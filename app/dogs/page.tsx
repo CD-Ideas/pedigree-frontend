@@ -1,143 +1,94 @@
+"use client";
+
+import { FormEvent, useState } from "react";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 export default function DogsPage() {
+  const [dogName, setDogName] = useState("");
+  const [breed, setBreed] = useState("");
+  const [sex, setSex] = useState("Male");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [sire, setSire] = useState("");
+  const [dam, setDam] = useState("");
+  const [message, setMessage] = useState("");
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const response = await fetch(\`\${API_URL}/dogs\`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name: dogName,
+        breed,
+        sex,
+        dateOfBirth,
+        sire,
+        dam
+      })
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      setMessage("Dog saved successfully!");
+      setDogName("");
+      setBreed("");
+      setSex("Male");
+      setDateOfBirth("");
+      setSire("");
+      setDam("");
+    } else {
+      setMessage(data.message || "Error saving dog");
+    }
+  }
+
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        background: "#f4f4f5",
-        padding: "60px",
-        fontFamily: "Arial, sans-serif",
-        color: "#111827",
-      }}
-    >
-      <h1 style={{ fontSize: "36px", fontWeight: "bold", marginBottom: "10px" }}>
-        Dog Registration
-      </h1>
+    <main style={{ padding: "60px", fontFamily: "Arial" }}>
+      <h1>Dog Registration</h1>
 
-      <p style={{ marginBottom: "30px", color: "#4b5563" }}>
-        Add a new dog to your pedigree platform.
-      </p>
+      <form onSubmit={handleSubmit} style={{ maxWidth: "600px", display: "grid", gap: "20px" }}>
+        <input
+          placeholder="Dog Name"
+          value={dogName}
+          onChange={(e) => setDogName(e.target.value)}
+        />
 
-      <form
-        style={{
-          background: "#ffffff",
-          padding: "30px",
-          borderRadius: "12px",
-          border: "1px solid #d1d5db",
-          maxWidth: "700px",
-          display: "grid",
-          gap: "20px",
-        }}
-      >
-        <div>
-          <label style={{ display: "block", marginBottom: "8px", fontWeight: 600 }}>
-            Dog Name
-          </label>
-          <input
-            type="text"
-            placeholder="Enter dog name"
-            style={{
-              width: "100%",
-              padding: "12px",
-              borderRadius: "8px",
-              border: "1px solid #cbd5e1",
-            }}
-          />
-        </div>
+        <input
+          placeholder="Breed"
+          value={breed}
+          onChange={(e) => setBreed(e.target.value)}
+        />
 
-        <div>
-          <label style={{ display: "block", marginBottom: "8px", fontWeight: 600 }}>
-            Breed
-          </label>
-          <input
-            type="text"
-            placeholder="Enter breed"
-            style={{
-              width: "100%",
-              padding: "12px",
-              borderRadius: "8px",
-              border: "1px solid #cbd5e1",
-            }}
-          />
-        </div>
+        <select value={sex} onChange={(e) => setSex(e.target.value)}>
+          <option>Male</option>
+          <option>Female</option>
+        </select>
 
-        <div>
-          <label style={{ display: "block", marginBottom: "8px", fontWeight: 600 }}>
-            Sex
-          </label>
-          <select
-            style={{
-              width: "100%",
-              padding: "12px",
-              borderRadius: "8px",
-              border: "1px solid #cbd5e1",
-            }}
-          >
-            <option>Male</option>
-            <option>Female</option>
-          </select>
-        </div>
+        <input
+          type="date"
+          value={dateOfBirth}
+          onChange={(e) => setDateOfBirth(e.target.value)}
+        />
 
-        <div>
-          <label style={{ display: "block", marginBottom: "8px", fontWeight: 600 }}>
-            Date of Birth
-          </label>
-          <input
-            type="date"
-            style={{
-              width: "100%",
-              padding: "12px",
-              borderRadius: "8px",
-              border: "1px solid #cbd5e1",
-            }}
-          />
-        </div>
+        <input
+          placeholder="Sire"
+          value={sire}
+          onChange={(e) => setSire(e.target.value)}
+        />
 
-        <div>
-          <label style={{ display: "block", marginBottom: "8px", fontWeight: 600 }}>
-            Sire (Father)
-          </label>
-          <input
-            type="text"
-            placeholder="Enter sire name"
-            style={{
-              width: "100%",
-              padding: "12px",
-              borderRadius: "8px",
-              border: "1px solid #cbd5e1",
-            }}
-          />
-        </div>
+        <input
+          placeholder="Dam"
+          value={dam}
+          onChange={(e) => setDam(e.target.value)}
+        />
 
-        <div>
-          <label style={{ display: "block", marginBottom: "8px", fontWeight: 600 }}>
-            Dam (Mother)
-          </label>
-          <input
-            type="text"
-            placeholder="Enter dam name"
-            style={{
-              width: "100%",
-              padding: "12px",
-              borderRadius: "8px",
-              border: "1px solid #cbd5e1",
-            }}
-          />
-        </div>
+        <button type="submit">Save Dog</button>
 
-        <button
-          type="submit"
-          style={{
-            background: "#111827",
-            color: "white",
-            padding: "14px 20px",
-            borderRadius: "10px",
-            border: "none",
-            fontWeight: "bold",
-            cursor: "pointer",
-          }}
-        >
-          Save Dog
-        </button>
+        {message && <p>{message}</p>}
       </form>
     </main>
   );
