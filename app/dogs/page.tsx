@@ -16,7 +16,7 @@ export default function DogsPage() {
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const response = await fetch(API_URL + "/dogs", {
+    const response = await fetch(API_URL + "/api/dogs", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
