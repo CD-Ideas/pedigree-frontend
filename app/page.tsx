@@ -1,3 +1,4 @@
+import Link from "next/link";
 
  export default function Home() {
    return (
@@ -26,18 +27,21 @@
            gap: "20px",
          }}
        >
+       <Link href="/dogs">
          <div
            style={{
              background: "white",
              padding: "20px",
              borderRadius: "10px",
              border: "1px solid #d1d5db",
+             cursor: "pointer",
            }}
          >
            <h2 style={{ color: "#111827" }}>Dogs</h2>
            <p style={{ color: "#4b5563" }}>Register and manage dogs</p>
          </div>
-
+       </Link>
+        
          <div
            style={{
              background: "white",
