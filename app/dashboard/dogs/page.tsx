@@ -1,0 +1,192 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+
+type Dog = {
+  id: number
+  name: string
+  breed: string
+  sex: string
+  dateOfBirth: string
+  sire: string
+  dam: string
+}
+
+export default function DogsPage() {
+  const [name, setName] = useState('')
+  const [breed, setBreed] = useState('')
+  const [sex, setSex] = useState('')
+  const [dateOfBirth, setDateOfBirth] = useState('')
+  const [sire, setSire] = useState('')
+  const [dam, setDam] = useState('')
+  const [message, setMessage] = useState('')
+  const [dogs, setDogs] = useState<Dog[]>([])
+
+  const loadDogs = async () => {
+    try {
+      const res = await fetch('/api/dogs')
+      const data = await res.json()
+      setDogs(data)
+    } catch (error) {
+      setMessage('Failed to load dogs')
+    }
+  }
+
+  useEffect(() => {
+    loadDogs()
+  }, [])
+
+  const handleAddDog = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    if (!name || !breed || !sex || !dateOfBirth) {
+      setMessage('Please fill in all fields')
+      return
+    }
+
+    try {
+      const res = await fetch('/api/dogs', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          breed,
+          sex,
+          dateOfBirth,
+          sire,
+          dam,
+        }),
+      })
+
+      if (!res.ok) {
+        setMessage('Failed to save dog')
+        return
+      }
+
+      setMessage(`Dog saved: ${name}`)
+      setName('')
+      setBreed('')
+      setSex('')
+      setDateOfBirth('')
+      loadDogs()
+    } catch (error) {
+      setMessage('Server error')
+    }
+  }
+
+  return (
+    <div style={{ padding: '30px', color: 'white' }}>
+      <h1>Dogs</h1>
+      <p>Register a new dog</p>
+
+      <form
+        onSubmit={handleAddDog}
+        style={{
+          maxWidth: '500px',
+          border: '1px solid #444',
+          padding: '20px',
+          borderRadius: '12px',
+          marginTop: '20px',
+        }}
+      >
+       <input
+         type="text"
+         placeholder="Dog Name"
+         value={name}
+         onChange={(e) => setName(e.target.value)}
+         style={{ width: '100%', padding: '12px', marginBottom: '12px', borderRadius: '8px' }}
+       />
+
+       <input
+         type="text"
+         placeholder="Breed"
+         value={breed}
+         onChange={(e) => setBreed(e.target.value)}
+         style={{ width: '100%', padding: '12px', marginBottom: '12px', borderRadius: '8px' }}
+       />
+
+       <input
+         type="text"
+         placeholder="Sex"
+         value={sex}
+         onChange={(e) => setSex(e.target.value)}
+         style={{ width: '100%', padding: '12px', marginBottom: '12px', borderRadius: '8px' }}
+       />
+
+       <input
+         type="date"
+         value={dateOfBirth}
+         onChange={(e) => setDateOfBirth(e.target.value)}
+         style={{ width: '100%', padding: '12px', marginBottom: '12px', borderRadius: '8px' }}
+       />
+
+       <input
+         type="text"
+         placeholder="Sire (Father)"
+         value={sire}
+         onChange={(e) => setSire(e.target.value)}
+         style={{ width: '100%', padding: '12px', marginBottom: '12px', borderRadius: '8px' }}
+       />
+
+       <input
+         type="text"
+         placeholder="Dam (Mother)"
+         value={dam}
+         onChange={(e) => setDam(e.target.value)}
+         style={{ width: '100%', padding: '12px', marginBottom: '12px', borderRadius: '8px' }}
+       />
+        
+    <button
+          type="submit"
+          style={{
+            padding: '12px 20px',
+            background: '#0b1d46',
+            color: 'white',
+            border: 'none',
+            borderRadius: '8px',
+            cursor: 'pointer',
+          }}
+        >
+          Add Dog
+        </button>
+
+        {message && <p style={{ marginTop: '15px' }}>{message}</p>}
+      </form>
+
+      <div style={{ marginTop: '30px' }}>
+        <h2>Registered Dogs</h2>
+
+        {dogs.length === 0 ? (
+          <p>No dogs added yet.</p>
+        ) : (
+          <table style={{ width: '100%', marginTop: '20px', borderCollapse: 'collapse' }}>
+            <thead>
+              <tr>
+                <th style={{ textAlign: 'left', paddingBottom: '10px' }}>Name</th>
+                <th style={{ textAlign: 'left', paddingBottom: '10px' }}>Breed</th>
+                <th style={{ textAlign: 'left', paddingBottom: '10px' }}>Sex</th>
+                <th style={{ textAlign: 'left', paddingBottom: '10px' }}>Date of Birth</th>
+                <th style={{ textAlign: 'left', paddingBottom: '10px' }}>Sire</th>
+                <th style={{ textAlign: 'left', paddingBottom: '10px' }}>Dam</th>
+              </tr>
+            </thead>
+            <tbody>
+              {dogs.map((dog) => (
+                <tr key={dog.id}>
+                  <td style={{ padding: '8px 0' }}>{dog.name}</td>
+                  <td style={{ padding: '8px 0' }}>{dog.breed}</td>
+                  <td style={{ padding: '8px 0' }}>{dog.sex}</td>
+                  <td style={{ padding: '8px 0' }}>{dog.dateOfBirth}</td>
+                  <td style={{ padding: '8px 0' }}>{dog.sire}</td>
+                  <td style={{ padding: '8px 0' }}>{dog.dam}</td>
+              </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+    </div>
+  )
+}
