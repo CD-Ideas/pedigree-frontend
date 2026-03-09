@@ -31,7 +31,8 @@ export default function DogsPage() {
       })
     });
 
-    const data = await response.json();
+    const text = await response.text();
+    const data = text ? JSON.parse(text) : {};
 
     if (response.ok) {
       setMessage("Dog saved successfully!");
