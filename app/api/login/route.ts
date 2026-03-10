@@ -1,23 +1,37 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import { createClient } from "@supabase/supabase-js";
 
-export async function POST(req: NextRequest) {
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    const res = await fetch("http://127.0.0.1:4000/api/v1/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
+    const { email, password } = body;
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
     });
 
-    const data = await res.json();
+    if (error) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: 401 }
+      );
+    }
 
-    return NextResponse.json(data, { status: res.status });
+    return NextResponse.json({
+      message: "Login successful",
+      session: data.session,
+      user: data.user,
+    });
   } catch (error) {
     return NextResponse.json(
-      { success: false, message: "Proxy login failed" },
+      { error: "Login failed" },
       { status: 500 }
     );
   }
