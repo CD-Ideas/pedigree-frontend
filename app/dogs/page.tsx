@@ -49,7 +49,10 @@ export default function DogsPage() {
 
   return (
     <main style={{ padding: "60px", fontFamily: "Arial" }}>
-      <h1>Dog Registration</h1>
+      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+  <h1>Dog Registration</h1>
+  <a href="/dashboard">Back to Dashboard</a>
+</div>
 
       <form
         onSubmit={handleSubmit}
