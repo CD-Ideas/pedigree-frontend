@@ -16,10 +16,10 @@ export default function DogsPage() {
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const response = await fetch(API_URL + "/api/dogs", {
+    const response = await fetch(`${API_URL}/api/dogs`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         name: dogName,
@@ -27,8 +27,8 @@ export default function DogsPage() {
         sex,
         dateOfBirth,
         sire,
-        dam
-      })
+        dam,
+      }),
     });
 
     const text = await response.text();
@@ -51,7 +51,10 @@ export default function DogsPage() {
     <main style={{ padding: "60px", fontFamily: "Arial" }}>
       <h1>Dog Registration</h1>
 
-      <form onSubmit={handleSubmit} style={{ maxWidth: "600px", display: "grid", gap: "20px" }}>
+      <form
+        onSubmit={handleSubmit}
+        style={{ maxWidth: "600px", display: "grid", gap: "20px" }}
+      >
         <input
           placeholder="Dog Name"
           value={dogName}
