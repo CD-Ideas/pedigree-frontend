@@ -39,6 +39,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
   const [lineage, setLineage] = useState<{ dog: { id: number; name: string; photo_url: string | null }; legendaryMatches: { id: number; name: string; photo_url: string | null; count: number }[] } | null>(null);
   const [lineageLoading, setLineageLoading] = useState(false);
   const [hovered, setHovered] = useState<number | null>(null);
+  const [genDepth, setGenDepth] = useState(8);
   const ref = useRef<HTMLDivElement>(null);
   const timer = useRef<NodeJS.Timeout | null>(null);
 
@@ -55,7 +56,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
     setLineage(null);
     setOpen(false);
     try {
-      const res = await fetch(`/api/dogs/${dogId}`);
+      const res = await fetch(`/api/dogs/${dogId}?gen=${genDepth}`);
       const data = await res.json();
       const pedigree = data.pedigree || [];
       const ancestorIds = new Set(pedigree.map((a: { ancestor_id: number }) => a.ancestor_id).filter(Boolean));
@@ -231,9 +232,24 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
           <div className="px-4 pb-4">
             <div className="flex items-center gap-2 mb-2 pt-2" style={{ borderTop: "1px solid var(--border)" }}>
               <span className="text-xs">🧬</span>
-              <span className="text-xs font-semibold" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+              <span className="text-xs font-semibold flex-1" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
                 Lineage of <a href={`/pedigree/${lineage.dog.id}`} className="underline hover:brightness-125">{lineage.dog.name}</a>
               </span>
+              <div className="flex items-center gap-1">
+                {[8, 12, 16].map((g) => (
+                  <button key={g}
+                    onClick={() => { setGenDepth(g); fetchLineage(lineage.dog.id, lineage.dog.name, lineage.dog.photo_url); }}
+                    className="px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all"
+                    style={{
+                      fontFamily: "var(--font-table)",
+                      background: genDepth === g ? "var(--accent-gold)" : "rgba(255,255,255,0.06)",
+                      color: genDepth === g ? "#000" : "var(--text-muted)",
+                      border: `1px solid ${genDepth === g ? "var(--accent-gold)" : "rgba(255,255,255,0.1)"}`,
+                    }}>
+                    {g}G
+                  </button>
+                ))}
+              </div>
             </div>
             {lineage.legendaryMatches.length > 0 ? (
               <>

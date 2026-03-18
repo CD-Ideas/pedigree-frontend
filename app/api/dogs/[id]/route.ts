@@ -19,7 +19,7 @@ export async function OPTIONS() {
 
 async function queryDb(script: string): Promise<any> {
   const { stdout } = await execFileAsync("python3", ["-c", script], {
-    timeout: 15000,
+    timeout: 60000,
   });
   return JSON.parse(stdout);
 }
@@ -35,10 +35,13 @@ export async function GET(
       return NextResponse.json({ error: "Invalid dog ID" }, { status: 400 });
     }
 
+    const maxGen = Math.min(parseInt(req.nextUrl.searchParams.get("gen") || "5", 10), 16);
+
     const data = await queryDb(`
 import sqlite3, json
 
 dog_id = ${dogId}
+max_gen = ${maxGen}
 
 conn = sqlite3.connect("${DB_PATH}", timeout=5)
 conn.row_factory = sqlite3.Row
@@ -86,35 +89,39 @@ def _pos_sort_key(p):
     return (p.get('generation', 0), int(m.group(1)) if m else 0)
 pedigree.sort(key=_pos_sort_key)
 
-# Build generation 5 dynamically from gen 4 ancestors
-gen4 = [p for p in pedigree if p["generation"] == 4]
-for g4 in gen4:
-    aid = g4.get("ancestor_id")
-    if not aid:
-        continue
-    cur.execute("SELECT dog_id, registered_name, sex, sire_id, dam_id, css_class, photo_url FROM dogs WHERE dog_id = ?", (aid,))
-    arow = cur.fetchone()
-    if not arow:
-        continue
-    pos = g4.get("position", "")
-    # Sire of this gen4 ancestor
-    if arow["sire_id"]:
-        cur.execute("SELECT dog_id, registered_name, css_class, photo_url FROM dogs WHERE dog_id = ?", (arow["sire_id"],))
-        sr = cur.fetchone()
-        if sr:
-            pedigree.append({"dog_id": dog_id, "ancestor_id": sr["dog_id"], "ancestor_name": sr["registered_name"], "position": pos + "_S", "generation": 5, "css_class": sr["css_class"] or "male", "ancestor_photo": sr["photo_url"]})
-    else:
-        pedigree.append({"dog_id": dog_id, "ancestor_id": None, "ancestor_name": "Unknown", "position": pos + "_S", "generation": 5, "css_class": "male", "ancestor_photo": None})
-    # Dam of this gen4 ancestor
-    if arow["dam_id"]:
-        cur.execute("SELECT dog_id, registered_name, css_class, photo_url FROM dogs WHERE dog_id = ?", (arow["dam_id"],))
-        dr = cur.fetchone()
-        if dr:
-            pedigree.append({"dog_id": dog_id, "ancestor_id": dr["dog_id"], "ancestor_name": dr["registered_name"], "position": pos + "_D", "generation": 5, "css_class": dr["css_class"] or "female", "ancestor_photo": dr["photo_url"]})
-    else:
-        pedigree.append({"dog_id": dog_id, "ancestor_id": None, "ancestor_name": "Unknown", "position": pos + "_D", "generation": 5, "css_class": "female", "ancestor_photo": None})
+# Build deeper generations dynamically (gen 5 through max_gen)
+max_db_gen = max((p["generation"] for p in pedigree), default=0)
+for gen in range(max_db_gen + 1, max_gen + 1):
+    prev_gen = [p for p in pedigree if p["generation"] == gen - 1]
+    for pg in prev_gen:
+        aid = pg.get("ancestor_id")
+        if not aid:
+            continue
+        cur.execute("SELECT dog_id, registered_name, sex, sire_id, dam_id, css_class, photo_url FROM dogs WHERE dog_id = ?", (aid,))
+        arow = cur.fetchone()
+        if not arow:
+            continue
+        pos = pg.get("position", "")
+        if arow["sire_id"]:
+            cur.execute("SELECT dog_id, registered_name, css_class, photo_url FROM dogs WHERE dog_id = ?", (arow["sire_id"],))
+            sr = cur.fetchone()
+            if sr:
+                pedigree.append({"dog_id": dog_id, "ancestor_id": sr["dog_id"], "ancestor_name": sr["registered_name"], "position": pos + "_S", "generation": gen, "css_class": sr["css_class"] or "male", "ancestor_photo": sr["photo_url"]})
+            else:
+                pedigree.append({"dog_id": dog_id, "ancestor_id": None, "ancestor_name": "Unknown", "position": pos + "_S", "generation": gen, "css_class": "male", "ancestor_photo": None})
+        else:
+            pedigree.append({"dog_id": dog_id, "ancestor_id": None, "ancestor_name": "Unknown", "position": pos + "_S", "generation": gen, "css_class": "male", "ancestor_photo": None})
+        if arow["dam_id"]:
+            cur.execute("SELECT dog_id, registered_name, css_class, photo_url FROM dogs WHERE dog_id = ?", (arow["dam_id"],))
+            dr = cur.fetchone()
+            if dr:
+                pedigree.append({"dog_id": dog_id, "ancestor_id": dr["dog_id"], "ancestor_name": dr["registered_name"], "position": pos + "_D", "generation": gen, "css_class": dr["css_class"] or "female", "ancestor_photo": dr["photo_url"]})
+            else:
+                pedigree.append({"dog_id": dog_id, "ancestor_id": None, "ancestor_name": "Unknown", "position": pos + "_D", "generation": gen, "css_class": "female", "ancestor_photo": None})
+        else:
+            pedigree.append({"dog_id": dog_id, "ancestor_id": None, "ancestor_name": "Unknown", "position": pos + "_D", "generation": gen, "css_class": "female", "ancestor_photo": None})
 
-# Re-sort pedigree after gen5 additions
+# Re-sort pedigree after dynamic gen additions
 pedigree.sort(key=_pos_sort_key)
 
 # Offspring (join dogs table for photo_url)
