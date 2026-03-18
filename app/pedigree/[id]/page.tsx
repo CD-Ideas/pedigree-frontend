@@ -700,12 +700,20 @@ function PedStatsTab({ genetics }: { genetics: Genetic[] }) {
       </div>
     );
 
-  // Build pie slices
+  // Build pie slices — unique vibrant colors for each ancestor
   const totalPct = genetics.reduce((sum, g) => sum + g.percentage, 0);
-  const topN = genetics.slice(0, 15);
-  const otherPct = genetics.slice(15).reduce((sum, g) => sum + g.percentage, 0);
-  const slices = topN.map((g) => ({ ...g, color: getDogCardColor(g.ancestor_name) }));
-  if (otherPct > 0) slices.push({ ancestor_id: 0, ancestor_name: "Others", percentage: otherPct, color: "#6b7280" } as typeof slices[0]);
+  const pieColors = [
+    "#f59e0b", "#3b82f6", "#ef4444", "#10b981", "#8b5cf6", "#f97316", "#06b6d4", "#ec4899",
+    "#84cc16", "#6366f1", "#14b8a6", "#f43f5e", "#a855f7", "#eab308", "#0ea5e9", "#d946ef",
+    "#22c55e", "#e11d48", "#7c3aed", "#fb923c", "#2dd4bf", "#c084fc", "#facc15", "#38bdf8",
+    "#4ade80", "#f472b6", "#818cf8", "#fbbf24", "#34d399", "#a78bfa", "#fca5a5", "#67e8f9",
+  ];
+  const slices = genetics.map((g, i) => ({
+    ...g,
+    color: getDogCardColor(g.ancestor_name) !== "#e8e8e8" && getDogCardColor(g.ancestor_name) !== "rgba(176,190,206,0.85)"
+      ? getDogCardColor(g.ancestor_name)
+      : pieColors[i % pieColors.length],
+  }));
 
   // Build SVG pie
   const radius = 120;
@@ -752,15 +760,20 @@ function PedStatsTab({ genetics }: { genetics: Genetic[] }) {
 
   return (
     <div className="title-cards">
+      <style>{`
+        @keyframes pieSpinIn { from { transform: rotate(-180deg) scale(0.5); opacity: 0; } to { transform: rotate(0deg) scale(1); opacity: 1; } }
+        @keyframes pieFadeIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+        .pie-chart-container { animation: pieFadeIn 0.6s ease-out; }
+        .pie-chart-svg { animation: pieSpinIn 0.8s ease-out; }
+      `}</style>
       <p className="text-[10px] mb-3 font-semibold" style={{ color: "var(--text-secondary)", fontFamily: "var(--font-table)" }}>
         Genetic contribution of ancestors to this dog&apos;s pedigree
       </p>
       <div className="flex flex-col lg:flex-row gap-4 items-start">
         {/* Pie Chart */}
-        <div className="flex-shrink-0 relative">
-          <svg width="280" height="280" viewBox="0 0 280 280">
+        <div className="flex-shrink-0 relative pie-chart-container">
+          <svg width="280" height="280" viewBox="0 0 280 280" className="pie-chart-svg">
             {paths}
-            {labels}
             {/* Center circle for donut effect */}
             <circle cx={cx} cy={cy} r="60" fill="var(--bg-deep)" stroke="rgba(30,64,120,0.5)" strokeWidth="1" />
             <text x={cx} y={cy - 8} textAnchor="middle" fill="var(--accent-gold)" fontSize="14" fontWeight="bold" fontFamily="var(--font-table)">

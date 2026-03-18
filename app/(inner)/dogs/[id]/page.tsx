@@ -86,6 +86,12 @@ function PedigreeTree({ pedigree, dogName }: { pedigree: Ancestor[]; dogName: st
     if (!byGen[a.generation]) byGen[a.generation] = [];
     byGen[a.generation].push(a);
   });
+  // Sort each generation by numeric suffix in position (fixes sire/dam order)
+  Object.values(byGen).forEach(arr => arr.sort((a, b) => {
+    const numA = parseInt((a.position || "0").match(/\d+$/)?.[0] || "0");
+    const numB = parseInt((b.position || "0").match(/\d+$/)?.[0] || "0");
+    return numA - numB;
+  }));
 
   const gens = Object.keys(byGen).map(Number).sort();
   if (gens.length === 0)

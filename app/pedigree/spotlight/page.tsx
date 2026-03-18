@@ -32,10 +32,13 @@ const TITLE_COLORS: Record<string, string> = {
   "3XL": "#6b7280", "2XL": "#6b7280", "1XL": "#6b7280",
 };
 
-function QuickSearch({ onSelectDog }: { onSelectDog?: (dogId: number) => void }) {
+function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number) => void; famousDogs: FamousDog[] }) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<{ dog_id: number; registered_name: string; photo_url: string | null }[]>([]);
   const [open, setOpen] = useState(false);
+  const [lineage, setLineage] = useState<{ dog: { id: number; name: string; photo_url: string | null }; legendaryMatches: { id: number; name: string; photo_url: string | null; count: number }[] } | null>(null);
+  const [lineageLoading, setLineageLoading] = useState(false);
+  const [hovered, setHovered] = useState<number | null>(null);
   const ref = useRef<HTMLDivElement>(null);
   const timer = useRef<NodeJS.Timeout | null>(null);
 
@@ -47,11 +50,52 @@ function QuickSearch({ onSelectDog }: { onSelectDog?: (dogId: number) => void })
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
+  const fetchLineage = async (dogId: number, dogName: string, dogPhoto: string | null) => {
+    setLineageLoading(true);
+    setLineage(null);
+    setOpen(false);
+    try {
+      const res = await fetch(`/api/dogs/${dogId}`);
+      const data = await res.json();
+      const pedigree = data.pedigree || [];
+      const ancestorIds = new Set(pedigree.map((a: { ancestor_id: number }) => a.ancestor_id).filter(Boolean));
+      const ancestorNames = new Map(pedigree.map((a: { ancestor_id: number; ancestor_name: string }) => [a.ancestor_id, a.ancestor_name]));
+
+      // Cross-reference with famous dogs
+      const matches: { id: number; name: string; photo_url: string | null; count: number }[] = [];
+      for (const f of famousDogs) {
+        if (ancestorIds.has(f.id)) {
+          matches.push({ id: f.id, name: f.name, photo_url: f.photo_url, count: 1 });
+        } else {
+          // Also check by name match in pedigree
+          const nameMatch = pedigree.find((a: { ancestor_name: string }) =>
+            a.ancestor_name && a.ancestor_name.toUpperCase().includes(f.name.toUpperCase())
+          );
+          if (nameMatch) {
+            matches.push({ id: f.id, name: f.name, photo_url: f.photo_url, count: 1 });
+          }
+        }
+      }
+      // Count occurrences (a famous dog can appear multiple times in pedigree)
+      for (const m of matches) {
+        m.count = pedigree.filter((a: { ancestor_id: number; ancestor_name: string }) =>
+          a.ancestor_id === m.id || (a.ancestor_name && a.ancestor_name.toUpperCase().includes(m.name.toUpperCase()))
+        ).length;
+      }
+      matches.sort((a, b) => b.count - a.count);
+
+      setLineage({ dog: { id: dogId, name: dogName, photo_url: dogPhoto }, legendaryMatches: matches });
+    } catch {
+      setLineage(null);
+    }
+    setLineageLoading(false);
+  };
+
   const search = (q: string) => {
     setQuery(q);
+    setLineage(null);
     if (timer.current) clearTimeout(timer.current);
 
-    // Detect pasted URLs — fetch dog info, show in dropdown, then select on click
     const urlMatch = q.match(/pedigreeplatform\.com\/(?:pedigree|dogs)\/(\d+)/);
     if (urlMatch) {
       const dogId = urlMatch[1];
@@ -78,6 +122,83 @@ function QuickSearch({ onSelectDog }: { onSelectDog?: (dogId: number) => void })
     }, 300);
   };
 
+  // Pie chart colors
+  const pieColors = ["#f59e0b", "#3b82f6", "#ef4444", "#10b981", "#8b5cf6", "#f97316", "#06b6d4", "#ec4899", "#84cc16", "#6366f1", "#14b8a6", "#f43f5e", "#a855f7", "#eab308", "#0ea5e9", "#d946ef", "#22c55e", "#e11d48"];
+
+  // Build pie chart for lineage
+  const renderPie = () => {
+    if (!lineage || lineage.legendaryMatches.length === 0) return null;
+    const matches = lineage.legendaryMatches;
+    const total = matches.reduce((s, m) => s + m.count, 0);
+    const radius = 110, cx = 130, cy = 130;
+    let cumAngle = -90;
+    const slices = matches.map((m, i) => {
+      const angle = (m.count / total) * 360;
+      const startAngle = cumAngle;
+      const endAngle = cumAngle + angle;
+      const midAngle = (startAngle + endAngle) / 2;
+      cumAngle = endAngle;
+      return { ...m, angle, startAngle, endAngle, midAngle, color: pieColors[i % pieColors.length], idx: i };
+    });
+
+    return (
+      <div className="flex flex-col lg:flex-row gap-4 items-start mt-4">
+        <div className="flex-shrink-0 relative">
+          <style>{`@keyframes pieSpinIn { from { transform: rotate(-180deg) scale(0.5); opacity: 0; } to { transform: rotate(0deg) scale(1); opacity: 1; } } .lineage-pie { animation: pieSpinIn 0.8s ease-out; }`}</style>
+          <svg width="260" height="260" viewBox="0 0 260 260" className="lineage-pie">
+            {slices.map((s) => {
+              const sr = (s.startAngle * Math.PI) / 180;
+              const er = (s.endAngle * Math.PI) / 180;
+              const x1 = cx + radius * Math.cos(sr), y1 = cy + radius * Math.sin(sr);
+              const x2 = cx + radius * Math.cos(er), y2 = cy + radius * Math.sin(er);
+              const la = s.angle > 180 ? 1 : 0;
+              const isH = hovered === s.idx;
+              return (
+                <path key={s.idx} d={`M ${cx} ${cy} L ${x1} ${y1} A ${radius} ${radius} 0 ${la} 1 ${x2} ${y2} Z`}
+                      fill={s.color} stroke="rgba(11,17,32,0.8)" strokeWidth="2"
+                      style={{ transform: isH ? "scale(1.06)" : "none", transformOrigin: `${cx}px ${cy}px`, transition: "all 0.2s", filter: isH ? `drop-shadow(0 0 10px ${s.color})` : "none", cursor: "pointer" }}
+                      onMouseEnter={() => setHovered(s.idx)} onMouseLeave={() => setHovered(null)} />
+              );
+            })}
+            <circle cx={cx} cy={cy} r="55" fill="var(--bg-deep)" stroke="rgba(30,64,120,0.5)" strokeWidth="1" />
+            <text x={cx} y={cy - 8} textAnchor="middle" fill="var(--accent-gold)" fontSize="14" fontWeight="bold" fontFamily="var(--font-table)">{matches.length}</text>
+            <text x={cx} y={cy + 10} textAnchor="middle" fill="var(--text-muted)" fontSize="8" fontFamily="var(--font-table)">Legendary</text>
+          </svg>
+          {hovered !== null && slices[hovered] && (
+            <div className="absolute top-1 left-1 px-2 py-1 rounded-lg text-[10px] font-bold"
+                 style={{ background: "var(--bg-elevated)", border: `1px solid ${slices[hovered].color}`, color: slices[hovered].color, fontFamily: "var(--font-table)", boxShadow: "0 4px 15px rgba(0,0,0,0.4)" }}>
+              {slices[hovered].name}: {slices[hovered].count}x ({((slices[hovered].count / total) * 100).toFixed(1)}%)
+            </div>
+          )}
+        </div>
+        <div className="flex-1 space-y-1 w-full max-h-[280px] overflow-y-auto">
+          {slices.map((s) => (
+            <div key={s.idx} className="rounded-lg flex items-center gap-2 px-3 py-2 transition-all cursor-pointer"
+                 style={{
+                   background: hovered === s.idx ? `${s.color}20` : "rgba(255,255,255,0.03)",
+                   border: `1px solid ${hovered === s.idx ? s.color + "60" : "rgba(255,255,255,0.06)"}`,
+                   transform: hovered === s.idx ? "translateX(4px)" : "none", transition: "all 0.2s",
+                 }}
+                 onMouseEnter={() => setHovered(s.idx)} onMouseLeave={() => setHovered(null)}
+                 onClick={() => { if (onSelectDog) onSelectDog(s.id); }}>
+              <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ background: s.color }} />
+              {s.photo_url ? (
+                <img src={s.photo_url.startsWith("http") ? s.photo_url : `https://www.apbt.online-pedigrees.com/${s.photo_url}`}
+                     alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "1px solid var(--border)" }} />
+              ) : (
+                <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-[9px]"
+                     style={{ background: "var(--bg-deep)", border: "1px solid var(--border)" }}>🐕</div>
+              )}
+              <span className="text-xs font-semibold truncate flex-1" style={{ color: s.color, fontFamily: "var(--font-table)" }}>{s.name}</span>
+              <span className="text-[10px] font-bold" style={{ color: s.color, fontFamily: "var(--font-mono)" }}>{s.count}x</span>
+              <span className="text-[9px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>({((s.count / total) * 100).toFixed(1)}%)</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div ref={ref} className="relative mb-5">
       <div className="glow-gold rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)" }}>
@@ -85,18 +206,52 @@ function QuickSearch({ onSelectDog }: { onSelectDog?: (dogId: number) => void })
           <span className="text-lg">🔍</span>
           <input
             type="text"
-            placeholder="Search by dog name or paste a pedigree URL..."
+            placeholder="Search by dog name or paste a pedigree URL to trace lineage..."
             value={query}
             onChange={(e) => search(e.target.value)}
             onFocus={() => { if (results.length > 0) setOpen(true); }}
             className="flex-1 bg-transparent text-sm outline-none"
             style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)" }}
           />
-          {query && (
-            <button onClick={() => { setQuery(""); setResults([]); setOpen(false); }} className="text-xs opacity-50 hover:opacity-100">✕</button>
+          {(query || lineage) && (
+            <button onClick={() => { setQuery(""); setResults([]); setOpen(false); setLineage(null); }} className="text-xs opacity-50 hover:opacity-100">✕</button>
           )}
         </div>
+
+        {/* Lineage results inside the box */}
+        {lineageLoading && (
+          <div className="px-4 py-6 text-center">
+            <div className="inline-flex items-center gap-2">
+              <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+              <span className="text-xs font-semibold" style={{ color: "var(--text-secondary)", fontFamily: "var(--font-table)" }}>Tracing lineage back to legendary dogs...</span>
+            </div>
+          </div>
+        )}
+        {lineage && (
+          <div className="px-4 pb-4">
+            <div className="flex items-center gap-2 mb-2 pt-2" style={{ borderTop: "1px solid var(--border)" }}>
+              <span className="text-xs">🧬</span>
+              <span className="text-xs font-semibold" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+                Lineage of <a href={`/pedigree/${lineage.dog.id}`} className="underline hover:brightness-125">{lineage.dog.name}</a>
+              </span>
+            </div>
+            {lineage.legendaryMatches.length > 0 ? (
+              <>
+                <p className="text-[10px] mb-1" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                  Found {lineage.legendaryMatches.length} legendary {lineage.legendaryMatches.length === 1 ? "dog" : "dogs"} in pedigree. Click to run Find Tightest.
+                </p>
+                {renderPie()}
+              </>
+            ) : (
+              <p className="text-xs py-4 text-center" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                No legendary dogs found in this dog&apos;s pedigree.
+              </p>
+            )}
+          </div>
+        )}
       </div>
+
+      {/* Search dropdown */}
       {open && results.length > 0 && (
         <div className="absolute left-0 right-0 top-full mt-1 rounded-xl overflow-hidden z-50 max-h-80 overflow-y-auto"
              style={{ background: "var(--bg-elevated)", border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}>
@@ -106,7 +261,7 @@ function QuickSearch({ onSelectDog }: { onSelectDog?: (dogId: number) => void })
             const isCh = !isGrCh && /\bCH\b/.test(nameUpper);
             const color = isGrCh ? "#60a5fa" : isCh ? "#fc8181" : "var(--text-primary)";
             return (
-              <button key={d.dog_id} onClick={() => { if (onSelectDog) { onSelectDog(d.dog_id); setQuery(""); setOpen(false); } else { window.location.href = `/pedigree/${d.dog_id}`; } }}
+              <button key={d.dog_id} onClick={() => { fetchLineage(d.dog_id, d.registered_name, d.photo_url); setQuery(d.registered_name); setResults([]); setOpen(false); }}
                  className="w-full flex items-center gap-3 px-4 py-2.5 transition-all hover:bg-white/5 text-left"
                  style={{ borderBottom: "1px solid rgba(40,44,60,0.3)" }}>
                 {d.photo_url ? (
@@ -380,7 +535,7 @@ export default function SpotlightPage() {
         </div>
 
         {/* ── Quick Search Bar ── */}
-        <QuickSearch onSelectDog={(dogId) => {
+        <QuickSearch famousDogs={famous} onSelectDog={(dogId) => {
           setSelectedDog(dogId);
           // Auto-trigger search after selecting
           setTimeout(() => {

@@ -79,6 +79,13 @@ cur.execute("""
 """, (dog_id,))
 pedigree = [dict(r) for r in cur.fetchall()]
 
+# Sort pedigree by numeric suffix in position (fixes display order)
+import re as _re
+def _pos_sort_key(p):
+    m = _re.search(r'(\d+)$', p.get('position', '0'))
+    return (p.get('generation', 0), int(m.group(1)) if m else 0)
+pedigree.sort(key=_pos_sort_key)
+
 # Build generation 5 dynamically from gen 4 ancestors
 gen4 = [p for p in pedigree if p["generation"] == 4]
 for g4 in gen4:
@@ -106,6 +113,9 @@ for g4 in gen4:
             pedigree.append({"dog_id": dog_id, "ancestor_id": dr["dog_id"], "ancestor_name": dr["registered_name"], "position": pos + "_D", "generation": 5, "css_class": dr["css_class"] or "female", "ancestor_photo": dr["photo_url"]})
     else:
         pedigree.append({"dog_id": dog_id, "ancestor_id": None, "ancestor_name": "Unknown", "position": pos + "_D", "generation": 5, "css_class": "female", "ancestor_photo": None})
+
+# Re-sort pedigree after gen5 additions
+pedigree.sort(key=_pos_sort_key)
 
 # Offspring (join dogs table for photo_url)
 cur.execute("""
