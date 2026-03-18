@@ -260,21 +260,21 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
           <div className="text-center mb-2">
             <h3 style={{
               fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "13px", letterSpacing: "0.06em",
-              textTransform: "uppercase", color: "#1a3a5c"
+              textTransform: "uppercase", color: "#4a5568"
             }}>{maxGen} Generation Pedigree</h3>
           </div>
 
           {/* Column headers */}
           <div className="flex gap-px mb-1">
             <div className="px-1.5 py-1 text-center"
-                 style={{ width: maxGen >= 5 ? "130px" : "170px", flexShrink: 0, fontFamily: "var(--font-table)", fontWeight: 600, fontSize: maxGen >= 5 ? "9px" : "10px", color: "#1a3a5c", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+                 style={{ width: maxGen >= 5 ? "130px" : "170px", flexShrink: 0, fontFamily: "var(--font-table)", fontWeight: 600, fontSize: maxGen >= 5 ? "9px" : "10px", color: "#4a5568", textTransform: "uppercase", letterSpacing: "0.1em" }}>
               Dog
             </div>
             {gens.filter(g => g <= maxGen).map((g) => {
               const isLastGen = g === maxGen;
               return (
                 <div key={g} className="px-1.5 py-1 text-center"
-                     style={{ flex: isLastGen ? 2 : 1, fontFamily: "var(--font-table)", fontWeight: 600, fontSize: maxGen >= 5 ? "9px" : "10px", color: "#1a3a5c", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+                     style={{ flex: isLastGen ? 2 : 1, fontFamily: "var(--font-table)", fontWeight: 600, fontSize: maxGen >= 5 ? "9px" : "10px", color: "#4a5568", textTransform: "uppercase", letterSpacing: "0.1em" }}>
                   {genLabels[g - 1] || `Gen ${g}`}
                 </div>
               );
@@ -326,41 +326,41 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
                     const xwBgMap: Record<number, string> = { 1: "rgba(45,212,191,0.12)", 2: "rgba(251,146,60,0.12)", 4: "rgba(52,211,153,0.12)" };
                     const xwBorderMap: Record<number, string> = { 1: "rgba(45,212,191,0.6)", 2: "rgba(251,146,60,0.6)", 4: "rgba(52,211,153,0.6)" };
                     const cellBg = isGrCh
-                      ? "linear-gradient(135deg, rgba(96,165,250,0.15), rgba(96,165,250,0.05))"
+                      ? "linear-gradient(135deg, rgba(96,165,250,0.18), rgba(96,165,250,0.08))"
                       : isCh
-                        ? "linear-gradient(135deg, rgba(252,129,129,0.15), rgba(252,129,129,0.05))"
+                        ? "linear-gradient(135deg, rgba(239,68,68,0.1), rgba(239,68,68,0.03))"
                         : xwNum === 3
-                          ? "linear-gradient(135deg, rgba(212,168,85,0.15), rgba(212,168,85,0.05))"
+                          ? "linear-gradient(135deg, rgba(202,138,4,0.12), rgba(202,138,4,0.03))"
                           : xwNum === 1
-                            ? "linear-gradient(135deg, rgba(45,212,191,0.15), rgba(45,212,191,0.05))"
+                            ? "linear-gradient(135deg, rgba(20,184,166,0.1), rgba(20,184,166,0.03))"
                             : xwNum === 2
-                              ? "linear-gradient(135deg, rgba(251,146,60,0.15), rgba(251,146,60,0.05))"
+                              ? "linear-gradient(135deg, rgba(234,88,12,0.1), rgba(234,88,12,0.03))"
                               : xwNum === 4
-                                ? "linear-gradient(135deg, rgba(244,114,182,0.15), rgba(244,114,182,0.05))"
+                                ? "linear-gradient(135deg, rgba(219,39,119,0.1), rgba(219,39,119,0.03))"
                                 : xwNum >= 5
-                                  ? "linear-gradient(135deg, rgba(192,132,252,0.15), rgba(192,132,252,0.05))"
-                                  : "#ffffff";
+                                  ? "linear-gradient(135deg, rgba(147,51,234,0.1), rgba(147,51,234,0.03))"
+                                  : "#f0f2f5";
                     const cellBorder = isGrCh
-                      ? "rgba(96,165,250,0.6)"
+                      ? "rgba(29,91,191,0.5)"
                       : isCh
-                        ? "rgba(252,129,129,0.6)"
+                        ? "rgba(192,40,40,0.5)"
                         : xwNum === 3
-                          ? "rgba(212,168,85,0.6)"
+                          ? "rgba(138,101,24,0.5)"
                           : xwNum === 1
-                            ? "rgba(45,212,191,0.6)"
+                            ? "rgba(13,116,104,0.5)"
                             : xwNum === 2
-                              ? "rgba(251,146,60,0.6)"
+                              ? "rgba(180,90,10,0.5)"
                               : xwNum === 4
-                                ? "rgba(244,114,182,0.6)"
+                                ? "rgba(176,56,120,0.5)"
                                 : xwNum >= 5
-                                  ? "rgba(192,132,252,0.6)"
-                                  : "rgba(200,200,210,0.5)";
+                                  ? "rgba(109,48,176,0.5)"
+                                  : "rgba(0,0,0,0.12)";
                     const cellTextColor = isGrCh
-                      ? "#60a5fa"
+                      ? "#1d5bbf"
                       : isCh
-                        ? "#fc8181"
-                        : xwNum === 1 ? "#2dd4bf" : xwNum === 2 ? "#fb923c" : xwNum === 3 ? "#d4a855" : xwNum === 4 ? "#f472b6" : xwNum >= 5 ? "#c084fc" : isChampion ? "#fc8181"
-                          : "#666666";
+                        ? "#c02828"
+                        : xwNum === 1 ? "#0d7468" : xwNum === 2 ? "#b45a0a" : xwNum === 3 ? "#8a6518" : xwNum === 4 ? "#b03878" : xwNum >= 5 ? "#6d30b0" : isChampion ? "#c02828"
+                          : "#3a3a3a";
                     return (
                       <div key={`${gen}-${i}`}
                            className="flex-1 rounded-md px-2 py-1 flex items-center group relative transition-all duration-200 hover:shadow-md hover:-translate-y-[1px]"
@@ -369,8 +369,7 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
                              borderLeft: `${maxGen >= 5 ? "3px" : "4px"} solid ${cellBorder}`,
                              minHeight: cellMinH,
                              cursor: hasLink ? "pointer" : "default",
-                             boxShadow: `0 1px 3px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.5)`,
-                             borderBottom: `1px solid rgba(0,0,0,0.06)`,
+                             boxShadow: `0 1px 3px rgba(0,0,0,0.08), 0 0 0 0.5px rgba(0,0,0,0.04)`,
                            }}>
                         {isChampion && (
                           <span className="absolute -top-0.5 -right-0.5 flex items-center justify-center rounded-full"
@@ -944,9 +943,9 @@ export default function PublicPedigreePage() {
           border: "1.5px solid rgba(30,64,120,0.8)",
           boxShadow: "0 2px 20px rgba(0,0,0,0.25)"
         }}>
-          <div className="flex items-center justify-between px-4 py-1.5" style={{
-            background: "linear-gradient(135deg, #1a3a5c 0%, #1e4478 50%, #1a3a5c 100%)",
-            borderBottom: "1px solid rgba(96,165,250,0.3)"
+          <div className="flex items-center justify-between px-4 py-2" style={{
+            background: "linear-gradient(135deg, #1c2740 0%, #161e30 50%, #1c2740 100%)",
+            borderBottom: "2px solid rgba(96,165,250,0.2)"
           }}>
             <div className="flex items-center gap-2.5">
               <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{
@@ -956,7 +955,7 @@ export default function PublicPedigreePage() {
                 <span className="text-sm">🌳</span>
               </div>
               <span className="text-sm font-semibold" style={{
-                color: "var(--text-primary)",
+                color: "var(--accent-gold)",
                 fontFamily: "var(--font-table)"
               }}>Pedigree</span>
               {(dog.pedigree?.length || 0) > 0 && (
@@ -970,15 +969,14 @@ export default function PublicPedigreePage() {
                 </span>
               )}
             </div>
-            <div className="flex items-center gap-3" style={{ fontFamily: "var(--font-mono)", fontSize: "10px", color: "var(--accent-gold)" }}>
+            <div className="flex items-center gap-3" style={{ fontFamily: "var(--font-mono)", fontSize: "10px", color: "#9a7020" }}>
               <span>🐾 {dog.offspring?.length || dog.offspring_count || 0} offspring</span>
               <span>🐕 {(dog.siblings?.full?.length || 0) + (dog.siblings?.halfSire?.length || 0) + (dog.siblings?.halfDam?.length || 0)} siblings</span>
               <span>👁 {(dog.view_count || 0).toLocaleString()} views</span>
             </div>
           </div>
           <div className="p-3 md:p-4" style={{
-            background: "linear-gradient(180deg, #f8f9fb 0%, #eef0f4 100%)",
-            boxShadow: "inset 0 2px 4px rgba(0,0,0,0.04)",
+            background: "#e8ecf1",
           }}>
             <PedigreeTree pedigree={dog.pedigree || []} dogName={dog.registered_name} dogId={dog.id} isMale={isMale} />
           </div>
