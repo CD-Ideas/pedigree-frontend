@@ -63,11 +63,11 @@ function getDogCardColor(name: string): string {
   }
   if (/\bROM\b/.test(n)) return "#22d3ee";
   if (/\bPOR\b/.test(n)) return "#a78bfa";
-  return "#e8eaed"; // deep white for no title
+  return "#e0e0e0"; // dark gray for no title
 }
 
 function cardStyle(cc: string) {
-  const isWhite = cc === "#e8eaed";
+  const isWhite = cc === "#e0e0e0" || cc === "#e8eaed";
   return {
     background: isWhite ? `linear-gradient(135deg, ${cc}30, ${cc}18)` : `linear-gradient(135deg, ${cc}20, ${cc}10)`,
     border: isWhite ? `1px solid ${cc}50` : `1px solid ${cc}35`,
@@ -81,10 +81,10 @@ function getXWColor(name: string): string | null {
   const match = nameUpper.match(/\b(\d+)X[WL]\b/);
   if (!match) return null;
   const num = parseInt(match[1]);
-  if (num === 1) return "rgba(45,212,191,0.95)";    // teal
-  if (num === 2) return "rgba(251,146,60,0.95)";     // orange
-  if (num === 4) return "rgba(244,114,182,0.95)";     // pink
-  if (num >= 5) return "rgba(192,132,252,0.95)";     // purple
+  if (num === 1) return "#2dd4bf";    // dark teal
+  if (num === 2) return "#fb923c";     // dark orange
+  if (num === 4) return "#f472b6";     // dark pink
+  if (num >= 5) return "#c084fc";     // dark purple
   return null; // 3XW handled by gold/subject
 }
 
@@ -96,7 +96,7 @@ function DogLink({ dogId, name, isMale }: { dogId: number | null; name: string; 
   const isRom = !isGrCh && !isCh && !xwColor && /\bROM\b/.test(nameUpper);
   const isPor = !isGrCh && !isCh && !xwColor && !isRom && /\bPOR\b/.test(nameUpper);
   const hasTitle = isGrCh || isCh || xwColor || isRom || isPor || /\b\d+X[WL]\b/i.test(nameUpper);
-  const color = isGrCh ? "rgba(96,165,250,0.95)" : isCh ? "rgba(252,129,129,0.95)" : xwColor ? xwColor : isRom ? "rgba(34,211,238,0.95)" : isPor ? "rgba(167,139,250,0.95)" : !hasTitle ? "rgba(232,234,237,0.95)" : isMale === true ? "var(--male-color)" : isMale === false ? "var(--female-color)" : "var(--accent-gold)";
+  const color = isGrCh ? "#60a5fa" : isCh ? "#fc8181" : xwColor ? xwColor : isRom ? "#22d3ee" : isPor ? "#a78bfa" : !hasTitle ? "#e0e0e0" : isMale === true ? "#60a5fa" : isMale === false ? "#f472b6" : "#d4a855";
   if (!dogId) return <span style={{ color: "var(--text-muted)" }}>{name}</span>;
   return (
     <Link href={`/pedigree/${dogId}`} className="hover:underline transition-colors" style={{ color }}>
@@ -306,13 +306,13 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
               const ancestors = byGen[gen] || [];
               const isLastGen = gen === maxGen;
               const cellMinH = maxGen >= 5
-                ? (gen <= 1 ? "22px" : gen === 2 ? "16px" : gen === 3 ? "13px" : "11px")
-                : (gen <= 1 ? "36px" : gen === 2 ? "26px" : gen === 3 ? "20px" : "18px");
+                ? (gen <= 1 ? "30px" : gen === 2 ? "24px" : gen === 3 ? "20px" : "16px")
+                : (gen <= 1 ? "40px" : gen === 2 ? "34px" : gen === 3 ? "28px" : "24px");
               const fontSize = maxGen >= 5
-                ? (gen <= 1 ? "9px" : gen === 2 ? "8.5px" : "8px")
-                : (gen <= 1 ? "11px" : gen === 2 ? "10px" : "9px");
+                ? (gen <= 1 ? "11px" : gen === 2 ? "10px" : "9.5px")
+                : (gen <= 1 ? "13px" : gen === 2 ? "12px" : "11px");
               return (
-                <div key={gen} className="flex flex-col gap-0.5" style={{ flex: isLastGen ? 2 : 1 }}>
+                <div key={gen} className="flex flex-col gap-1" style={{ flex: isLastGen ? 2 : 1 }}>
                   {ancestors.slice(0, Math.pow(2, gen)).map((a, i) => {
                     const male = isMaleAncestor(a, i);
                     const hasLink = !!a.ancestor_id;
@@ -326,32 +326,44 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
                     const xwBgMap: Record<number, string> = { 1: "rgba(45,212,191,0.12)", 2: "rgba(251,146,60,0.12)", 4: "rgba(52,211,153,0.12)" };
                     const xwBorderMap: Record<number, string> = { 1: "rgba(45,212,191,0.6)", 2: "rgba(251,146,60,0.6)", 4: "rgba(52,211,153,0.6)" };
                     const cellBg = isGrCh
-                      ? "linear-gradient(135deg, rgba(37,99,195,0.12), rgba(37,99,195,0.04))"
+                      ? "linear-gradient(135deg, rgba(96,165,250,0.15), rgba(96,165,250,0.05))"
                       : isCh
-                        ? "linear-gradient(135deg, rgba(200,40,40,0.10), rgba(200,40,40,0.03))"
-                        : xwColor && xwNum !== 3
-                          ? `linear-gradient(135deg, ${xwNum === 1 ? "rgba(13,148,136,0.10)" : xwNum === 2 ? "rgba(194,97,12,0.10)" : xwNum === 4 ? "rgba(190,60,130,0.10)" : "rgba(130,80,200,0.10)"}, transparent)`
-                          : xwNum === 3
-                            ? "linear-gradient(135deg, rgba(161,120,40,0.10), transparent)"
-                            : "#ffffff";
+                        ? "linear-gradient(135deg, rgba(252,129,129,0.15), rgba(252,129,129,0.05))"
+                        : xwNum === 3
+                          ? "linear-gradient(135deg, rgba(212,168,85,0.15), rgba(212,168,85,0.05))"
+                          : xwNum === 1
+                            ? "linear-gradient(135deg, rgba(45,212,191,0.15), rgba(45,212,191,0.05))"
+                            : xwNum === 2
+                              ? "linear-gradient(135deg, rgba(251,146,60,0.15), rgba(251,146,60,0.05))"
+                              : xwNum === 4
+                                ? "linear-gradient(135deg, rgba(244,114,182,0.15), rgba(244,114,182,0.05))"
+                                : xwNum >= 5
+                                  ? "linear-gradient(135deg, rgba(192,132,252,0.15), rgba(192,132,252,0.05))"
+                                  : "#ffffff";
                     const cellBorder = isGrCh
-                      ? "rgba(37,99,195,0.5)"
+                      ? "rgba(96,165,250,0.6)"
                       : isCh
-                        ? "rgba(200,40,40,0.5)"
-                        : xwColor && xwNum !== 3
-                          ? (xwNum === 1 ? "rgba(13,148,136,0.5)" : xwNum === 2 ? "rgba(194,97,12,0.5)" : xwNum === 4 ? "rgba(190,60,130,0.5)" : "rgba(130,80,200,0.5)")
-                          : xwNum === 3
-                            ? "rgba(161,120,40,0.5)"
-                            : "rgba(180,180,190,0.5)";
+                        ? "rgba(252,129,129,0.6)"
+                        : xwNum === 3
+                          ? "rgba(212,168,85,0.6)"
+                          : xwNum === 1
+                            ? "rgba(45,212,191,0.6)"
+                            : xwNum === 2
+                              ? "rgba(251,146,60,0.6)"
+                              : xwNum === 4
+                                ? "rgba(244,114,182,0.6)"
+                                : xwNum >= 5
+                                  ? "rgba(192,132,252,0.6)"
+                                  : "rgba(200,200,210,0.5)";
                     const cellTextColor = isGrCh
-                      ? "#1d5bbf"
+                      ? "#60a5fa"
                       : isCh
-                        ? "#c02828"
-                        : xwNum === 1 ? "#0d7468" : xwNum === 2 ? "#b45a0a" : xwNum === 3 ? "#9a7020" : xwNum === 4 ? "#b03878" : xwNum >= 5 ? "#7040c0" : isChampion ? "#c02828"
-                          : "#333333";
+                        ? "#fc8181"
+                        : xwNum === 1 ? "#2dd4bf" : xwNum === 2 ? "#fb923c" : xwNum === 3 ? "#d4a855" : xwNum === 4 ? "#f472b6" : xwNum >= 5 ? "#c084fc" : isChampion ? "#fc8181"
+                          : "#666666";
                     return (
                       <div key={`${gen}-${i}`}
-                           className="flex-1 rounded-md px-1 py-px flex items-center group relative transition-all duration-200 hover:shadow-md hover:-translate-y-[1px]"
+                           className="flex-1 rounded-md px-2 py-1 flex items-center group relative transition-all duration-200 hover:shadow-md hover:-translate-y-[1px]"
                            style={{
                              background: cellBg,
                              borderLeft: `${maxGen >= 5 ? "3px" : "4px"} solid ${cellBorder}`,
