@@ -1,108 +1,174 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, useEffect, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 
-export default function LoginPage() {
-  const router = useRouter()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [message, setMessage] = useState('')
+const LOGO = "https://i.imgur.com/cAvQemZ.png";
+
+function LoginForm() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState<"error" | "success">("error");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (searchParams.get("registered") === "true") {
+      setMessage("Account created successfully! Please log in.");
+      setMessageType("success");
+    }
+  }, [searchParams]);
 
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
+    setLoading(true);
+    setMessage("");
 
     try {
-      const res = await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      })
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
 
-      const data = await res.json()
+      const data = await res.json();
 
-      if (res.ok) {
-        localStorage.setItem('token', data.token)
-        setMessage('Login successful')
-        router.push('/dashboard')
+      if (res.ok && data?.data?.accessToken) {
+        localStorage.setItem("token", data.data.accessToken);
+        localStorage.setItem("refreshToken", data.data.refreshToken || "");
+        localStorage.setItem("user", JSON.stringify(data.data.user || null));
+        setMessage("Login successful");
+        setMessageType("success");
+        router.push("/dashboard");
       } else {
-        setMessage(data.message || 'Login failed')
+        setMessage(data?.error?.message || data?.message || "Login failed");
+        setMessageType("error");
       }
-    } catch (error) {
-      setMessage('Server error')
+    } catch {
+      setMessage("Server error");
+      setMessageType("error");
+    } finally {
+      setLoading(false);
     }
-  }
+  };
 
   return (
-    <div style={{ padding: '40px', fontFamily: 'Arial' }}>
-      <h1>Login</h1>
-      <p>Sign in to manage your dog pedigree records.</p>
-
-      <form
-        onSubmit={handleLogin}
-        style={{
-          maxWidth: '500px',
-          border: '1px solid #ddd',
-          padding: '30px',
-          borderRadius: '16px',
-          marginTop: '30px',
-        }}
-      >
-        <label style={{ display: 'block', marginBottom: '10px', fontWeight: 'bold' }}>
-          Email
-        </label>
-        <input
-          type="email"
-          placeholder="Enter email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          style={{
-            width: '100%',
-            padding: '14px',
-            marginBottom: '20px',
-            borderRadius: '10px',
-            border: '1px solid #ccc',
-          }}
+    <>
+    <Link
+      href="/"
+      className="fixed top-6 left-6 flex items-center gap-2 px-4 py-2.5 rounded-lg transition-all hover:bg-white/10 z-10 border border-[var(--accent-gold)]/30"
+      style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)", fontSize: "1rem", fontWeight: 600, letterSpacing: "0.05em" }}
+    >
+      <span style={{ fontSize: "1.3rem" }}>&larr;</span> BACK
+    </Link>
+    <div className="glass-card rounded-2xl p-6 w-full max-w-md animate-scale-reveal">
+      <div className="flex flex-col items-center mb-5">
+        <img
+          src={LOGO}
+          alt="Pedigree Platform"
+          width={88}
+          height={88}
+          className="rounded-xl mb-3"
+          style={{ boxShadow: "0 0 30px rgba(220,38,38,0.3)" }}
         />
+        <h1
+          style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "1.75rem" }}
+          className="text-white"
+        >
+          Welcome Back
+        </h1>
+        <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem" }}>
+          Sign in to your account
+        </p>
+      </div>
 
-        <label style={{ display: 'block', marginBottom: '10px', fontWeight: 'bold' }}>
-          Password
-        </label>
-        <input
-          type="password"
-          placeholder="Enter password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          style={{
-            width: '100%',
-            padding: '14px',
-            marginBottom: '20px',
-            borderRadius: '10px',
-            border: '1px solid #ccc',
-          }}
-        />
+      <form onSubmit={handleLogin} className="space-y-3.5">
+        <div>
+          <label
+            style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "0.85rem", letterSpacing: "0.06em" }}
+            className="block mb-1 uppercase"
+          >
+            Username
+          </label>
+          <input
+            type="text"
+            placeholder="Enter username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+            className="w-full px-4 py-2.5 rounded-lg outline-none transition-all focus:ring-1"
+            style={{
+              background: "var(--bg-elevated)",
+              border: "1px solid var(--border)",
+              color: "var(--text-primary)",
+              fontFamily: "var(--font-body)",
+            }}
+          />
+        </div>
+
+        <div>
+          <label
+            style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "0.85rem", letterSpacing: "0.06em" }}
+            className="block mb-1 uppercase"
+          >
+            Password
+          </label>
+          <input
+            type="password"
+            placeholder="Enter password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="w-full px-4 py-2.5 rounded-lg outline-none transition-all focus:ring-1"
+            style={{
+              background: "var(--bg-elevated)",
+              border: "1px solid var(--border)",
+              color: "var(--text-primary)",
+              fontFamily: "var(--font-body)",
+            }}
+          />
+        </div>
 
         <button
           type="submit"
-          style={{
-            width: '100%',
-            padding: '16px',
-            background: '#081225',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '12px',
-            fontSize: '18px',
-            fontWeight: 'bold',
-            cursor: 'pointer',
-          }}
+          disabled={loading}
+          className="btn-primary w-full py-3 rounded-lg text-sm"
         >
-          Sign In
+          {loading ? "Signing in..." : "Login"}
         </button>
 
-        {message && <p style={{ marginTop: '16px' }}>{message}</p>}
+        {message && (
+          <p
+            className="text-center text-sm mt-2"
+            style={{
+              color: messageType === "success" ? "var(--accent-green)" : "var(--accent-red-bright)",
+            }}
+          >
+            {message}
+          </p>
+        )}
       </form>
+
+      <p className="text-center mt-6" style={{ color: "var(--text-secondary)", fontSize: "0.9rem" }}>
+        Don&apos;t have an account?{" "}
+        <Link href="/register" className="hover:underline" style={{ color: "var(--accent-red-bright)" }}>
+          Sign up
+        </Link>
+      </p>
     </div>
-  )
+    </>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <div className="min-h-screen flex items-center justify-center px-4">
+      <Suspense fallback={<div className="text-center" style={{ color: "var(--text-muted)" }}>Loading...</div>}>
+        <LoginForm />
+      </Suspense>
+    </div>
+  );
 }
