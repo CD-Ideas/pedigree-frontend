@@ -166,6 +166,181 @@ function WhatsAppButton({ dogName }: { dogName: string }) {
 }
 
 /* ─── Pedigree Tree (Interactive) ─── */
+function NavSearch() {
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState<{ dog_id: number; registered_name: string; photo_url: string | null }[]>([]);
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const timer = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const search = (q: string) => {
+    setQuery(q);
+    if (timer.current) clearTimeout(timer.current);
+    // Detect pasted URL — fetch the dog info and show in dropdown
+    const urlMatch = q.match(/pedigreeplatform\.com\/(?:pedigree|dogs)\/(\d+)/);
+    if (urlMatch) {
+      const dogId = urlMatch[1];
+      fetch(`/api/dogs/${dogId}`)
+        .then(r => r.json())
+        .then(data => {
+          if (data && data.registered_name) {
+            setResults([{ dog_id: Number(dogId), registered_name: data.registered_name, photo_url: data.photo_url }]);
+            setOpen(true);
+          }
+        })
+        .catch(() => {});
+      return;
+    }
+    if (q.length < 2) { setResults([]); setOpen(false); return; }
+    timer.current = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/dogs/search?q=${encodeURIComponent(q)}&limit=8`);
+        const data = await res.json();
+        setResults(data.dogs || []);
+        setOpen(true);
+      } catch { setResults([]); }
+    }, 300);
+  };
+
+  return (
+    <div ref={ref} className="relative">
+      <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl transition-all duration-300 focus-within:scale-[1.02]" style={{
+        background: "linear-gradient(135deg, rgba(30,64,120,0.25), rgba(20,40,80,0.15))",
+        border: "1.5px solid rgba(96,165,250,0.3)",
+        boxShadow: "0 0 15px rgba(96,165,250,0.08), inset 0 1px 0 rgba(255,255,255,0.05)",
+        backdropFilter: "blur(10px)",
+      }}>
+        <span className="text-sm" style={{ filter: "drop-shadow(0 0 4px rgba(96,165,250,0.5))" }}>🔍</span>
+        <input type="text" placeholder="Search dog or paste URL..."
+          value={query} onChange={(e) => search(e.target.value)}
+          onFocus={() => { if (results.length > 0) setOpen(true); }}
+          className="flex-1 bg-transparent text-xs outline-none"
+          style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)", minWidth: 0 }} />
+        {query && <button onClick={() => { setQuery(""); setResults([]); setOpen(false); }} className="text-[10px] opacity-50 hover:opacity-100">✕</button>}
+      </div>
+      {open && results.length > 0 && (
+        <div className="absolute left-0 right-0 top-full mt-1 rounded-lg overflow-hidden z-[100] max-h-72 overflow-y-auto"
+             style={{ background: "var(--bg-elevated)", border: "1px solid rgba(30,64,120,0.8)", boxShadow: "0 15px 50px rgba(0,0,0,0.5)" }}>
+          {results.map((d) => {
+            const n = (d.registered_name || "").toUpperCase();
+            const color = /\bGR\s*CH\b/.test(n) ? "#60a5fa" : /(?:^|\s|\()CH\b/.test(n) ? "#fc8181" : "var(--text-primary)";
+            return (
+              <a key={d.dog_id} href={`/pedigree/${d.dog_id}`}
+                 className="flex items-center gap-2 px-3 py-2 transition-all hover:bg-white/5 text-xs"
+                 style={{ borderBottom: "1px solid rgba(40,44,60,0.3)" }}>
+                {d.photo_url ? (
+                  <img src={d.photo_url.startsWith("http") ? d.photo_url : `https://www.apbt.online-pedigrees.com/${d.photo_url}`}
+                       alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "1px solid var(--border)" }} />
+                ) : (
+                  <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-[10px]"
+                       style={{ background: "var(--bg-deep)", border: "1px solid var(--border)" }}>🐕</div>
+                )}
+                <span className="font-semibold truncate" style={{ color, fontFamily: "var(--font-table)" }}>{d.registered_name}</span>
+              </a>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function PedigreeSearch() {
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState<{ dog_id: number; registered_name: string; photo_url: string | null }[]>([]);
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const timer = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const search = (q: string) => {
+    setQuery(q);
+    if (timer.current) clearTimeout(timer.current);
+    const urlMatch = q.match(/pedigreeplatform\.com\/(?:pedigree|dogs)\/(\d+)/);
+    if (urlMatch) {
+      window.location.href = `/pedigree/${urlMatch[1]}`;
+      return;
+    }
+    if (q.length < 2) { setResults([]); setOpen(false); return; }
+    timer.current = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/dogs/search?q=${encodeURIComponent(q)}&limit=10`);
+        const data = await res.json();
+        setResults(data.dogs || []);
+        setOpen(true);
+      } catch { setResults([]); }
+    }, 300);
+  };
+
+  const getDogColor = (name: string) => {
+    const n = (name || "").toUpperCase();
+    if (/\bGR\s*CH\b/.test(n)) return "#60a5fa";
+    if (/(?:^|\s|\()CH\b/.test(n)) return "#fc8181";
+    const xw = n.match(/\b(\d+)X[WL]\b/);
+    if (xw) { const num = parseInt(xw[1]); if (num === 3) return "#d4a855"; if (num >= 5) return "#c084fc"; if (num === 4) return "#f472b6"; if (num === 2) return "#fb923c"; if (num === 1) return "#2dd4bf"; }
+    if (/\bROM\b/.test(n)) return "#22d3ee";
+    return "var(--text-primary)";
+  };
+
+  return (
+    <div ref={ref} className="relative">
+      <div className="glow-gold rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)" }}>
+        <div className="px-4 py-2.5 flex items-center gap-3">
+          <span className="text-base">🔍</span>
+          <input type="text" placeholder="Search by dog name or paste a pedigree URL..."
+            value={query} onChange={(e) => search(e.target.value)}
+            onFocus={() => { if (results.length > 0) setOpen(true); }}
+            className="flex-1 bg-transparent text-sm outline-none"
+            style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)" }} />
+          {query && <button onClick={() => { setQuery(""); setResults([]); setOpen(false); }} className="text-xs opacity-50 hover:opacity-100">✕</button>}
+        </div>
+      </div>
+      {open && results.length > 0 && (
+        <div className="absolute left-0 right-0 top-full mt-1 rounded-xl overflow-hidden z-50 max-h-80 overflow-y-auto"
+             style={{ background: "var(--bg-elevated)", border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}>
+          {results.map((d) => (
+            <a key={d.dog_id} href={`/pedigree/${d.dog_id}`}
+               className="flex items-center gap-3 px-4 py-2.5 transition-all hover:bg-white/5"
+               style={{ borderBottom: "1px solid rgba(40,44,60,0.3)" }}>
+              {d.photo_url ? (
+                <img src={d.photo_url.startsWith("http") ? d.photo_url : `https://www.apbt.online-pedigrees.com/${d.photo_url}`}
+                     alt="" className="w-8 h-8 rounded-full object-cover flex-shrink-0" style={{ border: "1px solid var(--border)" }} />
+              ) : (
+                <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm"
+                     style={{ background: "var(--bg-deep)", border: "2px solid var(--border)" }}>🐕</div>
+              )}
+              <span className="text-sm font-semibold truncate" style={{ color: getDogColor(d.registered_name), fontFamily: "var(--font-table)" }}>
+                {d.registered_name}
+              </span>
+            </a>
+          ))}
+        </div>
+      )}
+      {open && query.length >= 2 && results.length === 0 && (
+        <div className="absolute left-0 right-0 top-full mt-1 rounded-xl px-4 py-3 text-center text-xs z-50"
+             style={{ background: "var(--bg-elevated)", border: "1.5px solid rgba(30,64,120,0.8)", color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+          No dogs found for &quot;{query}&quot;
+        </div>
+      )}
+    </div>
+  );
+}
+
 function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor[]; dogName: string; dogId: number; isMale: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [zoom, setZoom] = useState(1);
@@ -515,6 +690,8 @@ function SiblingsTab({ siblings }: { siblings: Dog["siblings"] }) {
 
 /* ─── PedStats Tab ─── */
 function PedStatsTab({ genetics }: { genetics: Genetic[] }) {
+  const [hovered, setHovered] = useState<number | null>(null);
+
   if (!genetics.length)
     return (
       <div className="text-center py-16">
@@ -523,39 +700,109 @@ function PedStatsTab({ genetics }: { genetics: Genetic[] }) {
       </div>
     );
 
-  const maxPct = genetics[0]?.percentage || 1;
+  // Build pie slices
+  const totalPct = genetics.reduce((sum, g) => sum + g.percentage, 0);
+  const topN = genetics.slice(0, 15);
+  const otherPct = genetics.slice(15).reduce((sum, g) => sum + g.percentage, 0);
+  const slices = topN.map((g) => ({ ...g, color: getDogCardColor(g.ancestor_name) }));
+  if (otherPct > 0) slices.push({ ancestor_id: 0, ancestor_name: "Others", percentage: otherPct, color: "#6b7280" } as typeof slices[0]);
+
+  // Build SVG pie
+  const radius = 120;
+  const cx = 140, cy = 140;
+  let cumAngle = -90; // start from top
+  const pieData = slices.map((s, i) => {
+    const angle = (s.percentage / totalPct) * 360;
+    const startAngle = cumAngle;
+    const endAngle = cumAngle + angle;
+    const midAngle = (startAngle + endAngle) / 2;
+    cumAngle = endAngle;
+    return { ...s, startAngle, endAngle, midAngle, angle, idx: i };
+  });
+  const paths = pieData.map((s) => {
+    const startRad = (s.startAngle * Math.PI) / 180;
+    const endRad = (s.endAngle * Math.PI) / 180;
+    const x1 = cx + radius * Math.cos(startRad);
+    const y1 = cy + radius * Math.sin(startRad);
+    const x2 = cx + radius * Math.cos(endRad);
+    const y2 = cy + radius * Math.sin(endRad);
+    const largeArc = s.angle > 180 ? 1 : 0;
+    const isHovered = hovered === s.idx;
+    const d = `M ${cx} ${cy} L ${x1} ${y1} A ${radius} ${radius} 0 ${largeArc} 1 ${x2} ${y2} Z`;
+    return (
+      <path key={s.idx} d={d} fill={s.color} stroke="rgba(11,17,32,0.8)" strokeWidth="2"
+            style={{ transform: isHovered ? "scale(1.05)" : "none", transformOrigin: `${cx}px ${cy}px`, transition: "all 0.2s", filter: isHovered ? `drop-shadow(0 0 8px ${s.color})` : "none", cursor: "pointer" }}
+            onMouseEnter={() => setHovered(s.idx)} onMouseLeave={() => setHovered(null)} />
+    );
+  });
+  // Labels on slices (only show if slice is big enough)
+  const labels = pieData.filter(s => s.angle >= 15).map((s) => {
+    const midRad = (s.midAngle * Math.PI) / 180;
+    const labelR = radius * 0.7; // position between center and edge
+    const lx = cx + labelR * Math.cos(midRad);
+    const ly = cy + labelR * Math.sin(midRad);
+    return (
+      <text key={`lbl-${s.idx}`} x={lx} y={ly} textAnchor="middle" dominantBaseline="central"
+            fill="#fff" fontSize={s.angle >= 25 ? "9" : "7"} fontWeight="bold" fontFamily="var(--font-mono)"
+            style={{ pointerEvents: "none", textShadow: "0 1px 3px rgba(0,0,0,0.8)" }}>
+        {s.percentage.toFixed(1)}%
+      </text>
+    );
+  });
+
   return (
     <div className="title-cards">
-      <p className="text-[10px] mb-2 font-semibold" style={{ color: "var(--text-secondary)", fontFamily: "var(--font-table)" }}>
+      <p className="text-[10px] mb-3 font-semibold" style={{ color: "var(--text-secondary)", fontFamily: "var(--font-table)" }}>
         Genetic contribution of ancestors to this dog&apos;s pedigree
       </p>
-      <div className="space-y-1">
-        {genetics.map((g, i) => {
-          const cc = getDogCardColor(g.ancestor_name);
-          const barColor = `linear-gradient(90deg, ${cc}, ${cc}cc)`;
-          const pctColor = cc;
-          return (
-            <div key={i} className="rounded-md flex items-center overflow-hidden transition-all hover:brightness-125"
+      <div className="flex flex-col lg:flex-row gap-4 items-start">
+        {/* Pie Chart */}
+        <div className="flex-shrink-0 relative">
+          <svg width="280" height="280" viewBox="0 0 280 280">
+            {paths}
+            {labels}
+            {/* Center circle for donut effect */}
+            <circle cx={cx} cy={cy} r="60" fill="var(--bg-deep)" stroke="rgba(30,64,120,0.5)" strokeWidth="1" />
+            <text x={cx} y={cy - 8} textAnchor="middle" fill="var(--accent-gold)" fontSize="14" fontWeight="bold" fontFamily="var(--font-table)">
+              {genetics.length}
+            </text>
+            <text x={cx} y={cy + 10} textAnchor="middle" fill="var(--text-muted)" fontSize="9" fontFamily="var(--font-table)">
+              Ancestors
+            </text>
+          </svg>
+          {hovered !== null && slices[hovered] && (
+            <div className="absolute top-1 left-1 px-2 py-1 rounded-lg text-[10px] font-bold"
+                 style={{ background: "var(--bg-elevated)", border: `1px solid ${slices[hovered].color}`, color: slices[hovered].color, fontFamily: "var(--font-table)", boxShadow: "0 4px 15px rgba(0,0,0,0.4)" }}>
+              {slices[hovered].ancestor_name}: {slices[hovered].percentage.toFixed(1)}%
+            </div>
+          )}
+        </div>
+        {/* Legend */}
+        <div className="flex-1 space-y-0.5 w-full max-h-[300px] overflow-y-auto">
+          {slices.map((s, i) => (
+            <div key={i}
+                 className="rounded-md flex items-center overflow-hidden transition-all cursor-pointer"
                  style={{
-                   ...cardStyle(cc),
-                 }}>
-              <div style={{ width: "3px", alignSelf: "stretch", background: cc, flexShrink: 0 }} />
-              <div className="px-2.5 py-1.5 grid items-center gap-2 w-full" style={{ gridTemplateColumns: "250px 1fr 45px", fontFamily: "var(--font-table)", fontSize: "10px", fontWeight: 600, lineHeight: 1.1 }}>
-                <div>
-                  <DogLink dogId={g.ancestor_id} name={g.ancestor_name} />
+                   ...cardStyle(s.color),
+                   background: hovered === i ? `${s.color}20` : cardStyle(s.color).background,
+                   transform: hovered === i ? "translateX(4px)" : "none",
+                   transition: "all 0.2s",
+                 }}
+                 onMouseEnter={() => setHovered(i)} onMouseLeave={() => setHovered(null)}>
+              <div style={{ width: "3px", alignSelf: "stretch", background: s.color, flexShrink: 0 }} />
+              <div className="px-2.5 py-1 flex items-center gap-2 w-full" style={{ fontFamily: "var(--font-table)", fontSize: "10px", fontWeight: 600, lineHeight: 1.1 }}>
+                <div className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: s.color }} />
+                <div className="flex-1 min-w-0 truncate">
+                  {s.ancestor_id ? <DogLink dogId={s.ancestor_id} name={s.ancestor_name} /> : <span style={{ color: "#6b7280" }}>{s.ancestor_name}</span>}
                 </div>
-                <div className="h-2.5 rounded-full overflow-hidden" style={{ background: "var(--bg-elevated)" }}>
-                  <div className="h-full rounded-full transition-all duration-700"
-                       style={{ width: `${Math.max((g.percentage / maxPct) * 100, 3)}%`, background: barColor }} />
-                </div>
-                <span className="text-right font-bold"
-                      style={{ fontFamily: "var(--font-mono)", fontSize: "9px", color: pctColor }}>
-                  {g.percentage.toFixed(1)}%
+                <span className="font-bold flex-shrink-0"
+                      style={{ fontFamily: "var(--font-mono)", fontSize: "9px", color: s.color }}>
+                  {s.percentage.toFixed(1)}%
                 </span>
               </div>
             </div>
-          );
-        })}
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -809,6 +1056,9 @@ export default function PublicPedigreePage() {
             Pedigree Platform
           </span>
         </Link>
+        <div className="flex-1 max-w-md mx-4">
+          <NavSearch />
+        </div>
         <div className="flex items-center gap-2">
           <ShareButton dogName={dog.registered_name} />
           <TelegramButton dogName={dog.registered_name} />

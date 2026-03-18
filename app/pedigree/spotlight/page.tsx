@@ -51,12 +51,19 @@ function QuickSearch({ onSelectDog }: { onSelectDog?: (dogId: number) => void })
     setQuery(q);
     if (timer.current) clearTimeout(timer.current);
 
-    // Detect pasted URLs — select that dog in the legendary dropdown and trigger Find Tightest
+    // Detect pasted URLs — fetch dog info, show in dropdown, then select on click
     const urlMatch = q.match(/pedigreeplatform\.com\/(?:pedigree|dogs)\/(\d+)/);
-    if (urlMatch && onSelectDog) {
-      onSelectDog(Number(urlMatch[1]));
-      setQuery("");
-      setOpen(false);
+    if (urlMatch) {
+      const dogId = urlMatch[1];
+      fetch(`/api/dogs/${dogId}`)
+        .then(r => r.json())
+        .then(data => {
+          if (data && data.registered_name) {
+            setResults([{ dog_id: Number(dogId), registered_name: data.registered_name, photo_url: data.photo_url }]);
+            setOpen(true);
+          }
+        })
+        .catch(() => {});
       return;
     }
 
@@ -99,8 +106,8 @@ function QuickSearch({ onSelectDog }: { onSelectDog?: (dogId: number) => void })
             const isCh = !isGrCh && /\bCH\b/.test(nameUpper);
             const color = isGrCh ? "#60a5fa" : isCh ? "#fc8181" : "var(--text-primary)";
             return (
-              <a key={d.dog_id} href={`/pedigree/${d.dog_id}`}
-                 className="flex items-center gap-3 px-4 py-2.5 transition-all hover:bg-white/5"
+              <button key={d.dog_id} onClick={() => { if (onSelectDog) { onSelectDog(d.dog_id); setQuery(""); setOpen(false); } else { window.location.href = `/pedigree/${d.dog_id}`; } }}
+                 className="w-full flex items-center gap-3 px-4 py-2.5 transition-all hover:bg-white/5 text-left"
                  style={{ borderBottom: "1px solid rgba(40,44,60,0.3)" }}>
                 {d.photo_url ? (
                   <img src={d.photo_url.startsWith("http") ? d.photo_url : `https://www.apbt.online-pedigrees.com/${d.photo_url}`}
@@ -112,7 +119,7 @@ function QuickSearch({ onSelectDog }: { onSelectDog?: (dogId: number) => void })
                 <span className="text-sm font-semibold truncate" style={{ color, fontFamily: "var(--font-table)" }}>
                   {d.registered_name}
                 </span>
-              </a>
+              </button>
             );
           })}
         </div>
