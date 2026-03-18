@@ -944,8 +944,8 @@ export default function PublicPedigreePage() {
           boxShadow: "0 2px 20px rgba(0,0,0,0.25)"
         }}>
           <div className="flex items-center justify-between px-4 py-2" style={{
-            background: "linear-gradient(135deg, #1c2740 0%, #161e30 50%, #1c2740 100%)",
-            borderBottom: "2px solid rgba(96,165,250,0.2)"
+            background: "linear-gradient(135deg, #2a2a2e 0%, #1e1e22 50%, #2a2a2e 100%)",
+            borderBottom: "1px solid rgba(255,255,255,0.08)"
           }}>
             <div className="flex items-center gap-2.5">
               <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{
@@ -955,7 +955,7 @@ export default function PublicPedigreePage() {
                 <span className="text-sm">🌳</span>
               </div>
               <span className="text-sm font-semibold" style={{
-                color: "var(--accent-gold)",
+                color: "#d4a855",
                 fontFamily: "var(--font-table)"
               }}>Pedigree</span>
               {(dog.pedigree?.length || 0) > 0 && (
@@ -996,8 +996,8 @@ export default function PublicPedigreePage() {
             <div className="glow-teal rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)" }}>
               {/* Tab headers */}
               <div className="flex" style={{
-                background: "linear-gradient(180deg, #1a1a24 0%, #141418 100%)",
-                borderBottom: "1px solid rgba(30,64,120,0.5)",
+                background: "linear-gradient(135deg, #1a3a5c 0%, #1e4478 50%, #1a3a5c 100%)",
+                borderBottom: "1px solid rgba(96,165,250,0.3)",
               }}>
                 {tabs.map((tab) => (
                   <button key={tab.key}
