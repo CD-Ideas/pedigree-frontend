@@ -808,7 +808,7 @@ export default function PublicPedigreePage() {
           )}
           <Link href="/" className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold hover:underline transition-colors flex items-center gap-1"
                 style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
-            ← Home
+            ← Back to Dogs
           </Link>
           <h1 className="text-center" style={{
             fontFamily: "var(--font-table)", fontWeight: 700,
