@@ -32,6 +32,101 @@ const TITLE_COLORS: Record<string, string> = {
   "3XL": "#6b7280", "2XL": "#6b7280", "1XL": "#6b7280",
 };
 
+function QuickSearch({ onSelectDog }: { onSelectDog?: (dogId: number) => void }) {
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState<{ dog_id: number; registered_name: string; photo_url: string | null }[]>([]);
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const timer = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const search = (q: string) => {
+    setQuery(q);
+    if (timer.current) clearTimeout(timer.current);
+
+    // Detect pasted URLs — select that dog in the legendary dropdown and trigger Find Tightest
+    const urlMatch = q.match(/pedigreeplatform\.com\/(?:pedigree|dogs)\/(\d+)/);
+    if (urlMatch && onSelectDog) {
+      onSelectDog(Number(urlMatch[1]));
+      setQuery("");
+      setOpen(false);
+      return;
+    }
+
+    if (q.length < 2) { setResults([]); setOpen(false); return; }
+    timer.current = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/dogs/search?q=${encodeURIComponent(q)}&limit=10`);
+        const data = await res.json();
+        setResults(data.dogs || []);
+        setOpen(true);
+      } catch { setResults([]); }
+    }, 300);
+  };
+
+  return (
+    <div ref={ref} className="relative mb-5">
+      <div className="glow-gold rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)" }}>
+        <div className="px-4 py-3 flex items-center gap-3">
+          <span className="text-lg">🔍</span>
+          <input
+            type="text"
+            placeholder="Search by dog name or paste a pedigree URL..."
+            value={query}
+            onChange={(e) => search(e.target.value)}
+            onFocus={() => { if (results.length > 0) setOpen(true); }}
+            className="flex-1 bg-transparent text-sm outline-none"
+            style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)" }}
+          />
+          {query && (
+            <button onClick={() => { setQuery(""); setResults([]); setOpen(false); }} className="text-xs opacity-50 hover:opacity-100">✕</button>
+          )}
+        </div>
+      </div>
+      {open && results.length > 0 && (
+        <div className="absolute left-0 right-0 top-full mt-1 rounded-xl overflow-hidden z-50 max-h-80 overflow-y-auto"
+             style={{ background: "var(--bg-elevated)", border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}>
+          {results.map((d) => {
+            const nameUpper = (d.registered_name || "").toUpperCase();
+            const isGrCh = /\bGR\s*CH\b/.test(nameUpper);
+            const isCh = !isGrCh && /\bCH\b/.test(nameUpper);
+            const color = isGrCh ? "#60a5fa" : isCh ? "#fc8181" : "var(--text-primary)";
+            return (
+              <a key={d.dog_id} href={`/pedigree/${d.dog_id}`}
+                 className="flex items-center gap-3 px-4 py-2.5 transition-all hover:bg-white/5"
+                 style={{ borderBottom: "1px solid rgba(40,44,60,0.3)" }}>
+                {d.photo_url ? (
+                  <img src={d.photo_url.startsWith("http") ? d.photo_url : `https://www.apbt.online-pedigrees.com/${d.photo_url}`}
+                       alt="" className="w-8 h-8 rounded-full object-cover flex-shrink-0" style={{ border: "1px solid var(--border)" }} />
+                ) : (
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm"
+                       style={{ background: "var(--bg-deep)", border: "2px solid var(--border)" }}>🐕</div>
+                )}
+                <span className="text-sm font-semibold truncate" style={{ color, fontFamily: "var(--font-table)" }}>
+                  {d.registered_name}
+                </span>
+              </a>
+            );
+          })}
+        </div>
+      )}
+      {open && query.length >= 2 && results.length === 0 && (
+        <div className="absolute left-0 right-0 top-full mt-1 rounded-xl px-4 py-3 text-center text-xs z-50"
+             style={{ background: "var(--bg-elevated)", border: "1.5px solid rgba(30,64,120,0.8)", color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+          No dogs found for &quot;{query}&quot;
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function SpotlightPage() {
   const [famous, setFamous] = useState<FamousDog[]>([]);
   const [selectedDog, setSelectedDog] = useState<number>(2); // Jeep default
@@ -276,6 +371,21 @@ export default function SpotlightPage() {
             </div>
           )}
         </div>
+
+        {/* ── Quick Search Bar ── */}
+        <QuickSearch onSelectDog={(dogId) => {
+          setSelectedDog(dogId);
+          // Auto-trigger search after selecting
+          setTimeout(() => {
+            setLoading(true);
+            setSearched(true);
+            fetch(`/api/spotlight?dog_id=${dogId}&from=${fromYear}&to=${toYear}&sort=${sort}&limit=20`)
+              .then(r => r.json())
+              .then(data => { setTarget(data.target || null); setResults(data.results || []); setTotal(data.total || 0); })
+              .catch(() => { setResults([]); setTotal(0); })
+              .finally(() => setLoading(false));
+          }, 100);
+        }} />
 
         {/* ── Results ── */}
         {loading && (

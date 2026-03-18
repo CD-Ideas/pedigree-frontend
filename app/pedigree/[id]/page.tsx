@@ -281,7 +281,7 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
           {/* Tree grid */}
           <div style={{ display: "grid", gridTemplateColumns: `${maxGen >= 5 ? "130px" : "170px"} repeat(${maxGen}, 1fr)`, gap: "4px" }}>
             {/* Root dog */}
-            <div className="flex items-center">
+            <div className="flex items-center" style={{ minWidth: 0, overflow: "hidden" }}>
               <div className="w-full rounded-lg px-2 py-1.5 font-bold"
                    style={{
                      background: "linear-gradient(135deg, #fef9ee, #fdf3dc)",
@@ -309,7 +309,7 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
                 ? (gen <= 1 ? "11px" : gen === 2 ? "10px" : "9.5px")
                 : (gen <= 1 ? "13px" : gen === 2 ? "12px" : "11px");
               return (
-                <div key={gen} className="flex flex-col gap-1">
+                <div key={gen} className="flex flex-col gap-1" style={{ minWidth: 0, overflow: "hidden" }}>
                   {ancestors.slice(0, Math.pow(2, gen)).map((a, i) => {
                     const male = isMaleAncestor(a, i);
                     const hasLink = !!a.ancestor_id;
