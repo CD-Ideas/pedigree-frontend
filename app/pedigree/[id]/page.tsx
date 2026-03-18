@@ -63,7 +63,7 @@ function getDogCardColor(name: string): string {
   }
   if (/\bROM\b/.test(n)) return "#22d3ee";
   if (/\bPOR\b/.test(n)) return "#a78bfa";
-  return "#b0bece"; // silver for no title
+  return "#e8eaed"; // silver for no title
 }
 
 /* ─── DogLink ─── */
@@ -87,7 +87,7 @@ function DogLink({ dogId, name, isMale }: { dogId: number | null; name: string; 
   const isRom = !isGrCh && !isCh && !xwColor && /\bROM\b/.test(nameUpper);
   const isPor = !isGrCh && !isCh && !xwColor && !isRom && /\bPOR\b/.test(nameUpper);
   const hasTitle = isGrCh || isCh || xwColor || isRom || isPor || /\b\d+X[WL]\b/i.test(nameUpper);
-  const color = isGrCh ? "rgba(96,165,250,0.95)" : isCh ? "rgba(252,129,129,0.95)" : xwColor ? xwColor : isRom ? "rgba(34,211,238,0.95)" : isPor ? "rgba(167,139,250,0.95)" : !hasTitle ? "rgba(176,190,206,0.85)" : isMale === true ? "var(--male-color)" : isMale === false ? "var(--female-color)" : "var(--accent-gold)";
+  const color = isGrCh ? "rgba(96,165,250,0.95)" : isCh ? "rgba(252,129,129,0.95)" : xwColor ? xwColor : isRom ? "rgba(34,211,238,0.95)" : isPor ? "rgba(167,139,250,0.95)" : !hasTitle ? "rgba(232,234,237,0.95)" : isMale === true ? "var(--male-color)" : isMale === false ? "var(--female-color)" : "var(--accent-gold)";
   if (!dogId) return <span style={{ color: "var(--text-muted)" }}>{name}</span>;
   return (
     <Link href={`/pedigree/${dogId}`} className="hover:underline transition-colors" style={{ color }}>
@@ -321,21 +321,21 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
                         ? "linear-gradient(135deg, rgba(239,68,68,0.18), rgba(239,68,68,0.06))"
                         : xwColor && xwNum !== 3
                           ? `linear-gradient(135deg, ${xwNum >= 5 ? "rgba(192,132,252,0.12)" : xwBgMap[xwNum] || "rgba(35,35,38,0.95)"}, ${xwNum >= 5 ? "rgba(192,132,252,0.04)" : "rgba(28,28,32,0.9)"})`
-                          : "linear-gradient(135deg, rgba(176,190,206,0.08), rgba(176,190,206,0.03))";
+                          : "linear-gradient(135deg, rgba(232,234,237,0.08), rgba(232,234,237,0.03))";
                     const cellBorder = isGrCh
                       ? "rgba(59,130,246,0.7)"
                       : isCh
                         ? "rgba(239,68,68,0.7)"
                         : xwColor && xwNum !== 3
                           ? (xwNum >= 5 ? "rgba(192,132,252,0.6)" : xwBorderMap[xwNum] || (male ? "rgba(212,175,55,0.7)" : "rgba(236,72,153,0.5)"))
-                          : "rgba(176,190,206,0.4)";
+                          : "rgba(232,234,237,0.4)";
                     const cellTextColor = isGrCh
                       ? "rgba(96,165,250,0.95)"
                       : isCh
                         ? "rgba(252,129,129,0.95)"
                         : xwColor && xwNum !== 3
                           ? xwColor
-                          : "rgba(176,190,206,0.85)";
+                          : "rgba(232,234,237,0.95)";
                     return (
                       <div key={`${gen}-${i}`}
                            className="flex-1 rounded px-1 py-px flex items-center group relative"
@@ -633,14 +633,14 @@ function TitlesTab({ offspring }: { offspring: Offspring[] }) {
           <button key={title} onClick={() => setOpenTitle(openTitle === title ? null : title)}
             className="flex items-center gap-1.5 px-3 py-1 rounded text-[11px] uppercase tracking-wider font-semibold transition-all cursor-pointer"
             style={{
-              background: openTitle === title ? `${TC[title] || "#b0bece"}35` : `${TC[title] || "#b0bece"}15`,
-              border: `1px solid ${TC[title] || "#b0bece"}${openTitle === title ? "60" : "30"}`,
-              color: TC[title] || "#b0bece",
+              background: openTitle === title ? `${TC[title] || "#e8eaed"}35` : `${TC[title] || "#e8eaed"}15`,
+              border: `1px solid ${TC[title] || "#e8eaed"}${openTitle === title ? "60" : "30"}`,
+              color: TC[title] || "#e8eaed",
               fontFamily: "var(--font-table)",
               letterSpacing: "0.1em",
             }}>
             {LABELS[title] || title}
-            <span className="text-[9px] px-1.5 rounded-full" style={{ background: `${TC[title] || "#b0bece"}20`, fontFamily: "var(--font-mono)" }}>
+            <span className="text-[9px] px-1.5 rounded-full" style={{ background: `${TC[title] || "#e8eaed"}20`, fontFamily: "var(--font-mono)" }}>
               {groups[title].length}
             </span>
             <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" style={{ transform: openTitle === title ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>
