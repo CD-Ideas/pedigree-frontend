@@ -352,26 +352,12 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
     byGen[a.generation].push(a);
   });
 
-  // Sort each generation: sires (males) on top, dams (females) below
-  // Position format: G1_sire_0, G1_dam_1, G2_S_0, G2_D_1, etc.
-  Object.keys(byGen).forEach((g) => {
-    byGen[Number(g)].sort((a, b) => {
-      // Build a binary sort key from position: sire/S = 0, dam/D = 1 at each level
-      const getKey = (pos: string) => {
-        if (!pos) return 0;
-        // Extract parts after generation prefix
-        const parts = pos.replace(/^G\d+_/, "").split("_");
-        let key = 0;
-        for (const p of parts) {
-          key = key * 2;
-          if (p.toLowerCase() === "dam" || p === "D" || p === "d") key += 1;
-          // sire/S/numeric stays 0
-        }
-        return key;
-      };
-      return getKey(a.position) - getKey(b.position);
-    });
-  });
+  // Sort each generation by numeric suffix in position (correct display order)
+  Object.values(byGen).forEach(arr => arr.sort((a, b) => {
+    const numA = parseInt((a.position || "0").match(/\d+$/)?.[0] || "0");
+    const numB = parseInt((b.position || "0").match(/\d+$/)?.[0] || "0");
+    return numA - numB;
+  }));
 
   const gens = Object.keys(byGen).map(Number).sort();
   if (gens.length === 0)
