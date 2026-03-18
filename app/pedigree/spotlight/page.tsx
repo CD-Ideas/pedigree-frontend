@@ -51,12 +51,13 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  const fetchLineage = async (dogId: number, dogName: string, dogPhoto: string | null) => {
+  const fetchLineage = async (dogId: number, dogName: string, dogPhoto: string | null, overrideGen?: number) => {
     setLineageLoading(true);
     setLineage(null);
     setOpen(false);
+    const gen = overrideGen ?? genDepth;
     try {
-      const res = await fetch(`/api/dogs/${dogId}?gen=${genDepth}`);
+      const res = await fetch(`/api/dogs/${dogId}?gen=${gen}`);
       const data = await res.json();
       const pedigree = data.pedigree || [];
       const ancestorIds = new Set(pedigree.map((a: { ancestor_id: number }) => a.ancestor_id).filter(Boolean));
@@ -238,7 +239,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
               <div className="flex items-center gap-1">
                 {[8, 12, 16].map((g) => (
                   <button key={g}
-                    onClick={() => { setGenDepth(g); fetchLineage(lineage.dog.id, lineage.dog.name, lineage.dog.photo_url); }}
+                    onClick={() => { setGenDepth(g); fetchLineage(lineage.dog.id, lineage.dog.name, lineage.dog.photo_url, g); }}
                     className="px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all"
                     style={{
                       fontFamily: "var(--font-table)",
