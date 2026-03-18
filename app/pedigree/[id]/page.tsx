@@ -63,7 +63,16 @@ function getDogCardColor(name: string): string {
   }
   if (/\bROM\b/.test(n)) return "#22d3ee";
   if (/\bPOR\b/.test(n)) return "#a78bfa";
-  return "#e8eaed"; // silver for no title
+  return "#e8eaed"; // deep white for no title
+}
+
+function cardStyle(cc: string) {
+  const isWhite = cc === "#e8eaed";
+  return {
+    background: isWhite ? `linear-gradient(135deg, ${cc}30, ${cc}18)` : `linear-gradient(135deg, ${cc}20, ${cc}10)`,
+    border: isWhite ? `1px solid ${cc}50` : `1px solid ${cc}35`,
+    boxShadow: isWhite ? `0 1px 4px ${cc}25` : `0 1px 4px ${cc}15`,
+  };
 }
 
 /* ─── DogLink ─── */
@@ -251,21 +260,21 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
           <div className="text-center mb-2">
             <h3 style={{
               fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "13px", letterSpacing: "0.06em",
-              textTransform: "uppercase", color: "var(--accent-gold)"
+              textTransform: "uppercase", color: "#1a3a5c"
             }}>{maxGen} Generation Pedigree</h3>
           </div>
 
           {/* Column headers */}
           <div className="flex gap-px mb-1">
             <div className="px-1.5 py-1 text-center"
-                 style={{ width: maxGen >= 5 ? "130px" : "170px", flexShrink: 0, fontFamily: "var(--font-table)", fontWeight: 600, fontSize: maxGen >= 5 ? "9px" : "10px", color: "var(--accent-gold)", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+                 style={{ width: maxGen >= 5 ? "130px" : "170px", flexShrink: 0, fontFamily: "var(--font-table)", fontWeight: 600, fontSize: maxGen >= 5 ? "9px" : "10px", color: "#1a3a5c", textTransform: "uppercase", letterSpacing: "0.1em" }}>
               Dog
             </div>
             {gens.filter(g => g <= maxGen).map((g) => {
               const isLastGen = g === maxGen;
               return (
                 <div key={g} className="px-1.5 py-1 text-center"
-                     style={{ flex: isLastGen ? 2 : 1, fontFamily: "var(--font-table)", fontWeight: 600, fontSize: maxGen >= 5 ? "9px" : "10px", color: "var(--accent-gold)", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+                     style={{ flex: isLastGen ? 2 : 1, fontFamily: "var(--font-table)", fontWeight: 600, fontSize: maxGen >= 5 ? "9px" : "10px", color: "#1a3a5c", textTransform: "uppercase", letterSpacing: "0.1em" }}>
                   {genLabels[g - 1] || `Gen ${g}`}
                 </div>
               );
@@ -278,9 +287,10 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
             <div style={{ width: maxGen >= 5 ? "130px" : "170px", flexShrink: 0 }} className="flex items-center">
               <div className="w-full rounded-lg px-2 py-1.5 font-bold"
                    style={{
-                     background: "linear-gradient(135deg, rgba(212,175,55,0.15), rgba(212,175,55,0.05))",
-                     border: "2px solid rgba(212,175,55,0.7)",
-                     color: "rgba(212,175,55,0.95)",
+                     background: "linear-gradient(135deg, #fef9ee, #fdf3dc)",
+                     border: "2px solid rgba(161,120,40,0.5)",
+                     color: "#7a5c10",
+                     boxShadow: "0 2px 8px rgba(161,120,40,0.15), inset 0 1px 0 rgba(255,255,255,0.8)",
                      fontFamily: "var(--font-table)",
                      fontSize: maxGen >= 5 ? "10px" : "12px",
                    }}>
@@ -316,53 +326,68 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
                     const xwBgMap: Record<number, string> = { 1: "rgba(45,212,191,0.12)", 2: "rgba(251,146,60,0.12)", 4: "rgba(52,211,153,0.12)" };
                     const xwBorderMap: Record<number, string> = { 1: "rgba(45,212,191,0.6)", 2: "rgba(251,146,60,0.6)", 4: "rgba(52,211,153,0.6)" };
                     const cellBg = isGrCh
-                      ? "linear-gradient(135deg, rgba(59,130,246,0.18), rgba(59,130,246,0.06))"
+                      ? "linear-gradient(135deg, rgba(37,99,195,0.12), rgba(37,99,195,0.04))"
                       : isCh
-                        ? "linear-gradient(135deg, rgba(239,68,68,0.18), rgba(239,68,68,0.06))"
+                        ? "linear-gradient(135deg, rgba(200,40,40,0.10), rgba(200,40,40,0.03))"
                         : xwColor && xwNum !== 3
-                          ? `linear-gradient(135deg, ${xwNum >= 5 ? "rgba(192,132,252,0.12)" : xwBgMap[xwNum] || "rgba(35,35,38,0.95)"}, ${xwNum >= 5 ? "rgba(192,132,252,0.04)" : "rgba(28,28,32,0.9)"})`
-                          : "linear-gradient(135deg, rgba(232,234,237,0.08), rgba(232,234,237,0.03))";
+                          ? `linear-gradient(135deg, ${xwNum === 1 ? "rgba(13,148,136,0.10)" : xwNum === 2 ? "rgba(194,97,12,0.10)" : xwNum === 4 ? "rgba(190,60,130,0.10)" : "rgba(130,80,200,0.10)"}, transparent)`
+                          : xwNum === 3
+                            ? "linear-gradient(135deg, rgba(161,120,40,0.10), transparent)"
+                            : "#ffffff";
                     const cellBorder = isGrCh
-                      ? "rgba(59,130,246,0.7)"
+                      ? "rgba(37,99,195,0.5)"
                       : isCh
-                        ? "rgba(239,68,68,0.7)"
+                        ? "rgba(200,40,40,0.5)"
                         : xwColor && xwNum !== 3
-                          ? (xwNum >= 5 ? "rgba(192,132,252,0.6)" : xwBorderMap[xwNum] || (male ? "rgba(212,175,55,0.7)" : "rgba(236,72,153,0.5)"))
-                          : "rgba(232,234,237,0.4)";
+                          ? (xwNum === 1 ? "rgba(13,148,136,0.5)" : xwNum === 2 ? "rgba(194,97,12,0.5)" : xwNum === 4 ? "rgba(190,60,130,0.5)" : "rgba(130,80,200,0.5)")
+                          : xwNum === 3
+                            ? "rgba(161,120,40,0.5)"
+                            : "rgba(180,180,190,0.5)";
                     const cellTextColor = isGrCh
-                      ? "rgba(96,165,250,0.95)"
+                      ? "#1d5bbf"
                       : isCh
-                        ? "rgba(252,129,129,0.95)"
-                        : xwColor && xwNum !== 3
-                          ? xwColor
-                          : "rgba(232,234,237,0.95)";
+                        ? "#c02828"
+                        : xwNum === 1 ? "#0d7468" : xwNum === 2 ? "#b45a0a" : xwNum === 3 ? "#9a7020" : xwNum === 4 ? "#b03878" : xwNum >= 5 ? "#7040c0" : isChampion ? "#c02828"
+                          : "#333333";
                     return (
                       <div key={`${gen}-${i}`}
-                           className="flex-1 rounded px-1 py-px flex items-center group relative"
+                           className="flex-1 rounded-md px-1 py-px flex items-center group relative transition-all duration-200 hover:shadow-md hover:-translate-y-[1px]"
                            style={{
                              background: cellBg,
-                             borderLeft: `${maxGen >= 5 ? "2px" : "3px"} solid ${cellBorder}`,
+                             borderLeft: `${maxGen >= 5 ? "3px" : "4px"} solid ${cellBorder}`,
                              minHeight: cellMinH,
                              cursor: hasLink ? "pointer" : "default",
+                             boxShadow: `0 1px 3px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.5)`,
+                             borderBottom: `1px solid rgba(0,0,0,0.06)`,
                            }}>
                         {isChampion && (
-                          <span className="absolute top-0 right-0.5" style={{ fontSize: maxGen >= 5 ? "6px" : "8px", color: "#fbbf24" }}>★</span>
+                          <span className="absolute -top-0.5 -right-0.5 flex items-center justify-center rounded-full"
+                                style={{
+                                  fontSize: maxGen >= 5 ? "7px" : "9px",
+                                  color: "#b8860b",
+                                  background: "linear-gradient(135deg, #fef3c7, #fde68a)",
+                                  width: maxGen >= 5 ? "12px" : "15px",
+                                  height: maxGen >= 5 ? "12px" : "15px",
+                                  boxShadow: "0 1px 3px rgba(0,0,0,0.15)",
+                                  border: "1px solid rgba(184,134,11,0.3)",
+                                }}>★</span>
                         )}
                         {hasLink ? (
                           <Link href={`/pedigree/${a.ancestor_id}`}
-                                className="hover:underline font-medium truncate block w-full"
+                                className="font-medium truncate block w-full group-hover:underline"
                                 style={{
                                   color: cellTextColor,
                                   fontSize,
                                   fontFamily: "var(--font-table)",
-                                  fontWeight: isChampion ? 700 : 500,
+                                  fontWeight: isChampion ? 700 : 600,
                                   lineHeight: 1.1,
+                                  textShadow: "0 0.5px 0 rgba(255,255,255,0.5)",
                                 }}>
                             {a.ancestor_name}
                           </Link>
                         ) : (
                           <span className="truncate" style={{
-                            color: "var(--text-secondary)",
+                            color: "#888",
                             fontSize,
                             fontFamily: "var(--font-table)",
                             lineHeight: 1.2,
@@ -399,9 +424,7 @@ function OffspringTab({ offspring }: { offspring: Offspring[] }) {
         return (
           <div key={i} className="rounded-md flex items-center overflow-hidden transition-all hover:brightness-125"
                style={{
-                 background: `linear-gradient(135deg, ${cc}20, ${cc}10)`,
-                 border: `1px solid ${cc}35`,
-                 boxShadow: `0 1px 4px ${cc}15`,
+                 ...cardStyle(cc),
                  fontFamily: "var(--font-table)", fontSize: "10px", fontWeight: 600, lineHeight: 1.1,
                }}>
             <div style={{ width: "3px", alignSelf: "stretch", background: cc, flexShrink: 0 }} />
@@ -464,9 +487,7 @@ function SiblingsTab({ siblings }: { siblings: Dog["siblings"] }) {
               return (
                 <div key={i} className="rounded-md flex items-center overflow-hidden transition-all hover:brightness-125"
                      style={{
-                       background: `linear-gradient(135deg, ${cc}20, ${cc}10)`,
-                       border: `1px solid ${cc}35`,
-                       boxShadow: `0 1px 4px ${cc}15`,
+                       ...cardStyle(cc),
                        fontFamily: "var(--font-table)", fontSize: "10px", fontWeight: 600, lineHeight: 1.1,
                      }}>
                   <div style={{ width: "3px", alignSelf: "stretch", background: cc, flexShrink: 0 }} />
@@ -507,9 +528,7 @@ function PedStatsTab({ genetics }: { genetics: Genetic[] }) {
           return (
             <div key={i} className="rounded-md flex items-center overflow-hidden transition-all hover:brightness-125"
                  style={{
-                   background: `linear-gradient(135deg, ${cc}20, ${cc}10)`,
-                   border: `1px solid ${cc}35`,
-                   boxShadow: `0 1px 4px ${cc}15`,
+                   ...cardStyle(cc),
                  }}>
               <div style={{ width: "3px", alignSelf: "stretch", background: cc, flexShrink: 0 }} />
               <div className="px-2.5 py-1.5 grid items-center gap-2 w-full" style={{ gridTemplateColumns: "250px 1fr 45px", fontFamily: "var(--font-table)", fontSize: "10px", fontWeight: 600, lineHeight: 1.1 }}>
@@ -550,11 +569,11 @@ function PhotosTab({ offspring }: { offspring: Offspring[] }) {
         const cc = getDogCardColor(o.offspring_name);
         return (
           <Link key={i} href={`/pedigree/${o.offspring_id}`} className="title-cards group relative rounded-md overflow-hidden transition-all hover:brightness-125"
-                style={{ background: "var(--bg-elevated)", border: `1px solid ${cc}35`, boxShadow: `0 1px 4px ${cc}15` }}>
+                style={{ ...cardStyle(cc), background: "var(--bg-elevated)" }}>
             <div style={{ width: "100%", height: "120px", overflow: "hidden" }}>
               <img src={src} alt={o.offspring_name} className="w-full h-full object-cover transition-transform group-hover:scale-105" />
             </div>
-            <div className="px-1.5 py-1" style={{ background: `linear-gradient(135deg, ${cc}20, ${cc}10)`, borderTop: `1px solid ${cc}30` }}>
+            <div className="px-1.5 py-1" style={{ ...cardStyle(cc), borderTop: `1px solid ${cc === "#e8eaed" ? cc + "50" : cc + "30"}` }}>
               <p className="font-semibold truncate" style={{ color: cc, fontFamily: "var(--font-table)", fontSize: "9px", lineHeight: 1.1 }}>
                 {o.offspring_name}
               </p>
@@ -656,9 +675,7 @@ function TitlesTab({ offspring }: { offspring: Offspring[] }) {
             return (
               <div key={i} className="rounded-md flex items-center overflow-hidden transition-all hover:brightness-125"
                    style={{
-                     background: `linear-gradient(135deg, ${cc}20, ${cc}10)`,
-                     border: `1px solid ${cc}35`,
-                     boxShadow: `0 1px 4px ${cc}15`,
+                     ...cardStyle(cc),
                      fontFamily: "var(--font-table)", fontSize: "10px", fontWeight: 600, lineHeight: 1.1,
                    }}>
                 <div style={{ width: "3px", alignSelf: "stretch", background: cc, flexShrink: 0 }} />
@@ -948,7 +965,8 @@ export default function PublicPedigreePage() {
             </div>
           </div>
           <div className="p-3 md:p-4" style={{
-            background: "linear-gradient(180deg, #1a1a24 0%, #141418 100%)"
+            background: "linear-gradient(180deg, #f8f9fb 0%, #eef0f4 100%)",
+            boxShadow: "inset 0 2px 4px rgba(0,0,0,0.04)",
           }}>
             <PedigreeTree pedigree={dog.pedigree || []} dogName={dog.registered_name} dogId={dog.id} isMale={isMale} />
           </div>
