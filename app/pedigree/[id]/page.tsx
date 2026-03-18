@@ -691,6 +691,7 @@ function SiblingsTab({ siblings }: { siblings: Dog["siblings"] }) {
 /* ─── PedStats Tab ─── */
 function PedStatsTab({ genetics }: { genetics: Genetic[] }) {
   const [hovered, setHovered] = useState<number | null>(null);
+  const legendRef = useRef<HTMLDivElement>(null);
 
   if (!genetics.length)
     return (
@@ -740,7 +741,13 @@ function PedStatsTab({ genetics }: { genetics: Genetic[] }) {
     return (
       <path key={s.idx} d={d} fill={s.color} stroke="rgba(11,17,32,0.8)" strokeWidth="2"
             style={{ transform: isHovered ? "scale(1.05)" : "none", transformOrigin: `${cx}px ${cy}px`, transition: "all 0.2s", filter: isHovered ? `drop-shadow(0 0 8px ${s.color})` : "none", cursor: "pointer" }}
-            onMouseEnter={() => setHovered(s.idx)} onMouseLeave={() => setHovered(null)} />
+            onMouseEnter={() => {
+              setHovered(s.idx);
+              const el = document.getElementById(`pedstat-${s.idx}`);
+              if (el && legendRef.current) {
+                el.scrollIntoView({ behavior: "smooth", block: "center" });
+              }
+            }} onMouseLeave={() => setHovered(null)} />
     );
   });
   // Labels on slices (only show if slice is big enough)
@@ -791,17 +798,18 @@ function PedStatsTab({ genetics }: { genetics: Genetic[] }) {
           )}
         </div>
         {/* Legend */}
-        <div className="flex-1 space-y-0.5 w-full max-h-[300px] overflow-y-auto">
+        <div ref={legendRef} className="flex-1 space-y-0.5 w-full max-h-[300px] overflow-y-auto">
           {slices.map((s, i) => (
-            <div key={i}
+            <div key={i} id={`pedstat-${i}`}
                  className="rounded-md flex items-center overflow-hidden transition-all cursor-pointer"
+                 onMouseEnter={() => setHovered(i)} onMouseLeave={() => setHovered(null)}
                  style={{
                    ...cardStyle(s.color),
+                   ...(hovered === i ? { filter: "brightness(1.3)", boxShadow: `0 0 12px ${s.color}40`, outline: `1px solid ${s.color}` } : {}),
                    background: hovered === i ? `${s.color}20` : cardStyle(s.color).background,
                    transform: hovered === i ? "translateX(4px)" : "none",
                    transition: "all 0.2s",
-                 }}
-                 onMouseEnter={() => setHovered(i)} onMouseLeave={() => setHovered(null)}>
+                 }}>
               <div style={{ width: "3px", alignSelf: "stretch", background: s.color, flexShrink: 0 }} />
               <div className="px-2.5 py-1 flex items-center gap-2 w-full" style={{ fontFamily: "var(--font-table)", fontSize: "10px", fontWeight: 600, lineHeight: 1.1 }}>
                 <div className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: s.color }} />

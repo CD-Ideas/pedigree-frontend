@@ -190,8 +190,8 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
                      style={{ background: "var(--bg-deep)", border: "1px solid var(--border)" }}>🐕</div>
               )}
               <span className="text-xs font-semibold truncate flex-1" style={{ color: s.color, fontFamily: "var(--font-table)" }}>{s.name}</span>
-              <span className="text-[10px] font-bold" style={{ color: s.color, fontFamily: "var(--font-mono)" }}>{s.count}x</span>
-              <span className="text-[9px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>({((s.count / total) * 100).toFixed(1)}%)</span>
+              <span className="text-sm font-bold" style={{ color: s.color, fontFamily: "var(--font-mono)" }}>{s.count}x</span>
+              <span className="text-xs font-bold" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-mono)" }}>({((s.count / total) * 100).toFixed(1)}%)</span>
             </div>
           ))}
         </div>
