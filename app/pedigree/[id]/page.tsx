@@ -265,26 +265,23 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
           </div>
 
           {/* Column headers */}
-          <div className="flex gap-px mb-1">
+          <div className="mb-1" style={{ display: "grid", gridTemplateColumns: `${maxGen >= 5 ? "130px" : "170px"} repeat(${maxGen}, 1fr)`, gap: "4px" }}>
             <div className="px-1.5 py-1 text-center"
-                 style={{ width: maxGen >= 5 ? "130px" : "170px", flexShrink: 0, fontFamily: "var(--font-table)", fontWeight: 600, fontSize: maxGen >= 5 ? "9px" : "10px", color: "#4a5568", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+                 style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: maxGen >= 5 ? "9px" : "10px", color: "#4a5568", textTransform: "uppercase", letterSpacing: "0.1em" }}>
               Dog
             </div>
-            {gens.filter(g => g <= maxGen).map((g) => {
-              const isLastGen = g === maxGen;
-              return (
+            {gens.filter(g => g <= maxGen).map((g) => (
                 <div key={g} className="px-1.5 py-1 text-center"
-                     style={{ flex: isLastGen ? 2 : 1, fontFamily: "var(--font-table)", fontWeight: 600, fontSize: maxGen >= 5 ? "9px" : "10px", color: "#4a5568", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+                     style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: maxGen >= 5 ? "9px" : "10px", color: "#4a5568", textTransform: "uppercase", letterSpacing: "0.1em" }}>
                   {genLabels[g - 1] || `Gen ${g}`}
                 </div>
-              );
-            })}
+            ))}
           </div>
 
           {/* Tree grid */}
-          <div className="flex gap-px">
+          <div style={{ display: "grid", gridTemplateColumns: `${maxGen >= 5 ? "130px" : "170px"} repeat(${maxGen}, 1fr)`, gap: "4px" }}>
             {/* Root dog */}
-            <div style={{ width: maxGen >= 5 ? "130px" : "170px", flexShrink: 0 }} className="flex items-center">
+            <div className="flex items-center">
               <div className="w-full rounded-lg px-2 py-1.5 font-bold"
                    style={{
                      background: "linear-gradient(135deg, #fef9ee, #fdf3dc)",
@@ -312,7 +309,7 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
                 ? (gen <= 1 ? "11px" : gen === 2 ? "10px" : "9.5px")
                 : (gen <= 1 ? "13px" : gen === 2 ? "12px" : "11px");
               return (
-                <div key={gen} className="flex flex-col gap-1" style={{ flex: isLastGen ? 2 : 1 }}>
+                <div key={gen} className="flex flex-col gap-1">
                   {ancestors.slice(0, Math.pow(2, gen)).map((a, i) => {
                     const male = isMaleAncestor(a, i);
                     const hasLink = !!a.ancestor_id;
@@ -326,35 +323,35 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
                     const xwBgMap: Record<number, string> = { 1: "rgba(45,212,191,0.12)", 2: "rgba(251,146,60,0.12)", 4: "rgba(52,211,153,0.12)" };
                     const xwBorderMap: Record<number, string> = { 1: "rgba(45,212,191,0.6)", 2: "rgba(251,146,60,0.6)", 4: "rgba(52,211,153,0.6)" };
                     const cellBg = isGrCh
-                      ? "linear-gradient(135deg, rgba(96,165,250,0.18), rgba(96,165,250,0.08))"
+                      ? "linear-gradient(135deg, rgba(29,91,191,0.18), rgba(29,91,191,0.06), #ffffff)"
                       : isCh
-                        ? "linear-gradient(135deg, rgba(239,68,68,0.1), rgba(239,68,68,0.03))"
+                        ? "linear-gradient(135deg, rgba(192,40,40,0.15), rgba(192,40,40,0.05), #ffffff)"
                         : xwNum === 3
-                          ? "linear-gradient(135deg, rgba(202,138,4,0.12), rgba(202,138,4,0.03))"
+                          ? "linear-gradient(135deg, rgba(180,130,20,0.16), rgba(180,130,20,0.05), #ffffff)"
                           : xwNum === 1
-                            ? "linear-gradient(135deg, rgba(20,184,166,0.1), rgba(20,184,166,0.03))"
+                            ? "linear-gradient(135deg, rgba(13,116,104,0.14), rgba(13,116,104,0.04), #ffffff)"
                             : xwNum === 2
-                              ? "linear-gradient(135deg, rgba(234,88,12,0.1), rgba(234,88,12,0.03))"
+                              ? "linear-gradient(135deg, rgba(234,88,12,0.14), rgba(234,88,12,0.04), #ffffff)"
                               : xwNum === 4
-                                ? "linear-gradient(135deg, rgba(219,39,119,0.1), rgba(219,39,119,0.03))"
+                                ? "linear-gradient(135deg, rgba(219,39,119,0.14), rgba(219,39,119,0.04), #ffffff)"
                                 : xwNum >= 5
-                                  ? "linear-gradient(135deg, rgba(147,51,234,0.1), rgba(147,51,234,0.03))"
-                                  : "#f0f2f5";
+                                  ? "linear-gradient(135deg, rgba(109,48,176,0.14), rgba(109,48,176,0.04), #ffffff)"
+                                  : "linear-gradient(135deg, #ffffff, #f7f8fa)";
                     const cellBorder = isGrCh
-                      ? "rgba(29,91,191,0.5)"
+                      ? "rgba(29,91,191,0.75)"
                       : isCh
-                        ? "rgba(192,40,40,0.5)"
+                        ? "rgba(192,40,40,0.7)"
                         : xwNum === 3
-                          ? "rgba(138,101,24,0.5)"
+                          ? "rgba(160,115,15,0.7)"
                           : xwNum === 1
-                            ? "rgba(13,116,104,0.5)"
+                            ? "rgba(13,116,104,0.65)"
                             : xwNum === 2
-                              ? "rgba(180,90,10,0.5)"
+                              ? "rgba(200,75,8,0.65)"
                               : xwNum === 4
-                                ? "rgba(176,56,120,0.5)"
+                                ? "rgba(176,56,120,0.65)"
                                 : xwNum >= 5
-                                  ? "rgba(109,48,176,0.5)"
-                                  : "rgba(0,0,0,0.12)";
+                                  ? "rgba(109,48,176,0.65)"
+                                  : "rgba(180,185,195,0.4)";
                     const cellTextColor = isGrCh
                       ? "#1d5bbf"
                       : isCh
@@ -363,13 +360,14 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
                           : "#3a3a3a";
                     return (
                       <div key={`${gen}-${i}`}
-                           className="flex-1 rounded-md px-2 py-1 flex items-center group relative transition-all duration-200 hover:shadow-md hover:-translate-y-[1px]"
+                           className="flex-1 rounded-lg px-2.5 py-1.5 flex items-center group relative transition-all duration-200 hover:shadow-lg hover:-translate-y-[1px]"
                            style={{
                              background: cellBg,
                              borderLeft: `${maxGen >= 5 ? "3px" : "4px"} solid ${cellBorder}`,
                              minHeight: cellMinH,
                              cursor: hasLink ? "pointer" : "default",
-                             boxShadow: `0 1px 3px rgba(0,0,0,0.08), 0 0 0 0.5px rgba(0,0,0,0.04)`,
+                             boxShadow: `0 1px 4px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.03)`,
+                             borderTop: "1px solid rgba(255,255,255,0.8)",
                            }}>
                         {isChampion && (
                           <span className="absolute -top-0.5 -right-0.5 flex items-center justify-center rounded-full"
@@ -940,12 +938,12 @@ export default function PublicPedigreePage() {
 
         {/* ─── Pedigree Tree (full width, contrasting frame) ─── */}
         <div className="glow-teal rounded-xl overflow-hidden" style={{
-          border: "1.5px solid rgba(30,64,120,0.8)",
-          boxShadow: "0 2px 20px rgba(0,0,0,0.25)"
+          border: "1.5px solid rgba(50,50,55,0.9)",
+          boxShadow: "0 4px 30px rgba(0,0,0,0.35), 0 0 60px rgba(0,0,0,0.1)"
         }}>
-          <div className="flex items-center justify-between px-4 py-2" style={{
-            background: "linear-gradient(135deg, #2a2a2e 0%, #1e1e22 50%, #2a2a2e 100%)",
-            borderBottom: "1px solid rgba(255,255,255,0.08)"
+          <div className="flex items-center justify-between px-4 py-2.5" style={{
+            background: "linear-gradient(180deg, #1a1a24 0%, #141418 100%)",
+            borderBottom: "1px solid rgba(30,64,120,0.5)"
           }}>
             <div className="flex items-center gap-2.5">
               <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{
@@ -976,7 +974,7 @@ export default function PublicPedigreePage() {
             </div>
           </div>
           <div className="p-3 md:p-4" style={{
-            background: "#e8ecf1",
+            background: "linear-gradient(180deg, #eef1f5 0%, #e4e8ee 100%)",
           }}>
             <PedigreeTree pedigree={dog.pedigree || []} dogName={dog.registered_name} dogId={dog.id} isMale={isMale} />
           </div>
@@ -996,8 +994,8 @@ export default function PublicPedigreePage() {
             <div className="glow-teal rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)" }}>
               {/* Tab headers */}
               <div className="flex" style={{
-                background: "linear-gradient(135deg, #1a3a5c 0%, #1e4478 50%, #1a3a5c 100%)",
-                borderBottom: "1px solid rgba(96,165,250,0.3)",
+                background: "linear-gradient(180deg, #1a1a24 0%, #141418 100%)",
+                borderBottom: "1px solid rgba(30,64,120,0.5)",
               }}>
                 {tabs.map((tab) => (
                   <button key={tab.key}
