@@ -96,7 +96,7 @@ function Card({ children, className = "", style = {} }: { children: React.ReactN
       style={{
         border: "1.5px solid rgba(30,64,120,0.8)",
         boxShadow: "0 2px 20px rgba(0,0,0,0.25)",
-        background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+        background: "linear-gradient(180deg, #1a1a24 0%, #141418 100%)",
         ...style,
       }}
     >

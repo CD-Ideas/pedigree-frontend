@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 interface Dog {
@@ -211,7 +212,8 @@ export default function DogsPage() {
   const [searchInput, setSearchInput] = useState("");
   const [sexFilter, setSexFilter] = useState("");
   const [colorFilter, setColorFilter] = useState("");
-  const [titleFilter, setTitleFilter] = useState("");
+  const urlParams = useSearchParams();
+  const [titleFilter, setTitleFilter] = useState(urlParams.get("title") || "");
   const [hasPhotoFilter, setHasPhotoFilter] = useState(false);
   const [sort, setSort] = useState("name");
   const [order, setOrder] = useState("asc");
