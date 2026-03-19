@@ -526,10 +526,10 @@ export default function BreedingCalculatorPage() {
       {/* Header */}
       <div className="max-w-[1200px] mx-auto px-6 pt-10 pb-2">
         <div className="text-center">
-          <h1 className="text-5xl md:text-6xl font-black tracking-tight" style={{ fontFamily: "var(--font-table)", color: "var(--accent-gold, #d4a855)", textShadow: "0 0 60px rgba(212,168,85,0.2)" }}>
+          <h1 className="font-black tracking-tight" style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", fontWeight: 700, color: "var(--accent-gold, #d4a855)", textShadow: "0 0 60px rgba(212,168,85,0.2)" }}>
             Breeding Calculator
           </h1>
-          <p className="mt-2 text-sm tracking-[0.2em] uppercase" style={{ color: "rgba(255,255,255,0.25)", fontFamily: "var(--font-mono)" }}>
+          <p className="mt-2 tracking-[0.2em] uppercase" style={{ color: "rgba(255,255,255,0.25)", fontFamily: "var(--font-mono)", fontSize: "0.75rem" }}>
             Know Your Cross Before You Make It
           </p>
         </div>

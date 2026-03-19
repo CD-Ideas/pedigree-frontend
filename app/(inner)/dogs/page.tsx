@@ -287,7 +287,7 @@ export default function DogsPage() {
       {/* Header */}
       <div className="flex items-end justify-between mb-4">
         <div>
-          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem" }}>
+          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", fontWeight: 700 }}>
             Dogs
           </h1>
           <p className="text-xs mt-0.5" style={{ color: "var(--text-secondary)" }}>
@@ -528,12 +528,12 @@ export default function DogsPage() {
           <table className="w-full text-sm">
             <thead>
               <tr style={{ borderBottom: "1px solid var(--border)" }}>
-                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium" style={{ color: "var(--text-muted)" }}>Dog</th>
-                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium" style={{ color: "var(--text-muted)" }}>Sex</th>
-                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden md:table-cell" style={{ color: "var(--text-muted)" }}>Color</th>
-                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden lg:table-cell" style={{ color: "var(--text-muted)" }}>Sire</th>
-                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden lg:table-cell" style={{ color: "var(--text-muted)" }}>Dam</th>
-                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden md:table-cell" style={{ color: "var(--text-muted)" }}>Titles</th>
+                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>Dog</th>
+                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>Sex</th>
+                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden md:table-cell" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>Color</th>
+                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden lg:table-cell" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>Sire</th>
+                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden lg:table-cell" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>Dam</th>
+                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden md:table-cell" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>Titles</th>
               </tr>
             </thead>
             <tbody>

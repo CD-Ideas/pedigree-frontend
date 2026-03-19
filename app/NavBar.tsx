@@ -54,12 +54,16 @@ export default function NavBar() {
     >
       <div className="max-w-[1600px] mx-auto px-6 flex items-center justify-between h-14">
         <Link href="/" className="flex items-center gap-3">
-          <img src={LOGO} alt="Logo" className="w-7 h-7 rounded" />
+          <img src={LOGO} alt="Logo" className="w-8 h-8 rounded-lg" />
           <span
             style={{
               fontFamily: "var(--font-display)",
+              fontWeight: 700,
               fontSize: "1.25rem",
-              color: "var(--accent-gold)",
+              background: "linear-gradient(135deg, #e8c86e, #d4a855, #b8860b)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              letterSpacing: "0.02em",
             }}
           >
             Pedigree Platform

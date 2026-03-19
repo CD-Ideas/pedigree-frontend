@@ -66,7 +66,7 @@ export default function Dashboard() {
   return (
     <div>
       <div className="mb-5">
-        <h1 style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem" }}>Dashboard</h1>
+        <h1 style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", fontWeight: 700 }}>Dashboard</h1>
         <p className="text-xs mt-0.5" style={{ color: "var(--text-secondary)" }}>
           APBT Pedigree Platform Overview
         </p>
@@ -82,7 +82,7 @@ export default function Dashboard() {
       <div className="grid md:grid-cols-2 gap-3">
         {/* Breeds */}
         <div className="rounded-lg p-4" style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)" }}>
-          <h2 className="text-[10px] uppercase tracking-wider font-medium mb-3" style={{ color: "var(--text-muted)" }}>
+          <h2 className="text-[10px] uppercase tracking-wider font-medium mb-3" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
             By Breed
           </h2>
           {stats.breeds.length > 0 ? (
@@ -104,7 +104,7 @@ export default function Dashboard() {
 
         {/* Recent Dogs */}
         <div className="rounded-lg p-4" style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)" }}>
-          <h2 className="text-[10px] uppercase tracking-wider font-medium mb-3" style={{ color: "var(--text-muted)" }}>
+          <h2 className="text-[10px] uppercase tracking-wider font-medium mb-3" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
             Recently Added
           </h2>
           <div className="space-y-1.5">

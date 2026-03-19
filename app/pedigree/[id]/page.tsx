@@ -1055,7 +1055,7 @@ export default function PublicPedigreePage() {
         <Link href="/" className="flex items-center gap-3">
           <img src={LOGO} alt="Logo" className="w-8 h-8 rounded-lg" />
           <span style={{
-            fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "1.1rem",
+            fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1.25rem",
             background: "linear-gradient(135deg, #e8c86e, #d4a855, #b8860b)",
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
             letterSpacing: "0.02em",
@@ -1089,12 +1089,12 @@ export default function PublicPedigreePage() {
           {titles.length > 0 && (
             <div className="h-0.5 -mx-4 -mt-2 mb-2 rounded-t-lg" style={{ background: "linear-gradient(90deg, var(--accent-red), var(--accent-gold), var(--accent-red))" }} />
           )}
-          <Link href="/" className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold hover:underline transition-colors flex items-center gap-1"
+          <Link href="/dogs" className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold hover:underline transition-colors flex items-center gap-1"
                 style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
             ← Back to Dogs
           </Link>
           <h1 className="text-center" style={{
-            fontFamily: "var(--font-table)", fontWeight: 700,
+            fontFamily: "var(--font-display)", fontWeight: 700,
             fontSize: "clamp(1rem, 2.5vw, 1.5rem)", letterSpacing: "0.02em",
             color: titles.length > 0 ? "var(--accent-gold)" : "var(--text-primary)",
           }}>
@@ -1302,7 +1302,7 @@ export default function PublicPedigreePage() {
           <div className="flex items-center justify-center gap-2 mb-3">
             <img src={LOGO} alt="Logo" className="w-6 h-6 rounded" />
             <span style={{
-              fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "14px",
+              fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "14px",
               background: "linear-gradient(135deg, #e8c86e, #d4a855)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
             }}>Pedigree Platform</span>
           </div>

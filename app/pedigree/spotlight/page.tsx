@@ -400,8 +400,8 @@ export default function SpotlightPage() {
            style={{ background: "rgba(11,17,32,0.95)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(220,38,38,0.1)" }}>
         <Link href="/" className="flex items-center gap-2">
           <img src={LOGO} alt="Logo" className="w-8 h-8 rounded-full" />
-          <span className="text-base font-bold" style={{
-            fontFamily: "var(--font-display)",
+          <span className="font-bold" style={{
+            fontFamily: "var(--font-display)", fontSize: "1.25rem",
             background: "linear-gradient(135deg, #d4a853, #f5d78e, #d4a853)",
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
           }}>Pedigree Platform</span>
@@ -424,7 +424,7 @@ export default function SpotlightPage() {
         <div className="text-center mb-6">
           <div className="flex items-center justify-center gap-2 mb-2">
             <span className="text-2xl">🔬</span>
-            <h1 className="text-xl md:text-2xl font-bold" style={{ fontFamily: "var(--font-display)", letterSpacing: "0.02em" }}>
+            <h1 className="font-bold" style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", fontWeight: 700, letterSpacing: "0.02em" }}>
               LINEAGE{" "}
               <span style={{
                 background: "linear-gradient(135deg, #d4a853, #f5d78e, #d4a853)",
