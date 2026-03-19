@@ -237,7 +237,7 @@ function DogSlot({
     : null;
 
   return (
-    <div ref={containerRef} className="flex-1 relative rounded-2xl overflow-hidden" style={{
+    <div ref={containerRef} className="flex-1 relative rounded-2xl" style={{
       background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
       border: selected ? `1.5px solid ${color}` : "1.5px solid rgba(30,64,120,0.8)",
       boxShadow: selected ? `0 0 30px ${color}20, 0 2px 20px rgba(0,0,0,0.25)` : "0 2px 20px rgba(0,0,0,0.25)",
@@ -384,6 +384,8 @@ export default function BreedingCalculatorPage() {
   const [coi, setCoi] = useState<number | null>(null);
   const [sharedAncestors, setSharedAncestors] = useState<SharedAncestor[]>([]);
   const [hasResults, setHasResults] = useState(false);
+  const [avk, setAvk] = useState<number | null>(null);
+  const [bloodlines, setBloodlines] = useState<{ name: string; pct: number }[]>([]);
 
   const calculate = async (overrideGen?: number) => {
     if (!sire || !dam) return;
@@ -444,9 +446,56 @@ export default function BreedingCalculatorPage() {
         }
       }
 
+      /* AVK = Ancestor Loss Coefficient = unique ancestors / total positions */
+      const totalPositions = Array.from({ length: gen }, (_, g) => Math.pow(2, g + 1)).reduce((a, b) => a + b, 0);
+      const allSireIds = new Set(sirePedigree.map(a => a.ancestor_id));
+      const allDamIds = new Set(damPedigree.map(a => a.ancestor_id));
+      const uniqueCount = new Set([...allSireIds, ...allDamIds]).size;
+      const avkPct = totalPositions > 0 ? (uniqueCount / totalPositions) * 100 : 100;
+
+      /* Bloodline Radar — detect famous lines in combined pedigree */
+      const allNames = [...sirePedigree, ...damPedigree].map(a => (a.ancestor_name || "").toUpperCase());
+      const LINES: Record<string, string[]> = {
+        "Jeep/Redboy": ["JEEP", "REDBOY", "RED BOY"],
+        "Carver": ["CARVER", "BLACK WIDOW", "CRACKER"],
+        "Eli/Boudreaux": ["ELI", "BOUDREAUX", "BULLYSON"],
+        "Chinaman": ["CHINAMAN", "FRISCO"],
+        "Bolio/Tombstone": ["BOLIO", "TOMBSTONE"],
+        "Tab": ["WHITE'S TAB", "GARRETT'S TAB", "TAB"],
+        "Yellow/Tant": ["TANT'S YELLOW", "YELLOW"],
+        "Dibo/Tudor": ["TUDOR'S DIBO", "DIBO"],
+        "Buck/STP": ["S.T.P", "BUCK"],
+        "Honeybunch": ["HONEYBUNCH", "HONEYBU"],
+      };
+      const lineScores: { name: string; pct: number }[] = [];
+      for (const [lineName, keywords] of Object.entries(LINES)) {
+        const hits = allNames.filter(n => keywords.some(kw => n.includes(kw))).length;
+        if (hits > 0) {
+          const pct = Math.min((hits / allNames.length) * 100 * 5, 100); // amplify for visibility
+          lineScores.push({ name: lineName, pct: Math.round(pct) });
+        }
+      }
+      lineScores.sort((a, b) => b.pct - a.pct);
+
       setCoi(coiVal * 100);
+      setAvk(avkPct);
+      setBloodlines(lineScores);
       setSharedAncestors(shared);
       setHasResults(true);
+
+      /* Save to localStorage for homepage display */
+      try {
+        localStorage.setItem("breedingCalcResult", JSON.stringify({
+          sire: { name: sire.registered_name, photo: sire.photo_url },
+          dam: { name: dam.registered_name, photo: dam.photo_url },
+          coi: coiVal * 100,
+          bloodlines: lineScores.slice(0, 4),
+          sharedCount: shared.filter(a => a.sireGens.length > 0 && a.damGens.length > 0).length,
+          topAncestor: shared.length > 0 ? shared[0].name : null,
+          genDepth: gen,
+          timestamp: Date.now(),
+        }));
+      } catch {}
     } catch (err) {
       console.error("Calculation error:", err);
     } finally {
@@ -580,6 +629,49 @@ export default function BreedingCalculatorPage() {
                   </div>
                 </div>
               </div>
+            </div>
+
+            {/* AVK + Bloodline Radar */}
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-4">
+              {/* AVK */}
+              {avk !== null && (
+                <div className="rounded-2xl p-6" style={{ background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)", border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)" }}>
+                  <p className="text-xs tracking-[0.2em] uppercase mb-4" style={{ color: "rgba(255,255,255,0.25)", fontFamily: "var(--font-mono)" }}>ANCESTOR LOSS COEFFICIENT (AVK)</p>
+                  <div className="flex items-end gap-4">
+                    <span className="text-5xl font-black" style={{ color: avk > 80 ? "#22c55e" : avk > 60 ? "#eab308" : "#ef4444", fontFamily: "var(--font-table)" }}>{avk.toFixed(1)}%</span>
+                    <span className="text-sm mb-2" style={{ color: "rgba(255,255,255,0.35)", fontFamily: "var(--font-mono)" }}>
+                      {avk > 80 ? "High diversity — wide gene pool" : avk > 60 ? "Moderate — some repeat ancestors" : "Low diversity — heavy linebreeding"}
+                    </span>
+                  </div>
+                  <div className="mt-4 h-3 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.05)" }}>
+                    <div className="h-full rounded-full transition-all duration-1000" style={{ width: `${Math.min(avk, 100)}%`, background: avk > 80 ? "linear-gradient(90deg, #22c55e, #4ade80)" : avk > 60 ? "linear-gradient(90deg, #eab308, #facc15)" : "linear-gradient(90deg, #ef4444, #f87171)" }} />
+                  </div>
+                </div>
+              )}
+
+              {/* Bloodline Radar */}
+              {bloodlines.length > 0 && (
+                <div className="rounded-2xl p-6" style={{ background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)", border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)" }}>
+                  <p className="text-xs tracking-[0.2em] uppercase mb-4" style={{ color: "rgba(255,255,255,0.25)", fontFamily: "var(--font-mono)" }}>BLOODLINE RADAR</p>
+                  <div className="space-y-3">
+                    {bloodlines.slice(0, 8).map((bl, i) => {
+                      const colors = ["#d4a855", "#60a5fa", "#fc8181", "#4ade80", "#f472b6", "#fb923c", "#c084fc", "#22d3ee"];
+                      const col = colors[i % colors.length];
+                      return (
+                        <div key={bl.name}>
+                          <div className="flex justify-between items-center mb-1">
+                            <span className="text-sm font-black" style={{ color: col, fontFamily: "var(--font-table)" }}>{bl.name}</span>
+                            <span className="text-sm font-black" style={{ color: col, fontFamily: "var(--font-mono)" }}>{bl.pct}%</span>
+                          </div>
+                          <div className="h-2 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.04)" }}>
+                            <div className="h-full rounded-full transition-all duration-1000" style={{ width: `${bl.pct}%`, background: col, opacity: 0.8 }} />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Ancestor Overlap + List */}

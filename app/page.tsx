@@ -5,6 +5,218 @@ import { useEffect, useState } from "react";
 
 const LOGO = "https://i.imgur.com/cAvQemZ.png";
 
+/* ── (removed dynamic preview) ── */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+function _BreedingCalcPreview_UNUSED() {
+  const [data, setData] = useState<{
+    sire: { name: string; photo: string | null };
+    dam: { name: string; photo: string | null };
+    coi: number;
+    bloodlines: { name: string; pct: number }[];
+    sharedCount: number;
+    topAncestor: string | null;
+    genDepth: number;
+  } | null>(null);
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem("breedingCalcResult");
+      if (stored) setData(JSON.parse(stored));
+    } catch {}
+  }, []);
+
+  const PIE_COLORS = ["#ef4444", "#3b82f6", "#a855f7", "#d4a855", "#22c55e", "#f97316", "#ec4899", "#14b8a6"];
+
+  /* Use stored data or fallback to static example */
+  const isLive = !!data;
+  const bl = data?.bloodlines?.length ? data.bloodlines : [
+    { name: "Jeep/Redboy", pct: 31 }, { name: "Eli/Boudreaux", pct: 22 },
+    { name: "Carver", pct: 15 }, { name: "Tab", pct: 12 },
+  ];
+  const coiVal = data?.coi ?? 4.5;
+  const topLine = bl[0];
+  const totalPct = bl.reduce((s, b) => s + b.pct, 0);
+  const otherPct = Math.max(0, 100 - totalPct);
+  const coiColor = coiVal < 5 ? "#22c55e" : coiVal < 10 ? "#eab308" : coiVal < 15 ? "#f97316" : "#ef4444";
+  const coiLabel = coiVal < 5 ? "Clean Outcross" : coiVal < 10 ? "Mild Linebreed" : coiVal < 15 ? "Tight Linebreed" : "Danger Zone";
+
+  const insights = isLive ? [
+    `${topLine.pct}% ${topLine.name} lineage — dominant bloodline`,
+    data.sharedCount > 0 ? `${data.sharedCount} shared ancestors between sire & dam` : "No shared ancestors — clean cross",
+    data.topAncestor ? `Most repeated: ${data.topAncestor}` : "Wide genetic diversity",
+    coiVal > 10 ? "Test for joint health due to inbreeding overlap" : "Healthy genetic distance",
+  ] : [
+    "31% Jeep lineage — expect explosive prey drive",
+    "Double Jeep on both sides — high impact genetics",
+    "22% Red Boy adds gameness & stamina",
+    "Test for joint health due to inbreeding overlap",
+  ];
+
+  /* Build pie offsets */
+  let cumPct = 0;
+  const slices = bl.slice(0, 4).map((b, i) => {
+    const offset = cumPct;
+    cumPct += b.pct;
+    return { ...b, offset, color: PIE_COLORS[i % PIE_COLORS.length] };
+  });
+
+  return (
+    <section id="heatmap" className="py-5 px-4">
+      <div className="max-w-5xl mx-auto">
+        <h2 className="subtitle-gold text-center mb-0.5" style={{ fontFamily: "var(--font-table)", fontWeight: 500, fontSize: "clamp(0.95rem, 2vw, 1.25rem)" }}>
+          Breeding Calculator
+        </h2>
+        <p className="text-center mb-3" style={{ color: "rgba(180,180,195,0.7)", fontFamily: "var(--font-table)", fontSize: "10px", fontWeight: 400 }}>
+          Know Your Cross Before You Make It
+        </p>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+          {/* Pie Chart */}
+          <div className="relative rounded-lg p-4" style={{
+            background: "linear-gradient(160deg, rgba(25,27,35,0.95) 0%, rgba(14,15,20,0.98) 100%)",
+            border: "1px solid rgba(255,255,255,0.07)",
+            boxShadow: "0 4px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04)",
+          }}>
+            <div className="text-center mb-2">
+              {isLive ? (
+                <>
+                  <span style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", color: "#60a5fa" }}>{data.sire.name}</span>
+                  <span style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", color: "rgba(255,255,255,0.3)" }}> × </span>
+                  <span style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", color: "#f472b6" }}>{data.dam.name}</span>
+                </>
+              ) : (
+                <>
+                  <span style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", color: "#fff" }}>Example: </span>
+                  <span style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", color: "var(--accent-gold)" }}>GR CH Razor&apos;s Edge Bloodfire</span>
+                </>
+              )}
+            </div>
+            <div className="flex justify-center">
+              <svg width="180" height="180" viewBox="0 0 220 220">
+                {slices.map((s, i) => (
+                  <circle key={i} cx="110" cy="110" r="85" fill="none" stroke={s.color} strokeWidth="45"
+                    strokeDasharray={`${s.pct * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-s.offset * 5.34}`}
+                    transform="rotate(-90 110 110)"
+                    style={{ filter: `drop-shadow(0 0 8px ${s.color}40)` }} />
+                ))}
+                {otherPct > 0 && (
+                  <circle cx="110" cy="110" r="85" fill="none" stroke="rgba(120,120,140,0.5)" strokeWidth="45"
+                    strokeDasharray={`${otherPct * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-cumPct * 5.34}`}
+                    transform="rotate(-90 110 110)" />
+                )}
+                <circle cx="110" cy="110" r="62" fill="rgba(14,15,20,0.95)" />
+                <text x="110" y="100" textAnchor="middle" fill="#fff" style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "22px" }}>{topLine.pct}%</text>
+                <text x="110" y="118" textAnchor="middle" fill={slices[0]?.color || "#ef4444"} style={{ fontFamily: "var(--font-table)", fontWeight: 500, fontSize: "10px", letterSpacing: "0.05em" }}>
+                  {topLine.name.toUpperCase()}
+                </text>
+                <text x="110" y="134" textAnchor="middle" fill="rgba(180,180,195,0.6)" style={{ fontFamily: "var(--font-table)", fontWeight: 400, fontSize: "9px" }}>
+                  {isLive ? `${data.genDepth}-gen analysis` : "4-gen analysis"}
+                </text>
+              </svg>
+            </div>
+            {/* Legend */}
+            <div className="grid grid-cols-2 gap-x-3 gap-y-1 mt-2">
+              {slices.map((b, i) => (
+                <div key={i} className="flex items-center gap-2">
+                  <div className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ background: b.color, boxShadow: `0 0 6px ${b.color}40` }} />
+                  <span style={{ fontFamily: "var(--font-table)", fontSize: "11px", color: "rgba(200,200,210,0.85)", fontWeight: 500 }}>{b.name}</span>
+                  <span style={{ fontFamily: "var(--font-table)", fontSize: "11px", color: b.color, fontWeight: 700, marginLeft: "auto" }}>{b.pct}%</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Info & Warnings */}
+          <div className="flex flex-col gap-2">
+            {/* COI Alert */}
+            <div className="rounded-lg p-3" style={{
+              background: `linear-gradient(160deg, ${coiColor}10 0%, rgba(14,15,20,0.98) 100%)`,
+              border: `1px solid ${coiColor}30`,
+              boxShadow: `0 0 25px ${coiColor}08`,
+            }}>
+              <div className="flex items-center gap-2 mb-1.5">
+                <div className="w-6 h-6 rounded-md flex items-center justify-center" style={{ background: `${coiColor}20`, border: `1px solid ${coiColor}40` }}>
+                  <span style={{ fontSize: "12px" }}>⚠️</span>
+                </div>
+                <span style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "10px", color: coiColor, textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                  {coiLabel} — {coiVal.toFixed(1)}% COI
+                </span>
+              </div>
+              <p style={{ fontFamily: "var(--font-table)", fontSize: "9.5px", color: "rgba(200,200,210,0.7)", lineHeight: 1.5 }}>
+                {isLive && data.topAncestor
+                  ? <>{data.topAncestor} appears on <span style={{ color: coiColor, fontWeight: 600 }}>both sire and dam side</span>. {coiVal < 10 ? "Low risk." : "Monitor joint health and temperament stability."}</>
+                  : <>Jeep appears on <span style={{ color: "#ef4444", fontWeight: 600 }}>both sire and dam side</span>. Moderate risk. Monitor joint health and temperament stability.</>
+                }
+              </p>
+            </div>
+
+            {/* Breeder Insights */}
+            <div className="rounded-lg p-3" style={{
+              background: "linear-gradient(160deg, rgba(25,27,35,0.95) 0%, rgba(14,15,20,0.98) 100%)",
+              border: "1px solid rgba(255,255,255,0.07)",
+              boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+            }}>
+              <h4 style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "10px", color: "var(--accent-gold)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "6px" }}>
+                Breeder Insights {isLive && <span style={{ color: "rgba(255,255,255,0.3)", fontWeight: 400 }}>— Live Result</span>}
+              </h4>
+              <ul className="space-y-1.5">
+                {insights.map((tip, i) => (
+                  <li key={i} className="flex items-start gap-1.5" style={{ fontFamily: "var(--font-table)", fontSize: "9.5px", color: "rgba(200,200,210,0.8)", lineHeight: 1.45 }}>
+                    <span style={{ color: "var(--accent-gold)", fontSize: "7px", marginTop: "3px" }}>◆</span>
+                    {tip}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* How it works */}
+            <div className="rounded-lg p-3" style={{
+              background: "linear-gradient(160deg, rgba(25,27,35,0.95) 0%, rgba(14,15,20,0.98) 100%)",
+              border: "1px solid rgba(255,255,255,0.07)",
+            }}>
+              <h4 style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "10px", color: "#fff", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "6px" }}>
+                How It Works
+              </h4>
+              <div className="flex items-center gap-2">
+                {[
+                  { step: "1", text: "Enter parents" },
+                  { step: "2", text: `We crunch ${isLive ? data.genDepth * 2 : 16} ancestors` },
+                  { step: "3", text: "Results light up" },
+                ].map((s, i) => (
+                  <div key={i} className="flex-1 flex items-center gap-1.5">
+                    <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0"
+                      style={{ background: "linear-gradient(135deg, var(--accent-red, #dc2626), #991b1b)", fontSize: "9px", fontWeight: 700, fontFamily: "var(--font-table)", color: "#fff" }}>
+                      {s.step}
+                    </div>
+                    <span style={{ fontFamily: "var(--font-table)", fontSize: "9px", color: "rgba(200,200,210,0.8)", fontWeight: 500 }}>{s.text}</span>
+                    {i < 2 && <span style={{ color: "rgba(255,255,255,0.15)", fontSize: "12px" }}>→</span>}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* CTA */}
+            <button
+              onClick={() => window.location.href = "/breeding-calculator"}
+              className="w-full py-2 rounded-lg text-center"
+              style={{
+                fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.08em",
+                background: "linear-gradient(135deg, #dc2626, #991b1b)", color: "#fff",
+                border: "1px solid rgba(239,68,68,0.3)",
+                boxShadow: "0 4px 20px rgba(220,38,38,0.2)",
+                cursor: "pointer", transition: "all 0.2s",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 6px 30px rgba(220,38,38,0.35)"; e.currentTarget.style.transform = "translateY(-1px)"; }}
+              onMouseLeave={e => { e.currentTarget.style.boxShadow = "0 4px 20px rgba(220,38,38,0.2)"; e.currentTarget.style.transform = "translateY(0)"; }}>
+              {isLive ? "Open Breeding Calculator" : "Try Breeding Calculator"}
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [pricingOpen, setPricingOpen] = useState(false);
@@ -267,14 +479,14 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── Bloodline Heat Map ── */}
+        {/* ── Breeding Calculator ── */}
         <section id="heatmap" className="py-5 px-4">
           <div className="max-w-5xl mx-auto">
             <h2 className="subtitle-gold text-center mb-0.5" style={{ fontFamily: "var(--font-table)", fontWeight: 500, fontSize: "clamp(0.95rem, 2vw, 1.25rem)" }}>
-              Bloodline Heat Map
+              Breeding Calculator
             </h2>
             <p className="text-center mb-3" style={{ color: "rgba(180,180,195,0.7)", fontFamily: "var(--font-table)", fontSize: "10px", fontWeight: 400 }}>
-              See the DNA, not just the names — raw visual truth
+              Know Your Cross Before You Make It
             </p>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
@@ -291,46 +503,37 @@ export default function Home() {
                 </div>
                 <div className="flex justify-center">
                   <svg width="180" height="180" viewBox="0 0 220 220">
-                    {/* Pie slices — Champion Jeep 31%, Red Boy 22%, Eli Jr 15%, Carver 12%, Other 20% */}
-                    {/* Jeep - Red Hot (0 to 111.6deg) */}
                     <circle cx="110" cy="110" r="85" fill="none" stroke="#ef4444" strokeWidth="45"
                       strokeDasharray={`${31 * 5.34} ${100 * 5.34}`} strokeDashoffset="0"
                       transform="rotate(-90 110 110)"
                       style={{ filter: "drop-shadow(0 0 8px rgba(239,68,68,0.4))" }} />
-                    {/* Red Boy - Blue (111.6 to 190.8deg) */}
                     <circle cx="110" cy="110" r="85" fill="none" stroke="#3b82f6" strokeWidth="45"
                       strokeDasharray={`${22 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(31) * 5.34}`}
                       transform="rotate(-90 110 110)"
                       style={{ filter: "drop-shadow(0 0 8px rgba(59,130,246,0.3))" }} />
-                    {/* Eli Jr - Purple */}
                     <circle cx="110" cy="110" r="85" fill="none" stroke="#a855f7" strokeWidth="45"
                       strokeDasharray={`${15 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(31 + 22) * 5.34}`}
                       transform="rotate(-90 110 110)"
                       style={{ filter: "drop-shadow(0 0 6px rgba(168,85,247,0.3))" }} />
-                    {/* Carver - Gold */}
                     <circle cx="110" cy="110" r="85" fill="none" stroke="#d4a855" strokeWidth="45"
                       strokeDasharray={`${12 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(31 + 22 + 15) * 5.34}`}
                       transform="rotate(-90 110 110)"
                       style={{ filter: "drop-shadow(0 0 6px rgba(212,168,85,0.3))" }} />
-                    {/* Other - Gray */}
                     <circle cx="110" cy="110" r="85" fill="none" stroke="rgba(120,120,140,0.5)" strokeWidth="45"
                       strokeDasharray={`${20 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(31 + 22 + 15 + 12) * 5.34}`}
                       transform="rotate(-90 110 110)" />
-                    {/* Center circle */}
                     <circle cx="110" cy="110" r="62" fill="rgba(14,15,20,0.95)" />
-                    {/* Center text */}
                     <text x="110" y="100" textAnchor="middle" fill="#fff" style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "22px" }}>31%</text>
                     <text x="110" y="118" textAnchor="middle" fill="#ef4444" style={{ fontFamily: "var(--font-table)", fontWeight: 500, fontSize: "10px", letterSpacing: "0.05em" }}>JEEP DOMINANT</text>
                     <text x="110" y="134" textAnchor="middle" fill="rgba(180,180,195,0.6)" style={{ fontFamily: "var(--font-table)", fontWeight: 400, fontSize: "9px" }}>4-gen analysis</text>
                   </svg>
                 </div>
-                {/* Legend */}
                 <div className="grid grid-cols-2 gap-x-3 gap-y-1 mt-2">
                   {[
-                    { name: "CH Jeep", pct: "31%", color: "#ef4444", label: "Red Zone" },
-                    { name: "Red Boy", pct: "22%", color: "#3b82f6", label: "Blue Glow" },
-                    { name: "Eli Jr", pct: "15%", color: "#a855f7", label: "Purple" },
-                    { name: "Carver", pct: "12%", color: "#d4a855", label: "Gold" },
+                    { name: "CH Jeep", pct: "31%", color: "#ef4444" },
+                    { name: "Red Boy", pct: "22%", color: "#3b82f6" },
+                    { name: "Eli Jr", pct: "15%", color: "#a855f7" },
+                    { name: "Carver", pct: "12%", color: "#d4a855" },
                   ].map((b, i) => (
                     <div key={i} className="flex items-center gap-2">
                       <div className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ background: b.color, boxShadow: `0 0 6px ${b.color}40` }} />
@@ -343,7 +546,6 @@ export default function Home() {
 
               {/* Info & Warnings */}
               <div className="flex flex-col gap-2">
-                {/* Inbreeding Alert */}
                 <div className="rounded-lg p-3"
                   style={{
                     background: "linear-gradient(160deg, rgba(239,68,68,0.08) 0%, rgba(14,15,20,0.98) 100%)",
@@ -361,7 +563,6 @@ export default function Home() {
                   </p>
                 </div>
 
-                {/* Breeder Insights */}
                 <div className="rounded-lg p-3"
                   style={{
                     background: "linear-gradient(160deg, rgba(25,27,35,0.95) 0%, rgba(14,15,20,0.98) 100%)",
@@ -386,7 +587,6 @@ export default function Home() {
                   </ul>
                 </div>
 
-                {/* How it works */}
                 <div className="rounded-lg p-3"
                   style={{
                     background: "linear-gradient(160deg, rgba(25,27,35,0.95) 0%, rgba(14,15,20,0.98) 100%)",
@@ -399,11 +599,11 @@ export default function Home() {
                     {[
                       { step: "1", text: "Enter parents" },
                       { step: "2", text: "We crunch 16 ancestors" },
-                      { step: "3", text: "Heat map lights up" },
+                      { step: "3", text: "Results light up" },
                     ].map((s, i) => (
                       <div key={i} className="flex-1 flex items-center gap-1.5">
                         <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0"
-                          style={{ background: "linear-gradient(135deg, var(--accent-red), #991b1b)", fontSize: "9px", fontWeight: 700, fontFamily: "var(--font-table)", color: "#fff" }}>
+                          style={{ background: "linear-gradient(135deg, var(--accent-red, #dc2626), #991b1b)", fontSize: "9px", fontWeight: 700, fontFamily: "var(--font-table)", color: "#fff" }}>
                           {s.step}
                         </div>
                         <span style={{ fontFamily: "var(--font-table)", fontSize: "9px", color: "rgba(200,200,210,0.8)", fontWeight: 500 }}>{s.text}</span>
@@ -413,9 +613,8 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* CTA */}
                 <button
-                  onClick={() => setAuthModal(true)}
+                  onClick={() => window.location.href = "/breeding-calculator"}
                   className="w-full py-2 rounded-lg text-center"
                   style={{
                     fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.08em",
@@ -426,7 +625,7 @@ export default function Home() {
                   }}
                   onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 6px 30px rgba(220,38,38,0.35)"; e.currentTarget.style.transform = "translateY(-1px)"; }}
                   onMouseLeave={e => { e.currentTarget.style.boxShadow = "0 4px 20px rgba(220,38,38,0.2)"; e.currentTarget.style.transform = "translateY(0)"; }}>
-                  Try Bloodline Heat Map
+                  Try Breeding Calculator
                 </button>
               </div>
             </div>
