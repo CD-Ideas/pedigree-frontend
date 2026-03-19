@@ -274,6 +274,7 @@ export default function PedigreeLabPage() {
   });
   const [selectedSlot, setSelectedSlot] = useState<SlotKey | null>(null);
   const [dragData, setDragData] = useState<DogSearchResult | null>(null);
+  const [dragSourceSlot, setDragSourceSlot] = useState<SlotKey | null>(null);
 
   /* ---------- UI state ---------- */
   const [previewMode, setPreviewMode] = useState(false);
@@ -373,10 +374,49 @@ export default function PedigreeLabPage() {
   /* ---------- Drag handlers ---------- */
   const handleDragStart = (dog: DogSearchResult) => {
     setDragData(dog);
+    setDragSourceSlot(null);
+  };
+
+  const handleSlotDragStart = (slotKey: SlotKey) => {
+    const dog = slots[slotKey];
+    if (!dog) return;
+    setDragData({ dog_id: dog.dog_id, registered_name: dog.registered_name, photo_url: dog.photo_url, sex: dog.sex });
+    setDragSourceSlot(slotKey);
+  };
+
+  /* Helper: get all descendant slot keys for a given slot */
+  const getDescendantSlots = (slot: SlotKey): SlotKey[] => {
+    const mapping = CHILD_TO_PARENTS[slot];
+    if (!mapping) return [];
+    const children = [mapping.sireSlot, mapping.damSlot];
+    return [...children, ...children.flatMap(getDescendantSlots)];
   };
 
   const handleDrop = (slotKey: SlotKey) => {
     if (!dragData) return;
+    if (dragSourceSlot) {
+      // Slot-to-slot: move/swap with auto-fill
+      if (dragSourceSlot === slotKey) { setDragData(null); setDragSourceSlot(null); return; }
+      const srcDog = slots[dragSourceSlot];
+      const tgtDog = slots[slotKey];
+      // Clear descendant slots of both source and target
+      const srcDescendants = getDescendantSlots(dragSourceSlot);
+      const tgtDescendants = getDescendantSlots(slotKey);
+      const clearSlots: Partial<Record<SlotKey, SlotDog | null>> = {};
+      for (const s of [...srcDescendants, ...tgtDescendants]) clearSlots[s] = null;
+      setSlots((prev) => ({
+        ...prev,
+        ...clearSlots,
+        [slotKey]: srcDog,
+        [dragSourceSlot!]: tgtDog || null,
+      }));
+      // Auto-fill parents behind moved dogs in their new positions
+      if (srcDog) autoFillParents(srcDog.dog_id, slotKey);
+      if (tgtDog) autoFillParents(tgtDog.dog_id, dragSourceSlot!);
+      setDragData(null);
+      setDragSourceSlot(null);
+      return;
+    }
     setSlots((prev) => ({
       ...prev,
       [slotKey]: {
@@ -393,13 +433,17 @@ export default function PedigreeLabPage() {
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
-    e.dataTransfer.dropEffect = "copy";
+    e.dataTransfer.dropEffect = dragSourceSlot ? "move" : "copy";
   };
 
   const removeFromSlot = (slotKey: SlotKey) => {
-    setSlots((prev) => ({ ...prev, [slotKey]: null }));
-    if (selectedSlot === slotKey) setSelectedSlot(null);
+    const descendants = getDescendantSlots(slotKey);
+    const clearSlots: Partial<Record<SlotKey, SlotDog | null>> = { [slotKey]: null };
+    for (const s of descendants) clearSlots[s] = null;
+    setSlots((prev) => ({ ...prev, ...clearSlots }));
+    if (selectedSlot === slotKey || descendants.includes(selectedSlot as SlotKey)) setSelectedSlot(null);
   };
+
 
   /* ---------- Publish modal helpers ---------- */
   const handleRabiesDateChange = (date: string) => {
@@ -551,7 +595,7 @@ export default function PedigreeLabPage() {
                     onDragStart={() => handleDragStart(dog)}
                     className="rounded-lg p-2.5 cursor-grab active:cursor-grabbing transition-all hover:scale-[1.02]"
                     style={{
-                      background: "var(--bg-elevated, #1c2740)",
+                      background: `linear-gradient(135deg, ${titleColor}15, ${titleColor}08, #0b1120)`,
                       border: `1px solid ${titleColor}33`,
                       boxShadow: `0 0 0 0 ${titleColor}00`,
                     }}
@@ -591,11 +635,11 @@ export default function PedigreeLabPage() {
                           {dog.registered_name}
                         </p>
                         <p className="text-[10px]" style={{ color: "#5a6a82" }}>
-                          <span style={{ color: dog.sex?.toUpperCase() === "FEMALE" ? "#f472b6" : "#60a5fa" }}>{sexIcon(dog.sex)}</span> ID: {dog.dog_id}
+                          <span style={{ color: dog.sex?.toUpperCase() === "FEMALE" ? "#f472b6" : "#60a5fa" }}>{sexIcon(dog.sex)}</span> <span style={{ color: "#d4a855", fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}>ID: {dog.dog_id}</span>
                         </p>
                       </div>
                       {/* Drag indicator */}
-                      <span className="text-[10px]" style={{ color: "#3a4a62" }}>
+                      <span className="text-[10px]" style={{ color: "#d4a855" }}>
                         {"\u2630"}
                       </span>
                     </div>
@@ -875,6 +919,7 @@ export default function PedigreeLabPage() {
                     onDrop={handleDrop}
                     onDragOver={handleDragOver}
                     onRemove={removeFromSlot}
+                    onSlotDragStart={handleSlotDragStart}
                   />
                 </div>
 
@@ -913,6 +958,7 @@ export default function PedigreeLabPage() {
                     onDrop={handleDrop}
                     onDragOver={handleDragOver}
                     onRemove={removeFromSlot}
+                    onSlotDragStart={handleSlotDragStart}
                     accentColor="#60a5fa"
                   />
                   {/* Dam */}
@@ -929,6 +975,7 @@ export default function PedigreeLabPage() {
                     onDrop={handleDrop}
                     onDragOver={handleDragOver}
                     onRemove={removeFromSlot}
+                    onSlotDragStart={handleSlotDragStart}
                     accentColor="#f472b6"
                   />
                 </div>
@@ -953,6 +1000,7 @@ export default function PedigreeLabPage() {
                     onDrop={handleDrop}
                     onDragOver={handleDragOver}
                     onRemove={removeFromSlot}
+                    onSlotDragStart={handleSlotDragStart}
                     accentColor="#60a5fa"
                     size="sm"
                   />
@@ -969,6 +1017,7 @@ export default function PedigreeLabPage() {
                     onDrop={handleDrop}
                     onDragOver={handleDragOver}
                     onRemove={removeFromSlot}
+                    onSlotDragStart={handleSlotDragStart}
                     accentColor="#f472b6"
                     size="sm"
                   />
@@ -985,6 +1034,7 @@ export default function PedigreeLabPage() {
                     onDrop={handleDrop}
                     onDragOver={handleDragOver}
                     onRemove={removeFromSlot}
+                    onSlotDragStart={handleSlotDragStart}
                     accentColor="#60a5fa"
                     size="sm"
                   />
@@ -1001,6 +1051,7 @@ export default function PedigreeLabPage() {
                     onDrop={handleDrop}
                     onDragOver={handleDragOver}
                     onRemove={removeFromSlot}
+                    onSlotDragStart={handleSlotDragStart}
                     accentColor="#f472b6"
                     size="sm"
                   />
@@ -1946,6 +1997,7 @@ function DropZone({
   onDrop,
   onDragOver,
   onRemove,
+  onSlotDragStart,
   accentColor,
   size = "md",
 }: {
@@ -1961,6 +2013,7 @@ function DropZone({
   onDrop: (key: SlotKey) => void;
   onDragOver: (e: React.DragEvent) => void;
   onRemove: (key: SlotKey) => void;
+  onSlotDragStart?: (key: SlotKey) => void;
   accentColor?: string;
   size?: "sm" | "md";
 }) {
@@ -1973,13 +2026,13 @@ function DropZone({
   if (dog) {
     return (
       <div
-        className={`rounded-xl cursor-pointer transition-all ${selected ? "ring-2" : ""}`}
+        className={`rounded-xl cursor-pointer transition-all relative ${selected ? "ring-2" : ""}`}
         style={{
           width: isSm ? 140 : 155,
           padding: isSm ? 8 : 12,
           background: selected
             ? "rgba(212,168,85,0.08)"
-            : "var(--bg-elevated, #1c2740)",
+            : `linear-gradient(135deg, ${titleColor}15, ${titleColor}08, #0b1120)`,
           border: `1.5px solid ${selected ? "#d4a855" : titleColor + "44"}`,
           boxShadow: selected
             ? "0 0 15px rgba(212,168,85,0.15)"
@@ -2039,18 +2092,58 @@ function DropZone({
         <p className="text-center text-[8px] mt-0.5" style={{ color: "#3a4a62" }}>
           {label}
         </p>
-        {/* Remove button */}
+        {/* Remove X button - top right */}
         {!preview && (
           <button
             onClick={(e) => {
               e.stopPropagation();
               onRemove(slotKey);
             }}
-            className="block mx-auto mt-1 text-[8px] hover:text-red-400 transition-colors"
-            style={{ color: "#5a6a82" }}
+            className="absolute flex items-center justify-center rounded-full hover:scale-110 transition-all"
+            style={{
+              top: -6,
+              right: -6,
+              width: 18,
+              height: 18,
+              fontSize: 10,
+              fontWeight: 800,
+              color: "#fff",
+              background: "rgba(220,38,38,0.85)",
+              border: "1.5px solid rgba(255,255,255,0.3)",
+              boxShadow: "0 1px 4px rgba(0,0,0,0.3)",
+              lineHeight: 1,
+            }}
           >
-            remove
+            ✕
           </button>
+        )}
+        {/* Drag handle - top left */}
+        {!preview && onSlotDragStart && (
+          <div
+            draggable
+            onDragStart={(e) => {
+              e.stopPropagation();
+              onSlotDragStart(slotKey);
+            }}
+            className="absolute flex items-center justify-center cursor-grab active:cursor-grabbing hover:scale-110 transition-all"
+            style={{
+              top: -4,
+              left: -4,
+              width: 18,
+              height: 18,
+              fontSize: 11,
+              color: "#d4a855",
+              background: "rgba(11,17,32,0.9)",
+              border: "1.5px solid rgba(212,168,85,0.5)",
+              borderRadius: "4px",
+              boxShadow: "0 1px 4px rgba(0,0,0,0.3)",
+              lineHeight: 1,
+              fontFamily: "var(--font-mono, monospace)",
+            }}
+            title="Drag to move"
+          >
+            ☰
+          </div>
         )}
       </div>
     );
