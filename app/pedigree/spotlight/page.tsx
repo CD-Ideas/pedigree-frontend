@@ -80,11 +80,13 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
           }
         }
       }
-      // Count occurrences (a famous dog can appear multiple times in pedigree)
+      // Count occurrences and track generations
       for (const m of matches) {
-        m.count = pedigree.filter((a: { ancestor_id: number; ancestor_name: string }) =>
+        const found = pedigree.filter((a: { ancestor_id: number; ancestor_name: string; generation: number }) =>
           a.ancestor_id === m.id || (a.ancestor_name && a.ancestor_name.toUpperCase().includes(m.name.toUpperCase()))
-        ).length;
+        );
+        m.count = found.length;
+        (m as any).gens = found.map((a: { generation: number }) => a.generation).sort((a: number, b: number) => a - b);
       }
       matches.sort((a, b) => b.count - a.count);
 
@@ -209,9 +211,16 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
                 <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-[9px]"
                      style={{ background: "var(--bg-deep)", border: "1px solid var(--border)" }}>🐕</div>
               )}
-              <span className="text-xs font-semibold truncate flex-1" style={{ color: s.color, fontFamily: "var(--font-table)" }}>{s.name}</span>
-              <span className="text-sm font-bold" style={{ color: s.color, fontFamily: "var(--font-mono)" }}>{s.count}x</span>
-              <span className="text-xs font-bold" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-mono)" }}>({((s.count / total) * 100).toFixed(1)}%)</span>
+              <div className="flex-1 min-w-0">
+                <span className="text-xs font-semibold truncate block" style={{ color: s.color, fontFamily: "var(--font-table)" }}>{s.name}</span>
+                {(s as any).gens && (s as any).gens.length > 0 && (
+                  <span className="text-[9px] block mt-0.5" style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
+                    Gen: {(s as any).gens.join(",")}
+                  </span>
+                )}
+              </div>
+              <span className="text-sm font-bold flex-shrink-0" style={{ color: s.color, fontFamily: "var(--font-mono)" }}>{s.count}x</span>
+              <span className="text-xs font-bold flex-shrink-0" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-mono)" }}>({((s.count / total) * 100).toFixed(1)}%)</span>
             </div>
           ))}
         </div>

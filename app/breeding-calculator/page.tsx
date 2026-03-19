@@ -121,9 +121,16 @@ function SectionHeader({ children, color }: { children: React.ReactNode; color?:
 /* ------------------------------------------------------------------ */
 function TachoGauge({ coi }: { coi: number }) {
   const clampedCoi = Math.min(coi, 35);
-  const angle = -135 + (clampedCoi / 35) * 270;
+  const targetAngle = -135 + (clampedCoi / 35) * 270;
   const color = riskColor(coi);
   const danger = coi >= 20;
+  const [angle, setAngle] = useState(-135);
+
+  useEffect(() => {
+    setAngle(-135);
+    const timer = setTimeout(() => setAngle(targetAngle), 150);
+    return () => clearTimeout(timer);
+  }, [targetAngle]);
 
   return (
     <div className="relative flex flex-col items-center">
@@ -138,22 +145,9 @@ function TachoGauge({ coi }: { coi: number }) {
           </linearGradient>
         </defs>
         {/* Track */}
-        <path
-          d="M 30 160 A 110 110 0 0 1 250 160"
-          fill="none"
-          stroke="rgba(255,255,255,0.06)"
-          strokeWidth="18"
-          strokeLinecap="round"
-        />
+        <path d="M 30 160 A 110 110 0 0 1 250 160" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="18" strokeLinecap="round" />
         {/* Colored arc */}
-        <path
-          d="M 30 160 A 110 110 0 0 1 250 160"
-          fill="none"
-          stroke="url(#gaugeGrad)"
-          strokeWidth="18"
-          strokeLinecap="round"
-          opacity="0.7"
-        />
+        <path d="M 30 160 A 110 110 0 0 1 250 160" fill="none" stroke="url(#gaugeGrad)" strokeWidth="18" strokeLinecap="round" opacity="0.7" />
         {/* Tick marks */}
         {[0, 5, 10, 15, 20, 25, 30, 35].map((val) => {
           const a = (-135 + (val / 35) * 270) * (Math.PI / 180);
@@ -166,9 +160,7 @@ function TachoGauge({ coi }: { coi: number }) {
           return (
             <g key={val}>
               <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
-              <text x={tx} y={ty} textAnchor="middle" dominantBaseline="middle" fill="rgba(255,255,255,0.3)" fontSize="9" fontFamily="var(--font-mono)">
-                {val}%
-              </text>
+              <text x={tx} y={ty} textAnchor="middle" dominantBaseline="middle" fill="var(--accent-gold)" fontSize="9" fontFamily="var(--font-mono)">{val}%</text>
             </g>
           );
         })}
@@ -630,8 +622,8 @@ export default function BreedingCalculatorPage() {
                   style={{
                     fontFamily: "var(--font-table)",
                     background: genDepth === g ? "var(--accent-gold-glow-strong)" : "var(--bg-elevated)",
-                    color: genDepth === g ? "var(--accent-gold)" : "var(--text-secondary)",
-                    border: genDepth === g ? "1px solid rgba(212,168,85,0.3)" : "1px solid var(--border)",
+                    color: genDepth === g ? "var(--accent-gold)" : "rgba(212,168,85,0.5)",
+                    border: genDepth === g ? "1px solid rgba(212,168,85,0.3)" : "1px solid rgba(212,168,85,0.15)",
                   }}>
                   {g}G
                 </button>
