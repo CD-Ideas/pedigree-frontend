@@ -5,6 +5,7 @@ import Link from "next/link";
 
 const LOGO = "https://i.imgur.com/cAvQemZ.png";
 
+
 interface FamousDog { id: number; name: string; photo_url: string | null; view_count: number; }
 interface LineagePath { gen: number; path: string; }
 interface SpotlightResult {
@@ -396,25 +397,23 @@ export default function SpotlightPage() {
       <div className="ambient-bg" />
 
       {/* ── Nav ── */}
-      <nav className="sticky top-0 z-50 px-4 md:px-6 py-2.5 flex items-center justify-between"
-           style={{ background: "rgba(11,17,32,0.95)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(220,38,38,0.1)" }}>
-        <Link href="/" className="flex items-center gap-2">
-          <img src={LOGO} alt="Logo" className="w-8 h-8 rounded-full" />
+      <nav className="sticky top-0 z-50"
+           style={{ background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)", backdropFilter: "blur(20px)", borderBottom: "1.5px solid rgba(30,64,120,0.8)" }}>
+        <div className="max-w-[1600px] mx-auto px-6 flex items-center justify-between h-14">
+        <Link href="/" className="flex items-center gap-3">
+          <img src={LOGO} alt="Logo" className="w-8 h-8 rounded-lg" />
           <span className="font-bold" style={{
-            fontFamily: "var(--font-display)", fontSize: "1.25rem",
-            background: "linear-gradient(135deg, #d4a853, #f5d78e, #d4a853)",
+            fontFamily: "var(--font-display)", fontSize: "1.25rem", fontWeight: 700, letterSpacing: "0.02em",
+            background: "linear-gradient(135deg, #e8c86e, #d4a855, #b8860b)",
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
           }}>Pedigree Platform</span>
         </Link>
         <div className="flex items-center gap-3">
-          <Link href="/pedigree/spotlight" className="text-xs px-3 py-1.5 rounded-lg font-semibold"
-                style={{ background: "var(--accent-gold-glow-strong)", color: "var(--accent-gold)", fontFamily: "var(--font-table)", border: "1px solid rgba(212,168,85,0.2)" }}>
-            🔬 Lineage Spotlight
-          </Link>
           <Link href="/login" className="text-xs px-3 py-1.5 rounded-lg font-semibold transition-all hover:scale-105"
                 style={{ background: "linear-gradient(135deg, var(--accent-red), #991b1b)", color: "#fff", fontFamily: "var(--font-table)" }}>
             Sign In
           </Link>
+        </div>
         </div>
       </nav>
 
