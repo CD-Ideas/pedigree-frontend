@@ -25,7 +25,7 @@ search = base64.b64decode("${searchB64}").decode("utf-8")
 conn = sqlite3.connect("${DB_PATH}")
 conn.row_factory = sqlite3.Row
 c = conn.cursor()
-c.execute("SELECT dog_id, registered_name, photo_url FROM dogs WHERE registered_name LIKE ? ORDER BY view_count DESC LIMIT ?", ('%' + search + '%', ${limit}))
+c.execute("SELECT dog_id, registered_name, photo_url, sex FROM dogs WHERE registered_name LIKE ? ORDER BY view_count DESC LIMIT ?", ('%' + search + '%', ${limit}))
 rows = [dict(r) for r in c.fetchall()]
 conn.close()
 print(json.dumps(rows))
