@@ -28,7 +28,7 @@ export default function NavBar() {
   }, [pathname]); // re-check on every navigation
 
   // Don't show navbar on landing, login, register, or pedigree pages (pedigree has its own header)
-  if (pathname === "/" || pathname === "/login" || pathname === "/register" || pathname.startsWith("/pedigree")) return null;
+  if (pathname === "/" || pathname === "/login" || pathname === "/register" || pathname.startsWith("/pedigree") || pathname.startsWith("/breeding-calculator")) return null;
 
   const handleLogout = () => {
     localStorage.removeItem("token");

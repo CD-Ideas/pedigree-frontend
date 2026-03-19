@@ -1089,9 +1089,9 @@ export default function PublicPedigreePage() {
           {titles.length > 0 && (
             <div className="h-0.5 -mx-4 -mt-2 mb-2 rounded-t-lg" style={{ background: "linear-gradient(90deg, var(--accent-red), var(--accent-gold), var(--accent-red))" }} />
           )}
-          <Link href="/dogs" className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold hover:underline transition-colors flex items-center gap-1"
+          <Link href="/" className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold hover:underline transition-colors flex items-center gap-1"
                 style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
-            ← Back to Dogs
+            ← Back to Home
           </Link>
           <h1 className="text-center" style={{
             fontFamily: "var(--font-display)", fontWeight: 700,

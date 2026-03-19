@@ -399,7 +399,7 @@ export default function Home() {
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
               {[
-                { icon: "🌳", title: "Pedigree Trees", desc: "Multi-generation interactive lineage visualization", color: "#22c55e", glow: "0,200,80", href: "/pedigree/3" },
+                { icon: "🌳", title: "Pedigree Trees", desc: "Multi-generation interactive lineage visualization", color: "#22c55e", glow: "0,200,80", redirect: "/pedigree/3" },
                 { icon: "📋", title: "Dog Registry", desc: "Detailed profiles with titles, weights & records", color: "#3b82f6", glow: "59,130,246" },
                 { icon: "🔗", title: "Easy Sharing", desc: "Share via WhatsApp, Telegram with rich previews", color: "#a855f7", glow: "168,85,247" },
                 { icon: "🏆", title: "Title Tracking", desc: "CH, GR CH, ROM tracking across generations", color: "#d4a855", glow: "212,168,85" },
