@@ -35,11 +35,22 @@ interface VaccineEntry {
   date: string;
 }
 
+interface WormingEntry {
+  type: string;
+  otherType: string;
+  dateWormed: string;
+  nextDue: string;
+  intervalDays: number;
+  remindMe: boolean;
+}
+
 interface JournalData {
   rabiesDate: string;
   rabiesNextDue: string;
   avidChip: string;
   vaccines: VaccineEntry[];
+  worming: WormingEntry[];
+  wormingDraft: WormingEntry;
   notes: string;
 }
 
@@ -111,7 +122,7 @@ function getDogColor(name: string): string {
     if (num === 2) return "#fb923c"; // orange
     if (num === 1) return "#2dd4bf"; // teal
   }
-  return "#b0bece"; // silver for no title
+  return "#e2e8f0"; // white for no title
 }
 
 function sexIcon(sex?: string): string {
@@ -161,6 +172,24 @@ function calcCOI(slots: Record<SlotKey, SlotDog | null>): number {
   return sharedCount * 6.25;
 }
 
+function defaultWormingDraft(): WormingEntry {
+  const today = new Date().toISOString().split("T")[0];
+  return { type: "", otherType: "", dateWormed: today, nextDue: "", intervalDays: 0, remindMe: false };
+}
+
+function calcWormingDue(dateWormed: string, days: number): string {
+  if (!dateWormed || !days) return "";
+  const d = new Date(dateWormed);
+  d.setDate(d.getDate() + days);
+  return d.toISOString().split("T")[0];
+}
+
+function formatDateShort(iso: string): string {
+  if (!iso) return "";
+  const d = new Date(iso + "T00:00:00");
+  return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+}
+
 function defaultJournal(): JournalData {
   return {
     rabiesDate: "",
@@ -170,8 +199,9 @@ function defaultJournal(): JournalData {
       { name: "DHPP", checked: false, date: "" },
       { name: "Bordetella", checked: false, date: "" },
       { name: "Leptospirosis", checked: false, date: "" },
-      { name: "Worming", checked: false, date: "" },
     ],
+    worming: [],
+    wormingDraft: defaultWormingDraft(),
     notes: "",
   };
 }
@@ -561,7 +591,7 @@ export default function PedigreeLabPage() {
                           {dog.registered_name}
                         </p>
                         <p className="text-[10px]" style={{ color: "#5a6a82" }}>
-                          {sexIcon(dog.sex)} ID: {dog.dog_id}
+                          <span style={{ color: dog.sex?.toUpperCase() === "FEMALE" ? "#f472b6" : "#60a5fa" }}>{sexIcon(dog.sex)}</span> ID: {dog.dog_id}
                         </p>
                       </div>
                       {/* Drag indicator */}
@@ -594,7 +624,7 @@ export default function PedigreeLabPage() {
                 <div className="flex items-center gap-3">
                   <span
                     className="text-sm font-bold uppercase tracking-widest"
-                    style={{ color: "#e8ecf1", fontFamily: "var(--font-display, Oswald, sans-serif)" }}
+                    style={{ fontFamily: "var(--font-display, Oswald, sans-serif)", background: "linear-gradient(135deg, #d4a855 0%, #f5d994 50%, #d4a855 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
                   >
                     Pedigree Preview
                   </span>
@@ -625,9 +655,11 @@ export default function PedigreeLabPage() {
                 <table
                   className="w-full"
                   style={{
-                    borderCollapse: "collapse",
+                    borderCollapse: "separate",
+                    borderSpacing: "3px 3px",
                     fontFamily: "var(--font-table, Rajdhani, sans-serif)",
                     tableLayout: "fixed",
+                    padding: 4,
                   }}
                 >
                   <thead>
@@ -639,8 +671,8 @@ export default function PedigreeLabPage() {
                           style={{
                             background: "linear-gradient(180deg, #1a1a24 0%, #141418 100%)",
                             color: "#e8ecf1",
-                            borderRight: "1px solid rgba(30,64,120,0.4)",
                             fontFamily: "var(--font-display, Oswald, sans-serif)",
+                            borderRadius: 4,
                           }}
                         >
                           {label}
@@ -650,153 +682,138 @@ export default function PedigreeLabPage() {
                   </thead>
                   <tbody>
                     {(() => {
-                      /* Build a structured 4-gen grid: gen1 has 2 rows, gen2 has 4, gen3 has 8, gen4 has 16
-                         But we display as: 16 rows total, each gen column spans accordingly */
-                      const TOTAL_ROWS = 16; // 2^4 for 4 gens
+                      const TOTAL_ROWS = 16;
                       const genData: Record<number, { pos: number; name: string; dog_id: number | null; sex: string | null }[]> = { 1: [], 2: [], 3: [], 4: [] };
                       for (const row of previewTree) {
                         if (genData[row.gen]) {
                           genData[row.gen].push({ pos: row.pos, name: row.name, dog_id: row.dog_id, sex: row.sex });
                         }
                       }
-                      // Sort each gen by position
                       for (const g of [1, 2, 3, 4]) {
                         genData[g].sort((a, b) => a.pos - b.pos);
                       }
 
-                      const rows: React.ReactNode[] = [];
+                      function getCellStyle(name: string) {
+                        const n = (name || "").toUpperCase();
+                        const isGrCh = /\bGR\s*CH\b/.test(n);
+                        const isCh = !isGrCh && /(?:^|\s|\()CH\b/.test(n);
+                        const isRom = /\bROM\b/.test(n);
+                        const isPor = /\bPOR\b/.test(n);
+                        const xwMatch = n.match(/\b(\d+)X[WL]\b/);
+                        const xwNum = xwMatch ? parseInt(xwMatch[1]) : 0;
+                        const isChampion = isGrCh || isCh;
+
+                        const cellBg = isGrCh
+                          ? "linear-gradient(135deg, rgba(29,91,191,0.18), rgba(29,91,191,0.06), #ffffff)"
+                          : isCh
+                            ? "linear-gradient(135deg, rgba(192,40,40,0.15), rgba(192,40,40,0.05), #ffffff)"
+                            : xwNum === 3
+                              ? "linear-gradient(135deg, rgba(180,130,20,0.16), rgba(180,130,20,0.05), #ffffff)"
+                              : xwNum === 1
+                                ? "linear-gradient(135deg, rgba(13,116,104,0.14), rgba(13,116,104,0.04), #ffffff)"
+                                : xwNum === 2
+                                  ? "linear-gradient(135deg, rgba(234,88,12,0.14), rgba(234,88,12,0.04), #ffffff)"
+                                  : xwNum === 4
+                                    ? "linear-gradient(135deg, rgba(219,39,119,0.14), rgba(219,39,119,0.04), #ffffff)"
+                                    : xwNum >= 5
+                                      ? "linear-gradient(135deg, rgba(109,48,176,0.14), rgba(109,48,176,0.04), #ffffff)"
+                                      : isRom
+                                        ? "linear-gradient(135deg, rgba(34,211,238,0.14), rgba(34,211,238,0.04), #ffffff)"
+                                        : isPor
+                                          ? "linear-gradient(135deg, rgba(167,139,250,0.14), rgba(167,139,250,0.04), #ffffff)"
+                                          : "linear-gradient(135deg, #ffffff, #f7f8fa)";
+
+                        const cellBorder = isGrCh
+                          ? "rgba(29,91,191,0.75)"
+                          : isCh
+                            ? "rgba(192,40,40,0.7)"
+                            : xwNum === 3
+                              ? "rgba(160,115,15,0.7)"
+                              : xwNum === 1
+                                ? "rgba(13,116,104,0.65)"
+                                : xwNum === 2
+                                  ? "rgba(200,75,8,0.65)"
+                                  : xwNum === 4
+                                    ? "rgba(176,56,120,0.65)"
+                                    : xwNum >= 5
+                                      ? "rgba(109,48,176,0.65)"
+                                      : isRom
+                                        ? "rgba(34,211,238,0.65)"
+                                        : isPor
+                                          ? "rgba(167,139,250,0.65)"
+                                          : "rgba(180,185,195,0.4)";
+
+                        const cellTextColor = isGrCh
+                          ? "#1d5bbf"
+                          : isCh
+                            ? "#c02828"
+                            : xwNum === 1 ? "#0d7468" : xwNum === 2 ? "#b45a0a" : xwNum === 3 ? "#8a6518" : xwNum === 4 ? "#b03878" : xwNum >= 5 ? "#6d30b0"
+                              : isRom ? "#0e7490" : isPor ? "#6d28d9"
+                                : "#3a3a3a";
+
+                        return { cellBg, cellBorder, cellTextColor, isChampion };
+                      }
+
+                      function renderCell(dog: { name: string; dog_id: number | null } | undefined, gen: number, rSpan: number, key: string) {
+                        const name = dog?.name || "Unknown";
+                        const { cellBg, cellBorder, cellTextColor, isChampion } = getCellStyle(name);
+                        const fontSize = gen <= 2 ? 13 : gen === 3 ? 12 : 11;
+                        return (
+                          <td
+                            key={key}
+                            rowSpan={rSpan > 1 ? rSpan : undefined}
+                            className="align-middle relative"
+                            style={{
+                              background: cellBg,
+                              borderLeft: `4px solid ${cellBorder}`,
+                              borderTop: "1px solid rgba(255,255,255,0.8)",
+                              borderRadius: 6,
+                              boxShadow: "0 1px 4px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.03)",
+                              padding: "6px 10px",
+                              minHeight: 40,
+                              fontSize,
+                              fontWeight: isChampion ? 700 : 600,
+                              color: cellTextColor,
+                              fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+                              lineHeight: 1.1,
+                              textShadow: "0 0.5px 0 rgba(255,255,255,0.5)",
+                            }}
+                          >
+                            {isChampion && (
+                              <span
+                                className="absolute -top-0.5 -right-0.5 flex items-center justify-center rounded-full"
+                                style={{
+                                  fontSize: 9,
+                                  color: "#b8860b",
+                                  background: "linear-gradient(135deg, #fef3c7, #fde68a)",
+                                  width: 15,
+                                  height: 15,
+                                  boxShadow: "0 1px 3px rgba(0,0,0,0.15)",
+                                  border: "1px solid rgba(184,134,11,0.3)",
+                                }}
+                              >
+                                ★
+                              </span>
+                            )}
+                            {dog?.dog_id ? (
+                              <a href={`/pedigree/${dog.dog_id}`} className="hover:underline" style={{ color: cellTextColor, textDecoration: "none" }}>
+                                {name}
+                              </a>
+                            ) : name}
+                          </td>
+                        );
+                      }
+
+                      const tableRows: React.ReactNode[] = [];
                       for (let r = 0; r < TOTAL_ROWS; r++) {
                         const cells: React.ReactNode[] = [];
-
-                        // Gen 1: 2 entries, each spans 8 rows
-                        if (r % 8 === 0) {
-                          const idx = Math.floor(r / 8);
-                          const dog = genData[1]?.[idx];
-                          const name = dog?.name || "Unknown";
-                          const color = getDogColor(name);
-                          const tintBg = `${color}12`;
-                          cells.push(
-                            <td
-                              key="g1"
-                              rowSpan={8}
-                              className="text-center align-middle px-2"
-                              style={{
-                                fontSize: 13,
-                                fontWeight: 700,
-                                color,
-                                background: `linear-gradient(135deg, ${tintBg}, ${color}08)`,
-                                borderRight: "1px solid rgba(30,64,120,0.3)",
-                                borderBottom: "1px solid rgba(30,64,120,0.2)",
-                                minHeight: 40,
-                                fontFamily: "var(--font-table, Rajdhani, sans-serif)",
-                              }}
-                            >
-                              {dog?.dog_id ? (
-                                <a href={`/pedigree/${dog.dog_id}`} style={{ color, textDecoration: "none" }}>
-                                  {name}
-                                </a>
-                              ) : name}
-                            </td>
-                          );
-                        }
-
-                        // Gen 2: 4 entries, each spans 4 rows
-                        if (r % 4 === 0) {
-                          const idx = Math.floor(r / 4);
-                          const dog = genData[2]?.[idx];
-                          const name = dog?.name || "Unknown";
-                          const color = getDogColor(name);
-                          const tintBg = `${color}12`;
-                          cells.push(
-                            <td
-                              key="g2"
-                              rowSpan={4}
-                              className="text-center align-middle px-2"
-                              style={{
-                                fontSize: 13,
-                                fontWeight: 700,
-                                color,
-                                background: `linear-gradient(135deg, ${tintBg}, ${color}08)`,
-                                borderRight: "1px solid rgba(30,64,120,0.3)",
-                                borderBottom: "1px solid rgba(30,64,120,0.2)",
-                                minHeight: 40,
-                                fontFamily: "var(--font-table, Rajdhani, sans-serif)",
-                              }}
-                            >
-                              {dog?.dog_id ? (
-                                <a href={`/pedigree/${dog.dog_id}`} style={{ color, textDecoration: "none" }}>
-                                  {name}
-                                </a>
-                              ) : name}
-                            </td>
-                          );
-                        }
-
-                        // Gen 3: 8 entries, each spans 2 rows
-                        if (r % 2 === 0) {
-                          const idx = Math.floor(r / 2);
-                          const dog = genData[3]?.[idx];
-                          const name = dog?.name || "Unknown";
-                          const color = getDogColor(name);
-                          const tintBg = `${color}12`;
-                          cells.push(
-                            <td
-                              key="g3"
-                              rowSpan={2}
-                              className="text-center align-middle px-2"
-                              style={{
-                                fontSize: 12,
-                                fontWeight: 600,
-                                color,
-                                background: `linear-gradient(135deg, ${tintBg}, ${color}08)`,
-                                borderRight: "1px solid rgba(30,64,120,0.3)",
-                                borderBottom: "1px solid rgba(30,64,120,0.2)",
-                                minHeight: 40,
-                                fontFamily: "var(--font-table, Rajdhani, sans-serif)",
-                              }}
-                            >
-                              {dog?.dog_id ? (
-                                <a href={`/pedigree/${dog.dog_id}`} style={{ color, textDecoration: "none" }}>
-                                  {name}
-                                </a>
-                              ) : name}
-                            </td>
-                          );
-                        }
-
-                        // Gen 4: 16 entries, each spans 1 row
-                        {
-                          const dog = genData[4]?.[r];
-                          const name = dog?.name || "Unknown";
-                          const color = getDogColor(name);
-                          const tintBg = `${color}12`;
-                          cells.push(
-                            <td
-                              key="g4"
-                              className="text-center align-middle px-2"
-                              style={{
-                                fontSize: 11,
-                                fontWeight: 600,
-                                color,
-                                background: `linear-gradient(135deg, ${tintBg}, ${color}08)`,
-                                borderBottom: "1px solid rgba(30,64,120,0.2)",
-                                minHeight: 40,
-                                height: 36,
-                                fontFamily: "var(--font-table, Rajdhani, sans-serif)",
-                              }}
-                            >
-                              {dog?.dog_id ? (
-                                <a href={`/pedigree/${dog.dog_id}`} style={{ color, textDecoration: "none" }}>
-                                  {name}
-                                </a>
-                              ) : name}
-                            </td>
-                          );
-                        }
-
-                        rows.push(<tr key={r}>{cells}</tr>);
+                        if (r % 8 === 0) cells.push(renderCell(genData[1]?.[Math.floor(r / 8)], 1, 8, "g1"));
+                        if (r % 4 === 0) cells.push(renderCell(genData[2]?.[Math.floor(r / 4)], 2, 4, "g2"));
+                        if (r % 2 === 0) cells.push(renderCell(genData[3]?.[Math.floor(r / 2)], 3, 2, "g3"));
+                        cells.push(renderCell(genData[4]?.[r], 4, 1, "g4"));
+                        tableRows.push(<tr key={r}>{cells}</tr>);
                       }
-                      return rows;
+                      return tableRows;
                     })()}
                   </tbody>
                 </table>
@@ -1514,8 +1531,13 @@ export default function PedigreeLabPage() {
 
               {/* Journal Section */}
               <p
-                className="text-[10px] uppercase tracking-widest font-semibold"
-                style={{ color: "var(--accent-gold, #d4a855)", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
+                className="text-lg font-black uppercase tracking-widest"
+                style={{
+                  fontFamily: "var(--font-display, Oswald, sans-serif)",
+                  background: "linear-gradient(135deg, #d4a855 0%, #f5d994 50%, #d4a855 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}
               >
                 Journal
               </p>
@@ -1613,6 +1635,245 @@ export default function PedigreeLabPage() {
                     </div>
                   ))}
                 </div>
+              </div>
+
+              {/* Worming */}
+              <div>
+                <label
+                  className="block text-[10px] uppercase tracking-widest font-semibold mb-2"
+                  style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
+                >
+                  Worming
+                </label>
+
+                {/* Worming Draft Form */}
+                <div
+                  className="rounded-lg p-3 space-y-3"
+                  style={{ background: "var(--bg-deep, #0b1120)", border: "1px solid rgba(30,64,120,0.3)" }}
+                >
+                  {/* Type */}
+                  <select
+                    value={publishForm.journal.wormingDraft.type}
+                    onChange={(e) =>
+                      setPublishForm((p) => ({
+                        ...p,
+                        journal: { ...p.journal, wormingDraft: { ...p.journal.wormingDraft, type: e.target.value, otherType: "" } },
+                      }))
+                    }
+                    className="w-full rounded-lg px-3 py-2 text-xs outline-none"
+                    style={{
+                      background: "var(--bg-elevated, #1c2740)",
+                      border: "1px solid rgba(30,64,120,0.4)",
+                      color: "#e2e8f0",
+                      fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+                    }}
+                  >
+                    <option value="">Select Type</option>
+                    <option value="Ivermectin/Milbemycin">Ivermectin/Milbemycin (heartworm + round/hook)</option>
+                    <option value="Pyrantel">Pyrantel (round/hook)</option>
+                    <option value="Fenbendazole/Panacur">Fenbendazole/Panacur (broad + giardia)</option>
+                    <option value="Other">Other</option>
+                  </select>
+
+                  {/* Other text field */}
+                  {publishForm.journal.wormingDraft.type === "Other" && (
+                    <input
+                      type="text"
+                      placeholder="Specify type..."
+                      value={publishForm.journal.wormingDraft.otherType}
+                      onChange={(e) =>
+                        setPublishForm((p) => ({
+                          ...p,
+                          journal: { ...p.journal, wormingDraft: { ...p.journal.wormingDraft, otherType: e.target.value } },
+                        }))
+                      }
+                      className="w-full rounded-lg px-3 py-2 text-xs outline-none"
+                      style={{
+                        background: "var(--bg-elevated, #1c2740)",
+                        border: "1px solid rgba(30,64,120,0.4)",
+                        color: "#e2e8f0",
+                        fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+                      }}
+                    />
+                  )}
+
+                  {/* Date Wormed */}
+                  <div>
+                    <span className="text-[9px] uppercase tracking-widest font-semibold" style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}>
+                      Date Wormed
+                    </span>
+                    <input
+                      type="date"
+                      value={publishForm.journal.wormingDraft.dateWormed}
+                      onChange={(e) => {
+                        const dateWormed = e.target.value;
+                        const days = publishForm.journal.wormingDraft.intervalDays;
+                        setPublishForm((p) => ({
+                          ...p,
+                          journal: {
+                            ...p.journal,
+                            wormingDraft: {
+                              ...p.journal.wormingDraft,
+                              dateWormed,
+                              nextDue: calcWormingDue(dateWormed, days),
+                            },
+                          },
+                        }));
+                      }}
+                      className="w-full rounded-lg px-3 py-2 text-xs outline-none mt-1"
+                      style={{
+                        background: "var(--bg-elevated, #1c2740)",
+                        border: "1px solid rgba(30,64,120,0.4)",
+                        color: "#e2e8f0",
+                        fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
+                      }}
+                    />
+                  </div>
+
+                  {/* Next Due toggle buttons */}
+                  <div>
+                    <span className="text-[9px] uppercase tracking-widest font-semibold" style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}>
+                      Next Due
+                    </span>
+                    <div className="flex gap-2 mt-1">
+                      {[30, 60, 90].map((days) => (
+                        <button
+                          key={days}
+                          type="button"
+                          onClick={() => {
+                            const dateWormed = publishForm.journal.wormingDraft.dateWormed;
+                            setPublishForm((p) => ({
+                              ...p,
+                              journal: {
+                                ...p.journal,
+                                wormingDraft: {
+                                  ...p.journal.wormingDraft,
+                                  intervalDays: days,
+                                  nextDue: calcWormingDue(dateWormed, days),
+                                },
+                              },
+                            }));
+                          }}
+                          className="rounded-lg px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest transition-all"
+                          style={{
+                            fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+                            background: publishForm.journal.wormingDraft.intervalDays === days
+                              ? "rgba(212,168,85,0.2)"
+                              : "var(--bg-elevated, #1c2740)",
+                            color: publishForm.journal.wormingDraft.intervalDays === days
+                              ? "#d4a855"
+                              : "#5a6a82",
+                            border: `1px solid ${publishForm.journal.wormingDraft.intervalDays === days ? "rgba(212,168,85,0.5)" : "rgba(30,64,120,0.4)"}`,
+                          }}
+                        >
+                          {days} days
+                        </button>
+                      ))}
+                    </div>
+                    {publishForm.journal.wormingDraft.nextDue && (
+                      <p className="text-[10px] mt-1" style={{ color: "#22c55e", fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}>
+                        Due: {formatDateShort(publishForm.journal.wormingDraft.nextDue)}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Remind Me */}
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={publishForm.journal.wormingDraft.remindMe}
+                      onChange={() =>
+                        setPublishForm((p) => ({
+                          ...p,
+                          journal: { ...p.journal, wormingDraft: { ...p.journal.wormingDraft, remindMe: !p.journal.wormingDraft.remindMe } },
+                        }))
+                      }
+                      style={{ accentColor: "#d4a855" }}
+                    />
+                    <span className="text-[10px] uppercase tracking-widest font-semibold" style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}>
+                      Remind Me
+                    </span>
+                  </div>
+
+                  {/* Add Entry Button */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const draft = publishForm.journal.wormingDraft;
+                      if (!draft.type || !draft.dateWormed) return;
+                      setPublishForm((p) => ({
+                        ...p,
+                        journal: {
+                          ...p.journal,
+                          worming: [...p.journal.worming, { ...draft }],
+                          wormingDraft: defaultWormingDraft(),
+                        },
+                      }));
+                    }}
+                    className="w-full rounded-lg py-2 text-[10px] font-bold uppercase tracking-widest transition-all hover:scale-[1.02]"
+                    style={{
+                      fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+                      background: "rgba(212,168,85,0.15)",
+                      color: "#d4a855",
+                      border: "1px solid rgba(212,168,85,0.4)",
+                    }}
+                  >
+                    + Add Worming Entry
+                  </button>
+                </div>
+
+                {/* Worming History Table */}
+                {publishForm.journal.worming.length > 0 && (
+                  <div className="mt-3 space-y-1.5">
+                    {publishForm.journal.worming.map((entry, idx) => (
+                      <div
+                        key={idx}
+                        className="flex items-center justify-between rounded-lg px-3 py-2"
+                        style={{
+                          background: "var(--bg-deep, #0b1120)",
+                          border: "1px solid rgba(30,64,120,0.3)",
+                        }}
+                      >
+                        <div className="flex items-center gap-2">
+                          {entry.remindMe && (
+                            <span className="text-[9px] rounded-full px-1.5 py-0.5" style={{ background: "rgba(212,168,85,0.2)", color: "#d4a855" }}>
+                              {"\uD83D\uDD14"}
+                            </span>
+                          )}
+                          <span className="text-[10px] font-semibold" style={{ color: "#e2e8f0", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}>
+                            {entry.type === "Other" ? entry.otherType || "Other" : entry.type}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <span className="text-[10px]" style={{ color: "#e2e8f0", fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}>
+                            {formatDateShort(entry.dateWormed)}
+                          </span>
+                          {entry.nextDue && (
+                            <>
+                              <span className="text-[9px]" style={{ color: "#5a6a82" }}>→</span>
+                              <span className="text-[10px]" style={{ color: "#22c55e", fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}>
+                                Due: {formatDateShort(entry.nextDue)}
+                              </span>
+                            </>
+                          )}
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setPublishForm((p) => ({
+                                ...p,
+                                journal: { ...p.journal, worming: p.journal.worming.filter((_, i) => i !== idx) },
+                              }))
+                            }
+                            className="text-[10px] hover:text-red-400 transition-colors"
+                            style={{ color: "#5a6a82" }}
+                          >
+                            {"\u2716"}
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* Notes */}
