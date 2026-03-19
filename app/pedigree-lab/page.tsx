@@ -48,6 +48,8 @@ interface PublishForm {
   dob: string;
   sex: string;
   color: string;
+  country: string;
+  notes: string;
   photoFile: File | null;
   photoPreview: string;
   journal: JournalData;
@@ -153,6 +155,7 @@ function defaultJournal(): JournalData {
       { name: "DHPP", checked: false, date: "" },
       { name: "Bordetella", checked: false, date: "" },
       { name: "Leptospirosis", checked: false, date: "" },
+      { name: "Worming", checked: false, date: "" },
     ],
     notes: "",
   };
@@ -164,6 +167,8 @@ function defaultPublishForm(): PublishForm {
     dob: "",
     sex: "Male",
     color: "",
+    country: "",
+    notes: "",
     photoFile: null,
     photoPreview: "",
     journal: defaultJournal(),
@@ -1241,6 +1246,37 @@ export default function PedigreeLabPage() {
                   label="Color"
                   value={publishForm.color}
                   onChange={(v) => setPublishForm((p) => ({ ...p, color: v }))}
+                />
+              </div>
+
+              {/* Country */}
+              <ModalInput
+                label="Country"
+                value={publishForm.country}
+                onChange={(v) => setPublishForm((p) => ({ ...p, country: v }))}
+              />
+
+              {/* Notes */}
+              <div>
+                <label
+                  className="block text-[10px] uppercase tracking-widest font-semibold mb-2"
+                  style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
+                >
+                  Notes
+                </label>
+                <textarea
+                  rows={3}
+                  className="w-full rounded-lg px-3 py-2 text-sm outline-none transition-all focus:ring-1"
+                  style={{
+                    background: "var(--bg-deep, #0b1120)",
+                    border: "1px solid rgba(30,64,120,0.5)",
+                    color: "#e2e8f0",
+                    fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+                    resize: "vertical",
+                  }}
+                  value={publishForm.notes}
+                  onChange={(e) => setPublishForm((p) => ({ ...p, notes: e.target.value }))}
+                  placeholder="Additional notes..."
                 />
               </div>
 
