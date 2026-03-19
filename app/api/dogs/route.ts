@@ -30,7 +30,8 @@ export async function GET(req: NextRequest) {
     const colorB64 = Buffer.from(color).toString("base64");
     const titleB64 = Buffer.from(title).toString("base64");
 
-    const sortCol = ["view_count", "registered_name", "dog_id", "birthdate", "posted_date"].includes(sort) ? sort : "view_count";
+    const sortMap: Record<string, string> = { name: "registered_name", id: "dog_id", added: "posted_date", dob: "birthdate" };
+    const sortCol = sortMap[sort] || (["view_count", "registered_name", "dog_id", "birthdate", "posted_date"].includes(sort) ? sort : "view_count");
 
     const script = [
       `import sqlite3, json, base64, re, sys`,
@@ -42,9 +43,12 @@ export async function GET(req: NextRequest) {
       `c = conn.cursor()`,
       `conditions = []`,
       `params = []`,
+      `search = search.replace("\\u2019", "'").replace("\\u2018", "'").replace("  ", " ")`,
       `if search:`,
-      `    conditions.append("registered_name LIKE ?")`,
-      `    params.append("%" + search + "%")`,
+      `    words = search.split()`,
+      `    for w in words:`,
+      `        conditions.append("registered_name LIKE ?")`,
+      `        params.append("%" + w + "%")`,
       `sex_f = "${sex}"`,
       `if sex_f:`,
       `    conditions.append("UPPER(sex) = UPPER(?)")`,
