@@ -40,6 +40,7 @@ export default function NavBar() {
   const links = [
     { href: "/dashboard", label: "Dashboard" },
     { href: "/dogs", label: "Dogs" },
+    { href: "/breeding-calculator", label: "Breeding Calc" },
   ];
 
   return (
