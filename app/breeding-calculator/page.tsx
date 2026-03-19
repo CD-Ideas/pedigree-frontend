@@ -613,17 +613,18 @@ export default function BreedingCalculatorPage() {
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3" style={{ borderTop: "1px solid var(--border)" }}>
             {/* Gen buttons */}
             <div className="flex items-center gap-1.5">
-              <span className="text-[9px] uppercase tracking-widest font-semibold mr-1.5" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+              <span className="text-xs uppercase tracking-widest font-bold mr-2" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
                 Depth:
               </span>
               {[6, 8, 10, 12].map((g) => (
                 <button key={g} onClick={() => { setGenDepth(g); if (hasResults) calculate(g); }}
-                  className="text-[10px] px-2.5 py-1 rounded-md font-bold transition-all"
+                  className="text-sm px-3.5 py-1.5 rounded-lg font-bold transition-all"
                   style={{
                     fontFamily: "var(--font-table)",
-                    background: genDepth === g ? "var(--accent-gold-glow-strong)" : "var(--bg-elevated)",
-                    color: genDepth === g ? "var(--accent-gold)" : "rgba(212,168,85,0.5)",
-                    border: genDepth === g ? "1px solid rgba(212,168,85,0.3)" : "1px solid rgba(212,168,85,0.15)",
+                    background: genDepth === g ? "rgba(212,168,85,0.25)" : "var(--bg-elevated)",
+                    color: genDepth === g ? "#d4a855" : "rgba(212,168,85,0.6)",
+                    border: genDepth === g ? "1.5px solid rgba(212,168,85,0.6)" : "1px solid rgba(212,168,85,0.2)",
+                    textShadow: genDepth === g ? "0 0 8px rgba(212,168,85,0.4)" : "none",
                   }}>
                   {g}G
                 </button>
