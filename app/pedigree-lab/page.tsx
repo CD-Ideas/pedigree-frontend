@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect, useCallback, useRef, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 /* ------------------------------------------------------------------ */
@@ -262,9 +262,13 @@ function Card({
 /* ------------------------------------------------------------------ */
 /* Main Page                                                          */
 /* ------------------------------------------------------------------ */
-export default function PedigreeLabPage() {
+function PedigreeLabInner() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const editId = searchParams.get("edit");
   const [publishing, setPublishing] = useState(false);
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editLoaded, setEditLoaded] = useState(false);
 
   /* ---------- Search state ---------- */
   const [searchTerm, setSearchTerm] = useState("");
@@ -301,6 +305,70 @@ export default function PedigreeLabPage() {
   /* ---------- COI ---------- */
   const coi = calcCOI(slots);
   const dogsPlacedCount = Object.values(slots).filter(Boolean).length;
+
+  /* ---------- Load existing pedigree for editing ---------- */
+  useEffect(() => {
+    if (!editId || editLoaded) return;
+    const pedId = parseInt(editId, 10);
+    if (isNaN(pedId)) return;
+
+    fetch(`/api/pedigrees/${pedId}`)
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.error) return;
+
+        // Verify ownership
+        try {
+          const userStr = localStorage.getItem("user");
+          if (userStr) {
+            const user = JSON.parse(userStr);
+            if (!user?.id || user.id !== data.user_id) return;
+          } else return;
+        } catch { return; }
+
+        setEditingId(pedId);
+
+        // Restore slots
+        try {
+          const s = JSON.parse(data.slots_json || "{}");
+          setSlots(s);
+        } catch { /* ignore */ }
+
+        // Restore tree
+        try {
+          const t = JSON.parse(data.tree_json || "[]");
+          setPreviewTree(t);
+        } catch { /* ignore */ }
+
+        // Restore publish form
+        setPublishForm({
+          prefix: data.prefix || "",
+          name: data.name || "",
+          suffixWins: data.suffix_wins || "",
+          suffixLosses: data.suffix_losses || "",
+          suffixDraws: data.suffix_draws || "",
+          suffixHonors: data.suffix_honors || "",
+          dob: data.dob || "",
+          sex: data.sex || "Male",
+          color: data.color || "",
+          continent: data.continent || "",
+          country: data.country || "",
+          breeder: data.breeder || "",
+          owner: data.owner || "",
+          conditionedWeight: data.conditioned_weight || "",
+          notes: data.pedigree_notes || "",
+          photoFile: null,
+          photoPreview: data.photo_path || "",
+          journal: (() => {
+            try { return JSON.parse(data.journal_json || "{}"); }
+            catch { return defaultJournal(); }
+          })(),
+        });
+
+        setEditLoaded(true);
+      })
+      .catch(() => { /* ignore */ });
+  }, [editId, editLoaded]);
 
   /* ---------- Search with debounce ---------- */
   const doSearch = useCallback(async (term: string) => {
@@ -1174,7 +1242,7 @@ export default function PedigreeLabPage() {
               {/* Create & Publish */}
               <button
                 onClick={() => {
-                  setPublishForm(defaultPublishForm());
+                  if (!editingId) setPublishForm(defaultPublishForm());
                   setShowPublishModal(true);
                 }}
                 className="w-full rounded-lg py-2.5 text-xs font-bold uppercase tracking-widest transition-all hover:scale-[1.02]"
@@ -1186,7 +1254,7 @@ export default function PedigreeLabPage() {
                   boxShadow: "0 0 15px rgba(212,168,85,0.2)",
                 }}
               >
-                + Create &amp; Publish
+                {editingId ? "✎ Edit & Save" : "+ Create & Publish"}
               </button>
 
               {/* Mock Mode */}
@@ -1295,7 +1363,7 @@ export default function PedigreeLabPage() {
                     WebkitTextFillColor: "transparent",
                   }}
                 >
-                  Create &amp; Publish
+                  {editingId ? "Edit Pedigree" : "Create & Publish"}
                 </h2>
                 <button
                   onClick={() => setShowPublishModal(false)}
@@ -1335,7 +1403,8 @@ export default function PedigreeLabPage() {
               <ModalInput
                 label="Name"
                 value={publishForm.name}
-                onChange={(v) => setPublishForm((p) => ({ ...p, name: v }))}
+                onChange={(v) => setPublishForm((p) => ({ ...p, name: v.toUpperCase() }))}
+                style={{ textTransform: "uppercase" }}
               />
 
               {/* Suffix */}
@@ -2122,13 +2191,28 @@ export default function PedigreeLabPage() {
                     }
                     const headers: Record<string, string> = {};
                     if (token) headers["Authorization"] = `Bearer ${token}`;
-                    const res = await fetch("/api/pedigrees/publish", { method: "POST", body: fd, headers });
-                    const data = await res.json();
-                    if (data.success && data.id) {
-                      setShowPublishModal(false);
-                      router.push(`/pedigree/custom/${data.id}`);
+
+                    // Edit mode: update existing pedigree
+                    if (editingId) {
+                      fd.append("id", String(editingId));
+                      const res = await fetch("/api/pedigrees/update", { method: "POST", body: fd, headers });
+                      const data = await res.json();
+                      if (data.success) {
+                        setShowPublishModal(false);
+                        router.push(`/pedigree/custom/${editingId}`);
+                      } else {
+                        alert(data.error || "Failed to update. Please try again.");
+                      }
                     } else {
-                      alert("Failed to publish. Please try again.");
+                      // New publish
+                      const res = await fetch("/api/pedigrees/publish", { method: "POST", body: fd, headers });
+                      const data = await res.json();
+                      if (data.success && data.id) {
+                        setShowPublishModal(false);
+                        router.push(`/pedigree/custom/${data.id}`);
+                      } else {
+                        alert("Failed to publish. Please try again.");
+                      }
                     }
                   } catch (err) {
                     console.error("Publish error:", err);
@@ -2146,7 +2230,7 @@ export default function PedigreeLabPage() {
                   boxShadow: "0 0 20px rgba(212,168,85,0.25)",
                 }}
               >
-                {publishing ? "Publishing..." : "Submit & Publish"}
+                {publishing ? (editingId ? "Saving..." : "Publishing...") : (editingId ? "Save Changes" : "Submit & Publish")}
               </button>
             </div>
           </Card>
@@ -2389,12 +2473,14 @@ function ModalInput({
   onChange,
   type = "text",
   placeholder,
+  style: extraStyle,
 }: {
   label: string;
   value: string;
   onChange: (v: string) => void;
   type?: string;
   placeholder?: string;
+  style?: React.CSSProperties;
 }) {
   return (
     <div>
@@ -2415,8 +2501,20 @@ function ModalInput({
           border: "1px solid rgba(30,64,120,0.5)",
           color: "#e2e8f0",
           fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+          ...extraStyle,
         }}
       />
     </div>
+  );
+}
+
+/* ================================================================== */
+/* Page wrapper with Suspense for useSearchParams                      */
+/* ================================================================== */
+export default function PedigreeLabPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center" style={{ background: "#0b1120", color: "#5a6a82" }}>Loading...</div>}>
+      <PedigreeLabInner />
+    </Suspense>
   );
 }

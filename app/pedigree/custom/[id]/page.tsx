@@ -660,6 +660,129 @@ export default function PublishedPedigreePage() {
           </div>
         )}
 
+        {/* ─── Journal (Owner Only) ─── */}
+        {isOwner && ped.journal_json && (() => {
+          let journal: { rabiesDate?: string; rabiesNextDue?: string; avidChip?: string; vaccines?: { name: string; checked: boolean; date: string }[]; worming?: { type: string; otherType: string; dateWormed: string; nextDue: string; intervalDays: number; remindMe: boolean }[]; notes?: string } = {};
+          try { journal = JSON.parse(ped.journal_json); } catch { /* ignore */ }
+          const hasContent = journal.rabiesDate || journal.avidChip || journal.vaccines?.some(v => v.checked) || (journal.worming && journal.worming.length > 0) || journal.notes;
+          if (!hasContent) return null;
+
+          const fmtDate = (iso: string) => {
+            if (!iso) return "—";
+            try { return new Date(iso + "T00:00:00").toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }); } catch { return iso; }
+          };
+
+          return (
+            <div className="glow-gold rounded-xl overflow-hidden" style={{
+              border: "1.5px solid rgba(212,168,85,0.4)",
+              boxShadow: "0 2px 20px rgba(0,0,0,0.25)",
+              background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+            }}>
+              {/* Header */}
+              <div className="flex items-center justify-between px-4 py-2.5" style={{
+                background: "linear-gradient(180deg, #1a1a24 0%, #141418 100%)",
+                borderBottom: "1px solid rgba(212,168,85,0.2)",
+              }}>
+                <div className="flex items-center gap-2.5">
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: "rgba(212,168,85,0.15)", border: "1px solid rgba(212,168,85,0.3)" }}>
+                    <span className="text-sm">📋</span>
+                  </div>
+                  <span className="text-sm font-bold uppercase tracking-widest" style={{
+                    fontFamily: "var(--font-display, Oswald, sans-serif)",
+                    background: "linear-gradient(135deg, #d4a855 0%, #f5d994 50%, #d4a855 100%)",
+                    WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+                  }}>
+                    Journal
+                  </span>
+                </div>
+                <span className="text-[9px] px-2 py-0.5 rounded-full" style={{
+                  background: "rgba(220,38,38,0.12)", color: "#fc8181",
+                  fontFamily: "var(--font-table)", border: "1px solid rgba(220,38,38,0.3)",
+                }}>
+                  Private — Only You
+                </span>
+              </div>
+
+              <div className="p-4 space-y-4">
+                {/* Rabies */}
+                {journal.rabiesDate && (
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <span className="text-[10px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>Rabies: Date Given</span>
+                      <span className="text-sm" style={{ color: "#e2e8f0", fontFamily: "var(--font-mono)" }}>{fmtDate(journal.rabiesDate)}</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>Rabies: Next Due</span>
+                      <span className="text-sm" style={{ color: "#22c55e", fontFamily: "var(--font-mono)" }}>{fmtDate(journal.rabiesNextDue || "")}</span>
+                    </div>
+                  </div>
+                )}
+
+                {/* AVID Chip */}
+                {journal.avidChip && (
+                  <div>
+                    <span className="text-[10px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>AVID Chip</span>
+                    <span className="text-sm" style={{ color: "#e2e8f0", fontFamily: "var(--font-mono)" }}>{journal.avidChip}</span>
+                  </div>
+                )}
+
+                {/* Vaccines */}
+                {journal.vaccines && journal.vaccines.some(v => v.checked) && (
+                  <div>
+                    <span className="text-[10px] uppercase tracking-widest font-semibold block mb-2" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>Vaccines</span>
+                    <div className="space-y-1.5">
+                      {journal.vaccines.filter(v => v.checked).map(v => (
+                        <div key={v.name} className="flex items-center justify-between rounded-lg px-3 py-2"
+                          style={{ background: "rgba(34,197,94,0.06)", border: "1px solid rgba(34,197,94,0.15)" }}>
+                          <span className="text-xs font-semibold" style={{ color: "#22c55e", fontFamily: "var(--font-table)" }}>✓ {v.name}</span>
+                          {v.date && <span className="text-[10px]" style={{ color: "#e2e8f0", fontFamily: "var(--font-mono)" }}>{fmtDate(v.date)}</span>}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Worming History */}
+                {journal.worming && journal.worming.length > 0 && (
+                  <div>
+                    <span className="text-[10px] uppercase tracking-widest font-semibold block mb-2" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>Worming History</span>
+                    <div className="space-y-1.5">
+                      {journal.worming.map((w, i) => (
+                        <div key={i} className="flex items-center justify-between rounded-lg px-3 py-2"
+                          style={{ background: "rgba(96,165,250,0.06)", border: "1px solid rgba(96,165,250,0.15)" }}>
+                          <div className="flex items-center gap-2">
+                            {w.remindMe && <span className="text-[9px]">🔔</span>}
+                            <span className="text-xs font-semibold" style={{ color: "#e2e8f0", fontFamily: "var(--font-table)" }}>
+                              {w.type === "Other" ? w.otherType || "Other" : w.type}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <span className="text-[10px]" style={{ color: "#e2e8f0", fontFamily: "var(--font-mono)" }}>{fmtDate(w.dateWormed)}</span>
+                            {w.nextDue && (
+                              <>
+                                <span className="text-[9px]" style={{ color: "#5a6a82" }}>→</span>
+                                <span className="text-[10px]" style={{ color: "#22c55e", fontFamily: "var(--font-mono)" }}>Due: {fmtDate(w.nextDue)}</span>
+                              </>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Journal Notes */}
+                {journal.notes && (
+                  <div>
+                    <span className="text-[10px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>Journal Notes</span>
+                    <p className="text-sm leading-relaxed" style={{ color: "#e2e8f0", fontFamily: "var(--font-table)" }}>{journal.notes}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+        })()}
+
         {/* ─── Footer ─── */}
         <footer className="text-center py-8 mt-8" style={{ borderTop: "1px solid var(--border, rgba(30,64,120,0.5))" }}>
           <div className="flex items-center justify-center gap-2 mb-3">
