@@ -11,6 +11,7 @@ export default function NavBar() {
   const router = useRouter();
   const [loggedIn, setLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -39,8 +40,6 @@ export default function NavBar() {
 
   const links = [
     { href: "/dashboard", label: "Dashboard" },
-    { href: "/dogs", label: "Dogs" },
-    { href: "/breeding-calculator", label: "Breeding Calc" },
   ];
 
   return (
@@ -94,23 +93,92 @@ export default function NavBar() {
           })}
 
           {loggedIn ? (
-            <div className="flex items-center gap-3 ml-4">
-              {userName && (
-                <span className="text-xs" style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
-                  {userName}
-                </span>
-              )}
+            <div className="relative ml-4">
               <button
-                onClick={handleLogout}
-                className="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors"
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors"
                 style={{
-                  color: "var(--accent-red)",
-                  background: "rgba(220,38,38,0.08)",
-                  border: "1px solid rgba(220,38,38,0.15)",
+                  color: dropdownOpen ? "var(--accent-gold)" : "var(--text-secondary)",
+                  background: dropdownOpen ? "rgba(212,168,85,0.08)" : "transparent",
+                  border: "1px solid transparent",
+                  fontFamily: "var(--font-table)",
+                  fontSize: "0.875rem",
+                  fontWeight: 500,
                 }}
               >
-                Logout
+                <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold"
+                  style={{ background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#000" }}>
+                  {(userName || "U")[0].toUpperCase()}
+                </span>
+                {userName}
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
+                  style={{ transform: dropdownOpen ? "rotate(180deg)" : "rotate(0)", transition: "transform 0.2s" }}>
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
               </button>
+
+              {dropdownOpen && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setDropdownOpen(false)} />
+                  <div className="absolute right-0 top-full mt-2 w-56 rounded-xl overflow-hidden z-50"
+                    style={{
+                      background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+                      border: "1.5px solid rgba(30,64,120,0.8)",
+                      boxShadow: "0 12px 40px rgba(0,0,0,0.5)",
+                    }}>
+                    {/* User info */}
+                    <div className="px-4 py-3" style={{ borderBottom: "1px solid rgba(30,64,120,0.4)" }}>
+                      <p className="text-sm font-bold" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>{userName}</p>
+                      <p className="text-[10px] mt-0.5" style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>Admin</p>
+                    </div>
+
+                    {/* Links */}
+                    <div className="py-1">
+                      {[
+                        { href: "/dogs", label: "Dogs", icon: "🐕" },
+                        { href: "/pedigree/spotlight", label: "Lineage Spotlight", icon: "🔦" },
+                        { href: "/breeding-calculator", label: "Breeding Calculator", icon: "🧬" },
+                      ].map((item) => (
+                        <Link key={item.href} href={item.href}
+                          onClick={() => setDropdownOpen(false)}
+                          className="flex items-center gap-3 px-4 py-2.5 transition-colors hover:bg-white/5"
+                          style={{ color: pathname === item.href ? "var(--accent-gold)" : "var(--text-secondary)", fontFamily: "var(--font-table)", fontSize: "0.8rem" }}>
+                          <span className="text-sm">{item.icon}</span>
+                          {item.label}
+                        </Link>
+                      ))}
+                    </div>
+
+                    {/* Divider */}
+                    <div style={{ borderTop: "1px solid rgba(30,64,120,0.4)" }} />
+
+                    {/* Account Settings */}
+                    <div className="py-1">
+                      <Link href="/account"
+                        onClick={() => setDropdownOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 transition-colors hover:bg-white/5"
+                        style={{ color: "var(--text-secondary)", fontFamily: "var(--font-table)", fontSize: "0.8rem" }}>
+                        <span className="text-sm">⚙️</span>
+                        Account Settings
+                      </Link>
+                    </div>
+
+                    {/* Divider */}
+                    <div style={{ borderTop: "1px solid rgba(30,64,120,0.4)" }} />
+
+                    {/* Logout */}
+                    <div className="py-1">
+                      <button
+                        onClick={() => { setDropdownOpen(false); handleLogout(); }}
+                        className="w-full flex items-center gap-3 px-4 py-2.5 transition-colors hover:bg-red-500/5 text-left"
+                        style={{ color: "#ef4444", fontFamily: "var(--font-table)", fontSize: "0.8rem" }}>
+                        <span className="text-sm">🚪</span>
+                        Logout
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           ) : (
             <div className="flex items-center gap-2 ml-4">

@@ -220,6 +220,11 @@ export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [pricingOpen, setPricingOpen] = useState(false);
   const [authModal, setAuthModal] = useState(false);
+  const openAuth = (redirectTo?: string) => {
+    if (redirectTo) localStorage.setItem("loginRedirect", redirectTo);
+    else localStorage.removeItem("loginRedirect");
+    setAuthModal(true);
+  };
   const [mobileMenu, setMobileMenu] = useState(false);
 
   useEffect(() => {
@@ -394,17 +399,22 @@ export default function Home() {
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
               {[
-                { icon: "🌳", title: "Pedigree Trees", desc: "Multi-generation interactive lineage visualization", color: "#22c55e", glow: "0,200,80" },
+                { icon: "🌳", title: "Pedigree Trees", desc: "Multi-generation interactive lineage visualization", color: "#22c55e", glow: "0,200,80", href: "/pedigree/3" },
                 { icon: "📋", title: "Dog Registry", desc: "Detailed profiles with titles, weights & records", color: "#3b82f6", glow: "59,130,246" },
                 { icon: "🔗", title: "Easy Sharing", desc: "Share via WhatsApp, Telegram with rich previews", color: "#a855f7", glow: "168,85,247" },
                 { icon: "🏆", title: "Title Tracking", desc: "CH, GR CH, ROM tracking across generations", color: "#d4a855", glow: "212,168,85" },
                 { icon: "🧬", title: "Puppy Predictor", desc: "Input mom + dad, instantly predict litter bloodline percentages", color: "#ef4444", glow: "239,68,68" },
                 { icon: "🔍", title: "Legend Tracker", desc: "Search any famous dog, find every descendant sorted by %", color: "#06b6d4", glow: "6,182,212" },
                 { icon: "👑", title: "Dog of the Month", desc: "Monthly photo contest with community voting & prizes", color: "#f97316", glow: "249,115,22" },
-                { icon: "🔦", title: "Lineage Spotlight", desc: "Pick a legend, find every descendant ranked by blood %", color: "#1d8cf8", glow: "29,140,248", href: "/pedigree/spotlight" },
+                { icon: "🔦", title: "Lineage Spotlight", desc: "Pick a legend, find every descendant ranked by blood %", color: "#1d8cf8", glow: "29,140,248", redirect: "/pedigree/spotlight" },
               ].map((f, i) => (
                 <div key={i} className="group relative rounded-lg p-2.5 text-center animate-scale-reveal cursor-pointer"
-                  onClick={() => setAuthModal(true)}
+                  onClick={() => {
+                    const item = f as Record<string, unknown>;
+                    if (item.href) { window.location.href = String(item.href); }
+                    else if (item.redirect) { openAuth(String(item.redirect)); }
+                    else { openAuth(); }
+                  }}
                   style={{
                     animationDelay: `${i * 0.1}s`,
                     background: `linear-gradient(160deg, rgba(25,27,35,0.95) 0%, rgba(14,15,20,0.98) 100%)`,
@@ -612,7 +622,7 @@ export default function Home() {
                 </div>
 
                 <button
-                  onClick={() => setAuthModal(true)}
+                  onClick={() => openAuth("/breeding-calculator")}
                   className="w-full py-2 rounded-lg text-center"
                   style={{
                     fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.08em",

@@ -43,7 +43,9 @@ function LoginForm() {
         localStorage.setItem("user", JSON.stringify(data.data.user || null));
         setMessage("Login successful");
         setMessageType("success");
-        router.push("/dashboard");
+        const redirect = localStorage.getItem("loginRedirect") || "/dashboard";
+        localStorage.removeItem("loginRedirect");
+        router.push(redirect);
       } else {
         setMessage(data?.error?.message || data?.message || "Login failed");
         setMessageType("error");
