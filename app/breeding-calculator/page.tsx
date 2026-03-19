@@ -621,7 +621,7 @@ export default function BreedingCalculatorPage() {
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3" style={{ borderTop: "1px solid var(--border)" }}>
             {/* Gen buttons */}
             <div className="flex items-center gap-1.5">
-              <span className="text-[9px] uppercase tracking-widest font-semibold mr-1.5" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+              <span className="text-[9px] uppercase tracking-widest font-semibold mr-1.5" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
                 Depth:
               </span>
               {[6, 8, 10, 12].map((g) => (
@@ -663,7 +663,7 @@ export default function BreedingCalculatorPage() {
                 onClick={() => setIncludeHalf(!includeHalf)}>
                 <span className="absolute top-[2px] left-[2px] w-[14px] h-[14px] rounded-full transition-transform" style={{ transform: includeHalf ? "translateX(14px)" : "translateX(0)", background: includeHalf ? "var(--accent-gold)" : "var(--text-muted)" }} />
               </div>
-              <span className="text-[10px] uppercase tracking-widest font-semibold" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>Half-Sib Mode</span>
+              <span className="text-[10px] uppercase tracking-widest font-semibold" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>Half-Sib Mode</span>
             </label>
           </div>
         </Card>
@@ -706,7 +706,7 @@ export default function BreedingCalculatorPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {/* Gauge Card */}
               <Card className="p-5 flex flex-col items-center justify-center" style={{ borderColor: "rgba(34,197,94,0.4)", boxShadow: "0 2px 20px rgba(34,197,94,0.08)" }}>
-                <SectionHeader>COI Gauge</SectionHeader>
+                <SectionHeader color="#22c55e">COI Gauge</SectionHeader>
                 <TachoGauge coi={coi} />
               </Card>
 
@@ -715,7 +715,7 @@ export default function BreedingCalculatorPage() {
                 <SectionHeader color={riskColor(coi)}>Risk Assessment</SectionHeader>
                 <div className="space-y-3">
                   <div className="flex justify-between items-center py-2" style={{ borderBottom: "1px solid var(--border)" }}>
-                    <span className="text-xs" style={{ color: "var(--text-secondary)", fontFamily: "var(--font-table)" }}>COI</span>
+                    <span className="text-xs" style={{ color: "var(--text-secondary)", fontFamily: "var(--font-table)" }}>Coefficient of Inbreeding (COI)</span>
                     <span className="text-sm font-bold" style={{ color: riskColor(coi), fontFamily: "var(--font-mono)" }}>{coi.toFixed(2)}%</span>
                   </div>
                   <div className="flex justify-between items-center py-2" style={{ borderBottom: "1px solid var(--border)" }}>
