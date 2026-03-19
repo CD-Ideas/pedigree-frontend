@@ -66,6 +66,8 @@ interface PublishForm {
   color: string;
   continent: string;
   country: string;
+  owner: string;
+  conditionedWeight: string;
   notes: string;
   photoFile: File | null;
   photoPreview: string;
@@ -219,6 +221,8 @@ function defaultPublishForm(): PublishForm {
     color: "",
     continent: "",
     country: "",
+    owner: "",
+    conditionedWeight: "",
     notes: "",
     photoFile: null,
     photoPreview: "",
@@ -1507,6 +1511,73 @@ export default function PedigreeLabPage() {
                       <option key={c} value={c}>{c}</option>
                     ))}
                   </select>
+                </div>
+              </div>
+
+              {/* Owner, Conditioned Weight, Views */}
+              <div className="grid grid-cols-3 gap-3">
+                <div>
+                  <label
+                    className="block text-[10px] uppercase tracking-widest font-semibold mb-2"
+                    style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
+                  >
+                    Owner
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full rounded-lg px-3 py-2 text-sm outline-none transition-all focus:ring-1"
+                    style={{
+                      background: "var(--bg-deep, #0b1120)",
+                      border: "1px solid rgba(30,64,120,0.5)",
+                      color: "#e2e8f0",
+                      fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+                    }}
+                    value={publishForm.owner}
+                    onChange={(e) => setPublishForm((p) => ({ ...p, owner: e.target.value }))}
+                    placeholder="Owner name"
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-[10px] uppercase tracking-widest font-semibold mb-2"
+                    style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
+                  >
+                    Cond. Weight
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full rounded-lg px-3 py-2 text-sm outline-none transition-all focus:ring-1"
+                    style={{
+                      background: "var(--bg-deep, #0b1120)",
+                      border: "1px solid rgba(30,64,120,0.5)",
+                      color: "#e2e8f0",
+                      fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+                    }}
+                    value={publishForm.conditionedWeight}
+                    onChange={(e) => setPublishForm((p) => ({ ...p, conditionedWeight: e.target.value }))}
+                    placeholder="e.g. 42 lbs"
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-[10px] uppercase tracking-widest font-semibold mb-2"
+                    style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
+                  >
+                    Views
+                  </label>
+                  <div
+                    className="w-full rounded-lg px-3 py-2 text-sm flex items-center"
+                    style={{
+                      background: "var(--bg-deep, #0b1120)",
+                      border: "1px solid rgba(30,64,120,0.5)",
+                      color: "#64748b",
+                      fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
+                      minHeight: 38,
+                    }}
+                  >
+                    <span style={{ color: "#d4a855" }}>0</span>
+                    <span className="ml-1 text-[10px]" style={{ color: "#5a6a82" }}>views</span>
+                  </div>
                 </div>
               </div>
 
