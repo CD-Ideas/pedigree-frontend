@@ -421,6 +421,8 @@ export default function BreedingCalculatorPage() {
   const [hasResults, setHasResults] = useState(false);
   const [avk, setAvk] = useState<number | null>(null);
   const [bloodlines, setBloodlines] = useState<{ name: string; pct: number }[]>([]);
+  const [sharedHover, setSharedHover] = useState<number | null>(null);
+  const sharedListRef = useRef<HTMLDivElement>(null);
 
   const calculate = async (overrideGen?: number) => {
     if (!sire || !dam) return;
@@ -601,7 +603,7 @@ export default function BreedingCalculatorPage() {
               <span className="text-[9px] uppercase tracking-widest font-semibold mr-1.5" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
                 Depth:
               </span>
-              {[6, 8, 10].map((g) => (
+              {[6, 8, 10, 12].map((g) => (
                 <button key={g} onClick={() => { setGenDepth(g); if (hasResults) calculate(g); }}
                   className="text-[10px] px-2.5 py-1 rounded-md font-bold transition-all"
                   style={{
@@ -682,7 +684,7 @@ export default function BreedingCalculatorPage() {
             {/* Row 1: Tachometer + Risk Assessment */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {/* Gauge Card */}
-              <Card className="p-5 flex flex-col items-center justify-center">
+              <Card className="p-5 flex flex-col items-center justify-center" style={{ borderColor: "rgba(34,197,94,0.4)", boxShadow: "0 2px 20px rgba(34,197,94,0.08)" }}>
                 <SectionHeader>COI Gauge</SectionHeader>
                 <TachoGauge coi={coi} />
               </Card>
@@ -721,7 +723,7 @@ export default function BreedingCalculatorPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {/* AVK */}
               {avk !== null && (
-                <Card className="p-5">
+                <Card className="p-5" style={{ borderColor: "rgba(34,197,94,0.4)", boxShadow: "0 2px 20px rgba(34,197,94,0.08)" }}>
                   <SectionHeader>Ancestor Loss Coefficient (AVK)</SectionHeader>
                   <div className="flex items-end gap-3">
                     <span className="text-3xl font-bold" style={{ color: avk > 80 ? "#22c55e" : avk > 60 ? "#eab308" : "#ef4444", fontFamily: "var(--font-mono)" }}>{avk.toFixed(1)}%</span>
@@ -737,7 +739,7 @@ export default function BreedingCalculatorPage() {
 
               {/* Bloodline Radar */}
               {bloodlines.length > 0 && (
-                <Card className="p-5">
+                <Card className="p-5" style={{ borderColor: "rgba(139,92,246,0.4)", boxShadow: "0 2px 20px rgba(139,92,246,0.08)" }}>
                   <SectionHeader>Bloodline Radar</SectionHeader>
                   <div className="space-y-2.5">
                     {bloodlines.slice(0, 8).map((bl, i) => {
@@ -763,9 +765,15 @@ export default function BreedingCalculatorPage() {
             {/* Row 3: Donut + Shared Ancestors List */}
             <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-4">
               {/* Donut */}
-              <Card className="p-5 flex flex-col items-center">
+              <Card className="p-5 flex flex-col items-center" style={{ borderColor: "rgba(212,168,85,0.4)", boxShadow: "0 2px 20px rgba(212,168,85,0.08)" }}>
                 <SectionHeader>Ancestor Overlap</SectionHeader>
-                {directShared.length > 0 ? <DonutChart ancestors={directShared} /> : (
+                {directShared.length > 0 ? <DonutChart ancestors={directShared} hoveredIdx={sharedHover} onHover={(i) => {
+                  setSharedHover(i);
+                  if (i !== null && sharedListRef.current) {
+                    const el = sharedListRef.current.querySelector(`[data-idx="${i}"]`);
+                    if (el) el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                  }
+                }} /> : (
                   <div className="flex-1 flex items-center justify-center py-8">
                     <p className="text-xs" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>No shared blood</p>
                   </div>
@@ -775,12 +783,19 @@ export default function BreedingCalculatorPage() {
               {/* Shared list */}
               <Card className="p-5">
                 <SectionHeader>Shared Ancestors ({directShared.length})</SectionHeader>
-                <div className="space-y-1.5 max-h-[480px] overflow-y-auto pr-1">
+                <div ref={sharedListRef} className="space-y-1.5 max-h-[480px] overflow-y-auto pr-1">
                   {directShared.map((a, i) => {
                     const photoSrc = a.photo ? (a.photo.startsWith("http") ? a.photo : `https://www.apbt.online-pedigrees.com/${a.photo}`) : null;
+                    const isHovered = sharedHover === i;
                     return (
-                      <div key={a.id} className="rounded-lg flex items-center gap-2.5 px-3 py-2 transition-all hover:bg-white/[0.03] cursor-default"
-                        style={{ border: "1px solid rgba(255,255,255,0.06)", background: "rgba(255,255,255,0.02)" }}>
+                      <div key={a.id} data-idx={i} className="rounded-lg flex items-center gap-2.5 px-3 py-2 transition-all cursor-default"
+                        onMouseEnter={() => setSharedHover(i)}
+                        onMouseLeave={() => setSharedHover(null)}
+                        style={{
+                          border: isHovered ? `1px solid ${getDogColor(a.name)}40` : "1px solid rgba(255,255,255,0.06)",
+                          background: isHovered ? `${getDogColor(a.name)}10` : "rgba(255,255,255,0.02)",
+                          transform: isHovered ? "scale(1.01)" : "scale(1)",
+                        }}>
                         <div className="w-2.5 h-7 rounded-full flex-shrink-0" style={{ background: getDogColor(a.name) }} />
                         <div className="w-7 h-7 rounded-full overflow-hidden flex-shrink-0" style={{ background: "var(--bg-deep)", border: "1px solid var(--border)" }}>
                           {photoSrc ? <img src={photoSrc} alt="" className="w-full h-full object-cover" /> : (
