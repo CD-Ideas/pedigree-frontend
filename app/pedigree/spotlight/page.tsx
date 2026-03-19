@@ -237,7 +237,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
                 Lineage of <a href={`/pedigree/${lineage.dog.id}`} className="underline hover:brightness-125">{lineage.dog.name}</a>
               </span>
               <div className="flex items-center gap-1">
-                {[8, 12, 16].map((g) => (
+                {[6, 8, 10].map((g) => (
                   <button key={g}
                     onClick={() => { setGenDepth(g); fetchLineage(lineage.dog.id, lineage.dog.name, lineage.dog.photo_url, g); }}
                     className="px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all"

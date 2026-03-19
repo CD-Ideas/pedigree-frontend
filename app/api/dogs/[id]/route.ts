@@ -19,7 +19,8 @@ export async function OPTIONS() {
 
 async function queryDb(script: string): Promise<any> {
   const { stdout } = await execFileAsync("python3", ["-c", script], {
-    timeout: 60000,
+    timeout: 120000,
+    maxBuffer: 50 * 1024 * 1024, // 50MB
   });
   return JSON.parse(stdout);
 }
@@ -89,35 +90,44 @@ def _pos_sort_key(p):
     return (p.get('generation', 0), int(m.group(1)) if m else 0)
 pedigree.sort(key=_pos_sort_key)
 
-# Build deeper generations dynamically (gen 5 through max_gen)
+# Build deeper generations dynamically (gen 5 through max_gen) — batched
 max_db_gen = max((p["generation"] for p in pedigree), default=0)
 for gen in range(max_db_gen + 1, max_gen + 1):
     prev_gen = [p for p in pedigree if p["generation"] == gen - 1]
+    ancestor_ids = [pg["ancestor_id"] for pg in prev_gen if pg.get("ancestor_id")]
+    if not ancestor_ids:
+        break
+    # Batch fetch all ancestors in one query
+    placeholders = ",".join("?" * len(ancestor_ids))
+    cur.execute(f"SELECT dog_id, registered_name, sex, sire_id, dam_id, css_class, photo_url FROM dogs WHERE dog_id IN ({placeholders})", ancestor_ids)
+    ancestor_map = {r["dog_id"]: dict(r) for r in cur.fetchall()}
+    # Collect all child IDs we need to fetch
+    child_ids = set()
+    for arow in ancestor_map.values():
+        if arow.get("sire_id"): child_ids.add(arow["sire_id"])
+        if arow.get("dam_id"): child_ids.add(arow["dam_id"])
+    # Batch fetch all children
+    child_map = {}
+    if child_ids:
+        cids = list(child_ids)
+        placeholders2 = ",".join("?" * len(cids))
+        cur.execute(f"SELECT dog_id, registered_name, css_class, photo_url FROM dogs WHERE dog_id IN ({placeholders2})", cids)
+        child_map = {r["dog_id"]: dict(r) for r in cur.fetchall()}
+    # Build pedigree entries
     for pg in prev_gen:
         aid = pg.get("ancestor_id")
-        if not aid:
+        if not aid or aid not in ancestor_map:
             continue
-        cur.execute("SELECT dog_id, registered_name, sex, sire_id, dam_id, css_class, photo_url FROM dogs WHERE dog_id = ?", (aid,))
-        arow = cur.fetchone()
-        if not arow:
-            continue
+        arow = ancestor_map[aid]
         pos = pg.get("position", "")
-        if arow["sire_id"]:
-            cur.execute("SELECT dog_id, registered_name, css_class, photo_url FROM dogs WHERE dog_id = ?", (arow["sire_id"],))
-            sr = cur.fetchone()
-            if sr:
-                pedigree.append({"dog_id": dog_id, "ancestor_id": sr["dog_id"], "ancestor_name": sr["registered_name"], "position": pos + "_S", "generation": gen, "css_class": sr["css_class"] or "male", "ancestor_photo": sr["photo_url"]})
-            else:
-                pedigree.append({"dog_id": dog_id, "ancestor_id": None, "ancestor_name": "Unknown", "position": pos + "_S", "generation": gen, "css_class": "male", "ancestor_photo": None})
+        if arow.get("sire_id") and arow["sire_id"] in child_map:
+            sr = child_map[arow["sire_id"]]
+            pedigree.append({"dog_id": dog_id, "ancestor_id": sr["dog_id"], "ancestor_name": sr["registered_name"], "position": pos + "_S", "generation": gen, "css_class": sr.get("css_class") or "male", "ancestor_photo": sr.get("photo_url")})
         else:
             pedigree.append({"dog_id": dog_id, "ancestor_id": None, "ancestor_name": "Unknown", "position": pos + "_S", "generation": gen, "css_class": "male", "ancestor_photo": None})
-        if arow["dam_id"]:
-            cur.execute("SELECT dog_id, registered_name, css_class, photo_url FROM dogs WHERE dog_id = ?", (arow["dam_id"],))
-            dr = cur.fetchone()
-            if dr:
-                pedigree.append({"dog_id": dog_id, "ancestor_id": dr["dog_id"], "ancestor_name": dr["registered_name"], "position": pos + "_D", "generation": gen, "css_class": dr["css_class"] or "female", "ancestor_photo": dr["photo_url"]})
-            else:
-                pedigree.append({"dog_id": dog_id, "ancestor_id": None, "ancestor_name": "Unknown", "position": pos + "_D", "generation": gen, "css_class": "female", "ancestor_photo": None})
+        if arow.get("dam_id") and arow["dam_id"] in child_map:
+            dr = child_map[arow["dam_id"]]
+            pedigree.append({"dog_id": dog_id, "ancestor_id": dr["dog_id"], "ancestor_name": dr["registered_name"], "position": pos + "_D", "generation": gen, "css_class": dr.get("css_class") or "female", "ancestor_photo": dr.get("photo_url")})
         else:
             pedigree.append({"dog_id": dog_id, "ancestor_id": None, "ancestor_name": "Unknown", "position": pos + "_D", "generation": gen, "css_class": "female", "ancestor_photo": None})
 
