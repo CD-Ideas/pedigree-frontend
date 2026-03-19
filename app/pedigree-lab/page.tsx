@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 /* ------------------------------------------------------------------ */
@@ -66,6 +67,7 @@ interface PublishForm {
   color: string;
   continent: string;
   country: string;
+  breeder: string;
   owner: string;
   conditionedWeight: string;
   notes: string;
@@ -221,6 +223,7 @@ function defaultPublishForm(): PublishForm {
     color: "",
     continent: "",
     country: "",
+    breeder: "",
     owner: "",
     conditionedWeight: "",
     notes: "",
@@ -260,6 +263,9 @@ function Card({
 /* Main Page                                                          */
 /* ------------------------------------------------------------------ */
 export default function PedigreeLabPage() {
+  const router = useRouter();
+  const [publishing, setPublishing] = useState(false);
+
   /* ---------- Search state ---------- */
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState<DogSearchResult[]>([]);
@@ -1457,6 +1463,12 @@ export default function PedigreeLabPage() {
                   value={publishForm.color}
                   onChange={(v) => setPublishForm((p) => ({ ...p, color: v }))}
                 />
+                <ModalInput
+                  label="Breeder"
+                  value={publishForm.breeder}
+                  onChange={(v) => setPublishForm((p) => ({ ...p, breeder: v }))}
+                  placeholder="Breeder name"
+                />
               </div>
 
               {/* Continent & Country */}
@@ -1514,8 +1526,8 @@ export default function PedigreeLabPage() {
                 </div>
               </div>
 
-              {/* Owner, Conditioned Weight, Views */}
-              <div className="grid grid-cols-3 gap-3">
+              {/* Owner & Conditioned Weight */}
+              <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label
                     className="block text-[10px] uppercase tracking-widest font-semibold mb-2"
@@ -1558,6 +1570,10 @@ export default function PedigreeLabPage() {
                     placeholder="e.g. 42 lbs"
                   />
                 </div>
+              </div>
+
+              {/* Views, Date Posted, Last Modified */}
+              <div className="grid grid-cols-3 gap-3">
                 <div>
                   <label
                     className="block text-[10px] uppercase tracking-widest font-semibold mb-2"
@@ -1570,7 +1586,6 @@ export default function PedigreeLabPage() {
                     style={{
                       background: "var(--bg-deep, #0b1120)",
                       border: "1px solid rgba(30,64,120,0.5)",
-                      color: "#64748b",
                       fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
                       minHeight: 38,
                     }}
@@ -1579,15 +1594,53 @@ export default function PedigreeLabPage() {
                     <span className="ml-1 text-[10px]" style={{ color: "#5a6a82" }}>views</span>
                   </div>
                 </div>
+                <div>
+                  <label
+                    className="block text-[10px] uppercase tracking-widest font-semibold mb-2"
+                    style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
+                  >
+                    Date Posted
+                  </label>
+                  <div
+                    className="w-full rounded-lg px-3 py-2 text-sm flex items-center"
+                    style={{
+                      background: "var(--bg-deep, #0b1120)",
+                      border: "1px solid rgba(30,64,120,0.5)",
+                      fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
+                      minHeight: 38,
+                    }}
+                  >
+                    <span style={{ color: "#64748b" }}>—</span>
+                  </div>
+                </div>
+                <div>
+                  <label
+                    className="block text-[10px] uppercase tracking-widest font-semibold mb-2"
+                    style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
+                  >
+                    Last Modified
+                  </label>
+                  <div
+                    className="w-full rounded-lg px-3 py-2 text-sm flex items-center"
+                    style={{
+                      background: "var(--bg-deep, #0b1120)",
+                      border: "1px solid rgba(30,64,120,0.5)",
+                      fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
+                      minHeight: 38,
+                    }}
+                  >
+                    <span style={{ color: "#64748b" }}>—</span>
+                  </div>
+                </div>
               </div>
 
-              {/* Notes */}
+              {/* Pedigree Notes */}
               <div>
                 <label
                   className="block text-[10px] uppercase tracking-widest font-semibold mb-2"
                   style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
                 >
-                  Notes
+                  Pedigree Notes
                 </label>
                 <textarea
                   rows={3}
@@ -1998,13 +2051,13 @@ export default function PedigreeLabPage() {
                 )}
               </div>
 
-              {/* Notes */}
+              {/* Journal Notes */}
               <div>
                 <label
                   className="block text-[10px] uppercase tracking-widest font-semibold mb-1"
                   style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
                 >
-                  Notes
+                  Journal Notes
                 </label>
                 <textarea
                   value={publishForm.journal.notes}
@@ -2028,12 +2081,52 @@ export default function PedigreeLabPage() {
 
               {/* Submit */}
               <button
-                onClick={() => {
-                  // Placeholder: would POST to API
-                  alert("Published! (placeholder)");
-                  setShowPublishModal(false);
+                disabled={publishing}
+                onClick={async () => {
+                  if (!publishForm.name.trim()) {
+                    alert("Please enter a name for the dog.");
+                    return;
+                  }
+                  setPublishing(true);
+                  try {
+                    const fd = new FormData();
+                    fd.append("name", publishForm.name);
+                    fd.append("prefix", publishForm.prefix);
+                    fd.append("suffixWins", publishForm.suffixWins);
+                    fd.append("suffixLosses", publishForm.suffixLosses);
+                    fd.append("suffixDraws", publishForm.suffixDraws);
+                    fd.append("suffixHonors", publishForm.suffixHonors);
+                    fd.append("dob", publishForm.dob);
+                    fd.append("sex", publishForm.sex);
+                    fd.append("color", publishForm.color);
+                    fd.append("continent", publishForm.continent);
+                    fd.append("country", publishForm.country);
+                    fd.append("breeder", publishForm.breeder);
+                    fd.append("owner", publishForm.owner);
+                    fd.append("conditionedWeight", publishForm.conditionedWeight);
+                    fd.append("pedigreeNotes", publishForm.notes);
+                    fd.append("journalJson", JSON.stringify(publishForm.journal));
+                    fd.append("slotsJson", JSON.stringify(slots));
+                    fd.append("treeJson", JSON.stringify(previewTree));
+                    if (publishForm.photoFile) {
+                      fd.append("photo", publishForm.photoFile);
+                    }
+                    const res = await fetch("/api/pedigrees/publish", { method: "POST", body: fd });
+                    const data = await res.json();
+                    if (data.success && data.id) {
+                      setShowPublishModal(false);
+                      router.push(`/pedigree/custom/${data.id}`);
+                    } else {
+                      alert("Failed to publish. Please try again.");
+                    }
+                  } catch (err) {
+                    console.error("Publish error:", err);
+                    alert("Failed to publish. Please try again.");
+                  } finally {
+                    setPublishing(false);
+                  }
                 }}
-                className="w-full rounded-lg py-3 text-sm font-bold uppercase tracking-widest transition-all hover:scale-[1.02]"
+                className="w-full rounded-lg py-3 text-sm font-bold uppercase tracking-widest transition-all hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{
                   fontFamily: "var(--font-display, Oswald, sans-serif)",
                   background: "linear-gradient(135deg, #d4a855 0%, #f5d994 50%, #d4a855 100%)",
@@ -2042,7 +2135,7 @@ export default function PedigreeLabPage() {
                   boxShadow: "0 0 20px rgba(212,168,85,0.25)",
                 }}
               >
-                Submit &amp; Publish
+                {publishing ? "Publishing..." : "Submit & Publish"}
               </button>
             </div>
           </Card>
