@@ -1103,13 +1103,14 @@ export default function PublicPedigreePage() {
         </div>
 
         {/* ─── Photo + Details (like original site layout) ─── */}
-        <div className="glow-gold rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)" }}>
-          <div className="flex flex-col sm:flex-row sm:items-stretch">
+        <div className="glow-gold rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)", minHeight: "220px", maxHeight: "220px" }}>
+          <div className="flex flex-col sm:flex-row sm:items-stretch h-full">
             {/* Photo — stretches to match text height */}
             <div className="w-48 md:w-56 flex-shrink-0 relative m-2">
               {photoUrl ? (
                 <img src={photoUrl} alt={dog.registered_name}
-                     className="w-full h-full rounded-md object-cover" />
+                     className="w-full h-full rounded-md object-contain"
+                     style={{ background: "rgba(0,0,0,0.3)" }} />
               ) : (
                 <div className="w-full h-full min-h-[120px] rounded-md flex items-center justify-center"
                      style={{ background: isMale ? "linear-gradient(135deg, #0c1929, #1a2e4a)" : "linear-gradient(135deg, #29101c, #3d1a2e)" }}>
@@ -1124,7 +1125,7 @@ export default function PublicPedigreePage() {
             </div>
 
             {/* Details as plain text lines (like original) */}
-            <div className="flex-1 py-2 pr-2.5 pl-0.5" style={{ fontFamily: "var(--font-table)" }}>
+            <div className="flex-1 py-2 pr-2.5 pl-0.5 overflow-y-auto" style={{ fontFamily: "var(--font-table)" }}>
               <div className="space-y-0" style={{ fontSize: "13px", lineHeight: "1.6" }}>
                 {dog.breeder && (
                   <div><span style={{ color: "var(--text-muted)", fontWeight: 700 }}>BREEDER: </span><span style={{ color: "var(--text-primary)" }}>{dog.breeder}</span></div>
