@@ -44,6 +44,7 @@ interface JournalData {
 }
 
 interface PublishForm {
+  prefix: string;
   name: string;
   dob: string;
   sex: string;
@@ -163,6 +164,7 @@ function defaultJournal(): JournalData {
 
 function defaultPublishForm(): PublishForm {
   return {
+    prefix: "",
     name: "",
     dob: "",
     sex: "Male",
@@ -1207,13 +1209,39 @@ export default function PedigreeLabPage() {
                 </button>
               </div>
 
+              {/* Prefix + Name */}
+              <div>
+                <label
+                  className="block text-[10px] uppercase tracking-widest font-semibold mb-1"
+                  style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
+                >
+                  Prefix
+                </label>
+                <select
+                  value={publishForm.prefix}
+                  onChange={(e) => setPublishForm((p) => ({ ...p, prefix: e.target.value }))}
+                  className="rounded-lg px-2 py-2 text-xs outline-none"
+                  style={{
+                    background: "var(--bg-deep, #0b1120)",
+                    border: "1px solid rgba(30,64,120,0.5)",
+                    color: "#e2e8f0",
+                    fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+                    width: 90,
+                  }}
+                >
+                  <option value="">None</option>
+                  <option value="CH">CH</option>
+                  <option value="GR CH">GR CH</option>
+                </select>
+              </div>
+              <ModalInput
+                label="Name"
+                value={publishForm.name}
+                onChange={(v) => setPublishForm((p) => ({ ...p, name: v }))}
+              />
+
               {/* Dog Info */}
               <div className="grid grid-cols-2 gap-3">
-                <ModalInput
-                  label="Name"
-                  value={publishForm.name}
-                  onChange={(v) => setPublishForm((p) => ({ ...p, name: v }))}
-                />
                 <ModalInput
                   label="DOB"
                   type="date"
