@@ -46,9 +46,14 @@ interface JournalData {
 interface PublishForm {
   prefix: string;
   name: string;
+  suffixWins: string;
+  suffixLosses: string;
+  suffixDraws: string;
+  suffixHonors: string;
   dob: string;
   sex: string;
   color: string;
+  continent: string;
   country: string;
   notes: string;
   photoFile: File | null;
@@ -60,6 +65,15 @@ interface PublishForm {
 /* Constants                                                          */
 /* ------------------------------------------------------------------ */
 const PHOTO_BASE = "https://www.apbt.online-pedigrees.com/";
+
+const COUNTRY_MAP: Record<string, string[]> = {
+  "North America": ["United States", "Canada", "Mexico", "Antigua and Barbuda", "Bahamas", "Barbados", "Belize", "Cuba", "Dominica", "Dominican Republic", "Grenada", "Guatemala", "Haiti", "Honduras", "Jamaica", "El Salvador", "Costa Rica", "Nicaragua", "Panama", "Puerto Rico", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Trinidad and Tobago"],
+  "South America": ["Brazil", "Argentina", "Colombia", "Chile", "Peru", "Venezuela", "Ecuador", "Uruguay", "Paraguay", "Bolivia"],
+  "Europe": ["United Kingdom", "Ireland", "Spain", "Portugal", "France", "Germany", "Italy", "Netherlands", "Belgium", "Sweden", "Denmark", "Norway", "Finland", "Poland", "Romania", "Hungary", "Czech Republic", "Greece", "Croatia", "Serbia", "Bulgaria", "Albania", "Russia", "Ukraine", "Turkey"],
+  "Asia": ["Philippines", "Japan", "South Korea", "China", "Thailand", "Indonesia", "Vietnam", "India", "Pakistan", "Iran", "Iraq", "Israel", "Saudi Arabia", "UAE", "Malaysia", "Singapore", "Taiwan"],
+  "Africa": ["South Africa", "Nigeria", "Kenya", "Egypt", "Morocco", "Ghana", "Tanzania", "Ethiopia", "Cameroon", "Algeria"],
+  "Oceania": ["Australia", "New Zealand", "Fiji", "Papua New Guinea"],
+};
 
 const SLOT_LABELS: Record<SlotKey, string> = {
   subject: "Subject Dog",
@@ -166,9 +180,14 @@ function defaultPublishForm(): PublishForm {
   return {
     prefix: "",
     name: "",
+    suffixWins: "",
+    suffixLosses: "",
+    suffixDraws: "",
+    suffixHonors: "",
     dob: "",
     sex: "Male",
     color: "",
+    continent: "",
     country: "",
     notes: "",
     photoFile: null,
@@ -1232,6 +1251,7 @@ export default function PedigreeLabPage() {
                   <option value="">None</option>
                   <option value="CH">CH</option>
                   <option value="GR CH">GR CH</option>
+                  <option value="DBL GR CH">DBL GR CH</option>
                 </select>
               </div>
               <ModalInput
@@ -1239,6 +1259,96 @@ export default function PedigreeLabPage() {
                 value={publishForm.name}
                 onChange={(v) => setPublishForm((p) => ({ ...p, name: v }))}
               />
+
+              {/* Suffix */}
+              <div>
+                <label
+                  className="block text-[10px] uppercase tracking-widest font-semibold mb-1"
+                  style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
+                >
+                  Suffix
+                </label>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <select
+                    value={publishForm.suffixWins}
+                    onChange={(e) => setPublishForm((p) => ({ ...p, suffixWins: e.target.value }))}
+                    className="rounded-lg px-2 py-2 text-xs outline-none"
+                    style={{
+                      background: "var(--bg-deep, #0b1120)",
+                      border: "1px solid rgba(30,64,120,0.5)",
+                      color: "#e2e8f0",
+                      fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+                      width: 90,
+                    }}
+                  >
+                    <option value="">Wins</option>
+                    {[1,2,3,4,5,6,7,8,9,10].map((n) => (
+                      <option key={n} value={`${n}XW`}>{n}XW</option>
+                    ))}
+                  </select>
+                  <select
+                    value={publishForm.suffixLosses}
+                    onChange={(e) => setPublishForm((p) => ({ ...p, suffixLosses: e.target.value }))}
+                    className="rounded-lg px-2 py-2 text-xs outline-none"
+                    style={{
+                      background: "var(--bg-deep, #0b1120)",
+                      border: "1px solid rgba(30,64,120,0.5)",
+                      color: "#e2e8f0",
+                      fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+                      width: 90,
+                    }}
+                  >
+                    <option value="">Losses</option>
+                    {[1,2,3].map((n) => (
+                      <option key={n} value={`${n}XL`}>{n}XL</option>
+                    ))}
+                  </select>
+                  <select
+                    value={publishForm.suffixDraws}
+                    onChange={(e) => setPublishForm((p) => ({ ...p, suffixDraws: e.target.value }))}
+                    className="rounded-lg px-2 py-2 text-xs outline-none"
+                    style={{
+                      background: "var(--bg-deep, #0b1120)",
+                      border: "1px solid rgba(30,64,120,0.5)",
+                      color: "#e2e8f0",
+                      fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+                      width: 90,
+                    }}
+                  >
+                    <option value="">Draws</option>
+                    {[1,2,3].map((n) => (
+                      <option key={n} value={`${n}XD`}>{n}XD</option>
+                    ))}
+                  </select>
+                  <select
+                    value={publishForm.suffixHonors}
+                    onChange={(e) => setPublishForm((p) => ({ ...p, suffixHonors: e.target.value }))}
+                    className="rounded-lg px-2 py-2 text-xs outline-none"
+                    style={{
+                      background: "var(--bg-deep, #0b1120)",
+                      border: "1px solid rgba(30,64,120,0.5)",
+                      color: "#e2e8f0",
+                      fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+                      width: 90,
+                    }}
+                  >
+                    <option value="">Honors</option>
+                    <option value="POR">POR</option>
+                    <option value="ROM">ROM</option>
+                  </select>
+                </div>
+                {/* Preview of built suffix */}
+                {(publishForm.suffixWins || publishForm.suffixLosses || publishForm.suffixDraws || publishForm.suffixHonors) && (
+                  <p className="mt-1.5 text-xs font-semibold" style={{ color: "#d4a855", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}>
+                    {[
+                      publishForm.suffixWins ? `(${publishForm.suffixWins})` : "",
+                      publishForm.suffixLosses ? `(${publishForm.suffixLosses})` : "",
+                      publishForm.suffixDraws ? `(${publishForm.suffixDraws})` : "",
+                      publishForm.suffixHonors || "",
+                    ].filter(Boolean).join(" ")}
+                  </p>
+                )}
+              </div>
 
               {/* Dog Info */}
               <div className="grid grid-cols-2 gap-3">
@@ -1277,12 +1387,60 @@ export default function PedigreeLabPage() {
                 />
               </div>
 
-              {/* Country */}
-              <ModalInput
-                label="Country"
-                value={publishForm.country}
-                onChange={(v) => setPublishForm((p) => ({ ...p, country: v }))}
-              />
+              {/* Continent & Country */}
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label
+                    className="block text-[10px] uppercase tracking-widest font-semibold mb-1"
+                    style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
+                  >
+                    Continent
+                  </label>
+                  <select
+                    value={publishForm.continent}
+                    onChange={(e) => setPublishForm((p) => ({ ...p, continent: e.target.value, country: "" }))}
+                    className="w-full rounded-lg px-3 py-2 text-sm outline-none"
+                    style={{
+                      background: "var(--bg-deep, #0b1120)",
+                      border: "1px solid rgba(30,64,120,0.5)",
+                      color: "#e2e8f0",
+                      fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+                    }}
+                  >
+                    <option value="">Select</option>
+                    <option value="North America">North America</option>
+                    <option value="South America">South America</option>
+                    <option value="Europe">Europe</option>
+                    <option value="Asia">Asia</option>
+                    <option value="Africa">Africa</option>
+                    <option value="Oceania">Oceania</option>
+                  </select>
+                </div>
+                <div>
+                  <label
+                    className="block text-[10px] uppercase tracking-widest font-semibold mb-1"
+                    style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
+                  >
+                    Country
+                  </label>
+                  <select
+                    value={publishForm.country}
+                    onChange={(e) => setPublishForm((p) => ({ ...p, country: e.target.value }))}
+                    className="w-full rounded-lg px-3 py-2 text-sm outline-none"
+                    style={{
+                      background: "var(--bg-deep, #0b1120)",
+                      border: "1px solid rgba(30,64,120,0.5)",
+                      color: "#e2e8f0",
+                      fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+                    }}
+                  >
+                    <option value="">Select</option>
+                    {(COUNTRY_MAP[publishForm.continent] || []).map((c) => (
+                      <option key={c} value={c}>{c}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
 
               {/* Notes */}
               <div>
