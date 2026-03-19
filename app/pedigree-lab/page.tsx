@@ -81,14 +81,20 @@ const PANEL_BG =
 /* ------------------------------------------------------------------ */
 function getDogColor(name: string): string {
   const n = (name || "").toUpperCase();
-  if (/\bGR\s*CH\b/.test(n)) return "#60a5fa";
-  if (/(?:^|\s|\()CH\b/.test(n)) return "#fc8181";
+  if (/\bGR\s*CH\b/.test(n)) return "#60a5fa";   // blue
+  if (/(?:^|\s|\()CH\b/.test(n)) return "#fc8181"; // red
+  if (/\bROM\b/.test(n)) return "#22d3ee";         // cyan
+  if (/\bPOR\b/.test(n)) return "#a78bfa";         // violet
   const xw = n.match(/\b(\d+)X[WL]\b/);
   if (xw) {
     const num = parseInt(xw[1]);
-    if (num === 3) return "#d4a855";
+    if (num >= 5) return "#c084fc";  // purple
+    if (num === 4) return "#f472b6"; // pink
+    if (num === 3) return "#d4a855"; // gold
+    if (num === 2) return "#fb923c"; // orange
+    if (num === 1) return "#2dd4bf"; // teal
   }
-  return "#b0bece";
+  return "#b0bece"; // silver for no title
 }
 
 function sexIcon(sex?: string): string {
@@ -220,6 +226,11 @@ export default function PedigreeLabPage() {
   const [showPublishModal, setShowPublishModal] = useState(false);
   const [publishForm, setPublishForm] = useState<PublishForm>(defaultPublishForm());
 
+  /* ---------- Preview pedigree tree state ---------- */
+  interface TreeRow { gen: number; pos: number; dog_id: number | null; name: string; photo_url: string | null; sex: string | null; }
+  const [previewTree, setPreviewTree] = useState<TreeRow[]>([]);
+  const [previewLoading, setPreviewLoading] = useState(false);
+
   /* ---------- COI ---------- */
   const coi = calcCOI(slots);
   const dogsPlacedCount = Object.values(slots).filter(Boolean).length;
@@ -235,7 +246,7 @@ export default function PedigreeLabPage() {
       const res = await fetch(`/api/dogs/search?q=${encodeURIComponent(term)}&limit=10`);
       if (res.ok) {
         const data = await res.json();
-        setSearchResults(Array.isArray(data) ? data : data.results || []);
+        setSearchResults(Array.isArray(data) ? data : data.dogs || []);
       }
     } catch {
       /* silently fail */
@@ -251,6 +262,57 @@ export default function PedigreeLabPage() {
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
   }, [searchTerm, doSearch]);
+
+  /* ---------- Auto-fill parents from DB ---------- */
+  const CHILD_TO_PARENTS: Partial<Record<SlotKey, { sireSlot: SlotKey; damSlot: SlotKey }>> = {
+    subject: { sireSlot: "sire", damSlot: "dam" },
+    sire: { sireSlot: "sire_sire", damSlot: "sire_dam" },
+    dam: { sireSlot: "dam_sire", damSlot: "dam_dam" },
+  };
+
+  const autoFillParents = useCallback(async (dogId: number, slotKey: SlotKey) => {
+    const mapping = CHILD_TO_PARENTS[slotKey];
+    if (!mapping) return; // grandparent slots have no children to fill
+
+    try {
+      const res = await fetch(`/api/dogs/family?id=${dogId}`);
+      if (!res.ok) return;
+      const data = await res.json();
+
+      const updates: Partial<Record<SlotKey, SlotDog | null>> = {};
+
+      if (data.sire) {
+        updates[mapping.sireSlot] = {
+          dog_id: data.sire.dog_id,
+          registered_name: data.sire.registered_name,
+          photo_url: data.sire.photo_url,
+          sex: data.sire.sex,
+        };
+      }
+      if (data.dam) {
+        updates[mapping.damSlot] = {
+          dog_id: data.dam.dog_id,
+          registered_name: data.dam.registered_name,
+          photo_url: data.dam.photo_url,
+          sex: data.dam.sex,
+        };
+      }
+
+      if (Object.keys(updates).length > 0) {
+        setSlots((prev) => ({ ...prev, ...updates }));
+
+        // Recursively fill grandparents if sire/dam slots were filled
+        if (data.sire && CHILD_TO_PARENTS[mapping.sireSlot]) {
+          autoFillParents(data.sire.dog_id, mapping.sireSlot);
+        }
+        if (data.dam && CHILD_TO_PARENTS[mapping.damSlot]) {
+          autoFillParents(data.dam.dog_id, mapping.damSlot);
+        }
+      }
+    } catch {
+      /* silently fail */
+    }
+  }, []);
 
   /* ---------- Drag handlers ---------- */
   const handleDragStart = (dog: DogSearchResult) => {
@@ -268,6 +330,8 @@ export default function PedigreeLabPage() {
         sex: dragData.sex,
       },
     }));
+    // Auto-fill parents behind the dropped dog
+    autoFillParents(dragData.dog_id, slotKey);
     setDragData(null);
   };
 
@@ -490,192 +554,417 @@ export default function PedigreeLabPage() {
         {/* MIDDLE - Canvas                                            */}
         {/* ---------------------------------------------------------- */}
         <main className="flex-1 overflow-auto p-3">
-          <Card className="h-full p-5 relative" style={{ minHeight: 560 }}>
-            {/* COI badge */}
-            <div
-              className="absolute z-10 flex flex-col items-center"
-              style={{ top: 16, left: "50%", transform: "translateX(-50%)" }}
-            >
+          {previewMode && previewTree.length > 0 ? (
+            /* ====== PREVIEW: 4-Generation Pedigree Table ====== */
+            <Card className="h-full relative overflow-auto" style={{ minHeight: 560, padding: 0 }}>
+              {/* Header */}
               <div
-                className="rounded-full px-5 py-1.5 flex items-center gap-2"
+                className="px-5 py-3 flex items-center justify-between"
                 style={{
-                  background: `${riskColor(coi)}18`,
-                  border: `1.5px solid ${riskColor(coi)}55`,
+                  background: "linear-gradient(180deg, #1a1a24 0%, #141418 100%)",
+                  borderBottom: "1.5px solid rgba(30,64,120,0.5)",
                 }}
               >
+                <div className="flex items-center gap-3">
+                  <span
+                    className="text-sm font-bold uppercase tracking-widest"
+                    style={{ color: "#e8ecf1", fontFamily: "var(--font-display, Oswald, sans-serif)" }}
+                  >
+                    Pedigree Preview
+                  </span>
+                  {slots.subject && (
+                    <span className="text-xs" style={{ color: getDogColor(slots.subject.registered_name) }}>
+                      — {slots.subject.registered_name}
+                    </span>
+                  )}
+                </div>
+                <div className="flex items-center gap-2">
+                  <span
+                    className="text-[10px] uppercase tracking-widest font-bold"
+                    style={{ color: riskColor(coi), fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
+                  >
+                    COI
+                  </span>
+                  <span
+                    className="text-sm font-black"
+                    style={{ color: riskColor(coi), fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}
+                  >
+                    {coi.toFixed(1)}%
+                  </span>
+                </div>
+              </div>
+
+              {/* 4-Gen Table */}
+              <div className="overflow-auto" style={{ background: "#e8ecf1" }}>
+                <table
+                  className="w-full"
+                  style={{
+                    borderCollapse: "collapse",
+                    fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+                    tableLayout: "fixed",
+                  }}
+                >
+                  <thead>
+                    <tr>
+                      {["First", "Second", "Third", "Fourth"].map((label) => (
+                        <th
+                          key={label}
+                          className="text-center text-[11px] uppercase tracking-widest font-bold py-2"
+                          style={{
+                            background: "linear-gradient(180deg, #1a1a24 0%, #141418 100%)",
+                            color: "#e8ecf1",
+                            borderRight: "1px solid rgba(30,64,120,0.4)",
+                            fontFamily: "var(--font-display, Oswald, sans-serif)",
+                          }}
+                        >
+                          {label}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {(() => {
+                      /* Build a structured 4-gen grid: gen1 has 2 rows, gen2 has 4, gen3 has 8, gen4 has 16
+                         But we display as: 16 rows total, each gen column spans accordingly */
+                      const TOTAL_ROWS = 16; // 2^4 for 4 gens
+                      const genData: Record<number, { pos: number; name: string; dog_id: number | null; sex: string | null }[]> = { 1: [], 2: [], 3: [], 4: [] };
+                      for (const row of previewTree) {
+                        if (genData[row.gen]) {
+                          genData[row.gen].push({ pos: row.pos, name: row.name, dog_id: row.dog_id, sex: row.sex });
+                        }
+                      }
+                      // Sort each gen by position
+                      for (const g of [1, 2, 3, 4]) {
+                        genData[g].sort((a, b) => a.pos - b.pos);
+                      }
+
+                      const rows: React.ReactNode[] = [];
+                      for (let r = 0; r < TOTAL_ROWS; r++) {
+                        const cells: React.ReactNode[] = [];
+
+                        // Gen 1: 2 entries, each spans 8 rows
+                        if (r % 8 === 0) {
+                          const idx = Math.floor(r / 8);
+                          const dog = genData[1]?.[idx];
+                          const name = dog?.name || "Unknown";
+                          const color = getDogColor(name);
+                          const tintBg = `${color}12`;
+                          cells.push(
+                            <td
+                              key="g1"
+                              rowSpan={8}
+                              className="text-center align-middle px-2"
+                              style={{
+                                fontSize: 13,
+                                fontWeight: 700,
+                                color,
+                                background: `linear-gradient(135deg, ${tintBg}, ${color}08)`,
+                                borderRight: "1px solid rgba(30,64,120,0.3)",
+                                borderBottom: "1px solid rgba(30,64,120,0.2)",
+                                minHeight: 40,
+                                fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+                              }}
+                            >
+                              {dog?.dog_id ? (
+                                <a href={`/pedigree/${dog.dog_id}`} style={{ color, textDecoration: "none" }}>
+                                  {name}
+                                </a>
+                              ) : name}
+                            </td>
+                          );
+                        }
+
+                        // Gen 2: 4 entries, each spans 4 rows
+                        if (r % 4 === 0) {
+                          const idx = Math.floor(r / 4);
+                          const dog = genData[2]?.[idx];
+                          const name = dog?.name || "Unknown";
+                          const color = getDogColor(name);
+                          const tintBg = `${color}12`;
+                          cells.push(
+                            <td
+                              key="g2"
+                              rowSpan={4}
+                              className="text-center align-middle px-2"
+                              style={{
+                                fontSize: 13,
+                                fontWeight: 700,
+                                color,
+                                background: `linear-gradient(135deg, ${tintBg}, ${color}08)`,
+                                borderRight: "1px solid rgba(30,64,120,0.3)",
+                                borderBottom: "1px solid rgba(30,64,120,0.2)",
+                                minHeight: 40,
+                                fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+                              }}
+                            >
+                              {dog?.dog_id ? (
+                                <a href={`/pedigree/${dog.dog_id}`} style={{ color, textDecoration: "none" }}>
+                                  {name}
+                                </a>
+                              ) : name}
+                            </td>
+                          );
+                        }
+
+                        // Gen 3: 8 entries, each spans 2 rows
+                        if (r % 2 === 0) {
+                          const idx = Math.floor(r / 2);
+                          const dog = genData[3]?.[idx];
+                          const name = dog?.name || "Unknown";
+                          const color = getDogColor(name);
+                          const tintBg = `${color}12`;
+                          cells.push(
+                            <td
+                              key="g3"
+                              rowSpan={2}
+                              className="text-center align-middle px-2"
+                              style={{
+                                fontSize: 12,
+                                fontWeight: 600,
+                                color,
+                                background: `linear-gradient(135deg, ${tintBg}, ${color}08)`,
+                                borderRight: "1px solid rgba(30,64,120,0.3)",
+                                borderBottom: "1px solid rgba(30,64,120,0.2)",
+                                minHeight: 40,
+                                fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+                              }}
+                            >
+                              {dog?.dog_id ? (
+                                <a href={`/pedigree/${dog.dog_id}`} style={{ color, textDecoration: "none" }}>
+                                  {name}
+                                </a>
+                              ) : name}
+                            </td>
+                          );
+                        }
+
+                        // Gen 4: 16 entries, each spans 1 row
+                        {
+                          const dog = genData[4]?.[r];
+                          const name = dog?.name || "Unknown";
+                          const color = getDogColor(name);
+                          const tintBg = `${color}12`;
+                          cells.push(
+                            <td
+                              key="g4"
+                              className="text-center align-middle px-2"
+                              style={{
+                                fontSize: 11,
+                                fontWeight: 600,
+                                color,
+                                background: `linear-gradient(135deg, ${tintBg}, ${color}08)`,
+                                borderBottom: "1px solid rgba(30,64,120,0.2)",
+                                minHeight: 40,
+                                height: 36,
+                                fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+                              }}
+                            >
+                              {dog?.dog_id ? (
+                                <a href={`/pedigree/${dog.dog_id}`} style={{ color, textDecoration: "none" }}>
+                                  {name}
+                                </a>
+                              ) : name}
+                            </td>
+                          );
+                        }
+
+                        rows.push(<tr key={r}>{cells}</tr>);
+                      }
+                      return rows;
+                    })()}
+                  </tbody>
+                </table>
+              </div>
+            </Card>
+          ) : (
+            /* ====== EDIT MODE: Drag & Drop Canvas ====== */
+            <Card className="h-full p-5 relative" style={{ minHeight: 560 }}>
+              {/* COI badge */}
+              <div
+                className="absolute z-10 flex flex-col items-center"
+                style={{ top: 16, left: "50%", transform: "translateX(-50%)" }}
+              >
+                <div
+                  className="rounded-full px-5 py-1.5 flex items-center gap-2"
+                  style={{
+                    background: `${riskColor(coi)}18`,
+                    border: `1.5px solid ${riskColor(coi)}55`,
+                  }}
+                >
+                  <span
+                    className="text-[10px] uppercase tracking-widest font-bold"
+                    style={{ color: riskColor(coi), fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
+                  >
+                    COI
+                  </span>
+                  <span
+                    className="text-lg font-black"
+                    style={{ color: riskColor(coi), fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}
+                  >
+                    {coi.toFixed(1)}%
+                  </span>
+                </div>
                 <span
-                  className="text-[10px] uppercase tracking-widest font-bold"
+                  className="text-[9px] uppercase tracking-widest mt-1 font-semibold"
                   style={{ color: riskColor(coi), fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
                 >
-                  COI
-                </span>
-                <span
-                  className="text-lg font-black"
-                  style={{ color: riskColor(coi), fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}
-                >
-                  {coi.toFixed(1)}%
+                  {riskLabel(coi)}
                 </span>
               </div>
-              <span
-                className="text-[9px] uppercase tracking-widest mt-1 font-semibold"
-                style={{ color: riskColor(coi), fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
+
+              {/* Pedigree Tree Layout */}
+              <div
+                className="flex items-center justify-center h-full pt-16"
+                style={{ minHeight: 460 }}
               >
-                {riskLabel(coi)}
-              </span>
-            </div>
+                {/* Subject (left) */}
+                <div className="flex flex-col items-center" style={{ width: 160 }}>
+                  <DropZone
+                    slotKey="subject"
+                    label={SLOT_LABELS.subject}
+                    dog={slots.subject}
+                    preview={previewMode}
+                    mockMode={mockMode}
+                    mockName={mockNames.subject}
+                    onMockNameChange={(v) => setMockNames((p) => ({ ...p, subject: v }))}
+                    selected={selectedSlot === "subject"}
+                    onSelect={() => setSelectedSlot("subject")}
+                    onDrop={handleDrop}
+                    onDragOver={handleDragOver}
+                    onRemove={removeFromSlot}
+                  />
+                </div>
 
-            {/* Pedigree Tree Layout */}
-            <div
-              className="flex items-center justify-center h-full pt-16"
-              style={{ minHeight: 460 }}
-            >
-              {/* Subject (left) */}
-              <div className="flex flex-col items-center" style={{ width: 160 }}>
-                <DropZone
-                  slotKey="subject"
-                  label={SLOT_LABELS.subject}
-                  dog={slots.subject}
-                  preview={previewMode}
-                  mockMode={mockMode}
-                  mockName={mockNames.subject}
-                  onMockNameChange={(v) => setMockNames((p) => ({ ...p, subject: v }))}
-                  selected={selectedSlot === "subject"}
-                  onSelect={() => setSelectedSlot("subject")}
-                  onDrop={handleDrop}
-                  onDragOver={handleDragOver}
-                  onRemove={removeFromSlot}
-                />
-              </div>
+                {/* Lines: Subject -> Parents */}
+                <div className="flex flex-col justify-center" style={{ width: 40 }}>
+                  <div style={{ borderTop: "2px solid rgba(30,64,120,0.6)", width: "100%", marginBottom: 80 }} />
+                  <div style={{ borderTop: "2px solid rgba(30,64,120,0.6)", width: "100%", marginTop: 80 }} />
+                  {/* Vertical connector */}
+                  <div
+                    className="absolute"
+                    style={{
+                      width: 2,
+                      height: 160,
+                      background: "rgba(30,64,120,0.6)",
+                      left: "calc(160px + 20px)",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      display: "none", /* handled by flex gap */
+                    }}
+                  />
+                </div>
 
-              {/* Lines: Subject -> Parents */}
-              <div className="flex flex-col justify-center" style={{ width: 40 }}>
-                <div style={{ borderTop: "2px solid rgba(30,64,120,0.6)", width: "100%", marginBottom: 80 }} />
-                <div style={{ borderTop: "2px solid rgba(30,64,120,0.6)", width: "100%", marginTop: 80 }} />
-                {/* Vertical connector */}
-                <div
-                  className="absolute"
-                  style={{
-                    width: 2,
-                    height: 160,
-                    background: "rgba(30,64,120,0.6)",
-                    left: "calc(160px + 20px)",
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    display: "none", /* handled by flex gap */
-                  }}
-                />
-              </div>
+                {/* Parents (middle) */}
+                <div className="flex flex-col items-center gap-10" style={{ width: 160 }}>
+                  {/* Sire */}
+                  <DropZone
+                    slotKey="sire"
+                    label={SLOT_LABELS.sire}
+                    dog={slots.sire}
+                    preview={previewMode}
+                    mockMode={mockMode}
+                    mockName={mockNames.sire}
+                    onMockNameChange={(v) => setMockNames((p) => ({ ...p, sire: v }))}
+                    selected={selectedSlot === "sire"}
+                    onSelect={() => setSelectedSlot("sire")}
+                    onDrop={handleDrop}
+                    onDragOver={handleDragOver}
+                    onRemove={removeFromSlot}
+                    accentColor="#60a5fa"
+                  />
+                  {/* Dam */}
+                  <DropZone
+                    slotKey="dam"
+                    label={SLOT_LABELS.dam}
+                    dog={slots.dam}
+                    preview={previewMode}
+                    mockMode={mockMode}
+                    mockName={mockNames.dam}
+                    onMockNameChange={(v) => setMockNames((p) => ({ ...p, dam: v }))}
+                    selected={selectedSlot === "dam"}
+                    onSelect={() => setSelectedSlot("dam")}
+                    onDrop={handleDrop}
+                    onDragOver={handleDragOver}
+                    onRemove={removeFromSlot}
+                    accentColor="#f472b6"
+                  />
+                </div>
 
-              {/* Parents (middle) */}
-              <div className="flex flex-col items-center gap-10" style={{ width: 160 }}>
-                {/* Sire */}
-                <DropZone
-                  slotKey="sire"
-                  label={SLOT_LABELS.sire}
-                  dog={slots.sire}
-                  preview={previewMode}
-                  mockMode={mockMode}
-                  mockName={mockNames.sire}
-                  onMockNameChange={(v) => setMockNames((p) => ({ ...p, sire: v }))}
-                  selected={selectedSlot === "sire"}
-                  onSelect={() => setSelectedSlot("sire")}
-                  onDrop={handleDrop}
-                  onDragOver={handleDragOver}
-                  onRemove={removeFromSlot}
-                  accentColor="#60a5fa"
-                />
-                {/* Dam */}
-                <DropZone
-                  slotKey="dam"
-                  label={SLOT_LABELS.dam}
-                  dog={slots.dam}
-                  preview={previewMode}
-                  mockMode={mockMode}
-                  mockName={mockNames.dam}
-                  onMockNameChange={(v) => setMockNames((p) => ({ ...p, dam: v }))}
-                  selected={selectedSlot === "dam"}
-                  onSelect={() => setSelectedSlot("dam")}
-                  onDrop={handleDrop}
-                  onDragOver={handleDragOver}
-                  onRemove={removeFromSlot}
-                  accentColor="#f472b6"
-                />
-              </div>
+                {/* Lines: Parents -> Grandparents */}
+                <div className="flex flex-col justify-center" style={{ width: 40 }}>
+                  <div style={{ borderTop: "2px solid rgba(30,64,120,0.4)", width: "100%" }} />
+                </div>
 
-              {/* Lines: Parents -> Grandparents */}
-              <div className="flex flex-col justify-center" style={{ width: 40 }}>
-                <div style={{ borderTop: "2px solid rgba(30,64,120,0.4)", width: "100%" }} />
+                {/* Grandparents (right) */}
+                <div className="flex flex-col items-center gap-4" style={{ width: 160 }}>
+                  <DropZone
+                    slotKey="sire_sire"
+                    label={SLOT_LABELS.sire_sire}
+                    dog={slots.sire_sire}
+                    preview={previewMode}
+                    mockMode={mockMode}
+                    mockName={mockNames.sire_sire}
+                    onMockNameChange={(v) => setMockNames((p) => ({ ...p, sire_sire: v }))}
+                    selected={selectedSlot === "sire_sire"}
+                    onSelect={() => setSelectedSlot("sire_sire")}
+                    onDrop={handleDrop}
+                    onDragOver={handleDragOver}
+                    onRemove={removeFromSlot}
+                    accentColor="#60a5fa"
+                    size="sm"
+                  />
+                  <DropZone
+                    slotKey="sire_dam"
+                    label={SLOT_LABELS.sire_dam}
+                    dog={slots.sire_dam}
+                    preview={previewMode}
+                    mockMode={mockMode}
+                    mockName={mockNames.sire_dam}
+                    onMockNameChange={(v) => setMockNames((p) => ({ ...p, sire_dam: v }))}
+                    selected={selectedSlot === "sire_dam"}
+                    onSelect={() => setSelectedSlot("sire_dam")}
+                    onDrop={handleDrop}
+                    onDragOver={handleDragOver}
+                    onRemove={removeFromSlot}
+                    accentColor="#f472b6"
+                    size="sm"
+                  />
+                  <DropZone
+                    slotKey="dam_sire"
+                    label={SLOT_LABELS.dam_sire}
+                    dog={slots.dam_sire}
+                    preview={previewMode}
+                    mockMode={mockMode}
+                    mockName={mockNames.dam_sire}
+                    onMockNameChange={(v) => setMockNames((p) => ({ ...p, dam_sire: v }))}
+                    selected={selectedSlot === "dam_sire"}
+                    onSelect={() => setSelectedSlot("dam_sire")}
+                    onDrop={handleDrop}
+                    onDragOver={handleDragOver}
+                    onRemove={removeFromSlot}
+                    accentColor="#60a5fa"
+                    size="sm"
+                  />
+                  <DropZone
+                    slotKey="dam_dam"
+                    label={SLOT_LABELS.dam_dam}
+                    dog={slots.dam_dam}
+                    preview={previewMode}
+                    mockMode={mockMode}
+                    mockName={mockNames.dam_dam}
+                    onMockNameChange={(v) => setMockNames((p) => ({ ...p, dam_dam: v }))}
+                    selected={selectedSlot === "dam_dam"}
+                    onSelect={() => setSelectedSlot("dam_dam")}
+                    onDrop={handleDrop}
+                    onDragOver={handleDragOver}
+                    onRemove={removeFromSlot}
+                    accentColor="#f472b6"
+                    size="sm"
+                  />
+                </div>
               </div>
-
-              {/* Grandparents (right) */}
-              <div className="flex flex-col items-center gap-4" style={{ width: 160 }}>
-                <DropZone
-                  slotKey="sire_sire"
-                  label={SLOT_LABELS.sire_sire}
-                  dog={slots.sire_sire}
-                  preview={previewMode}
-                  mockMode={mockMode}
-                  mockName={mockNames.sire_sire}
-                  onMockNameChange={(v) => setMockNames((p) => ({ ...p, sire_sire: v }))}
-                  selected={selectedSlot === "sire_sire"}
-                  onSelect={() => setSelectedSlot("sire_sire")}
-                  onDrop={handleDrop}
-                  onDragOver={handleDragOver}
-                  onRemove={removeFromSlot}
-                  accentColor="#60a5fa"
-                  size="sm"
-                />
-                <DropZone
-                  slotKey="sire_dam"
-                  label={SLOT_LABELS.sire_dam}
-                  dog={slots.sire_dam}
-                  preview={previewMode}
-                  mockMode={mockMode}
-                  mockName={mockNames.sire_dam}
-                  onMockNameChange={(v) => setMockNames((p) => ({ ...p, sire_dam: v }))}
-                  selected={selectedSlot === "sire_dam"}
-                  onSelect={() => setSelectedSlot("sire_dam")}
-                  onDrop={handleDrop}
-                  onDragOver={handleDragOver}
-                  onRemove={removeFromSlot}
-                  accentColor="#f472b6"
-                  size="sm"
-                />
-                <DropZone
-                  slotKey="dam_sire"
-                  label={SLOT_LABELS.dam_sire}
-                  dog={slots.dam_sire}
-                  preview={previewMode}
-                  mockMode={mockMode}
-                  mockName={mockNames.dam_sire}
-                  onMockNameChange={(v) => setMockNames((p) => ({ ...p, dam_sire: v }))}
-                  selected={selectedSlot === "dam_sire"}
-                  onSelect={() => setSelectedSlot("dam_sire")}
-                  onDrop={handleDrop}
-                  onDragOver={handleDragOver}
-                  onRemove={removeFromSlot}
-                  accentColor="#60a5fa"
-                  size="sm"
-                />
-                <DropZone
-                  slotKey="dam_dam"
-                  label={SLOT_LABELS.dam_dam}
-                  dog={slots.dam_dam}
-                  preview={previewMode}
-                  mockMode={mockMode}
-                  mockName={mockNames.dam_dam}
-                  onMockNameChange={(v) => setMockNames((p) => ({ ...p, dam_dam: v }))}
-                  selected={selectedSlot === "dam_dam"}
-                  onSelect={() => setSelectedSlot("dam_dam")}
-                  onDrop={handleDrop}
-                  onDragOver={handleDragOver}
-                  onRemove={removeFromSlot}
-                  accentColor="#f472b6"
-                  size="sm"
-                />
-              </div>
-            </div>
-          </Card>
+            </Card>
+          )}
         </main>
 
         {/* ---------------------------------------------------------- */}
@@ -743,7 +1032,28 @@ export default function PedigreeLabPage() {
 
               {/* Preview toggle */}
               <button
-                onClick={() => setPreviewMode(!previewMode)}
+                onClick={async () => {
+                  if (previewMode) {
+                    setPreviewMode(false);
+                    setPreviewTree([]);
+                  } else {
+                    // Fetch 4-gen tree when sire and/or dam are placed
+                    const sireId = slots.sire?.dog_id || 0;
+                    const damId = slots.dam?.dog_id || 0;
+                    if (sireId || damId) {
+                      setPreviewLoading(true);
+                      try {
+                        const res = await fetch(`/api/dogs/pedigree-tree?sire_id=${sireId}&dam_id=${damId}&gens=4`);
+                        if (res.ok) {
+                          const data = await res.json();
+                          setPreviewTree(data.rows || []);
+                        }
+                      } catch { /* ignore */ }
+                      setPreviewLoading(false);
+                    }
+                    setPreviewMode(true);
+                  }
+                }}
                 className="w-full rounded-lg py-2.5 text-xs font-bold uppercase tracking-widest transition-all hover:scale-[1.02]"
                 style={{
                   fontFamily: "var(--font-table, Rajdhani, sans-serif)",
@@ -754,7 +1064,7 @@ export default function PedigreeLabPage() {
                   border: `1.5px solid ${previewMode ? "#d4a855" : "rgba(30,64,120,0.6)"}`,
                 }}
               >
-                {previewMode ? "\u2716 Exit Preview" : "\u25B6 Preview"}
+                {previewLoading ? "Loading..." : previewMode ? "\u2716 Exit Preview" : "\u25B6 Preview"}
               </button>
 
               {/* Create & Publish */}
