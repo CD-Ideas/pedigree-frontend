@@ -1,78 +1,92 @@
-import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+export const dynamic = "force-dynamic";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+import { NextRequest, NextResponse } from "next/server";
+import { execFile } from "child_process";
+import { promisify } from "util";
 
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+const execFileAsync = promisify(execFile);
+const DB_PATH = "/home/ubuntu/apbt-scraper/apbt_v2.db";
 
-export async function GET() {
-  try {
-    const { data, error } = await supabase
-      .from("dogs")
-      .select("*")
-      .order("created_at", { ascending: false });
-
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
-
-    return NextResponse.json(data, { status: 200 });
-  } catch {
-    return NextResponse.json({ error: "Failed to load dogs" }, { status: 500 });
-  }
+async function queryDb(script: string): Promise<string> {
+  const { stdout } = await execFileAsync("python3", ["-c", script], { timeout: 15000 });
+  return stdout;
 }
 
-export async function POST(req: Request) {
+export async function GET(req: NextRequest) {
   try {
-    const body = await req.json();
+    const { searchParams } = req.nextUrl;
+    const page = Math.max(1, parseInt(searchParams.get("page") || "1"));
+    const limit = Math.min(100, parseInt(searchParams.get("limit") || "50"));
+    const offset = (page - 1) * limit;
+    const sort = searchParams.get("sort") || "view_count";
+    const order = searchParams.get("order") === "asc" ? "ASC" : "DESC";
+    const search = searchParams.get("search") || "";
+    const sex = searchParams.get("sex") || "";
+    const color = searchParams.get("color") || "";
+    const title = searchParams.get("title") || "";
+    const hasPhoto = searchParams.get("hasPhoto") === "true";
 
-    const {
-      name,
-      breed,
-      sex,
-      dateOfBirth,
-      sire,
-      dam,
-      sire_id,
-      dam_id,
-    } = body;
+    const searchB64 = Buffer.from(search).toString("base64");
+    const colorB64 = Buffer.from(color).toString("base64");
+    const titleB64 = Buffer.from(title).toString("base64");
 
-    if (!name || !breed || !sex || !dateOfBirth) {
-      return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 }
-      );
-    }
+    const sortCol = ["view_count", "registered_name", "dog_id", "birthdate", "posted_date"].includes(sort) ? sort : "view_count";
 
-    const { data, error } = await supabase
-      .from("dogs")
-      .insert([
-        {
-          name: String(name).trim(),
-          breed: String(breed).trim(),
-          sex: String(sex).trim(),
-          dateOfBirth,
-          sire: sire ? String(sire).trim() : "",
-          dam: dam ? String(dam).trim() : "",
-          sire_id: sire_id || null,
-          dam_id: dam_id || null,
-        },
-      ])
-      .select();
+    const script = [
+      `import sqlite3, json, base64, re, sys`,
+      `search = base64.b64decode("${searchB64}").decode("utf-8")`,
+      `color_f = base64.b64decode("${colorB64}").decode("utf-8")`,
+      `title_f = base64.b64decode("${titleB64}").decode("utf-8")`,
+      `conn = sqlite3.connect("${DB_PATH}")`,
+      `conn.row_factory = sqlite3.Row`,
+      `c = conn.cursor()`,
+      `conditions = []`,
+      `params = []`,
+      `if search:`,
+      `    conditions.append("registered_name LIKE ?")`,
+      `    params.append("%" + search + "%")`,
+      `sex_f = "${sex}"`,
+      `if sex_f:`,
+      `    conditions.append("UPPER(sex) = UPPER(?)")`,
+      `    params.append(sex_f)`,
+      `if color_f:`,
+      `    conditions.append("color = ?")`,
+      `    params.append(color_f)`,
+      `if title_f:`,
+      `    conditions.append("registered_name LIKE ?")`,
+      `    params.append("%" + title_f + "%")`,
+      `has_photo = ${hasPhoto ? "True" : "False"}`,
+      `if has_photo:`,
+      `    conditions.append("photo_url IS NOT NULL AND photo_url != ''")`,
+      `where = "WHERE " + " AND ".join(conditions) if conditions else ""`,
+      `c.execute("SELECT COUNT(*) FROM dogs " + where, params)`,
+      `total = c.fetchone()[0]`,
+      `sort_col = "${sortCol}"`,
+      `sort_order = "${order}"`,
+      `lim = ${limit}`,
+      `off = ${offset}`,
+      `c.execute("SELECT dog_id as id, registered_name as name, sex, color, birthdate as dob, registration_number as reg_number, photo_url as profile_image_url, sire_id, dam_id, view_count FROM dogs " + where + " ORDER BY " + sort_col + " " + sort_order + " LIMIT ? OFFSET ?", params + [lim, off])`,
+      `dogs = []`,
+      `for r in c.fetchall():`,
+      `    d = dict(r)`,
+      `    d["titles"] = []`,
+      `    nm = (d.get("name") or "").upper()`,
+      `    if "GR CH" in nm: d["titles"].append("GR CH")`,
+      `    if " CH " in nm or nm.startswith("CH "): d["titles"].append("CH")`,
+      `    if "ROM" in nm: d["titles"].append("ROM")`,
+      `    xw = re.findall(r"\\b(\\d+)X[WL]\\b", nm)`,
+      `    for x in xw: d["titles"].append(x + "XW")`,
+      `    dogs.append(d)`,
+      `total_pages = (total + lim - 1) // lim`,
+      `print(json.dumps({"dogs": dogs, "total": total, "totalPages": total_pages, "page": ${page}, "filters": {"colors": [], "titles": ["GR CH","CH","ROM","POR","1XW","2XW","3XW","4XW","5XW"]}}))`,
+      `conn.close()`,
+    ].join("\n");
 
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
-
-    return NextResponse.json(
-      { message: "Dog saved successfully!", data },
-      { status: 201 }
-    );
-  } catch {
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
+    const stdout = await queryDb(script);
+    const data = JSON.parse(stdout);
+    return NextResponse.json(data);
+  } catch (err) {
+    console.error("Dogs API error:", err);
+    return NextResponse.json({ dogs: [], total: 0, totalPages: 0, page: 1, filters: { colors: [], titles: [] } });
   }
 }

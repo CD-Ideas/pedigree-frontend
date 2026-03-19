@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 
 const LOGO = "https://i.imgur.com/cAvQemZ.png";
 
-/* ── (removed dynamic preview) ── */
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* removed unused dynamic component */
+function _REMOVED() { return null; }
 function _BreedingCalcPreview_UNUSED() {
   const [data, setData] = useState<{
     sire: { name: string; photo: string | null };
@@ -86,7 +86,6 @@ function _BreedingCalcPreview_UNUSED() {
                 </>
               ) : (
                 <>
-                  <span style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", color: "#fff" }}>Example: </span>
                   <span style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", color: "var(--accent-gold)" }}>GR CH Razor&apos;s Edge Bloodfire</span>
                 </>
               )}
@@ -498,7 +497,6 @@ export default function Home() {
                   boxShadow: "0 4px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04)",
                 }}>
                 <div className="text-center mb-2">
-                  <span style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", color: "#fff" }}>Example: </span>
                   <span style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", color: "var(--accent-gold)" }}>GR CH Razor&apos;s Edge Bloodfire</span>
                 </div>
                 <div className="flex justify-center">
@@ -614,7 +612,7 @@ export default function Home() {
                 </div>
 
                 <button
-                  onClick={() => window.location.href = "/breeding-calculator"}
+                  onClick={() => setAuthModal(true)}
                   className="w-full py-2 rounded-lg text-center"
                   style={{
                     fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.08em",
