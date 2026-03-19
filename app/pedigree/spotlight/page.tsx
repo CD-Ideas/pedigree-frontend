@@ -40,6 +40,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
   const [lineageLoading, setLineageLoading] = useState(false);
   const [hovered, setHovered] = useState<number | null>(null);
   const [genDepth, setGenDepth] = useState(8);
+  const lineageListRef = useRef<HTMLDivElement>(null);
   const ref = useRef<HTMLDivElement>(null);
   const timer = useRef<NodeJS.Timeout | null>(null);
 
@@ -124,8 +125,24 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
     }, 300);
   };
 
-  // Pie chart colors
-  const pieColors = ["#f59e0b", "#3b82f6", "#ef4444", "#10b981", "#8b5cf6", "#f97316", "#06b6d4", "#ec4899", "#84cc16", "#6366f1", "#14b8a6", "#f43f5e", "#a855f7", "#eab308", "#0ea5e9", "#d946ef", "#22c55e", "#e11d48"];
+  // Title-based dog color (matches PedStats)
+  function getDogColor(name: string): string {
+    const n = (name || "").toUpperCase();
+    if (/\bGR\s*CH\b/.test(n)) return "#60a5fa";       // blue
+    if (/(?:^|\s|\()CH\b/.test(n)) return "#fc8181";    // red
+    const xw = n.match(/\b(\d+)X[WL]\b/);
+    if (xw) {
+      const num = parseInt(xw[1]);
+      if (num === 1) return "#2dd4bf";   // teal
+      if (num === 2) return "#fb923c";   // orange
+      if (num === 3) return "#d4a855";   // gold
+      if (num === 4) return "#f472b6";   // pink
+      if (num >= 5) return "#c084fc";    // purple
+    }
+    if (/\bROM\b/.test(n)) return "#22d3ee";            // cyan
+    if (/\bPOR\b/.test(n)) return "#a78bfa";            // violet
+    return "#e8e8e8";                                    // white for no title
+  }
 
   // Build pie chart for lineage
   const renderPie = () => {
@@ -140,7 +157,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
       const endAngle = cumAngle + angle;
       const midAngle = (startAngle + endAngle) / 2;
       cumAngle = endAngle;
-      return { ...m, angle, startAngle, endAngle, midAngle, color: pieColors[i % pieColors.length], idx: i };
+      return { ...m, angle, startAngle, endAngle, midAngle, color: getDogColor(m.name), idx: i };
     });
 
     return (
@@ -159,7 +176,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
                 <path key={s.idx} d={`M ${cx} ${cy} L ${x1} ${y1} A ${radius} ${radius} 0 ${la} 1 ${x2} ${y2} Z`}
                       fill={s.color} stroke="rgba(11,17,32,0.8)" strokeWidth="2"
                       style={{ transform: isH ? "scale(1.06)" : "none", transformOrigin: `${cx}px ${cy}px`, transition: "all 0.2s", filter: isH ? `drop-shadow(0 0 10px ${s.color})` : "none", cursor: "pointer" }}
-                      onMouseEnter={() => setHovered(s.idx)} onMouseLeave={() => setHovered(null)} />
+                      onMouseEnter={() => { setHovered(s.idx); const el = lineageListRef.current?.children[s.idx] as HTMLElement; if (el) el.scrollIntoView({ behavior: "smooth", block: "nearest" }); }} onMouseLeave={() => setHovered(null)} />
               );
             })}
             <circle cx={cx} cy={cy} r="55" fill="var(--bg-deep)" stroke="rgba(30,64,120,0.5)" strokeWidth="1" />
@@ -173,7 +190,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
             </div>
           )}
         </div>
-        <div className="flex-1 space-y-1 w-full max-h-[280px] overflow-y-auto">
+        <div ref={lineageListRef} className="flex-1 space-y-1 w-full max-h-[280px] overflow-y-auto">
           {slices.map((s) => (
             <div key={s.idx} className="rounded-lg flex items-center gap-2 px-3 py-2 transition-all cursor-pointer"
                  style={{
@@ -237,7 +254,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
                 Lineage of <a href={`/pedigree/${lineage.dog.id}`} className="underline hover:brightness-125">{lineage.dog.name}</a>
               </span>
               <div className="flex items-center gap-1">
-                {[6, 8, 10].map((g) => (
+                {[8, 10, 12].map((g) => (
                   <button key={g}
                     onClick={() => { setGenDepth(g); fetchLineage(lineage.dog.id, lineage.dog.name, lineage.dog.photo_url, g); }}
                     className="px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all"
