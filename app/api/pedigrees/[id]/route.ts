@@ -22,7 +22,12 @@ import sqlite3, json
 db = sqlite3.connect("${DB}")
 db.row_factory = sqlite3.Row
 cur = db.cursor()
-cur.execute("SELECT * FROM published_pedigrees WHERE id = ?", (${pedId},))
+cur.execute("""
+    SELECT p.*, u.username as creator_username
+    FROM published_pedigrees p
+    LEFT JOIN users u ON p.user_id = u.id
+    WHERE p.id = ?
+""", (${pedId},))
 row = cur.fetchone()
 if not row:
     print(json.dumps(None))

@@ -2090,6 +2090,15 @@ export default function PedigreeLabPage() {
                   setPublishing(true);
                   try {
                     const fd = new FormData();
+                    // Send user_id from localStorage
+                    try {
+                      const userStr = localStorage.getItem("user");
+                      if (userStr) {
+                        const user = JSON.parse(userStr);
+                        if (user?.id) fd.append("userId", String(user.id));
+                      }
+                    } catch { /* ignore */ }
+                    const token = localStorage.getItem("token");
                     fd.append("name", publishForm.name);
                     fd.append("prefix", publishForm.prefix);
                     fd.append("suffixWins", publishForm.suffixWins);
@@ -2111,7 +2120,9 @@ export default function PedigreeLabPage() {
                     if (publishForm.photoFile) {
                       fd.append("photo", publishForm.photoFile);
                     }
-                    const res = await fetch("/api/pedigrees/publish", { method: "POST", body: fd });
+                    const headers: Record<string, string> = {};
+                    if (token) headers["Authorization"] = `Bearer ${token}`;
+                    const res = await fetch("/api/pedigrees/publish", { method: "POST", body: fd, headers });
                     const data = await res.json();
                     if (data.success && data.id) {
                       setShowPublishModal(false);

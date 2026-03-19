@@ -29,6 +29,8 @@ interface PublishedPedigree {
   view_count: number;
   date_posted: string;
   last_modified: string;
+  user_id: number | null;
+  creator_username: string | null;
 }
 
 interface TreeRow {
@@ -341,6 +343,42 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
   );
 }
 
+/* ─── Auth Button ─── */
+function NavAuthButton() {
+  const [user, setUser] = useState<{ id: number; username: string } | null>(null);
+  useEffect(() => {
+    try {
+      const u = localStorage.getItem("user");
+      if (u) setUser(JSON.parse(u));
+    } catch { /* ignore */ }
+  }, []);
+
+  if (user) {
+    return (
+      <div className="flex items-center gap-2">
+        <span className="text-xs font-semibold" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+          {user.username}
+        </span>
+        <button
+          onClick={() => { localStorage.removeItem("token"); localStorage.removeItem("refreshToken"); localStorage.removeItem("user"); window.location.reload(); }}
+          className="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all hover:scale-105"
+          style={{ background: "rgba(220,38,38,0.15)", color: "#fc8181", border: "1px solid rgba(220,38,38,0.3)", fontFamily: "var(--font-table)" }}>
+          Logout
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-center gap-2">
+      <Link href="/login" className="px-4 py-2 rounded-lg text-sm font-semibold transition-all hover:scale-105"
+        style={{ background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#000", fontFamily: "var(--font-table)", letterSpacing: "0.02em" }}>
+        Sign In
+      </Link>
+    </div>
+  );
+}
+
 /* ─── Main Page ─── */
 export default function PublishedPedigreePage() {
   const params = useParams();
@@ -348,6 +386,7 @@ export default function PublishedPedigreePage() {
   const [ped, setPed] = useState<PublishedPedigree | null>(null);
   const [loading, setLoading] = useState(true);
   const [tree, setTree] = useState<TreeRow[]>([]);
+  const [isOwner, setIsOwner] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -358,6 +397,16 @@ export default function PublishedPedigreePage() {
         setPed(data);
         // Parse tree
         try { setTree(JSON.parse(data.tree_json || "[]")); } catch { setTree([]); }
+        // Check if current user is the owner
+        try {
+          const userStr = localStorage.getItem("user");
+          if (userStr) {
+            const user = JSON.parse(userStr);
+            if (user?.id && data.user_id && user.id === data.user_id) {
+              setIsOwner(true);
+            }
+          }
+        } catch { /* ignore */ }
         // Increment view count
         fetch(`/api/pedigrees/${id}/view`, { method: "POST" }).catch(() => {});
         setLoading(false);
@@ -441,12 +490,7 @@ export default function PublishedPedigreePage() {
         <div className="flex-1 max-w-md mx-4">
           <NavSearch />
         </div>
-        <div className="flex items-center gap-2">
-          <Link href="/login" className="px-4 py-2 rounded-lg text-sm font-semibold transition-all hover:scale-105"
-            style={{ background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#000", fontFamily: "var(--font-table)", letterSpacing: "0.02em" }}>
-            Sign In
-          </Link>
-        </div>
+        <NavAuthButton />
       </nav>
 
       <div className="max-w-[1600px] mx-auto px-4 md:px-6 py-4 space-y-3">
@@ -469,12 +513,32 @@ export default function PublishedPedigreePage() {
             }}>
               {displayName}
             </h1>
-            <span className="text-[10px] px-2 py-0.5 rounded-full" style={{
-              background: "rgba(212,168,85,0.15)", color: "#d4a855",
-              fontFamily: "var(--font-mono)", border: "1px solid rgba(212,168,85,0.3)",
-            }}>
-              Community Pedigree
-            </span>
+            <div className="flex items-center justify-center gap-2 mt-1">
+              <span className="text-[10px] px-2 py-0.5 rounded-full" style={{
+                background: "rgba(212,168,85,0.15)", color: "#d4a855",
+                fontFamily: "var(--font-mono)", border: "1px solid rgba(212,168,85,0.3)",
+              }}>
+                Community Pedigree
+              </span>
+              {ped.creator_username && (
+                <span className="text-[10px] px-2 py-0.5 rounded-full" style={{
+                  background: "rgba(96,165,250,0.12)", color: "#60a5fa",
+                  fontFamily: "var(--font-table)", border: "1px solid rgba(96,165,250,0.3)",
+                }}>
+                  by {ped.creator_username}
+                </span>
+              )}
+              {isOwner && (
+                <Link href={`/pedigree-lab?edit=${ped.id}`}
+                  className="text-[10px] px-2 py-0.5 rounded-full font-semibold transition-all hover:scale-105"
+                  style={{
+                    background: "rgba(34,197,94,0.12)", color: "#22c55e",
+                    fontFamily: "var(--font-table)", border: "1px solid rgba(34,197,94,0.3)",
+                  }}>
+                  ✎ Edit
+                </Link>
+              )}
+            </div>
           </div>
         </div>
 
