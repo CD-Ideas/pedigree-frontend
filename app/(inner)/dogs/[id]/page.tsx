@@ -363,12 +363,11 @@ export default function DogDetailPage() {
       <div className="glow-gold rounded-xl overflow-hidden animate-reveal"
            style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)" }}>
         <div className="flex flex-col md:flex-row">
-          <div className="md:w-56 lg:w-64 flex-shrink-0">
+          <div className="flex-shrink-0 m-2" style={{ width: "200px", height: "200px" }}>
             {photoUrl ? (
-              <img src={photoUrl} alt={dog.registered_name} className="w-full h-48 md:h-full object-cover" />
+              <img src={photoUrl} alt={dog.registered_name} className="rounded-md" style={{ width: "200px", height: "200px", objectFit: "contain", objectPosition: "center", background: "#0a0f1a" }} />
             ) : (
-              <div className="w-full h-48 md:h-full min-h-[160px] flex items-center justify-center"
-                   style={{ background: isMale ? "linear-gradient(135deg, #1a2540, #1e3a5f)" : "linear-gradient(135deg, #2a1a30, #4a2040)" }}>
+              <div className="rounded-md flex items-center justify-center" style={{ width: "200px", height: "200px", background: isMale ? "linear-gradient(135deg, #1a2540, #1e3a5f)" : "linear-gradient(135deg, #2a1a30, #4a2040)" }}>
                 <span className="text-5xl opacity-15" style={{ color: isMale ? "var(--male-color)" : "var(--female-color)" }}>
                   {isMale ? "♂" : "♀"}
                 </span>

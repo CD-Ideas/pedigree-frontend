@@ -1103,17 +1103,17 @@ export default function PublicPedigreePage() {
         </div>
 
         {/* ─── Photo + Details (like original site layout) ─── */}
-        <div className="glow-gold rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)", minHeight: "220px", maxHeight: "220px" }}>
+        <div className="glow-gold rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)", minHeight: "220px" }}>
           <div className="flex flex-col sm:flex-row sm:items-stretch h-full">
             {/* Photo — stretches to match text height */}
-            <div className="w-48 md:w-56 flex-shrink-0 relative m-2">
+            <div className="flex-shrink-0 relative m-2" style={{ width: "200px", height: "200px" }}>
               {photoUrl ? (
                 <img src={photoUrl} alt={dog.registered_name}
-                     className="w-full h-full rounded-md object-contain"
-                     style={{ background: "rgba(0,0,0,0.3)" }} />
+                     className="rounded-md"
+                     style={{ width: "200px", height: "200px", objectFit: "fill" }} />
               ) : (
-                <div className="w-full h-full min-h-[120px] rounded-md flex items-center justify-center"
-                     style={{ background: isMale ? "linear-gradient(135deg, #0c1929, #1a2e4a)" : "linear-gradient(135deg, #29101c, #3d1a2e)" }}>
+                <div className="rounded-md flex items-center justify-center"
+                     style={{ width: "200px", height: "200px", background: isMale ? "linear-gradient(135deg, #0c1929, #1a2e4a)" : "linear-gradient(135deg, #29101c, #3d1a2e)" }}>
                   <span className="text-2xl opacity-10" style={{ color: sexColor }}>{isMale ? "♂" : "♀"}</span>
                 </div>
               )}
