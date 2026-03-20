@@ -275,6 +275,7 @@ export default function NavBar() {
                         { href: "/pedigree/spotlight", label: "Lineage Spotlight", icon: "🔦" },
                         { href: "/breeding-calculator", label: "Breeding Calculator", icon: "🧬" },
                         { href: "/puppy-predictor", label: "Puppy Color Predictor", icon: "🎨" },
+                        { href: "/marketplace", label: "Marketplace", icon: "🏪" },
                       ].map((item) => (
                         <Link key={item.href} href={item.href}
                           onClick={() => setDropdownOpen(false)}

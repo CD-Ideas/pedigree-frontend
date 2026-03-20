@@ -226,6 +226,14 @@ export default function Home() {
     setAuthModal(true);
   };
   const [mobileMenu, setMobileMenu] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    try {
+      const userStr = localStorage.getItem("user");
+      if (userStr && userStr !== "null") setIsLoggedIn(true);
+    } catch (_e) {}
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -660,7 +668,9 @@ export default function Home() {
                 { icon: "🚚", title: "Courier Services", desc: "Licensed pet transport & delivery", color: "#60a5fa", glow: "96,165,250", tag: null, category: "courier_services" },
                 { icon: "📢", title: "Puppies Wanted", desc: "Post what you're looking for", color: "#e8c86e", glow: "212,168,85", tag: null, category: "puppies_wanted" },
               ].map((m, i) => (
-                <Link key={i} href={`/marketplace?category=${m.category}`} className="group relative rounded-lg p-2.5 animate-scale-reveal cursor-pointer block"
+                <div key={i} onClick={() => {
+                  openAuth(`/marketplace?category=${m.category}`);
+                }} className="group relative rounded-lg p-2.5 animate-scale-reveal cursor-pointer block"
                   style={{
                     animationDelay: `${i * 0.08}s`,
                     background: "linear-gradient(160deg, rgba(25,27,35,0.95) 0%, rgba(14,15,20,0.98) 100%)",
@@ -712,19 +722,21 @@ export default function Home() {
                       <p style={{ color: "rgba(180,180,195,0.7)", fontFamily: "var(--font-table)", fontSize: "9px", fontWeight: 400, lineHeight: 1.4, marginTop: "1px" }}>{m.desc}</p>
                     </div>
                   </div>
-                </Link>
+                </div>
               ))}
             </div>
             <div className="text-center mt-3">
-              <Link href="/marketplace" className="inline-block px-5 py-1.5 rounded-lg"
+              <button onClick={() => {
+                  openAuth("/marketplace");
+                }} className="inline-block px-5 py-1.5 rounded-lg"
                 style={{
                   fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.08em",
-                  color: "var(--accent-gold)", border: "1px solid rgba(212,168,85,0.3)", transition: "all 0.2s",
+                  color: "var(--accent-gold)", border: "1px solid rgba(212,168,85,0.3)", transition: "all 0.2s", cursor: "pointer", background: "transparent",
                 }}
                 onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--accent-gold)"; e.currentTarget.style.boxShadow = "0 0 20px rgba(212,168,85,0.15)"; e.currentTarget.style.color = "var(--accent-gold-bright)"; }}
                 onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(212,168,85,0.3)"; e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.color = "var(--accent-gold)"; }}>
                 Explore Marketplace
-              </Link>
+              </button>
             </div>
           </div>
         </section>

@@ -145,7 +145,7 @@ export async function POST(req: NextRequest) {
 
     const titleB64 = Buffer.from(title).toString("base64");
     const descB64 = Buffer.from(description).toString("base64");
-    const priceB64 = Buffer.from(price || "").toString("base64");
+    const priceB64 = Buffer.from(String(price ?? "")).toString("base64");
     const photosB64 = Buffer.from(JSON.stringify(photos || [])).toString("base64");
     const phoneB64 = Buffer.from(contactPhone || "").toString("base64");
     const emailB64 = Buffer.from(contactEmail || "").toString("base64");

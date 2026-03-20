@@ -185,39 +185,6 @@ export default function MarketplaceAdPage() {
 
   return (
     <div className="min-h-screen" style={{ background: "var(--bg-deep, #0b1120)" }}>
-      {/* ─── Nav ─── */}
-      <nav
-        className="sticky top-0 z-50 px-4 md:px-6 py-2.5 flex items-center justify-between"
-        style={{
-          background: "rgba(11,17,32,0.95)",
-          backdropFilter: "blur(20px)",
-          borderBottom: "1px solid var(--border, rgba(30,64,120,0.3))",
-        }}
-      >
-        <Link href="/" className="flex items-center gap-2.5">
-          <img src={LOGO} alt="Logo" className="w-7 h-7 rounded-lg" />
-          <span
-            style={{
-              fontFamily: "var(--font-table)",
-              fontWeight: 700,
-              fontSize: "1rem",
-              background: "linear-gradient(135deg, #e8c86e, #d4a855, #b8860b)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
-            Pedigree Platform
-          </span>
-        </Link>
-        <Link
-          href="/marketplace"
-          className="px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all hover:scale-105"
-          style={{ color: "var(--text-secondary, #94a3b8)", fontFamily: "var(--font-table)" }}
-        >
-          {"\u2190"} Back to Marketplace
-        </Link>
-      </nav>
-
       <div className="max-w-[1000px] mx-auto px-4 md:px-6 py-6">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 mb-4">
