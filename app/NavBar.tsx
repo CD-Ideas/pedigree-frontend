@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const LOGO = "https://i.imgur.com/cAvQemZ.png";
 
@@ -26,58 +26,91 @@ function getDogSearchColor(name: string): string {
 
 function NavSearch() {
   const [q, setQ] = useState("");
-  const [results, setResults] = useState<{ dog_id: number; registered_name: string }[]>([]);
+  const [results, setResults] = useState<{ dog_id: number; registered_name: string; photo_url?: string | null }[]>([]);
   const [show, setShow] = useState(false);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  useEffect(() => {
-    if (q.length < 2) { setResults([]); return; }
-    const t = setTimeout(() => {
-      fetch(`/api/dogs/search?q=${encodeURIComponent(q)}&limit=8`)
+  const doSearch = (val: string) => {
+    setQ(val);
+    if (timerRef.current) clearTimeout(timerRef.current);
+    // URL paste detection
+    const urlMatch = val.match(/pedigreeplatform\.com\/(?:pedigree|dogs)\/(\d+)/);
+    if (urlMatch) {
+      fetch(`/api/dogs/${urlMatch[1]}`)
         .then((r) => r.json())
-        .then((d) => { setResults(d); setShow(true); })
+        .then((data) => {
+          if (data?.registered_name) {
+            setResults([{ dog_id: Number(urlMatch[1]), registered_name: data.registered_name, photo_url: data.photo_url }]);
+            setShow(true);
+          }
+        })
+        .catch(() => {});
+      return;
+    }
+    if (val.length < 2) { setResults([]); setShow(false); return; }
+    timerRef.current = setTimeout(() => {
+      fetch(`/api/dogs/search?q=${encodeURIComponent(val)}&limit=8`)
+        .then((r) => r.json())
+        .then((d) => { setResults(d.dogs || d); setShow(true); })
         .catch(() => {});
     }, 300);
-    return () => clearTimeout(t);
-  }, [q]);
+  };
 
   return (
     <div className="relative">
-      <input
-        type="text"
-        value={q}
-        onChange={(e) => setQ(e.target.value)}
-        onFocus={() => results.length > 0 && setShow(true)}
-        onBlur={() => setTimeout(() => setShow(false), 200)}
-        placeholder="Search dogs..."
-        className="w-full rounded-lg px-3 py-1.5 text-sm outline-none"
-        style={{
-          background: "var(--bg-elevated, #151d2e)",
-          border: "1px solid rgba(30,64,120,0.5)",
-          color: "var(--text-primary, #e2e8f0)",
-          fontFamily: "var(--font-table, Rajdhani, sans-serif)",
-        }}
-      />
+      <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl transition-all duration-300 focus-within:scale-[1.02]" style={{
+        background: "linear-gradient(135deg, rgba(30,64,120,0.25), rgba(20,40,80,0.15))",
+        border: "1.5px solid rgba(96,165,250,0.3)",
+        boxShadow: "0 0 15px rgba(96,165,250,0.08), inset 0 1px 0 rgba(255,255,255,0.05)",
+        backdropFilter: "blur(10px)",
+      }}>
+        <span className="text-sm" style={{ filter: "drop-shadow(0 0 4px rgba(96,165,250,0.5))" }}>🔍</span>
+        <input
+          type="text"
+          value={q}
+          onChange={(e) => doSearch(e.target.value)}
+          onFocus={() => results.length > 0 && setShow(true)}
+          onBlur={() => setTimeout(() => setShow(false), 200)}
+          placeholder="Search dog or paste URL..."
+          className="flex-1 bg-transparent text-xs outline-none"
+          style={{ color: "var(--text-primary, #e2e8f0)", fontFamily: "var(--font-table, Rajdhani, sans-serif)", minWidth: 0 }}
+        />
+        {q && <button onClick={() => { setQ(""); setResults([]); setShow(false); }} className="text-[10px] opacity-50 hover:opacity-100">✕</button>}
+      </div>
       {show && results.length > 0 && (
         <div
-          className="absolute top-full mt-1 left-0 right-0 rounded-lg overflow-hidden z-50"
+          className="absolute top-full mt-1 left-0 right-0 rounded-lg overflow-hidden z-[100]"
           style={{
             background: "var(--bg-elevated, #151d2e)",
-            border: "1px solid rgba(30,64,120,0.5)",
+            border: "1px solid rgba(30,64,120,0.8)",
             maxHeight: 300,
             overflowY: "auto",
-            boxShadow: "0 12px 40px rgba(0,0,0,0.5)",
+            boxShadow: "0 15px 50px rgba(0,0,0,0.5)",
           }}
         >
-          {results.map((r) => (
-            <Link
-              key={r.dog_id}
-              href={`/pedigree/${r.dog_id}`}
-              className="block px-3 py-2 text-sm hover:bg-white/5 transition-colors"
-              style={{ color: getDogSearchColor(r.registered_name), fontFamily: "var(--font-table)" }}
-            >
-              {r.registered_name}
-            </Link>
-          ))}
+          {results.map((r) => {
+            const photoSrc = r.photo_url
+              ? r.photo_url.startsWith("http") ? r.photo_url : `https://www.apbt.online-pedigrees.com/${r.photo_url}`
+              : null;
+            return (
+              <Link
+                key={r.dog_id}
+                href={`/pedigree/${r.dog_id}`}
+                className="flex items-center gap-2 px-3 py-2 transition-all hover:bg-white/5 text-xs"
+                style={{ borderBottom: "1px solid rgba(40,44,60,0.3)" }}
+              >
+                {photoSrc ? (
+                  <img src={photoSrc} alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "1px solid var(--border, rgba(30,64,120,0.5))" }} />
+                ) : (
+                  <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-[10px]"
+                       style={{ background: "var(--bg-deep, #0b1120)", border: "1px solid var(--border, rgba(30,64,120,0.5))" }}>🐕</div>
+                )}
+                <span className="font-semibold truncate" style={{ color: getDogSearchColor(r.registered_name), fontFamily: "var(--font-table)" }}>
+                  {r.registered_name}
+                </span>
+              </Link>
+            );
+          })}
         </div>
       )}
     </div>
@@ -105,9 +138,8 @@ export default function NavBar() {
     }
   }, [pathname]); // re-check on every navigation
 
-  // Don't show navbar on landing, login, register, or pedigree/[id] pages (they have their own nav)
+  // Don't show navbar on landing, login, register
   if (pathname === "/" || pathname === "/login" || pathname === "/register") return null;
-  if (pathname.startsWith("/pedigree/") && !pathname.startsWith("/pedigree/custom/") && pathname !== "/pedigree/spotlight") return null;
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -219,6 +251,7 @@ export default function NavBar() {
                     {/* Links */}
                     <div className="py-1">
                       {[
+                        { href: "/pedigree-lab", label: "Pedigree Lab", icon: "🧪" },
                         { href: "/dashboard/pedigrees", label: "My Pedigrees", icon: "📋" },
                         { href: "/community", label: "Community Pedigrees", icon: "🌍" },
                         { href: "/dogs", label: "Dogs", icon: "🐕" },

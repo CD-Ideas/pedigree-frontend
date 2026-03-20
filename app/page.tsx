@@ -407,7 +407,8 @@ export default function Home() {
                 { icon: "🔍", title: "Legend Tracker", desc: "Search any famous dog, find every descendant sorted by %", color: "#06b6d4", glow: "6,182,212" },
                 { icon: "👑", title: "Dog of the Month", desc: "Monthly photo contest with community voting & prizes", color: "#f97316", glow: "249,115,22" },
                 { icon: "🔦", title: "Lineage Spotlight", desc: "Pick a legend, find every descendant ranked by blood %", color: "#1d8cf8", glow: "29,140,248", redirect: "/pedigree/spotlight" },
-                { icon: "🌍", title: "Community Pedigrees", desc: "Browse and discover pedigrees created by the community", color: "#22d3ee", glow: "34,211,238", href: "/community" },
+                { icon: "🧪", title: "Pedigree Lab", desc: "Build custom pedigrees with drag-and-drop, then publish and share", color: "#a78bfa", glow: "167,139,250", redirect: "/pedigree-lab" },
+                { icon: "🌍", title: "Community Pedigrees", desc: "Browse and discover pedigrees created by the community", color: "#22d3ee", glow: "34,211,238", redirect: "/community" },
               ].map((f, i) => (
                 <div key={i} className="group relative rounded-lg p-2.5 text-center animate-scale-reveal cursor-pointer"
                   onClick={() => {
