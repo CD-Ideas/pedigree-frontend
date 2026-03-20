@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { getDogColor } from "@/app/utils/colors";
 
 /* ─── Types ─── */
 interface PublishedPedigree {
@@ -44,23 +45,6 @@ interface TreeRow {
 const LOGO = "https://i.imgur.com/cAvQemZ.png";
 
 /* ─── Helpers ─── */
-function getDogCardColor(name: string): string {
-  const n = (name || "").toUpperCase();
-  if (/\bGR\s*CH\b/.test(n)) return "#60a5fa";
-  if (/(?:^|\s|\()CH\b/.test(n)) return "#fc8181";
-  const xw = n.match(/\b(\d+)X[WL]\b/);
-  if (xw) {
-    const num = parseInt(xw[1]);
-    if (num === 1) return "#2dd4bf";
-    if (num === 2) return "#fb923c";
-    if (num === 3) return "#d4a855";
-    if (num === 4) return "#f472b6";
-    if (num >= 5) return "#c084fc";
-  }
-  if (/\bROM\b/.test(n)) return "#22d3ee";
-  if (/\bPOR\b/.test(n)) return "#a78bfa";
-  return "#ffffff";
-}
 
 function getXWColor(name: string): string | null {
   const nameUpper = (name || "").toUpperCase();
@@ -219,7 +203,7 @@ function PedigreeSearch() {
                 <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm"
                      style={{ background: "var(--bg-deep)", border: "2px solid var(--border)" }}>🐕</div>
               )}
-              <span className="text-sm font-semibold truncate" style={{ color: getDogCardColor(d.registered_name), fontFamily: "var(--font-table)" }}>
+              <span className="text-sm font-semibold truncate" style={{ color: getDogColor(d.registered_name), fontFamily: "var(--font-table)" }}>
                 {d.registered_name}
               </span>
             </a>
@@ -524,7 +508,7 @@ export default function PublishedPedigreePage() {
   const displayName = buildDisplayName(ped);
   const isMale = ped.sex === "Male" || ped.sex === "MALE" || ped.sex === "M";
   const sexColor = isMale ? "var(--male-color, #60a5fa)" : "var(--female-color, #f472b6)";
-  const titleColor = getDogCardColor(displayName);
+  const titleColor = getDogColor(displayName);
   const hasTitles = titleColor !== "#ffffff";
 
   const titlePatterns = ["GR CH", "CH", "ROM", "POR", "1XW", "2XW", "3XW", "4XW", "5XW", "6XW", "1XL", "2XL", "3XL"];
@@ -679,7 +663,7 @@ export default function PublishedPedigreePage() {
             style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)" }}>
             <div className="text-[9px] uppercase tracking-wider mb-0.5 font-semibold" style={{ color: "var(--male-color, #60a5fa)", letterSpacing: "0.1em" }}>♂ Sire (Father)</div>
             {sire ? (
-              <Link href={`/pedigree/${sire.dog_id}`} className="text-sm font-bold hover:underline" style={{ color: getDogCardColor(sire.registered_name) }}>
+              <Link href={`/pedigree/${sire.dog_id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColor(sire.registered_name) }}>
                 {sire.registered_name}
               </Link>
             ) : <span className="text-sm" style={{ color: "var(--text-muted)" }}>Unknown</span>}
@@ -688,7 +672,7 @@ export default function PublishedPedigreePage() {
             style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)" }}>
             <div className="text-[9px] uppercase tracking-wider mb-0.5 font-semibold" style={{ color: "var(--female-color, #f472b6)", letterSpacing: "0.1em" }}>♀ Dam (Mother)</div>
             {dam ? (
-              <Link href={`/pedigree/${dam.dog_id}`} className="text-sm font-bold hover:underline" style={{ color: getDogCardColor(dam.registered_name) }}>
+              <Link href={`/pedigree/${dam.dog_id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColor(dam.registered_name) }}>
                 {dam.registered_name}
               </Link>
             ) : <span className="text-sm" style={{ color: "var(--text-muted)" }}>Unknown</span>}

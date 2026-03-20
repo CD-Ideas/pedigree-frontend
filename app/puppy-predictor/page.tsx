@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import { getDogColor } from "@/app/utils/colors";
 
 /* ═══════════════════════════════════════════════════
    TYPES & CONSTANTS
@@ -12,24 +13,6 @@ interface PredictionResult { phenotype: string; percentage: number; carriers: st
 interface SimulatedPuppy { id: number; phenotype: string; sex: string; carriers: string[]; }
 interface SearchDog { dog_id: number; registered_name: string; photo_url: string | null; sex: string; color: string | null; }
 interface HistoryEntry { share_id: string; sire_name: string | null; dam_name: string | null; sire_dog_id: number | null; dam_dog_id: number | null; created_at: string; }
-
-function getDogColor(name: string): string {
-  const n = (name || "").toUpperCase();
-  if (/\bGR\s*CH\b/.test(n)) return "#60a5fa";
-  if (/(?:^|\s|\()CH\b/.test(n)) return "#fc8181";
-  if (/\bROM\b/.test(n)) return "#22d3ee";
-  if (/\bPOR\b/.test(n)) return "#a78bfa";
-  const xw = n.match(/\b(\d+)X[WL]\b/);
-  if (xw) {
-    const num = parseInt(xw[1]);
-    if (num >= 5) return "#c084fc";
-    if (num === 4) return "#f472b6";
-    if (num === 3) return "#d4a855";
-    if (num === 2) return "#fb923c";
-    if (num === 1) return "#2dd4bf";
-  }
-  return "#ffffff";
-}
 
 const DEFAULT_GENO: Genotype = { K: "ky/ky", A: "Ay/Ay", B: "BB", D: "DD", E: "EE", S: "S/S" };
 
@@ -752,7 +735,7 @@ export default function PuppyPredictorPage() {
             <div className="flex items-center gap-2">
               <span className="text-lg" style={{ color: "#60a5fa" }}>♂</span>
               <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1.3rem", color: "#60a5fa", letterSpacing: "0.02em" }}>
-                SIRE {sireName && <span className="text-sm" style={{ color: "#94a3b8" }}>— {sireName}</span>}
+                SIRE
               </h2>
             </div>
 
@@ -810,7 +793,7 @@ export default function PuppyPredictorPage() {
             <div className="flex items-center gap-2">
               <span className="text-lg" style={{ color: "#f472b6" }}>♀</span>
               <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1.3rem", color: "#f472b6", letterSpacing: "0.02em" }}>
-                DAM {damName && <span className="text-sm" style={{ color: "#94a3b8" }}>— {damName}</span>}
+                DAM
               </h2>
             </div>
 

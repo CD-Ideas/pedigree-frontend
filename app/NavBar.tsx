@@ -3,26 +3,10 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { getDogColor } from "@/app/utils/colors";
 
 const LOGO = "https://i.imgur.com/cAvQemZ.png";
 
-function getDogSearchColor(name: string): string {
-  const n = (name || "").toUpperCase();
-  if (/\bGR\s*CH\b/.test(n)) return "#60a5fa";
-  if (/(?:^|\s|\()CH\b/.test(n)) return "#fc8181";
-  if (/\bROM\b/.test(n)) return "#22d3ee";
-  if (/\bPOR\b/.test(n)) return "#a78bfa";
-  const xw = n.match(/\b(\d+)X[WL]\b/);
-  if (xw) {
-    const num = parseInt(xw[1]);
-    if (num >= 5) return "#c084fc";
-    if (num === 4) return "#f472b6";
-    if (num === 3) return "#d4a855";
-    if (num === 2) return "#fb923c";
-    if (num === 1) return "#2dd4bf";
-  }
-  return "#ffffff";
-}
 
 function NavSearch() {
   const [q, setQ] = useState("");
@@ -81,7 +65,7 @@ function NavSearch() {
           onFocus={() => results.length > 0 && setShow(true)}
           placeholder="Search dog or paste URL..."
           className="flex-1 bg-transparent text-xs outline-none"
-          style={{ color: q && getDogSearchColor(q) !== "#ffffff" ? getDogSearchColor(q) : "var(--text-primary, #e2e8f0)", fontFamily: "var(--font-table, Rajdhani, sans-serif)", minWidth: 0 }}
+          style={{ color: q && getDogColor(q) !== "#ffffff" ? getDogColor(q) : "var(--text-primary, #e2e8f0)", fontFamily: "var(--font-table, Rajdhani, sans-serif)", minWidth: 0 }}
         />
         {q && <button onClick={() => { setQ(""); setResults([]); setShow(false); }} className="text-[10px] opacity-50 hover:opacity-100">✕</button>}
       </div>
@@ -113,7 +97,7 @@ function NavSearch() {
                   <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-[10px]"
                        style={{ background: "var(--bg-deep, #0b1120)", border: "1px solid var(--border, rgba(30,64,120,0.5))" }}>🐕</div>
                 )}
-                <span className="font-semibold truncate" style={{ color: getDogSearchColor(r.registered_name), fontFamily: "var(--font-table)" }}>
+                <span className="font-semibold truncate" style={{ color: getDogColor(r.registered_name), fontFamily: "var(--font-table)" }}>
                   {r.registered_name}
                 </span>
               </a>

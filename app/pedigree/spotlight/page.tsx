@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import { getDogColor } from "@/app/utils/colors";
 
 const LOGO = "https://i.imgur.com/cAvQemZ.png";
 
@@ -32,24 +33,6 @@ const TITLE_COLORS: Record<string, string> = {
   "3XW": "#d4a855", "2XW": "#fb923c", "1XW": "#2dd4bf",
   "3XL": "#2dd4bf", "2XL": "#fb923c", "1XL": "#2dd4bf",
 };
-
-function getDogColor(name: string): string {
-  const n = (name || "").toUpperCase();
-  if (/\bGR\s*CH\b/.test(n)) return "#60a5fa";
-  if (/(?:^|\s|\()CH\b/.test(n)) return "#fc8181";
-  if (/\bROM\b/.test(n)) return "#22d3ee";
-  if (/\bPOR\b/.test(n)) return "#a78bfa";
-  const xw = n.match(/\b(\d+)X[WL]\b/);
-  if (xw) {
-    const num = parseInt(xw[1]);
-    if (num >= 5) return "#c084fc";
-    if (num === 4) return "#f472b6";
-    if (num === 3) return "#d4a855";
-    if (num === 2) return "#fb923c";
-    if (num === 1) return "#2dd4bf";
-  }
-  return "#ffffff";
-}
 
 function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number) => void; famousDogs: FamousDog[] }) {
   const [query, setQuery] = useState("");

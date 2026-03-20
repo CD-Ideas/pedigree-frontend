@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { getDogColor } from "@/app/utils/colors";
 
 /* ------------------------------------------------------------------ */
 /* Types                                                              */
@@ -115,24 +116,6 @@ const PANEL_BG =
 /* ------------------------------------------------------------------ */
 /* Helpers                                                            */
 /* ------------------------------------------------------------------ */
-function getDogColor(name: string): string {
-  const n = (name || "").toUpperCase();
-  if (/\bGR\s*CH\b/.test(n)) return "#60a5fa";   // blue
-  if (/(?:^|\s|\()CH\b/.test(n)) return "#fc8181"; // red
-  if (/\bROM\b/.test(n)) return "#22d3ee";         // cyan
-  if (/\bPOR\b/.test(n)) return "#a78bfa";         // violet
-  const xw = n.match(/\b(\d+)X[WL]\b/);
-  if (xw) {
-    const num = parseInt(xw[1]);
-    if (num >= 5) return "#c084fc";  // purple
-    if (num === 4) return "#f472b6"; // pink
-    if (num === 3) return "#d4a855"; // gold
-    if (num === 2) return "#fb923c"; // orange
-    if (num === 1) return "#2dd4bf"; // teal
-  }
-  return "#ffffff";
-}
-
 function sexIcon(sex?: string): string {
   if (!sex) return "";
   const s = sex.toLowerCase();

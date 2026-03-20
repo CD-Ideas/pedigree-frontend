@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { getDogColor } from "@/app/utils/colors";
 
 /* ─── Types ─── */
 interface Ancestor {
@@ -48,23 +49,6 @@ const TC: Record<string, string> = {
 };
 
 /* ─── Dog Color Helper ─── */
-function getDogCardColor(name: string): string {
-  const n = (name || "").toUpperCase();
-  if (/\bGR\s*CH\b/.test(n)) return "#60a5fa";
-  if (/(?:^|\s|\()CH\b/.test(n)) return "#fc8181";
-  const xw = n.match(/\b(\d+)X[WL]\b/);
-  if (xw) {
-    const num = parseInt(xw[1]);
-    if (num === 1) return "#2dd4bf";
-    if (num === 2) return "#fb923c";
-    if (num === 3) return "#d4a855";
-    if (num === 4) return "#f472b6";
-    if (num >= 5) return "#c084fc";
-  }
-  if (/\bROM\b/.test(n)) return "#22d3ee";
-  if (/\bPOR\b/.test(n)) return "#a78bfa";
-  return "#ffffff";
-}
 
 function cardStyle(cc: string) {
   const isWhite = cc === "#ffffff" || cc === "#e8eaed";
@@ -198,16 +182,6 @@ function PedigreeSearch() {
         setOpen(true);
       } catch (_e) { setResults([]); }
     }, 300);
-  };
-
-  const getDogColor = (name: string) => {
-    const n = (name || "").toUpperCase();
-    if (/\bGR\s*CH\b/.test(n)) return "#60a5fa";
-    if (/(?:^|\s|\()CH\b/.test(n)) return "#fc8181";
-    const xw = n.match(/\b(\d+)X[WL]\b/);
-    if (xw) { const num = parseInt(xw[1]); if (num === 3) return "#d4a855"; if (num >= 5) return "#c084fc"; if (num === 4) return "#f472b6"; if (num === 2) return "#fb923c"; if (num === 1) return "#2dd4bf"; }
-    if (/\bROM\b/.test(n)) return "#22d3ee";
-    return "var(--text-primary)";
   };
 
   return (
@@ -503,7 +477,7 @@ function OffspringTab({ offspring }: { offspring: Offspring[] }) {
   return (
     <div className="title-cards grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1.5">
       {offspring.map((o, i) => {
-        const cc = getDogCardColor(o.offspring_name);
+        const cc = getDogColor(o.offspring_name);
         return (
           <div key={i} className="rounded-md flex items-center overflow-hidden transition-all hover:brightness-125"
                style={{
@@ -566,7 +540,7 @@ function SiblingsTab({ siblings }: { siblings: Dog["siblings"] }) {
         return (
           <div className="title-cards grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1.5">
             {sec.list.map((s, i) => {
-              const cc = getDogCardColor(s.sibling_name);
+              const cc = getDogColor(s.sibling_name);
               return (
                 <div key={i} className="rounded-md flex items-center overflow-hidden transition-all hover:brightness-125"
                      style={{
@@ -610,8 +584,8 @@ function PedStatsTab({ genetics }: { genetics: Genetic[] }) {
   ];
   const slices = genetics.map((g, i) => ({
     ...g,
-    color: getDogCardColor(g.ancestor_name) !== "#e8e8e8" && getDogCardColor(g.ancestor_name) !== "rgba(176,190,206,0.85)"
-      ? getDogCardColor(g.ancestor_name)
+    color: getDogColor(g.ancestor_name) !== "#e8e8e8" && getDogColor(g.ancestor_name) !== "rgba(176,190,206,0.85)"
+      ? getDogColor(g.ancestor_name)
       : pieColors[i % pieColors.length],
   }));
 
@@ -742,7 +716,7 @@ function PhotosTab({ offspring }: { offspring: Offspring[] }) {
     <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-1.5">
       {withPhotos.map((o, i) => {
         const src = o.photo_url!.startsWith("http") ? o.photo_url! : `https://www.apbt.online-pedigrees.com/${o.photo_url}`;
-        const cc = getDogCardColor(o.offspring_name);
+        const cc = getDogColor(o.offspring_name);
         return (
           <Link key={i} href={`/pedigree/${o.offspring_id}`} className="title-cards group relative rounded-md overflow-hidden transition-all hover:brightness-125"
                 style={{ ...cardStyle(cc), background: "var(--bg-elevated)" }}>
@@ -847,7 +821,7 @@ function TitlesTab({ offspring }: { offspring: Offspring[] }) {
       {openTitle && groups[openTitle] && (
         <div className="title-cards grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1.5 mt-2">
           {groups[openTitle].map((o, i) => {
-            const cc = getDogCardColor(o.offspring_name);
+            const cc = getDogColor(o.offspring_name);
             return (
               <div key={i} className="rounded-md flex items-center overflow-hidden transition-all hover:brightness-125"
                    style={{
@@ -1058,7 +1032,7 @@ export default function PublicPedigreePage() {
             <div className="text-[9px] uppercase tracking-wider mb-0.5 font-semibold"
                  style={{ color: "var(--male-color)", letterSpacing: "0.1em" }}>♂ Sire (Father)</div>
             {dog.sire ? (
-              <Link href={`/pedigree/${dog.sire.id}`} className="text-sm font-bold hover:underline" style={{ color: getDogCardColor(dog.sire.name) }}>
+              <Link href={`/pedigree/${dog.sire.id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColor(dog.sire.name) }}>
                 {dog.sire.name}
               </Link>
             ) : <span className="text-sm" style={{ color: "var(--text-muted)" }}>Unknown</span>}
@@ -1070,7 +1044,7 @@ export default function PublicPedigreePage() {
             <div className="text-[9px] uppercase tracking-wider mb-0.5 font-semibold"
                  style={{ color: "var(--female-color)", letterSpacing: "0.1em" }}>♀ Dam (Mother)</div>
             {dog.dam ? (
-              <Link href={`/pedigree/${dog.dam.id}`} className="text-sm font-bold hover:underline" style={{ color: getDogCardColor(dog.dam.name) }}>
+              <Link href={`/pedigree/${dog.dam.id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColor(dog.dam.name) }}>
                 {dog.dam.name}
               </Link>
             ) : <span className="text-sm" style={{ color: "var(--text-muted)" }}>Unknown</span>}
