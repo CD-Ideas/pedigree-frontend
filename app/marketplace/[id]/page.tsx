@@ -220,7 +220,7 @@ export default function MarketplaceAdPage() {
             <div
               className="relative rounded-xl overflow-hidden"
               style={{
-                background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+                background: "linear-gradient(180deg, #1e1e1e 0%, #161616 100%)",
                 border: "1.5px solid rgba(30,64,120,0.3)",
                 aspectRatio: "4/3",
               }}
@@ -239,7 +239,7 @@ export default function MarketplaceAdPage() {
 
               {/* Watermark */}
               <div
-                className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg backdrop-blur-md"
+                className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg backdrop-blur-md"
                 style={{ background: "rgba(0,0,0,0.5)", border: "1px solid rgba(212,168,85,0.2)" }}
               >
                 <img src={LOGO} alt="" className="w-4 h-4 rounded" />
@@ -283,7 +283,7 @@ export default function MarketplaceAdPage() {
             <div
               className="rounded-xl p-5"
               style={{
-                background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+                background: "linear-gradient(180deg, #1e1e1e 0%, #161616 100%)",
                 border: "1.5px solid rgba(30,64,120,0.3)",
                 backdropFilter: "blur(12px)",
               }}
@@ -339,7 +339,7 @@ export default function MarketplaceAdPage() {
             <div
               className="rounded-xl p-5"
               style={{
-                background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+                background: "linear-gradient(180deg, #1e1e1e 0%, #161616 100%)",
                 border: "1.5px solid rgba(30,64,120,0.3)",
                 backdropFilter: "blur(12px)",
               }}
@@ -393,7 +393,7 @@ export default function MarketplaceAdPage() {
               <div
                 className="text-2xl font-black mb-4"
                 style={{
-                  color: ad.price !== null && ad.price !== undefined ? "#22c55e" : "#5a6a82",
+                  color: ad.price !== null && ad.price !== undefined ? "#e8c86e" : "#5a6a82",
                   fontFamily: "var(--font-mono)",
                 }}
               >
@@ -486,7 +486,7 @@ export default function MarketplaceAdPage() {
               <div
                 className="rounded-xl p-4"
                 style={{
-                  background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+                  background: "linear-gradient(180deg, #1e1e1e 0%, #161616 100%)",
                   border: "1.5px solid rgba(212,168,85,0.25)",
                   backdropFilter: "blur(12px)",
                 }}
@@ -567,7 +567,7 @@ export default function MarketplaceAdPage() {
               <div
                 className="rounded-xl p-5"
                 style={{
-                  background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+                  background: "linear-gradient(180deg, #1e1e1e 0%, #161616 100%)",
                   border: ad.verification_requested
                     ? "1.5px solid rgba(234,179,8,0.3)"
                     : "1.5px solid rgba(30,64,120,0.3)",
@@ -645,7 +645,7 @@ export default function MarketplaceAdPage() {
               <div
                 className="rounded-xl p-5"
                 style={{
-                  background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+                  background: "linear-gradient(180deg, #1e1e1e 0%, #161616 100%)",
                   border: "1.5px solid rgba(30,64,120,0.3)",
                   backdropFilter: "blur(12px)",
                 }}
@@ -759,7 +759,7 @@ export default function MarketplaceAdPage() {
                 <div
                   className="rounded-xl p-4"
                   style={{
-                    background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+                    background: "linear-gradient(180deg, #1e1e1e 0%, #161616 100%)",
                     border: "1.5px solid rgba(239,68,68,0.3)",
                   }}
                 >
