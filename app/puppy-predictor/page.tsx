@@ -328,7 +328,7 @@ function DogSilhouette({ phenotype, size = 80 }: { phenotype: string; size?: num
   const id = `dog-${phenotype.replace(/[^a-zA-Z]/g, "")}-${Math.random().toString(36).slice(2, 6)}`;
 
   return (
-    <svg width={size} height={size} viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <svg width={size} height={size} viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style={{ filter: "drop-shadow(0 3px 6px rgba(0,0,0,0.4))" }}>
       <defs>
         {isBrindle && (
           <pattern id={`brindle-${id}`} patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(30)">
@@ -629,18 +629,20 @@ export default function PuppyPredictorPage() {
             <button onClick={() => setMode("simple")}
               className="px-4 py-2 text-xs font-semibold transition-colors"
               style={{
-                background: mode === "simple" ? "linear-gradient(135deg, #e8c86e, #b8860b)" : "transparent",
-                color: mode === "simple" ? "#000" : "#94a3b8",
+                background: mode === "simple" ? "linear-gradient(135deg, #e8c86e, #b8860b)" : "linear-gradient(135deg, #cbd5e1, #94a3b8)",
+                color: "#000",
                 fontFamily: "var(--font-table)",
+                transition: "all 0.3s ease",
               }}>
               I Don&apos;t Know Genotype
             </button>
             <button onClick={() => setMode("advanced")}
               className="px-4 py-2 text-xs font-semibold transition-colors"
               style={{
-                background: mode === "advanced" ? "linear-gradient(135deg, #e8c86e, #b8860b)" : "transparent",
-                color: mode === "advanced" ? "#000" : "#94a3b8",
+                background: mode === "advanced" ? "linear-gradient(135deg, #e8c86e, #b8860b)" : "linear-gradient(135deg, #cbd5e1, #94a3b8)",
+                color: "#000",
                 fontFamily: "var(--font-table)",
+                transition: "all 0.3s ease",
               }}>
               Advanced (DNA Tested)
             </button>
@@ -648,12 +650,12 @@ export default function PuppyPredictorPage() {
           <div className="flex items-center gap-2">
             <button onClick={() => setShowGuide(!showGuide)}
               className="px-3 py-2 rounded-lg text-xs font-semibold transition-colors hover:bg-white/5"
-              style={{ color: "#60a5fa", border: "1px solid rgba(96,165,250,0.3)", fontFamily: "var(--font-table)" }}>
+              style={{ color: "#60a5fa", border: "1px solid rgba(96,165,250,0.3)", fontFamily: "var(--font-table)", transition: "all 0.3s ease" }}>
               DNA Test Guide
             </button>
               <button onClick={() => setShowHistory(!showHistory)}
                 className="px-3 py-2 rounded-lg text-xs font-semibold transition-colors hover:bg-white/5"
-                style={{ color: "#e8c86e", border: "1px solid rgba(212,168,85,0.3)", fontFamily: "var(--font-table)" }}>
+                style={{ color: "#e8c86e", border: "1px solid rgba(212,168,85,0.3)", fontFamily: "var(--font-table)", transition: "all 0.3s ease" }}>
                 History{history.length > 0 ? ` (${history.length})` : ""}
               </button>
           </div>
@@ -698,6 +700,8 @@ export default function PuppyPredictorPage() {
           <div className="rounded-xl p-4 space-y-2" style={{
             background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
             border: "1.5px solid rgba(212,168,85,0.3)",
+            boxShadow: "0 0 15px rgba(212,168,85,0.08)",
+            transition: "all 0.3s ease",
           }}>
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-bold" style={{ color: "#e8c86e", fontFamily: "var(--font-display)", letterSpacing: "0.05em" }}>
@@ -764,8 +768,11 @@ export default function PuppyPredictorPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* ── Sire ── */}
           <div className="rounded-xl p-5 space-y-4" style={{
-            background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
-            border: "1.5px solid rgba(96,165,250,0.3)", boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+            background: "linear-gradient(180deg, rgba(14,24,40,0.85) 0%, rgba(11,17,32,0.85) 100%)",
+            backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)",
+            border: "1.5px solid rgba(96,165,250,0.3)",
+            boxShadow: "0 0 15px rgba(96,165,250,0.1), 0 4px 20px rgba(0,0,0,0.3), 0 10px 40px rgba(0,0,0,0.2)",
+            transition: "all 0.3s ease",
           }}>
             <div className="flex items-center gap-2">
               <span className="text-lg" style={{ color: "#60a5fa" }}>♂</span>
@@ -786,12 +793,15 @@ export default function PuppyPredictorPage() {
                 <div className="grid grid-cols-3 gap-2">
                   {Object.entries(COAT_PRESETS).map(([key, val]) => (
                     <button key={key} onClick={() => handleSelectSirePreset(key)}
-                      className="flex items-center gap-2 px-2 py-1.5 rounded-lg text-[11px] transition-all hover:scale-[1.02]"
+                      className="flex items-center gap-2 px-2 py-1.5 rounded-lg text-[11px] transition-all hover:scale-[1.02] hover:shadow-[0_0_10px_rgba(96,165,250,0.15)]"
                       style={{
                         background: sirePreset === key ? "rgba(96,165,250,0.15)" : "rgba(255,255,255,0.03)",
                         border: sirePreset === key ? "1.5px solid rgba(96,165,250,0.5)" : "1px solid rgba(255,255,255,0.06)",
                         color: sirePreset === key ? "#e2e8f0" : "#94a3b8",
                         fontFamily: "var(--font-table)",
+                        transform: sirePreset === key ? "scale(1.03)" : undefined,
+                        boxShadow: sirePreset === key ? "0 0 12px rgba(96,165,250,0.2)" : undefined,
+                        transition: "all 0.3s ease",
                       }}>
                       <div className="w-4 h-4 rounded-full flex-shrink-0" style={{ background: val.swatch, border: "1px solid rgba(255,255,255,0.15)" }} />
                       {val.label}
@@ -822,8 +832,11 @@ export default function PuppyPredictorPage() {
 
           {/* ── Dam ── */}
           <div className="rounded-xl p-5 space-y-4" style={{
-            background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
-            border: "1.5px solid rgba(244,114,182,0.3)", boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+            background: "linear-gradient(180deg, rgba(14,24,40,0.85) 0%, rgba(11,17,32,0.85) 100%)",
+            backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)",
+            border: "1.5px solid rgba(244,114,182,0.3)",
+            boxShadow: "0 0 15px rgba(244,114,182,0.1), 0 4px 20px rgba(0,0,0,0.3), 0 10px 40px rgba(0,0,0,0.2)",
+            transition: "all 0.3s ease",
           }}>
             <div className="flex items-center gap-2">
               <span className="text-lg" style={{ color: "#f472b6" }}>♀</span>
@@ -842,12 +855,15 @@ export default function PuppyPredictorPage() {
                 <div className="grid grid-cols-3 gap-2">
                   {Object.entries(COAT_PRESETS).map(([key, val]) => (
                     <button key={key} onClick={() => handleSelectDamPreset(key)}
-                      className="flex items-center gap-2 px-2 py-1.5 rounded-lg text-[11px] transition-all hover:scale-[1.02]"
+                      className="flex items-center gap-2 px-2 py-1.5 rounded-lg text-[11px] transition-all hover:scale-[1.02] hover:shadow-[0_0_10px_rgba(244,114,182,0.15)]"
                       style={{
                         background: damPreset === key ? "rgba(244,114,182,0.15)" : "rgba(255,255,255,0.03)",
                         border: damPreset === key ? "1.5px solid rgba(244,114,182,0.5)" : "1px solid rgba(255,255,255,0.06)",
                         color: damPreset === key ? "#e2e8f0" : "#94a3b8",
                         fontFamily: "var(--font-table)",
+                        transform: damPreset === key ? "scale(1.03)" : undefined,
+                        boxShadow: damPreset === key ? "0 0 12px rgba(244,114,182,0.2)" : undefined,
+                        transition: "all 0.3s ease",
                       }}>
                       <div className="w-4 h-4 rounded-full flex-shrink-0" style={{ background: val.swatch, border: "1px solid rgba(255,255,255,0.15)" }} />
                       {val.label}
@@ -883,15 +899,15 @@ export default function PuppyPredictorPage() {
             style={{
               background: "linear-gradient(135deg, #e8c86e, #d4a855, #b8860b)", color: "#000",
               fontFamily: "var(--font-display)", letterSpacing: "0.05em", fontSize: "1rem",
-              boxShadow: "0 4px 20px rgba(212,168,85,0.3)",
+              boxShadow: "0 4px 20px rgba(212,168,85,0.3)", transition: "all 0.3s ease",
             }}>
             PREDICT LITTER
           </button>
           <button onClick={handleReset}
             className="px-6 py-3 rounded-xl font-black transition-all hover:scale-105 active:scale-95"
-            style={{ background: "linear-gradient(135deg, #f87171, #ef4444)", color: "#000",
+            style={{ background: "linear-gradient(135deg, #cbd5e1, #94a3b8)", color: "#000",
               fontFamily: "var(--font-display)", letterSpacing: "0.05em", fontSize: "1rem",
-              boxShadow: "0 4px 20px rgba(239,68,68,0.3)" }}>
+              boxShadow: "0 4px 20px rgba(148,163,184,0.3)", transition: "all 0.3s ease" }}>
             NEW PAIRING
           </button>
         </div>
@@ -906,9 +922,10 @@ export default function PuppyPredictorPage() {
                   <button key={t} onClick={() => { setTab(t); if (t === "simulate" && !litter) handleSimulate(); }}
                     className="px-4 py-2 text-xs font-semibold transition-colors capitalize"
                     style={{
-                      background: tab === t ? "linear-gradient(135deg, #e8c86e, #b8860b)" : "transparent",
-                      color: tab === t ? "#000" : "#94a3b8",
+                      background: tab === t ? "linear-gradient(135deg, #e8c86e, #b8860b)" : "linear-gradient(135deg, #cbd5e1, #94a3b8)",
+                      color: "#000",
                       fontFamily: "var(--font-table)",
+                      transition: "all 0.3s ease",
                     }}>
                     {t === "results" ? "Predicted Colors" : "Simulate Litter"}
                   </button>
@@ -919,7 +936,7 @@ export default function PuppyPredictorPage() {
                 {!shareUrl ? (
                   <button onClick={handleSave} disabled={saving}
                     className="px-4 py-2 rounded-lg text-xs font-semibold transition-all hover:scale-105"
-                    style={{ background: "rgba(96,165,250,0.15)", color: "#60a5fa", border: "1px solid rgba(96,165,250,0.3)", fontFamily: "var(--font-table)" }}>
+                    style={{ background: "rgba(96,165,250,0.15)", color: "#60a5fa", border: "1px solid rgba(96,165,250,0.3)", fontFamily: "var(--font-table)", transition: "all 0.3s ease" }}>
                     {saving ? "Saving..." : "Save & Share"}
                   </button>
                 ) : (
@@ -961,9 +978,11 @@ export default function PuppyPredictorPage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {results.map((r, i) => (
-                    <div key={i} className="rounded-xl p-4 transition-all hover:scale-[1.02]" style={{
+                    <div key={i} className="rounded-xl p-4 transition-all hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(212,168,85,0.08)]" style={{
                       background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
-                      border: "1.5px solid rgba(30,64,120,0.5)", boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+                      border: "1.5px solid rgba(30,64,120,0.5)",
+                      boxShadow: "0 4px 20px rgba(0,0,0,0.3), 0 0 10px rgba(30,64,120,0.05)",
+                      transition: "all 0.3s ease",
                     }}>
                       {/* Dog silhouette + swatch (#3) */}
                       <div className="flex items-center gap-3 mb-3">
@@ -1053,7 +1072,7 @@ export default function PuppyPredictorPage() {
                     </select>
                     <button onClick={handleSimulate}
                       className="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all hover:scale-105"
-                      style={{ background: "rgba(212,168,85,0.15)", color: "#e8c86e", border: "1px solid rgba(212,168,85,0.3)", fontFamily: "var(--font-table)" }}>
+                      style={{ background: "rgba(212,168,85,0.15)", color: "#e8c86e", border: "1px solid rgba(212,168,85,0.3)", fontFamily: "var(--font-table)", transition: "all 0.3s ease" }}>
                       Re-roll
                     </button>
                   </div>
@@ -1062,9 +1081,11 @@ export default function PuppyPredictorPage() {
                 {litter && (
                   <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                     {litter.map(pup => (
-                      <div key={pup.id} className="rounded-xl p-4 text-center space-y-2 transition-all hover:scale-[1.03]" style={{
+                      <div key={pup.id} className="rounded-xl p-4 text-center space-y-2 transition-all hover:scale-[1.03] hover:-translate-y-1" style={{
                         background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
-                        border: "1.5px solid rgba(30,64,120,0.4)", boxShadow: "0 4px 15px rgba(0,0,0,0.3)",
+                        border: "1.5px solid rgba(30,64,120,0.4)",
+                        boxShadow: "0 4px 6px rgba(0,0,0,0.3), 0 10px 40px rgba(0,0,0,0.2), 0 0 10px rgba(30,64,120,0.05)",
+                        transition: "all 0.3s ease",
                       }}>
                         <DogSilhouette phenotype={pup.phenotype} size={72} />
                         <div>
@@ -1110,7 +1131,11 @@ export default function PuppyPredictorPage() {
               background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
               border: "1px solid rgba(30,64,120,0.3)",
             }}>
-              <h3 className="text-xs font-bold" style={{ color: "#64748b", fontFamily: "var(--font-table)", letterSpacing: "0.1em" }}>
+              <h3 className="text-xs font-bold" style={{
+                fontFamily: "var(--font-table)", letterSpacing: "0.1em",
+                background: "linear-gradient(135deg, #e8c86e, #d4a855, #b8860b)",
+                WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+              }}>
                 GENETICS REFERENCE
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 text-[11px]" style={{ color: "#94a3b8", fontFamily: "var(--font-table)" }}>
