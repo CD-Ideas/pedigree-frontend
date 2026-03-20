@@ -473,24 +473,20 @@ function PedigreeLabInner() {
   const handleDrop = (slotKey: SlotKey) => {
     if (!dragData) return;
     if (dragSourceSlot) {
-      // Slot-to-slot: move/swap with auto-fill
+      // Slot-to-slot: MOVE (not swap) — move dog to new slot, clear old slot + descendants
       if (dragSourceSlot === slotKey) { setDragData(null); setDragSourceSlot(null); return; }
       const srcDog = slots[dragSourceSlot];
-      const tgtDog = slots[slotKey];
-      // Clear descendant slots of both source and target
+      if (!srcDog) { setDragData(null); setDragSourceSlot(null); return; }
+      // Clear source slot + its descendants, AND target slot + its descendants
       const srcDescendants = getDescendantSlots(dragSourceSlot);
       const tgtDescendants = getDescendantSlots(slotKey);
       const clearSlots: Partial<Record<SlotKey, SlotDog | null>> = {};
-      for (const s of [...srcDescendants, ...tgtDescendants]) clearSlots[s] = null;
-      setSlots((prev) => ({
-        ...prev,
-        ...clearSlots,
-        [slotKey]: srcDog,
-        [dragSourceSlot!]: tgtDog || null,
-      }));
-      // Auto-fill parents behind moved dogs in their new positions
-      if (srcDog) autoFillParents(srcDog.dog_id, slotKey);
-      if (tgtDog) autoFillParents(tgtDog.dog_id, dragSourceSlot!);
+      for (const s of [dragSourceSlot, ...srcDescendants, ...tgtDescendants]) clearSlots[s] = null;
+      // Place the source dog in the target slot
+      clearSlots[slotKey] = srcDog;
+      setSlots((prev) => ({ ...prev, ...clearSlots }));
+      // Auto-fill parents behind the moved dog at its NEW position
+      autoFillParents(srcDog.dog_id, slotKey);
       setDragData(null);
       setDragSourceSlot(null);
       return;

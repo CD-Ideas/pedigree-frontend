@@ -28,7 +28,7 @@ export default function NavBar() {
   }, [pathname]); // re-check on every navigation
 
   // Don't show navbar on landing, login, register, or pedigree pages (pedigree has its own header)
-  if (pathname === "/" || pathname === "/login" || pathname === "/register" || pathname.startsWith("/pedigree") || pathname.startsWith("/breeding-calculator")) return null;
+  if (pathname === "/" || pathname === "/login" || pathname === "/register" || pathname.startsWith("/pedigree") || pathname.startsWith("/breeding-calculator") || pathname.startsWith("/dashboard") || pathname === "/community") return null;
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -135,6 +135,8 @@ export default function NavBar() {
                     {/* Links */}
                     <div className="py-1">
                       {[
+                        { href: "/dashboard/pedigrees", label: "My Pedigrees", icon: "📋" },
+                        { href: "/community", label: "Community Pedigrees", icon: "🌍" },
                         { href: "/dogs", label: "Dogs", icon: "🐕" },
                         { href: "/pedigree/spotlight", label: "Lineage Spotlight", icon: "🔦" },
                         { href: "/breeding-calculator", label: "Breeding Calculator", icon: "🧬" },
