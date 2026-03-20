@@ -2158,6 +2158,23 @@ function PedigreeLabInner() {
                   }
                   setPublishing(true);
                   try {
+                    // Auto-fetch tree if preview wasn't clicked but sire/dam exist
+                    let treeData = previewTree;
+                    if (treeData.length === 0) {
+                      const sireId = slots.sire?.dog_id || 0;
+                      const damId = slots.dam?.dog_id || 0;
+                      if (sireId || damId) {
+                        try {
+                          const treeRes = await fetch(`/api/dogs/pedigree-tree?sire_id=${sireId}&dam_id=${damId}&gens=4`);
+                          if (treeRes.ok) {
+                            const treeResult = await treeRes.json();
+                            treeData = treeResult.rows || [];
+                            setPreviewTree(treeData);
+                          }
+                        } catch { /* ignore */ }
+                      }
+                    }
+
                     const fd = new FormData();
                     // Send user_id from localStorage
                     try {
@@ -2185,7 +2202,7 @@ function PedigreeLabInner() {
                     fd.append("pedigreeNotes", publishForm.notes);
                     fd.append("journalJson", JSON.stringify(publishForm.journal));
                     fd.append("slotsJson", JSON.stringify(slots));
-                    fd.append("treeJson", JSON.stringify(previewTree));
+                    fd.append("treeJson", JSON.stringify(treeData));
                     if (publishForm.photoFile) {
                       fd.append("photo", publishForm.photoFile);
                     }
