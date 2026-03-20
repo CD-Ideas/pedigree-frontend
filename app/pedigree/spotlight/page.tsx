@@ -712,7 +712,7 @@ export default function SpotlightPage() {
         {!searched && !loading && (
           <div className="text-center py-10">
             <div className="text-4xl mb-3 opacity-30">🧬</div>
-            <h3 className="text-sm font-semibold mb-1.5" style={{ fontFamily: "var(--font-table)", color: "var(--text-secondary)" }}>
+            <h3 className="text-sm font-semibold mb-1.5" style={{ fontFamily: "var(--font-table)", color: "var(--accent-gold)" }}>
               Select a legendary dog and hit &quot;Find Tightest&quot;
             </h3>
             <p className="text-[10px] max-w-md mx-auto" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>

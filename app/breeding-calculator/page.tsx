@@ -293,7 +293,7 @@ function DogSlot({
                   {selected.registered_name}
                 </p>
                 <p className="text-[10px] mt-0.5" style={{ fontFamily: "var(--font-mono)" }}>
-                  <span style={{ color: "var(--text-muted)" }}>ID </span><span style={{ color: "#d4a855" }}>{selected.dog_id}</span>
+                  <span style={{ color: "#d4a855" }}>ID </span><span style={{ color: "#d4a855" }}>{selected.dog_id}</span>
                 </p>
               </div>
             </div>
@@ -309,7 +309,7 @@ function DogSlot({
                 style={{
                   background: "var(--bg-elevated)",
                   border: "1px solid var(--border)",
-                  color: "var(--text-primary)",
+                  color: query && getDogColor(query) !== "#ffffff" ? getDogColor(query) : "var(--text-primary)",
                   fontFamily: "var(--font-table)",
                 }}
               />
@@ -598,11 +598,11 @@ export default function BreedingCalculatorPage() {
               </span>
               {[6, 8, 10, 12].map((g) => (
                 <button key={g} onClick={() => { setGenDepth(g); if (hasResults) calculate(g); }}
-                  className="text-sm px-3.5 py-1.5 rounded-lg font-bold transition-all"
+                  className="text-[10px] px-2.5 py-1 rounded-lg font-bold transition-all"
                   style={{
                     fontFamily: "var(--font-table)",
                     background: genDepth === g ? "rgba(212,168,85,0.25)" : "var(--bg-elevated)",
-                    color: genDepth === g ? "#d4a855" : "rgba(212,168,85,0.6)",
+                    color: genDepth === g ? "#d4a855" : "#d4a855",
                     border: genDepth === g ? "1.5px solid rgba(212,168,85,0.6)" : "1px solid rgba(212,168,85,0.2)",
                     textShadow: genDepth === g ? "0 0 8px rgba(212,168,85,0.4)" : "none",
                   }}>
@@ -662,7 +662,7 @@ export default function BreedingCalculatorPage() {
         {!hasResults && !calculating && (
           <div className="text-center py-10">
             <div className="text-4xl mb-3 opacity-30">&#x1f9ec;</div>
-            <h3 className="text-sm font-semibold mb-1.5" style={{ fontFamily: "var(--font-table)", color: "var(--text-secondary)" }}>
+            <h3 className="text-sm font-semibold mb-1.5" style={{ fontFamily: "var(--font-table)", color: "var(--accent-gold)" }}>
               Select a sire and dam, then hit &quot;Calculate Breeding&quot;
             </h3>
             <p className="text-[10px] max-w-md mx-auto" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
@@ -718,7 +718,7 @@ export default function BreedingCalculatorPage() {
               {/* AVK */}
               {avk !== null && (
                 <Card className="p-5" style={{ borderColor: "rgba(34,197,94,0.4)", boxShadow: "0 2px 20px rgba(34,197,94,0.08)" }}>
-                  <SectionHeader>Ancestor Loss Coefficient (AVK)</SectionHeader>
+                  <SectionHeader color={avk > 80 ? "#22c55e" : avk > 60 ? "#eab308" : "#ef4444"}>Ancestor Loss Coefficient (AVK)</SectionHeader>
                   <div className="flex items-end gap-3">
                     <span className="text-3xl font-bold" style={{ color: avk > 80 ? "#22c55e" : avk > 60 ? "#eab308" : "#ef4444", fontFamily: "var(--font-mono)" }}>{avk.toFixed(1)}%</span>
                     <span className="text-[10px] mb-1.5" style={{ color: "var(--text-secondary)", fontFamily: "var(--font-table)" }}>
@@ -734,7 +734,7 @@ export default function BreedingCalculatorPage() {
               {/* Bloodline Radar */}
               {bloodlines.length > 0 && (
                 <Card className="p-5" style={{ borderColor: "rgba(139,92,246,0.4)", boxShadow: "0 2px 20px rgba(139,92,246,0.08)" }}>
-                  <SectionHeader>Bloodline Radar</SectionHeader>
+                  <SectionHeader color="#d4a855">Bloodline Radar</SectionHeader>
                   <div className="space-y-2.5">
                     {bloodlines.slice(0, 8).map((bl, i) => {
                       const colors = ["#d4a855", "#60a5fa", "#fc8181", "#4ade80", "#f472b6", "#fb923c", "#c084fc", "#22d3ee"];
@@ -760,7 +760,7 @@ export default function BreedingCalculatorPage() {
             <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-4">
               {/* Donut */}
               <Card className="p-5 flex flex-col items-center" style={{ borderColor: "rgba(212,168,85,0.4)", boxShadow: "0 2px 20px rgba(212,168,85,0.08)" }}>
-                <SectionHeader>Ancestor Overlap</SectionHeader>
+                <SectionHeader color="#d4a855">Ancestor Overlap</SectionHeader>
                 {directShared.length > 0 ? <DonutChart ancestors={directShared} hoveredIdx={sharedHover} onHover={(i) => {
                   setSharedHover(i);
                   if (i !== null && sharedListRef.current) {
@@ -776,7 +776,7 @@ export default function BreedingCalculatorPage() {
 
               {/* Shared list */}
               <Card className="p-5">
-                <SectionHeader>Shared Ancestors ({directShared.length})</SectionHeader>
+                <SectionHeader color="#d4a855">Shared Ancestors ({directShared.length})</SectionHeader>
                 <div ref={sharedListRef} className="space-y-1.5 max-h-[480px] overflow-y-auto pr-1">
                   {directShared.map((a, i) => {
                     const photoSrc = a.photo ? (a.photo.startsWith("http") ? a.photo : `https://www.apbt.online-pedigrees.com/${a.photo}`) : null;

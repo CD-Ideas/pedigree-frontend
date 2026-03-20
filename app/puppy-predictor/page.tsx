@@ -447,7 +447,7 @@ function DogSearch({ label, onSelect }: { label: string; onSelect: (dog: SearchD
           onBlur={() => setTimeout(() => setShow(false), 200)}
           placeholder={`Search ${label} from database...`}
           className="flex-1 bg-transparent text-xs outline-none"
-          style={{ color: "#e2e8f0", fontFamily: "var(--font-table)" }} />
+          style={{ color: q && getDogColor(q) !== "#ffffff" ? getDogColor(q) : "#e2e8f0", fontFamily: "var(--font-table)" }} />
         {q && <button onClick={() => { setQ(""); setResults([]); setShow(false); }} className="text-[10px] opacity-50 hover:opacity-100">✕</button>}
       </div>
       {show && results.length > 0 && (

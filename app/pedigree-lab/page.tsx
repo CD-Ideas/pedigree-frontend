@@ -701,7 +701,7 @@ function PedigreeLabInner() {
                   style={{
                     background: "var(--bg-deep, #0b1120)",
                     border: "1px solid rgba(30,64,120,0.5)",
-                    color: "#e2e8f0",
+                    color: searchTerm && getDogColor(searchTerm) !== "#ffffff" ? getDogColor(searchTerm) : "#e2e8f0",
                     fontFamily: "var(--font-table, Rajdhani, sans-serif)",
                     outline: "none",
                     transition: "all 0.3s ease",

@@ -81,7 +81,7 @@ function NavSearch() {
           onFocus={() => results.length > 0 && setShow(true)}
           placeholder="Search dog or paste URL..."
           className="flex-1 bg-transparent text-xs outline-none"
-          style={{ color: "var(--text-primary, #e2e8f0)", fontFamily: "var(--font-table, Rajdhani, sans-serif)", minWidth: 0 }}
+          style={{ color: q && getDogSearchColor(q) !== "#ffffff" ? getDogSearchColor(q) : "var(--text-primary, #e2e8f0)", fontFamily: "var(--font-table, Rajdhani, sans-serif)", minWidth: 0 }}
         />
         {q && <button onClick={() => { setQ(""); setResults([]); setShow(false); }} className="text-[10px] opacity-50 hover:opacity-100">✕</button>}
       </div>
