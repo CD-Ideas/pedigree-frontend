@@ -157,27 +157,45 @@ function riskLabel(coi: number): string {
   return "DANGER ZONE";
 }
 
-function calcCOI(slots: Record<SlotKey, SlotDog | null>): number {
-  /* Simple Wright's COI placeholder: count how many grandparent slots
-     share the same dog_id across sire/dam lines. Each match adds ~6.25%. */
-  const sireLineIds: number[] = [];
-  const damLineIds: number[] = [];
+function calcCOIFromTree(rows: { gen: number; pos: number; dog_id: number | null; name: string }[]): number {
+  /* Wright's COI from a pedigree tree.
+     For each ancestor that appears on BOTH the sire's side and dam's side,
+     COI += (1/2)^(n1+n2+1) where n1, n2 are the number of generations
+     from sire/dam to the common ancestor. */
+  if (!rows || rows.length === 0) return 0;
 
-  if (slots.sire) sireLineIds.push(slots.sire.dog_id);
-  if (slots.sire_sire) sireLineIds.push(slots.sire_sire.dog_id);
-  if (slots.sire_dam) sireLineIds.push(slots.sire_dam.dog_id);
+  // Build maps: dog_id -> list of (side, generation) where side = 'S' or 'D'
+  // Gen 1 pos 0 = sire side, Gen 1 pos 1 = dam side
+  // For gen g, positions 0..2^(g-1)-1 are sire side, 2^(g-1)..2^g-1 are dam side
+  const sireAncestors: Map<number, number[]> = new Map(); // dog_id -> [gen, gen, ...]
+  const damAncestors: Map<number, number[]> = new Map();
 
-  if (slots.dam) damLineIds.push(slots.dam.dog_id);
-  if (slots.dam_sire) damLineIds.push(slots.dam_sire.dog_id);
-  if (slots.dam_dam) damLineIds.push(slots.dam_dam.dog_id);
+  for (const row of rows) {
+    if (!row.dog_id) continue;
+    const halfSize = Math.pow(2, row.gen - 1);
+    const isSireSide = row.pos < halfSize;
 
-  let sharedCount = 0;
-  for (const sid of sireLineIds) {
-    for (const did of damLineIds) {
-      if (sid === did) sharedCount++;
+    const map = isSireSide ? sireAncestors : damAncestors;
+    if (!map.has(row.dog_id)) map.set(row.dog_id, []);
+    map.get(row.dog_id)!.push(row.gen);
+  }
+
+  // Find common ancestors and calculate COI
+  let coi = 0;
+  for (const [dogId, sireGens] of sireAncestors) {
+    const damGens = damAncestors.get(dogId);
+    if (!damGens) continue;
+    // For each pair of paths through common ancestor
+    for (const sg of sireGens) {
+      for (const dg of damGens) {
+        // n1 = generations from sire to ancestor, n2 = generations from dam to ancestor
+        // In our tree, gen 1 = parents, so n = gen (since subject is gen 0)
+        coi += Math.pow(0.5, sg + dg + 1);
+      }
     }
   }
-  return sharedCount * 6.25;
+
+  return Math.round(coi * 10000) / 100; // percentage with 2 decimal precision
 }
 
 function defaultWormingDraft(): WormingEntry {
@@ -317,8 +335,31 @@ function PedigreeLabInner() {
   const [previewLoading, setPreviewLoading] = useState(false);
 
   /* ---------- COI ---------- */
-  const coi = calcCOI(slots);
+  const [coi, setCoi] = useState(0);
+  const [coiLoading, setCoiLoading] = useState(false);
   const dogsPlacedCount = Object.values(slots).filter(Boolean).length;
+
+  useEffect(() => {
+    const sireId = slots.sire?.dog_id;
+    const damId = slots.dam?.dog_id;
+    if (!sireId || !damId) {
+      setCoi(0);
+      return;
+    }
+    let cancelled = false;
+    setCoiLoading(true);
+    fetch(`/api/dogs/pedigree-tree?sire_id=${sireId}&dam_id=${damId}&gens=6`)
+      .then((r) => r.json())
+      .then((data) => {
+        if (!cancelled) {
+          const val = calcCOIFromTree(data.rows || []);
+          setCoi(val);
+        }
+      })
+      .catch((_e) => { if (!cancelled) setCoi(0); })
+      .finally(() => { if (!cancelled) setCoiLoading(false); });
+    return () => { cancelled = true; };
+  }, [slots.sire?.dog_id, slots.dam?.dog_id]);
 
   /* ---------- Load existing pedigree for editing ---------- */
   useEffect(() => {
@@ -590,8 +631,8 @@ function PedigreeLabInner() {
     <>
     <style>{`
       @keyframes coiPulse {
-        0%, 100% { opacity: 1; transform: translateX(-50%) scale(1); }
-        50% { opacity: 0.9; transform: translateX(-50%) scale(1.03); }
+        0%, 100% { box-shadow: 0 0 8px var(--coi-glow, rgba(34,197,94,0.2)); }
+        50% { box-shadow: 0 0 20px var(--coi-glow, rgba(34,197,94,0.4)), 0 0 40px var(--coi-glow, rgba(34,197,94,0.15)); }
       }
       @keyframes slotPulse {
         0%, 100% { box-shadow: 0 0 10px rgba(30,64,120,0.08); }
@@ -973,14 +1014,14 @@ function PedigreeLabInner() {
               {/* COI badge */}
               <div
                 className="absolute z-10 flex flex-col items-center"
-                style={{ top: 16, left: "50%", transform: "translateX(-50%)" }}
+                style={{ top: 32, left: "50%", transform: "translateX(-50%)" }}
               >
                 <div
                   className="rounded-full px-5 py-1.5 flex items-center gap-2"
                   style={{
                     background: `${riskColor(coi)}18`,
                     border: `1.5px solid ${riskColor(coi)}55`,
-                    boxShadow: `0 0 20px ${riskColor(coi)}25, 0 0 40px ${riskColor(coi)}10`,
+                    ["--coi-glow" as string]: `${riskColor(coi)}40`,
                     animation: "coiPulse 3s ease-in-out infinite",
                   }}
                 >
@@ -994,14 +1035,14 @@ function PedigreeLabInner() {
                     className="text-lg font-black"
                     style={{ color: riskColor(coi), fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}
                   >
-                    {coi.toFixed(1)}%
+                    {coiLoading ? "..." : `${coi.toFixed(1)}%`}
                   </span>
                 </div>
                 <span
                   className="text-[9px] uppercase tracking-widest mt-1 font-semibold"
                   style={{ color: riskColor(coi), fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
                 >
-                  {riskLabel(coi)}
+                  {coiLoading ? "CALCULATING..." : riskLabel(coi)}
                 </span>
               </div>
 
@@ -1221,7 +1262,7 @@ function PedigreeLabInner() {
                 </div>
               ) : (
                 <div className="py-8 text-center">
-                  <p className="text-xs" style={{ color: "#3a4a62" }}>
+                  <p className="text-xs" style={{ color: "#d4a855" }}>
                     Select a dog on the canvas to view details
                   </p>
                 </div>
@@ -1305,7 +1346,7 @@ function PedigreeLabInner() {
               <div className="flex items-center justify-between">
                 <span
                   className="text-[10px] uppercase tracking-widest font-semibold"
-                  style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
+                  style={{ color: "#d4a855", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
                 >
                   Mock Mode
                 </span>
@@ -1349,20 +1390,20 @@ function PedigreeLabInner() {
         <div className="flex items-center gap-6">
           <span
             className="text-[10px] uppercase tracking-widest font-semibold"
-            style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
+            style={{ color: "#fc8181", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
           >
             Dogs Placed:{" "}
-            <span style={{ color: "#d4a855", fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}>
+            <span style={{ color: "#fc8181", fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}>
               {dogsPlacedCount} / 7
             </span>
           </span>
           <span
             className="text-[10px] uppercase tracking-widest font-semibold"
-            style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
+            style={{ color: "#22c55e", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
           >
             COI:{" "}
             <span style={{ color: riskColor(coi), fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}>
-              {coi.toFixed(1)}%
+              {coiLoading ? "..." : `${coi.toFixed(1)}%`}
             </span>
           </span>
         </div>
@@ -1370,9 +1411,9 @@ function PedigreeLabInner() {
           className="rounded-full px-4 py-1 text-[10px] uppercase tracking-widest font-bold"
           style={{
             fontFamily: "var(--font-table, Rajdhani, sans-serif)",
-            background: previewMode ? "rgba(212,168,85,0.15)" : "rgba(30,64,120,0.2)",
-            color: previewMode ? "#d4a855" : "#5a6a82",
-            border: `1px solid ${previewMode ? "rgba(212,168,85,0.4)" : "rgba(30,64,120,0.4)"}`,
+            background: previewMode ? "rgba(212,168,85,0.15)" : "rgba(212,168,85,0.08)",
+            color: "#d4a855",
+            border: `1px solid rgba(212,168,85,0.4)`,
           }}
         >
           {previewMode ? "Preview Mode" : "Edit Mode"}
@@ -2426,7 +2467,7 @@ function DropZone({
           </p>
         )}
         {/* Label */}
-        <p className="text-center text-[8px] mt-0.5" style={{ color: "#3a4a62" }}>
+        <p className="text-center text-[8px] mt-0.5" style={{ color: "#d4a855" }}>
           {label}
         </p>
         {/* Remove X button - top right */}
@@ -2530,13 +2571,13 @@ function DropZone({
         onDrop(slotKey);
       }}
     >
-      <span className="text-lg mb-1" style={{ color: dragOver ? "#d4a855" : "#2a3a52" }}>
+      <span className="text-lg mb-1" style={{ color: "#d4a855" }}>
         +
       </span>
       <span
         className={`${isSm ? "text-[8px]" : "text-[9px]"} uppercase tracking-widest font-semibold`}
         style={{
-          color: dragOver ? "#d4a855" : "#3a4a62",
+          color: "#d4a855",
           fontFamily: "var(--font-table, Rajdhani, sans-serif)",
         }}
       >
