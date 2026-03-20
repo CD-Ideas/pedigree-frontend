@@ -553,9 +553,8 @@ export default function PublishedPedigreePage() {
       `}</style>
 
       <div className="max-w-[1600px] mx-auto px-4 md:px-6 py-4 space-y-3">
-        {/* Share toolbar + Search */}
-        <div className="flex items-center gap-2">
-          <div style={{ width: "320px" }}><PedigreeSearch /></div>
+        {/* Share toolbar */}
+        <div className="flex items-center justify-end gap-2">
           <ShareButton dogName={displayName} />
           <TelegramButton dogName={displayName} />
           <WhatsAppButton dogName={displayName} />

@@ -29,6 +29,15 @@ function NavSearch() {
   const [results, setResults] = useState<{ dog_id: number; registered_name: string; photo_url?: string | null }[]>([]);
   const [show, setShow] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) setShow(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
 
   const doSearch = (val: string) => {
     setQ(val);
@@ -57,7 +66,7 @@ function NavSearch() {
   };
 
   return (
-    <div className="relative">
+    <div ref={containerRef} className="relative">
       <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl transition-all duration-300 focus-within:scale-[1.02]" style={{
         background: "linear-gradient(135deg, rgba(30,64,120,0.25), rgba(20,40,80,0.15))",
         border: "1.5px solid rgba(96,165,250,0.3)",
@@ -70,7 +79,6 @@ function NavSearch() {
           value={q}
           onChange={(e) => doSearch(e.target.value)}
           onFocus={() => results.length > 0 && setShow(true)}
-          onBlur={() => setTimeout(() => setShow(false), 200)}
           placeholder="Search dog or paste URL..."
           className="flex-1 bg-transparent text-xs outline-none"
           style={{ color: "var(--text-primary, #e2e8f0)", fontFamily: "var(--font-table, Rajdhani, sans-serif)", minWidth: 0 }}
@@ -93,7 +101,7 @@ function NavSearch() {
               ? r.photo_url.startsWith("http") ? r.photo_url : `https://www.apbt.online-pedigrees.com/${r.photo_url}`
               : null;
             return (
-              <Link
+              <a
                 key={r.dog_id}
                 href={`/pedigree/${r.dog_id}`}
                 className="flex items-center gap-2 px-3 py-2 transition-all hover:bg-white/5 text-xs"
@@ -108,7 +116,7 @@ function NavSearch() {
                 <span className="font-semibold truncate" style={{ color: getDogSearchColor(r.registered_name), fontFamily: "var(--font-table)" }}>
                   {r.registered_name}
                 </span>
-              </Link>
+              </a>
             );
           })}
         </div>
@@ -169,9 +177,9 @@ export default function NavBar() {
         borderBottom: "1.5px solid rgba(30,64,120,0.8)",
         backdropFilter: "blur(20px)",
       }}
-      className="sticky top-0 z-50"
+      className="sticky top-0 z-50 overflow-visible"
     >
-      <div className="max-w-[1600px] mx-auto px-6 flex items-center justify-between h-14">
+      <div className="max-w-[1600px] mx-auto px-6 flex items-center justify-between h-14 overflow-visible">
         <Link href="/" className="flex items-center gap-3">
           <img src={LOGO} alt="Logo" className="w-8 h-8 rounded-lg" />
           <span
@@ -202,8 +210,8 @@ export default function NavBar() {
             ← Back
           </Link>
         )}
-        {pathname.startsWith("/pedigree/") && !pathname.startsWith("/pedigree/custom/") && pathname !== "/pedigree/spotlight" && (
-          <div className="flex-1 max-w-md mx-4">
+        {pathname.startsWith("/pedigree/") && pathname !== "/pedigree/spotlight" && (
+          <div className="flex-1 max-w-md mx-4 overflow-visible">
             <NavSearch />
           </div>
         )}
