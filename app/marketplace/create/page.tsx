@@ -182,7 +182,7 @@ export default function CreateAdPage() {
 
     if (photos.length === 0) errs.photos = "At least one photo is required";
 
-    if (!continent || !country) errs.location = "Location is required";
+    if (!continent && !country) errs.location = "At least a continent or country is required";
 
     if (!phone.trim() && !email.trim() && !venmo.trim() && !paypal.trim()) {
       errs.contact = "At least one contact method is required";
@@ -191,6 +191,12 @@ export default function CreateAdPage() {
     const dogRequiredCategories = ["dogs_for_sale", "stud_service", "litters_for_sale"];
     if (dogRequiredCategories.includes(category) && !dogId) {
       errs.dog = "Linking to a dog is required for this category";
+    }
+
+    // Heading must match linked dog name
+    if (dogId && selectedDogName && title.trim().toUpperCase() !== selectedDogName.toUpperCase()) {
+      errs.title = `Heading must match the linked dog's name: "${selectedDogName}"`;
+      errs.dog = `Linked dog name "${selectedDogName}" does not match the heading "${title.trim()}"`;
     }
 
     setErrors(errs);
@@ -216,7 +222,7 @@ export default function CreateAdPage() {
           description: description.trim(),
           price: price ? parseFloat(price) : null,
           photos,
-          location: country + ", " + continent,
+          location: [country, continent].filter(Boolean).join(", "),
           contactPhone: phone.trim() || null,
           contactEmail: email.trim() || null,
           contactVenmo: venmo.trim() || null,
@@ -349,6 +355,44 @@ export default function CreateAdPage() {
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-5">
+          {/* ─── Listed By ─── */}
+          <div
+            className="rounded-xl p-5"
+            style={{
+              background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+              border: "1.5px solid rgba(30,64,120,0.3)",
+              backdropFilter: "blur(12px)",
+            }}
+          >
+            <label className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+              Listed By
+            </label>
+            <div
+              className="flex items-center gap-3 rounded-lg px-4 py-2.5"
+              style={{
+                background: "rgba(30,64,120,0.15)",
+                border: "1px solid rgba(30,64,120,0.3)",
+              }}
+            >
+              <div
+                className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
+                style={{
+                  background: "linear-gradient(135deg, #e8c86e, #b8860b)",
+                  color: "#000",
+                  fontFamily: "var(--font-table)",
+                }}
+              >
+                {user?.username?.charAt(0).toUpperCase() || "?"}
+              </div>
+              <span
+                className="text-sm font-bold"
+                style={{ color: "var(--text-primary, #e2e8f0)", fontFamily: "var(--font-table)" }}
+              >
+                {user?.username || "Loading..."}
+              </span>
+            </div>
+          </div>
+
           {/* ─── Category ─── */}
           <div
             className="rounded-xl p-5"
