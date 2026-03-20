@@ -41,7 +41,7 @@ c.execute("""CREATE TABLE IF NOT EXISTS users (
 conn.commit()
 
 # Find user
-c.execute("SELECT id, username, password_hash, salt, role, email FROM users WHERE LOWER(username) = LOWER(?)", (username,))
+c.execute("SELECT id, username, password_hash, salt, role, email, COALESCE(profile_picture, '') FROM users WHERE LOWER(username) = LOWER(?)", (username,))
 row = c.fetchone()
 
 if not row:
@@ -49,7 +49,7 @@ if not row:
     conn.close()
     exit()
 
-user_id, uname, stored_hash, salt, role, email = row
+user_id, uname, stored_hash, salt, role, email, profile_picture = row
 
 # Verify password
 check_hash = hashlib.sha256((password + salt).encode()).hexdigest()
@@ -71,7 +71,8 @@ print(json.dumps({
             "id": user_id,
             "username": uname,
             "email": email,
-            "role": role
+            "role": role,
+            "profile_picture": profile_picture
         }
     }
 }))

@@ -1520,28 +1520,31 @@ function PedigreeLabInner() {
                   <select
                     value={publishForm.sex}
                     onChange={(e) => setPublishForm((p) => ({ ...p, sex: e.target.value }))}
-                    className="w-full rounded-lg px-3 py-2 text-sm outline-none"
+                    className="w-full rounded-lg px-3 py-2 text-sm outline-none uppercase"
                     style={{
                       background: "var(--bg-deep, #0b1120)",
                       border: "1px solid rgba(30,64,120,0.5)",
                       color: "#e2e8f0",
                       fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+                      textTransform: "uppercase",
                     }}
                   >
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
+                    <option value="Male">MALE</option>
+                    <option value="Female">FEMALE</option>
                   </select>
                 </div>
                 <ModalInput
                   label="Color"
                   value={publishForm.color}
-                  onChange={(v) => setPublishForm((p) => ({ ...p, color: v }))}
+                  onChange={(v) => setPublishForm((p) => ({ ...p, color: v.toUpperCase() }))}
+                  style={{ textTransform: "uppercase" }}
                 />
                 <ModalInput
                   label="Breeder"
                   value={publishForm.breeder}
-                  onChange={(v) => setPublishForm((p) => ({ ...p, breeder: v }))}
+                  onChange={(v) => setPublishForm((p) => ({ ...p, breeder: v.toUpperCase() }))}
                   placeholder="Breeder name"
+                  style={{ textTransform: "uppercase" }}
                 />
               </div>
 
@@ -1619,9 +1622,10 @@ function PedigreeLabInner() {
                       border: "1px solid rgba(30,64,120,0.5)",
                       color: "#e2e8f0",
                       fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+                      textTransform: "uppercase",
                     }}
                     value={publishForm.owner}
-                    onChange={(e) => setPublishForm((p) => ({ ...p, owner: e.target.value }))}
+                    onChange={(e) => setPublishForm((p) => ({ ...p, owner: e.target.value.toUpperCase() }))}
                     placeholder="Owner name"
                   />
                 </div>
@@ -1640,10 +1644,11 @@ function PedigreeLabInner() {
                       border: "1px solid rgba(30,64,120,0.5)",
                       color: "#e2e8f0",
                       fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+                      textTransform: "uppercase",
                     }}
                     value={publishForm.conditionedWeight}
-                    onChange={(e) => setPublishForm((p) => ({ ...p, conditionedWeight: e.target.value }))}
-                    placeholder="e.g. 42 lbs"
+                    onChange={(e) => setPublishForm((p) => ({ ...p, conditionedWeight: e.target.value.toUpperCase() }))}
+                    placeholder="e.g. 42 LBS"
                   />
                 </div>
               </div>

@@ -122,7 +122,13 @@ export default function NavBar() {
   const router = useRouter();
   const [loggedIn, setLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
+  const [userPicture, setUserPicture] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -132,11 +138,14 @@ export default function NavBar() {
         const u = JSON.parse(localStorage.getItem("user") || "null");
         if (u?.username) setUserName(u.username);
         else if (u?.email) setUserName(u.email);
+        if (u?.profile_picture) setUserPicture(u.profile_picture);
       } catch {}
     } else {
       setLoggedIn(false);
+      setUserName("");
+      setUserPicture("");
     }
-  }, [pathname]); // re-check on every navigation
+  }, [pathname, mounted]); // re-check on every navigation and on mount
 
   // Don't show navbar on landing, login, register
   if (pathname === "/" || pathname === "/login" || pathname === "/register") return null;
@@ -179,6 +188,20 @@ export default function NavBar() {
             Pedigree Platform
           </span>
         </Link>
+        {mounted && loggedIn && pathname !== "/dashboard" && (
+          <Link
+            href="/dashboard"
+            className="ml-4 flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold transition-all hover:scale-[1.02]"
+            style={{
+              color: "var(--accent-gold, #d4a855)",
+              fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+              background: "rgba(212,168,85,0.06)",
+              border: "1px solid rgba(212,168,85,0.15)",
+            }}
+          >
+            ← Back
+          </Link>
+        )}
         {pathname.startsWith("/pedigree/") && !pathname.startsWith("/pedigree/custom/") && pathname !== "/pedigree/spotlight" && (
           <div className="flex-1 max-w-md mx-4">
             <NavSearch />
@@ -208,7 +231,9 @@ export default function NavBar() {
             );
           })}
 
-          {loggedIn ? (
+          {!mounted ? (
+            <div className="ml-4" style={{ width: 80 }} />
+          ) : loggedIn ? (
             <div className="relative ml-4">
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
