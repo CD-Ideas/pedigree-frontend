@@ -90,7 +90,7 @@ print(json.dumps(rows))
     const { stdout } = await execFileAsync("python3", ["-c", script], { timeout: 15000 });
     const rows = JSON.parse(stdout || "[]");
     return NextResponse.json({ rows });
-  } catch {
+  } catch (_e) {
     return NextResponse.json({ rows: [] });
   }
 }

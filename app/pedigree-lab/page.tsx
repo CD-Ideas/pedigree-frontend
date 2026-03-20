@@ -330,7 +330,7 @@ function PedigreeLabInner() {
             const user = JSON.parse(userStr);
             if (!user?.id || user.id !== data.user_id) return;
           } else return;
-        } catch { return; }
+        } catch (_e) { return; }
 
         setEditingId(pedId);
 
@@ -338,13 +338,13 @@ function PedigreeLabInner() {
         try {
           const s = JSON.parse(data.slots_json || "{}");
           setSlots(s);
-        } catch { /* ignore */ }
+        } catch (_e) { /* ignore */ }
 
         // Restore tree
         try {
           const t = JSON.parse(data.tree_json || "[]");
           setPreviewTree(t);
-        } catch { /* ignore */ }
+        } catch (_e) { /* ignore */ }
 
         // Restore publish form
         setPublishForm({
@@ -392,7 +392,7 @@ function PedigreeLabInner() {
         const data = await res.json();
         setSearchResults(Array.isArray(data) ? data : data.dogs || []);
       }
-    } catch {
+    } catch (_e) {
       /* silently fail */
     } finally {
       setSearchLoading(false);
@@ -453,7 +453,7 @@ function PedigreeLabInner() {
           autoFillParents(data.dam.dog_id, mapping.damSlot);
         }
       }
-    } catch {
+    } catch (_e) {
       /* silently fail */
     }
   }, []);
@@ -1217,7 +1217,7 @@ function PedigreeLabInner() {
                           const data = await res.json();
                           setPreviewTree(data.rows || []);
                         }
-                      } catch { /* ignore */ }
+                      } catch (_e) { /* ignore */ }
                       setPreviewLoading(false);
                     }
                     setPreviewMode(true);
@@ -2179,7 +2179,7 @@ function PedigreeLabInner() {
                             treeData = treeResult.rows || [];
                             setPreviewTree(treeData);
                           }
-                        } catch { /* ignore */ }
+                        } catch (_e) { /* ignore */ }
                       }
                     }
 
@@ -2191,7 +2191,7 @@ function PedigreeLabInner() {
                         const user = JSON.parse(userStr);
                         if (user?.id) fd.append("userId", String(user.id));
                       }
-                    } catch { /* ignore */ }
+                    } catch (_e) { /* ignore */ }
                     const token = localStorage.getItem("token");
                     fd.append("name", publishForm.name);
                     fd.append("prefix", publishForm.prefix);

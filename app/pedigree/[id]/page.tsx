@@ -111,7 +111,7 @@ function ShareButton({ dogName }: { dogName: string }) {
   const share = async () => {
     const url = window.location.href;
     if (navigator.share) {
-      try { await navigator.share({ title: `${dogName} - Pedigree Platform`, url }); } catch {}
+      try { await navigator.share({ title: `${dogName} - Pedigree Platform`, url }); } catch (_e) {}
     } else {
       await navigator.clipboard.writeText(url);
       setCopied(true);
@@ -196,7 +196,7 @@ function PedigreeSearch() {
         const data = await res.json();
         setResults(data.dogs || []);
         setOpen(true);
-      } catch { setResults([]); }
+      } catch (_e) { setResults([]); }
     }, 300);
   };
 

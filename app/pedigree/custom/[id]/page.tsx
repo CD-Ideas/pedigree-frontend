@@ -59,7 +59,7 @@ function getDogCardColor(name: string): string {
   }
   if (/\bROM\b/.test(n)) return "#22d3ee";
   if (/\bPOR\b/.test(n)) return "#a78bfa";
-  return "#e0e0e0";
+  return "#e2e8f0";
 }
 
 function getXWColor(name: string): string | null {
@@ -92,7 +92,7 @@ function formatDate(iso: string): string {
   try {
     const d = new Date(iso);
     return d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }).toUpperCase();
-  } catch {
+  } catch (_e) {
     return iso;
   }
 }
@@ -103,7 +103,7 @@ function ShareButton({ dogName }: { dogName: string }) {
   const share = async () => {
     const url = window.location.href;
     if (navigator.share) {
-      try { await navigator.share({ title: `${dogName} - Pedigree Platform`, url }); } catch {}
+      try { await navigator.share({ title: `${dogName} - Pedigree Platform`, url }); } catch (_e) {}
     } else {
       await navigator.clipboard.writeText(url);
       setCopied(true);
@@ -188,7 +188,7 @@ function PedigreeSearch() {
         const data = await res.json();
         setResults(data.dogs || []);
         setOpen(true);
-      } catch { setResults([]); }
+      } catch (_e) { setResults([]); }
     }, 300);
   };
 
@@ -429,7 +429,7 @@ function NavAuthButton() {
     try {
       const u = localStorage.getItem("user");
       if (u) setUser(JSON.parse(u));
-    } catch { /* ignore */ }
+    } catch (_e) { /* ignore */ }
   }, []);
 
   if (user) {
@@ -475,7 +475,7 @@ export default function PublishedPedigreePage() {
         if (data.error) { setPed(null); setLoading(false); return; }
         setPed(data);
         // Parse tree
-        try { setTree(JSON.parse(data.tree_json || "[]")); } catch { setTree([]); }
+        try { setTree(JSON.parse(data.tree_json || "[]")); } catch (_e) { setTree([]); }
         // Check if current user is the owner
         try {
           const userStr = localStorage.getItem("user");
@@ -485,7 +485,7 @@ export default function PublishedPedigreePage() {
               setIsOwner(true);
             }
           }
-        } catch { /* ignore */ }
+        } catch (_e) { /* ignore */ }
         // Increment view count
         fetch(`/api/pedigrees/${id}/view`, { method: "POST" }).catch(() => {});
         setLoading(false);
@@ -532,7 +532,7 @@ export default function PublishedPedigreePage() {
 
   // Parse slots for sire/dam display
   let slots: Record<string, { dog_id: number; registered_name: string; photo_url: string | null; sex?: string } | null> = {};
-  try { slots = JSON.parse(ped.slots_json || "{}"); } catch { slots = {}; }
+  try { slots = JSON.parse(ped.slots_json || "{}"); } catch (_e) { slots = {}; }
 
   const sire = slots.sire || null;
   const dam = slots.dam || null;
@@ -734,13 +734,13 @@ export default function PublishedPedigreePage() {
         {/* ─── Journal (Owner Only) ─── */}
         {isOwner && ped.journal_json && (() => {
           let journal: { rabiesDate?: string; rabiesNextDue?: string; avidChip?: string; vaccines?: { name: string; checked: boolean; date: string }[]; worming?: { type: string; otherType: string; dateWormed: string; nextDue: string; intervalDays: number; remindMe: boolean }[]; notes?: string } = {};
-          try { journal = JSON.parse(ped.journal_json); } catch { /* ignore */ }
+          try { journal = JSON.parse(ped.journal_json); } catch (_e) { /* ignore */ }
           const hasContent = journal.rabiesDate || journal.avidChip || journal.vaccines?.some(v => v.checked) || (journal.worming && journal.worming.length > 0) || journal.notes;
           if (!hasContent) return null;
 
           const fmtDate = (iso: string) => {
             if (!iso) return "—";
-            try { return new Date(iso + "T00:00:00").toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }); } catch { return iso; }
+            try { return new Date(iso + "T00:00:00").toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }); } catch (_e) { return iso; }
           };
 
           return (

@@ -50,7 +50,7 @@ function LoginForm() {
         setMessage(data?.error?.message || data?.message || "Login failed");
         setMessageType("error");
       }
-    } catch {
+    } catch (_e) {
       setMessage("Server error");
       setMessageType("error");
     } finally {

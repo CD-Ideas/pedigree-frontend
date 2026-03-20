@@ -87,7 +87,7 @@ conn.close()
     }
 
     return NextResponse.json(data, { status: 200 });
-  } catch {
+  } catch (_e) {
     return NextResponse.json({ error: { message: "Login failed" } }, { status: 500 });
   }
 }

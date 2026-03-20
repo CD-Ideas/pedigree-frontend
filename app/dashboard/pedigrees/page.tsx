@@ -83,7 +83,7 @@ function formatDate(iso: string): string {
   try {
     const d = new Date(iso);
     return d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
-  } catch { return iso; }
+  } catch (_e) { return iso; }
 }
 
 function daysUntil(iso: string): number | null {
@@ -143,7 +143,7 @@ export default function MyPedigreesPage() {
           setLoading(false);
         })
         .catch(() => setLoading(false));
-    } catch {
+    } catch (_e) {
       router.replace("/login");
     }
   }, [router]);

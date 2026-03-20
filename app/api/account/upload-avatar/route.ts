@@ -40,7 +40,7 @@ print(json.dumps({"success": True, "profile_picture": "${avatarPath}"}))
     const { stdout } = await execFileAsync("python3", ["-c", script], { timeout: 10000 });
     const data = JSON.parse(stdout);
     return NextResponse.json(data);
-  } catch {
+  } catch (_e) {
     return NextResponse.json({ error: "Failed to upload avatar" }, { status: 500 });
   }
 }

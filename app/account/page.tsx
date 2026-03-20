@@ -71,7 +71,7 @@ export default function AccountPage() {
         setEditEmail(u.email || "");
         setAvatarPreview(u.profile_picture || "");
       } else router.push("/login");
-    } catch { router.push("/login"); }
+    } catch (_e) { router.push("/login"); }
   }, [router]);
 
   // Save profile (username/email)
@@ -94,7 +94,7 @@ export default function AccountPage() {
       setUser(updated);
       localStorage.setItem("user", JSON.stringify(updated));
       showMsg("Profile updated successfully", "success");
-    } catch {
+    } catch (_e) {
       showMsg("Failed to update profile", "error");
     } finally {
       setProfileSaving(false);
@@ -120,7 +120,7 @@ export default function AccountPage() {
       setNewPassword("");
       setConfirmPassword("");
       showMsg("Password changed successfully", "success");
-    } catch {
+    } catch (_e) {
       showMsg("Failed to change password", "error");
     } finally {
       setPasswordSaving(false);
@@ -152,7 +152,7 @@ export default function AccountPage() {
       setAvatarPreview(data.profile_picture);
       localStorage.setItem("user", JSON.stringify(updated));
       showMsg("Profile picture updated", "success");
-    } catch {
+    } catch (_e) {
       showMsg("Failed to upload picture", "error");
     } finally {
       setAvatarUploading(false);
@@ -187,7 +187,7 @@ export default function AccountPage() {
       } else {
         showMsg(data.message || "Failed to delete account", "error");
       }
-    } catch {
+    } catch (_e) {
       showMsg("Server error", "error");
     }
   };

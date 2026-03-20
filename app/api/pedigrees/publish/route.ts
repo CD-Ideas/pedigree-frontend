@@ -36,7 +36,7 @@ else:
         const { stdout: authOut } = await execFileAsync("python3", ["-c", authScript], { timeout: 5000 });
         const authData = JSON.parse(authOut.trim());
         userId = authData.user_id;
-      } catch {
+      } catch (_e) {
         // Token lookup failed, try simpler approach - get user_id from formData
       }
     }

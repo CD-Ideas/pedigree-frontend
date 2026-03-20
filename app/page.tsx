@@ -22,7 +22,7 @@ function _BreedingCalcPreview_UNUSED() {
     try {
       const stored = localStorage.getItem("breedingCalcResult");
       if (stored) setData(JSON.parse(stored));
-    } catch {}
+    } catch (_e) {}
   }, []);
 
   const PIE_COLORS = ["#ef4444", "#3b82f6", "#a855f7", "#d4a855", "#22c55e", "#f97316", "#ec4899", "#14b8a6"];

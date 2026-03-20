@@ -21,7 +21,7 @@ export async function generateMetadata({
       const pedigree = data.pedigree?.length || 0;
       description = `${dogName} — ${pedigree} ancestors, ${offspring} offspring. View full pedigree, titles, siblings, and genetic stats on Pedigree Platform.`;
     }
-  } catch {}
+  } catch (_e) {}
 
   const title = `${dogName} | Pedigree Platform`;
   const url = `${SITE}/pedigree/${id}`;

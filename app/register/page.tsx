@@ -45,7 +45,7 @@ export default function RegisterPage() {
         setMessage(data?.error?.message || data?.message || "Registration failed");
         setMessageType("error");
       }
-    } catch {
+    } catch (_e) {
       setMessage("Server error");
       setMessageType("error");
     } finally {

@@ -56,7 +56,7 @@ export default function PedigreeHub() {
       setResults(data.dogs || []);
       setTotalPages(data.totalPages || 0);
       setTotal(data.total || 0);
-    } catch {
+    } catch (_e) {
       setResults([]);
     }
     setLoading(false);

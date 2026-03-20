@@ -33,7 +33,7 @@ print(json.dumps(rows))
     const { stdout } = await execFileAsync("python3", ["-c", script], { timeout: 10000 });
     const dogs = JSON.parse(stdout || "[]");
     return NextResponse.json({ dogs });
-  } catch {
+  } catch (_e) {
     return NextResponse.json({ dogs: [] });
   }
 }

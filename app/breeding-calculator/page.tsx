@@ -42,17 +42,18 @@ function getDogColor(name: string): string {
   const n = (name || "").toUpperCase();
   if (/\bGR\s*CH\b/.test(n)) return "#60a5fa";
   if (/(?:^|\s|\()CH\b/.test(n)) return "#fc8181";
+  if (/\bROM\b/.test(n)) return "#22d3ee";
+  if (/\bPOR\b/.test(n)) return "#a78bfa";
   const xw = n.match(/\b(\d+)X[WL]\b/);
   if (xw) {
     const num = parseInt(xw[1]);
-    if (num === 1) return "#2dd4bf";
-    if (num === 2) return "#fb923c";
-    if (num === 3) return "#d4a855";
-    if (num === 4) return "#f472b6";
     if (num >= 5) return "#c084fc";
+    if (num === 4) return "#f472b6";
+    if (num === 3) return "#d4a855";
+    if (num === 2) return "#fb923c";
+    if (num === 1) return "#2dd4bf";
   }
-  if (/\bROM\b/.test(n)) return "#22d3ee";
-  return "#e8e8e8";
+  return "#e2e8f0";
 }
 
 function riskColor(coi: number): string {
@@ -224,7 +225,7 @@ function DogSlot({
       const data = await res.json();
       setResults(data.dogs || []);
       setShowDrop(true);
-    } catch { setResults([]); }
+    } catch (_e) { setResults([]); }
     finally { setLoading(false); }
   }, []);
 
@@ -243,7 +244,7 @@ function DogSlot({
             setQuery(data.registered_name);
             setShowDrop(false);
           }
-        } catch {}
+        } catch (_e) {}
       })();
       return;
     }
@@ -524,7 +525,7 @@ export default function BreedingCalculatorPage() {
           genDepth: gen,
           timestamp: Date.now(),
         }));
-      } catch {}
+      } catch (_e) {}
     } catch (err) {
       console.error("Calculation error:", err);
     } finally {

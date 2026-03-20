@@ -13,6 +13,24 @@ interface SimulatedPuppy { id: number; phenotype: string; sex: string; carriers:
 interface SearchDog { dog_id: number; registered_name: string; photo_url: string | null; sex: string; color: string | null; }
 interface HistoryEntry { share_id: string; sire_name: string | null; dam_name: string | null; sire_dog_id: number | null; dam_dog_id: number | null; created_at: string; }
 
+function getDogColor(name: string): string {
+  const n = (name || "").toUpperCase();
+  if (/\bGR\s*CH\b/.test(n)) return "#60a5fa";
+  if (/(?:^|\s|\()CH\b/.test(n)) return "#fc8181";
+  if (/\bROM\b/.test(n)) return "#22d3ee";
+  if (/\bPOR\b/.test(n)) return "#a78bfa";
+  const xw = n.match(/\b(\d+)X[WL]\b/);
+  if (xw) {
+    const num = parseInt(xw[1]);
+    if (num >= 5) return "#c084fc";
+    if (num === 4) return "#f472b6";
+    if (num === 3) return "#d4a855";
+    if (num === 2) return "#fb923c";
+    if (num === 1) return "#2dd4bf";
+  }
+  return "#e2e8f0";
+}
+
 const DEFAULT_GENO: Genotype = { K: "ky/ky", A: "Ay/Ay", B: "BB", D: "DD", E: "EE", S: "S/S" };
 
 const K_OPTIONS = ["KB/KB", "KB/kbr", "KB/ky", "kbr/kbr", "kbr/ky", "ky/ky"];
@@ -446,7 +464,7 @@ function DogSearch({ label, onSelect }: { label: string; onSelect: (dog: SearchD
                 <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-[10px]"
                   style={{ background: "#0b1120", border: "1px solid rgba(30,64,120,0.5)" }}>🐕</div>
               )}
-              <span className="truncate" style={{ color: "#e2e8f0", fontFamily: "var(--font-table)" }}>{d.registered_name}</span>
+              <span className="truncate font-semibold" style={{ color: getDogColor(d.registered_name), fontFamily: "var(--font-table)" }}>{d.registered_name}</span>
               {d.color && <span className="ml-auto text-[10px] opacity-50">{d.color}</span>}
             </button>
           ))}
@@ -490,7 +508,7 @@ export default function PuppyPredictorPage() {
           .then(d => { if (d.history) setHistory(d.history); })
           .catch(() => {});
       }
-    } catch {}
+    } catch (_e) {}
   }, []);
 
   const handlePredict = () => {
@@ -552,7 +570,7 @@ export default function PuppyPredictorPage() {
             .catch(() => {});
         }
       }
-    } catch {}
+    } catch (_e) {}
     setSaving(false);
   };
 
@@ -732,7 +750,7 @@ export default function PuppyPredictorPage() {
             border: "1.5px solid rgba(96,165,250,0.3)", boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
           }}>
             <div className="flex items-center gap-2">
-              <span className="text-lg">♂</span>
+              <span className="text-lg" style={{ color: "#60a5fa" }}>♂</span>
               <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1.3rem", color: "#60a5fa", letterSpacing: "0.02em" }}>
                 SIRE {sireName && <span className="text-sm" style={{ color: "#94a3b8" }}>— {sireName}</span>}
               </h2>
@@ -790,7 +808,7 @@ export default function PuppyPredictorPage() {
             border: "1.5px solid rgba(244,114,182,0.3)", boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
           }}>
             <div className="flex items-center gap-2">
-              <span className="text-lg">♀</span>
+              <span className="text-lg" style={{ color: "#f472b6" }}>♀</span>
               <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1.3rem", color: "#f472b6", letterSpacing: "0.02em" }}>
                 DAM {damName && <span className="text-sm" style={{ color: "#94a3b8" }}>— {damName}</span>}
               </h2>

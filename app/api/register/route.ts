@@ -77,7 +77,7 @@ print(json.dumps({"success": True, "message": "Account created successfully"}))
     }
 
     return NextResponse.json(data, { status: 201 });
-  } catch {
+  } catch (_e) {
     return NextResponse.json({ success: false, message: "Registration failed" }, { status: 500 });
   }
 }

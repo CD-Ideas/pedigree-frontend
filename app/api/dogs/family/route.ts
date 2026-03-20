@@ -41,7 +41,7 @@ print(json.dumps({"dog": dog, "sire": sire, "dam": dam}))
     const { stdout } = await execFileAsync("python3", ["-c", script], { timeout: 10000 });
     const data = JSON.parse(stdout || '{"dog":null,"sire":null,"dam":null}');
     return NextResponse.json(data);
-  } catch {
+  } catch (_e) {
     return NextResponse.json({ dog: null, sire: null, dam: null });
   }
 }

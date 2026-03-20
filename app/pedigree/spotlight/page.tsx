@@ -91,7 +91,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
       matches.sort((a, b) => b.count - a.count);
 
       setLineage({ dog: { id: dogId, name: dogName, photo_url: dogPhoto }, legendaryMatches: matches });
-    } catch {
+    } catch (_e) {
       setLineage(null);
     }
     setLineageLoading(false);
@@ -124,27 +124,27 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
         const data = await res.json();
         setResults(data.dogs || []);
         setOpen(true);
-      } catch { setResults([]); }
+      } catch (_e) { setResults([]); }
     }, 300);
   };
 
   // Title-based dog color (matches PedStats)
   function getDogColor(name: string): string {
     const n = (name || "").toUpperCase();
-    if (/\bGR\s*CH\b/.test(n)) return "#60a5fa";       // blue
-    if (/(?:^|\s|\()CH\b/.test(n)) return "#fc8181";    // red
+    if (/\bGR\s*CH\b/.test(n)) return "#60a5fa";
+    if (/(?:^|\s|\()CH\b/.test(n)) return "#fc8181";
+    if (/\bROM\b/.test(n)) return "#22d3ee";
+    if (/\bPOR\b/.test(n)) return "#a78bfa";
     const xw = n.match(/\b(\d+)X[WL]\b/);
     if (xw) {
       const num = parseInt(xw[1]);
-      if (num === 1) return "#2dd4bf";   // teal
-      if (num === 2) return "#fb923c";   // orange
-      if (num === 3) return "#d4a855";   // gold
-      if (num === 4) return "#f472b6";   // pink
-      if (num >= 5) return "#c084fc";    // purple
+      if (num >= 5) return "#c084fc";
+      if (num === 4) return "#f472b6";
+      if (num === 3) return "#d4a855";
+      if (num === 2) return "#fb923c";
+      if (num === 1) return "#2dd4bf";
     }
-    if (/\bROM\b/.test(n)) return "#22d3ee";            // cyan
-    if (/\bPOR\b/.test(n)) return "#a78bfa";            // violet
-    return "#e8e8e8";                                    // white for no title
+    return "#e2e8f0";
   }
 
   // Build pie chart for lineage
@@ -300,10 +300,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
         <div className="absolute left-0 right-0 top-full mt-1 rounded-xl overflow-hidden z-50 max-h-80 overflow-y-auto"
              style={{ background: "var(--bg-elevated)", border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}>
           {results.map((d) => {
-            const nameUpper = (d.registered_name || "").toUpperCase();
-            const isGrCh = /\bGR\s*CH\b/.test(nameUpper);
-            const isCh = !isGrCh && /\bCH\b/.test(nameUpper);
-            const color = isGrCh ? "#60a5fa" : isCh ? "#fc8181" : "var(--text-primary)";
+            const color = getDogColor(d.registered_name);
             return (
               <button key={d.dog_id} onClick={() => { fetchLineage(d.dog_id, d.registered_name, d.photo_url); setQuery(d.registered_name); setResults([]); setOpen(false); }}
                  className="w-full flex items-center gap-3 px-4 py-2.5 transition-all hover:bg-white/5 text-left"
@@ -382,7 +379,7 @@ export default function SpotlightPage() {
       setTarget(data.target || null);
       setResults(data.results || []);
       setTotal(data.total || 0);
-    } catch {
+    } catch (_e) {
       setResults([]);
       setTotal(0);
     }

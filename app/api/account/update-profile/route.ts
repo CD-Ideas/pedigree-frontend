@@ -38,7 +38,7 @@ print(json.dumps({"success": True, "username": data["username"], "email": data["
     const data = JSON.parse(stdout);
     if (data.error) return NextResponse.json(data, { status: 400 });
     return NextResponse.json(data);
-  } catch {
+  } catch (_e) {
     return NextResponse.json({ error: "Failed to update profile" }, { status: 500 });
   }
 }

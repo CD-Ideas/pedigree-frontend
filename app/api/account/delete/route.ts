@@ -29,7 +29,7 @@ print(json.dumps({"success": deleted > 0, "message": "Account deleted" if delete
     const { stdout } = await execFileAsync("python3", ["-c", script], { timeout: 10000 });
     const data = JSON.parse(stdout);
     return NextResponse.json(data, { status: data.success ? 200 : 404 });
-  } catch {
+  } catch (_e) {
     return NextResponse.json({ message: "Failed to delete account" }, { status: 500 });
   }
 }

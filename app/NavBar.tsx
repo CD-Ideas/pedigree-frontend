@@ -147,7 +147,7 @@ export default function NavBar() {
         if (u?.username) setUserName(u.username);
         else if (u?.email) setUserName(u.email);
         if (u?.profile_picture) setUserPicture(u.profile_picture);
-      } catch {}
+      } catch (_e) {}
     } else {
       setLoggedIn(false);
       setUserName("");
