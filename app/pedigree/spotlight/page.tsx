@@ -239,7 +239,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
             onChange={(e) => search(e.target.value)}
             onFocus={() => { if (results.length > 0) setOpen(true); }}
             className="flex-1 bg-transparent text-sm outline-none"
-            style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)" }}
+            style={{ color: query && getDogColor(query) !== "#ffffff" ? getDogColor(query) : "var(--text-primary)", fontFamily: "var(--font-table)" }}
           />
           {(query || lineage) && (
             <button onClick={() => { setQuery(""); setResults([]); setOpen(false); setLineage(null); }} className="text-xs opacity-50 hover:opacity-100">✕</button>
@@ -260,7 +260,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
             <div className="flex items-center gap-2 mb-2 pt-2" style={{ borderTop: "1px solid var(--border)" }}>
               <span className="text-xs">🧬</span>
               <span className="text-xs font-semibold flex-1" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
-                Lineage of <a href={`/pedigree/${lineage.dog.id}`} className="underline hover:brightness-125">{lineage.dog.name}</a>
+                Lineage of <a href={`/pedigree/${lineage.dog.id}`} className="underline hover:brightness-125" style={{ color: getDogColor(lineage.dog.name) }}>{lineage.dog.name}</a>
               </span>
               <div className="flex items-center gap-1">
                 {[6, 8, 10, 12].map((g) => (
@@ -270,7 +270,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
                     style={{
                       fontFamily: "var(--font-table)",
                       background: genDepth === g ? "var(--accent-gold)" : "rgba(255,255,255,0.06)",
-                      color: genDepth === g ? "#000" : "var(--text-muted)",
+                      color: genDepth === g ? "#000" : "var(--accent-gold)",
                       border: `1px solid ${genDepth === g ? "var(--accent-gold)" : "rgba(255,255,255,0.1)"}`,
                     }}>
                     {g}G
