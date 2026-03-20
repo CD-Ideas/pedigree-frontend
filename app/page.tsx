@@ -403,7 +403,7 @@ export default function Home() {
                 { icon: "📋", title: "Dog Registry", desc: "Detailed profiles with titles, weights & records", color: "#3b82f6", glow: "59,130,246" },
                 { icon: "🔗", title: "Easy Sharing", desc: "Share via WhatsApp, Telegram with rich previews", color: "#a855f7", glow: "168,85,247" },
                 { icon: "🏆", title: "Title Tracking", desc: "CH, GR CH, ROM tracking across generations", color: "#d4a855", glow: "212,168,85" },
-                { icon: "🧬", title: "Puppy Predictor", desc: "Input mom + dad, instantly predict litter bloodline percentages", color: "#ef4444", glow: "239,68,68" },
+                { icon: "🧬", title: "Puppy Predictor", desc: "Input sire + dam genotypes, predict litter coat colors & probabilities", color: "#ef4444", glow: "239,68,68", redirect: "/puppy-predictor" },
                 { icon: "🔍", title: "Legend Tracker", desc: "Search any famous dog, find every descendant sorted by %", color: "#06b6d4", glow: "6,182,212" },
                 { icon: "👑", title: "Dog of the Month", desc: "Monthly photo contest with community voting & prizes", color: "#f97316", glow: "249,115,22" },
                 { icon: "🔦", title: "Lineage Spotlight", desc: "Pick a legend, find every descendant ranked by blood %", color: "#1d8cf8", glow: "29,140,248", redirect: "/pedigree/spotlight" },
