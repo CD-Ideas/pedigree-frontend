@@ -30,7 +30,7 @@ export async function GET(req: NextRequest) {
     }
 
     const data = await queryDb(`
-import sqlite3, json, math
+import sqlite3, json, math, re
 
 DB = "${DB_PATH}"
 TARGET_ID = ${dogId}
@@ -53,89 +53,47 @@ if not target_row:
 
 target = {"id": target_row["dog_id"], "name": target_row["registered_name"], "photo_url": target_row["photo_url"]}
 
-# ─── Step 1: Find all dogs that have TARGET_ID as an ancestor ───
-# Use pedigree_tree: find all dog_ids where ancestor_id = TARGET_ID
+# Single optimized query: join pedigree_tree with dogs, filter by year in SQL
 cur.execute("""
-    SELECT DISTINCT pt.dog_id, pt.generation, pt.position
+    SELECT d.dog_id, d.registered_name, d.photo_url, d.sex, d.birthdate,
+           d.owner, d.breeder, d.registration_number, d.css_class,
+           d.view_count, d.offspring_count, d.posted_date,
+           pt.generation, pt.position
     FROM pedigree_tree pt
+    JOIN dogs d ON d.dog_id = pt.dog_id
     WHERE pt.ancestor_id = ?
-""", (TARGET_ID,))
-descendants_raw = cur.fetchall()
+      AND (d.birthdate IS NULL OR d.birthdate = ''
+           OR (CAST(SUBSTR(d.birthdate, 1, 4) AS INTEGER) >= ?
+               AND CAST(SUBSTR(d.birthdate, 1, 4) AS INTEGER) <= ?))
+""", (TARGET_ID, FROM_YEAR, TO_YEAR))
 
-# Build a dict: dog_id -> list of (generation, position) appearances
+# Build desc_map and dog details in one pass
 desc_map = {}
-for r in descendants_raw:
+dog_details = {}
+for r in cur.fetchall():
     did = r["dog_id"]
     if did not in desc_map:
         desc_map[did] = []
+        dog_details[did] = dict(r)
     desc_map[did].append({"gen": r["generation"], "pos": r["position"]})
+
+conn.close()
 
 if not desc_map:
     print(json.dumps({"target": target, "results": [], "total": 0}))
-    conn.close()
     raise SystemExit(0)
 
-# ─── Step 2: Get dog details for all descendants, filter by year ───
-dog_ids = list(desc_map.keys())
-
-# Process in batches of 500
-results = []
-batch_size = 500
-for i in range(0, len(dog_ids), batch_size):
-    batch = dog_ids[i:i+batch_size]
-    placeholders = ",".join("?" * len(batch))
-    cur.execute(f"""
-        SELECT dog_id, registered_name, photo_url, sex, birthdate, owner, breeder,
-               registration_number, css_class, view_count, offspring_count,
-               sire_id, dam_id, posted_date
-        FROM dogs
-        WHERE dog_id IN ({placeholders})
-    """, batch)
-    for row in cur.fetchall():
-        d = dict(row)
-        # Filter by birthdate year
-        bd = d.get("birthdate") or ""
-        year = None
-        if bd and len(bd) >= 4:
-            try:
-                year = int(bd[:4])
-            except:
-                pass
-        if year and (year < FROM_YEAR or year > TO_YEAR):
-            continue
-        results.append(d)
-
-# ─── Step 3: Calculate COI-like score for each descendant ───
-# "Tightest" = appears most times as ancestor (more paths = tighter breeding)
-# Also factor in how close (lower generation = closer)
-# Wright's COI approximation: sum of (0.5)^(n+1) for each path
-# where n = generation of the common ancestor appearance
-
+# Calculate scores
 scored = []
-for d in results:
-    did = d["dog_id"]
-    appearances = desc_map.get(did, [])
-
-    # Number of times target appears in this dog's pedigree
+for did, appearances in desc_map.items():
+    d = dog_details[did]
     num_paths = len(appearances)
-
-    # Closest generation (minimum)
     min_gen = min(a["gen"] for a in appearances)
-
-    # COI contribution from this ancestor
-    # Wright's formula: F = sum( (1/2)^(n_s + n_d + 1) * (1 + F_a) )
-    # Simplified: each appearance at gen g contributes (0.5)^(g+1)
     coi = sum(math.pow(0.5, a["gen"] + 1) for a in appearances)
-
-    # Blood percentage: each appearance at gen g contributes (1/2^g) * 100%
-    # e.g. gen 1 = 50%, gen 2 = 25%, gen 3 = 12.5%
-    # If the target appears multiple times, sum them (can exceed 50% for tight breeding)
     blood_pct = sum(math.pow(0.5, a["gen"]) * 100 for a in appearances)
 
-    # Extract titles
     name = (d.get("registered_name") or "").upper()
     titles = []
-    import re
     if re.search(r'\\bGR\\s*CH\\b', name): titles.append("GR CH")
     if re.search(r'(?:^|\\s|\\()CH\\b', name): titles.append("CH")
     if re.search(r'\\bROM\\b', name): titles.append("ROM")
@@ -145,12 +103,10 @@ for d in results:
     xl = re.search(r'(\\d+)XL', name)
     if xl: titles.append(f"{xl.group(1)}XL")
 
-    # Build lineage path description
     path_desc = []
-    for a in sorted(appearances, key=lambda x: x["gen"]):
+    for a in sorted(appearances, key=lambda x: x["gen"])[:5]:
         g = a["gen"]
         pos = a["pos"]
-        # Convert position to readable path
         parts = pos.replace(f"G{g}_", "").split("_")
         readable = []
         for p in parts:
@@ -159,22 +115,17 @@ for d in results:
             else: readable.append(p)
         path_desc.append({"gen": g, "path": " > ".join(readable) if readable else pos})
 
-    # Generational label
-    if min_gen == 1:
-        gen_label = "Son/Daughter"
-    elif min_gen == 2:
-        gen_label = "Grandchild"
-    elif min_gen == 3:
-        gen_label = "Great-grandchild"
-    else:
-        gen_label = f"{min_gen-2}x great-grandchild"
+    if min_gen == 1: gen_label = "Son/Daughter"
+    elif min_gen == 2: gen_label = "Grandchild"
+    elif min_gen == 3: gen_label = "Great-grandchild"
+    else: gen_label = f"{min_gen-2}x great-grandchild"
 
     photo = d.get("photo_url")
     if photo and not photo.startswith("http"):
         photo = "https://www.apbt.online-pedigrees.com/" + photo
 
     scored.append({
-        "id": d["dog_id"],
+        "id": did,
         "name": d["registered_name"],
         "photo_url": photo,
         "sex": d.get("sex"),
@@ -192,10 +143,9 @@ for d in results:
         "blood_pct": round(blood_pct, 2),
         "titles": titles,
         "gen_label": gen_label,
-        "lineage_paths": path_desc[:5],
+        "lineage_paths": path_desc,
     })
 
-# ─── Step 4: Sort ───
 if SORT == "closest":
     scored.sort(key=lambda x: (-x["coi"], x["min_gen"], -x["num_paths"]))
 elif SORT == "titles":
@@ -208,7 +158,6 @@ elif SORT == "recent":
 total = len(scored)
 scored = scored[:LIMIT]
 
-conn.close()
 print(json.dumps({"target": target, "results": scored, "total": total}, default=str))
 `);
 

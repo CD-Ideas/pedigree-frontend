@@ -435,8 +435,8 @@ export default function SpotlightPage() {
               <button onClick={() => setDropdownOpen(!dropdownOpen)}
                       className="w-full text-left px-3 py-2 rounded-lg text-xs font-semibold flex items-center justify-between transition-all"
                       style={{ background: "var(--bg-elevated)", border: dropdownOpen ? "1px solid var(--accent-gold)" : "1px solid var(--border)",
-                               fontFamily: "var(--font-table)", color: "var(--text-primary)" }}>
-                <span className="truncate">{selectedDogName}</span>
+                               fontFamily: "var(--font-table)" }}>
+                <span className="truncate" style={{ color: getDogColor(selectedDogName) }}>{selectedDogName}</span>
                 <svg className={`w-4 h-4 transition-transform ${dropdownOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
@@ -602,7 +602,7 @@ export default function SpotlightPage() {
                        alt="" className="w-8 h-8 rounded-full object-cover" style={{ border: "1px solid var(--accent-gold)" }} />
                 )}
                 <div>
-                  <h2 className="text-sm font-bold" style={{ fontFamily: "var(--font-table)", color: "var(--accent-gold)" }}>{target?.name}</h2>
+                  <h2 className="text-sm font-bold" style={{ fontFamily: "var(--font-table)", color: getDogColor(target?.name || "") }}>{target?.name}</h2>
                   <p className="text-[10px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
                     {total.toLocaleString()} descendants found · Top {results.length} shown
                   </p>
