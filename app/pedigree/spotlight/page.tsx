@@ -405,27 +405,6 @@ export default function SpotlightPage() {
       `}</style>
       <div className="ambient-bg" />
 
-      {/* ── Nav ── */}
-      <nav className="sticky top-0 z-50"
-           style={{ background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)", backdropFilter: "blur(20px)", borderBottom: "1.5px solid rgba(30,64,120,0.8)" }}>
-        <div className="max-w-[1600px] mx-auto px-6 flex items-center justify-between h-14">
-        <Link href="/" className="flex items-center gap-3">
-          <img src={LOGO} alt="Logo" className="w-8 h-8 rounded-lg" />
-          <span className="font-bold" style={{
-            fontFamily: "var(--font-display)", fontSize: "1.25rem", fontWeight: 700, letterSpacing: "0.02em",
-            background: "linear-gradient(135deg, #e8c86e, #d4a855, #b8860b)",
-            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
-          }}>Pedigree Platform</span>
-        </Link>
-        <div className="flex items-center gap-3">
-          <Link href="/login" className="text-xs px-3 py-1.5 rounded-lg font-semibold transition-all hover:scale-105"
-                style={{ background: "linear-gradient(135deg, var(--accent-red), #991b1b)", color: "#fff", fontFamily: "var(--font-table)" }}>
-            Sign In
-          </Link>
-        </div>
-        </div>
-      </nav>
-
       <main className="max-w-7xl mx-auto px-4 md:px-5 py-5">
 
         {/* ── Back to Home ── */}

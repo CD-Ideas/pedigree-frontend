@@ -6,6 +6,84 @@ import { useEffect, useState } from "react";
 
 const LOGO = "https://i.imgur.com/cAvQemZ.png";
 
+function getDogSearchColor(name: string): string {
+  const n = (name || "").toUpperCase();
+  if (/\bGR\s*CH\b/.test(n)) return "#60a5fa";
+  if (/(?:^|\s|\()CH\b/.test(n)) return "#fc8181";
+  if (/\bROM\b/.test(n)) return "#22d3ee";
+  if (/\bPOR\b/.test(n)) return "#a78bfa";
+  const xw = n.match(/\b(\d+)X[WL]\b/);
+  if (xw) {
+    const num = parseInt(xw[1]);
+    if (num >= 5) return "#c084fc";
+    if (num === 4) return "#f472b6";
+    if (num === 3) return "#d4a855";
+    if (num === 2) return "#fb923c";
+    if (num === 1) return "#2dd4bf";
+  }
+  return "#e2e8f0";
+}
+
+function NavSearch() {
+  const [q, setQ] = useState("");
+  const [results, setResults] = useState<{ dog_id: number; registered_name: string }[]>([]);
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    if (q.length < 2) { setResults([]); return; }
+    const t = setTimeout(() => {
+      fetch(`/api/dogs/search?q=${encodeURIComponent(q)}&limit=8`)
+        .then((r) => r.json())
+        .then((d) => { setResults(d); setShow(true); })
+        .catch(() => {});
+    }, 300);
+    return () => clearTimeout(t);
+  }, [q]);
+
+  return (
+    <div className="relative">
+      <input
+        type="text"
+        value={q}
+        onChange={(e) => setQ(e.target.value)}
+        onFocus={() => results.length > 0 && setShow(true)}
+        onBlur={() => setTimeout(() => setShow(false), 200)}
+        placeholder="Search dogs..."
+        className="w-full rounded-lg px-3 py-1.5 text-sm outline-none"
+        style={{
+          background: "var(--bg-elevated, #151d2e)",
+          border: "1px solid rgba(30,64,120,0.5)",
+          color: "var(--text-primary, #e2e8f0)",
+          fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+        }}
+      />
+      {show && results.length > 0 && (
+        <div
+          className="absolute top-full mt-1 left-0 right-0 rounded-lg overflow-hidden z-50"
+          style={{
+            background: "var(--bg-elevated, #151d2e)",
+            border: "1px solid rgba(30,64,120,0.5)",
+            maxHeight: 300,
+            overflowY: "auto",
+            boxShadow: "0 12px 40px rgba(0,0,0,0.5)",
+          }}
+        >
+          {results.map((r) => (
+            <Link
+              key={r.dog_id}
+              href={`/pedigree/${r.dog_id}`}
+              className="block px-3 py-2 text-sm hover:bg-white/5 transition-colors"
+              style={{ color: getDogSearchColor(r.registered_name), fontFamily: "var(--font-table)" }}
+            >
+              {r.registered_name}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function NavBar() {
   const pathname = usePathname();
   const router = useRouter();
@@ -27,8 +105,9 @@ export default function NavBar() {
     }
   }, [pathname]); // re-check on every navigation
 
-  // Don't show navbar on landing, login, register, or pedigree pages (pedigree has its own header)
-  if (pathname === "/" || pathname === "/login" || pathname === "/register" || pathname.startsWith("/pedigree") || pathname.startsWith("/breeding-calculator") || pathname.startsWith("/dashboard") || pathname === "/community") return null;
+  // Don't show navbar on landing, login, register, or pedigree/[id] pages (they have their own nav)
+  if (pathname === "/" || pathname === "/login" || pathname === "/register") return null;
+  if (pathname.startsWith("/pedigree/") && !pathname.startsWith("/pedigree/custom/") && pathname !== "/pedigree/spotlight") return null;
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -68,6 +147,11 @@ export default function NavBar() {
             Pedigree Platform
           </span>
         </Link>
+        {pathname.startsWith("/pedigree/") && !pathname.startsWith("/pedigree/custom/") && pathname !== "/pedigree/spotlight" && (
+          <div className="flex-1 max-w-md mx-4">
+            <NavSearch />
+          </div>
+        )}
         <div className="flex items-center gap-1">
           {loggedIn && links.map((link) => {
             const isActive =

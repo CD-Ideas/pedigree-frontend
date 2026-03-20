@@ -558,19 +558,6 @@ export default function BreedingCalculatorPage() {
       `}</style>
       <div className="ambient-bg" />
 
-      {/* Nav — matches spotlight */}
-      <nav className="sticky top-0 z-50 px-4 md:px-6 py-3 flex items-center justify-between"
-           style={{ background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)", borderBottom: "1.5px solid rgba(30,64,120,0.8)", backdropFilter: "blur(20px)" }}>
-        <a className="flex items-center gap-3" href="/">
-          <img src="https://i.imgur.com/cAvQemZ.png" alt="Logo" className="w-7 h-7 rounded" />
-          <span style={{ fontFamily: "var(--font-display)", fontSize: "1.25rem", color: "var(--accent-gold)" }}>Pedigree Platform</span>
-        </a>
-        <a href="/login" className="px-4 py-1.5 rounded-lg text-sm font-medium"
-           style={{ background: "linear-gradient(135deg, #dc2626, #7c3aed)", color: "#fff" }}>
-          Sign In
-        </a>
-      </nav>
-
       <main className="max-w-7xl mx-auto px-4 md:px-5 py-5">
 
         {/* Back to Home */}

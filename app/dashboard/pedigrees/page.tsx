@@ -165,32 +165,6 @@ export default function MyPedigreesPage() {
 
   return (
     <div className="min-h-screen" style={{ background: "var(--bg-deep, #0b1120)" }}>
-      {/* Nav */}
-      <nav className="sticky top-0 z-50 px-4 md:px-6 py-3 flex items-center justify-between"
-        style={{ background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)", borderBottom: "1.5px solid rgba(30,64,120,0.8)" }}>
-        <Link href="/" className="flex items-center gap-3">
-          <img src={LOGO} alt="Logo" className="w-8 h-8 rounded-lg" />
-          <span style={{
-            fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1.25rem",
-            background: "linear-gradient(135deg, #e8c86e, #d4a855, #b8860b)",
-            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
-          }}>
-            Pedigree Platform
-          </span>
-        </Link>
-        <div className="flex items-center gap-3">
-          <Link href="/pedigree-lab" className="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all hover:scale-105"
-            style={{ background: "rgba(212,168,85,0.15)", color: "#d4a855", border: "1px solid rgba(212,168,85,0.3)", fontFamily: "var(--font-table)" }}>
-            + New Pedigree
-          </Link>
-          {user && (
-            <span className="text-xs font-semibold" style={{ color: "var(--accent-gold, #d4a855)", fontFamily: "var(--font-table)" }}>
-              {user.username}
-            </span>
-          )}
-        </div>
-      </nav>
-
       <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-6 space-y-6">
         {/* Header */}
         <div>

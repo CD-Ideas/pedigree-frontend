@@ -473,26 +473,6 @@ export default function PublishedPedigreePage() {
         .glow-teal:hover { border-color: #2dd4bf !important; }
       `}</style>
 
-      {/* ─── Top Nav ─── */}
-      <nav className="sticky top-0 z-50 px-4 md:px-6 py-3 flex items-center justify-between"
-        style={{ background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)", backdropFilter: "blur(20px)", borderBottom: "1.5px solid rgba(30,64,120,0.8)" }}>
-        <Link href="/" className="flex items-center gap-3">
-          <img src={LOGO} alt="Logo" className="w-8 h-8 rounded-lg" />
-          <span style={{
-            fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1.25rem",
-            background: "linear-gradient(135deg, #e8c86e, #d4a855, #b8860b)",
-            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
-            letterSpacing: "0.02em",
-          }}>
-            Pedigree Platform
-          </span>
-        </Link>
-        <div className="flex-1 max-w-md mx-4">
-          <NavSearch />
-        </div>
-        <NavAuthButton />
-      </nav>
-
       <div className="max-w-[1600px] mx-auto px-4 md:px-6 py-4 space-y-3">
 
         {/* ─── Dog Name Header ─── */}
