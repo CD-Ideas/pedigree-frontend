@@ -97,60 +97,139 @@ function formatDate(iso: string): string {
   }
 }
 
+/* ─── Share Buttons ─── */
+function ShareButton({ dogName }: { dogName: string }) {
+  const [copied, setCopied] = useState(false);
+  const share = async () => {
+    const url = window.location.href;
+    if (navigator.share) {
+      try { await navigator.share({ title: `${dogName} - Pedigree Platform`, url }); } catch {}
+    } else {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+  return (
+    <button onClick={share}
+      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all hover:scale-105"
+      style={{
+        background: copied ? "rgba(34,197,94,0.15)" : "rgba(212,168,85,0.1)",
+        color: copied ? "var(--accent-green)" : "var(--accent-gold)",
+        border: `1px solid ${copied ? "rgba(34,197,94,0.3)" : "rgba(212,168,85,0.2)"}`,
+      }}>
+      {copied ? "✓ Copied!" : "🔗 Share"}
+    </button>
+  );
+}
+
+function TelegramButton({ dogName }: { dogName: string }) {
+  const handleClick = () => {
+    const url = window.location.href;
+    window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}`, "_blank");
+  };
+  return (
+    <button onClick={handleClick}
+      className="inline-flex items-center justify-center w-10 h-10 rounded-lg transition-all hover:scale-110"
+      style={{ background: "rgba(0,136,204,0.12)", border: "1px solid rgba(0,136,204,0.25)" }}
+      title="Share on Telegram">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="#0088cc">
+        <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+      </svg>
+    </button>
+  );
+}
+
+function WhatsAppButton({ dogName }: { dogName: string }) {
+  const handleClick = () => {
+    const url = window.location.href;
+    window.open(`https://wa.me/?text=${encodeURIComponent(url)}`, "_blank");
+  };
+  return (
+    <button onClick={handleClick}
+      className="inline-flex items-center justify-center w-10 h-10 rounded-lg transition-all hover:scale-110"
+      style={{ background: "rgba(37,211,102,0.12)", border: "1px solid rgba(37,211,102,0.25)" }}
+      title="Share on WhatsApp">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="#25d366">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+      </svg>
+    </button>
+  );
+}
+
 /* ─── Search Component ─── */
-function NavSearch() {
-  const [q, setQ] = useState("");
-  const [results, setResults] = useState<{ dog_id: number; registered_name: string }[]>([]);
-  const [show, setShow] = useState(false);
+function PedigreeSearch() {
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState<{ dog_id: number; registered_name: string; photo_url: string | null }[]>([]);
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const timer = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    if (q.length < 2) { setResults([]); return; }
-    const t = setTimeout(() => {
-      fetch(`/api/dogs/search?q=${encodeURIComponent(q)}&limit=8`)
-        .then((r) => r.json())
-        .then((d) => { setResults(d); setShow(true); })
-        .catch(() => {});
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const search = (q: string) => {
+    setQuery(q);
+    if (timer.current) clearTimeout(timer.current);
+    const urlMatch = q.match(/pedigreeplatform\.com\/(?:pedigree|dogs)\/(\d+)/);
+    if (urlMatch) {
+      window.location.href = `/pedigree/${urlMatch[1]}`;
+      return;
+    }
+    if (q.length < 2) { setResults([]); setOpen(false); return; }
+    timer.current = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/dogs/search?q=${encodeURIComponent(q)}&limit=10`);
+        const data = await res.json();
+        setResults(data.dogs || []);
+        setOpen(true);
+      } catch { setResults([]); }
     }, 300);
-    return () => clearTimeout(t);
-  }, [q]);
+  };
 
   return (
-    <div className="relative">
-      <input
-        type="text"
-        value={q}
-        onChange={(e) => setQ(e.target.value)}
-        onFocus={() => results.length > 0 && setShow(true)}
-        onBlur={() => setTimeout(() => setShow(false), 200)}
-        placeholder="Search dogs..."
-        className="w-full rounded-lg px-3 py-2 text-sm outline-none"
-        style={{
-          background: "var(--bg-elevated, #151d2e)",
-          border: "1px solid rgba(30,64,120,0.5)",
-          color: "var(--text-primary, #e2e8f0)",
-          fontFamily: "var(--font-table, Rajdhani, sans-serif)",
-        }}
-      />
-      {show && results.length > 0 && (
-        <div
-          className="absolute top-full mt-1 left-0 right-0 rounded-lg overflow-hidden z-50"
-          style={{
-            background: "var(--bg-elevated, #151d2e)",
-            border: "1px solid rgba(30,64,120,0.5)",
-            maxHeight: 300,
-            overflowY: "auto",
-          }}
-        >
-          {results.map((r) => (
-            <Link
-              key={r.dog_id}
-              href={`/pedigree/${r.dog_id}`}
-              className="block px-3 py-2 text-sm hover:bg-white/5 transition-colors"
-              style={{ color: getDogCardColor(r.registered_name), fontFamily: "var(--font-table)" }}
-            >
-              {r.registered_name}
-            </Link>
+    <div ref={ref} className="relative">
+      <div className="glow-gold rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)" }}>
+        <div className="px-4 py-2.5 flex items-center gap-3">
+          <span className="text-base">🔍</span>
+          <input type="text" placeholder="Search by dog name or paste a pedigree URL..."
+            value={query} onChange={(e) => search(e.target.value)}
+            onFocus={() => { if (results.length > 0) setOpen(true); }}
+            className="flex-1 bg-transparent text-sm outline-none"
+            style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)" }} />
+          {query && <button onClick={() => { setQuery(""); setResults([]); setOpen(false); }} className="text-xs opacity-50 hover:opacity-100">✕</button>}
+        </div>
+      </div>
+      {open && results.length > 0 && (
+        <div className="absolute left-0 right-0 top-full mt-1 rounded-xl overflow-hidden z-50 max-h-80 overflow-y-auto"
+             style={{ background: "var(--bg-elevated)", border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}>
+          {results.map((d) => (
+            <a key={d.dog_id} href={`/pedigree/${d.dog_id}`}
+               className="flex items-center gap-3 px-4 py-2.5 transition-all hover:bg-white/5"
+               style={{ borderBottom: "1px solid rgba(40,44,60,0.3)" }}>
+              {d.photo_url ? (
+                <img src={d.photo_url.startsWith("http") ? d.photo_url : `https://www.apbt.online-pedigrees.com/${d.photo_url}`}
+                     alt="" className="w-8 h-8 rounded-full object-cover flex-shrink-0" style={{ border: "1px solid var(--border)" }} />
+              ) : (
+                <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm"
+                     style={{ background: "var(--bg-deep)", border: "2px solid var(--border)" }}>🐕</div>
+              )}
+              <span className="text-sm font-semibold truncate" style={{ color: getDogCardColor(d.registered_name), fontFamily: "var(--font-table)" }}>
+                {d.registered_name}
+              </span>
+            </a>
           ))}
+        </div>
+      )}
+      {open && query.length >= 2 && results.length === 0 && (
+        <div className="absolute left-0 right-0 top-full mt-1 rounded-xl px-4 py-3 text-center text-xs z-50"
+             style={{ background: "var(--bg-elevated)", border: "1.5px solid rgba(30,64,120,0.8)", color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+          No dogs found for &quot;{query}&quot;
         </div>
       )}
     </div>
@@ -188,7 +267,7 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
       {/* Controls bar */}
       <div className="absolute top-1 right-2 z-10 flex items-center gap-2">
         <div className="flex items-center gap-0.5 rounded-md p-0.5" style={{ background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)", border: "1px solid rgba(30,64,120,0.8)" }}>
-          {[3, 4].map((g) => (
+          {[3, 4, 5].map((g) => (
             <button key={g} onClick={() => { setDisplayGens(g); setZoom(1); if (containerRef.current) containerRef.current.scrollLeft = 0; }}
               className="px-2 h-5 rounded flex items-center justify-center text-[10px] font-bold transition-all"
               style={{
@@ -474,6 +553,13 @@ export default function PublishedPedigreePage() {
       `}</style>
 
       <div className="max-w-[1600px] mx-auto px-4 md:px-6 py-4 space-y-3">
+        {/* Share toolbar + Search */}
+        <div className="flex items-center gap-2">
+          <div style={{ width: "320px" }}><PedigreeSearch /></div>
+          <ShareButton dogName={displayName} />
+          <TelegramButton dogName={displayName} />
+          <WhatsAppButton dogName={displayName} />
+        </div>
 
         {/* ─── Dog Name Header ─── */}
         <div className="rounded-lg px-4 py-2 relative"
@@ -481,10 +567,6 @@ export default function PublishedPedigreePage() {
           {titles.length > 0 && (
             <div className="h-0.5 -mx-4 -mt-2 mb-2 rounded-t-lg" style={{ background: "linear-gradient(90deg, var(--accent-red, #fc8181), var(--accent-gold, #d4a855), var(--accent-red, #fc8181))" }} />
           )}
-          <Link href="/" className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold hover:underline transition-colors flex items-center gap-1"
-            style={{ color: "var(--accent-gold, #d4a855)", fontFamily: "var(--font-table)" }}>
-            ← Back
-          </Link>
           <div className="text-center">
             <h1 style={{
               fontFamily: "var(--font-display)", fontWeight: 700,
@@ -573,6 +655,25 @@ export default function PublishedPedigreePage() {
           </div>
         </div>
 
+        {/* ─── Pedigree Notes ─── */}
+        {ped.pedigree_notes && (
+          <div className="glow-gold rounded-xl px-3 py-2" style={{
+            border: "1.5px solid rgba(30,64,120,0.8)",
+            boxShadow: "0 2px 20px rgba(0,0,0,0.25)",
+            background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+          }}>
+            <div className="flex items-center gap-2">
+              <div className="w-5 h-5 rounded flex items-center justify-center flex-shrink-0" style={{ background: "rgba(212,168,85,0.15)", border: "1px solid rgba(212,168,85,0.3)" }}>
+                <span className="text-[10px]">📝</span>
+              </div>
+              <span className="text-xs font-semibold flex-shrink-0" style={{ color: "#d4a855", fontFamily: "var(--font-table)" }}>Pedigree Notes:</span>
+              <p className="text-xs" style={{ color: "var(--text-primary, #e2e8f0)", fontFamily: "var(--font-table)", lineHeight: "1.4" }}>
+                {ped.pedigree_notes}
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* ─── Sire / Dam links ─── */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           <div className="glow-blue rounded-xl p-2.5"
@@ -611,6 +712,16 @@ export default function PublishedPedigreePage() {
                 <span className="text-sm">🌳</span>
               </div>
               <span className="text-sm font-semibold" style={{ color: "#d4a855", fontFamily: "var(--font-table)" }}>Pedigree</span>
+              {tree.length > 0 && (
+                <span className="text-[10px] px-2 py-0.5 rounded-full font-medium" style={{
+                  background: "rgba(212,168,85,0.15)",
+                  color: "var(--accent-gold)",
+                  fontFamily: "var(--font-mono)",
+                  border: "1px solid rgba(212,168,85,0.3)"
+                }}>
+                  {tree.length}
+                </span>
+              )}
             </div>
             <div className="flex items-center gap-3" style={{ fontFamily: "var(--font-mono)", fontSize: "10px", color: "#9a7020" }}>
               <span>👁 {((ped.view_count || 0) + 1).toLocaleString()} views</span>
@@ -620,25 +731,6 @@ export default function PublishedPedigreePage() {
             <PedigreeTreeView tree={tree} dogName={displayName} isMale={isMale} />
           </div>
         </div>
-
-        {/* ─── Pedigree Notes ─── */}
-        {ped.pedigree_notes && (
-          <div className="glow-gold rounded-xl p-4" style={{
-            border: "1.5px solid rgba(30,64,120,0.8)",
-            boxShadow: "0 2px 20px rgba(0,0,0,0.25)",
-            background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
-          }}>
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: "rgba(212,168,85,0.15)", border: "1px solid rgba(212,168,85,0.3)" }}>
-                <span className="text-sm">📝</span>
-              </div>
-              <span className="text-sm font-semibold" style={{ color: "#d4a855", fontFamily: "var(--font-table)" }}>Pedigree Notes</span>
-            </div>
-            <p className="text-sm leading-relaxed" style={{ color: "var(--text-primary, #e2e8f0)", fontFamily: "var(--font-table)" }}>
-              {ped.pedigree_notes}
-            </p>
-          </div>
-        )}
 
         {/* ─── Journal (Owner Only) ─── */}
         {isOwner && ped.journal_json && (() => {

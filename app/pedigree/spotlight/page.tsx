@@ -407,14 +407,6 @@ export default function SpotlightPage() {
 
       <main className="max-w-7xl mx-auto px-4 md:px-5 py-5">
 
-        {/* ── Back to Home ── */}
-        <div className="mb-4">
-          <Link href="/" className="text-sm font-semibold hover:underline transition-colors flex items-center gap-1"
-                style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
-            ← Back to Home
-          </Link>
-        </div>
-
         {/* ── Hero Header ── */}
         <div className="text-center mb-6">
           <div className="flex items-center justify-center gap-2 mb-2">

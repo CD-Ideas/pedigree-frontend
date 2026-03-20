@@ -1,12 +1,7 @@
-import Link from "next/link";
-
 export default function PrivacyPage() {
   return (
     <div className="min-h-screen px-4 py-20">
       <div className="max-w-3xl mx-auto">
-        <Link href="/" className="inline-block mb-6" style={{ fontFamily: "var(--font-table)", fontSize: "12px", color: "var(--accent-gold)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
-          &larr; Back to Home
-        </Link>
         <h1 style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "2rem" }} className="text-white mb-6">Privacy Policy</h1>
         <div style={{ fontFamily: "var(--font-table)", fontSize: "14px", color: "var(--text-secondary)", lineHeight: 1.8 }} className="space-y-5">
           <p><strong style={{ color: "#fff" }}>Last updated:</strong> March 14, 2026</p>

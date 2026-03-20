@@ -590,15 +590,7 @@ function PedigreeLabInner() {
       {/* HEADER                                                       */}
       {/* ============================================================ */}
       <header className="px-6 py-5 flex items-center justify-between" style={STEEL_FRAME}>
-        <div className="flex items-center gap-4">
-          <Link
-            href="/"
-            className="text-xs uppercase tracking-widest hover:text-white transition-colors"
-            style={{ color: "#7a8ba8", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
-          >
-            &larr; Back to Home
-          </Link>
-        </div>
+        <div className="flex items-center gap-4" />
         <h1
           className="text-2xl md:text-3xl font-black uppercase tracking-[0.15em]"
           style={{

@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 
 export default function ContactPage() {
@@ -9,9 +8,6 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen px-4 py-20">
       <div className="max-w-2xl mx-auto">
-        <Link href="/" className="inline-block mb-6" style={{ fontFamily: "var(--font-table)", fontSize: "12px", color: "var(--accent-gold)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
-          &larr; Back to Home
-        </Link>
         <h1 style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "2rem" }} className="text-white mb-2">Contact Us</h1>
         <p style={{ fontFamily: "var(--font-table)", fontSize: "13px", color: "var(--text-secondary)", marginBottom: "1.5rem" }}>
           Have a question, feedback, or need support? We&apos;d love to hear from you.

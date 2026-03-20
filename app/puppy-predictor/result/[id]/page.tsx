@@ -110,7 +110,6 @@ export default function PredictionResultPage() {
   if (error || !data) return (
     <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: "#080c14" }}>
       <p className="text-sm" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>{error || "Not found"}</p>
-      <Link href="/puppy-predictor" className="text-xs underline" style={{ color: "#60a5fa" }}>Back to Predictor</Link>
     </div>
   );
 
