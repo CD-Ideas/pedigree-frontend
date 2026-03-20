@@ -104,12 +104,13 @@ const SLOT_LABELS: Record<SlotKey, string> = {
 };
 
 const STEEL_FRAME: React.CSSProperties = {
-  border: "1.5px solid rgba(30,64,120,0.8)",
-  boxShadow: "0 2px 20px rgba(0,0,0,0.25)",
+  border: "1px solid rgba(45,75,130,0.5)",
+  boxShadow:
+    "0 4px 6px rgba(0,0,0,0.3), 0 10px 40px rgba(0,0,0,0.2), 0 0 15px rgba(212,168,85,0.06)",
 };
 
 const PANEL_BG =
-  "linear-gradient(180deg, #1a1a24 0%, #141418 100%)";
+  "linear-gradient(180deg, rgba(26,26,36,0.85) 0%, rgba(20,20,24,0.9) 100%)";
 
 /* ------------------------------------------------------------------ */
 /* Helpers                                                            */
@@ -253,13 +254,20 @@ function Card({
 }) {
   return (
     <div
-      className={`rounded-xl ${className}`}
+      className={`rounded-xl overflow-hidden ${className}`}
       style={{
         ...STEEL_FRAME,
         background: PANEL_BG,
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
         ...style,
       }}
     >
+      {/* Gradient accent line */}
+      <div style={{
+        height: "1px",
+        background: "linear-gradient(90deg, transparent 0%, rgba(212,168,85,0.4) 50%, transparent 100%)",
+      }} />
       {children}
     </div>
   );
@@ -579,6 +587,17 @@ function PedigreeLabInner() {
   /* RENDER                                                           */
   /* ================================================================ */
   return (
+    <>
+    <style>{`
+      @keyframes coiPulse {
+        0%, 100% { opacity: 1; transform: translateX(-50%) scale(1); }
+        50% { opacity: 0.9; transform: translateX(-50%) scale(1.03); }
+      }
+      @keyframes slotPulse {
+        0%, 100% { box-shadow: 0 0 10px rgba(30,64,120,0.08); }
+        50% { box-shadow: 0 0 18px rgba(30,64,120,0.15); }
+      }
+    `}</style>
     <div
       className="min-h-screen flex flex-col"
       style={{
@@ -621,7 +640,7 @@ function PedigreeLabInner() {
             <div className="p-4 pb-3">
               <p
                 className="text-[10px] uppercase tracking-widest font-semibold mb-3"
-                style={{ color: "var(--accent-gold, #d4a855)", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
+                style={{ color: "var(--accent-gold, #d4a855)", fontFamily: "var(--font-table, Rajdhani, sans-serif)", textShadow: "0 0 8px rgba(212,168,85,0.4)" }}
               >
                 Search Dogs
               </p>
@@ -637,13 +656,22 @@ function PedigreeLabInner() {
                   placeholder="Search by name..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full rounded-lg pl-9 pr-3 py-2 text-sm outline-none transition-all focus:ring-1"
+                  className="w-full rounded-lg pl-9 pr-3 py-2 text-sm outline-none focus:ring-1"
                   style={{
                     background: "var(--bg-deep, #0b1120)",
                     border: "1px solid rgba(30,64,120,0.5)",
                     color: "#e2e8f0",
                     fontFamily: "var(--font-table, Rajdhani, sans-serif)",
                     outline: "none",
+                    transition: "all 0.3s ease",
+                  }}
+                  onFocus={(e) => {
+                    e.currentTarget.style.borderColor = "rgba(212,168,85,0.5)";
+                    e.currentTarget.style.boxShadow = "0 0 12px rgba(212,168,85,0.15)";
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.style.borderColor = "rgba(30,64,120,0.5)";
+                    e.currentTarget.style.boxShadow = "none";
                   }}
                 />
               </div>
@@ -668,11 +696,12 @@ function PedigreeLabInner() {
                     key={dog.dog_id}
                     draggable
                     onDragStart={() => handleDragStart(dog)}
-                    className="rounded-lg p-2.5 cursor-grab active:cursor-grabbing transition-all hover:scale-[1.02]"
+                    className="rounded-lg p-2.5 cursor-grab active:cursor-grabbing hover:scale-[1.02]"
                     style={{
                       background: `linear-gradient(135deg, ${titleColor}15, ${titleColor}08, #0b1120)`,
                       border: `1px solid ${titleColor}33`,
                       boxShadow: `0 0 0 0 ${titleColor}00`,
+                      transition: "all 0.3s ease",
                     }}
                     onMouseEnter={(e) => {
                       (e.currentTarget as HTMLElement).style.boxShadow = `0 0 12px ${titleColor}40`;
@@ -940,7 +969,7 @@ function PedigreeLabInner() {
             </Card>
           ) : (
             /* ====== EDIT MODE: Drag & Drop Canvas ====== */
-            <Card className="h-full p-5 relative" style={{ minHeight: 560 }}>
+            <Card className="h-full p-5 relative" style={{ minHeight: 560, backgroundImage: "radial-gradient(circle, rgba(30,64,120,0.15) 1px, transparent 1px)", backgroundSize: "24px 24px" }}>
               {/* COI badge */}
               <div
                 className="absolute z-10 flex flex-col items-center"
@@ -951,6 +980,8 @@ function PedigreeLabInner() {
                   style={{
                     background: `${riskColor(coi)}18`,
                     border: `1.5px solid ${riskColor(coi)}55`,
+                    boxShadow: `0 0 20px ${riskColor(coi)}25, 0 0 40px ${riskColor(coi)}10`,
+                    animation: "coiPulse 3s ease-in-out infinite",
                   }}
                 >
                   <span
@@ -1000,8 +1031,8 @@ function PedigreeLabInner() {
 
                 {/* Lines: Subject -> Parents */}
                 <div className="flex flex-col justify-center" style={{ width: 40 }}>
-                  <div style={{ borderTop: "2px solid rgba(30,64,120,0.6)", width: "100%", marginBottom: 80 }} />
-                  <div style={{ borderTop: "2px solid rgba(30,64,120,0.6)", width: "100%", marginTop: 80 }} />
+                  <div style={{ borderTop: "2px solid rgba(30,64,120,0.5)", width: "100%", marginBottom: 80, boxShadow: "0 0 6px rgba(30,64,120,0.3)" }} />
+                  <div style={{ borderTop: "2px solid rgba(30,64,120,0.5)", width: "100%", marginTop: 80, boxShadow: "0 0 6px rgba(30,64,120,0.3)" }} />
                   {/* Vertical connector */}
                   <div
                     className="absolute"
@@ -1057,7 +1088,7 @@ function PedigreeLabInner() {
 
                 {/* Lines: Parents -> Grandparents */}
                 <div className="flex flex-col justify-center" style={{ width: 40 }}>
-                  <div style={{ borderTop: "2px solid rgba(30,64,120,0.4)", width: "100%" }} />
+                  <div style={{ borderTop: "2px solid rgba(30,64,120,0.4)", width: "100%", boxShadow: "0 0 6px rgba(30,64,120,0.2)" }} />
                 </div>
 
                 {/* Grandparents (right) */}
@@ -1148,7 +1179,7 @@ function PedigreeLabInner() {
               {/* Panel header */}
               <p
                 className="text-[10px] uppercase tracking-widest font-semibold"
-                style={{ color: "var(--accent-gold, #d4a855)", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
+                style={{ color: "var(--accent-gold, #d4a855)", fontFamily: "var(--font-table, Rajdhani, sans-serif)", textShadow: "0 0 8px rgba(212,168,85,0.4)" }}
               >
                 Details &amp; Actions
               </p>
@@ -1223,7 +1254,7 @@ function PedigreeLabInner() {
                     setPreviewMode(true);
                   }
                 }}
-                className="w-full rounded-lg py-2.5 text-xs font-bold uppercase tracking-widest transition-all hover:scale-[1.02]"
+                className="w-full rounded-lg py-2.5 text-xs font-bold uppercase tracking-widest hover:scale-[1.02]"
                 style={{
                   fontFamily: "var(--font-table, Rajdhani, sans-serif)",
                   background: previewMode
@@ -1231,6 +1262,15 @@ function PedigreeLabInner() {
                     : "var(--bg-elevated, #1c2740)",
                   color: previewMode ? "#0b1120" : "#d4a855",
                   border: `1.5px solid ${previewMode ? "#d4a855" : "rgba(30,64,120,0.6)"}`,
+                  transition: "all 0.3s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = previewMode
+                    ? "0 0 20px rgba(212,168,85,0.4), 0 4px 15px rgba(212,168,85,0.2)"
+                    : "0 0 15px rgba(212,168,85,0.2), 0 4px 10px rgba(0,0,0,0.3)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = "none";
                 }}
               >
                 {previewLoading ? "Loading..." : previewMode ? "\u2716 Exit Preview" : "\u25B6 Preview"}
@@ -1242,13 +1282,20 @@ function PedigreeLabInner() {
                   if (!editingId) setPublishForm(defaultPublishForm());
                   setShowPublishModal(true);
                 }}
-                className="w-full rounded-lg py-2.5 text-xs font-bold uppercase tracking-widest transition-all hover:scale-[1.02]"
+                className="w-full rounded-lg py-2.5 text-xs font-bold uppercase tracking-widest hover:scale-[1.02]"
                 style={{
                   fontFamily: "var(--font-table, Rajdhani, sans-serif)",
                   background: "linear-gradient(135deg, #d4a855 0%, #f5d994 50%, #d4a855 100%)",
                   color: "#0b1120",
                   border: "1.5px solid #d4a855",
                   boxShadow: "0 0 15px rgba(212,168,85,0.2)",
+                  transition: "all 0.3s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = "0 0 25px rgba(212,168,85,0.5), 0 4px 20px rgba(212,168,85,0.3)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = "0 0 15px rgba(212,168,85,0.2)";
                 }}
               >
                 {editingId ? "✎ Edit & Save" : "+ Create & Publish"}
@@ -2262,6 +2309,7 @@ function PedigreeLabInner() {
         </div>
       )}
     </div>
+    </>
   );
 }
 
@@ -2310,7 +2358,7 @@ function DropZone({
   if (dog) {
     return (
       <div
-        className={`rounded-xl cursor-pointer transition-all relative ${selected ? "ring-2" : ""}`}
+        className={`rounded-xl cursor-pointer relative ${selected ? "ring-2" : ""}`}
         style={{
           width: isSm ? 140 : 155,
           padding: isSm ? 8 : 12,
@@ -2324,8 +2372,9 @@ function DropZone({
             ? "0 0 20px rgba(212,168,85,0.25)"
             : selected
               ? "0 0 15px rgba(212,168,85,0.15)"
-              : `0 0 8px ${titleColor}15`,
+              : `0 0 12px ${titleColor}20, 0 4px 8px rgba(0,0,0,0.2)`,
           outline: "none",
+          transition: "all 0.3s ease",
         }}
         onClick={onSelect}
         onDragOver={(e) => {
@@ -2463,11 +2512,12 @@ function DropZone({
       style={{
         width: isSm ? 140 : 155,
         height: isSm ? 70 : 90,
-        background: dragOver ? "rgba(212,168,85,0.06)" : "transparent",
+        background: dragOver ? "rgba(212,168,85,0.06)" : "rgba(30,64,120,0.03)",
         border: dragOver
           ? "2px dashed #d4a855"
           : `2px dashed rgba(30,64,120,0.4)`,
-        boxShadow: dragOver ? "0 0 15px rgba(212,168,85,0.1)" : "none",
+        boxShadow: dragOver ? "0 0 20px rgba(212,168,85,0.2), 0 0 40px rgba(212,168,85,0.1)" : "0 0 10px rgba(30,64,120,0.08)",
+        animation: dragOver ? "none" : "slotPulse 4s ease-in-out infinite",
       }}
       onDragOver={(e) => {
         onDragOver(e);
