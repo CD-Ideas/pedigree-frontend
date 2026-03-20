@@ -14,7 +14,9 @@ interface MarketplaceAd {
   location: string;
   photos: string[];
   views: number;
-  is_verified: boolean;
+  is_verified: number;
+  is_paid: number;
+  verification_requested: number;
   created_at: string;
   expires_at: string;
   user_id: number;
@@ -82,6 +84,8 @@ export default function MarketplaceAdPage() {
   const [currentUserId, setCurrentUserId] = useState<number | null>(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [verifyRequesting, setVerifyRequesting] = useState(false);
+  const [verifyMsg, setVerifyMsg] = useState("");
 
   useEffect(() => {
     // Get current user from localStorage
@@ -555,6 +559,84 @@ export default function MarketplaceAdPage() {
                     </div>
                   )}
                 </div>
+              </div>
+            )}
+
+            {/* Verification Section */}
+            {isOwner && !ad.is_verified && (
+              <div
+                className="rounded-xl p-5"
+                style={{
+                  background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+                  border: ad.verification_requested
+                    ? "1.5px solid rgba(234,179,8,0.3)"
+                    : "1.5px solid rgba(30,64,120,0.3)",
+                  backdropFilter: "blur(12px)",
+                }}
+              >
+                <h3
+                  className="text-xs font-bold uppercase tracking-widest mb-2"
+                  style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}
+                >
+                  Verification
+                </h3>
+                {!!ad.verification_requested ? (
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg">⏳</span>
+                    <div>
+                      <p className="text-xs font-bold" style={{ color: "#eab308", fontFamily: "var(--font-table)" }}>
+                        Verification Pending
+                      </p>
+                      <p className="text-[10px]" style={{ color: "#5a6a82" }}>
+                        Our team is reviewing your listing. You&apos;ll receive an email when verified.
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <p className="text-[10px] mb-3" style={{ color: "#5a6a82" }}>
+                      Get a verified badge to build trust with buyers. Our team will review your listing.
+                    </p>
+                    <button
+                      onClick={async () => {
+                        setVerifyRequesting(true);
+                        setVerifyMsg("");
+                        try {
+                          const res = await fetch(`/api/marketplace/${ad.id}/request-verify`, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ userId: currentUserId }),
+                          });
+                          const data = await res.json();
+                          if (data.success) {
+                            setVerifyMsg("Verification requested!");
+                            setAd({ ...ad, verification_requested: 1 });
+                          } else {
+                            setVerifyMsg(data.error || "Failed");
+                          }
+                        } catch {
+                          setVerifyMsg("Failed to request");
+                        }
+                        setVerifyRequesting(false);
+                      }}
+                      disabled={verifyRequesting}
+                      className="w-full rounded-lg px-4 py-2.5 text-xs font-bold uppercase tracking-wider transition-all hover:scale-[1.02] disabled:opacity-50"
+                      style={{
+                        background: "rgba(34,197,94,0.12)",
+                        color: "#22c55e",
+                        border: "1.5px solid rgba(34,197,94,0.3)",
+                        fontFamily: "var(--font-table)",
+                      }}
+                    >
+                      {verifyRequesting ? "Requesting..." : "🛡 Request Free Verification"}
+                    </button>
+                    {verifyMsg && (
+                      <p className="text-[10px] text-center mt-2" style={{ color: verifyMsg.includes("!") ? "#22c55e" : "#ef4444" }}>
+                        {verifyMsg}
+                      </p>
+                    )}
+                  </div>
+                )}
               </div>
             )}
 

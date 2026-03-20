@@ -33,7 +33,7 @@ export async function GET(
       `# Increment view count`,
       `c.execute("UPDATE marketplace_ads SET views = views + 1 WHERE id = ?", (${adId},))`,
       `conn.commit()`,
-      `c.execute("SELECT id, user_id, category, title, description, price, photos, contact_phone, contact_email, contact_venmo, contact_paypal, dog_id, location, status, is_verified, is_paid, views, created_at, expires_at FROM marketplace_ads WHERE id = ?", (${adId},))`,
+      `c.execute("SELECT id, user_id, category, title, description, price, photos, contact_phone, contact_email, contact_venmo, contact_paypal, dog_id, location, status, is_verified, is_paid, verification_requested, verified_at, verified_by, views, created_at, expires_at FROM marketplace_ads WHERE id = ?", (${adId},))`,
       `row = c.fetchone()`,
       `if not row:`,
       `    print(json.dumps({"error": "not_found"}))`,
