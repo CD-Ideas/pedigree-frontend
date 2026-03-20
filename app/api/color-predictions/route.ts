@@ -103,3 +103,26 @@ print(json.dumps([dict(r) for r in rows]))
     return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
+
+// DELETE — clear all predictions for a user
+export async function DELETE(req: NextRequest) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const userId = searchParams.get("userId");
+    if (!userId) return NextResponse.json({ error: "userId required" }, { status: 400 });
+
+    const script = `
+import sqlite3, json
+conn = sqlite3.connect("${DB_PATH}")
+deleted = conn.execute("DELETE FROM color_predictions WHERE user_id = ?", (${Number(userId)},)).rowcount
+conn.commit()
+conn.close()
+print(json.dumps({"deleted": deleted}))
+`;
+    const { stdout } = await execFileAsync("python3", ["-c", script], { timeout: 10000 });
+    return NextResponse.json(JSON.parse(stdout));
+  } catch (e: unknown) {
+    const msg = e instanceof Error ? e.message : "Unknown error";
+    return NextResponse.json({ error: msg }, { status: 500 });
+  }
+}

@@ -477,6 +477,7 @@ export default function PuppyPredictorPage() {
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [showHistory, setShowHistory] = useState(false);
   const [showGuide, setShowGuide] = useState(false);
+  const [confirmClear, setConfirmClear] = useState(false);
   const [shareUrl, setShareUrl] = useState("");
   const [saving, setSaving] = useState(false);
   const [tab, setTab] = useState<"results" | "simulate" | "compare">("results");
@@ -650,13 +651,11 @@ export default function PuppyPredictorPage() {
               style={{ color: "#60a5fa", border: "1px solid rgba(96,165,250,0.3)", fontFamily: "var(--font-table)" }}>
               DNA Test Guide
             </button>
-            {history.length > 0 && (
               <button onClick={() => setShowHistory(!showHistory)}
                 className="px-3 py-2 rounded-lg text-xs font-semibold transition-colors hover:bg-white/5"
                 style={{ color: "#e8c86e", border: "1px solid rgba(212,168,85,0.3)", fontFamily: "var(--font-table)" }}>
-                History ({history.length})
+                History{history.length > 0 ? ` (${history.length})` : ""}
               </button>
-            )}
           </div>
         </div>
 
@@ -695,7 +694,7 @@ export default function PuppyPredictorPage() {
         )}
 
         {/* ─── History (#8) ─── */}
-        {showHistory && history.length > 0 && (
+        {showHistory && (
           <div className="rounded-xl p-4 space-y-2" style={{
             background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
             border: "1.5px solid rgba(212,168,85,0.3)",
@@ -704,8 +703,43 @@ export default function PuppyPredictorPage() {
               <h3 className="text-sm font-bold" style={{ color: "#e8c86e", fontFamily: "var(--font-display)", letterSpacing: "0.05em" }}>
                 PREDICTION HISTORY
               </h3>
-              <button onClick={() => setShowHistory(false)} className="text-xs opacity-50 hover:opacity-100">✕</button>
+              <div className="flex items-center gap-2">
+                {history.length > 0 && !confirmClear && (
+                  <button onClick={() => setConfirmClear(true)}
+                    className="text-[10px] px-2 py-0.5 rounded transition-all hover:brightness-125"
+                    style={{ background: "rgba(239,68,68,0.15)", color: "#ef4444", border: "1px solid rgba(239,68,68,0.3)", fontFamily: "var(--font-table)" }}>
+                    Clear All
+                  </button>
+                )}
+                {confirmClear && (
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[10px]" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>Are you sure?</span>
+                    <button onClick={async () => {
+                      try {
+                        const u = JSON.parse(localStorage.getItem("user") || "null");
+                        if (!u?.id) return;
+                        await fetch(`/api/color-predictions?userId=${u.id}`, { method: "DELETE" });
+                        setHistory([]);
+                        setConfirmClear(false);
+                      } catch (_e) {}
+                    }}
+                      className="text-[10px] px-2 py-0.5 rounded transition-all hover:brightness-125"
+                      style={{ background: "rgba(239,68,68,0.25)", color: "#ef4444", border: "1px solid rgba(239,68,68,0.4)", fontFamily: "var(--font-table)", fontWeight: 700 }}>
+                      Yes, Clear
+                    </button>
+                    <button onClick={() => setConfirmClear(false)}
+                      className="text-[10px] px-2 py-0.5 rounded transition-all hover:brightness-125"
+                      style={{ background: "rgba(100,116,139,0.15)", color: "#94a3b8", border: "1px solid rgba(100,116,139,0.3)", fontFamily: "var(--font-table)" }}>
+                      Cancel
+                    </button>
+                  </div>
+                )}
+                <button onClick={() => { setShowHistory(false); setConfirmClear(false); }} className="text-xs opacity-50 hover:opacity-100">✕</button>
+              </div>
             </div>
+            {history.length === 0 ? (
+              <p className="text-xs text-center py-4" style={{ color: "#64748b", fontFamily: "var(--font-table)" }}>No prediction history yet.</p>
+            ) : (
             <div className="space-y-1">
               {history.map(h => (
                 <Link key={h.share_id} href={`/puppy-predictor/result/${h.share_id}`}
@@ -722,6 +756,7 @@ export default function PuppyPredictorPage() {
                 </Link>
               ))}
             </div>
+            )}
           </div>
         )}
 
@@ -853,9 +888,11 @@ export default function PuppyPredictorPage() {
             PREDICT LITTER
           </button>
           <button onClick={handleReset}
-            className="px-6 py-3 rounded-xl font-semibold transition-all hover:scale-105 active:scale-95"
-            style={{ background: "rgba(255,255,255,0.05)", color: "#94a3b8", border: "1px solid rgba(255,255,255,0.1)", fontFamily: "var(--font-table)", fontSize: "0.9rem" }}>
-            New Pairing
+            className="px-6 py-3 rounded-xl font-black transition-all hover:scale-105 active:scale-95"
+            style={{ background: "linear-gradient(135deg, #f87171, #ef4444)", color: "#000",
+              fontFamily: "var(--font-display)", letterSpacing: "0.05em", fontSize: "1rem",
+              boxShadow: "0 4px 20px rgba(239,68,68,0.3)" }}>
+            NEW PAIRING
           </button>
         </div>
 
@@ -891,7 +928,12 @@ export default function PuppyPredictorPage() {
                       className="px-3 py-1.5 rounded-lg text-[11px] w-64 outline-none"
                       style={{ background: "rgba(96,165,250,0.1)", border: "1px solid rgba(96,165,250,0.3)", color: "#60a5fa", fontFamily: "var(--font-mono)" }}
                       onClick={e => (e.target as HTMLInputElement).select()} />
-                    <button onClick={() => { navigator.clipboard.writeText(shareUrl); }}
+                    <button onClick={() => {
+                        try { navigator.clipboard.writeText(shareUrl); } catch (_e) {
+                          const ta = document.createElement("textarea"); ta.value = shareUrl; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); document.body.removeChild(ta);
+                        }
+                        const btn = document.activeElement as HTMLButtonElement; if (btn) { btn.textContent = "Copied!"; setTimeout(() => { btn.textContent = "Copy"; }, 2000); }
+                      }}
                       className="px-3 py-1.5 rounded-lg text-xs font-semibold"
                       style={{ background: "rgba(34,197,94,0.15)", color: "#22c55e", border: "1px solid rgba(34,197,94,0.3)", fontFamily: "var(--font-table)" }}>
                       Copy
