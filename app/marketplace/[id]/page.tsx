@@ -191,7 +191,7 @@ export default function MarketplaceAdPage() {
           <Link
             href="/"
             className="text-[10px] font-medium hover:underline"
-            style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}
+            style={{ color: "#e8c86e", fontFamily: "var(--font-table)" }}
           >
             Home
           </Link>
@@ -199,7 +199,7 @@ export default function MarketplaceAdPage() {
           <Link
             href="/marketplace"
             className="text-[10px] font-medium hover:underline"
-            style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}
+            style={{ color: "#e8c86e", fontFamily: "var(--font-table)" }}
           >
             Marketplace
           </Link>
@@ -370,7 +370,7 @@ export default function MarketplaceAdPage() {
               </h1>
 
               {/* Verified badge */}
-              {ad.is_verified && (
+              {!!ad.is_verified && (
                 <div
                   className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full mb-3"
                   style={{ background: "rgba(34,197,94,0.12)", border: "1px solid rgba(34,197,94,0.3)" }}
@@ -496,11 +496,12 @@ export default function MarketplaceAdPage() {
                 <div className="flex gap-2">
                   <Link
                     href={`/marketplace/${ad.id}/edit`}
-                    className="flex-1 text-center rounded-lg px-4 py-2.5 text-xs font-bold uppercase tracking-wider transition-all hover:scale-[1.02]"
+                    className="flex-1 flex items-center justify-center rounded-lg px-4 py-2.5 text-xs font-bold uppercase tracking-wider transition-all hover:scale-[1.02]"
                     style={{
                       background: "linear-gradient(135deg, #e8c86e, #b8860b)",
                       color: "#000",
                       fontFamily: "var(--font-table)",
+                      textAlign: "center",
                     }}
                   >
                     Edit Ad
@@ -543,8 +544,8 @@ export default function MarketplaceAdPage() {
                           onClick={() => setShowDeleteConfirm(false)}
                           className="flex-1 rounded-lg px-2 py-1.5 text-[10px] font-medium transition-all hover:scale-105"
                           style={{
-                            background: "rgba(148,163,184,0.1)",
-                            color: "#94a3b8",
+                            background: "linear-gradient(135deg, #cbd5e1, #94a3b8)",
+                            color: "#000",
                             fontFamily: "var(--font-table)",
                           }}
                         >
@@ -722,10 +723,11 @@ export default function MarketplaceAdPage() {
                             setShowReport(false);
                             setReportReason("");
                           }}
-                          className="px-4 py-1.5 rounded-lg text-[11px] font-medium transition-all hover:scale-105"
+                          className="px-4 py-1.5 rounded-lg text-[11px] font-bold transition-all hover:scale-105"
                           style={{
-                            background: "rgba(148,163,184,0.1)",
+                            background: "rgba(148,163,184,0.15)",
                             color: "#94a3b8",
+                            border: "1px solid rgba(148,163,184,0.3)",
                             fontFamily: "var(--font-table)",
                           }}
                         >

@@ -295,7 +295,7 @@ export default function MarketplacePage() {
             <Link
               href="/"
               className="text-[10px] font-medium hover:underline transition-colors"
-              style={{ color: "var(--text-muted, #5a6a82)", fontFamily: "var(--font-table)" }}
+              style={{ color: "#e8c86e", fontFamily: "var(--font-table)" }}
             >
               Home
             </Link>

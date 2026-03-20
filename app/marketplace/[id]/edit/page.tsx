@@ -464,15 +464,15 @@ export default function EditAdPage() {
       <div className="max-w-[700px] mx-auto px-4 md:px-6 py-6">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 mb-4">
-          <Link href="/" className="text-[10px] font-medium hover:underline" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+          <Link href="/" className="text-[10px] font-medium hover:underline" style={{ color: "#e8c86e", fontFamily: "var(--font-table)" }}>
             Home
           </Link>
           <span style={{ color: "#5a6a82", fontSize: "10px" }}>/</span>
-          <Link href="/marketplace" className="text-[10px] font-medium hover:underline" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+          <Link href="/marketplace" className="text-[10px] font-medium hover:underline" style={{ color: "#e8c86e", fontFamily: "var(--font-table)" }}>
             Marketplace
           </Link>
           <span style={{ color: "#5a6a82", fontSize: "10px" }}>/</span>
-          <Link href={`/marketplace/${adId}`} className="text-[10px] font-medium hover:underline" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+          <Link href={`/marketplace/${adId}`} className="text-[10px] font-medium hover:underline" style={{ color: "#e8c86e", fontFamily: "var(--font-table)" }}>
             Ad #{adId}
           </Link>
           <span style={{ color: "#5a6a82", fontSize: "10px" }}>/</span>
