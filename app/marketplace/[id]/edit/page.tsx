@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 
 /* ─── Types ─── */
@@ -9,6 +9,26 @@ interface DogSearchResult {
   id: number;
   name: string;
   reg_number: string;
+}
+
+interface MarketplaceAd {
+  id: number;
+  title: string;
+  description: string;
+  category: string;
+  price: number | null;
+  location: string;
+  photos: string[];
+  views: number;
+  is_verified: boolean;
+  created_at: string;
+  expires_at: string;
+  user_id: number;
+  dog_id: number | null;
+  contact_phone: string | null;
+  contact_email: string | null;
+  contact_venmo: string | null;
+  contact_paypal: string | null;
 }
 
 /* ─── Constants ─── */
@@ -32,11 +52,17 @@ const COUNTRY_MAP: Record<string, string[]> = {
   "Oceania": ["Australia", "New Zealand", "Fiji", "Papua New Guinea"],
 };
 
-/* ─── Main Create Ad Page ─── */
-export default function CreateAdPage() {
+/* ─── Main Edit Ad Page ─── */
+export default function EditAdPage() {
+  const params = useParams();
   const router = useRouter();
+  const adId = params?.id;
+
   const [user, setUser] = useState<{ id: number; username: string } | null>(null);
   const [notLoggedIn, setNotLoggedIn] = useState(false);
+  const [notOwner, setNotOwner] = useState(false);
+  const [loadingAd, setLoadingAd] = useState(true);
+  const [loadError, setLoadError] = useState("");
 
   // Form state
   const [category, setCategory] = useState("");
@@ -66,20 +92,84 @@ export default function CreateAdPage() {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
 
+  // Load user and ad data
   useEffect(() => {
+    let currentUser: { id: number; username: string } | null = null;
     try {
       const token = localStorage.getItem("token");
       const userStr = localStorage.getItem("user");
       if (!token || !userStr) {
         setNotLoggedIn(true);
+        setLoadingAd(false);
         return;
       }
-      const u = JSON.parse(userStr);
-      setUser(u);
+      currentUser = JSON.parse(userStr);
+      setUser(currentUser);
     } catch {
       setNotLoggedIn(true);
+      setLoadingAd(false);
+      return;
     }
-  }, []);
+
+    if (!adId) return;
+
+    // Fetch ad data
+    fetch(`/api/marketplace/${adId}`)
+      .then((r) => {
+        if (!r.ok) throw new Error("Ad not found");
+        return r.json();
+      })
+      .then((ad: MarketplaceAd) => {
+        // Check ownership
+        if (!currentUser || ad.user_id !== currentUser.id) {
+          setNotOwner(true);
+          setLoadingAd(false);
+          return;
+        }
+
+        // Pre-fill form
+        setCategory(ad.category || "");
+        setTitle(ad.title || "");
+        setDescription(ad.description || "");
+        setPrice(ad.price !== null && ad.price !== undefined ? String(ad.price) : "");
+        setPhotos(ad.photos || []);
+        setPhone(ad.contact_phone || "");
+        setEmail(ad.contact_email || "");
+        setVenmo(ad.contact_venmo || "");
+        setPaypal(ad.contact_paypal || "");
+        setDogId(ad.dog_id);
+
+        // Parse location: "Country, Continent"
+        if (ad.location) {
+          const parts = ad.location.split(", ");
+          if (parts.length >= 2) {
+            const parsedCountry = parts[0];
+            const parsedContinent = parts.slice(1).join(", ");
+            // Verify continent exists in our map
+            if (COUNTRY_MAP[parsedContinent]) {
+              setContinent(parsedContinent);
+              setCountry(parsedCountry);
+            } else {
+              // Try reverse: maybe it's "Continent, Country"
+              if (COUNTRY_MAP[parts[0]]) {
+                setContinent(parts[0]);
+                setCountry(parts.slice(1).join(", "));
+              }
+            }
+          }
+        }
+
+        if (ad.dog_id) {
+          setSelectedDogName(`Dog #${ad.dog_id}`);
+        }
+
+        setLoadingAd(false);
+      })
+      .catch((err) => {
+        setLoadError(err.message || "Failed to load ad");
+        setLoadingAd(false);
+      });
+  }, [adId]);
 
   // Dog search
   useEffect(() => {
@@ -186,42 +276,52 @@ export default function CreateAdPage() {
     setSubmitError("");
 
     try {
-      const token = localStorage.getItem("token");
-      const res = await fetch("/api/marketplace", {
-        method: "POST",
+      const res = await fetch(`/api/marketplace/${adId}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          category,
+          userId: user.id,
           title: title.trim(),
           description: description.trim(),
-          price: price ? parseFloat(price) : null,
+          price: price ? String(parseFloat(price)) : "",
           photos,
           location: country + ", " + continent,
-          contact_phone: phone.trim() || null,
-          contact_email: email.trim() || null,
-          contact_venmo: venmo.trim() || null,
-          contact_paypal: paypal.trim() || null,
-          dog_id: dogId,
-          user_id: user.id,
+          contactPhone: phone.trim() || "",
+          contactEmail: email.trim() || "",
+          contactVenmo: venmo.trim() || "",
+          contactPaypal: paypal.trim() || "",
         }),
       });
 
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        throw new Error(data.error || "Failed to create ad");
+        throw new Error(data.error || "Failed to update ad");
       }
 
-      const data = await res.json();
-      router.push(`/marketplace/${data.id}`);
+      router.push(`/marketplace/${adId}`);
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Something went wrong";
       setSubmitError(message);
       setSubmitting(false);
     }
   };
+
+  // Loading state
+  if (loadingAd) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--bg-deep, #0b1120)" }}>
+        <div className="flex items-center gap-3" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+          <div
+            className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin"
+            style={{ borderColor: "#e8c86e", borderTopColor: "transparent" }}
+          />
+          Loading ad...
+        </div>
+      </div>
+    );
+  }
 
   // Not logged in state
   if (notLoggedIn) {
@@ -240,7 +340,7 @@ export default function CreateAdPage() {
           Please Log In
         </h2>
         <p className="text-sm" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
-          You need to be logged in to create a marketplace ad.
+          You need to be logged in to edit a marketplace ad.
         </p>
         <div className="flex gap-3">
           <Link
@@ -270,6 +370,68 @@ export default function CreateAdPage() {
             Browse Marketplace
           </Link>
         </div>
+      </div>
+    );
+  }
+
+  // Not owner state
+  if (notOwner) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center gap-6" style={{ background: "var(--bg-deep, #0b1120)" }}>
+        <div className="text-5xl opacity-30">{"\uD83D\uDEAB"}</div>
+        <h2
+          className="text-xl font-black uppercase tracking-widest"
+          style={{
+            fontFamily: "var(--font-display, Oswald, sans-serif)",
+            background: "linear-gradient(135deg, #ef4444, #dc2626)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+          }}
+        >
+          Access Denied
+        </h2>
+        <p className="text-sm" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+          You can only edit your own ads.
+        </p>
+        <Link
+          href="/marketplace"
+          className="px-6 py-2.5 rounded-lg text-xs font-bold transition-all hover:scale-105"
+          style={{
+            background: "linear-gradient(135deg, #e8c86e, #b8860b)",
+            color: "#000",
+            fontFamily: "var(--font-table)",
+            letterSpacing: "0.04em",
+            textTransform: "uppercase",
+          }}
+        >
+          Back to Marketplace
+        </Link>
+      </div>
+    );
+  }
+
+  // Load error state
+  if (loadError) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: "var(--bg-deep, #0b1120)" }}>
+        <div className="text-5xl opacity-30">{"\uD83D\uDEAB"}</div>
+        <h2
+          className="text-lg font-bold"
+          style={{ color: "var(--text-primary, #e2e8f0)", fontFamily: "var(--font-table)" }}
+        >
+          {loadError}
+        </h2>
+        <Link
+          href="/marketplace"
+          className="px-5 py-2 rounded-lg text-xs font-bold transition-all hover:scale-105"
+          style={{
+            background: "linear-gradient(135deg, #e8c86e, #b8860b)",
+            color: "#000",
+            fontFamily: "var(--font-table)",
+          }}
+        >
+          Back to Marketplace
+        </Link>
       </div>
     );
   }
@@ -324,11 +486,11 @@ export default function CreateAdPage() {
           </span>
         </Link>
         <Link
-          href="/marketplace"
+          href={`/marketplace/${adId}`}
           className="px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all hover:scale-105"
           style={{ color: "var(--text-secondary, #94a3b8)", fontFamily: "var(--font-table)" }}
         >
-          {"\u2190"} Back to Marketplace
+          {"\u2190"} Back to Ad
         </Link>
       </nav>
 
@@ -343,8 +505,12 @@ export default function CreateAdPage() {
             Marketplace
           </Link>
           <span style={{ color: "#5a6a82", fontSize: "10px" }}>/</span>
+          <Link href={`/marketplace/${adId}`} className="text-[10px] font-medium hover:underline" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+            Ad #{adId}
+          </Link>
+          <span style={{ color: "#5a6a82", fontSize: "10px" }}>/</span>
           <span className="text-[10px] font-medium" style={{ color: "#e8c86e", fontFamily: "var(--font-table)" }}>
-            Create Ad
+            Edit
           </span>
         </div>
 
@@ -358,10 +524,10 @@ export default function CreateAdPage() {
             WebkitTextFillColor: "transparent",
           }}
         >
-          Create Ad
+          Edit Ad
         </h1>
         <p className="text-xs mb-6" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
-          Fill in the details below to post your marketplace listing
+          Update your marketplace listing details below
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-5">
@@ -953,10 +1119,10 @@ export default function CreateAdPage() {
                   className="w-4 h-4 rounded-full border-2 border-t-transparent animate-spin"
                   style={{ borderColor: "#000", borderTopColor: "transparent" }}
                 />
-                Posting...
+                Saving...
               </span>
             ) : (
-              "Post Ad"
+              "Save Changes"
             )}
           </button>
         </form>

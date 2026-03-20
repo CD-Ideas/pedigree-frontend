@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 
 /* ─── Types ─── */
@@ -56,9 +56,18 @@ function formatPrice(price: number | null): string {
   return `$${price.toLocaleString()}`;
 }
 
+function getDaysUntilExpiry(expiresAt: string): number {
+  if (!expiresAt) return 0;
+  const now = new Date();
+  const expires = new Date(expiresAt);
+  const diffMs = expires.getTime() - now.getTime();
+  return Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+}
+
 /* ─── Main Ad Detail Page ─── */
 export default function MarketplaceAdPage() {
   const params = useParams();
+  const router = useRouter();
   const id = params?.id;
 
   const [ad, setAd] = useState<MarketplaceAd | null>(null);
@@ -68,6 +77,24 @@ export default function MarketplaceAdPage() {
   const [showReport, setShowReport] = useState(false);
   const [reportReason, setReportReason] = useState("");
   const [reportSent, setReportSent] = useState(false);
+
+  // Owner state
+  const [currentUserId, setCurrentUserId] = useState<number | null>(null);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    // Get current user from localStorage
+    try {
+      const userStr = localStorage.getItem("user");
+      if (userStr) {
+        const u = JSON.parse(userStr);
+        if (u && u.id) setCurrentUserId(u.id);
+      }
+    } catch {
+      // Not logged in
+    }
+  }, []);
 
   useEffect(() => {
     if (!id) return;
@@ -88,12 +115,33 @@ export default function MarketplaceAdPage() {
 
   const cat = ad ? CATEGORIES[ad.category] : null;
   const photos = ad?.photos || [];
+  const isOwner = ad && currentUserId !== null && currentUserId === ad.user_id;
+  const daysUntilExpiry = ad ? getDaysUntilExpiry(ad.expires_at) : 0;
 
   const handleReport = () => {
     if (!reportReason.trim()) return;
-    // In production this would POST to the API
     setReportSent(true);
     setTimeout(() => setShowReport(false), 2000);
+  };
+
+  const handleDelete = async () => {
+    if (!ad || !currentUserId) return;
+    setDeleting(true);
+    try {
+      const res = await fetch(`/api/marketplace/${ad.id}?userId=${currentUserId}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Failed to delete ad");
+      }
+      router.push("/marketplace");
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Failed to delete";
+      alert(message);
+      setDeleting(false);
+      setShowDeleteConfirm(false);
+    }
   };
 
   if (loading) {
@@ -399,8 +447,8 @@ export default function MarketplaceAdPage() {
                 </div>
               </div>
 
-              {/* Dates */}
-              <div className="flex gap-4 pt-3" style={{ borderTop: "1px solid rgba(30,64,120,0.3)" }}>
+              {/* Dates & Expiry Countdown */}
+              <div className="flex flex-wrap gap-4 pt-3" style={{ borderTop: "1px solid rgba(30,64,120,0.3)" }}>
                 <div>
                   <div className="text-[9px] uppercase tracking-wider" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
                     Posted
@@ -426,7 +474,121 @@ export default function MarketplaceAdPage() {
                   </div>
                 </div>
               </div>
+
+              {/* Expiry countdown */}
+              {ad.expires_at && (
+                <div
+                  className="mt-3 flex items-center gap-2 px-3 py-2 rounded-lg"
+                  style={{
+                    background: daysUntilExpiry <= 7
+                      ? "rgba(239,68,68,0.08)"
+                      : "rgba(34,197,94,0.08)",
+                    border: daysUntilExpiry <= 7
+                      ? "1px solid rgba(239,68,68,0.25)"
+                      : "1px solid rgba(34,197,94,0.25)",
+                  }}
+                >
+                  <span className="text-xs">
+                    {daysUntilExpiry <= 7 ? "\u26A0" : "\u23F0"}
+                  </span>
+                  <span
+                    className="text-[11px] font-bold"
+                    style={{
+                      color: daysUntilExpiry <= 0
+                        ? "#ef4444"
+                        : daysUntilExpiry <= 7
+                          ? "#f59e0b"
+                          : "#22c55e",
+                      fontFamily: "var(--font-table)",
+                    }}
+                  >
+                    {daysUntilExpiry <= 0
+                      ? "This listing has expired"
+                      : `Expires in ${daysUntilExpiry} day${daysUntilExpiry === 1 ? "" : "s"}`}
+                  </span>
+                </div>
+              )}
             </div>
+
+            {/* ─── Owner Actions (Edit / Delete) ─── */}
+            {isOwner && (
+              <div
+                className="rounded-xl p-4"
+                style={{
+                  background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+                  border: "1.5px solid rgba(212,168,85,0.25)",
+                  backdropFilter: "blur(12px)",
+                }}
+              >
+                <h3
+                  className="text-xs font-bold uppercase tracking-widest mb-3"
+                  style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}
+                >
+                  Manage Your Ad
+                </h3>
+                <div className="flex gap-2">
+                  <Link
+                    href={`/marketplace/${ad.id}/edit`}
+                    className="flex-1 text-center rounded-lg px-4 py-2.5 text-xs font-bold uppercase tracking-wider transition-all hover:scale-[1.02]"
+                    style={{
+                      background: "linear-gradient(135deg, #e8c86e, #b8860b)",
+                      color: "#000",
+                      fontFamily: "var(--font-table)",
+                    }}
+                  >
+                    Edit Ad
+                  </Link>
+                  {!showDeleteConfirm ? (
+                    <button
+                      onClick={() => setShowDeleteConfirm(true)}
+                      className="flex-1 rounded-lg px-4 py-2.5 text-xs font-bold uppercase tracking-wider transition-all hover:scale-[1.02]"
+                      style={{
+                        background: "rgba(239,68,68,0.15)",
+                        color: "#ef4444",
+                        border: "1.5px solid rgba(239,68,68,0.3)",
+                        fontFamily: "var(--font-table)",
+                      }}
+                    >
+                      Delete Ad
+                    </button>
+                  ) : (
+                    <div className="flex-1 flex flex-col gap-2">
+                      <span
+                        className="text-[11px] font-bold text-center"
+                        style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}
+                      >
+                        Are you sure?
+                      </span>
+                      <div className="flex gap-1.5">
+                        <button
+                          onClick={handleDelete}
+                          disabled={deleting}
+                          className="flex-1 rounded-lg px-2 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all hover:scale-105 disabled:opacity-50"
+                          style={{
+                            background: "#ef4444",
+                            color: "#fff",
+                            fontFamily: "var(--font-table)",
+                          }}
+                        >
+                          {deleting ? "Deleting..." : "Yes, Delete"}
+                        </button>
+                        <button
+                          onClick={() => setShowDeleteConfirm(false)}
+                          className="flex-1 rounded-lg px-2 py-1.5 text-[10px] font-medium transition-all hover:scale-105"
+                          style={{
+                            background: "rgba(148,163,184,0.1)",
+                            color: "#94a3b8",
+                            fontFamily: "var(--font-table)",
+                          }}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
 
             {/* Contact Info Card */}
             {(ad.contact_phone || ad.contact_email || ad.contact_venmo || ad.contact_paypal) && (
