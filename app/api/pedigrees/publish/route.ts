@@ -47,19 +47,19 @@ else:
       if (userIdStr) userId = parseInt(userIdStr, 10) || null;
     }
 
-    const name = (formData.get("name") as string) || "";
-    const prefix = (formData.get("prefix") as string) || "";
-    const suffixWins = (formData.get("suffixWins") as string) || "";
-    const suffixLosses = (formData.get("suffixLosses") as string) || "";
-    const suffixDraws = (formData.get("suffixDraws") as string) || "";
-    const suffixHonors = (formData.get("suffixHonors") as string) || "";
+    const name = ((formData.get("name") as string) || "").toUpperCase();
+    const prefix = ((formData.get("prefix") as string) || "").toUpperCase();
+    const suffixWins = ((formData.get("suffixWins") as string) || "").toUpperCase();
+    const suffixLosses = ((formData.get("suffixLosses") as string) || "").toUpperCase();
+    const suffixDraws = ((formData.get("suffixDraws") as string) || "").toUpperCase();
+    const suffixHonors = ((formData.get("suffixHonors") as string) || "").toUpperCase();
     const dob = (formData.get("dob") as string) || "";
-    const sex = (formData.get("sex") as string) || "Male";
-    const color = (formData.get("color") as string) || "";
-    const continent = (formData.get("continent") as string) || "";
-    const country = (formData.get("country") as string) || "";
-    const breeder = (formData.get("breeder") as string) || "";
-    const owner = (formData.get("owner") as string) || "";
+    const sex = ((formData.get("sex") as string) || "Male").toUpperCase();
+    const color = ((formData.get("color") as string) || "").toUpperCase();
+    const continent = ((formData.get("continent") as string) || "").toUpperCase();
+    const country = ((formData.get("country") as string) || "").toUpperCase();
+    const breeder = ((formData.get("breeder") as string) || "").toUpperCase();
+    const owner = ((formData.get("owner") as string) || "").toUpperCase();
     const conditionedWeight = (formData.get("conditionedWeight") as string) || "";
     const pedigreeNotes = (formData.get("pedigreeNotes") as string) || "";
     const journalJson = (formData.get("journalJson") as string) || "{}";

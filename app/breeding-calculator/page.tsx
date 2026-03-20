@@ -291,8 +291,8 @@ function DogSlot({
                 <p className="text-sm font-bold truncate" style={{ color: getDogColor(selected.registered_name), fontFamily: "var(--font-table)" }}>
                   {selected.registered_name}
                 </p>
-                <p className="text-[10px] mt-0.5" style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
-                  ID {selected.dog_id}
+                <p className="text-[10px] mt-0.5" style={{ fontFamily: "var(--font-mono)" }}>
+                  <span style={{ color: "var(--text-muted)" }}>ID </span><span style={{ color: "#d4a855" }}>{selected.dog_id}</span>
                 </p>
               </div>
             </div>

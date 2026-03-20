@@ -91,7 +91,7 @@ function formatDate(iso: string): string {
   if (!iso) return "";
   try {
     const d = new Date(iso);
-    return d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+    return d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }).toUpperCase();
   } catch {
     return iso;
   }

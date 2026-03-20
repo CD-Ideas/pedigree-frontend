@@ -74,6 +74,9 @@ interface PublishForm {
   photoFile: File | null;
   photoPreview: string;
   journal: JournalData;
+  datePosted: string;
+  lastModified: string;
+  viewCount: number;
 }
 
 /* ------------------------------------------------------------------ */
@@ -230,6 +233,9 @@ function defaultPublishForm(): PublishForm {
     photoFile: null,
     photoPreview: "",
     journal: defaultJournal(),
+    datePosted: "",
+    lastModified: "",
+    viewCount: 0,
   };
 }
 
@@ -363,6 +369,9 @@ function PedigreeLabInner() {
             try { return JSON.parse(data.journal_json || "{}"); }
             catch { return defaultJournal(); }
           })(),
+          datePosted: data.date_posted || "",
+          lastModified: data.last_modified || "",
+          viewCount: data.view_count || 0,
         });
 
         setEditLoaded(true);
@@ -1184,7 +1193,7 @@ function PedigreeLabInner() {
                     {sexIcon(selectedDog.sex)} {selectedDog.registered_name}
                   </p>
                   <p className="text-[10px]" style={{ color: "#5a6a82" }}>
-                    Slot: {selectedSlot ? SLOT_LABELS[selectedSlot] : "--"} | ID: {selectedDog.dog_id}
+                    Slot: {selectedSlot ? SLOT_LABELS[selectedSlot] : "--"} | ID: <span style={{ color: "#d4a855", fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}>{selectedDog.dog_id}</span>
                   </p>
                 </div>
               ) : (
@@ -1548,21 +1557,22 @@ function PedigreeLabInner() {
                   <select
                     value={publishForm.continent}
                     onChange={(e) => setPublishForm((p) => ({ ...p, continent: e.target.value, country: "" }))}
-                    className="w-full rounded-lg px-3 py-2 text-sm outline-none"
+                    className="w-full rounded-lg px-3 py-2 text-sm outline-none uppercase"
                     style={{
                       background: "var(--bg-deep, #0b1120)",
                       border: "1px solid rgba(30,64,120,0.5)",
                       color: "#e2e8f0",
                       fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+                      textTransform: "uppercase",
                     }}
                   >
                     <option value="">Select</option>
-                    <option value="North America">North America</option>
-                    <option value="South America">South America</option>
-                    <option value="Europe">Europe</option>
-                    <option value="Asia">Asia</option>
-                    <option value="Africa">Africa</option>
-                    <option value="Oceania">Oceania</option>
+                    <option value="North America">NORTH AMERICA</option>
+                    <option value="South America">SOUTH AMERICA</option>
+                    <option value="Europe">EUROPE</option>
+                    <option value="Asia">ASIA</option>
+                    <option value="Africa">AFRICA</option>
+                    <option value="Oceania">OCEANIA</option>
                   </select>
                 </div>
                 <div>
@@ -1575,17 +1585,18 @@ function PedigreeLabInner() {
                   <select
                     value={publishForm.country}
                     onChange={(e) => setPublishForm((p) => ({ ...p, country: e.target.value }))}
-                    className="w-full rounded-lg px-3 py-2 text-sm outline-none"
+                    className="w-full rounded-lg px-3 py-2 text-sm outline-none uppercase"
                     style={{
                       background: "var(--bg-deep, #0b1120)",
                       border: "1px solid rgba(30,64,120,0.5)",
                       color: "#e2e8f0",
                       fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+                      textTransform: "uppercase",
                     }}
                   >
                     <option value="">Select</option>
                     {(COUNTRY_MAP[publishForm.continent] || []).map((c) => (
-                      <option key={c} value={c}>{c}</option>
+                      <option key={c} value={c}>{c.toUpperCase()}</option>
                     ))}
                   </select>
                 </div>
@@ -1655,7 +1666,7 @@ function PedigreeLabInner() {
                       minHeight: 38,
                     }}
                   >
-                    <span style={{ color: "#d4a855" }}>0</span>
+                    <span style={{ color: "#d4a855" }}>{publishForm.viewCount}</span>
                     <span className="ml-1 text-[10px]" style={{ color: "#5a6a82" }}>views</span>
                   </div>
                 </div>
@@ -1675,7 +1686,9 @@ function PedigreeLabInner() {
                       minHeight: 38,
                     }}
                   >
-                    <span style={{ color: "#64748b" }}>—</span>
+                    <span style={{ color: publishForm.datePosted ? "#d4a855" : "#64748b" }}>
+                      {publishForm.datePosted ? new Date(publishForm.datePosted).toLocaleDateString() : editingId ? "—" : "Auto on publish"}
+                    </span>
                   </div>
                 </div>
                 <div>
@@ -1694,7 +1707,9 @@ function PedigreeLabInner() {
                       minHeight: 38,
                     }}
                   >
-                    <span style={{ color: "#64748b" }}>—</span>
+                    <span style={{ color: publishForm.lastModified ? "#d4a855" : "#64748b" }}>
+                      {publishForm.lastModified ? new Date(publishForm.lastModified).toLocaleDateString() : editingId ? "—" : "Auto on publish"}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -2302,13 +2317,17 @@ function DropZone({
         style={{
           width: isSm ? 140 : 155,
           padding: isSm ? 8 : 12,
-          background: selected
-            ? "rgba(212,168,85,0.08)"
-            : `linear-gradient(135deg, ${titleColor}15, ${titleColor}08, #0b1120)`,
-          border: `1.5px solid ${selected ? "#d4a855" : titleColor + "44"}`,
-          boxShadow: selected
-            ? "0 0 15px rgba(212,168,85,0.15)"
-            : `0 0 8px ${titleColor}15`,
+          background: dragOver
+            ? "rgba(212,168,85,0.15)"
+            : selected
+              ? "rgba(212,168,85,0.08)"
+              : `linear-gradient(135deg, ${titleColor}15, ${titleColor}08, #0b1120)`,
+          border: `1.5px solid ${dragOver ? "#d4a855" : selected ? "#d4a855" : titleColor + "44"}`,
+          boxShadow: dragOver
+            ? "0 0 20px rgba(212,168,85,0.25)"
+            : selected
+              ? "0 0 15px rgba(212,168,85,0.15)"
+              : `0 0 8px ${titleColor}15`,
           outline: "none",
         }}
         onClick={onSelect}
@@ -2395,24 +2414,27 @@ function DropZone({
             draggable
             onDragStart={(e) => {
               e.stopPropagation();
+              e.dataTransfer.effectAllowed = "move";
+              e.dataTransfer.setData("text/plain", slotKey);
               onSlotDragStart(slotKey);
             }}
             className="absolute flex items-center justify-center cursor-grab active:cursor-grabbing hover:scale-110 transition-all"
             style={{
               top: -4,
               left: -4,
-              width: 18,
-              height: 18,
-              fontSize: 11,
+              width: 20,
+              height: 20,
+              fontSize: 12,
               color: "#d4a855",
-              background: "rgba(11,17,32,0.9)",
-              border: "1.5px solid rgba(212,168,85,0.5)",
-              borderRadius: "4px",
-              boxShadow: "0 1px 4px rgba(0,0,0,0.3)",
+              background: "rgba(11,17,32,0.95)",
+              border: "1.5px solid rgba(212,168,85,0.6)",
+              borderRadius: "5px",
+              boxShadow: "0 2px 6px rgba(0,0,0,0.4), 0 0 8px rgba(212,168,85,0.15)",
               lineHeight: 1,
               fontFamily: "var(--font-mono, monospace)",
+              zIndex: 10,
             }}
-            title="Drag to move"
+            title="Drag to move to another slot"
           >
             ☰
           </div>
