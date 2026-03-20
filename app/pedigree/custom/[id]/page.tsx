@@ -59,7 +59,7 @@ function getDogCardColor(name: string): string {
   }
   if (/\bROM\b/.test(n)) return "#22d3ee";
   if (/\bPOR\b/.test(n)) return "#a78bfa";
-  return "#e2e8f0";
+  return "#ffffff";
 }
 
 function getXWColor(name: string): string | null {
@@ -525,7 +525,7 @@ export default function PublishedPedigreePage() {
   const isMale = ped.sex === "Male" || ped.sex === "MALE" || ped.sex === "M";
   const sexColor = isMale ? "var(--male-color, #60a5fa)" : "var(--female-color, #f472b6)";
   const titleColor = getDogCardColor(displayName);
-  const hasTitles = titleColor !== "#e0e0e0";
+  const hasTitles = titleColor !== "#ffffff";
 
   const titlePatterns = ["GR CH", "CH", "ROM", "POR", "1XW", "2XW", "3XW", "4XW", "5XW", "6XW", "1XL", "2XL", "3XL"];
   const titles = titlePatterns.filter((t) => displayName.toUpperCase().includes(t));

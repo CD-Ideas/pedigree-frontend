@@ -27,11 +27,29 @@ const SORT_OPTIONS = [
 ];
 
 const TITLE_COLORS: Record<string, string> = {
-  "GR CH": "#fbbf24", "CH": "#f59e0b", "ROM": "#a78bfa", "POR": "#60a5fa",
-  "7XW": "#ef4444", "6XW": "#ef4444", "5XW": "#ef4444", "4XW": "#f97316",
-  "3XW": "#f97316", "2XW": "#eab308", "1XW": "#84cc16",
-  "3XL": "#6b7280", "2XL": "#6b7280", "1XL": "#6b7280",
+  "GR CH": "#60a5fa", "CH": "#fc8181", "ROM": "#22d3ee", "POR": "#a78bfa",
+  "7XW": "#c084fc", "6XW": "#c084fc", "5XW": "#c084fc", "4XW": "#f472b6",
+  "3XW": "#d4a855", "2XW": "#fb923c", "1XW": "#2dd4bf",
+  "3XL": "#2dd4bf", "2XL": "#fb923c", "1XL": "#2dd4bf",
 };
+
+function getDogColor(name: string): string {
+  const n = (name || "").toUpperCase();
+  if (/\bGR\s*CH\b/.test(n)) return "#60a5fa";
+  if (/(?:^|\s|\()CH\b/.test(n)) return "#fc8181";
+  if (/\bROM\b/.test(n)) return "#22d3ee";
+  if (/\bPOR\b/.test(n)) return "#a78bfa";
+  const xw = n.match(/\b(\d+)X[WL]\b/);
+  if (xw) {
+    const num = parseInt(xw[1]);
+    if (num >= 5) return "#c084fc";
+    if (num === 4) return "#f472b6";
+    if (num === 3) return "#d4a855";
+    if (num === 2) return "#fb923c";
+    if (num === 1) return "#2dd4bf";
+  }
+  return "#ffffff";
+}
 
 function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number) => void; famousDogs: FamousDog[] }) {
   const [query, setQuery] = useState("");
@@ -127,25 +145,6 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
       } catch (_e) { setResults([]); }
     }, 300);
   };
-
-  // Title-based dog color (matches PedStats)
-  function getDogColor(name: string): string {
-    const n = (name || "").toUpperCase();
-    if (/\bGR\s*CH\b/.test(n)) return "#60a5fa";
-    if (/(?:^|\s|\()CH\b/.test(n)) return "#fc8181";
-    if (/\bROM\b/.test(n)) return "#22d3ee";
-    if (/\bPOR\b/.test(n)) return "#a78bfa";
-    const xw = n.match(/\b(\d+)X[WL]\b/);
-    if (xw) {
-      const num = parseInt(xw[1]);
-      if (num >= 5) return "#c084fc";
-      if (num === 4) return "#f472b6";
-      if (num === 3) return "#d4a855";
-      if (num === 2) return "#fb923c";
-      if (num === 1) return "#2dd4bf";
-    }
-    return "#e2e8f0";
-  }
 
   // Build pie chart for lineage
   const renderPie = () => {
@@ -422,65 +421,26 @@ export default function SpotlightPage() {
         </div>
 
         {/* ── Search Controls ── */}
-        <div className="glow-teal rounded-xl p-3 md:p-4 mb-5"
+        <div ref={dropdownRef} className="glow-teal rounded-xl p-3 md:p-4 mb-5"
              style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)", backdropFilter: "blur(20px)" }}>
 
           <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-end">
 
             {/* Dog Selector Dropdown */}
-            <div className="md:col-span-5" ref={dropdownRef}>
+            <div className="md:col-span-5">
               <label className="block text-[10px] uppercase tracking-widest font-semibold mb-1.5"
                      style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
                 🏛 Select Legendary Dog
               </label>
-              <div className="relative">
-                <button onClick={() => setDropdownOpen(!dropdownOpen)}
-                        className="w-full text-left px-3 py-2 rounded-lg text-xs font-semibold flex items-center justify-between transition-all"
-                        style={{ background: "var(--bg-elevated)", border: dropdownOpen ? "1px solid var(--accent-gold)" : "1px solid var(--border)",
-                                 fontFamily: "var(--font-table)", color: "var(--text-primary)" }}>
-                  <span className="truncate">{selectedDogName}</span>
-                  <svg className={`w-4 h-4 transition-transform ${dropdownOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-
-                {dropdownOpen && (
-                  <div className="absolute top-full left-0 right-0 mt-1 rounded-lg overflow-hidden z-50 max-h-64 overflow-y-auto"
-                       style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}>
-                    <div className="p-1.5 sticky top-0" style={{ background: "var(--bg-elevated)" }}>
-                      <input
-                        type="text" placeholder="Search dogs..." value={searchText}
-                        onChange={(e) => setSearchText(e.target.value)}
-                        className="w-full px-2.5 py-1.5 rounded-md text-xs outline-none"
-                        style={{ background: "var(--bg-deep)", border: "1px solid var(--border)", color: "var(--text-primary)", fontFamily: "var(--font-table)" }}
-                        autoFocus
-                      />
-                    </div>
-                    {filteredFamous.map((f) => (
-                      <button key={f.id} onClick={() => { setSelectedDog(f.id); setDropdownOpen(false); setSearchText(""); }}
-                              className="w-full text-left px-3 py-2 flex items-center gap-2 transition-all hover:bg-white/5"
-                              style={{ borderBottom: "1px solid rgba(40,44,60,0.3)" }}>
-                        {f.photo_url ? (
-                          <img src={f.photo_url.startsWith("http") ? f.photo_url : `https://www.apbt.online-pedigrees.com/${f.photo_url}`}
-                               alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "1px solid var(--border)" }} />
-                        ) : (
-                          <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-[10px]"
-                               style={{ background: "var(--bg-deep)", border: "2px solid var(--border)" }}>🐕</div>
-                        )}
-                        <div className="min-w-0 flex-1">
-                          <span className="block text-xs font-semibold truncate" style={{ color: selectedDog === f.id ? "var(--accent-gold)" : "var(--text-primary)", fontFamily: "var(--font-table)" }}>
-                            {f.name}
-                          </span>
-                          <span className="text-[9px]" style={{ color: "var(--text-muted)" }}>
-                            {f.view_count?.toLocaleString()} views
-                          </span>
-                        </div>
-                        {selectedDog === f.id && <span className="text-xs" style={{ color: "var(--accent-gold)" }}>✓</span>}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
+              <button onClick={() => setDropdownOpen(!dropdownOpen)}
+                      className="w-full text-left px-3 py-2 rounded-lg text-xs font-semibold flex items-center justify-between transition-all"
+                      style={{ background: "var(--bg-elevated)", border: dropdownOpen ? "1px solid var(--accent-gold)" : "1px solid var(--border)",
+                               fontFamily: "var(--font-table)", color: "var(--text-primary)" }}>
+                <span className="truncate">{selectedDogName}</span>
+                <svg className={`w-4 h-4 transition-transform ${dropdownOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
             </div>
 
             {/* Year Range */}
@@ -528,6 +488,45 @@ export default function SpotlightPage() {
               </button>
             </div>
           </div>
+
+          {/* Legendary Dog Dropdown List */}
+          {dropdownOpen && (
+            <div className="mt-2 rounded-lg" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", boxShadow: "0 10px 40px rgba(0,0,0,0.4)" }}>
+              <div className="p-1.5">
+                <input
+                  type="text" placeholder="Search dogs..." value={searchText}
+                  onChange={(e) => setSearchText(e.target.value)}
+                  className="w-full px-2.5 py-1.5 rounded-md text-xs outline-none"
+                  style={{ background: "var(--bg-deep)", border: "1px solid var(--border)", color: "var(--text-primary)", fontFamily: "var(--font-table)" }}
+                  autoFocus
+                />
+              </div>
+              <div style={{ maxHeight: 288, overflowY: "auto" }}>
+                {filteredFamous.map((f) => (
+                  <button key={f.id} onClick={() => { setSelectedDog(f.id); setDropdownOpen(false); setSearchText(""); }}
+                          className="w-full text-left px-3 py-2 flex items-center gap-2 transition-all hover:bg-white/5"
+                          style={{ borderBottom: "1px solid rgba(40,44,60,0.3)" }}>
+                    {f.photo_url ? (
+                      <img src={f.photo_url.startsWith("http") ? f.photo_url : `https://www.apbt.online-pedigrees.com/${f.photo_url}`}
+                           alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "1px solid var(--border)" }} />
+                    ) : (
+                      <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-[10px]"
+                           style={{ background: "var(--bg-deep)", border: "2px solid var(--border)" }}>🐕</div>
+                    )}
+                    <div className="min-w-0 flex-1">
+                      <span className="block text-xs font-semibold truncate" style={{ color: getDogColor(f.name), fontFamily: "var(--font-table)" }}>
+                        {f.name}
+                      </span>
+                      <span className="text-[9px]" style={{ color: "var(--text-muted)" }}>
+                        {f.view_count?.toLocaleString()} views
+                      </span>
+                    </div>
+                    {selectedDog === f.id && <span className="text-xs" style={{ color: "var(--accent-gold)" }}>✓</span>}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Sort Controls */}
           {searched && (
@@ -659,7 +658,7 @@ export default function SpotlightPage() {
 
                   {/* Info */}
                   <div className="p-2.5">
-                    <h3 className="text-xs font-bold truncate mb-0.5" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+                    <h3 className="text-xs font-bold truncate mb-0.5" style={{ color: getDogColor(r.name), fontFamily: "var(--font-table)" }}>
                       {r.name}
                     </h3>
 
@@ -738,7 +737,7 @@ export default function SpotlightPage() {
                   </div>
                   <div className="p-1.5">
                     <span className="text-[8px] font-bold truncate block"
-                          style={{ color: selectedDog === f.id ? "var(--accent-gold)" : "var(--text-secondary)", fontFamily: "var(--font-table)" }}>
+                          style={{ color: selectedDog === f.id ? "var(--accent-gold)" : getDogColor(f.name), fontFamily: "var(--font-table)" }}>
                       {f.name}
                     </span>
                   </div>

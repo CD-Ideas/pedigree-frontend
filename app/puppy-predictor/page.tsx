@@ -28,7 +28,7 @@ function getDogColor(name: string): string {
     if (num === 2) return "#fb923c";
     if (num === 1) return "#2dd4bf";
   }
-  return "#e2e8f0";
+  return "#ffffff";
 }
 
 const DEFAULT_GENO: Genotype = { K: "ky/ky", A: "Ay/Ay", B: "BB", D: "DD", E: "EE", S: "S/S" };

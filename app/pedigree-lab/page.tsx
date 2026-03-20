@@ -129,7 +129,7 @@ function getDogColor(name: string): string {
     if (num === 2) return "#fb923c"; // orange
     if (num === 1) return "#2dd4bf"; // teal
   }
-  return "#e2e8f0"; // white for no title
+  return "#ffffff";
 }
 
 function sexIcon(sex?: string): string {

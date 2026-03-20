@@ -63,11 +63,11 @@ function getDogCardColor(name: string): string {
   }
   if (/\bROM\b/.test(n)) return "#22d3ee";
   if (/\bPOR\b/.test(n)) return "#a78bfa";
-  return "#e0e0e0"; // dark gray for no title
+  return "#ffffff";
 }
 
 function cardStyle(cc: string) {
-  const isWhite = cc === "#e0e0e0" || cc === "#e8eaed";
+  const isWhite = cc === "#ffffff" || cc === "#e8eaed";
   return {
     background: isWhite ? `linear-gradient(135deg, ${cc}30, ${cc}18)` : `linear-gradient(135deg, ${cc}20, ${cc}10)`,
     border: isWhite ? `1px solid ${cc}50` : `1px solid ${cc}35`,
@@ -96,7 +96,7 @@ function DogLink({ dogId, name, isMale }: { dogId: number | null; name: string; 
   const isRom = !isGrCh && !isCh && !xwColor && /\bROM\b/.test(nameUpper);
   const isPor = !isGrCh && !isCh && !xwColor && !isRom && /\bPOR\b/.test(nameUpper);
   const hasTitle = isGrCh || isCh || xwColor || isRom || isPor || /\b\d+X[WL]\b/i.test(nameUpper);
-  const color = isGrCh ? "#60a5fa" : isCh ? "#fc8181" : xwColor ? xwColor : isRom ? "#22d3ee" : isPor ? "#a78bfa" : !hasTitle ? "#e0e0e0" : isMale === true ? "#60a5fa" : isMale === false ? "#f472b6" : "#d4a855";
+  const color = isGrCh ? "#60a5fa" : isCh ? "#fc8181" : xwColor ? xwColor : isRom ? "#22d3ee" : isPor ? "#a78bfa" : !hasTitle ? "#ffffff" : isMale === true ? "#60a5fa" : isMale === false ? "#f472b6" : "#d4a855";
   if (!dogId) return <span style={{ color: "var(--text-muted)" }}>{name}</span>;
   return (
     <Link href={`/pedigree/${dogId}`} className="hover:underline transition-colors" style={{ color }}>

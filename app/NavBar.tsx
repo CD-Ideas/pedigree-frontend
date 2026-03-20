@@ -21,7 +21,7 @@ function getDogSearchColor(name: string): string {
     if (num === 2) return "#fb923c";
     if (num === 1) return "#2dd4bf";
   }
-  return "#e2e8f0";
+  return "#ffffff";
 }
 
 function NavSearch() {

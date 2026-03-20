@@ -22,16 +22,10 @@ interface Dog {
 }
 
 const TITLE_COLORS: Record<string, string> = {
-  "GR CH": "#fbbf24",
-  CH: "#60a5fa",
-  ROM: "#34d399",
-  POR: "#a78bfa",
-  "1XW": "#f97316",
-  "2XW": "#f97316",
-  "3XW": "#f97316",
-  "4XW": "#ef4444",
-  "5XW": "#ef4444",
-  "1XL": "#fb7185",
+  "GR CH": "#60a5fa", CH: "#fc8181", ROM: "#22d3ee", POR: "#a78bfa",
+  "1XW": "#2dd4bf", "2XW": "#fb923c", "3XW": "#d4a855",
+  "4XW": "#f472b6", "5XW": "#c084fc", "6XW": "#c084fc", "7XW": "#c084fc",
+  "1XL": "#2dd4bf", "2XL": "#fb923c", "3XL": "#d4a855",
 };
 
 function SexIcon({ sex }: { sex: string }) {
