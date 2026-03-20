@@ -270,7 +270,7 @@ export default function Home() {
             onMouseEnter={e => e.currentTarget.style.color = "var(--accent-gold-bright)"} onMouseLeave={e => e.currentTarget.style.color = "var(--accent-gold)"}>Features</a>
           <a href="#heatmap" style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--accent-gold)", transition: "color 0.2s" }}
             onMouseEnter={e => e.currentTarget.style.color = "var(--accent-gold-bright)"} onMouseLeave={e => e.currentTarget.style.color = "var(--accent-gold)"}>Heat Map</a>
-          <a href="#marketplace" style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--accent-gold)", transition: "color 0.2s" }}
+          <a href="/marketplace" style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--accent-gold)", transition: "color 0.2s" }}
             onMouseEnter={e => e.currentTarget.style.color = "var(--accent-gold-bright)"} onMouseLeave={e => e.currentTarget.style.color = "var(--accent-gold)"}>Marketplace</a>
           <div className="relative">
             <button
@@ -653,15 +653,14 @@ export default function Home() {
             </p>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
               {[
-                { icon: "🐕", title: "Dogs For Sale", desc: "Browse verified listings from registered breeders", color: "#ef4444", glow: "239,68,68", tag: "HOT" },
-                { icon: "💎", title: "Stud Services", desc: "Find proven studs with full pedigree verification", color: "#3b82f6", glow: "59,130,246", tag: null },
-                { icon: "🐾", title: "Upcoming Litters", desc: "Reserve puppies from planned breedings", color: "#22c55e", glow: "34,197,94", tag: "NEW" },
-                { icon: "🏥", title: "Health Testing", desc: "Connect with certified testing partners", color: "#a855f7", glow: "168,85,247", tag: null },
-                { icon: "📦", title: "Supplies & Gear", desc: "Premium products from trusted vendors", color: "#f97316", glow: "249,115,22", tag: null },
-                { icon: "🎓", title: "Training Services", desc: "Professional trainers & handling classes", color: "#d4a855", glow: "212,168,85", tag: null },
+                { icon: "🐕", title: "Dogs For Sale", desc: "Browse verified listings from registered breeders", color: "#ef4444", glow: "239,68,68", tag: "HOT", category: "dogs_for_sale" },
+                { icon: "💎", title: "Stud Service", desc: "Find proven studs with full pedigree verification", color: "#8b5cf6", glow: "139,92,246", tag: null, category: "stud_service" },
+                { icon: "🍼", title: "Litters for Sale", desc: "Reserve puppies from planned breedings", color: "#f472b6", glow: "244,114,182", tag: "NEW", category: "litters_for_sale" },
+                { icon: "🎒", title: "Supplies & Gear", desc: "Premium products from trusted vendors", color: "#22c55e", glow: "34,197,94", tag: null, category: "supplies_gear" },
+                { icon: "🚚", title: "Courier Services", desc: "Licensed pet transport & delivery", color: "#60a5fa", glow: "96,165,250", tag: null, category: "courier_services" },
+                { icon: "📢", title: "Puppies Wanted", desc: "Post what you're looking for", color: "#e8c86e", glow: "212,168,85", tag: null, category: "puppies_wanted" },
               ].map((m, i) => (
-                <div key={i} className="group relative rounded-lg p-2.5 animate-scale-reveal cursor-pointer"
-                  onClick={() => setAuthModal(true)}
+                <Link key={i} href={`/marketplace?category=${m.category}`} className="group relative rounded-lg p-2.5 animate-scale-reveal cursor-pointer block"
                   style={{
                     animationDelay: `${i * 0.08}s`,
                     background: "linear-gradient(160deg, rgba(25,27,35,0.95) 0%, rgba(14,15,20,0.98) 100%)",
@@ -713,11 +712,11 @@ export default function Home() {
                       <p style={{ color: "rgba(180,180,195,0.7)", fontFamily: "var(--font-table)", fontSize: "9px", fontWeight: 400, lineHeight: 1.4, marginTop: "1px" }}>{m.desc}</p>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
             <div className="text-center mt-3">
-              <Link href="/register" className="inline-block px-5 py-1.5 rounded-lg"
+              <Link href="/marketplace" className="inline-block px-5 py-1.5 rounded-lg"
                 style={{
                   fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.08em",
                   color: "var(--accent-gold)", border: "1px solid rgba(212,168,85,0.3)", transition: "all 0.2s",
