@@ -32,12 +32,12 @@ interface MarketplaceResponse {
 const LOGO = "https://i.imgur.com/cAvQemZ.png";
 
 const CATEGORIES = [
-  { key: "dogs_for_sale", label: "Dogs for Sale", icon: "\uD83D\uDC15", color: "#ef4444" },
-  { key: "stud_service", label: "Stud Service", icon: "\uD83D\uDC8E", color: "#8b5cf6" },
-  { key: "litters_for_sale", label: "Litters for Sale", icon: "\uD83C\uDF7C", color: "#f472b6" },
-  { key: "supplies_gear", label: "Supplies & Gear", icon: "\uD83C\uDF92", color: "#22c55e" },
-  { key: "courier_services", label: "Courier Services", icon: "\uD83D\uDE9A", color: "#60a5fa" },
-  { key: "puppies_wanted", label: "Puppies Wanted", icon: "\uD83D\uDCE2", color: "#e8c86e" },
+  { key: "dogs_for_sale", label: "Dogs for Sale", icon: "\uD83D\uDC15", color: "#ef4444", glow: "239,68,68", tag: "HOT" },
+  { key: "stud_service", label: "Stud Service", icon: "\uD83D\uDC8E", color: "#8b5cf6", glow: "139,92,246", tag: null },
+  { key: "litters_for_sale", label: "Litters for Sale", icon: "\uD83C\uDF7C", color: "#f472b6", glow: "244,114,182", tag: "NEW" },
+  { key: "supplies_gear", label: "Supplies & Gear", icon: "\uD83C\uDF92", color: "#22c55e", glow: "34,197,94", tag: null },
+  { key: "courier_services", label: "Courier Services", icon: "\uD83D\uDE9A", color: "#60a5fa", glow: "96,165,250", tag: null },
+  { key: "puppies_wanted", label: "Puppies Wanted", icon: "\uD83D\uDCE2", color: "#e8c86e", glow: "212,168,85", tag: null },
 ];
 
 const CATEGORY_MAP: Record<string, { label: string; icon: string; color: string }> = {};
@@ -344,80 +344,131 @@ export default function MarketplacePage() {
             </span>
           </div>
 
-          {/* Title */}
-          <h1
-            className="text-3xl md:text-4xl font-black uppercase tracking-widest"
-            style={{
-              fontFamily: "var(--font-display, Oswald, sans-serif)",
-              background: "linear-gradient(135deg, #e8c86e, #d4a855)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
-            MARKETPLACE
-          </h1>
-          <p
-            className="mt-1.5 text-sm"
-            style={{ color: "var(--text-secondary, #94a3b8)", fontFamily: "var(--font-table)" }}
-          >
-            Buy, sell, and connect with breeders worldwide
-          </p>
+          {/* Title + Create Ad */}
+          <div className="flex items-start justify-between">
+            <div>
+              <h1
+                className="text-3xl md:text-4xl font-black uppercase tracking-widest"
+                style={{
+                  fontFamily: "var(--font-display, Oswald, sans-serif)",
+                  background: "linear-gradient(135deg, #e8c86e, #d4a855)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}
+              >
+                MARKETPLACE
+              </h1>
+              <p
+                className="mt-1.5 text-sm"
+                style={{ color: "var(--text-secondary, #94a3b8)", fontFamily: "var(--font-table)" }}
+              >
+                Buy, sell, and connect with breeders worldwide
+              </p>
+            </div>
+            <Link
+              href={category ? `/marketplace/create?category=${category}` : "/marketplace/create"}
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-[11px] font-bold transition-all hover:scale-105 flex-shrink-0 mt-2"
+              style={{
+                background: "linear-gradient(135deg, #e8c86e, #b8860b)",
+                color: "#000",
+                fontFamily: "var(--font-table)",
+                letterSpacing: "0.03em",
+                boxShadow: "0 2px 12px rgba(212,168,85,0.2)",
+              }}
+            >
+              + Create Ad
+            </Link>
+          </div>
         </div>
       </div>
 
       <div className="max-w-[1200px] mx-auto px-4 md:px-6 pb-10">
         {/* ─── Category Filter Cards ─── */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mb-6">
           {CATEGORIES.map((cat) => {
             const isActive = category === cat.key;
             return (
               <button
                 key={cat.key}
                 onClick={() => handleCategoryClick(cat.key)}
-                className="flex items-center gap-3 rounded-xl px-4 py-3.5 text-left transition-all duration-300 hover:scale-[1.02]"
+                className="group relative rounded-lg p-2.5 text-left cursor-pointer"
                 style={{
                   background: isActive
-                    ? `linear-gradient(135deg, ${cat.color}18, ${cat.color}08)`
-                    : "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+                    ? `linear-gradient(160deg, rgba(${cat.glow},0.12) 0%, rgba(14,15,20,0.98) 100%)`
+                    : "linear-gradient(160deg, rgba(25,27,35,0.95) 0%, rgba(14,15,20,0.98) 100%)",
                   border: isActive
-                    ? `1.5px solid ${cat.color}66`
-                    : "1.5px solid rgba(30,64,120,0.3)",
-                  backdropFilter: "blur(12px)",
+                    ? `1px solid ${cat.color}`
+                    : "1px solid rgba(255,255,255,0.07)",
+                  transition: "all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                  overflow: "hidden",
+                  boxShadow: isActive
+                    ? `0 0 30px rgba(${cat.glow},0.12), 0 10px 35px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08)`
+                    : "0 4px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04)",
+                }}
+                onMouseEnter={e => {
+                  if (!isActive) {
+                    e.currentTarget.style.borderColor = cat.color;
+                    e.currentTarget.style.boxShadow = `0 0 30px rgba(${cat.glow},0.12), 0 10px 35px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08)`;
+                    e.currentTarget.style.transform = "translateY(-4px) scale(1.01)";
+                  }
+                }}
+                onMouseLeave={e => {
+                  if (!isActive) {
+                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)";
+                    e.currentTarget.style.boxShadow = "0 4px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04)";
+                    e.currentTarget.style.transform = "translateY(0) scale(1)";
+                  }
                 }}
               >
+                {/* Top accent line */}
                 <div
-                  className="w-10 h-10 rounded-lg flex items-center justify-center text-lg flex-shrink-0"
-                  style={{ background: `${cat.color}18`, border: `1px solid ${cat.color}33` }}
-                >
-                  {cat.icon}
-                </div>
-                <div>
+                  className="absolute top-0 left-0 right-0 h-[2px] transition-all duration-400"
+                  style={{
+                    background: `linear-gradient(90deg, transparent 5%, ${cat.color} 50%, transparent 95%)`,
+                    opacity: isActive ? 1 : 0.3,
+                  }}
+                />
+                <div className="flex items-start gap-2">
+                  {/* Icon */}
                   <div
-                    className="text-xs font-bold"
+                    className="flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-md"
                     style={{
-                      color: isActive ? cat.color : "var(--text-primary, #e2e8f0)",
-                      fontFamily: "var(--font-table)",
+                      background: `linear-gradient(135deg, rgba(${cat.glow},0.12) 0%, rgba(${cat.glow},0.04) 100%)`,
+                      border: `1px solid rgba(${cat.glow},0.2)`,
                     }}
                   >
-                    {cat.label}
+                    <span className="text-sm">{cat.icon}</span>
                   </div>
-                  <div
-                    className="text-[9px] mt-0.5"
-                    style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}
-                  >
-                    {isActive ? "Click to clear" : "Browse listings"}
+                  {/* Text */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-1.5">
+                      <h3 style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", color: isActive ? cat.color : "#fff", letterSpacing: "0.02em" }}>
+                        {cat.label}
+                      </h3>
+                      {cat.tag && (
+                        <span style={{
+                          fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "8px", letterSpacing: "0.08em",
+                          color: cat.tag === "HOT" ? "#ef4444" : "#22c55e",
+                          background: cat.tag === "HOT" ? "rgba(239,68,68,0.12)" : "rgba(34,197,94,0.12)",
+                          border: `1px solid ${cat.tag === "HOT" ? "rgba(239,68,68,0.25)" : "rgba(34,197,94,0.25)"}`,
+                          padding: "1px 6px", borderRadius: "9999px",
+                        }}>{cat.tag}</span>
+                      )}
+                      {isActive && (
+                        <span style={{
+                          fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "8px", letterSpacing: "0.08em",
+                          color: cat.color,
+                          background: `rgba(${cat.glow},0.12)`,
+                          border: `1px solid rgba(${cat.glow},0.25)`,
+                          padding: "1px 6px", borderRadius: "9999px",
+                        }}>{"\u2713"} ACTIVE</span>
+                      )}
+                    </div>
+                    <p style={{ fontFamily: "var(--font-table)", fontSize: "9px", color: "rgba(148,163,184,0.6)", marginTop: "2px", fontWeight: 400 }}>
+                      {isActive ? "Click to clear filter" : "Browse listings"}
+                    </p>
                   </div>
                 </div>
-                {isActive && (
-                  <div className="ml-auto">
-                    <span
-                      className="text-[10px] font-bold"
-                      style={{ color: cat.color }}
-                    >
-                      {"\u2713"}
-                    </span>
-                  </div>
-                )}
               </button>
             );
           })}
@@ -493,17 +544,19 @@ export default function MarketplacePage() {
               setSort(e.target.value);
               setPage(1);
             }}
-            className="rounded-lg px-3 py-2.5 text-xs font-medium appearance-none cursor-pointer"
+            className="rounded-lg px-3 py-2.5 text-xs font-bold appearance-none cursor-pointer"
             style={{
-              background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
-              border: "1.5px solid rgba(30,64,120,0.3)",
-              color: "var(--text-secondary, #94a3b8)",
+              background: "linear-gradient(135deg, #e0e0e0, #a8a8a8, #c8c8c8, #8a8a8a)",
+              border: "1px solid rgba(255,255,255,0.3)",
+              color: "#1a1a1a",
               fontFamily: "var(--font-table)",
               paddingRight: "30px",
-              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%234b5f80'/%3E%3C/svg%3E")`,
+              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%231a1a1a' d='M6 8L1 3h10z'/%3E%3C/svg%3E")`,
               backgroundRepeat: "no-repeat",
               backgroundPosition: "right 10px center",
               minWidth: "140px",
+              boxShadow: "0 2px 12px rgba(192,192,192,0.3), inset 0 1px 0 rgba(255,255,255,0.4)",
+              textShadow: "0 1px 0 rgba(255,255,255,0.3)",
             }}
           >
             <option value="newest">Newest First</option>
@@ -641,23 +694,6 @@ export default function MarketplacePage() {
           </div>
         ) : (
           <>
-            {/* Create Ad button */}
-            <div className="flex justify-end mb-3">
-              <Link
-                href={category ? `/marketplace/create?category=${category}` : "/marketplace/create"}
-                className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-[11px] font-bold transition-all hover:scale-105"
-                style={{
-                  background: "linear-gradient(135deg, #e8c86e, #b8860b)",
-                  color: "#000",
-                  fontFamily: "var(--font-table)",
-                  letterSpacing: "0.03em",
-                  boxShadow: "0 2px 12px rgba(212,168,85,0.2)",
-                }}
-              >
-                Create Ad {"\u2192"}
-              </Link>
-            </div>
-
             {/* Ad Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {ads.map((ad, i) => (
