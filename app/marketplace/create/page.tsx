@@ -486,6 +486,7 @@ export default function CreateAdPage() {
                     setSelectedDogName("");
                     setDogSearchQuery("");
                     setTitle("");
+                    setPhotos([]);
                   }}
                   className="px-2.5 py-2 rounded-lg text-xs transition-all hover:scale-105"
                   style={{ background: "rgba(239,68,68,0.1)", color: "#ef4444", border: "1px solid rgba(239,68,68,0.2)" }}
@@ -535,6 +536,13 @@ export default function CreateAdPage() {
                           setShowDogSearch(false);
                           setDogSearchQuery("");
                           setErrors((prev) => ({ ...prev, title: "", dog: "" }));
+                          // Auto-fill photo from database
+                          if (dog.photo_url) {
+                            const photoUrl = dog.photo_url.startsWith("http")
+                              ? dog.photo_url
+                              : `https://www.apbt.online-pedigrees.com/${dog.photo_url}`;
+                            setPhotos([photoUrl]);
+                          }
                         }}
                         className="w-full text-left px-3 py-2 text-xs flex items-center gap-2 transition-colors hover:bg-[rgba(212,168,85,0.08)]"
                         style={{ borderBottom: "1px solid rgba(30,64,120,0.2)" }}
@@ -590,11 +598,11 @@ export default function CreateAdPage() {
               placeholder={selectedDogName ? selectedDogName : "e.g., Champion Bloodline Male - 2 Years Old"}
               maxLength={80}
               readOnly={!!selectedDogName}
-              className="w-full rounded-lg px-4 py-2.5 text-sm outline-none"
+              className="w-full rounded-lg px-4 py-2.5 text-sm outline-none font-bold"
               style={{
                 background: selectedDogName ? "rgba(212,168,85,0.08)" : "rgba(30,64,120,0.15)",
                 border: selectedDogName ? "1px solid rgba(212,168,85,0.25)" : "1px solid rgba(30,64,120,0.3)",
-                color: "var(--text-primary, #e2e8f0)",
+                color: selectedDogName ? getDogColor(selectedDogName) : "var(--text-primary, #e2e8f0)",
                 fontFamily: "var(--font-table)",
                 cursor: selectedDogName ? "not-allowed" : "text",
               }}
@@ -716,39 +724,62 @@ export default function CreateAdPage() {
               </span>
             </div>
 
-            {/* Thumbnail previews */}
+            {/* Thumbnail previews — all photos (auto + manual) */}
             {photos.length > 0 && (
               <div className="flex flex-wrap gap-3 mb-3">
-                {photos.map((photo, i) => (
-                  <div
-                    key={i}
-                    className="relative group"
-                    style={{ width: 80, height: 80 }}
-                  >
-                    <img
-                      src={photo}
-                      alt={`Photo ${i + 1}`}
-                      className="w-full h-full object-cover rounded-lg"
-                      style={{ border: "1.5px solid rgba(30,64,120,0.3)" }}
-                    />
-                    <button
-                      type="button"
-                      onClick={() => removePhoto(i)}
-                      className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold transition-all opacity-0 group-hover:opacity-100 hover:scale-110"
-                      style={{
-                        background: "rgba(239,68,68,0.9)",
-                        color: "#fff",
-                        boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
-                      }}
+                {photos.map((photo, i) => {
+                  const isAutoPhoto = selectedDogName && i === 0 && (photo.includes("online-pedigrees.com") || photo.includes("apbt"));
+                  return (
+                    <div
+                      key={i}
+                      className="relative group"
+                      style={{ width: 80, height: 80 }}
                     >
-                      {"\u2715"}
-                    </button>
-                  </div>
-                ))}
+                      <img
+                        src={photo}
+                        alt={`Photo ${i + 1}`}
+                        className="w-full h-full object-cover rounded-lg"
+                        style={{ border: isAutoPhoto ? "1.5px solid rgba(212,168,85,0.3)" : "1.5px solid rgba(30,64,120,0.3)" }}
+                      />
+                      {isAutoPhoto && (
+                        <div
+                          className="absolute bottom-0 left-0 right-0 rounded-b-lg px-1 py-0.5 text-center"
+                          style={{ background: "rgba(0,0,0,0.7)", backdropFilter: "blur(4px)" }}
+                        >
+                          <span className="text-[8px] font-bold" style={{ color: "#e8c86e", fontFamily: "var(--font-table)" }}>
+                            Auto
+                          </span>
+                        </div>
+                      )}
+                      {/* Show remove button for manual photos only */}
+                      {!isAutoPhoto && (
+                        <button
+                          type="button"
+                          onClick={() => removePhoto(i)}
+                          className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold transition-all opacity-0 group-hover:opacity-100 hover:scale-110"
+                          style={{
+                            background: "rgba(239,68,68,0.9)",
+                            color: "#fff",
+                            boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
+                          }}
+                        >
+                          {"\u2715"}
+                        </button>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             )}
 
-            {/* Drag and drop zone */}
+            {/* Auto-loaded note */}
+            {selectedDogName && photos.length > 0 && (photos[0].includes("online-pedigrees.com") || photos[0].includes("apbt")) && (
+              <p className="text-[10px] mb-3" style={{ color: "#e8c86e", fontFamily: "var(--font-table)" }}>
+                First photo auto-loaded from database — you can add up to {5 - photos.length} more below
+              </p>
+            )}
+
+            {/* Drag and drop zone — always show if under 5 photos */}
             {photos.length < 5 && (
               <div
                 style={dropzoneStyle}
@@ -782,7 +813,7 @@ export default function CreateAdPage() {
                   <div className="flex flex-col items-center gap-2">
                     <span className="text-2xl opacity-50">{"\uD83D\uDCF7"}</span>
                     <span className="text-xs font-medium" style={{ color: "#e8c86e", fontFamily: "var(--font-table)" }}>
-                      Drag photos here or click to browse
+                      {selectedDogName ? "Add more photos" : "Drag photos here or click to browse"}
                     </span>
                     <span className="text-[10px]" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
                       JPG, PNG, WebP — Max 5MB each — Up to {5 - photos.length} more

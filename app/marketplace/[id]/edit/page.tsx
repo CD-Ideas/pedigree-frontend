@@ -3,12 +3,16 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import { getDogColor } from "@/app/utils/colors";
 
 /* ─── Types ─── */
 interface DogSearchResult {
   id: number;
+  dog_id: number;
   name: string;
+  registered_name: string;
   reg_number: string;
+  photo_url: string | null;
 }
 
 interface MarketplaceAd {
@@ -545,6 +549,126 @@ export default function EditAdPage() {
             )}
           </div>
 
+          {/* ─── Link to Dog ─── */}
+          <div
+            className="rounded-xl p-5 relative"
+            style={{
+              background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+              border: errors.dog ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid rgba(30,64,120,0.3)",
+              backdropFilter: "blur(12px)",
+              overflow: "visible",
+              zIndex: 10,
+            }}
+          >
+            <label className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+              Link to Dog {["dogs_for_sale", "stud_service", "litters_for_sale"].includes(category)
+                ? <span className="text-[9px] normal-case tracking-normal font-normal" style={{ color: "#ef4444" }}>(required)</span>
+                : <span className="text-[9px] normal-case tracking-normal font-normal">(optional)</span>}
+            </label>
+            <p className="text-[10px] mb-3" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+              Link this ad to a registered pedigree on the platform — the heading will be auto-filled
+            </p>
+            {errors.dog && (
+              <p className="text-[10px] mb-2" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+                {errors.dog}
+              </p>
+            )}
+
+            {selectedDogName ? (
+              <div className="flex items-center gap-2">
+                <div
+                  className="flex-1 flex items-center gap-2 rounded-lg px-3 py-2"
+                  style={{ background: "rgba(212,168,85,0.08)", border: "1px solid rgba(212,168,85,0.25)" }}
+                >
+                  <span className="text-xs">{"\uD83D\uDC15"}</span>
+                  <span className="text-xs font-bold" style={{ color: getDogColor(selectedDogName), fontFamily: "var(--font-table)" }}>
+                    {selectedDogName}
+                  </span>
+                  <span className="text-[9px]" style={{ color: "#e8c86e", fontFamily: "var(--font-mono)" }}>
+                    ID: {dogId}
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setDogId(null);
+                    setSelectedDogName("");
+                    setDogSearchQuery("");
+                    setTitle("");
+                    setPhotos([]);
+                  }}
+                  className="px-2.5 py-2 rounded-lg text-xs transition-all hover:scale-105"
+                  style={{ background: "rgba(239,68,68,0.1)", color: "#ef4444", border: "1px solid rgba(239,68,68,0.2)" }}
+                >
+                  {"\u2715"}
+                </button>
+              </div>
+            ) : (
+              <div className="relative">
+                <input
+                  type="text"
+                  value={dogSearchQuery}
+                  onChange={(e) => {
+                    setDogSearchQuery(e.target.value);
+                    setShowDogSearch(true);
+                  }}
+                  onFocus={() => setShowDogSearch(true)}
+                  placeholder="Search for a dog by name..."
+                  className="w-full rounded-lg px-4 py-2.5 text-xs outline-none"
+                  style={{
+                    background: "rgba(30,64,120,0.15)",
+                    border: "1px solid rgba(30,64,120,0.3)",
+                    color: "var(--text-primary, #e2e8f0)",
+                    fontFamily: "var(--font-table)",
+                  }}
+                />
+                {showDogSearch && dogSearchResults.length > 0 && (
+                  <div
+                    className="absolute top-full left-0 right-0 mt-1 rounded-lg overflow-hidden z-50 max-h-48 overflow-y-auto"
+                    style={{
+                      background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+                      border: "1.5px solid rgba(30,64,120,0.5)",
+                      boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
+                    }}
+                  >
+                    {dogSearchResults.map((dog) => (
+                      <button
+                        key={dog.id}
+                        type="button"
+                        onClick={() => {
+                          const dId = dog.dog_id || dog.id;
+                          const dName = dog.registered_name || dog.name;
+                          setDogId(dId);
+                          setSelectedDogName(dName);
+                          setTitle(dName);
+                          setShowDogSearch(false);
+                          setDogSearchQuery("");
+                          setErrors((prev) => ({ ...prev, title: "", dog: "" }));
+                          // Auto-fill photo from database
+                          if (dog.photo_url) {
+                            const photoUrl = dog.photo_url.startsWith("http")
+                              ? dog.photo_url
+                              : `https://www.apbt.online-pedigrees.com/${dog.photo_url}`;
+                            setPhotos([photoUrl]);
+                          }
+                        }}
+                        className="w-full text-left px-3 py-2 text-xs flex items-center gap-2 transition-colors hover:bg-[rgba(212,168,85,0.08)]"
+                        style={{ borderBottom: "1px solid rgba(30,64,120,0.2)" }}
+                      >
+                        <span style={{ color: getDogColor(dog.name), fontFamily: "var(--font-table)", fontWeight: 600 }}>
+                          {dog.name}
+                        </span>
+                        <span className="text-[9px] ml-auto" style={{ color: "#e8c86e", fontFamily: "var(--font-mono)" }}>
+                          {dog.reg_number}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
           {/* ─── Heading ─── */}
           <div
             className="rounded-xl p-5"
@@ -575,16 +699,23 @@ export default function EditAdPage() {
                 setTitle(e.target.value);
                 if (errors.title) setErrors((prev) => ({ ...prev, title: "" }));
               }}
-              placeholder="e.g., Champion Bloodline Male - 2 Years Old"
+              placeholder={selectedDogName ? selectedDogName : "e.g., Champion Bloodline Male - 2 Years Old"}
               maxLength={80}
-              className="w-full rounded-lg px-4 py-2.5 text-sm outline-none"
+              readOnly={!!selectedDogName}
+              className="w-full rounded-lg px-4 py-2.5 text-sm outline-none font-bold"
               style={{
-                background: "rgba(30,64,120,0.15)",
-                border: "1px solid rgba(30,64,120,0.3)",
-                color: "var(--text-primary, #e2e8f0)",
+                background: selectedDogName ? "rgba(212,168,85,0.08)" : "rgba(30,64,120,0.15)",
+                border: selectedDogName ? "1px solid rgba(212,168,85,0.25)" : "1px solid rgba(30,64,120,0.3)",
+                color: selectedDogName ? getDogColor(selectedDogName) : "var(--text-primary, #e2e8f0)",
                 fontFamily: "var(--font-table)",
+                cursor: selectedDogName ? "not-allowed" : "text",
               }}
             />
+            {selectedDogName && (
+              <p className="text-[10px] mt-1.5" style={{ color: "#e8c86e", fontFamily: "var(--font-table)" }}>
+                Auto-filled from linked dog
+              </p>
+            )}
             {errors.title && (
               <p className="text-[10px] mt-1.5 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
                 {errors.title}
@@ -948,111 +1079,6 @@ export default function EditAdPage() {
               <p className="text-[10px] mt-2 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
                 {errors.contact}
               </p>
-            )}
-          </div>
-
-          {/* ─── Link to Dog ─── */}
-          <div
-            className="rounded-xl p-5"
-            style={{
-              background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
-              border: errors.dog ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid rgba(30,64,120,0.3)",
-              backdropFilter: "blur(12px)",
-            }}
-          >
-            <label className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
-              Link to Dog {["dogs_for_sale", "stud_service", "litters_for_sale"].includes(category)
-                ? <span className="text-[9px] normal-case tracking-normal font-normal" style={{ color: "#ef4444" }}>(required)</span>
-                : <span className="text-[9px] normal-case tracking-normal font-normal">(optional)</span>}
-            </label>
-            <p className="text-[10px] mb-3" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
-              Link this ad to a registered pedigree on the platform
-            </p>
-            {errors.dog && (
-              <p className="text-[10px] mb-2" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
-                {errors.dog}
-              </p>
-            )}
-
-            {selectedDogName ? (
-              <div className="flex items-center gap-2">
-                <div
-                  className="flex-1 flex items-center gap-2 rounded-lg px-3 py-2"
-                  style={{ background: "rgba(212,168,85,0.08)", border: "1px solid rgba(212,168,85,0.25)" }}
-                >
-                  <span className="text-xs">{"\uD83D\uDC15"}</span>
-                  <span className="text-xs font-bold" style={{ color: "#e8c86e", fontFamily: "var(--font-table)" }}>
-                    {selectedDogName}
-                  </span>
-                  <span className="text-[9px]" style={{ color: "#5a6a82", fontFamily: "var(--font-mono)" }}>
-                    ID: {dogId}
-                  </span>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setDogId(null);
-                    setSelectedDogName("");
-                    setDogSearchQuery("");
-                  }}
-                  className="px-2.5 py-2 rounded-lg text-xs transition-all hover:scale-105"
-                  style={{ background: "rgba(239,68,68,0.1)", color: "#ef4444", border: "1px solid rgba(239,68,68,0.2)" }}
-                >
-                  {"\u2715"}
-                </button>
-              </div>
-            ) : (
-              <div className="relative">
-                <input
-                  type="text"
-                  value={dogSearchQuery}
-                  onChange={(e) => {
-                    setDogSearchQuery(e.target.value);
-                    setShowDogSearch(true);
-                  }}
-                  onFocus={() => setShowDogSearch(true)}
-                  placeholder="Search for a dog by name..."
-                  className="w-full rounded-lg px-4 py-2.5 text-xs outline-none"
-                  style={{
-                    background: "rgba(30,64,120,0.15)",
-                    border: "1px solid rgba(30,64,120,0.3)",
-                    color: "var(--text-primary, #e2e8f0)",
-                    fontFamily: "var(--font-table)",
-                  }}
-                />
-                {showDogSearch && dogSearchResults.length > 0 && (
-                  <div
-                    className="absolute top-full left-0 right-0 mt-1 rounded-lg overflow-hidden z-20 max-h-48 overflow-y-auto"
-                    style={{
-                      background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
-                      border: "1.5px solid rgba(30,64,120,0.5)",
-                      boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
-                    }}
-                  >
-                    {dogSearchResults.map((dog) => (
-                      <button
-                        key={dog.id}
-                        type="button"
-                        onClick={() => {
-                          setDogId(dog.id);
-                          setSelectedDogName(dog.name);
-                          setShowDogSearch(false);
-                          setDogSearchQuery("");
-                        }}
-                        className="w-full text-left px-3 py-2 text-xs flex items-center gap-2 transition-colors hover:bg-[rgba(212,168,85,0.08)]"
-                        style={{ borderBottom: "1px solid rgba(30,64,120,0.2)" }}
-                      >
-                        <span style={{ color: "var(--text-primary, #e2e8f0)", fontFamily: "var(--font-table)", fontWeight: 600 }}>
-                          {dog.name}
-                        </span>
-                        <span className="text-[9px] ml-auto" style={{ color: "#5a6a82", fontFamily: "var(--font-mono)" }}>
-                          {dog.reg_number}
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
             )}
           </div>
 
