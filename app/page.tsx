@@ -61,7 +61,7 @@ function _BreedingCalcPreview_UNUSED() {
   });
 
   return (
-    <section id="heatmap" className="py-5 px-4">
+    <section id="breeding-calculator" className="py-5 px-4">
       <div className="max-w-5xl mx-auto">
         <h2 className="subtitle-gold text-center mb-0.5" style={{ fontFamily: "var(--font-table)", fontWeight: 500, fontSize: "clamp(0.95rem, 2vw, 1.25rem)" }}>
           Breeding Calculator
@@ -196,7 +196,7 @@ function _BreedingCalcPreview_UNUSED() {
 
             {/* CTA */}
             <button
-              onClick={() => window.location.href = "/breeding-calculator"}
+              onClick={() => window.location.href = "#breeding-calculator"}
               className="w-full py-2 rounded-lg text-center"
               style={{
                 fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.08em",
@@ -276,9 +276,9 @@ export default function Home() {
         <div className="hidden md:flex items-center gap-6">
           <a href="#features" style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--accent-gold)", transition: "color 0.2s" }}
             onMouseEnter={e => e.currentTarget.style.color = "var(--accent-gold-bright)"} onMouseLeave={e => e.currentTarget.style.color = "var(--accent-gold)"}>Features</a>
-          <a href="/breeding-calculator" style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--accent-gold)", transition: "color 0.2s" }}
+          <a href="#breeding-calculator" style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--accent-gold)", transition: "color 0.2s" }}
             onMouseEnter={e => e.currentTarget.style.color = "var(--accent-gold-bright)"} onMouseLeave={e => e.currentTarget.style.color = "var(--accent-gold)"}>Breeding Calculator</a>
-          <a href="/marketplace" style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--accent-gold)", transition: "color 0.2s" }}
+          <a href="#marketplace" style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--accent-gold)", transition: "color 0.2s" }}
             onMouseEnter={e => e.currentTarget.style.color = "var(--accent-gold-bright)"} onMouseLeave={e => e.currentTarget.style.color = "var(--accent-gold)"}>Marketplace</a>
           <div className="relative">
             <button
@@ -341,7 +341,7 @@ export default function Home() {
           <div className="flex flex-col items-center justify-center h-full gap-6">
             {[
               { label: "Features", href: "#features" },
-              { label: "Breeding Calculator", href: "/breeding-calculator" },
+              { label: "Breeding Calculator", href: "#breeding-calculator" },
               { label: "Marketplace", href: "#marketplace" },
             ].map((item) => (
               <a key={item.label} href={item.href} onClick={() => setMobileMenu(false)}
@@ -499,7 +499,7 @@ export default function Home() {
         </section>
 
         {/* ── Breeding Calculator ── */}
-        <section id="heatmap" className="py-5 px-4">
+        <section id="breeding-calculator" className="py-5 px-4">
           <div className="max-w-5xl mx-auto">
             <h2 className="subtitle-gold text-center mb-0.5" style={{ fontFamily: "var(--font-table)", fontWeight: 500, fontSize: "clamp(0.95rem, 2vw, 1.25rem)" }}>
               Breeding Calculator
@@ -632,7 +632,7 @@ export default function Home() {
                 </div>
 
                 <button
-                  onClick={() => openAuth("/breeding-calculator")}
+                  onClick={() => openAuth("#breeding-calculator")}
                   className="w-full py-2 rounded-lg text-center"
                   style={{
                     fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.08em",
@@ -762,7 +762,7 @@ export default function Home() {
                 <div>
                   <h4 style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "9px", color: "var(--accent-gold-bright)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "6px" }}>Platform</h4>
                   <div className="flex flex-col gap-1.5">
-                    {[{ label: "Features", href: "#features" }, { label: "Breeding Calculator", href: "/breeding-calculator" }, { label: "Marketplace", href: "#marketplace" }].map((l) => (
+                    {[{ label: "Features", href: "#features" }, { label: "Breeding Calculator", href: "#breeding-calculator" }, { label: "Marketplace", href: "#marketplace" }].map((l) => (
                       <a key={l.label} href={l.href} style={{ fontFamily: "var(--font-table)", fontSize: "10px", color: "rgba(200,200,210,0.8)", transition: "color 0.2s" }}
                         onMouseEnter={e => e.currentTarget.style.color = "#fff"}
                         onMouseLeave={e => e.currentTarget.style.color = "rgba(200,200,210,0.8)"}>{l.label}</a>
