@@ -203,7 +203,7 @@ function CreateAdContent() {
 
     if (!description.trim()) errs.description = "Description is required";
     else if (description.trim().length < 10) errs.description = "Description must be at least 10 characters";
-    else if (description.trim().length > 200) errs.description = "Description must be 200 characters or less";
+    else if (description.trim().length > 500) errs.description = "Description must be 500 characters or less";
 
     if (photos.length === 0) errs.photos = "At least one photo is required";
 
@@ -686,11 +686,11 @@ function CreateAdContent() {
               <span
                 className="text-[10px]"
                 style={{
-                  color: description.length > 200 ? "#ef4444" : description.length > 160 ? "#eab308" : "#5a6a82",
+                  color: description.length > 500 ? "#ef4444" : description.length > 400 ? "#eab308" : "#5a6a82",
                   fontFamily: "var(--font-mono)",
                 }}
               >
-                {description.length}/200
+                {description.length}/500
               </span>
             </div>
             <textarea
@@ -700,8 +700,8 @@ function CreateAdContent() {
                 if (errors.description) setErrors((prev) => ({ ...prev, description: "" }));
               }}
               placeholder="Describe your listing in detail..."
-              rows={4}
-              maxLength={200}
+              rows={5}
+              maxLength={500}
               className="w-full rounded-lg px-4 py-2.5 text-sm outline-none resize-none"
               style={{
                 ...INPUT_STYLE,

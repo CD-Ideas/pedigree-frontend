@@ -321,7 +321,7 @@ export default function MarketplacePage() {
       <div className="relative overflow-hidden">
         {/* Ambient glow */}
         <div
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[200px] opacity-[0.07]"
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[600px] h-[200px] opacity-[0.07]"
           style={{ background: "radial-gradient(ellipse, rgba(212,168,85,1) 0%, transparent 70%)" }}
         />
 
@@ -538,30 +538,32 @@ export default function MarketplacePage() {
           </form>
 
           {/* Sort dropdown */}
-          <select
-            value={sort}
-            onChange={(e) => {
-              setSort(e.target.value);
-              setPage(1);
-            }}
-            className="rounded-lg px-3 py-2.5 text-xs font-bold appearance-none cursor-pointer"
-            style={{
-              background: "linear-gradient(135deg, #e0e0e0, #a8a8a8, #c8c8c8, #8a8a8a)",
-              border: "1px solid rgba(255,255,255,0.3)",
-              color: "#1a1a1a",
-              fontFamily: "var(--font-table)",
-              paddingRight: "30px",
-              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%231a1a1a' d='M6 8L1 3h10z'/%3E%3C/svg%3E")`,
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "right 10px center",
-              minWidth: "140px",
-              boxShadow: "0 2px 12px rgba(192,192,192,0.3), inset 0 1px 0 rgba(255,255,255,0.4)",
-              textShadow: "0 1px 0 rgba(255,255,255,0.3)",
-            }}
-          >
+          <div className="relative" style={{ minWidth: "120px" }}>
+            <select
+              value={sort}
+              onChange={(e) => {
+                setSort(e.target.value);
+                setPage(1);
+              }}
+              className="rounded-xl px-3 py-2.5 text-xs font-black appearance-none cursor-pointer w-full"
+              style={{
+                background: "linear-gradient(135deg, #cbd5e1, #94a3b8)",
+                color: "#000",
+                fontFamily: "var(--font-display)",
+                letterSpacing: "0.05em",
+                paddingRight: "30px",
+                border: "none",
+                boxShadow: "0 4px 20px rgba(148,163,184,0.3)",
+                transition: "all 0.3s ease",
+              }}
+            >
             <option value="newest">Newest First</option>
             <option value="most_viewed">Most Viewed</option>
-          </select>
+            </select>
+            <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2" style={{ color: "#000" }}>
+              ▼
+            </div>
+          </div>
         </div>
 
         {/* Active filters info */}

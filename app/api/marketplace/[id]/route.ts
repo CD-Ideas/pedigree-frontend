@@ -93,9 +93,9 @@ export async function PUT(
       );
     }
 
-    if (description !== undefined && (description.length < 10 || description.length > 200)) {
+    if (description !== undefined && (description.length < 10 || description.length > 500)) {
       return NextResponse.json(
-        { error: "Description must be between 10 and 200 characters" },
+        { error: "Description must be between 10 and 500 characters" },
         { status: 400 }
       );
     }

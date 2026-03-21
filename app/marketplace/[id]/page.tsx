@@ -215,9 +215,9 @@ export default function MarketplaceAdPage() {
           </span>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
           {/* ─── Left Column: Photos ─── */}
-          <div className="lg:col-span-3 space-y-3">
+          <div className="md:col-span-3 space-y-3">
             {/* Main Photo */}
             <div
               className="relative rounded-xl overflow-hidden"
@@ -406,7 +406,7 @@ export default function MarketplaceAdPage() {
           </div>
 
           {/* ─── Right Column: Details ─── */}
-          <div className="lg:col-span-2 space-y-4">
+          <div className="md:col-span-2 space-y-4">
             {/* Title & Price Card */}
             <div
               className="rounded-xl p-5"
@@ -782,7 +782,7 @@ export default function MarketplaceAdPage() {
                         </div>
                         <a
                           href={`mailto:${ad.contact_email}`}
-                          className="text-xs font-bold hover:underline"
+                          className="text-xs font-bold hover:underline break-all"
                           style={{ color: "#60a5fa", fontFamily: "var(--font-mono)" }}
                         >
                           {ad.contact_email}
@@ -879,7 +879,7 @@ export default function MarketplaceAdPage() {
                           fontFamily: "var(--font-table)",
                         }}
                       />
-                      <div className="flex gap-2">
+                      <div className="flex gap-2 flex-wrap">
                         <button
                           onClick={handleReport}
                           className="px-4 py-1.5 rounded-lg text-[11px] font-bold transition-all hover:scale-105"
@@ -934,7 +934,7 @@ export default function MarketplaceAdPage() {
             Pedigree Platform
           </span>
         </div>
-        <div className="flex items-center justify-center gap-4">
+        <div className="flex items-center justify-center gap-2 sm:gap-4 flex-wrap">
           <Link href="/" className="text-[10px] hover:underline" style={{ color: "#5a6a82" }}>Home</Link>
           <Link href="/marketplace" className="text-[10px] hover:underline" style={{ color: "#e8c86e" }}>Marketplace</Link>
           <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "#5a6a82" }}>Privacy</Link>
