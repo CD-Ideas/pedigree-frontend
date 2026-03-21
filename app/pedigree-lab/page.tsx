@@ -1252,7 +1252,7 @@ function PedigreeLabInner() {
               )}
 
               {/* Divider */}
-              <div style={{ borderTop: "1px solid rgba(30,64,120,0.4)" }} />
+              <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }} />
 
               {/* Preview toggle */}
               <button
@@ -1413,8 +1413,15 @@ function PedigreeLabInner() {
           onClick={() => setShowPublishModal(false)}
         >
           <Card
-            className="w-full max-w-lg max-h-[85vh] overflow-y-auto"
-            style={{ margin: 16, padding: 0 }}
+            className="w-full max-w-lg max-h-[85vh] overflow-y-auto rounded-2xl"
+            style={{
+              margin: 16,
+              padding: 0,
+              background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)",
+              backdropFilter: "blur(16px)",
+              border: "1.5px solid rgba(255,255,255,0.06)",
+              boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)",
+            }}
           >
             <div
               className="p-5 space-y-5"
@@ -1435,8 +1442,17 @@ function PedigreeLabInner() {
                 </h2>
                 <button
                   onClick={() => setShowPublishModal(false)}
-                  className="text-sm hover:text-white transition-colors"
-                  style={{ color: "#5a6a82" }}
+                  className="text-sm hover:text-white transition-colors rounded-xl"
+                  style={{
+                    color: "#5a6a82",
+                    background: "rgba(255,255,255,0.04)",
+                    border: "1px solid rgba(255,255,255,0.08)",
+                    width: 32,
+                    height: 32,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
                 >
                   {"\u2716"}
                 </button>
@@ -1448,15 +1464,15 @@ function PedigreeLabInner() {
                   className="block text-[10px] uppercase tracking-widest font-semibold mb-1"
                   style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
                 >
-                  Prefix
+                  🏷️ Prefix
                 </label>
                 <select
                   value={publishForm.prefix}
                   onChange={(e) => setPublishForm((p) => ({ ...p, prefix: e.target.value }))}
-                  className="rounded-lg px-2 py-2 text-xs outline-none"
+                  className="rounded-2xl px-2 py-2 text-xs outline-none transition-all"
                   style={{
-                    background: "var(--bg-deep, #0b1120)",
-                    border: "1px solid rgba(30,64,120,0.5)",
+                    background: "rgba(255,255,255,0.04)",
+                    border: "1px solid rgba(255,255,255,0.08)",
                     color: "#e2e8f0",
                     fontFamily: "var(--font-table, Rajdhani, sans-serif)",
                     width: 90,
@@ -1469,7 +1485,7 @@ function PedigreeLabInner() {
                 </select>
               </div>
               <ModalInput
-                label="Name"
+                label="✏️ Name"
                 value={publishForm.name}
                 onChange={(v) => setPublishForm((p) => ({ ...p, name: v.toUpperCase() }))}
                 style={{ textTransform: "uppercase" }}
@@ -1481,16 +1497,16 @@ function PedigreeLabInner() {
                   className="block text-[10px] uppercase tracking-widest font-semibold mb-1"
                   style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
                 >
-                  Suffix
+                  🏅 Suffix
                 </label>
                 <div className="flex items-center gap-2 flex-wrap">
                   <select
                     value={publishForm.suffixWins}
                     onChange={(e) => setPublishForm((p) => ({ ...p, suffixWins: e.target.value }))}
-                    className="rounded-lg px-2 py-2 text-xs outline-none"
+                    className="rounded-2xl px-2 py-2 text-xs outline-none transition-all"
                     style={{
-                      background: "var(--bg-deep, #0b1120)",
-                      border: "1px solid rgba(30,64,120,0.5)",
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.08)",
                       color: "#e2e8f0",
                       fontFamily: "var(--font-table, Rajdhani, sans-serif)",
                       width: 90,
@@ -1504,10 +1520,10 @@ function PedigreeLabInner() {
                   <select
                     value={publishForm.suffixLosses}
                     onChange={(e) => setPublishForm((p) => ({ ...p, suffixLosses: e.target.value }))}
-                    className="rounded-lg px-2 py-2 text-xs outline-none"
+                    className="rounded-2xl px-2 py-2 text-xs outline-none transition-all"
                     style={{
-                      background: "var(--bg-deep, #0b1120)",
-                      border: "1px solid rgba(30,64,120,0.5)",
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.08)",
                       color: "#e2e8f0",
                       fontFamily: "var(--font-table, Rajdhani, sans-serif)",
                       width: 90,
@@ -1521,10 +1537,10 @@ function PedigreeLabInner() {
                   <select
                     value={publishForm.suffixDraws}
                     onChange={(e) => setPublishForm((p) => ({ ...p, suffixDraws: e.target.value }))}
-                    className="rounded-lg px-2 py-2 text-xs outline-none"
+                    className="rounded-2xl px-2 py-2 text-xs outline-none transition-all"
                     style={{
-                      background: "var(--bg-deep, #0b1120)",
-                      border: "1px solid rgba(30,64,120,0.5)",
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.08)",
                       color: "#e2e8f0",
                       fontFamily: "var(--font-table, Rajdhani, sans-serif)",
                       width: 90,
@@ -1538,10 +1554,10 @@ function PedigreeLabInner() {
                   <select
                     value={publishForm.suffixHonors}
                     onChange={(e) => setPublishForm((p) => ({ ...p, suffixHonors: e.target.value }))}
-                    className="rounded-lg px-2 py-2 text-xs outline-none"
+                    className="rounded-2xl px-2 py-2 text-xs outline-none transition-all"
                     style={{
-                      background: "var(--bg-deep, #0b1120)",
-                      border: "1px solid rgba(30,64,120,0.5)",
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.08)",
                       color: "#e2e8f0",
                       fontFamily: "var(--font-table, Rajdhani, sans-serif)",
                       width: 90,
@@ -1568,7 +1584,7 @@ function PedigreeLabInner() {
               {/* Dog Info */}
               <div className="grid grid-cols-2 gap-3">
                 <ModalInput
-                  label="DOB"
+                  label="📅 DOB"
                   type="date"
                   value={publishForm.dob}
                   onChange={(v) => setPublishForm((p) => ({ ...p, dob: v }))}
@@ -1578,15 +1594,15 @@ function PedigreeLabInner() {
                     className="block text-[10px] uppercase tracking-widest font-semibold mb-1"
                     style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
                   >
-                    Sex
+                    🔹 Sex
                   </label>
                   <select
                     value={publishForm.sex}
                     onChange={(e) => setPublishForm((p) => ({ ...p, sex: e.target.value }))}
-                    className="w-full rounded-lg px-3 py-2 text-sm outline-none uppercase"
+                    className="w-full rounded-2xl px-3 py-2 text-sm outline-none uppercase transition-all"
                     style={{
-                      background: "var(--bg-deep, #0b1120)",
-                      border: "1px solid rgba(30,64,120,0.5)",
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.08)",
                       color: "#e2e8f0",
                       fontFamily: "var(--font-table, Rajdhani, sans-serif)",
                       textTransform: "uppercase",
@@ -1597,13 +1613,13 @@ function PedigreeLabInner() {
                   </select>
                 </div>
                 <ModalInput
-                  label="Color"
+                  label="🎨 Color"
                   value={publishForm.color}
                   onChange={(v) => setPublishForm((p) => ({ ...p, color: v.toUpperCase() }))}
                   style={{ textTransform: "uppercase" }}
                 />
                 <ModalInput
-                  label="Breeder"
+                  label="👤 Breeder"
                   value={publishForm.breeder}
                   onChange={(v) => setPublishForm((p) => ({ ...p, breeder: v.toUpperCase() }))}
                   placeholder="Breeder name"
@@ -1618,15 +1634,15 @@ function PedigreeLabInner() {
                     className="block text-[10px] uppercase tracking-widest font-semibold mb-1"
                     style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
                   >
-                    Continent
+                    🌍 Continent
                   </label>
                   <select
                     value={publishForm.continent}
                     onChange={(e) => setPublishForm((p) => ({ ...p, continent: e.target.value, country: "" }))}
-                    className="w-full rounded-lg px-3 py-2 text-sm outline-none uppercase"
+                    className="w-full rounded-2xl px-3 py-2 text-sm outline-none uppercase transition-all"
                     style={{
-                      background: "var(--bg-deep, #0b1120)",
-                      border: "1px solid rgba(30,64,120,0.5)",
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.08)",
                       color: "#e2e8f0",
                       fontFamily: "var(--font-table, Rajdhani, sans-serif)",
                       textTransform: "uppercase",
@@ -1646,15 +1662,15 @@ function PedigreeLabInner() {
                     className="block text-[10px] uppercase tracking-widest font-semibold mb-1"
                     style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
                   >
-                    Country
+                    🏳️ Country
                   </label>
                   <select
                     value={publishForm.country}
                     onChange={(e) => setPublishForm((p) => ({ ...p, country: e.target.value }))}
-                    className="w-full rounded-lg px-3 py-2 text-sm outline-none uppercase"
+                    className="w-full rounded-2xl px-3 py-2 text-sm outline-none uppercase transition-all"
                     style={{
-                      background: "var(--bg-deep, #0b1120)",
-                      border: "1px solid rgba(30,64,120,0.5)",
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.08)",
                       color: "#e2e8f0",
                       fontFamily: "var(--font-table, Rajdhani, sans-serif)",
                       textTransform: "uppercase",
@@ -1675,14 +1691,14 @@ function PedigreeLabInner() {
                     className="block text-[10px] uppercase tracking-widest font-semibold mb-2"
                     style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
                   >
-                    Owner
+                    👑 Owner
                   </label>
                   <input
                     type="text"
-                    className="w-full rounded-lg px-3 py-2 text-sm outline-none transition-all focus:ring-1"
+                    className="w-full rounded-2xl px-3 py-2 text-sm outline-none transition-all focus:ring-1"
                     style={{
-                      background: "var(--bg-deep, #0b1120)",
-                      border: "1px solid rgba(30,64,120,0.5)",
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.08)",
                       color: "#e2e8f0",
                       fontFamily: "var(--font-table, Rajdhani, sans-serif)",
                       textTransform: "uppercase",
@@ -1697,14 +1713,14 @@ function PedigreeLabInner() {
                     className="block text-[10px] uppercase tracking-widest font-semibold mb-2"
                     style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
                   >
-                    Cond. Weight
+                    ⚖️ Cond. Weight
                   </label>
                   <input
                     type="text"
-                    className="w-full rounded-lg px-3 py-2 text-sm outline-none transition-all focus:ring-1"
+                    className="w-full rounded-2xl px-3 py-2 text-sm outline-none transition-all focus:ring-1"
                     style={{
-                      background: "var(--bg-deep, #0b1120)",
-                      border: "1px solid rgba(30,64,120,0.5)",
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.08)",
                       color: "#e2e8f0",
                       fontFamily: "var(--font-table, Rajdhani, sans-serif)",
                       textTransform: "uppercase",
@@ -1726,10 +1742,10 @@ function PedigreeLabInner() {
                     Views
                   </label>
                   <div
-                    className="w-full rounded-lg px-3 py-2 text-sm flex items-center"
+                    className="w-full rounded-2xl px-3 py-2 text-sm flex items-center"
                     style={{
-                      background: "var(--bg-deep, #0b1120)",
-                      border: "1px solid rgba(30,64,120,0.5)",
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.08)",
                       fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
                       minHeight: 38,
                     }}
@@ -1746,10 +1762,10 @@ function PedigreeLabInner() {
                     Date Posted
                   </label>
                   <div
-                    className="w-full rounded-lg px-3 py-2 text-sm flex items-center"
+                    className="w-full rounded-2xl px-3 py-2 text-sm flex items-center"
                     style={{
-                      background: "var(--bg-deep, #0b1120)",
-                      border: "1px solid rgba(30,64,120,0.5)",
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.08)",
                       fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
                       minHeight: 38,
                     }}
@@ -1767,10 +1783,10 @@ function PedigreeLabInner() {
                     Last Modified
                   </label>
                   <div
-                    className="w-full rounded-lg px-3 py-2 text-sm flex items-center"
+                    className="w-full rounded-2xl px-3 py-2 text-sm flex items-center"
                     style={{
-                      background: "var(--bg-deep, #0b1120)",
-                      border: "1px solid rgba(30,64,120,0.5)",
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.08)",
                       fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
                       minHeight: 38,
                     }}
@@ -1788,14 +1804,14 @@ function PedigreeLabInner() {
                   className="block text-[10px] uppercase tracking-widest font-semibold mb-2"
                   style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
                 >
-                  Pedigree Notes
+                  📝 Pedigree Notes
                 </label>
                 <textarea
                   rows={3}
-                  className="w-full rounded-lg px-3 py-2 text-sm outline-none transition-all focus:ring-1"
+                  className="w-full rounded-2xl px-3 py-2 text-sm outline-none transition-all focus:ring-1"
                   style={{
-                    background: "var(--bg-deep, #0b1120)",
-                    border: "1px solid rgba(30,64,120,0.5)",
+                    background: "rgba(255,255,255,0.04)",
+                    border: "1px solid rgba(255,255,255,0.08)",
                     color: "#e2e8f0",
                     fontFamily: "var(--font-table, Rajdhani, sans-serif)",
                     resize: "vertical",
@@ -1812,13 +1828,13 @@ function PedigreeLabInner() {
                   className="block text-[10px] uppercase tracking-widest font-semibold mb-2"
                   style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
                 >
-                  Photo
+                  📸 Photo
                 </label>
                 <div
-                  className="rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer transition-all hover:border-opacity-80"
+                  className="rounded-2xl p-4 flex flex-col items-center justify-center cursor-pointer transition-all hover:border-opacity-80"
                   style={{
-                    background: "var(--bg-deep, #0b1120)",
-                    border: "2px dashed rgba(30,64,120,0.5)",
+                    background: "rgba(255,255,255,0.04)",
+                    border: "2px dashed rgba(255,255,255,0.1)",
                     minHeight: 100,
                   }}
                   onClick={() => document.getElementById("photo-upload")?.click()}
@@ -1850,7 +1866,7 @@ function PedigreeLabInner() {
               </div>
 
               {/* Divider */}
-              <div style={{ borderTop: "1px solid rgba(30,64,120,0.4)" }} />
+              <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }} />
 
               {/* Journal Section */}
               <p
@@ -1881,10 +1897,10 @@ function PedigreeLabInner() {
                     Rabies: Next Due
                   </label>
                   <div
-                    className="w-full rounded-lg px-3 py-2 text-sm"
+                    className="w-full rounded-2xl px-3 py-2 text-sm"
                     style={{
-                      background: "rgba(30,64,120,0.15)",
-                      border: "1px solid rgba(30,64,120,0.3)",
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.08)",
                       color: publishForm.journal.rabiesNextDue ? "#22c55e" : "#3a4a62",
                       fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
                     }}
@@ -1919,10 +1935,10 @@ function PedigreeLabInner() {
                   {publishForm.journal.vaccines.map((vax, idx) => (
                     <div
                       key={vax.name}
-                      className="flex items-center gap-3 rounded-lg px-3 py-2"
+                      className="flex items-center gap-3 rounded-2xl px-3 py-2"
                       style={{
-                        background: "var(--bg-deep, #0b1120)",
-                        border: "1px solid rgba(30,64,120,0.3)",
+                        background: "rgba(255,255,255,0.04)",
+                        border: "1px solid rgba(255,255,255,0.08)",
                       }}
                     >
                       <input
@@ -1946,10 +1962,10 @@ function PedigreeLabInner() {
                           type="date"
                           value={vax.date}
                           onChange={(e) => handleVaccineDate(idx, e.target.value)}
-                          className="rounded px-2 py-1 text-[10px] outline-none"
+                          className="rounded-xl px-2 py-1 text-[10px] outline-none transition-all"
                           style={{
-                            background: "var(--bg-elevated, #1c2740)",
-                            border: "1px solid rgba(30,64,120,0.4)",
+                            background: "rgba(255,255,255,0.04)",
+                            border: "1px solid rgba(255,255,255,0.08)",
                             color: "#e2e8f0",
                             fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
                           }}
@@ -1971,8 +1987,8 @@ function PedigreeLabInner() {
 
                 {/* Worming Draft Form */}
                 <div
-                  className="rounded-lg p-3 space-y-3"
-                  style={{ background: "var(--bg-deep, #0b1120)", border: "1px solid rgba(30,64,120,0.3)" }}
+                  className="rounded-2xl p-3 space-y-3"
+                  style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
                 >
                   {/* Type */}
                   <select
@@ -1983,10 +1999,10 @@ function PedigreeLabInner() {
                         journal: { ...p.journal, wormingDraft: { ...p.journal.wormingDraft, type: e.target.value, otherType: "" } },
                       }))
                     }
-                    className="w-full rounded-lg px-3 py-2 text-xs outline-none"
+                    className="w-full rounded-2xl px-3 py-2 text-xs outline-none transition-all"
                     style={{
-                      background: "var(--bg-elevated, #1c2740)",
-                      border: "1px solid rgba(30,64,120,0.4)",
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.08)",
                       color: "#e2e8f0",
                       fontFamily: "var(--font-table, Rajdhani, sans-serif)",
                     }}
@@ -2010,7 +2026,7 @@ function PedigreeLabInner() {
                           journal: { ...p.journal, wormingDraft: { ...p.journal.wormingDraft, otherType: e.target.value } },
                         }))
                       }
-                      className="w-full rounded-lg px-3 py-2 text-xs outline-none"
+                      className="w-full rounded-2xl px-3 py-2 text-xs outline-none transition-all"
                       style={{
                         background: "var(--bg-elevated, #1c2740)",
                         border: "1px solid rgba(30,64,120,0.4)",
@@ -2043,7 +2059,7 @@ function PedigreeLabInner() {
                           },
                         }));
                       }}
-                      className="w-full rounded-lg px-3 py-2 text-xs outline-none mt-1"
+                      className="w-full rounded-2xl px-3 py-2 text-xs outline-none mt-1 transition-all"
                       style={{
                         background: "var(--bg-elevated, #1c2740)",
                         border: "1px solid rgba(30,64,120,0.4)",
@@ -2077,7 +2093,7 @@ function PedigreeLabInner() {
                               },
                             }));
                           }}
-                          className="rounded-lg px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest transition-all"
+                          className="rounded-2xl px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest transition-all"
                           style={{
                             fontFamily: "var(--font-table, Rajdhani, sans-serif)",
                             background: publishForm.journal.wormingDraft.intervalDays === days
@@ -2133,7 +2149,7 @@ function PedigreeLabInner() {
                         },
                       }));
                     }}
-                    className="w-full rounded-lg py-2 text-[10px] font-bold uppercase tracking-widest transition-all hover:scale-[1.02]"
+                    className="w-full rounded-2xl py-2 text-[10px] font-bold uppercase tracking-widest transition-all hover:scale-[1.02]"
                     style={{
                       fontFamily: "var(--font-table, Rajdhani, sans-serif)",
                       background: "rgba(212,168,85,0.15)",
@@ -2151,10 +2167,10 @@ function PedigreeLabInner() {
                     {publishForm.journal.worming.map((entry, idx) => (
                       <div
                         key={idx}
-                        className="flex items-center justify-between rounded-lg px-3 py-2"
+                        className="flex items-center justify-between rounded-2xl px-3 py-2"
                         style={{
-                          background: "var(--bg-deep, #0b1120)",
-                          border: "1px solid rgba(30,64,120,0.3)",
+                          background: "rgba(255,255,255,0.04)",
+                          border: "1px solid rgba(255,255,255,0.08)",
                         }}
                       >
                         <div className="flex items-center gap-2">
@@ -2217,10 +2233,10 @@ function PedigreeLabInner() {
                   }
                   rows={3}
                   placeholder="Additional notes..."
-                  className="w-full rounded-lg px-3 py-2 text-sm outline-none resize-none"
+                  className="w-full rounded-2xl px-3 py-2 text-sm outline-none resize-none transition-all"
                   style={{
-                    background: "var(--bg-deep, #0b1120)",
-                    border: "1px solid rgba(30,64,120,0.5)",
+                    background: "rgba(255,255,255,0.04)",
+                    border: "1px solid rgba(255,255,255,0.08)",
                     color: "#e2e8f0",
                     fontFamily: "var(--font-table, Rajdhani, sans-serif)",
                   }}
@@ -2317,13 +2333,13 @@ function PedigreeLabInner() {
                     setPublishing(false);
                   }
                 }}
-                className="w-full rounded-lg py-3 text-sm font-bold uppercase tracking-widest transition-all hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full rounded-2xl py-3 text-sm font-bold uppercase tracking-widest transition-all hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{
                   fontFamily: "var(--font-display, Oswald, sans-serif)",
-                  background: "linear-gradient(135deg, #d4a855 0%, #f5d994 50%, #d4a855 100%)",
+                  background: "linear-gradient(135deg, #d4a855, #f5d994, #d4a855)",
                   color: "#0b1120",
                   border: "1.5px solid #d4a855",
-                  boxShadow: "0 0 20px rgba(212,168,85,0.25)",
+                  boxShadow: "0 4px 24px rgba(212,168,85,0.35), 0 0 48px rgba(212,168,85,0.15)",
                 }}
               >
                 {publishing ? (editingId ? "Saving..." : "Publishing...") : (editingId ? "Save Changes" : "Submit & Publish")}
@@ -2601,10 +2617,10 @@ function ModalInput({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full rounded-lg px-3 py-2 text-sm outline-none transition-all focus:ring-1"
+        className="w-full rounded-2xl px-3 py-2 text-sm outline-none transition-all focus:ring-1"
         style={{
-          background: "var(--bg-deep, #0b1120)",
-          border: "1px solid rgba(30,64,120,0.5)",
+          background: "rgba(255,255,255,0.04)",
+          border: "1px solid rgba(255,255,255,0.08)",
           color: "#e2e8f0",
           fontFamily: "var(--font-table, Rajdhani, sans-serif)",
           ...extraStyle,

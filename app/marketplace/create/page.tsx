@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useEffect, useRef, useState, useCallback } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { getDogColor } from "@/app/utils/colors";
 
@@ -15,6 +15,21 @@ interface DogSearchResult {
 
 /* ─── Constants ─── */
 const LOGO = "https://i.imgur.com/cAvQemZ.png";
+
+const GLASS_BOX = {
+  background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)",
+  backdropFilter: "blur(16px)",
+  border: "1.5px solid rgba(255,255,255,0.06)",
+  boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)",
+};
+
+const INPUT_STYLE: React.CSSProperties = {
+  background: "rgba(255,255,255,0.04)",
+  border: "1px solid rgba(255,255,255,0.08)",
+  color: "var(--text-primary, #e2e8f0)",
+  fontFamily: "var(--font-table)",
+  transition: "all 0.2s ease",
+};
 
 const CATEGORIES = [
   { key: "dogs_for_sale", label: "Dogs for Sale", icon: "\uD83D\uDC15", color: "#ef4444" },
@@ -36,12 +51,22 @@ const COUNTRY_MAP: Record<string, string[]> = {
 
 /* ─── Main Create Ad Page ─── */
 export default function CreateAdPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen" style={{ background: "var(--bg-primary, #080d18)" }} />}>
+      <CreateAdContent />
+    </Suspense>
+  );
+}
+
+function CreateAdContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const preselectedCategory = searchParams.get("category") || "";
   const [user, setUser] = useState<{ id: number; username: string } | null>(null);
   const [notLoggedIn, setNotLoggedIn] = useState(false);
 
   // Form state
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(preselectedCategory);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -309,8 +334,8 @@ export default function CreateAdPage() {
   };
 
   const selectStyle: React.CSSProperties = {
-    background: "rgba(30,64,120,0.15)",
-    border: "1px solid rgba(30,64,120,0.3)",
+    background: "rgba(255,255,255,0.04)",
+    border: "1px solid rgba(255,255,255,0.08)",
     color: "var(--text-primary, #e2e8f0)",
     fontFamily: "var(--font-table)",
     appearance: "none" as const,
@@ -318,6 +343,7 @@ export default function CreateAdPage() {
     backgroundRepeat: "no-repeat",
     backgroundPosition: "right 12px center",
     backgroundSize: "12px",
+    transition: "all 0.2s ease",
   };
 
   return (
@@ -342,8 +368,8 @@ export default function CreateAdPage() {
         <h1
           className="text-2xl font-black uppercase tracking-widest mb-1"
           style={{
-            fontFamily: "var(--font-display, Oswald, sans-serif)",
-            background: "linear-gradient(135deg, #e8c86e, #d4a855)",
+            fontFamily: "var(--font-display)",
+            background: "linear-gradient(135deg, #d4a855, #f5d994, #d4a855)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
           }}
@@ -357,21 +383,17 @@ export default function CreateAdPage() {
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* ─── Listed By ─── */}
           <div
-            className="rounded-xl p-5"
-            style={{
-              background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
-              border: "1.5px solid rgba(30,64,120,0.3)",
-              backdropFilter: "blur(12px)",
-            }}
+            className="rounded-2xl p-5"
+            style={{ ...GLASS_BOX }}
           >
             <label className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
-              Listed By
+              👤 Listed By
             </label>
             <div
               className="flex items-center gap-3 rounded-lg px-4 py-2.5"
               style={{
-                background: "rgba(30,64,120,0.15)",
-                border: "1px solid rgba(30,64,120,0.3)",
+                background: "rgba(255,255,255,0.04)",
+                border: "1px solid rgba(255,255,255,0.08)",
               }}
             >
               <div
@@ -394,65 +416,99 @@ export default function CreateAdPage() {
           </div>
 
           {/* ─── Category ─── */}
-          <div
-            className="rounded-xl p-5"
-            style={{
-              background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
-              border: errors.category ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid rgba(30,64,120,0.3)",
-              backdropFilter: "blur(12px)",
-            }}
-          >
-            <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
-              Category <span style={{ color: "#ef4444" }}>*</span>
-            </label>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-              {CATEGORIES.map((cat) => (
-                <button
-                  key={cat.key}
-                  type="button"
-                  onClick={() => {
-                    setCategory(cat.key);
-                    setErrors((prev) => ({ ...prev, category: "" }));
-                  }}
-                  className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-left transition-all duration-200 hover:scale-[1.02]"
-                  style={{
-                    background: category === cat.key ? `${cat.color}18` : "rgba(30,64,120,0.1)",
-                    border: category === cat.key ? `1.5px solid ${cat.color}55` : "1.5px solid rgba(30,64,120,0.2)",
-                  }}
-                >
-                  <span className="text-base">{cat.icon}</span>
-                  <span
-                    className="text-[10px] font-bold"
-                    style={{
-                      color: category === cat.key ? cat.color : "#94a3b8",
-                      fontFamily: "var(--font-table)",
-                    }}
-                  >
-                    {cat.label}
-                  </span>
-                </button>
-              ))}
+          {preselectedCategory ? (
+            /* Category was preselected from marketplace page — show compact label */
+            <div
+              className="rounded-2xl p-4 flex items-center gap-3"
+              style={{
+                ...GLASS_BOX,
+                border: `1.5px solid ${CATEGORIES.find(c => c.key === category)?.color || "rgba(255,255,255,0.06)"}55`,
+              }}
+            >
+              <span className="text-lg">{CATEGORIES.find(c => c.key === category)?.icon}</span>
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-widest block" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+                  📂 Category
+                </span>
+                <span className="text-sm font-bold" style={{ color: CATEGORIES.find(c => c.key === category)?.color, fontFamily: "var(--font-table)" }}>
+                  {CATEGORIES.find(c => c.key === category)?.label}
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setCategory("");
+                  router.replace("/marketplace/create");
+                }}
+                className="ml-auto text-[10px] px-2.5 py-1 rounded-lg transition-all duration-200 hover:scale-105 hover:brightness-125"
+                style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", color: "#5a6a82", fontFamily: "var(--font-table)" }}
+              >
+                Change
+              </button>
             </div>
-            {errors.category && (
-              <p className="text-[10px] mt-2 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
-                {errors.category}
-              </p>
-            )}
-          </div>
+          ) : (
+            /* No preselected category — show full picker */
+            <div
+              className="rounded-2xl p-5"
+              style={{
+                ...GLASS_BOX,
+                border: errors.category ? "1.5px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
+              }}
+            >
+              <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+                📂 Category <span style={{ color: "#ef4444" }}>*</span>
+              </label>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {CATEGORIES.map((cat) => (
+                  <button
+                    key={cat.key}
+                    type="button"
+                    onClick={() => {
+                      setCategory(cat.key);
+                      setErrors((prev) => ({ ...prev, category: "" }));
+                    }}
+                    className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-left transition-all duration-300 hover:scale-[1.03]"
+                    style={{
+                      background: category === cat.key ? `${cat.color}18` : "rgba(255,255,255,0.03)",
+                      border: category === cat.key ? `1.5px solid ${cat.color}55` : "1.5px solid rgba(255,255,255,0.06)",
+                      boxShadow: category === cat.key ? `0 0 12px ${cat.color}20` : "none",
+                    }}
+                    onMouseEnter={(e) => { if (category !== cat.key) (e.currentTarget.style.boxShadow = `0 0 16px ${cat.color}15`); }}
+                    onMouseLeave={(e) => { if (category !== cat.key) (e.currentTarget.style.boxShadow = "none"); }}
+                  >
+                    <span className="text-lg">{cat.icon}</span>
+                    <span
+                      className="text-[10px] font-bold"
+                      style={{
+                        color: category === cat.key ? cat.color : "#94a3b8",
+                        fontFamily: "var(--font-table)",
+                      }}
+                    >
+                      {cat.label}
+                    </span>
+                  </button>
+                ))}
+              </div>
+              {errors.category && (
+                <p className="text-[10px] mt-2 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+                  {errors.category}
+                </p>
+              )}
+            </div>
+          )}
 
           {/* ─── Link to Dog ─── */}
           <div
-            className="rounded-xl p-5 relative"
+            className="rounded-2xl p-5 relative"
             style={{
-              background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
-              border: errors.dog ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid rgba(30,64,120,0.3)",
-              backdropFilter: "blur(12px)",
+              ...GLASS_BOX,
+              border: errors.dog ? "1.5px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
               overflow: "visible",
               zIndex: 10,
             }}
           >
             <label className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
-              Link to Dog {["dogs_for_sale", "stud_service", "litters_for_sale"].includes(category)
+              🐕 Link to Dog {["dogs_for_sale", "stud_service", "litters_for_sale"].includes(category)
                 ? <span className="text-[9px] normal-case tracking-normal font-normal" style={{ color: "#ef4444" }}>(required)</span>
                 : <span className="text-[9px] normal-case tracking-normal font-normal">(optional)</span>}
             </label>
@@ -509,10 +565,7 @@ export default function CreateAdPage() {
                     placeholder="Search for a dog by name..."
                     className="w-full rounded-lg pl-9 pr-4 py-2.5 text-sm outline-none"
                     style={{
-                      background: "rgba(30,64,120,0.15)",
-                      border: "1px solid rgba(30,64,120,0.3)",
-                      color: "var(--text-primary, #e2e8f0)",
-                      fontFamily: "var(--font-table)",
+                      ...INPUT_STYLE,
                     }}
                   />
                 </div>
@@ -520,8 +573,7 @@ export default function CreateAdPage() {
                   <div
                     className="absolute top-full left-0 right-0 mt-1 rounded-lg overflow-hidden z-50 max-h-48 overflow-y-auto"
                     style={{
-                      background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
-                      border: "1.5px solid rgba(30,64,120,0.5)",
+                      ...GLASS_BOX,
                       boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
                     }}
                   >
@@ -567,16 +619,15 @@ export default function CreateAdPage() {
 
           {/* ─── Heading ─── */}
           <div
-            className="rounded-xl p-5"
+            className="rounded-2xl p-5"
             style={{
-              background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
-              border: errors.title ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid rgba(30,64,120,0.3)",
-              backdropFilter: "blur(12px)",
+              ...GLASS_BOX,
+              border: errors.title ? "1.5px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
             }}
           >
             <div className="flex items-center justify-between mb-2">
               <label className="text-xs font-bold uppercase tracking-widest" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
-                Heading <span style={{ color: "#ef4444" }}>*</span>
+                ✏️ Heading <span style={{ color: "#ef4444" }}>*</span>
               </label>
               <span
                 className="text-[10px]"
@@ -600,11 +651,12 @@ export default function CreateAdPage() {
               readOnly={!!selectedDogName}
               className="w-full rounded-lg px-4 py-2.5 text-sm outline-none font-bold"
               style={{
-                background: selectedDogName ? "rgba(212,168,85,0.08)" : "rgba(30,64,120,0.15)",
-                border: selectedDogName ? "1px solid rgba(212,168,85,0.25)" : "1px solid rgba(30,64,120,0.3)",
+                background: selectedDogName ? "rgba(212,168,85,0.08)" : "rgba(255,255,255,0.04)",
+                border: selectedDogName ? "1px solid rgba(212,168,85,0.25)" : "1px solid rgba(255,255,255,0.08)",
                 color: selectedDogName ? getDogColor(selectedDogName) : "var(--text-primary, #e2e8f0)",
                 fontFamily: "var(--font-table)",
                 cursor: selectedDogName ? "not-allowed" : "text",
+                transition: "all 0.2s ease",
               }}
             />
             {selectedDogName && (
@@ -621,16 +673,15 @@ export default function CreateAdPage() {
 
           {/* ─── Description ─── */}
           <div
-            className="rounded-xl p-5"
+            className="rounded-2xl p-5"
             style={{
-              background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
-              border: errors.description ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid rgba(30,64,120,0.3)",
-              backdropFilter: "blur(12px)",
+              ...GLASS_BOX,
+              border: errors.description ? "1.5px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
             }}
           >
             <div className="flex items-center justify-between mb-2">
               <label className="text-xs font-bold uppercase tracking-widest" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
-                Description <span style={{ color: "#ef4444" }}>*</span>
+                📝 Description <span style={{ color: "#ef4444" }}>*</span>
               </label>
               <span
                 className="text-[10px]"
@@ -653,10 +704,7 @@ export default function CreateAdPage() {
               maxLength={200}
               className="w-full rounded-lg px-4 py-2.5 text-sm outline-none resize-none"
               style={{
-                background: "rgba(30,64,120,0.15)",
-                border: "1px solid rgba(30,64,120,0.3)",
-                color: "var(--text-primary, #e2e8f0)",
-                fontFamily: "var(--font-table)",
+                ...INPUT_STYLE,
               }}
             />
             {errors.description && (
@@ -668,15 +716,11 @@ export default function CreateAdPage() {
 
           {/* ─── Price ─── */}
           <div
-            className="rounded-xl p-5"
-            style={{
-              background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
-              border: "1.5px solid rgba(30,64,120,0.3)",
-              backdropFilter: "blur(12px)",
-            }}
+            className="rounded-2xl p-5"
+            style={{ ...GLASS_BOX }}
           >
             <label className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
-              Price <span className="text-[9px] normal-case tracking-normal font-normal">(optional)</span>
+              💰 Price <span className="text-[9px] normal-case tracking-normal font-normal">(optional)</span>
             </label>
             <div className="relative">
               <span
@@ -694,10 +738,11 @@ export default function CreateAdPage() {
                 step="0.01"
                 className="w-full rounded-lg pl-8 pr-4 py-2.5 text-sm outline-none"
                 style={{
-                  background: "rgba(30,64,120,0.15)",
-                  border: "1px solid rgba(30,64,120,0.3)",
+                  background: "rgba(255,255,255,0.04)",
+                  border: "1px solid rgba(255,255,255,0.08)",
                   color: "#22c55e",
                   fontFamily: "var(--font-mono)",
+                  transition: "all 0.2s ease",
                 }}
               />
             </div>
@@ -708,16 +753,15 @@ export default function CreateAdPage() {
 
           {/* ─── Photos ─── */}
           <div
-            className="rounded-xl p-5"
+            className="rounded-2xl p-5"
             style={{
-              background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
-              border: errors.photos ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid rgba(30,64,120,0.3)",
-              backdropFilter: "blur(12px)",
+              ...GLASS_BOX,
+              border: errors.photos ? "1.5px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
             }}
           >
             <div className="flex items-center justify-between mb-3">
               <label className="text-xs font-bold uppercase tracking-widest" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
-                Photos <span style={{ color: "#ef4444" }}>*</span>
+                📸 Photos <span style={{ color: "#ef4444" }}>*</span>
               </label>
               <span className="text-[10px]" style={{ color: "#5a6a82", fontFamily: "var(--font-mono)" }}>
                 {photos.length}/5
@@ -832,15 +876,14 @@ export default function CreateAdPage() {
 
           {/* ─── Location ─── */}
           <div
-            className="rounded-xl p-5"
+            className="rounded-2xl p-5"
             style={{
-              background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
-              border: errors.location ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid rgba(30,64,120,0.3)",
-              backdropFilter: "blur(12px)",
+              ...GLASS_BOX,
+              border: errors.location ? "1.5px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
             }}
           >
             <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
-              Location <span style={{ color: "#ef4444" }}>*</span>
+              📍 Location <span style={{ color: "#ef4444" }}>*</span>
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {/* Continent */}
@@ -895,15 +938,14 @@ export default function CreateAdPage() {
 
           {/* ─── Contact Info ─── */}
           <div
-            className="rounded-xl p-5"
+            className="rounded-2xl p-5"
             style={{
-              background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
-              border: errors.contact ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid rgba(30,64,120,0.3)",
-              backdropFilter: "blur(12px)",
+              ...GLASS_BOX,
+              border: errors.contact ? "1.5px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
             }}
           >
             <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
-              Contact Information <span style={{ color: "#ef4444" }}>*</span>
+              📞 Contact Information <span style={{ color: "#ef4444" }}>*</span>
             </label>
             <p className="text-[10px] mb-3" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
               Provide at least one contact method
@@ -923,10 +965,11 @@ export default function CreateAdPage() {
                   placeholder="Phone number"
                   className="flex-1 rounded-lg px-3 py-2 text-xs outline-none"
                   style={{
-                    background: "rgba(30,64,120,0.15)",
-                    border: "1px solid rgba(30,64,120,0.3)",
+                    background: "rgba(255,255,255,0.04)",
+                    border: "1px solid rgba(255,255,255,0.08)",
                     color: "var(--text-primary, #e2e8f0)",
                     fontFamily: "var(--font-mono)",
+                    transition: "all 0.2s ease",
                   }}
                 />
               </div>
@@ -944,10 +987,11 @@ export default function CreateAdPage() {
                   placeholder="Email address"
                   className="flex-1 rounded-lg px-3 py-2 text-xs outline-none"
                   style={{
-                    background: "rgba(30,64,120,0.15)",
-                    border: "1px solid rgba(30,64,120,0.3)",
+                    background: "rgba(255,255,255,0.04)",
+                    border: "1px solid rgba(255,255,255,0.08)",
                     color: "var(--text-primary, #e2e8f0)",
                     fontFamily: "var(--font-mono)",
+                    transition: "all 0.2s ease",
                   }}
                 />
               </div>
@@ -965,10 +1009,11 @@ export default function CreateAdPage() {
                   placeholder="Venmo username"
                   className="flex-1 rounded-lg px-3 py-2 text-xs outline-none"
                   style={{
-                    background: "rgba(30,64,120,0.15)",
-                    border: "1px solid rgba(30,64,120,0.3)",
+                    background: "rgba(255,255,255,0.04)",
+                    border: "1px solid rgba(255,255,255,0.08)",
                     color: "var(--text-primary, #e2e8f0)",
                     fontFamily: "var(--font-mono)",
+                    transition: "all 0.2s ease",
                   }}
                 />
               </div>
@@ -986,10 +1031,11 @@ export default function CreateAdPage() {
                   placeholder="PayPal email or username"
                   className="flex-1 rounded-lg px-3 py-2 text-xs outline-none"
                   style={{
-                    background: "rgba(30,64,120,0.15)",
-                    border: "1px solid rgba(30,64,120,0.3)",
+                    background: "rgba(255,255,255,0.04)",
+                    border: "1px solid rgba(255,255,255,0.08)",
                     color: "var(--text-primary, #e2e8f0)",
                     fontFamily: "var(--font-mono)",
+                    transition: "all 0.2s ease",
                   }}
                 />
               </div>
@@ -1017,12 +1063,13 @@ export default function CreateAdPage() {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full rounded-xl py-3.5 text-sm font-bold uppercase tracking-widest transition-all hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100"
+            className="w-full rounded-xl py-3.5 text-sm font-bold uppercase tracking-widest transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100"
             style={{
-              background: "linear-gradient(135deg, #e8c86e, #b8860b)",
+              background: "linear-gradient(135deg, #d4a855, #f5d994, #d4a855)",
               color: "#000",
               fontFamily: "var(--font-table)",
-              boxShadow: "0 4px 20px rgba(212,168,85,0.25)",
+              boxShadow: "0 4px 24px rgba(212,168,85,0.35), 0 0 48px rgba(212,168,85,0.15)",
+              letterSpacing: "0.08em",
             }}
           >
             {submitting ? (
@@ -1067,9 +1114,11 @@ export default function CreateAdPage() {
 
       {/* ─── Focus styles for selects ─── */}
       <style jsx global>{`
-        .rounded-lg select:focus {
-          border-color: rgba(212,168,85,0.6) !important;
-          box-shadow: 0 0 0 2px rgba(212,168,85,0.15);
+        .rounded-lg select:focus,
+        .rounded-lg input:focus,
+        .rounded-lg textarea:focus {
+          border-color: rgba(212,168,85,0.4) !important;
+          box-shadow: 0 0 0 2px rgba(212,168,85,0.12), 0 0 12px rgba(212,168,85,0.08);
         }
         .rounded-lg select option {
           background: #0e1828;

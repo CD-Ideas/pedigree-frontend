@@ -269,7 +269,7 @@ export default function MarketplacePage() {
       {/* Create Ad button bar */}
       <div className="px-4 md:px-6 py-2 flex items-center justify-end" style={{ borderBottom: "1px solid var(--border, rgba(30,64,120,0.3))" }}>
         <Link
-          href="/marketplace/create"
+          href={category ? `/marketplace/create?category=${category}` : "/marketplace/create"}
           className="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all hover:scale-105"
           style={{
             background: "linear-gradient(135deg, #e8c86e, #b8860b)",
@@ -589,7 +589,7 @@ export default function MarketplacePage() {
               Try adjusting your search or category filter
             </p>
             <Link
-              href="/marketplace/create"
+              href={category ? `/marketplace/create?category=${category}` : "/marketplace/create"}
               className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg text-xs font-bold transition-all hover:scale-105"
               style={{
                 background: "linear-gradient(135deg, #e8c86e, #b8860b)",
@@ -731,7 +731,7 @@ export default function MarketplacePage() {
             Create a listing to reach thousands of breeders and enthusiasts.
           </p>
           <Link
-            href="/marketplace/create"
+            href={category ? `/marketplace/create?category=${category}` : "/marketplace/create"}
             className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg text-xs font-bold transition-all hover:scale-105"
             style={{
               background: "linear-gradient(135deg, #e8c86e, #b8860b)",
