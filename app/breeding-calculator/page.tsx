@@ -682,7 +682,7 @@ export default function BreedingCalculatorPage() {
                   {topAncestor && topAncestor.sireGens.length > 0 && topAncestor.damGens.length > 0 && (
                     <div className="flex justify-between items-center py-2" style={{ borderBottom: "1px solid var(--border)" }}>
                       <span className="text-xs" style={{ color: "var(--text-secondary)", fontFamily: "var(--font-table)" }}>Most Repeated</span>
-                      <span className="text-xs font-bold truncate max-w-[200px] text-right" style={{ color: getDogColor(topAncestor.name), fontFamily: "var(--font-table)" }}>
+                      <span className="text-xs font-bold truncate max-w-[120px] sm:max-w-[200px] text-right" style={{ color: getDogColor(topAncestor.name), fontFamily: "var(--font-table)" }}>
                         {topAncestor.name} ({topAncestor.count}x)
                       </span>
                     </div>
@@ -761,7 +761,7 @@ export default function BreedingCalculatorPage() {
               {/* Shared list */}
               <Card className="p-5">
                 <SectionHeader color="#d4a855">Shared Ancestors ({directShared.length})</SectionHeader>
-                <div ref={sharedListRef} className="space-y-1.5 max-h-[480px] overflow-y-auto pr-1">
+                <div ref={sharedListRef} className="space-y-1.5 max-h-[320px] sm:max-h-[480px] overflow-y-auto pr-1">
                   {directShared.map((a, i) => {
                     const photoSrc = a.photo ? (a.photo.startsWith("http") ? a.photo : `https://www.apbt.online-pedigrees.com/${a.photo}`) : null;
                     const isHovered = sharedHover === i;

@@ -259,7 +259,7 @@ export default function MyAdsPage() {
                 >
                   <div className="flex flex-col sm:flex-row">
                     {/* Thumbnail */}
-                    <div className="sm:w-40 h-32 sm:h-auto flex-shrink-0 relative overflow-hidden">
+                    <div className="sm:w-36 md:w-40 h-32 sm:h-auto flex-shrink-0 relative overflow-hidden">
                       {photo ? (
                         <img src={photo} alt={ad.title} className="w-full h-full object-cover" loading="lazy" />
                       ) : (

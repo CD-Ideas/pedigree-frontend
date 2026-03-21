@@ -117,7 +117,7 @@ export default function PedigreeHub() {
 
       {/* ─── Hero / Search ─── */}
       <section className="relative px-4 md:px-6 pt-12 pb-8">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] rounded-full opacity-10"
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[500px] h-[300px] rounded-full opacity-10"
              style={{ background: "radial-gradient(circle, rgba(212,168,85,0.5) 0%, transparent 70%)" }} />
         <div className="relative max-w-3xl mx-auto text-center">
           <div className="flex items-center justify-center gap-3 mb-4">

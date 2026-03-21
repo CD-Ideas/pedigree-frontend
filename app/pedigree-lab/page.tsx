@@ -1605,7 +1605,7 @@ function PedigreeLabInner() {
               </div>
 
               {/* Dog Info */}
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <ModalInput
                   label="📅 DOB"
                   type="date"
@@ -1651,7 +1651,7 @@ function PedigreeLabInner() {
               </div>
 
               {/* Continent & Country */}
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label
                     className="block text-[10px] uppercase tracking-widest font-semibold mb-1"
@@ -1708,7 +1708,7 @@ function PedigreeLabInner() {
               </div>
 
               {/* Owner & Conditioned Weight */}
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label
                     className="block text-[10px] uppercase tracking-widest font-semibold mb-2"
@@ -1905,7 +1905,7 @@ function PedigreeLabInner() {
               </p>
 
               {/* Rabies */}
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <ModalInput
                   label="Rabies: Date Given"
                   type="date"

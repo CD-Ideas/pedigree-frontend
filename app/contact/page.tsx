@@ -17,7 +17,7 @@ export default function ContactPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
           <div className="rounded-xl p-4" style={{ background: "rgba(25,27,35,0.95)", border: "1px solid rgba(255,255,255,0.07)" }}>
             <h3 style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "12px", color: "var(--accent-gold)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "6px" }}>Email</h3>
-            <a href="mailto:support@pedigreeplatform.com" style={{ fontFamily: "var(--font-table)", fontSize: "13px", color: "#fff" }}>support@pedigreeplatform.com</a>
+            <a href="mailto:support@pedigreeplatform.com" className="break-all" style={{ fontFamily: "var(--font-table)", fontSize: "13px", color: "#fff" }}>support@pedigreeplatform.com</a>
           </div>
           <div className="rounded-xl p-4" style={{ background: "rgba(25,27,35,0.95)", border: "1px solid rgba(255,255,255,0.07)" }}>
             <h3 style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "12px", color: "var(--accent-gold)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "6px" }}>Response Time</h3>

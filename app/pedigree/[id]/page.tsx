@@ -720,7 +720,7 @@ function PhotosTab({ offspring }: { offspring: Offspring[] }) {
         return (
           <Link key={i} href={`/pedigree/${o.offspring_id}`} className="title-cards group relative rounded-md overflow-hidden transition-all hover:brightness-125"
                 style={{ ...cardStyle(cc), background: "var(--bg-elevated)" }}>
-            <div style={{ width: "100%", height: "120px", overflow: "hidden" }}>
+            <div className="w-full h-[100px] sm:h-[120px] overflow-hidden">
               <img src={src} alt={o.offspring_name} className="w-full h-full object-cover transition-transform group-hover:scale-105" />
             </div>
             <div className="px-1.5 py-1" style={{ ...cardStyle(cc), borderTop: `1px solid ${cc === "#e8eaed" ? cc + "50" : cc + "30"}` }}>
@@ -963,14 +963,14 @@ export default function PublicPedigreePage() {
         <div className="glow-gold rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)", minHeight: "220px" }}>
           <div className="flex flex-col sm:flex-row sm:items-stretch h-full">
             {/* Photo — stretches to match text height */}
-            <div className="flex-shrink-0 relative m-2" style={{ width: "200px", height: "200px" }}>
+            <div className="flex-shrink-0 relative m-2 w-full sm:w-[200px] h-[200px]">
               {photoUrl ? (
                 <img src={photoUrl} alt={dog.registered_name}
-                     className="rounded-md"
-                     style={{ width: "200px", height: "200px", objectFit: "fill" }} />
+                     className="rounded-md w-full sm:w-[200px] h-[200px]"
+                     style={{ objectFit: "fill" }} />
               ) : (
-                <div className="rounded-md flex items-center justify-center"
-                     style={{ width: "200px", height: "200px", background: isMale ? "linear-gradient(135deg, #0c1929, #1a2e4a)" : "linear-gradient(135deg, #29101c, #3d1a2e)" }}>
+                <div className="rounded-md flex items-center justify-center w-full sm:w-[200px] h-[200px]"
+                     style={{ background: isMale ? "linear-gradient(135deg, #0c1929, #1a2e4a)" : "linear-gradient(135deg, #29101c, #3d1a2e)" }}>
                   <span className="text-2xl opacity-10" style={{ color: sexColor }}>{isMale ? "♂" : "♀"}</span>
                 </div>
               )}
@@ -1082,7 +1082,7 @@ export default function PublicPedigreePage() {
                 </span>
               )}
             </div>
-            <div className="flex items-center gap-3" style={{ fontFamily: "var(--font-mono)", fontSize: "10px", color: "#9a7020" }}>
+            <div className="flex items-center gap-2 sm:gap-3 flex-wrap" style={{ fontFamily: "var(--font-mono)", fontSize: "10px", color: "#9a7020" }}>
               <span>🐾 {dog.offspring?.length || dog.offspring_count || 0} offspring</span>
               <span>🐕 {(dog.siblings?.full?.length || 0) + (dog.siblings?.halfSire?.length || 0) + (dog.siblings?.halfDam?.length || 0)} siblings</span>
               <span>👁 {(dog.view_count || 0).toLocaleString()} views</span>

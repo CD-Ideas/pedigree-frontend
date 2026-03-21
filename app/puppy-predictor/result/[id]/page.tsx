@@ -138,7 +138,7 @@ export default function PredictionResultPage() {
         </div>
 
         {/* Genotypes */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {[
             { label: "Sire Genotype", geno: data.sire_genotype, color: "#60a5fa", icon: "♂" },
             { label: "Dam Genotype", geno: data.dam_genotype, color: "#f472b6", icon: "♀" },

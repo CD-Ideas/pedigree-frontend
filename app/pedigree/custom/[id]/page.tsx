@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { getDogColor } from "@/app/utils/colors";
 
 /* ─── Types ─── */
@@ -450,6 +450,9 @@ export default function PublishedPedigreePage() {
   const [loading, setLoading] = useState(true);
   const [tree, setTree] = useState<TreeRow[]>([]);
   const [isOwner, setIsOwner] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     setLoading(true);
@@ -476,6 +479,28 @@ export default function PublishedPedigreePage() {
       })
       .catch(() => setLoading(false));
   }, [id]);
+
+  const handleDelete = async () => {
+    setDeleting(true);
+    try {
+      const userStr = localStorage.getItem("user");
+      if (!userStr) return;
+      const user = JSON.parse(userStr);
+      const res = await fetch(`/api/pedigrees/${id}?userId=${user.id}`, { method: "DELETE" });
+      const data = await res.json();
+      if (data.success) {
+        router.push("/pedigree-lab");
+      } else {
+        alert(data.error || "Failed to delete pedigree");
+        setDeleting(false);
+        setShowDeleteConfirm(false);
+      }
+    } catch {
+      alert("Failed to delete pedigree");
+      setDeleting(false);
+      setShowDeleteConfirm(false);
+    }
+  };
 
   if (loading)
     return (
@@ -574,14 +599,25 @@ export default function PublishedPedigreePage() {
                 </span>
               )}
               {isOwner && (
-                <Link href={`/pedigree-lab?edit=${ped.id}`}
-                  className="text-[10px] px-2 py-0.5 rounded-full font-semibold transition-all hover:scale-105"
-                  style={{
-                    background: "rgba(34,197,94,0.12)", color: "#22c55e",
-                    fontFamily: "var(--font-table)", border: "1px solid rgba(34,197,94,0.3)",
-                  }}>
-                  ✎ Edit
-                </Link>
+                <>
+                  <Link href={`/pedigree-lab?edit=${ped.id}`}
+                    className="text-[10px] px-2 py-0.5 rounded-full font-semibold transition-all hover:scale-105"
+                    style={{
+                      background: "rgba(34,197,94,0.12)", color: "#22c55e",
+                      fontFamily: "var(--font-table)", border: "1px solid rgba(34,197,94,0.3)",
+                    }}>
+                    ✎ Edit
+                  </Link>
+                  <button
+                    onClick={() => setShowDeleteConfirm(true)}
+                    className="text-[10px] px-2 py-0.5 rounded-full font-semibold transition-all hover:scale-105"
+                    style={{
+                      background: "rgba(239,68,68,0.12)", color: "#ef4444",
+                      fontFamily: "var(--font-table)", border: "1px solid rgba(239,68,68,0.3)",
+                    }}>
+                    ✕ Delete
+                  </button>
+                </>
               )}
             </div>
           </div>
@@ -591,12 +627,12 @@ export default function PublishedPedigreePage() {
         <div className="glow-gold rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)", minHeight: "220px" }}>
           <div className="flex flex-col sm:flex-row sm:items-stretch h-full">
             {/* Photo */}
-            <div className="flex-shrink-0 relative m-2" style={{ width: "200px", height: "200px" }}>
+            <div className="flex-shrink-0 relative m-2 w-full sm:w-[200px] h-[200px]">
               {photoUrl ? (
-                <img src={photoUrl} alt={displayName} className="rounded-md" style={{ width: "200px", height: "200px", objectFit: "fill" }} />
+                <img src={photoUrl} alt={displayName} className="rounded-md w-full sm:w-[200px] h-[200px]" style={{ objectFit: "fill" }} />
               ) : (
-                <div className="rounded-md flex items-center justify-center"
-                  style={{ width: "200px", height: "200px", background: isMale ? "linear-gradient(135deg, #0c1929, #1a2e4a)" : "linear-gradient(135deg, #29101c, #3d1a2e)" }}>
+                <div className="rounded-md flex items-center justify-center w-full sm:w-[200px] h-[200px]"
+                  style={{ background: isMale ? "linear-gradient(135deg, #0c1929, #1a2e4a)" : "linear-gradient(135deg, #29101c, #3d1a2e)" }}>
                   <span className="text-2xl opacity-10" style={{ color: sexColor }}>{isMale ? "♂" : "♀"}</span>
                 </div>
               )}
@@ -857,6 +893,60 @@ export default function PublishedPedigreePage() {
           </div>
         </footer>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-4" style={{ background: "rgba(0,0,0,0.7)", backdropFilter: "blur(4px)" }}>
+          <div className="rounded-xl p-6 max-w-sm w-full" style={{
+            background: "linear-gradient(180deg, #1a1a24 0%, #0e1018 100%)",
+            border: "1px solid rgba(239,68,68,0.3)",
+            boxShadow: "0 20px 50px rgba(0,0,0,0.6)",
+          }}>
+            <div className="text-center mb-4">
+              <span className="text-3xl">⚠️</span>
+            </div>
+            <h3 className="text-sm font-bold text-center mb-2" style={{ color: "#ef4444", fontFamily: "var(--font-display)", letterSpacing: "0.03em" }}>
+              Delete Pedigree
+            </h3>
+            <p className="text-xs text-center mb-1" style={{ color: "var(--text-primary, #e2e8f0)", fontFamily: "var(--font-table)" }}>
+              Are you sure you want to permanently delete
+            </p>
+            <p className="text-xs text-center font-bold mb-4" style={{ color: "var(--accent-gold, #d4a855)", fontFamily: "var(--font-table)" }}>
+              {ped?.name || "this pedigree"}?
+            </p>
+            <p className="text-[10px] text-center mb-5" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+              This action cannot be undone.
+            </p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowDeleteConfirm(false)}
+                disabled={deleting}
+                className="flex-1 px-4 py-2.5 rounded-xl text-xs font-black transition-all hover:scale-105"
+                style={{
+                  background: "linear-gradient(135deg, #cbd5e1, #94a3b8)",
+                  color: "#000",
+                  fontFamily: "var(--font-display)",
+                  letterSpacing: "0.05em",
+                }}>
+                Cancel
+              </button>
+              <button
+                onClick={handleDelete}
+                disabled={deleting}
+                className="flex-1 px-4 py-2.5 rounded-xl text-xs font-black transition-all hover:scale-105"
+                style={{
+                  background: "linear-gradient(135deg, #ef4444, #b91c1c)",
+                  color: "#fff",
+                  fontFamily: "var(--font-display)",
+                  letterSpacing: "0.05em",
+                  boxShadow: "0 4px 20px rgba(239,68,68,0.3)",
+                }}>
+                {deleting ? "Deleting..." : "Delete Forever"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

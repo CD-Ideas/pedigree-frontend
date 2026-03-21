@@ -298,7 +298,7 @@ export default function PublicDogsPage() {
       {/* ─── Hero Header ─── */}
       <div className="relative overflow-hidden">
         {/* Ambient glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[200px] opacity-[0.07]"
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[600px] h-[200px] opacity-[0.07]"
           style={{ background: "radial-gradient(ellipse, rgba(212,168,85,1) 0%, transparent 70%)" }} />
 
         <div className="relative max-w-[1600px] mx-auto px-4 md:px-6 pt-8 pb-5">

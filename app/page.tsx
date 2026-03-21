@@ -276,8 +276,8 @@ export default function Home() {
         <div className="hidden md:flex items-center gap-6">
           <a href="#features" style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--accent-gold)", transition: "color 0.2s" }}
             onMouseEnter={e => e.currentTarget.style.color = "var(--accent-gold-bright)"} onMouseLeave={e => e.currentTarget.style.color = "var(--accent-gold)"}>Features</a>
-          <a href="#heatmap" style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--accent-gold)", transition: "color 0.2s" }}
-            onMouseEnter={e => e.currentTarget.style.color = "var(--accent-gold-bright)"} onMouseLeave={e => e.currentTarget.style.color = "var(--accent-gold)"}>Heat Map</a>
+          <a href="/breeding-calculator" style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--accent-gold)", transition: "color 0.2s" }}
+            onMouseEnter={e => e.currentTarget.style.color = "var(--accent-gold-bright)"} onMouseLeave={e => e.currentTarget.style.color = "var(--accent-gold)"}>Breeding Calculator</a>
           <a href="/marketplace" style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--accent-gold)", transition: "color 0.2s" }}
             onMouseEnter={e => e.currentTarget.style.color = "var(--accent-gold-bright)"} onMouseLeave={e => e.currentTarget.style.color = "var(--accent-gold)"}>Marketplace</a>
           <div className="relative">
@@ -296,7 +296,7 @@ export default function Home() {
             </button>
             {pricingOpen && (
               <div className="absolute top-full right-0 mt-3 rounded-xl overflow-hidden"
-                style={{ width: "320px", background: "rgba(12,13,16,0.97)", backdropFilter: "blur(24px)", border: "1px solid rgba(255,255,255,0.08)", boxShadow: "0 20px 50px rgba(0,0,0,0.6)" }}
+                style={{ width: "min(320px, 90vw)", background: "rgba(12,13,16,0.97)", backdropFilter: "blur(24px)", border: "1px solid rgba(255,255,255,0.08)", boxShadow: "0 20px 50px rgba(0,0,0,0.6)" }}
                 onClick={(e) => e.stopPropagation()}>
                   {/* Free tier */}
                   <div className="px-6 py-6">
@@ -341,7 +341,7 @@ export default function Home() {
           <div className="flex flex-col items-center justify-center h-full gap-6">
             {[
               { label: "Features", href: "#features" },
-              { label: "Heat Map", href: "#heatmap" },
+              { label: "Breeding Calculator", href: "/breeding-calculator" },
               { label: "Marketplace", href: "#marketplace" },
             ].map((item) => (
               <a key={item.label} href={item.href} onClick={() => setMobileMenu(false)}
@@ -762,7 +762,7 @@ export default function Home() {
                 <div>
                   <h4 style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "9px", color: "var(--accent-gold-bright)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "6px" }}>Platform</h4>
                   <div className="flex flex-col gap-1.5">
-                    {[{ label: "Features", href: "#features" }, { label: "Heat Map", href: "#heatmap" }, { label: "Marketplace", href: "#marketplace" }].map((l) => (
+                    {[{ label: "Features", href: "#features" }, { label: "Breeding Calculator", href: "/breeding-calculator" }, { label: "Marketplace", href: "#marketplace" }].map((l) => (
                       <a key={l.label} href={l.href} style={{ fontFamily: "var(--font-table)", fontSize: "10px", color: "rgba(200,200,210,0.8)", transition: "color 0.2s" }}
                         onMouseEnter={e => e.currentTarget.style.color = "#fff"}
                         onMouseLeave={e => e.currentTarget.style.color = "rgba(200,200,210,0.8)"}>{l.label}</a>
