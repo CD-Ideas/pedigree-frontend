@@ -159,9 +159,6 @@ export default function NavBar() {
     }
   }, [pathname, mounted]); // re-check on every navigation and on mount
 
-  // Don't show navbar on landing, login, register
-  if (pathname === "/" || pathname === "/login" || pathname === "/register") return null;
-
   const handleAvatarSelect = useCallback(async (emoji: string) => {
     if (!userId) return;
     setAvatarUploading(true);
@@ -205,6 +202,9 @@ export default function NavBar() {
     setAvatarUploading(false);
     e.target.value = "";
   }, [userId]);
+
+  // Don't show navbar on landing, login, register
+  if (pathname === "/" || pathname === "/login" || pathname === "/register") return null;
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -397,31 +397,6 @@ export default function NavBar() {
                       <p className="text-sm font-bold" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>{userName}</p>
                       <p className="text-[10px] mt-0.5" style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>Admin</p>
                     </div>
-
-                    {/* Links */}
-                    <div className="py-1">
-                      {[
-                        { href: "/pedigree-lab", label: "Pedigree Lab", icon: "🧪" },
-                        { href: "/dashboard/pedigrees", label: "My Pedigrees", icon: "📋" },
-                        { href: "/community", label: "Community Pedigrees", icon: "🌍" },
-                        { href: "/dogs", label: "Dogs", icon: "🐕" },
-                        { href: "/pedigree/spotlight", label: "Lineage Spotlight", icon: "🔦" },
-                        { href: "/breeding-calculator", label: "Breeding Calculator", icon: "🧬" },
-                        { href: "/puppy-predictor", label: "Puppy Color Predictor", icon: "🎨" },
-                        { href: "/marketplace", label: "Marketplace", icon: "🏪" },
-                      ].map((item) => (
-                        <Link key={item.href} href={item.href}
-                          onClick={() => setDropdownOpen(false)}
-                          className="flex items-center gap-3 px-4 py-2.5 transition-colors hover:bg-white/5"
-                          style={{ color: pathname === item.href ? "var(--accent-gold)" : "var(--text-secondary)", fontFamily: "var(--font-table)", fontSize: "0.8rem" }}>
-                          <span className="text-sm">{item.icon}</span>
-                          {item.label}
-                        </Link>
-                      ))}
-                    </div>
-
-                    {/* Divider */}
-                    <div style={{ borderTop: "1px solid rgba(30,64,120,0.4)" }} />
 
                     {/* Account Settings */}
                     <div className="py-1">
