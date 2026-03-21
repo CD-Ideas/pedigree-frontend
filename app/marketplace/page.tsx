@@ -183,15 +183,50 @@ function AdCard({ ad, index }: { ad: MarketplaceAd; index: number }) {
           </div>
         )}
 
-        {/* Location & time */}
+        {/* Location & time & share */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1 text-[10px]" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
             <span>{"\uD83D\uDCCD"}</span>
-            <span className="truncate max-w-[120px]">{ad.location || "Unknown"}</span>
+            <span className="truncate max-w-[80px]">{ad.location || "Unknown"}</span>
+            <span style={{ color: "rgba(90,106,130,0.4)" }}>{"\u00B7"}</span>
+            <span style={{ fontFamily: "var(--font-mono)" }}>{timeAgo(ad.created_at)}</span>
           </div>
-          <span className="text-[10px]" style={{ color: "#5a6a82", fontFamily: "var(--font-mono)" }}>
-            {timeAgo(ad.created_at)}
-          </span>
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                navigator.clipboard.writeText(`https://pedigreeplatform.com/marketplace/${ad.id}`);
+              }}
+              className="w-5 h-5 rounded flex items-center justify-center transition-all hover:scale-110"
+              style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)" }}
+              title="Copy Link"
+            >
+              <span className="text-[9px]">{"\uD83D\uDD17"}</span>
+            </button>
+            <a
+              href={`https://wa.me/?text=${encodeURIComponent(`${ad.title}${ad.price ? ` - $${ad.price}` : ""} | Pedigree Platform\nhttps://pedigreeplatform.com/marketplace/${ad.id}`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="w-5 h-5 rounded flex items-center justify-center transition-all hover:scale-110"
+              style={{ background: "rgba(37,211,102,0.1)", border: "1px solid rgba(37,211,102,0.2)" }}
+              title="WhatsApp"
+            >
+              <svg viewBox="0 0 24 24" width="11" height="11" fill="#25d366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.611.611l4.458-1.495A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.3 0-4.438-.766-6.149-2.056l-.432-.336-3.2 1.073 1.073-3.2-.336-.432A9.953 9.953 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+            </a>
+            <a
+              href={`https://t.me/share/url?url=${encodeURIComponent(`https://pedigreeplatform.com/marketplace/${ad.id}`)}&text=${encodeURIComponent(`${ad.title}${ad.price ? ` - $${ad.price}` : ""} | Pedigree Platform`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="w-5 h-5 rounded flex items-center justify-center transition-all hover:scale-110"
+              style={{ background: "rgba(0,136,204,0.1)", border: "1px solid rgba(0,136,204,0.2)" }}
+              title="Telegram"
+            >
+              <svg viewBox="0 0 24 24" width="11" height="11" fill="#0088cc"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+            </a>
+          </div>
         </div>
       </div>
     </Link>
@@ -282,21 +317,6 @@ export default function MarketplacePage() {
       `}</style>
 
       {/* ─── Nav ─── */}
-      {/* Create Ad button bar */}
-      <div className="px-4 md:px-6 py-2 flex items-center justify-end" style={{ borderBottom: "1px solid var(--border, rgba(30,64,120,0.3))" }}>
-        <Link
-          href={category ? `/marketplace/create?category=${category}` : "/marketplace/create"}
-          className="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all hover:scale-105"
-          style={{
-            background: "linear-gradient(135deg, #e8c86e, #b8860b)",
-            color: "#000",
-            fontFamily: "var(--font-table)",
-          }}
-        >
-          + Create Ad
-        </Link>
-      </div>
-
       {/* ─── Hero Header ─── */}
       <div className="relative overflow-hidden">
         {/* Ambient glow */}
@@ -621,6 +641,23 @@ export default function MarketplacePage() {
           </div>
         ) : (
           <>
+            {/* Create Ad button */}
+            <div className="flex justify-end mb-3">
+              <Link
+                href={category ? `/marketplace/create?category=${category}` : "/marketplace/create"}
+                className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-[11px] font-bold transition-all hover:scale-105"
+                style={{
+                  background: "linear-gradient(135deg, #e8c86e, #b8860b)",
+                  color: "#000",
+                  fontFamily: "var(--font-table)",
+                  letterSpacing: "0.03em",
+                  boxShadow: "0 2px 12px rgba(212,168,85,0.2)",
+                }}
+              >
+                Create Ad {"\u2192"}
+              </Link>
+            </div>
+
             {/* Ad Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {ads.map((ad, i) => (
@@ -718,49 +755,6 @@ export default function MarketplacePage() {
           </>
         )}
 
-        {/* ─── CTA Banner ─── */}
-        <div
-          className="mt-10 rounded-xl p-6 text-center relative overflow-hidden"
-          style={{
-            background: "linear-gradient(160deg, rgba(212,168,85,0.06), rgba(14,15,20,0.98))",
-            border: "1px solid rgba(212,168,85,0.15)",
-          }}
-        >
-          <div
-            className="absolute top-0 left-0 right-0 h-px"
-            style={{ background: "linear-gradient(90deg, transparent, rgba(212,168,85,0.3), transparent)" }}
-          />
-          <h2
-            style={{
-              fontFamily: "var(--font-table)",
-              fontWeight: 700,
-              fontSize: "1.1rem",
-              color: "var(--text-primary, #e2e8f0)",
-            }}
-          >
-            Ready to sell or advertise?
-          </h2>
-          <p
-            className="mt-1.5 mb-4"
-            style={{ fontFamily: "var(--font-table)", fontSize: "12px", color: "#5a6a82" }}
-          >
-            Create a listing to reach thousands of breeders and enthusiasts.
-          </p>
-          <Link
-            href={category ? `/marketplace/create?category=${category}` : "/marketplace/create"}
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg text-xs font-bold transition-all hover:scale-105"
-            style={{
-              background: "linear-gradient(135deg, #e8c86e, #b8860b)",
-              color: "#000",
-              fontFamily: "var(--font-table)",
-              letterSpacing: "0.04em",
-              textTransform: "uppercase",
-              boxShadow: "0 4px 20px rgba(212,168,85,0.2)",
-            }}
-          >
-            Create Ad {"\u2192"}
-          </Link>
-        </div>
       </div>
 
       {/* ─── Footer ─── */}
