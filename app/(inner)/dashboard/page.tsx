@@ -28,14 +28,14 @@ interface UserData {
 }
 
 const NAV_ITEMS = [
-  { icon: "🧪", label: "Pedigree Lab", href: "/pedigree-lab", desc: "Create & publish pedigrees" },
-  { icon: "🔦", label: "Lineage Spotlight", href: "/pedigree/spotlight", desc: "Explore lineage trees" },
-  { icon: "📋", label: "My Pedigrees", href: "/dashboard/pedigrees", desc: "Your published pedigrees" },
-  { icon: "🌍", label: "Community Pedigrees", href: "/community", desc: "Browse all pedigrees" },
-  { icon: "🐕", label: "Dogs", href: "/dogs", desc: "Browse dog database" },
-  { icon: "🧬", label: "Breeding Calculator", href: "/breeding-calculator", desc: "COI & linebreeding analysis" },
-  { icon: "🎨", label: "Puppy Color Predictor", href: "/puppy-predictor", desc: "Predict coat colors" },
-  { icon: "🏪", label: "Marketplace", href: "/marketplace", desc: "Buy, sell & advertise" },
+  { icon: "🧬", label: "Breeding Calculator", href: "/breeding-calculator", desc: "COI & linebreeding analysis", color: "#a78bfa" },
+  { icon: "🌍", label: "Community Pedigrees", href: "/community", desc: "Browse all pedigrees", color: "#34d399" },
+  { icon: "🐕", label: "Dogs", href: "/dogs", desc: "Browse dog database", color: "#f472b6" },
+  { icon: "🔦", label: "Lineage Spotlight", href: "/pedigree/spotlight", desc: "Explore lineage trees", color: "#f59e0b" },
+  { icon: "🏪", label: "Marketplace", href: "/marketplace", desc: "Buy, sell & advertise", color: "#ef4444" },
+  { icon: "📋", label: "My Pedigrees", href: "/dashboard/pedigrees", desc: "Your published pedigrees", color: "#60a5fa" },
+  { icon: "🧪", label: "Pedigree Lab", href: "/pedigree-lab", desc: "Create & publish pedigrees", color: "#22c55e" },
+  { icon: "🎨", label: "Puppy Color Predictor", href: "/puppy-predictor", desc: "Predict coat colors", color: "#fb923c" },
 ];
 
 const ALERT_COLORS = {
@@ -55,6 +55,16 @@ export default function Dashboard() {
   const [searchQ, setSearchQ] = useState("");
   const [searchResults, setSearchResults] = useState<{ dog_id: number; registered_name: string }[]>([]);
   const [showSearch, setShowSearch] = useState(false);
+  const [showAvatarPicker, setShowAvatarPicker] = useState(false);
+  const [avatarUploading, setAvatarUploading] = useState(false);
+  const avatarInputRef = useRef<HTMLInputElement>(null);
+
+  const AVATAR_OPTIONS = [
+    { id: "dog1", emoji: "🐕" }, { id: "dog2", emoji: "🐶" }, { id: "dog3", emoji: "🐾" },
+    { id: "wolf", emoji: "🐺" }, { id: "bone", emoji: "🦴" }, { id: "star", emoji: "⭐" },
+    { id: "fire", emoji: "🔥" }, { id: "crown", emoji: "👑" }, { id: "trophy", emoji: "🏆" },
+    { id: "shield", emoji: "🛡️" }, { id: "diamond", emoji: "💎" }, { id: "bolt", emoji: "⚡" },
+  ];
 
   useEffect(() => {
     try {
@@ -62,6 +72,51 @@ export default function Dashboard() {
       if (u) setUser(u);
     } catch (_e) {}
   }, []);
+
+  const handleAvatarSelect = async (emoji: string) => {
+    if (!user?.id) return;
+    setAvatarUploading(true);
+    try {
+      const avatarValue = emoji ? `emoji:${emoji}` : "";
+      const res = await fetch("/api/account/update-profile", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: user.id, profile_picture: avatarValue }),
+      });
+      const data = await res.json();
+      if (!data.error) {
+        setUser({ ...user, profile_picture: avatarValue });
+        const u = JSON.parse(localStorage.getItem("user") || "{}");
+        u.profile_picture = avatarValue;
+        localStorage.setItem("user", JSON.stringify(u));
+      }
+    } catch (_e) {}
+    setAvatarUploading(false);
+    setShowAvatarPicker(false);
+  };
+
+  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !user?.id) return;
+    if (file.size > 5 * 1024 * 1024) return;
+    setAvatarUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append("userId", String(user.id));
+      fd.append("avatar", file);
+      const res = await fetch("/api/account/upload-avatar", { method: "POST", body: fd });
+      const data = await res.json();
+      if (data.profile_picture) {
+        setUser({ ...user, profile_picture: data.profile_picture });
+        const u = JSON.parse(localStorage.getItem("user") || "{}");
+        u.profile_picture = data.profile_picture;
+        localStorage.setItem("user", JSON.stringify(u));
+      }
+    } catch (_e) {}
+    setAvatarUploading(false);
+    setShowAvatarPicker(false);
+    e.target.value = "";
+  };
 
   const dismissAlert = (id: string) => {
     setAlerts((prev) => prev.filter((a) => a.id !== id));
@@ -122,10 +177,10 @@ export default function Dashboard() {
             {NAV_ITEMS.map((item) => (
               <Link key={item.href} href={item.href}
                 className="dash-nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg group"
-                style={{ fontFamily: "var(--font-table)" }}>
-                <span className="text-base w-6 text-center transition-transform group-hover:scale-110">{item.icon}</span>
+                style={{ fontFamily: "var(--font-table)", "--item-color": item.color.replace("#", "").match(/.{2}/g)!.map(h => parseInt(h, 16)).join(",") } as React.CSSProperties}>
+                <span className="text-base w-6 text-center transition-transform group-hover:scale-125 group-hover:drop-shadow-lg">{item.icon}</span>
                 <div>
-                  <span className="text-sm font-medium group-hover:text-[var(--accent-gold)] transition-colors"
+                  <span className="dash-nav-label text-sm font-medium transition-colors"
                     style={{ color: "var(--text-primary)" }}>
                     {item.label}
                   </span>
@@ -147,7 +202,7 @@ export default function Dashboard() {
               const c = ALERT_COLORS[alert.color];
               return (
                 <div key={alert.id}
-                  className="rounded-lg px-4 py-3 flex items-center justify-between animate-pulse-subtle"
+                  className="rounded-lg px-4 py-3 flex items-center justify-between animate-pulse-subtle transition-all hover:scale-[1.01] cursor-pointer"
                   style={{ background: c.bg, border: `1px solid ${c.border}`, boxShadow: `0 0 25px ${c.glow}, inset 0 1px 0 rgba(255,255,255,0.05)` }}>
                   <div className="flex items-center gap-3">
                     <span className="text-lg">🏆</span>
@@ -212,16 +267,17 @@ export default function Dashboard() {
                 { label: "Predict Puppy Colors", href: "/puppy-predictor", icon: "🎨", color: "#f472b6" },
               ].map((action) => (
                 <Link key={action.href} href={action.href}
-                  className="dash-action-item flex items-center gap-3 px-3 py-2.5 rounded-lg group">
-                  <span className="w-8 h-8 rounded-lg flex items-center justify-center text-sm"
+                  className="dash-nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg group"
+                  style={{ "--item-color": action.color.replace("#", "").match(/.{2}/g)!.map(h => parseInt(h, 16)).join(",") } as React.CSSProperties}>
+                  <span className="w-8 h-8 rounded-lg flex items-center justify-center text-sm transition-transform group-hover:scale-110"
                     style={{ background: `${action.color}15`, border: `1px solid ${action.color}30` }}>
                     {action.icon}
                   </span>
-                  <span className="text-sm font-medium group-hover:text-[var(--accent-gold)] transition-colors"
+                  <span className="dash-nav-label text-sm font-medium transition-colors"
                     style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)" }}>
                     {action.label}
                   </span>
-                  <span className="dash-arrow ml-auto text-xs" style={{ color: "var(--text-muted)" }}>→</span>
+                  <span className="dash-arrow ml-auto text-xs transition-all" style={{ color: "var(--text-muted)" }}>→</span>
                 </Link>
               ))}
             </div>
@@ -251,8 +307,55 @@ export default function Dashboard() {
       <aside className="w-56 flex-shrink-0 hidden xl:block">
         <div className="rounded-xl p-4 sticky top-20 space-y-4" style={steelFrame}>
           {/* Profile */}
-          <div className="flex flex-col items-center text-center pb-4" style={{ borderBottom: "1px solid rgba(90,70,50,0.3)" }}>
-            {renderAvatar("w-16 h-16", "text-2xl")}
+          <div className="flex flex-col items-center text-center pb-4 relative" style={{ borderBottom: "1px solid rgba(90,70,50,0.3)" }}>
+            <div className="relative group cursor-pointer" onClick={() => setShowAvatarPicker(!showAvatarPicker)}>
+              {renderAvatar("w-16 h-16", "text-2xl")}
+              <div className="absolute inset-0 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                style={{ background: "rgba(0,0,0,0.5)" }}>
+                <span className="text-white text-[10px] font-bold" style={{ fontFamily: "var(--font-table)" }}>
+                  {avatarUploading ? "..." : "Change"}
+                </span>
+              </div>
+            </div>
+            <input ref={avatarInputRef} type="file" accept="image/*" className="hidden" onChange={handleAvatarUpload} />
+            {/* Avatar Picker */}
+            {showAvatarPicker && (
+              <>
+                <div className="fixed inset-0 z-[60]" onClick={() => setShowAvatarPicker(false)} />
+                <div className="absolute top-20 left-1/2 -translate-x-1/2 w-56 rounded-xl overflow-hidden z-[70]"
+                  onClick={(e) => e.stopPropagation()}
+                  style={{ background: "linear-gradient(180deg, #2a2420 0%, #1c1714 100%)", border: "1.5px solid rgba(90,70,50,0.6)", boxShadow: "0 12px 40px rgba(0,0,0,0.6)" }}>
+                  <div className="px-3 py-2" style={{ borderBottom: "1px solid rgba(90,70,50,0.4)" }}>
+                    <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>Choose Avatar</p>
+                  </div>
+                  <button onClick={() => { setShowAvatarPicker(false); avatarInputRef.current?.click(); }}
+                    className="w-full flex items-center gap-2 px-3 py-2 transition-colors hover:bg-white/5"
+                    style={{ borderBottom: "1px solid rgba(90,70,50,0.3)", color: "var(--text-secondary)", fontFamily: "var(--font-table)", fontSize: "0.75rem" }}>
+                    <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs" style={{ background: "rgba(212,168,85,0.1)", border: "1px solid rgba(212,168,85,0.3)" }}>📷</span>
+                    Upload Photo
+                  </button>
+                  <div className="p-2 grid grid-cols-6 gap-1.5">
+                    {AVATAR_OPTIONS.map((av) => (
+                      <button key={av.id} onClick={() => handleAvatarSelect(av.emoji)} title={av.id}
+                        className="w-7 h-7 rounded-full flex items-center justify-center text-sm transition-all hover:scale-110"
+                        style={{
+                          background: user?.profile_picture === `emoji:${av.emoji}` ? "rgba(212,168,85,0.25)" : "rgba(60,45,35,0.5)",
+                          border: user?.profile_picture === `emoji:${av.emoji}` ? "2px solid var(--accent-gold)" : "1px solid rgba(90,70,50,0.4)",
+                        }}>
+                        {av.emoji}
+                      </button>
+                    ))}
+                  </div>
+                  {user?.profile_picture && (
+                    <button onClick={() => handleAvatarSelect("")}
+                      className="w-full flex items-center justify-center gap-1 px-3 py-1.5 transition-colors hover:bg-red-500/5 text-[10px]"
+                      style={{ borderTop: "1px solid rgba(90,70,50,0.3)", color: "#ef4444", fontFamily: "var(--font-table)" }}>
+                      Remove
+                    </button>
+                  )}
+                </div>
+              </>
+            )}
             <p className="text-sm font-bold mt-3" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
               {user?.username || "User"}
             </p>
@@ -288,8 +391,8 @@ export default function Dashboard() {
 
           {/* Messaging */}
           <div className="pb-4" style={{ borderBottom: "1px solid rgba(90,70,50,0.3)" }}>
-            <button className="dash-panel-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg"
-              style={{ fontFamily: "var(--font-table)" }}>
+            <button className="dash-nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg"
+              style={{ fontFamily: "var(--font-table)", "--item-color": "96,165,250" } as React.CSSProperties}>
               <span className="relative">
                 <span className="text-base">🔔</span>
                 {unreadMessages > 0 && (
@@ -311,16 +414,16 @@ export default function Dashboard() {
           {/* Account & Logout */}
           <div className="space-y-0.5">
             <Link href="/account"
-              className="dash-panel-btn flex items-center gap-3 px-3 py-2.5 rounded-lg"
-              style={{ fontFamily: "var(--font-table)" }}>
-              <span className="text-base">⚙️</span>
-              <span className="text-xs font-medium" style={{ color: "var(--text-primary)" }}>Account Settings</span>
+              className="dash-nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg group"
+              style={{ fontFamily: "var(--font-table)", "--item-color": "167,139,250" } as React.CSSProperties}>
+              <span className="text-base transition-transform group-hover:scale-110">⚙️</span>
+              <span className="dash-nav-label text-xs font-medium transition-colors" style={{ color: "var(--text-primary)" }}>Account Settings</span>
             </Link>
             <button onClick={handleLogout}
-              className="dash-panel-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:!bg-red-500/10"
-              style={{ fontFamily: "var(--font-table)" }}>
-              <span className="text-base">🚪</span>
-              <span className="text-xs font-medium" style={{ color: "#ef4444" }}>Logout</span>
+              className="dash-nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg group"
+              style={{ fontFamily: "var(--font-table)", "--item-color": "239,68,68" } as React.CSSProperties}>
+              <span className="text-base transition-transform group-hover:scale-110">🚪</span>
+              <span className="dash-nav-label text-xs font-medium transition-colors" style={{ color: "#ef4444" }}>Logout</span>
             </button>
           </div>
         </div>
