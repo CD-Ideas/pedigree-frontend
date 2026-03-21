@@ -224,7 +224,17 @@ export default function AccountPage() {
         </h2>
         <div className="flex items-center gap-6">
           <div className="relative group">
-            {avatarPreview ? (
+            {avatarPreview?.startsWith("emoji:") ? (
+              <div
+                className="w-24 h-24 rounded-full flex items-center justify-center text-4xl"
+                style={{
+                  background: "linear-gradient(135deg, #1a2744, #0e1828)",
+                  border: "3px solid var(--accent-gold)",
+                }}
+              >
+                {avatarPreview.replace("emoji:", "")}
+              </div>
+            ) : avatarPreview ? (
               <img
                 src={avatarPreview}
                 alt="Avatar"

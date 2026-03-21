@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { getDogColor } from "@/app/utils/colors";
 
 const LOGO = "https://i.imgur.com/cAvQemZ.png";
@@ -114,9 +114,28 @@ export default function NavBar() {
   const router = useRouter();
   const [loggedIn, setLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
+  const [userId, setUserId] = useState(0);
   const [userPicture, setUserPicture] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const avatarInputRef = useRef<HTMLInputElement>(null);
+  const [avatarUploading, setAvatarUploading] = useState(false);
+  const [showAvatarPicker, setShowAvatarPicker] = useState(false);
+
+  const AVATAR_OPTIONS = [
+    { id: "dog1", emoji: "🐕", label: "Dog" },
+    { id: "dog2", emoji: "🐶", label: "Puppy" },
+    { id: "dog3", emoji: "🐾", label: "Paw" },
+    { id: "wolf", emoji: "🐺", label: "Wolf" },
+    { id: "bone", emoji: "🦴", label: "Bone" },
+    { id: "star", emoji: "⭐", label: "Star" },
+    { id: "fire", emoji: "🔥", label: "Fire" },
+    { id: "crown", emoji: "👑", label: "Crown" },
+    { id: "trophy", emoji: "🏆", label: "Trophy" },
+    { id: "shield", emoji: "🛡️", label: "Shield" },
+    { id: "diamond", emoji: "💎", label: "Diamond" },
+    { id: "bolt", emoji: "⚡", label: "Bolt" },
+  ];
 
   useEffect(() => {
     setMounted(true);
@@ -128,6 +147,7 @@ export default function NavBar() {
       setLoggedIn(true);
       try {
         const u = JSON.parse(localStorage.getItem("user") || "null");
+        if (u?.id) setUserId(u.id);
         if (u?.username) setUserName(u.username);
         else if (u?.email) setUserName(u.email);
         if (u?.profile_picture) setUserPicture(u.profile_picture);
@@ -141,6 +161,50 @@ export default function NavBar() {
 
   // Don't show navbar on landing, login, register
   if (pathname === "/" || pathname === "/login" || pathname === "/register") return null;
+
+  const handleAvatarSelect = useCallback(async (emoji: string) => {
+    if (!userId) return;
+    setAvatarUploading(true);
+    try {
+      const avatarValue = emoji ? `emoji:${emoji}` : "";
+      const res = await fetch("/api/account/update-profile", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId, profile_picture: avatarValue }),
+      });
+      const data = await res.json();
+      if (!data.error) {
+        setUserPicture(avatarValue);
+        const u = JSON.parse(localStorage.getItem("user") || "{}");
+        u.profile_picture = avatarValue;
+        localStorage.setItem("user", JSON.stringify(u));
+      }
+    } catch (_e) {}
+    setAvatarUploading(false);
+    setShowAvatarPicker(false);
+  }, [userId]);
+
+  const handleAvatarUpload = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !userId) return;
+    if (file.size > 5 * 1024 * 1024) return;
+    setAvatarUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append("userId", String(userId));
+      fd.append("avatar", file);
+      const res = await fetch("/api/account/upload-avatar", { method: "POST", body: fd });
+      const data = await res.json();
+      if (data.profile_picture) {
+        setUserPicture(data.profile_picture);
+        const u = JSON.parse(localStorage.getItem("user") || "{}");
+        u.profile_picture = data.profile_picture;
+        localStorage.setItem("user", JSON.stringify(u));
+      }
+    } catch (_e) {}
+    setAvatarUploading(false);
+    e.target.value = "";
+  }, [userId]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -239,10 +303,79 @@ export default function NavBar() {
                   fontWeight: 500,
                 }}
               >
-                <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold"
-                  style={{ background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#000" }}>
-                  {(userName || "U")[0].toUpperCase()}
+                <span
+                  className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold relative cursor-pointer overflow-hidden flex-shrink-0"
+                  style={{ background: userPicture?.startsWith("emoji:") ? "linear-gradient(135deg, #1a2744, #0e1828)" : "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#000", border: "2px solid var(--accent-gold)" }}
+                  onClick={(e) => { e.stopPropagation(); setShowAvatarPicker(!showAvatarPicker); }}
+                  title="Click to change profile picture"
+                >
+                  {userPicture?.startsWith("emoji:") ? (
+                    <span className="text-sm">{userPicture.replace("emoji:", "")}</span>
+                  ) : userPicture ? (
+                    <img src={userPicture} alt="" className="w-full h-full object-cover rounded-full" />
+                  ) : (
+                    (userName || "U")[0].toUpperCase()
+                  )}
+                  {avatarUploading && (
+                    <span className="absolute inset-0 flex items-center justify-center rounded-full" style={{ background: "rgba(0,0,0,0.6)" }}>
+                      <span className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin" />
+                    </span>
+                  )}
                 </span>
+                <input ref={avatarInputRef} type="file" accept="image/*" className="hidden" onChange={handleAvatarUpload} />
+                {/* Avatar Picker Popup */}
+                {showAvatarPicker && (
+                  <>
+                    <div className="fixed inset-0 z-[60]" onClick={(e) => { e.stopPropagation(); setShowAvatarPicker(false); }} />
+                    <div className="absolute right-0 top-full mt-2 w-64 rounded-xl overflow-hidden z-[70]"
+                      onClick={(e) => e.stopPropagation()}
+                      style={{
+                        background: "linear-gradient(180deg, #2a2420 0%, #1c1714 100%)",
+                        border: "1.5px solid rgba(90,70,50,0.6)",
+                        boxShadow: "0 12px 40px rgba(0,0,0,0.6)",
+                      }}>
+                      <div className="px-4 py-3" style={{ borderBottom: "1px solid rgba(90,70,50,0.4)" }}>
+                        <p className="text-xs font-bold uppercase tracking-wider" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+                          Choose Avatar
+                        </p>
+                      </div>
+                      {/* Upload Photo Option */}
+                      <button
+                        onClick={() => { setShowAvatarPicker(false); avatarInputRef.current?.click(); }}
+                        className="w-full flex items-center gap-3 px-4 py-3 transition-colors hover:bg-white/5"
+                        style={{ borderBottom: "1px solid rgba(90,70,50,0.3)", color: "var(--text-secondary)", fontFamily: "var(--font-table)", fontSize: "0.8rem" }}>
+                        <span className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: "rgba(212,168,85,0.1)", border: "1px solid rgba(212,168,85,0.3)" }}>📷</span>
+                        Upload Photo
+                      </button>
+                      {/* Avatar Grid */}
+                      <div className="p-3 grid grid-cols-6 gap-2">
+                        {AVATAR_OPTIONS.map((av) => (
+                          <button
+                            key={av.id}
+                            onClick={() => handleAvatarSelect(av.emoji)}
+                            title={av.label}
+                            className="w-9 h-9 rounded-full flex items-center justify-center text-lg transition-all hover:scale-110 hover:bg-white/10"
+                            style={{
+                              background: userPicture === `emoji:${av.emoji}` ? "rgba(212,168,85,0.25)" : "rgba(60,45,35,0.5)",
+                              border: userPicture === `emoji:${av.emoji}` ? "2px solid var(--accent-gold)" : "1px solid rgba(90,70,50,0.4)",
+                            }}
+                          >
+                            {av.emoji}
+                          </button>
+                        ))}
+                      </div>
+                      {/* Remove avatar option */}
+                      {userPicture && (
+                        <button
+                          onClick={() => handleAvatarSelect("")}
+                          className="w-full flex items-center justify-center gap-2 px-4 py-2 transition-colors hover:bg-red-500/5 text-xs"
+                          style={{ borderTop: "1px solid rgba(90,70,50,0.3)", color: "#ef4444", fontFamily: "var(--font-table)" }}>
+                          Remove Avatar
+                        </button>
+                      )}
+                    </div>
+                  </>
+                )}
                 {userName}
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
                   style={{ transform: dropdownOpen ? "rotate(180deg)" : "rotate(0)", transition: "transform 0.2s" }}>
