@@ -621,6 +621,29 @@ function PedigreeLabInner() {
         0%, 100% { box-shadow: 0 0 10px rgba(30,64,120,0.08); }
         50% { box-shadow: 0 0 18px rgba(30,64,120,0.15); }
       }
+      select {
+        color-scheme: dark !important;
+        background-color: #1e1e1e !important;
+        color: #e2e8f0 !important;
+        border-color: rgba(255,255,255,0.08) !important;
+        outline: none !important;
+      }
+      select option {
+        background-color: #1e1e1e !important;
+        color: #e2e8f0 !important;
+        border: none !important;
+        outline: none !important;
+        padding: 6px 8px;
+      }
+      select option:hover,
+      select option:checked {
+        background-color: #333 !important;
+        color: #e8c86e !important;
+      }
+      select:focus {
+        border-color: rgba(212,168,85,0.4) !important;
+        box-shadow: 0 0 0 2px rgba(212,168,85,0.12);
+      }
     `}</style>
     <div
       className="min-h-screen flex flex-col"

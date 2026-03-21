@@ -25,6 +25,7 @@ interface MarketplaceAd {
   contact_email: string | null;
   contact_venmo: string | null;
   contact_paypal: string | null;
+  username: string | null;
 }
 
 /* ─── Constants ─── */
@@ -86,6 +87,7 @@ export default function MarketplaceAdPage() {
   const [deleting, setDeleting] = useState(false);
   const [verifyRequesting, setVerifyRequesting] = useState(false);
   const [verifyMsg, setVerifyMsg] = useState("");
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     // Get current user from localStorage
@@ -418,6 +420,26 @@ export default function MarketplaceAdPage() {
                 </div>
               </div>
 
+              {/* Listed By */}
+              {ad.username && (
+                <div className="flex items-center gap-2 mb-3">
+                  <div
+                    className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 text-xs font-bold"
+                    style={{ background: "rgba(212,168,85,0.15)", color: "#e8c86e", fontFamily: "var(--font-table)" }}
+                  >
+                    {ad.username.charAt(0).toUpperCase()}
+                  </div>
+                  <div>
+                    <div className="text-[10px] uppercase tracking-wider" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+                      Listed By
+                    </div>
+                    <div className="text-xs font-bold" style={{ color: "var(--text-primary, #e2e8f0)", fontFamily: "var(--font-table)" }}>
+                      {ad.username}
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* Dates & Expiry Countdown */}
               <div className="flex flex-wrap gap-4 pt-3" style={{ borderTop: "1px solid rgba(30,64,120,0.3)" }}>
                 <div>
@@ -739,6 +761,74 @@ export default function MarketplaceAdPage() {
                 </div>
               </div>
             )}
+
+            {/* Share Toolbar */}
+            <div
+              className="rounded-xl p-5"
+              style={{
+                background: "linear-gradient(180deg, #1e1e1e 0%, #161616 100%)",
+                border: "1.5px solid rgba(30,64,120,0.3)",
+                backdropFilter: "blur(12px)",
+              }}
+            >
+              <h3
+                className="text-xs font-bold uppercase tracking-widest mb-3"
+                style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}
+              >
+                Share This Listing
+              </h3>
+              <div className="flex gap-2">
+                {/* Copy Link */}
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(`https://pedigreeplatform.com/marketplace/${ad.id}`);
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 2000);
+                  }}
+                  className="flex-1 flex items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-xs font-bold transition-all hover:scale-[1.02]"
+                  style={{
+                    background: copied ? "rgba(34,197,94,0.1)" : "rgba(255,255,255,0.04)",
+                    border: copied ? "1px solid rgba(34,197,94,0.3)" : "1px solid rgba(255,255,255,0.08)",
+                    color: copied ? "#22c55e" : "#94a3b8",
+                    fontFamily: "var(--font-table)",
+                  }}
+                >
+                  {copied ? "\u2714" : "\uD83D\uDD17"} {copied ? "Copied!" : "Copy Link"}
+                </button>
+
+                {/* WhatsApp */}
+                <a
+                  href={`https://wa.me/?text=${encodeURIComponent(`${ad.title}${ad.price ? ` - $${ad.price}` : ""} | Pedigree Platform\nhttps://pedigreeplatform.com/marketplace/${ad.id}`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-xs font-bold transition-all hover:scale-[1.02]"
+                  style={{
+                    background: "rgba(37,211,102,0.08)",
+                    border: "1px solid rgba(37,211,102,0.2)",
+                    color: "#25d366",
+                    fontFamily: "var(--font-table)",
+                  }}
+                >
+                  WhatsApp
+                </a>
+
+                {/* Telegram */}
+                <a
+                  href={`https://t.me/share/url?url=${encodeURIComponent(`https://pedigreeplatform.com/marketplace/${ad.id}`)}&text=${encodeURIComponent(`${ad.title}${ad.price ? ` - $${ad.price}` : ""} | Pedigree Platform`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-xs font-bold transition-all hover:scale-[1.02]"
+                  style={{
+                    background: "rgba(0,136,204,0.08)",
+                    border: "1px solid rgba(0,136,204,0.2)",
+                    color: "#0088cc",
+                    fontFamily: "var(--font-table)",
+                  }}
+                >
+                  Telegram
+                </a>
+              </div>
+            </div>
 
             {/* Report Button */}
             <div>

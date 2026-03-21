@@ -18,6 +18,7 @@ interface MarketplaceAd {
   expires_at: string;
   user_id: number;
   dog_id: number | null;
+  username: string | null;
 }
 
 interface MarketplaceResponse {
@@ -166,6 +167,21 @@ function AdCard({ ad, index }: { ad: MarketplaceAd; index: number }) {
         >
           {formatPrice(ad.price)}
         </div>
+
+        {/* Listed By */}
+        {ad.username && (
+          <div className="flex items-center gap-1.5 mb-1.5">
+            <div
+              className="w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-bold flex-shrink-0"
+              style={{ background: "rgba(212,168,85,0.2)", color: "#e8c86e" }}
+            >
+              {ad.username.charAt(0).toUpperCase()}
+            </div>
+            <span className="text-[10px] font-medium" style={{ color: "#94a3b8", fontFamily: "var(--font-table)" }}>
+              {ad.username}
+            </span>
+          </div>
+        )}
 
         {/* Location & time */}
         <div className="flex items-center justify-between">

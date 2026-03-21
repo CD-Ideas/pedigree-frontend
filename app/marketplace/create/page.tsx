@@ -1120,9 +1120,22 @@ function CreateAdContent() {
           border-color: rgba(212,168,85,0.4) !important;
           box-shadow: 0 0 0 2px rgba(212,168,85,0.12), 0 0 12px rgba(212,168,85,0.08);
         }
-        .rounded-lg select option {
-          background: #0e1828;
-          color: #e2e8f0;
+        select {
+          color-scheme: dark !important;
+          background-color: #1e1e1e !important;
+          color: #e2e8f0 !important;
+          border-color: rgba(255,255,255,0.08) !important;
+        }
+        select option {
+          background-color: #1e1e1e !important;
+          color: #e2e8f0 !important;
+          border: none !important;
+          padding: 6px 8px;
+        }
+        select option:hover,
+        select option:checked {
+          background-color: #333 !important;
+          color: #e8c86e !important;
         }
       `}</style>
     </div>
