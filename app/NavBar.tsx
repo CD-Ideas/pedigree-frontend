@@ -258,7 +258,7 @@ export default function NavBar() {
             ← Back
           </Link>
         )}
-        {pathname.startsWith("/pedigree/") && pathname !== "/pedigree/spotlight" && (
+        {(pathname.startsWith("/pedigree/") && pathname !== "/pedigree/spotlight" || pathname === "/dashboard") && (
           <div className="flex-1 max-w-md mx-4 overflow-visible">
             <NavSearch />
           </div>
@@ -289,6 +289,8 @@ export default function NavBar() {
 
           {!mounted ? (
             <div className="ml-4" style={{ width: 80 }} />
+          ) : loggedIn && pathname === "/dashboard" ? (
+            null
           ) : loggedIn ? (
             <div className="relative ml-4">
               <button

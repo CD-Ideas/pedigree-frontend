@@ -6,9 +6,10 @@ import { useRouter } from "next/navigation";
 import { getDogColor } from "@/app/utils/colors";
 
 const steelFrame = {
-  border: "1.5px solid rgba(30,64,120,0.8)",
-  boxShadow: "0 2px 20px rgba(0,0,0,0.25)",
-  background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+  border: "1.5px solid rgba(212,168,85,0.15)",
+  boxShadow: "0 4px 30px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04), 0 0 0 1px rgba(90,70,50,0.3)",
+  background: "linear-gradient(160deg, rgba(42,36,32,0.95) 0%, rgba(28,23,20,0.98) 100%)",
+  backdropFilter: "blur(12px)",
 };
 
 interface TitleAlert {
@@ -38,9 +39,9 @@ const NAV_ITEMS = [
 ];
 
 const ALERT_COLORS = {
-  blue: { bg: "rgba(96,165,250,0.08)", border: "rgba(96,165,250,0.3)", text: "#60a5fa", glow: "rgba(96,165,250,0.15)" },
-  red: { bg: "rgba(239,68,68,0.08)", border: "rgba(239,68,68,0.3)", text: "#ef4444", glow: "rgba(239,68,68,0.15)" },
-  gold: { bg: "rgba(212,168,85,0.08)", border: "rgba(212,168,85,0.3)", text: "#d4a855", glow: "rgba(212,168,85,0.15)" },
+  blue: { bg: "linear-gradient(135deg, rgba(96,165,250,0.1), rgba(96,165,250,0.03))", border: "rgba(96,165,250,0.35)", text: "#60a5fa", glow: "rgba(96,165,250,0.2)" },
+  red: { bg: "linear-gradient(135deg, rgba(239,68,68,0.1), rgba(239,68,68,0.03))", border: "rgba(239,68,68,0.35)", text: "#ef4444", glow: "rgba(239,68,68,0.2)" },
+  gold: { bg: "linear-gradient(135deg, rgba(212,168,85,0.1), rgba(212,168,85,0.03))", border: "rgba(212,168,85,0.35)", text: "#d4a855", glow: "rgba(212,168,85,0.2)" },
 };
 
 export default function Dashboard() {
@@ -113,16 +114,16 @@ export default function Dashboard() {
       <aside className="w-64 flex-shrink-0 hidden lg:block">
         <div className="rounded-xl p-4 sticky top-20" style={steelFrame}>
           <h2 className="text-[10px] uppercase tracking-widest font-bold mb-4 px-2"
-            style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+            style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)", textShadow: "0 0 12px rgba(212,168,85,0.3)" }}>
             Menu
           </h2>
 
           <nav className="space-y-0.5">
             {NAV_ITEMS.map((item) => (
               <Link key={item.href} href={item.href}
-                className="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all hover:bg-white/5 group"
+                className="dash-nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg group"
                 style={{ fontFamily: "var(--font-table)" }}>
-                <span className="text-base w-6 text-center">{item.icon}</span>
+                <span className="text-base w-6 text-center transition-transform group-hover:scale-110">{item.icon}</span>
                 <div>
                   <span className="text-sm font-medium group-hover:text-[var(--accent-gold)] transition-colors"
                     style={{ color: "var(--text-primary)" }}>
@@ -134,33 +135,6 @@ export default function Dashboard() {
             ))}
           </nav>
 
-          {/* Pedigree Search */}
-          <div className="mt-4 pt-4 relative" style={{ borderTop: "1px solid rgba(30,64,120,0.4)" }}>
-            <div className="flex items-center gap-2 px-3 py-2 rounded-lg"
-              style={{ background: "rgba(30,64,120,0.15)", border: "1px solid rgba(30,64,120,0.3)" }}>
-              <span className="text-xs">🔍</span>
-              <input
-                type="text"
-                value={searchQ}
-                onChange={(e) => handleSearch(e.target.value)}
-                placeholder="Search pedigrees..."
-                className="flex-1 bg-transparent text-xs outline-none"
-                style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)", minWidth: 0 }}
-              />
-            </div>
-            {showSearch && searchResults.length > 0 && (
-              <div className="absolute left-0 right-0 top-full mt-1 rounded-lg overflow-hidden z-50"
-                style={{ background: "var(--bg-elevated, #151d2e)", border: "1px solid rgba(30,64,120,0.8)", boxShadow: "0 10px 30px rgba(0,0,0,0.5)", maxHeight: 200, overflowY: "auto" }}>
-                {searchResults.map((r) => (
-                  <a key={r.dog_id} href={`/pedigree/${r.dog_id}`}
-                    className="block px-3 py-2 text-xs hover:bg-white/5 transition-colors"
-                    style={{ color: getDogColor(r.registered_name), fontFamily: "var(--font-table)", borderBottom: "1px solid rgba(30,64,120,0.2)" }}>
-                    {r.registered_name}
-                  </a>
-                ))}
-              </div>
-            )}
-          </div>
         </div>
       </aside>
 
@@ -174,7 +148,7 @@ export default function Dashboard() {
               return (
                 <div key={alert.id}
                   className="rounded-lg px-4 py-3 flex items-center justify-between animate-pulse-subtle"
-                  style={{ background: c.bg, border: `1px solid ${c.border}`, boxShadow: `0 0 20px ${c.glow}` }}>
+                  style={{ background: c.bg, border: `1px solid ${c.border}`, boxShadow: `0 0 25px ${c.glow}, inset 0 1px 0 rgba(255,255,255,0.05)` }}>
                   <div className="flex items-center gap-3">
                     <span className="text-lg">🏆</span>
                     <div>
@@ -200,7 +174,7 @@ export default function Dashboard() {
         {/* Welcome */}
         <div className="mb-6">
           <h1 style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", fontWeight: 700 }}>
-            Welcome back, <span style={{ color: "var(--accent-gold)" }}>{user?.username || "User"}</span>
+            Welcome back, <span style={{ background: "linear-gradient(135deg, #e8c86e, #d4a855, #b8860b)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>{user?.username || "User"}</span>
           </h1>
           <p className="text-xs mt-1" style={{ color: "var(--text-secondary)", fontFamily: "var(--font-table)" }}>
             APBT Pedigree Platform Dashboard
@@ -224,9 +198,10 @@ export default function Dashboard() {
         {/* Feature Cards Grid */}
         <div className="grid md:grid-cols-2 gap-4">
           {/* Quick Actions */}
-          <div className="rounded-xl p-5" style={steelFrame}>
-            <h2 className="text-[10px] uppercase tracking-widest font-bold mb-4"
-              style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+          <div className="dash-box-hover rounded-xl p-5" style={steelFrame}>
+            <h2 className="text-[10px] uppercase tracking-widest font-bold mb-4 flex items-center gap-2"
+              style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)", textShadow: "0 0 12px rgba(212,168,85,0.3)" }}>
+              <span style={{ width: 16, height: 2, background: "linear-gradient(90deg, var(--accent-gold), transparent)", borderRadius: 1 }} />
               Quick Actions
             </h2>
             <div className="space-y-2">
@@ -237,7 +212,7 @@ export default function Dashboard() {
                 { label: "Predict Puppy Colors", href: "/puppy-predictor", icon: "🎨", color: "#f472b6" },
               ].map((action) => (
                 <Link key={action.href} href={action.href}
-                  className="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all hover:bg-white/5 group">
+                  className="dash-action-item flex items-center gap-3 px-3 py-2.5 rounded-lg group">
                   <span className="w-8 h-8 rounded-lg flex items-center justify-center text-sm"
                     style={{ background: `${action.color}15`, border: `1px solid ${action.color}30` }}>
                     {action.icon}
@@ -246,16 +221,17 @@ export default function Dashboard() {
                     style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)" }}>
                     {action.label}
                   </span>
-                  <span className="ml-auto text-xs" style={{ color: "var(--text-muted)" }}>→</span>
+                  <span className="dash-arrow ml-auto text-xs" style={{ color: "var(--text-muted)" }}>→</span>
                 </Link>
               ))}
             </div>
           </div>
 
           {/* Recent Activity Placeholder */}
-          <div className="rounded-xl p-5" style={steelFrame}>
-            <h2 className="text-[10px] uppercase tracking-widest font-bold mb-4"
-              style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+          <div className="dash-box-hover rounded-xl p-5" style={steelFrame}>
+            <h2 className="text-[10px] uppercase tracking-widest font-bold mb-4 flex items-center gap-2"
+              style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)", textShadow: "0 0 12px rgba(212,168,85,0.3)" }}>
+              <span style={{ width: 16, height: 2, background: "linear-gradient(90deg, var(--accent-gold), transparent)", borderRadius: 1 }} />
               Recent Activity
             </h2>
             <div className="flex flex-col items-center justify-center py-8 text-center">
@@ -275,7 +251,7 @@ export default function Dashboard() {
       <aside className="w-56 flex-shrink-0 hidden xl:block">
         <div className="rounded-xl p-4 sticky top-20 space-y-4" style={steelFrame}>
           {/* Profile */}
-          <div className="flex flex-col items-center text-center pb-4" style={{ borderBottom: "1px solid rgba(30,64,120,0.4)" }}>
+          <div className="flex flex-col items-center text-center pb-4" style={{ borderBottom: "1px solid rgba(90,70,50,0.3)" }}>
             {renderAvatar("w-16 h-16", "text-2xl")}
             <p className="text-sm font-bold mt-3" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
               {user?.username || "User"}
@@ -287,13 +263,13 @@ export default function Dashboard() {
           </div>
 
           {/* Subscription */}
-          <div className="pb-4" style={{ borderBottom: "1px solid rgba(30,64,120,0.4)" }}>
+          <div className="pb-4" style={{ borderBottom: "1px solid rgba(90,70,50,0.3)" }}>
             <h3 className="text-[10px] uppercase tracking-widest font-bold mb-3"
-              style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+              style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)", textShadow: "0 0 10px rgba(212,168,85,0.25)" }}>
               Subscription
             </h3>
             <div className="rounded-lg p-3"
-              style={{ background: "linear-gradient(135deg, rgba(212,168,85,0.08), rgba(184,134,11,0.04))", border: "1px solid rgba(212,168,85,0.2)" }}>
+              style={{ background: "linear-gradient(135deg, rgba(212,168,85,0.1), rgba(184,134,11,0.05))", border: "1px solid rgba(212,168,85,0.25)", boxShadow: "0 0 15px rgba(212,168,85,0.06)" }}>
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-sm">★</span>
                 <span className="text-xs font-bold" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-display)" }}>
@@ -311,8 +287,8 @@ export default function Dashboard() {
           </div>
 
           {/* Messaging */}
-          <div className="pb-4" style={{ borderBottom: "1px solid rgba(30,64,120,0.4)" }}>
-            <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-white/5"
+          <div className="pb-4" style={{ borderBottom: "1px solid rgba(90,70,50,0.3)" }}>
+            <button className="dash-panel-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg"
               style={{ fontFamily: "var(--font-table)" }}>
               <span className="relative">
                 <span className="text-base">🔔</span>
@@ -335,13 +311,13 @@ export default function Dashboard() {
           {/* Account & Logout */}
           <div className="space-y-0.5">
             <Link href="/account"
-              className="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-white/5"
+              className="dash-panel-btn flex items-center gap-3 px-3 py-2.5 rounded-lg"
               style={{ fontFamily: "var(--font-table)" }}>
               <span className="text-base">⚙️</span>
               <span className="text-xs font-medium" style={{ color: "var(--text-primary)" }}>Account Settings</span>
             </Link>
             <button onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-red-500/5"
+              className="dash-panel-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:!bg-red-500/10"
               style={{ fontFamily: "var(--font-table)" }}>
               <span className="text-base">🚪</span>
               <span className="text-xs font-medium" style={{ color: "#ef4444" }}>Logout</span>
