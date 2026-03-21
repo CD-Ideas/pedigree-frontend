@@ -440,53 +440,6 @@ export default function CreateAdPage() {
             )}
           </div>
 
-          {/* ─── Heading ─── */}
-          <div
-            className="rounded-xl p-5"
-            style={{
-              background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
-              border: errors.title ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid rgba(30,64,120,0.3)",
-              backdropFilter: "blur(12px)",
-            }}
-          >
-            <div className="flex items-center justify-between mb-2">
-              <label className="text-xs font-bold uppercase tracking-widest" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
-                Heading <span style={{ color: "#ef4444" }}>*</span>
-              </label>
-              <span
-                className="text-[10px]"
-                style={{
-                  color: title.length > 80 ? "#ef4444" : title.length > 60 ? "#eab308" : "#5a6a82",
-                  fontFamily: "var(--font-mono)",
-                }}
-              >
-                {title.length}/80
-              </span>
-            </div>
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => {
-                setTitle(e.target.value);
-                if (errors.title) setErrors((prev) => ({ ...prev, title: "" }));
-              }}
-              placeholder="e.g., Champion Bloodline Male - 2 Years Old"
-              maxLength={80}
-              className="w-full rounded-lg px-4 py-2.5 text-sm outline-none"
-              style={{
-                background: "rgba(30,64,120,0.15)",
-                border: "1px solid rgba(30,64,120,0.3)",
-                color: "var(--text-primary, #e2e8f0)",
-                fontFamily: "var(--font-table)",
-              }}
-            />
-            {errors.title && (
-              <p className="text-[10px] mt-1.5 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
-                {errors.title}
-              </p>
-            )}
-          </div>
-
           {/* ─── Link to Dog ─── */}
           <div
             className="rounded-xl p-5 relative"
@@ -504,7 +457,7 @@ export default function CreateAdPage() {
                 : <span className="text-[9px] normal-case tracking-normal font-normal">(optional)</span>}
             </label>
             <p className="text-[10px] mb-3" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
-              Link this ad to a registered pedigree on the platform
+              Link this ad to a registered pedigree on the platform — the heading will be auto-filled
             </p>
             {errors.dog && (
               <p className="text-[10px] mb-2" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
@@ -532,6 +485,7 @@ export default function CreateAdPage() {
                     setDogId(null);
                     setSelectedDogName("");
                     setDogSearchQuery("");
+                    setTitle("");
                   }}
                   className="px-2.5 py-2 rounded-lg text-xs transition-all hover:scale-105"
                   style={{ background: "rgba(239,68,68,0.1)", color: "#ef4444", border: "1px solid rgba(239,68,68,0.2)" }}
@@ -577,8 +531,10 @@ export default function CreateAdPage() {
                         onClick={() => {
                           setDogId(dog.dog_id);
                           setSelectedDogName(dog.registered_name);
+                          setTitle(dog.registered_name);
                           setShowDogSearch(false);
                           setDogSearchQuery("");
+                          setErrors((prev) => ({ ...prev, title: "", dog: "" }));
                         }}
                         className="w-full text-left px-3 py-2 text-xs flex items-center gap-2 transition-colors hover:bg-[rgba(212,168,85,0.08)]"
                         style={{ borderBottom: "1px solid rgba(30,64,120,0.2)" }}
@@ -598,6 +554,60 @@ export default function CreateAdPage() {
                   </div>
                 )}
               </div>
+            )}
+          </div>
+
+          {/* ─── Heading ─── */}
+          <div
+            className="rounded-xl p-5"
+            style={{
+              background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+              border: errors.title ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid rgba(30,64,120,0.3)",
+              backdropFilter: "blur(12px)",
+            }}
+          >
+            <div className="flex items-center justify-between mb-2">
+              <label className="text-xs font-bold uppercase tracking-widest" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+                Heading <span style={{ color: "#ef4444" }}>*</span>
+              </label>
+              <span
+                className="text-[10px]"
+                style={{
+                  color: title.length > 80 ? "#ef4444" : title.length > 60 ? "#eab308" : "#5a6a82",
+                  fontFamily: "var(--font-mono)",
+                }}
+              >
+                {title.length}/80
+              </span>
+            </div>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => {
+                setTitle(e.target.value);
+                if (errors.title) setErrors((prev) => ({ ...prev, title: "" }));
+              }}
+              placeholder={selectedDogName ? selectedDogName : "e.g., Champion Bloodline Male - 2 Years Old"}
+              maxLength={80}
+              readOnly={!!selectedDogName}
+              className="w-full rounded-lg px-4 py-2.5 text-sm outline-none"
+              style={{
+                background: selectedDogName ? "rgba(212,168,85,0.08)" : "rgba(30,64,120,0.15)",
+                border: selectedDogName ? "1px solid rgba(212,168,85,0.25)" : "1px solid rgba(30,64,120,0.3)",
+                color: "var(--text-primary, #e2e8f0)",
+                fontFamily: "var(--font-table)",
+                cursor: selectedDogName ? "not-allowed" : "text",
+              }}
+            />
+            {selectedDogName && (
+              <p className="text-[10px] mt-1.5" style={{ color: "#e8c86e", fontFamily: "var(--font-table)" }}>
+                Auto-filled from linked dog
+              </p>
+            )}
+            {errors.title && (
+              <p className="text-[10px] mt-1.5 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+                {errors.title}
+              </p>
             )}
           </div>
 
