@@ -46,6 +46,13 @@ interface WormingEntry {
   remindMe: boolean;
 }
 
+interface HeatCycleData {
+  lastHeatDate: string;
+  interval: string; // "120" | "180" | "365" | custom number
+  customDays: string;
+  reminderEnabled: boolean;
+}
+
 interface JournalData {
   rabiesDate: string;
   rabiesNextDue: string;
@@ -53,6 +60,7 @@ interface JournalData {
   vaccines: VaccineEntry[];
   worming: WormingEntry[];
   wormingDraft: WormingEntry;
+  heatCycle: HeatCycleData;
   notes: string;
 }
 
@@ -212,6 +220,7 @@ function defaultJournal(): JournalData {
     ],
     worming: [],
     wormingDraft: defaultWormingDraft(),
+    heatCycle: { lastHeatDate: "", interval: "180", customDays: "180", reminderEnabled: true },
     notes: "",
   };
 }
@@ -1484,31 +1493,84 @@ function PedigreeLabInner() {
                 </button>
               </div>
 
-              {/* Prefix + Name */}
-              <div>
-                <label
-                  className="block text-[10px] uppercase tracking-widest font-semibold mb-1"
-                  style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
-                >
-                  🏷️ Prefix
-                </label>
-                <select
-                  value={publishForm.prefix}
-                  onChange={(e) => setPublishForm((p) => ({ ...p, prefix: e.target.value }))}
-                  className="rounded-2xl px-2 py-2 text-xs outline-none transition-all"
+              {/* Prefix + Title Feed Toggle */}
+              <div className="flex items-end gap-3">
+                <div>
+                  <label
+                    className="block text-[10px] uppercase tracking-widest font-semibold mb-1"
+                    style={{ color: "#5a6a82", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
+                  >
+                    🏷️ Prefix
+                  </label>
+                  <select
+                    value={publishForm.prefix}
+                    onChange={(e) => setPublishForm((p) => ({ ...p, prefix: e.target.value }))}
+                    className="rounded-2xl px-2 py-2 text-xs outline-none transition-all"
+                    style={{
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                      color: "#e2e8f0",
+                      fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+                      width: 90,
+                    }}
+                  >
+                    <option value="">None</option>
+                    <option value="CH">CH</option>
+                    <option value="GR CH">GR CH</option>
+                    <option value="DBL GR CH">DBL GR CH</option>
+                  </select>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setPublishForm((p) => ({ ...p, showInTitleFeed: !p.showInTitleFeed }))}
+                  className="flex-1 flex items-center gap-3 px-4 py-3 rounded-2xl transition-all"
                   style={{
-                    background: "rgba(255,255,255,0.04)",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    color: "#e2e8f0",
-                    fontFamily: "var(--font-table, Rajdhani, sans-serif)",
-                    width: 90,
+                    background: publishForm.showInTitleFeed
+                      ? "linear-gradient(135deg, rgba(232,200,110,0.15), rgba(184,134,11,0.1))"
+                      : "rgba(255,255,255,0.03)",
+                    border: publishForm.showInTitleFeed
+                      ? "1.5px solid rgba(212,168,85,0.5)"
+                      : "1px solid rgba(255,255,255,0.08)",
+                    boxShadow: publishForm.showInTitleFeed
+                      ? "0 0 20px rgba(212,168,85,0.15), inset 0 1px 0 rgba(255,255,255,0.05)"
+                      : "none",
                   }}
+                  title="Show in Dashboard Title Feed"
                 >
-                  <option value="">None</option>
-                  <option value="CH">CH</option>
-                  <option value="GR CH">GR CH</option>
-                  <option value="DBL GR CH">DBL GR CH</option>
-                </select>
+                  <span className="text-xl" style={{ filter: publishForm.showInTitleFeed ? "drop-shadow(0 0 6px rgba(212,168,85,0.5))" : "none" }}>🏆</span>
+                  <div className="flex-1 text-left">
+                    <span className="text-xs font-bold uppercase tracking-wider" style={{
+                      fontFamily: "var(--font-table)",
+                      background: publishForm.showInTitleFeed
+                        ? "linear-gradient(135deg, #e8c86e, #d4a855, #b8860b)"
+                        : "none",
+                      WebkitBackgroundClip: publishForm.showInTitleFeed ? "text" : "unset",
+                      WebkitTextFillColor: publishForm.showInTitleFeed ? "transparent" : "var(--text-muted)",
+                      color: publishForm.showInTitleFeed ? undefined : "var(--text-muted)",
+                    }}>Title Feed</span>
+                    <p className="text-[10px] mt-0.5 font-medium" style={{ color: publishForm.showInTitleFeed ? "#d4a855" : "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                      Announce this dog on the dashboard title alerts
+                    </p>
+                  </div>
+                  <span className="relative w-11 h-6 rounded-full flex-shrink-0 transition-all"
+                    style={{
+                      background: publishForm.showInTitleFeed
+                        ? "linear-gradient(135deg, rgba(212,168,85,0.5), rgba(184,134,11,0.4))"
+                        : "rgba(30,64,120,0.2)",
+                      border: publishForm.showInTitleFeed
+                        ? "1px solid rgba(212,168,85,0.6)"
+                        : "1px solid rgba(30,64,120,0.3)",
+                    }}>
+                    <span className="absolute top-0.5 left-0.5 w-5 h-5 rounded-full transition-all"
+                      style={{
+                        background: publishForm.showInTitleFeed
+                          ? "linear-gradient(135deg, #e8c86e, #b8860b)"
+                          : "#5a6a82",
+                        transform: publishForm.showInTitleFeed ? "translateX(20px)" : "translateX(0)",
+                        boxShadow: publishForm.showInTitleFeed ? "0 0 8px rgba(212,168,85,0.5)" : "none",
+                      }} />
+                  </span>
+                </button>
               </div>
               <ModalInput
                 label="✏️ Name"
@@ -2267,43 +2329,6 @@ function PedigreeLabInner() {
                     fontFamily: "var(--font-table, Rajdhani, sans-serif)",
                   }}
                 />
-              </div>
-
-              {/* Title Feed Toggle */}
-              <div className="rounded-2xl px-4 py-3 flex items-center justify-between"
-                style={{
-                  background: publishForm.showInTitleFeed ? "rgba(212,168,85,0.08)" : "rgba(255,255,255,0.03)",
-                  border: publishForm.showInTitleFeed ? "1px solid rgba(212,168,85,0.3)" : "1px solid rgba(255,255,255,0.08)",
-                  transition: "all 0.3s",
-                }}>
-                <div className="flex items-center gap-2">
-                  <span className="text-base">🏆</span>
-                  <div>
-                    <p className="text-xs font-semibold" style={{ color: publishForm.showInTitleFeed ? "var(--accent-gold)" : "var(--text-primary)", fontFamily: "var(--font-table)" }}>
-                      Show in Title Feed
-                    </p>
-                    <p className="text-[9px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
-                      Announce this dog on the dashboard title alerts
-                    </p>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setPublishForm((p) => ({ ...p, showInTitleFeed: !p.showInTitleFeed }))}
-                  className="relative w-11 h-6 rounded-full transition-all flex-shrink-0"
-                  style={{
-                    background: publishForm.showInTitleFeed ? "rgba(212,168,85,0.3)" : "rgba(30,64,120,0.2)",
-                    border: publishForm.showInTitleFeed ? "1px solid rgba(212,168,85,0.5)" : "1px solid rgba(30,64,120,0.3)",
-                  }}
-                >
-                  <span
-                    className="absolute top-0.5 left-0.5 w-5 h-5 rounded-full transition-all"
-                    style={{
-                      background: publishForm.showInTitleFeed ? "var(--accent-gold)" : "#5a6a82",
-                      transform: publishForm.showInTitleFeed ? "translateX(20px)" : "translateX(0)",
-                    }}
-                  />
-                </button>
               </div>
 
               {/* Submit */}
