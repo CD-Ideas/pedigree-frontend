@@ -15,11 +15,13 @@ const steelFrame = {
 interface TitleAlert {
   id: string;
   dog_id?: number;
+  pedigree_id?: number;
   dog: string;
   title: string;
   color: "blue" | "red" | "gold";
   photo_url?: string;
-  scraped_at?: string;
+  username?: string;
+  date_posted?: string;
 }
 
 interface UserData {
@@ -75,7 +77,7 @@ export default function Dashboard() {
 
     // Fetch real title alerts
     const dismissed = JSON.parse(localStorage.getItem("dismissed_title_alerts") || "[]");
-    fetch("/api/dogs/titled?limit=10&days=7")
+    fetch("/api/dogs/titled?limit=10")
       .then((r) => r.json())
       .then((data) => {
         const filtered = (data.alerts || []).filter((a: TitleAlert) => !dismissed.includes(a.id));
@@ -226,7 +228,7 @@ export default function Dashboard() {
                 🏆 Recent Titled Dogs
               </span>
               <span className="text-[10px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
-                Last 7 days
+                User-published titles
               </span>
             </div>
             {alerts.map((alert) => {
@@ -234,7 +236,10 @@ export default function Dashboard() {
               return (
                 <div key={alert.id}
                   className="rounded-lg px-4 py-3 flex items-center justify-between animate-pulse-subtle transition-all hover:scale-[1.01] cursor-pointer"
-                  onClick={() => alert.dog_id && router.push(`/pedigree/${alert.dog_id}`)}
+                  onClick={() => {
+                    if (alert.pedigree_id) router.push(`/pedigree/custom/${alert.pedigree_id}`);
+                    else if (alert.dog_id) router.push(`/pedigree/${alert.dog_id}`);
+                  }}
                   style={{ background: c.bg, border: `1px solid ${c.border}`, boxShadow: `0 0 25px ${c.glow}, inset 0 1px 0 rgba(255,255,255,0.05)` }}>
                   <div className="flex items-center gap-3">
                     <span className="text-lg">{alert.color === "blue" ? "🥇" : "🏆"}</span>
@@ -244,6 +249,11 @@ export default function Dashboard() {
                       </span>
                       <span className="text-xs ml-2" style={{ color: "var(--text-secondary)", fontFamily: "var(--font-table)" }}>
                         <strong style={{ color: getDogColor(alert.dog) }}>{alert.dog}</strong>
+                        {alert.username && (
+                          <span className="ml-2 text-[10px]" style={{ color: "var(--text-muted)" }}>
+                            by {alert.username}
+                          </span>
+                        )}
                       </span>
                     </div>
                   </div>

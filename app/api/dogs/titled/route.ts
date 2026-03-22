@@ -11,58 +11,63 @@ export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const limit = Math.min(parseInt(searchParams.get("limit") || "10", 10), 50);
-    const days = Math.min(parseInt(searchParams.get("days") || "7", 10), 30);
-
-    // Get dismissed alert IDs from query param (comma-separated)
-    const dismissed = searchParams.get("dismissed") || "";
 
     const script = `
 import sqlite3, json
-from datetime import datetime, timedelta
 
 conn = sqlite3.connect("${DB_PATH}")
 conn.row_factory = sqlite3.Row
 
-cutoff = (datetime.utcnow() - timedelta(days=${days})).strftime("%Y-%m-%d %H:%M:%S")
-
-# Find recently scraped dogs with title prefixes
+# Only pull from published_pedigrees where user opted in to title feed
 rows = conn.execute("""
-    SELECT dog_id, registered_name, photo_url, scraped_at, modified_date
-    FROM dogs
-    WHERE scraped_at >= ?
-    AND (
-        registered_name LIKE 'GR CH %'
-        OR registered_name LIKE 'GRCH %'
-        OR registered_name LIKE 'CH %'
-        OR registered_name LIKE 'GR. CH.%'
-        OR registered_name LIKE 'GRAND CHAMPION%'
-    )
-    ORDER BY scraped_at DESC
+    SELECT p.id, p.name, p.prefix, p.photo_path, p.date_posted, p.user_id, u.username
+    FROM published_pedigrees p
+    LEFT JOIN users u ON p.user_id = u.id
+    WHERE p.show_in_title_feed = 1
+    ORDER BY p.date_posted DESC
     LIMIT ${limit}
-""", (cutoff,)).fetchall()
+""").fetchall()
 
 results = []
 for r in rows:
-    name = r["registered_name"]
-    # Determine title type
-    if name.upper().startswith("GR CH") or name.upper().startswith("GRCH") or name.upper().startswith("GR. CH") or name.upper().startswith("GRAND CHAMPION"):
+    name = r["name"]
+    prefix = r["prefix"] or ""
+    full_name = f"{prefix} {name}".strip() if prefix else name
+
+    # Determine title type from prefix
+    pf = prefix.upper().strip()
+    if pf in ("GR CH", "GRCH", "GR. CH.", "GRAND CHAMPION"):
         title = "Grand Champion"
         color = "blue"
-    elif name.upper().startswith("CH "):
+    elif pf in ("CH", "CHAMPION"):
         title = "Champion"
         color = "gold"
-    else:
-        title = "Titled"
+    elif pf:
+        title = pf
         color = "red"
+    else:
+        # Check if the name itself starts with a title
+        nu = name.upper()
+        if nu.startswith("GR CH") or nu.startswith("GRCH"):
+            title = "Grand Champion"
+            color = "blue"
+        elif nu.startswith("CH "):
+            title = "Champion"
+            color = "gold"
+        else:
+            title = "Published"
+            color = "gold"
 
     results.append({
-        "id": str(r["dog_id"]),
-        "dog_id": r["dog_id"],
-        "dog": name,
+        "id": str(r["id"]),
+        "dog_id": None,
+        "pedigree_id": r["id"],
+        "dog": full_name,
         "title": title,
         "color": color,
-        "photo_url": r["photo_url"],
-        "scraped_at": r["scraped_at"],
+        "photo_url": r["photo_path"],
+        "username": r["username"],
+        "date_posted": r["date_posted"],
     })
 
 conn.close()

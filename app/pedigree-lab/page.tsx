@@ -78,6 +78,7 @@ interface PublishForm {
   datePosted: string;
   lastModified: string;
   viewCount: number;
+  showInTitleFeed: boolean;
 }
 
 /* ------------------------------------------------------------------ */
@@ -238,6 +239,7 @@ function defaultPublishForm(): PublishForm {
     datePosted: "",
     lastModified: "",
     viewCount: 0,
+    showInTitleFeed: false,
   };
 }
 
@@ -404,6 +406,7 @@ function PedigreeLabInner() {
           datePosted: data.date_posted || "",
           lastModified: data.last_modified || "",
           viewCount: data.view_count || 0,
+          showInTitleFeed: data.show_in_title_feed === 1,
         });
 
         setEditLoaded(true);
@@ -2266,6 +2269,43 @@ function PedigreeLabInner() {
                 />
               </div>
 
+              {/* Title Feed Toggle */}
+              <div className="rounded-2xl px-4 py-3 flex items-center justify-between"
+                style={{
+                  background: publishForm.showInTitleFeed ? "rgba(212,168,85,0.08)" : "rgba(255,255,255,0.03)",
+                  border: publishForm.showInTitleFeed ? "1px solid rgba(212,168,85,0.3)" : "1px solid rgba(255,255,255,0.08)",
+                  transition: "all 0.3s",
+                }}>
+                <div className="flex items-center gap-2">
+                  <span className="text-base">🏆</span>
+                  <div>
+                    <p className="text-xs font-semibold" style={{ color: publishForm.showInTitleFeed ? "var(--accent-gold)" : "var(--text-primary)", fontFamily: "var(--font-table)" }}>
+                      Show in Title Feed
+                    </p>
+                    <p className="text-[9px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                      Announce this dog on the dashboard title alerts
+                    </p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setPublishForm((p) => ({ ...p, showInTitleFeed: !p.showInTitleFeed }))}
+                  className="relative w-11 h-6 rounded-full transition-all flex-shrink-0"
+                  style={{
+                    background: publishForm.showInTitleFeed ? "rgba(212,168,85,0.3)" : "rgba(30,64,120,0.2)",
+                    border: publishForm.showInTitleFeed ? "1px solid rgba(212,168,85,0.5)" : "1px solid rgba(30,64,120,0.3)",
+                  }}
+                >
+                  <span
+                    className="absolute top-0.5 left-0.5 w-5 h-5 rounded-full transition-all"
+                    style={{
+                      background: publishForm.showInTitleFeed ? "var(--accent-gold)" : "#5a6a82",
+                      transform: publishForm.showInTitleFeed ? "translateX(20px)" : "translateX(0)",
+                    }}
+                  />
+                </button>
+              </div>
+
               {/* Submit */}
               <button
                 disabled={publishing}
@@ -2318,6 +2358,7 @@ function PedigreeLabInner() {
                     fd.append("owner", publishForm.owner);
                     fd.append("conditionedWeight", publishForm.conditionedWeight);
                     fd.append("pedigreeNotes", publishForm.notes);
+                    fd.append("showInTitleFeed", publishForm.showInTitleFeed ? "1" : "0");
                     fd.append("journalJson", JSON.stringify(publishForm.journal));
                     fd.append("slotsJson", JSON.stringify(slots));
                     fd.append("treeJson", JSON.stringify(treeData));

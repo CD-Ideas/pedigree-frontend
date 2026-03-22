@@ -65,6 +65,7 @@ else:
     const journalJson = (formData.get("journalJson") as string) || "{}";
     const slotsJson = (formData.get("slotsJson") as string) || "{}";
     const treeJson = (formData.get("treeJson") as string) || "[]";
+    const showInTitleFeed = (formData.get("showInTitleFeed") as string) === "1" ? 1 : 0;
 
     // Handle photo upload
     let photoPath = "";
@@ -91,8 +92,8 @@ cur.execute("""
   INSERT INTO published_pedigrees
     (name, prefix, suffix_wins, suffix_losses, suffix_draws, suffix_honors,
      dob, sex, color, continent, country, breeder, owner, conditioned_weight,
-     pedigree_notes, journal_json, slots_json, tree_json, photo_path, user_id)
-  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+     pedigree_notes, journal_json, slots_json, tree_json, photo_path, user_id, show_in_title_feed)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 """, (
   ${JSON.stringify(name)}, ${JSON.stringify(prefix)},
   ${JSON.stringify(suffixWins)}, ${JSON.stringify(suffixLosses)},
@@ -103,7 +104,7 @@ cur.execute("""
   ${JSON.stringify(conditionedWeight)}, ${JSON.stringify(pedigreeNotes)},
   ${JSON.stringify(journalJson)}, ${JSON.stringify(slotsJson)},
   ${JSON.stringify(treeJson)}, ${JSON.stringify(photoPath)},
-  ${userIdSql}
+  ${userIdSql}, ${showInTitleFeed}
 ))
 db.commit()
 print(json.dumps({"id": cur.lastrowid}))

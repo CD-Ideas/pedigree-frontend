@@ -35,6 +35,7 @@ export async function POST(req: NextRequest) {
     const journalJson = (formData.get("journalJson") as string) || "{}";
     const slotsJson = (formData.get("slotsJson") as string) || "{}";
     const treeJson = (formData.get("treeJson") as string) || "[]";
+    const showInTitleFeed = (formData.get("showInTitleFeed") as string) === "1" ? 1 : 0;
 
     // Handle photo upload
     let photoClause = "";
@@ -69,7 +70,7 @@ cur.execute("""
     name = ?, prefix = ?, suffix_wins = ?, suffix_losses = ?, suffix_draws = ?, suffix_honors = ?,
     dob = ?, sex = ?, color = ?, continent = ?, country = ?, breeder = ?, owner = ?,
     conditioned_weight = ?, pedigree_notes = ?, journal_json = ?, slots_json = ?, tree_json = ?,
-    last_modified = datetime('now')${photoClause}
+    show_in_title_feed = ?, last_modified = datetime('now')${photoClause}
   WHERE id = ? AND user_id = ?
 """, (
   ${JSON.stringify(name)}, ${JSON.stringify(prefix)},
@@ -81,6 +82,7 @@ cur.execute("""
   ${JSON.stringify(conditionedWeight)}, ${JSON.stringify(pedigreeNotes)},
   ${JSON.stringify(journalJson)}, ${JSON.stringify(slotsJson)},
   ${JSON.stringify(treeJson)},
+  ${showInTitleFeed},
   ${pedId}, ${userId}
 ))
 db.commit()
