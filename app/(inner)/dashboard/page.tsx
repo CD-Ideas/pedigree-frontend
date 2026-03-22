@@ -14,9 +14,12 @@ const steelFrame = {
 
 interface TitleAlert {
   id: string;
+  dog_id?: number;
   dog: string;
   title: string;
   color: "blue" | "red" | "gold";
+  photo_url?: string;
+  scraped_at?: string;
 }
 
 interface UserData {
@@ -47,10 +50,8 @@ const ALERT_COLORS = {
 export default function Dashboard() {
   const router = useRouter();
   const [user, setUser] = useState<UserData | null>(null);
-  const [alerts, setAlerts] = useState<TitleAlert[]>([
-    { id: "1", dog: "TURNER'S PABLO", title: "Grand Champion", color: "blue" },
-    { id: "2", dog: "BWK'S ATLAS", title: "Champion", color: "gold" },
-  ]);
+  const [alerts, setAlerts] = useState<TitleAlert[]>([]);
+  const [alertsLoading, setAlertsLoading] = useState(true);
   const [unreadMessages] = useState(0);
   const [searchQ, setSearchQ] = useState("");
   const [searchResults, setSearchResults] = useState<{ dog_id: number; registered_name: string }[]>([]);
@@ -71,6 +72,17 @@ export default function Dashboard() {
       const u = JSON.parse(localStorage.getItem("user") || "null");
       if (u) setUser(u);
     } catch (_e) {}
+
+    // Fetch real title alerts
+    const dismissed = JSON.parse(localStorage.getItem("dismissed_title_alerts") || "[]");
+    fetch("/api/dogs/titled?limit=10&days=7")
+      .then((r) => r.json())
+      .then((data) => {
+        const filtered = (data.alerts || []).filter((a: TitleAlert) => !dismissed.includes(a.id));
+        setAlerts(filtered);
+      })
+      .catch(() => {})
+      .finally(() => setAlertsLoading(false));
   }, []);
 
   const handleAvatarSelect = async (emoji: string) => {
@@ -120,6 +132,12 @@ export default function Dashboard() {
 
   const dismissAlert = (id: string) => {
     setAlerts((prev) => prev.filter((a) => a.id !== id));
+    // Persist dismissed alerts so they don't come back on refresh
+    try {
+      const dismissed = JSON.parse(localStorage.getItem("dismissed_title_alerts") || "[]");
+      dismissed.push(id);
+      localStorage.setItem("dismissed_title_alerts", JSON.stringify(dismissed));
+    } catch (_e) {}
   };
 
   const searchTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -196,26 +214,40 @@ export default function Dashboard() {
       {/* ─── Main Content ─── */}
       <main className="flex-1 min-w-0">
         {/* Title Alert Banners */}
-        {alerts.length > 0 && (
+        {alertsLoading ? (
+          <div className="mb-6 flex items-center gap-2 text-xs" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+            <span className="w-3 h-3 border border-current border-t-transparent rounded-full animate-spin" />
+            Loading title alerts...
+          </div>
+        ) : alerts.length > 0 ? (
           <div className="space-y-2 mb-6">
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-[10px] uppercase tracking-widest font-bold" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+                🏆 Recent Titled Dogs
+              </span>
+              <span className="text-[10px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                Last 7 days
+              </span>
+            </div>
             {alerts.map((alert) => {
               const c = ALERT_COLORS[alert.color];
               return (
                 <div key={alert.id}
                   className="rounded-lg px-4 py-3 flex items-center justify-between animate-pulse-subtle transition-all hover:scale-[1.01] cursor-pointer"
+                  onClick={() => alert.dog_id && router.push(`/pedigree/${alert.dog_id}`)}
                   style={{ background: c.bg, border: `1px solid ${c.border}`, boxShadow: `0 0 25px ${c.glow}, inset 0 1px 0 rgba(255,255,255,0.05)` }}>
                   <div className="flex items-center gap-3">
-                    <span className="text-lg">🏆</span>
+                    <span className="text-lg">{alert.color === "blue" ? "🥇" : "🏆"}</span>
                     <div>
                       <span className="text-xs font-bold uppercase tracking-wider" style={{ color: c.text, fontFamily: "var(--font-table)" }}>
-                        New Title: {alert.title}
+                        {alert.title}
                       </span>
                       <span className="text-xs ml-2" style={{ color: "var(--text-secondary)", fontFamily: "var(--font-table)" }}>
-                        for <strong style={{ color: getDogColor(alert.dog) }}>{alert.dog}</strong>
+                        <strong style={{ color: getDogColor(alert.dog) }}>{alert.dog}</strong>
                       </span>
                     </div>
                   </div>
-                  <button onClick={() => dismissAlert(alert.id)}
+                  <button onClick={(e) => { e.stopPropagation(); dismissAlert(alert.id); }}
                     className="text-xs px-2 py-1 rounded hover:bg-white/10 transition-colors"
                     style={{ color: c.text }}>
                     ✕
@@ -224,7 +256,7 @@ export default function Dashboard() {
               );
             })}
           </div>
-        )}
+        ) : null}
 
         {/* Welcome */}
         <div className="mb-6">
