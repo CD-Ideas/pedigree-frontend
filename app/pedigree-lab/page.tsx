@@ -318,8 +318,6 @@ function PedigreeLabInner() {
 
   /* ---------- UI state ---------- */
   const [previewMode, setPreviewMode] = useState(false);
-  const [mockMode, setMockMode] = useState(false);
-  const [mockNames, setMockNames] = useState<Record<SlotKey, string>>({} as Record<SlotKey, string>);
   const [showPublishModal, setShowPublishModal] = useState(false);
   const [publishForm, setPublishForm] = useState<PublishForm>(defaultPublishForm());
 
@@ -1076,9 +1074,6 @@ function PedigreeLabInner() {
                     label={SLOT_LABELS.subject}
                     dog={slots.subject}
                     preview={previewMode}
-                    mockMode={mockMode}
-                    mockName={mockNames.subject}
-                    onMockNameChange={(v) => setMockNames((p) => ({ ...p, subject: v }))}
                     selected={selectedSlot === "subject"}
                     onSelect={() => setSelectedSlot("subject")}
                     onDrop={handleDrop}
@@ -1115,9 +1110,6 @@ function PedigreeLabInner() {
                     label={SLOT_LABELS.sire}
                     dog={slots.sire}
                     preview={previewMode}
-                    mockMode={mockMode}
-                    mockName={mockNames.sire}
-                    onMockNameChange={(v) => setMockNames((p) => ({ ...p, sire: v }))}
                     selected={selectedSlot === "sire"}
                     onSelect={() => setSelectedSlot("sire")}
                     onDrop={handleDrop}
@@ -1132,9 +1124,6 @@ function PedigreeLabInner() {
                     label={SLOT_LABELS.dam}
                     dog={slots.dam}
                     preview={previewMode}
-                    mockMode={mockMode}
-                    mockName={mockNames.dam}
-                    onMockNameChange={(v) => setMockNames((p) => ({ ...p, dam: v }))}
                     selected={selectedSlot === "dam"}
                     onSelect={() => setSelectedSlot("dam")}
                     onDrop={handleDrop}
@@ -1157,9 +1146,6 @@ function PedigreeLabInner() {
                     label={SLOT_LABELS.sire_sire}
                     dog={slots.sire_sire}
                     preview={previewMode}
-                    mockMode={mockMode}
-                    mockName={mockNames.sire_sire}
-                    onMockNameChange={(v) => setMockNames((p) => ({ ...p, sire_sire: v }))}
                     selected={selectedSlot === "sire_sire"}
                     onSelect={() => setSelectedSlot("sire_sire")}
                     onDrop={handleDrop}
@@ -1174,9 +1160,6 @@ function PedigreeLabInner() {
                     label={SLOT_LABELS.sire_dam}
                     dog={slots.sire_dam}
                     preview={previewMode}
-                    mockMode={mockMode}
-                    mockName={mockNames.sire_dam}
-                    onMockNameChange={(v) => setMockNames((p) => ({ ...p, sire_dam: v }))}
                     selected={selectedSlot === "sire_dam"}
                     onSelect={() => setSelectedSlot("sire_dam")}
                     onDrop={handleDrop}
@@ -1191,9 +1174,6 @@ function PedigreeLabInner() {
                     label={SLOT_LABELS.dam_sire}
                     dog={slots.dam_sire}
                     preview={previewMode}
-                    mockMode={mockMode}
-                    mockName={mockNames.dam_sire}
-                    onMockNameChange={(v) => setMockNames((p) => ({ ...p, dam_sire: v }))}
                     selected={selectedSlot === "dam_sire"}
                     onSelect={() => setSelectedSlot("dam_sire")}
                     onDrop={handleDrop}
@@ -1208,9 +1188,6 @@ function PedigreeLabInner() {
                     label={SLOT_LABELS.dam_dam}
                     dog={slots.dam_dam}
                     preview={previewMode}
-                    mockMode={mockMode}
-                    mockName={mockNames.dam_dam}
-                    onMockNameChange={(v) => setMockNames((p) => ({ ...p, dam_dam: v }))}
                     selected={selectedSlot === "dam_dam"}
                     onSelect={() => setSelectedSlot("dam_dam")}
                     onDrop={handleDrop}
@@ -1360,36 +1337,6 @@ function PedigreeLabInner() {
                 {editingId ? "✎ Edit & Save" : "+ Create & Publish"}
               </button>
 
-              {/* Mock Mode */}
-              <div className="flex items-center justify-between">
-                <span
-                  className="text-[10px] uppercase tracking-widest font-semibold"
-                  style={{ color: "#d4a855", fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
-                >
-                  Mock Mode
-                </span>
-                <button
-                  onClick={() => setMockMode(!mockMode)}
-                  className="relative w-10 h-5 rounded-full transition-colors"
-                  style={{
-                    background: mockMode ? "#d4a855" : "rgba(30,64,120,0.5)",
-                  }}
-                >
-                  <div
-                    className="absolute top-0.5 w-4 h-4 rounded-full transition-transform"
-                    style={{
-                      background: "#fff",
-                      left: mockMode ? 22 : 2,
-                      transition: "left 0.2s ease",
-                    }}
-                  />
-                </button>
-              </div>
-              {mockMode && (
-                <p className="text-[10px]" style={{ color: "#d4a855" }}>
-                  Mock mode active -- edit names and colors without saving.
-                </p>
-              )}
             </div>
           </Card>
         </aside>
@@ -1541,14 +1488,9 @@ function PedigreeLabInner() {
                   <div className="flex-1 text-left">
                     <span className="text-xs font-bold uppercase tracking-wider" style={{
                       fontFamily: "var(--font-table)",
-                      background: publishForm.showInTitleFeed
-                        ? "linear-gradient(135deg, #e8c86e, #d4a855, #b8860b)"
-                        : "none",
-                      WebkitBackgroundClip: publishForm.showInTitleFeed ? "text" : "unset",
-                      WebkitTextFillColor: publishForm.showInTitleFeed ? "transparent" : "var(--text-muted)",
-                      color: publishForm.showInTitleFeed ? undefined : "var(--text-muted)",
+                      color: "#e2e8f0",
                     }}>Title Feed</span>
-                    <p className="text-[10px] mt-0.5 font-medium" style={{ color: publishForm.showInTitleFeed ? "#d4a855" : "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                    <p className="text-[10px] mt-0.5 font-medium" style={{ color: "#e2e8f0", fontFamily: "var(--font-table)" }}>
                       Announce this dog on the dashboard title alerts
                     </p>
                   </div>
@@ -2303,6 +2245,197 @@ function PedigreeLabInner() {
                 )}
               </div>
 
+              {/* Heat Cycle Tracker - Only for females */}
+              {publishForm.sex.toUpperCase() === "FEMALE" && (() => {
+                const hc = publishForm.journal.heatCycle || { lastHeatDate: "", interval: "180", customDays: "180", reminderEnabled: true };
+                const intervalDays = hc.interval === "custom" ? parseInt(hc.customDays) || 180 : parseInt(hc.interval);
+                const nextHeatDate = hc.lastHeatDate
+                  ? new Date(new Date(hc.lastHeatDate).getTime() + intervalDays * 86400000)
+                  : null;
+                const today = new Date();
+                const daysUntilNext = nextHeatDate ? Math.ceil((nextHeatDate.getTime() - today.getTime()) / 86400000) : null;
+                const isUpcoming = daysUntilNext !== null && daysUntilNext <= 7 && daysUntilNext > 0;
+                const isOverdue = daysUntilNext !== null && daysUntilNext <= 0;
+                const lastLoggedMonths = hc.lastHeatDate
+                  ? Math.floor((today.getTime() - new Date(hc.lastHeatDate).getTime()) / (86400000 * 30))
+                  : null;
+
+                const updateHeatCycle = (updates: Partial<HeatCycleData>) => {
+                  setPublishForm((p) => ({
+                    ...p,
+                    journal: {
+                      ...p.journal,
+                      heatCycle: { ...(p.journal.heatCycle || { lastHeatDate: "", interval: "180", customDays: "180", reminderEnabled: true }), ...updates },
+                    },
+                  }));
+                };
+
+                return (
+                  <div className="rounded-2xl p-4" style={{
+                    background: "linear-gradient(135deg, rgba(244,114,182,0.06), rgba(251,146,60,0.04))",
+                    border: isUpcoming ? "1.5px solid rgba(251,146,60,0.4)" : isOverdue ? "1.5px solid rgba(239,68,68,0.4)" : "1px solid rgba(244,114,182,0.2)",
+                    boxShadow: isUpcoming ? "0 0 20px rgba(251,146,60,0.1)" : isOverdue ? "0 0 20px rgba(239,68,68,0.1)" : "none",
+                  }}>
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="text-base" style={{ filter: "drop-shadow(0 0 4px rgba(244,114,182,0.4))" }}>🌸</span>
+                      <span className="text-[10px] uppercase tracking-widest font-bold" style={{
+                        color: "#f472b6",
+                        fontFamily: "var(--font-table)",
+                      }}>Heat Cycle Tracker</span>
+                      <span className="text-[8px] px-1.5 py-0.5 rounded-full" style={{
+                        background: "rgba(244,114,182,0.1)",
+                        color: "#f472b6",
+                        border: "1px solid rgba(244,114,182,0.2)",
+                        fontFamily: "var(--font-table)",
+                      }}>Private</span>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                      {/* Last Heat Date */}
+                      <div>
+                        <label className="block text-[9px] uppercase tracking-widest font-semibold mb-1"
+                          style={{ color: "#a78bfa", fontFamily: "var(--font-table)" }}>
+                          Last Heat Date
+                        </label>
+                        <input
+                          type="date"
+                          value={hc.lastHeatDate}
+                          onChange={(e) => updateHeatCycle({ lastHeatDate: e.target.value })}
+                          className="w-full rounded-xl px-3 py-2 text-xs outline-none transition-all"
+                          style={{
+                            background: "rgba(255,255,255,0.04)",
+                            border: "1px solid rgba(244,114,182,0.2)",
+                            color: "#e2e8f0",
+                            fontFamily: "var(--font-table)",
+                            colorScheme: "dark",
+                          }}
+                        />
+                      </div>
+
+                      {/* Frequency */}
+                      <div>
+                        <label className="block text-[9px] uppercase tracking-widest font-semibold mb-1"
+                          style={{ color: "#a78bfa", fontFamily: "var(--font-table)" }}>
+                          Cycle Frequency
+                        </label>
+                        <select
+                          value={hc.interval}
+                          onChange={(e) => updateHeatCycle({ interval: e.target.value })}
+                          className="w-full rounded-xl px-3 py-2 text-xs outline-none transition-all"
+                          style={{
+                            background: "rgba(255,255,255,0.04)",
+                            border: "1px solid rgba(244,114,182,0.2)",
+                            color: "#e2e8f0",
+                            fontFamily: "var(--font-table)",
+                            colorScheme: "dark",
+                          }}
+                        >
+                          <option value="120">Three times a year (~120 days)</option>
+                          <option value="180">Twice a year (~180 days)</option>
+                          <option value="365">Once a year (~365 days)</option>
+                          <option value="custom">Custom interval</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    {/* Custom Days Input */}
+                    {hc.interval === "custom" && (
+                      <div className="mt-2">
+                        <label className="block text-[9px] uppercase tracking-widest font-semibold mb-1"
+                          style={{ color: "#a78bfa", fontFamily: "var(--font-table)" }}>
+                          Custom Interval (days, min 90)
+                        </label>
+                        <input
+                          type="number"
+                          min="90"
+                          value={hc.customDays}
+                          onChange={(e) => updateHeatCycle({ customDays: e.target.value })}
+                          className="w-32 rounded-xl px-3 py-2 text-xs outline-none transition-all"
+                          style={{
+                            background: "rgba(255,255,255,0.04)",
+                            border: "1px solid rgba(244,114,182,0.2)",
+                            color: "#e2e8f0",
+                            fontFamily: "var(--font-table)",
+                          }}
+                        />
+                      </div>
+                    )}
+
+                    {/* Next Heat Prediction */}
+                    {hc.lastHeatDate && nextHeatDate && (
+                      <div className="mt-3 rounded-xl px-3 py-2.5 flex items-center justify-between" style={{
+                        background: isOverdue ? "rgba(239,68,68,0.08)" : isUpcoming ? "rgba(251,146,60,0.08)" : "rgba(244,114,182,0.05)",
+                        border: isOverdue ? "1px solid rgba(239,68,68,0.25)" : isUpcoming ? "1px solid rgba(251,146,60,0.25)" : "1px solid rgba(244,114,182,0.15)",
+                      }}>
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm">{isOverdue ? "🔴" : isUpcoming ? "🟠" : "🌷"}</span>
+                          <div>
+                            <p className="text-[9px] uppercase tracking-wider font-semibold" style={{
+                              color: isOverdue ? "#ef4444" : isUpcoming ? "#fb923c" : "#f472b6",
+                              fontFamily: "var(--font-table)",
+                            }}>
+                              {isOverdue ? "May be overdue" : isUpcoming ? "Coming up soon" : "Next expected heat"}
+                            </p>
+                            <p className="text-xs font-bold mt-0.5" style={{ color: "#e2e8f0", fontFamily: "var(--font-table)" }}>
+                              {nextHeatDate.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-lg font-bold" style={{
+                            color: isOverdue ? "#ef4444" : isUpcoming ? "#fb923c" : "#f472b6",
+                            fontFamily: "var(--font-display)",
+                          }}>
+                            {isOverdue ? `${Math.abs(daysUntilNext!)}d ago` : `${daysUntilNext}d`}
+                          </p>
+                          <p className="text-[8px] uppercase" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                            {isOverdue ? "past due" : "remaining"}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Nudge if no entry in 12+ months */}
+                    {lastLoggedMonths !== null && lastLoggedMonths >= 12 && (
+                      <div className="mt-2 rounded-xl px-3 py-2 flex items-center gap-2" style={{
+                        background: "rgba(251,146,60,0.06)",
+                        border: "1px solid rgba(251,146,60,0.2)",
+                      }}>
+                        <span className="text-sm">💬</span>
+                        <p className="text-[10px]" style={{ color: "#fb923c", fontFamily: "var(--font-table)" }}>
+                          Haven&apos;t logged a cycle since {new Date(hc.lastHeatDate).toLocaleDateString("en-US", { month: "short", year: "numeric" })} — want to update?
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Reminder toggle */}
+                    <div className="mt-2 flex items-center justify-between px-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs">🔔</span>
+                        <span className="text-[9px] font-medium" style={{ color: "var(--text-secondary)", fontFamily: "var(--font-table)" }}>
+                          Remind me 7 days before
+                        </span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => updateHeatCycle({ reminderEnabled: !hc.reminderEnabled })}
+                        className="relative w-9 h-5 rounded-full transition-all flex-shrink-0"
+                        style={{
+                          background: hc.reminderEnabled ? "rgba(244,114,182,0.4)" : "rgba(30,64,120,0.2)",
+                          border: hc.reminderEnabled ? "1px solid rgba(244,114,182,0.5)" : "1px solid rgba(30,64,120,0.3)",
+                        }}
+                      >
+                        <span className="absolute top-0.5 left-0.5 w-4 h-4 rounded-full transition-all"
+                          style={{
+                            background: hc.reminderEnabled ? "#f472b6" : "#5a6a82",
+                            transform: hc.reminderEnabled ? "translateX(16px)" : "translateX(0)",
+                          }} />
+                      </button>
+                    </div>
+                  </div>
+                );
+              })()}
+
               {/* Journal Notes */}
               <div>
                 <label
@@ -2450,9 +2583,6 @@ function DropZone({
   label,
   dog,
   preview,
-  mockMode,
-  mockName,
-  onMockNameChange,
   selected,
   onSelect,
   onDrop,
@@ -2466,9 +2596,6 @@ function DropZone({
   label: string;
   dog: SlotDog | null;
   preview: boolean;
-  mockMode: boolean;
-  mockName?: string;
-  onMockNameChange: (v: string) => void;
   selected: boolean;
   onSelect: () => void;
   onDrop: (key: SlotKey) => void;
@@ -2481,7 +2608,7 @@ function DropZone({
   const [dragOver, setDragOver] = useState(false);
   const isSm = size === "sm";
   const accent = accentColor || "#d4a855";
-  const displayName = mockMode && mockName !== undefined && mockName !== "" ? mockName : dog?.registered_name;
+  const displayName = dog?.registered_name;
   const titleColor = displayName ? getDogColor(displayName) : accent;
 
   if (dog) {
@@ -2535,25 +2662,12 @@ function DropZone({
           )}
         </div>
         {/* Name */}
-        {mockMode ? (
-          <input
-            value={mockName || displayName || ""}
-            onChange={(e) => onMockNameChange(e.target.value)}
-            className="w-full text-center text-[10px] font-bold bg-transparent outline-none border-b"
-            style={{
-              color: titleColor,
-              borderColor: titleColor + "33",
-              fontFamily: "var(--font-table, Rajdhani, sans-serif)",
-            }}
-          />
-        ) : (
-          <p
-            className={`text-center font-bold truncate ${isSm ? "text-[9px]" : "text-[10px]"}`}
-            style={{ color: titleColor, fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
-          >
-            {displayName}
-          </p>
-        )}
+        <p
+          className={`text-center font-bold truncate ${isSm ? "text-[9px]" : "text-[10px]"}`}
+          style={{ color: titleColor, fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
+        >
+          {displayName}
+        </p>
         {/* Label */}
         <p className="text-center text-[8px] mt-0.5" style={{ color: "#d4a855" }}>
           {label}
