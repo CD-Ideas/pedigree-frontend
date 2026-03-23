@@ -15,6 +15,7 @@ interface Thread {
   thread_id: string;
   other_user_id: number;
   other_username: string;
+  other_profile_picture: string | null;
   last_body: string;
   subject: string;
   last_time: string;
@@ -432,57 +433,95 @@ function MessagesContent() {
                   Click &quot;+ New Message&quot; to start
                 </p>
               </div>
-            ) : threads.map(t => (
+            ) : threads.map(t => {
+              const accentColor = selectedThread === t.thread_id ? "#d4a855" : t.unread_count > 0 ? "#60a5fa" : "#d4a855";
+              return (
               <button key={t.thread_id} onClick={() => { openThread(t.thread_id); setShowCompose(false); }}
-                className="w-full text-left px-4 py-3 transition-colors hover:bg-white/5 group"
+                className="w-full text-left mx-2 my-1.5 rounded-lg p-2.5 hover:scale-[1.02]"
                 style={{
-                  borderBottom: "1px solid rgba(255,255,255,0.03)",
-                  background: selectedThread === t.thread_id ? "rgba(212,168,85,0.08)" : t.unread_count > 0 ? "rgba(59,130,246,0.04)" : "transparent",
-                }}>
-                <div className="flex items-center justify-between mb-0.5">
-                  <div className="flex items-center gap-2">
-                    <span className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0"
-                      style={{ background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)" }}>
+                  background: selectedThread === t.thread_id
+                    ? `linear-gradient(135deg, ${accentColor}18, ${accentColor}08, #0b1120)`
+                    : t.unread_count > 0
+                    ? `linear-gradient(135deg, #60a5fa12, #60a5fa06, #0b1120)`
+                    : `linear-gradient(135deg, ${accentColor}0a, ${accentColor}05, #0b1120)`,
+                  border: selectedThread === t.thread_id ? `1px solid ${accentColor}55` : `1px solid ${accentColor}22`,
+                  transition: "all 0.3s ease",
+                  width: "calc(100% - 16px)",
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLElement).style.boxShadow = `0 0 12px ${accentColor}30`;
+                  (e.currentTarget as HTMLElement).style.borderColor = `${accentColor}66`;
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLElement).style.boxShadow = "none";
+                  (e.currentTarget as HTMLElement).style.borderColor = selectedThread === t.thread_id ? `${accentColor}55` : `${accentColor}22`;
+                }}
+              >
+                <div className="flex items-center gap-2.5">
+                  {/* Photo */}
+                  {t.other_profile_picture ? (
+                    <div
+                      className="w-10 h-10 rounded-md flex-shrink-0 bg-cover bg-center"
+                      style={{
+                        backgroundImage: `url(${t.other_profile_picture})`,
+                        border: `1.5px solid ${accentColor}55`,
+                      }}
+                    />
+                  ) : (
+                    <div
+                      className="w-10 h-10 rounded-md flex-shrink-0 flex items-center justify-center text-sm font-bold"
+                      style={{
+                        background: `linear-gradient(135deg, ${accentColor}30, ${accentColor}15)`,
+                        border: `1.5px solid ${accentColor}55`,
+                        color: accentColor,
+                      }}
+                    >
                       {(t.other_username || "?")[0].toUpperCase()}
-                    </span>
-                    <span className="text-xs font-bold truncate"
-                      style={{ color: t.unread_count > 0 ? "#60a5fa" : "#d4a855", fontFamily: "var(--font-table)" }}>
-                      {t.other_username || "Unknown"}
-                    </span>
+                    </div>
+                  )}
+                  {/* Info */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold truncate"
+                        style={{ color: accentColor, fontFamily: "var(--font-table)" }}>
+                        {t.other_username || "Unknown"}
+                      </span>
+                      <span className="text-[9px] flex-shrink-0 ml-1" style={{ color: "var(--text-muted)" }}>
+                        {formatDate(t.last_time)}
+                      </span>
+                    </div>
+                    {t.subject && (
+                      <p className="text-[10px] font-semibold truncate"
+                        style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)" }}>
+                        {t.subject}
+                      </p>
+                    )}
+                    <p className="text-[10px] truncate"
+                      style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                      {t.last_body.substring(0, 60)}
+                    </p>
+                    <div className="flex items-center gap-2 mt-0.5">
+                      {t.unread_count > 0 && (
+                        <span className="px-1.5 py-0.5 rounded-full text-[8px] font-bold"
+                          style={{ background: "#3b82f6", color: "#fff" }}>
+                          {t.unread_count} new
+                        </span>
+                      )}
+                      {t.marketplace_ad_id && (
+                        <span className="text-[8px] px-1.5 py-0.5 rounded-full"
+                          style={{ background: "rgba(212,168,85,0.15)", color: "#d4a855", fontFamily: "var(--font-table)" }}>
+                          🏪 Ad
+                        </span>
+                      )}
+                      <span className="text-[8px]" style={{ color: "var(--text-muted)" }}>
+                        {t.msg_count} msg{t.msg_count !== 1 ? "s" : ""}
+                      </span>
+                    </div>
                   </div>
-                  <span className="text-[9px] flex-shrink-0 ml-1" style={{ color: "var(--text-muted)" }}>
-                    {formatDate(t.last_time)}
-                  </span>
-                </div>
-                {t.subject && (
-                  <p className="text-[10px] font-semibold truncate ml-9"
-                    style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)" }}>
-                    {t.subject}
-                  </p>
-                )}
-                <p className="text-[10px] truncate ml-9"
-                  style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
-                  {t.last_body.substring(0, 60)}
-                </p>
-                <div className="flex items-center gap-2 ml-9 mt-1">
-                  {t.unread_count > 0 && (
-                    <span className="px-1.5 py-0.5 rounded-full text-[8px] font-bold"
-                      style={{ background: "#3b82f6", color: "#fff" }}>
-                      {t.unread_count} new
-                    </span>
-                  )}
-                  {t.marketplace_ad_id && (
-                    <span className="text-[8px] px-1.5 py-0.5 rounded-full"
-                      style={{ background: "rgba(212,168,85,0.15)", color: "#d4a855", fontFamily: "var(--font-table)" }}>
-                      🏪 Ad
-                    </span>
-                  )}
-                  <span className="text-[8px]" style={{ color: "var(--text-muted)" }}>
-                    {t.msg_count} msg{t.msg_count !== 1 ? "s" : ""}
-                  </span>
                 </div>
               </button>
-            ))}
+              );
+            })}
           </div>
         </div>
 

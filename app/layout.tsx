@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Particles from "./Particles";
 import NavBar from "./NavBar";
+import HeartbeatTracker from "./HeartbeatTracker";
 
 export const metadata: Metadata = {
   title: "Pedigree Platform",
@@ -27,6 +28,7 @@ export default function RootLayout({
           <Particles />
         </div>
         <NavBar />
+        <HeartbeatTracker />
         <main className="relative z-10">
           {children}
         </main>

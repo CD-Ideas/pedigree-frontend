@@ -52,6 +52,7 @@ elif folder == "threads":
             m.marketplace_ad_id,
             CASE WHEN m.from_user_id = ? THEN m.to_user_id ELSE m.from_user_id END as other_user_id,
             CASE WHEN m.from_user_id = ? THEN ut.username ELSE uf.username END as other_username,
+            CASE WHEN m.from_user_id = ? THEN ut.profile_picture ELSE uf.profile_picture END as other_profile_picture,
             (SELECT COUNT(*) FROM messages m2 WHERE m2.thread_id = m.thread_id AND m2.to_user_id = ? AND m2.is_read = 0 AND (m2.deleted_by IS NULL OR m2.deleted_by = '' OR m2.deleted_by NOT LIKE '%' || ? || '%')) as unread_count,
             (SELECT COUNT(*) FROM messages m3 WHERE m3.thread_id = m.thread_id AND (m3.deleted_by IS NULL OR m3.deleted_by = '' OR m3.deleted_by NOT LIKE '%' || ? || '%')) as msg_count
         FROM messages m
@@ -63,7 +64,7 @@ elif folder == "threads":
             SELECT MAX(m4.id) FROM messages m4 WHERE m4.thread_id = m.thread_id AND (m4.deleted_by IS NULL OR m4.deleted_by = '' OR m4.deleted_by NOT LIKE '%' || ? || '%')
         )
         ORDER BY m.created_at DESC
-    """, (user_id, user_id, user_id, uid_str, uid_str, user_id, user_id, uid_str, uid_str)).fetchall()
+    """, (user_id, user_id, user_id, user_id, uid_str, uid_str, user_id, user_id, uid_str, uid_str)).fetchall()
     result = {"threads": [dict(r) for r in rows]}
 else:
     # Legacy: get individual messages

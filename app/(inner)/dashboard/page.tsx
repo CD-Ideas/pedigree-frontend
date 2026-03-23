@@ -62,6 +62,7 @@ export default function Dashboard() {
   const [showAvatarPicker, setShowAvatarPicker] = useState(false);
   const [showPhotoPreview, setShowPhotoPreview] = useState(false);
   const [avatarUploading, setAvatarUploading] = useState(false);
+  const [onlineData, setOnlineData] = useState<{ members_online: number; guests_online: number; online_members: { id: number; username: string; profile_picture: string | null }[] }>({ members_online: 0, guests_online: 0, online_members: [] });
   const avatarInputRef = useRef<HTMLInputElement>(null);
 
   const AVATAR_OPTIONS = [
@@ -93,6 +94,14 @@ export default function Dashboard() {
       })
       .catch(() => {})
       .finally(() => setAlertsLoading(false));
+
+    // Fetch who's online
+    const fetchOnline = () => {
+      fetch("/api/heartbeat").then(r => r.json()).then(d => setOnlineData(d)).catch(() => {});
+    };
+    fetchOnline();
+    const onlineInterval = setInterval(fetchOnline, 60000);
+    return () => clearInterval(onlineInterval);
   }, []);
 
   const handleAvatarSelect = async (emoji: string) => {
@@ -478,6 +487,37 @@ export default function Dashboard() {
               <span className="dash-nav-label text-xs font-medium transition-colors" style={{ color: "#ef4444" }}>Logout</span>
             </button>
           </div>
+        </div>
+
+        {/* Who's Online Widget */}
+        <div className="rounded-2xl p-4 mt-4" style={steelFrame}>
+          <div className="flex items-center gap-2 mb-3">
+            <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#22c55e", boxShadow: "0 0 6px #22c55e" }} />
+            <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: "#d4a855", fontFamily: "var(--font-table)" }}>
+              Who&apos;s Online
+            </p>
+          </div>
+          <p className="text-xs mb-2" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+            <span className="font-bold" style={{ color: "#22c55e" }}>{onlineData.guests_online}</span> guest{onlineData.guests_online !== 1 ? "s" : ""} and{" "}
+            <span className="font-bold" style={{ color: "#d4a855" }}>{onlineData.members_online}</span> member{onlineData.members_online !== 1 ? "s" : ""} online
+          </p>
+          {onlineData.online_members.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 mt-2">
+              {onlineData.online_members.map(m => (
+                <Link key={m.id} href={`/profile/${m.username}`}
+                  className="flex items-center gap-1.5 px-2 py-1 rounded-md text-[10px] font-semibold transition-all hover:scale-105"
+                  style={{
+                    background: "linear-gradient(135deg, rgba(212,168,85,0.12), rgba(212,168,85,0.04))",
+                    border: "1px solid rgba(212,168,85,0.2)",
+                    color: "#d4a855",
+                    fontFamily: "var(--font-table)",
+                  }}>
+                  <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#22c55e" }} />
+                  {m.username}
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </aside>
 

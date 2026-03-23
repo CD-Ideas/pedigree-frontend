@@ -162,17 +162,6 @@ export default function NavBar() {
     }
   }, [pathname, mounted]); // re-check on every navigation and on mount
 
-  // Update last_active status
-  useEffect(() => {
-    if (!userId || !loggedIn) return;
-    const ping = () => {
-      fetch("/api/users/status", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId }) }).catch(() => {});
-    };
-    ping();
-    const interval = setInterval(ping, 60000); // every 60s
-    return () => clearInterval(interval);
-  }, [userId, loggedIn]);
-
   // Poll for notifications
   useEffect(() => {
     if (!userId || !loggedIn) return;
