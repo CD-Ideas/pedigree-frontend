@@ -24,7 +24,6 @@ interface ProfileUser {
 interface Pedigree {
   id: number;
   name: string;
-  slug: string | null;
   created_at: string;
 }
 
@@ -324,11 +323,7 @@ export default function ProfilePage() {
             {pedigrees.map((ped) => (
               <Link
                 key={ped.id}
-                href={
-                  ped.slug
-                    ? `/pedigree/${ped.slug}`
-                    : `/pedigree/custom/${ped.id}`
-                }
+                href={`/pedigree/custom/${ped.id}`}
                 className="flex items-center justify-between px-3 py-2.5 rounded-lg transition-all hover:bg-white/5 group"
                 style={{ fontFamily: "var(--font-table)" }}
               >

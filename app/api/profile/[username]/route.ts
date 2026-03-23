@@ -42,7 +42,7 @@ del user["id"]
 
 # Fetch published pedigrees
 pedigree_rows = conn.execute(
-    "SELECT id, name, slug, created_at FROM custom_pedigrees WHERE user_id = ? AND is_published = 1 ORDER BY created_at DESC",
+    "SELECT id, name, date_posted as created_at FROM published_pedigrees WHERE user_id = ? ORDER BY date_posted DESC",
     (user_id,)
 ).fetchall()
 pedigrees = [dict(r) for r in pedigree_rows]

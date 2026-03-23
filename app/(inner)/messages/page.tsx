@@ -69,6 +69,8 @@ function MessagesContent() {
   const composeFileRef = useRef<HTMLInputElement>(null);
   const composeImageRef = useRef<HTMLInputElement>(null);
   const [composePendingAttachments, setComposePendingAttachments] = useState<{ url: string; name: string; size: number; isImage: boolean }[]>([]);
+  const [onlineData, setOnlineData] = useState<{ members_online: number; guests_online: number; online_members: { id: number; username: string; profile_picture: string | null }[] }>({ members_online: 0, guests_online: 0, online_members: [] });
+  const [showAllOnline, setShowAllOnline] = useState(false);
 
   useEffect(() => {
     try {
@@ -110,6 +112,16 @@ function MessagesContent() {
     }, 15000);
     return () => clearInterval(interval);
   }, [user]);
+
+  // Fetch who's online
+  useEffect(() => {
+    const fetchOnline = () => {
+      fetch("/api/heartbeat").then(r => r.json()).then(d => setOnlineData(d)).catch(() => {});
+    };
+    fetchOnline();
+    const interval = setInterval(fetchOnline, 60000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Poll other user's online status
   useEffect(() => {
@@ -411,6 +423,41 @@ function MessagesContent() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4" style={{ minHeight: "min(500px, 70vh)" }}>
         {/* Thread List */}
         <div className="md:col-span-1 rounded-xl overflow-hidden" style={GLASS_BOX}>
+          {/* Who's Online */}
+          <div className="px-4 py-3" style={{ borderBottom: "1px solid rgba(212,168,85,0.1)" }}>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#22c55e", boxShadow: "0 0 6px #22c55e" }} />
+              <p className="text-[10px] uppercase tracking-widest font-semibold"
+                style={{ color: "#d4a855", fontFamily: "var(--font-table)" }}>
+                Online — <span style={{ color: "#22c55e" }}>{onlineData.members_online}</span> member{onlineData.members_online !== 1 ? "s" : ""}
+              </p>
+            </div>
+            {onlineData.online_members.length > 0 && (
+              <div className="flex flex-wrap gap-1.5">
+                {(showAllOnline ? onlineData.online_members : onlineData.online_members.slice(0, 10)).map(m => (
+                  <a key={m.id} href={`/profile/${m.username}`}
+                    className="flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-semibold transition-all hover:scale-105"
+                    style={{
+                      background: "linear-gradient(135deg, rgba(34,197,94,0.12), rgba(34,197,94,0.04))",
+                      border: "1px solid rgba(34,197,94,0.2)",
+                      color: "#22c55e",
+                      fontFamily: "var(--font-table)",
+                    }}>
+                    <span className="w-1 h-1 rounded-full" style={{ background: "#22c55e" }} />
+                    {m.username}
+                  </a>
+                ))}
+                {onlineData.online_members.length > 10 && (
+                  <button onClick={() => setShowAllOnline(!showAllOnline)}
+                    className="text-[9px] font-semibold px-1.5 py-0.5 rounded transition-all hover:scale-105"
+                    style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                    {showAllOnline ? "Show less" : `+ ${onlineData.online_members.length - 10} more`}
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
+
           <div className="px-4 py-3" style={{ borderBottom: "1px solid rgba(212,168,85,0.1)" }}>
             <p className="text-[10px] uppercase tracking-widest font-semibold"
               style={{ color: "#d4a855", fontFamily: "var(--font-table)" }}>
