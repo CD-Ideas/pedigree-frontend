@@ -412,7 +412,7 @@ export default function Home() {
                 { icon: "🔗", title: "Easy Sharing", desc: "Share via WhatsApp, Telegram with rich previews", color: "#a855f7", glow: "168,85,247" },
                 { icon: "🏆", title: "Title Tracking", desc: "CH, GR CH, ROM tracking across generations", color: "#d4a855", glow: "212,168,85" },
                 { icon: "🧬", title: "Puppy Predictor", desc: "Input sire + dam genotypes, predict litter coat colors & probabilities", color: "#ef4444", glow: "239,68,68", redirect: "/puppy-predictor" },
-                { icon: "👑", title: "Dog of the Month", desc: "Monthly photo contest with community voting & prizes", color: "#f97316", glow: "249,115,22" },
+                { icon: "👑", title: "Dog of the Month", desc: "Monthly photo contest with community voting & prizes", color: "#f97316", glow: "249,115,22", redirect: "/dog-of-the-month" },
                 { icon: "🔦", title: "Lineage Spotlight", desc: "Search any legendary dog, trace descendants and find the tightest bloodlines ranked by blood %", color: "#1d8cf8", glow: "29,140,248", redirect: "/pedigree/spotlight" },
                 { icon: "🧪", title: "Pedigree Lab", desc: "Build custom pedigrees with drag-and-drop, then publish and share", color: "#a78bfa", glow: "167,139,250", redirect: "/pedigree-lab" },
                 { icon: "🌍", title: "Community Pedigrees", desc: "Browse and discover pedigrees created by the community", color: "#22d3ee", glow: "34,211,238", redirect: "/community", gridCol: "2 / 4", center: true },

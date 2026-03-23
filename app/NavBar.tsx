@@ -244,7 +244,7 @@ export default function NavBar() {
             Pedigree Platform
           </span>
         </Link>
-        {mounted && loggedIn && pathname !== "/dashboard" && !pathname.startsWith("/marketplace") && (
+        {mounted && loggedIn && pathname !== "/dashboard" && !pathname.startsWith("/marketplace") && pathname !== "/dog-of-the-month" && (
           <button
             onClick={() => {
               if (pathname === "/dashboard/pedigrees") {
