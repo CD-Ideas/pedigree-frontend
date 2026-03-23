@@ -61,6 +61,7 @@ function MessagesContent() {
   const [sending, setSending] = useState(false);
   const [composeMsg, setComposeMsg] = useState("");
   const [pendingAttachments, setPendingAttachments] = useState<{ url: string; name: string; size: number; isImage: boolean }[]>([]);
+  const [otherUserStatus, setOtherUserStatus] = useState<{ online: boolean; last_active: string | null; seconds_ago: number | null } | null>(null);
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
@@ -108,6 +109,22 @@ function MessagesContent() {
     }, 15000);
     return () => clearInterval(interval);
   }, [user]);
+
+  // Poll other user's online status
+  useEffect(() => {
+    if (!selectedThread) { setOtherUserStatus(null); return; }
+    const thread = threads.find(t => t.thread_id === selectedThread);
+    if (!thread) return;
+    const checkStatus = () => {
+      fetch(`/api/users/status?username=${encodeURIComponent(thread.other_username)}`)
+        .then(r => r.json())
+        .then(data => setOtherUserStatus(data))
+        .catch(() => {});
+    };
+    checkStatus();
+    const interval = setInterval(checkStatus, 15000);
+    return () => clearInterval(interval);
+  }, [selectedThread, threads]);
 
   // Auto-poll active conversation every 5 seconds
   useEffect(() => {
@@ -286,6 +303,14 @@ function MessagesContent() {
       const date = new Date(d + "Z");
       return date.toLocaleDateString("en-US", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
     } catch (_e) { return d; }
+  };
+
+  const formatLastSeen = (seconds: number | null) => {
+    if (seconds === null) return "Never";
+    if (seconds < 60) return "Just now";
+    if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
+    if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
+    return `${Math.floor(seconds / 86400)}d ago`;
   };
 
   if (!user) return null;
@@ -474,9 +499,19 @@ function MessagesContent() {
                     {(selectedThreadData.other_username || "?")[0].toUpperCase()}
                   </span>
                   <div>
-                    <p className="text-sm font-bold" style={{ color: "#d4a855", fontFamily: "var(--font-table)" }}>
-                      {selectedThreadData.other_username}
-                    </p>
+                    <div className="flex items-center gap-2">
+                      <p className="text-sm font-bold" style={{ color: "#d4a855", fontFamily: "var(--font-table)" }}>
+                        {selectedThreadData.other_username}
+                      </p>
+                      {otherUserStatus && (
+                        <span className="flex items-center gap-1">
+                          <span className="w-2 h-2 rounded-full" style={{ background: otherUserStatus.online ? "#22c55e" : "#6b7280" }} />
+                          <span className="text-[9px] font-medium" style={{ color: otherUserStatus.online ? "#22c55e" : "#6b7280", fontFamily: "var(--font-table)" }}>
+                            {otherUserStatus.online ? "Online" : `Last seen ${formatLastSeen(otherUserStatus.seconds_ago)}`}
+                          </span>
+                        </span>
+                      )}
+                    </div>
                     {selectedThreadData.subject && (
                       <p className="text-[10px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
                         {selectedThreadData.subject}

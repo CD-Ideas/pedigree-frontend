@@ -27,16 +27,24 @@ export async function GET(req: NextRequest) {
   try {
     const conn = getDb();
 
-    // Try prefix match first (uses index, very fast)
-    let dogs = conn.prepare(
-      "SELECT dog_id, registered_name, photo_url, sex FROM dogs WHERE registered_name LIKE ? ORDER BY view_count DESC LIMIT ?"
-    ).all(q + '%', limit) as { dog_id: number; registered_name: string; photo_url: string | null; sex: string }[];
+    // Use FTS5 for fast full-text search
+    const ftsQuery = q.replace(/['"]/g, '').split(/\s+/).map(w => `"${w}"*`).join(' ');
+    let dogs: { dog_id: number; registered_name: string; photo_url: string | null; sex: string }[] = [];
 
-    // If not enough results, fall back to contains match
-    if (dogs.length < limit) {
+    try {
+      dogs = conn.prepare(
+        `SELECT d.dog_id, d.registered_name, d.photo_url, d.sex
+         FROM dogs_fts f
+         JOIN dogs d ON f.rowid = d.dog_id
+         WHERE dogs_fts MATCH ?
+         ORDER BY d.view_count DESC
+         LIMIT ?`
+      ).all(ftsQuery, limit) as typeof dogs;
+    } catch (_ftsErr) {
+      // FTS fallback: use LIKE if FTS fails
       dogs = conn.prepare(
         "SELECT dog_id, registered_name, photo_url, sex FROM dogs WHERE registered_name LIKE ? ORDER BY view_count DESC LIMIT ?"
-      ).all('%' + q + '%', limit) as { dog_id: number; registered_name: string; photo_url: string | null; sex: string }[];
+      ).all('%' + q + '%', limit) as typeof dogs;
     }
 
     return NextResponse.json({ dogs });

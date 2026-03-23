@@ -480,6 +480,21 @@ export default function Dashboard() {
           </div>
         </div>
       </aside>
+
+      {/* Photo Preview Modal */}
+      {showPhotoPreview && user?.profile_picture && !user.profile_picture.startsWith("emoji:") && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center px-4" style={{ background: "rgba(0,0,0,0.8)", backdropFilter: "blur(8px)" }}
+          onClick={() => setShowPhotoPreview(false)}>
+          <div className="relative max-w-lg w-full" onClick={e => e.stopPropagation()}>
+            <img src={user.profile_picture} alt="" className="w-full rounded-2xl" style={{ border: "3px solid var(--accent-gold)", boxShadow: "0 20px 60px rgba(0,0,0,0.6)" }} />
+            <button onClick={() => setShowPhotoPreview(false)}
+              className="absolute -top-3 -right-3 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all hover:scale-110"
+              style={{ background: "rgba(30,30,30,0.95)", color: "#fff", border: "2px solid var(--accent-gold)" }}>
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
