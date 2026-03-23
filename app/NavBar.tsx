@@ -216,7 +216,6 @@ export default function NavBar() {
 
   const links = [
     { href: "/dashboard", label: "Dashboard" },
-    ...(pathname === "/dashboard" ? [{ href: "/", label: "Home" }] : []),
   ];
 
   return (
