@@ -147,6 +147,43 @@ conn.close()
     ], { timeout: 10000 });
     const data = JSON.parse(stdout);
     if (data.error) return NextResponse.json(data, { status: 400 });
+
+    // Create notification for recipient
+    try {
+      const fromUser = JSON.parse(Buffer.from(
+        (await execFileAsync("python3", ["-c", `
+import sqlite3, json, sys
+conn = sqlite3.connect("${DB_PATH}")
+row = conn.execute("SELECT username FROM users WHERE id = ?", (int(sys.argv[1]),)).fetchone()
+conn.close()
+print(json.dumps({"username": row[0] if row else "Someone"}))
+`, String(fromUserId)], { timeout: 5000 })).stdout, "utf-8").toString());
+
+      // Find recipient user ID
+      const recipientData = JSON.parse((await execFileAsync("python3", ["-c", `
+import sqlite3, json, sys
+conn = sqlite3.connect("${DB_PATH}")
+row = conn.execute("SELECT id FROM users WHERE username = ?", (sys.argv[1],)).fetchone()
+conn.close()
+print(json.dumps({"id": row[0] if row else 0}))
+`, toUsername], { timeout: 5000 })).stdout);
+
+      if (recipientData.id) {
+        await execFileAsync("python3", ["-c", `
+import sqlite3, sys
+conn = sqlite3.connect("${DB_PATH}")
+conn.execute(
+    "INSERT INTO notifications (user_id, type, title, body, link) VALUES (?, ?, ?, ?, ?)",
+    (int(sys.argv[1]), "message", sys.argv[2], sys.argv[3], "/messages")
+)
+conn.commit()
+conn.close()
+`, String(recipientData.id), `New message from ${fromUser.username}`, subject || body.substring(0, 100)], { timeout: 5000 });
+      }
+    } catch (_notifErr) {
+      // Notification creation failure shouldn't block message sending
+    }
+
     return NextResponse.json(data);
   } catch (e) {
     console.error("Messages POST error:", e);

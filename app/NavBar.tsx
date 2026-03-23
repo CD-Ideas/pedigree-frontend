@@ -120,6 +120,9 @@ export default function NavBar() {
   const [mounted, setMounted] = useState(false);
   const avatarInputRef = useRef<HTMLInputElement>(null);
   const [avatarUploading, setAvatarUploading] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [notifications, setNotifications] = useState<{ id: number; type: string; title: string; body: string; link: string; is_read: number; created_at: string }[]>([]);
+  const [showNotifications, setShowNotifications] = useState(false);
   const [showAvatarPicker, setShowAvatarPicker] = useState(false);
 
   const AVATAR_OPTIONS = [
@@ -158,6 +161,60 @@ export default function NavBar() {
       setUserPicture("");
     }
   }, [pathname, mounted]); // re-check on every navigation and on mount
+
+  // Poll for notifications
+  useEffect(() => {
+    if (!userId || !loggedIn) return;
+    const fetchNotifications = () => {
+      fetch(`/api/notifications?userId=${userId}`)
+        .then(r => r.json())
+        .then(data => {
+          setUnreadCount(data.unread_count || 0);
+          setNotifications(data.notifications || []);
+        })
+        .catch(() => {});
+    };
+    fetchNotifications();
+    const interval = setInterval(fetchNotifications, 30000); // every 30s
+    return () => clearInterval(interval);
+  }, [userId, loggedIn]);
+
+  const markNotificationRead = useCallback(async (notifId: number) => {
+    if (!userId) return;
+    await fetch("/api/notifications", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "mark_read", userId, notificationId: notifId }),
+    });
+    setNotifications(prev => prev.map(n => n.id === notifId ? { ...n, is_read: 1 } : n));
+    setUnreadCount(prev => Math.max(0, prev - 1));
+  }, [userId]);
+
+  const deleteNotification = useCallback(async (notifId: number) => {
+    if (!userId) return;
+    await fetch("/api/notifications", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "delete", userId, notificationId: notifId }),
+    });
+    setNotifications(prev => {
+      const removed = prev.find(n => n.id === notifId);
+      if (removed && !removed.is_read) setUnreadCount(c => Math.max(0, c - 1));
+      return prev.filter(n => n.id !== notifId);
+    });
+  }, [userId]);
+
+  const clearAllNotifications = useCallback(async () => {
+    if (!userId) return;
+    await fetch("/api/notifications", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "clear_all", userId }),
+    });
+    setNotifications([]);
+    setUnreadCount(0);
+    setShowNotifications(false);
+  }, [userId]);
 
   const handleAvatarSelect = useCallback(async (emoji: string) => {
     if (!userId) return;
@@ -279,7 +336,7 @@ export default function NavBar() {
             <NavSearch />
           </div>
         )}
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1.5">
           {loggedIn && links.map((link) => {
             const isActive =
               pathname === link.href ||
@@ -323,6 +380,120 @@ export default function NavBar() {
               </Link>
             );
           })}
+
+          {/* Notification Bell - before Dashboard, styled silver */}
+          {mounted && loggedIn && (
+            <div className="relative" style={{ order: -1 }}>
+              <button
+                onClick={() => { setShowNotifications(!showNotifications); setDropdownOpen(false); }}
+                className="relative px-2.5 py-1.5 rounded-lg transition-all hover:scale-[1.03]"
+                style={{
+                  background: "linear-gradient(135deg, #e8e8e8, #b0b0b0, #d8d8d8, #a0a0a0)",
+                  boxShadow: showNotifications ? "0 2px 12px rgba(200,200,200,0.3), inset 0 1px 0 rgba(255,255,255,0.4)" : "0 2px 10px rgba(200,200,200,0.15), inset 0 1px 0 rgba(255,255,255,0.4)",
+                  border: "1px solid rgba(200,200,200,0.3)",
+                }}
+                title="Notifications"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                  <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                </svg>
+                {unreadCount > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-1 rounded-full flex items-center justify-center text-[9px] font-bold"
+                    style={{
+                      background: "linear-gradient(135deg, #ef4444, #dc2626)",
+                      color: "#fff",
+                      boxShadow: "0 0 8px rgba(239,68,68,0.5)",
+                      fontFamily: "var(--font-mono)",
+                    }}>
+                    {unreadCount > 99 ? "99+" : unreadCount}
+                  </span>
+                )}
+              </button>
+
+              {showNotifications && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setShowNotifications(false)} />
+                  <div className="absolute right-0 top-full mt-2 w-80 sm:w-96 max-w-[calc(100vw-16px)] rounded-xl overflow-hidden z-50"
+                    style={{
+                      background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+                      border: "1.5px solid rgba(30,64,120,0.8)",
+                      boxShadow: "0 12px 40px rgba(0,0,0,0.5)",
+                    }}>
+                    {/* Header */}
+                    <div className="px-4 py-3 flex items-center justify-between" style={{ borderBottom: "1px solid rgba(30,64,120,0.4)" }}>
+                      <p className="text-xs font-bold uppercase tracking-wider" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+                        Notifications {unreadCount > 0 && <span className="ml-1 text-[10px]" style={{ color: "#ef4444" }}>({unreadCount} new)</span>}
+                      </p>
+                      {notifications.length > 0 && (
+                        <button onClick={clearAllNotifications}
+                          className="text-[10px] px-2 py-0.5 rounded transition-colors hover:bg-red-500/10"
+                          style={{ color: "#ef4444", fontFamily: "var(--font-table)", border: "1px solid rgba(239,68,68,0.2)" }}>
+                          Clear All
+                        </button>
+                      )}
+                    </div>
+                    {/* Notification List */}
+                    <div className="max-h-80 overflow-y-auto">
+                      {notifications.length === 0 ? (
+                        <div className="p-6 text-center">
+                          <span className="text-2xl block mb-2">🔔</span>
+                          <p className="text-xs" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                            No notifications
+                          </p>
+                        </div>
+                      ) : notifications.map(notif => {
+                        const typeIcon = notif.type === "message" ? "💬" : notif.type === "marketplace" ? "🏪" : notif.type === "title" ? "🏆" : "🔔";
+                        return (
+                          <div key={notif.id}
+                            className="flex items-start gap-3 px-4 py-3 transition-colors hover:bg-white/5 cursor-pointer"
+                            style={{
+                              borderBottom: "1px solid rgba(30,64,120,0.2)",
+                              background: notif.is_read ? "transparent" : "rgba(212,168,85,0.03)",
+                            }}
+                            onClick={() => {
+                              if (!notif.is_read) markNotificationRead(notif.id);
+                              if (notif.link) router.push(notif.link);
+                              setShowNotifications(false);
+                            }}
+                          >
+                            <span className="text-sm mt-0.5 flex-shrink-0">{typeIcon}</span>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-xs font-semibold truncate" style={{
+                                color: notif.is_read ? "var(--text-secondary)" : "var(--text-primary)",
+                                fontFamily: "var(--font-table)",
+                              }}>
+                                {notif.title}
+                              </p>
+                              {notif.body && (
+                                <p className="text-[10px] mt-0.5 truncate" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                                  {notif.body}
+                                </p>
+                              )}
+                              <p className="text-[9px] mt-1" style={{ color: "#5a6a82", fontFamily: "var(--font-mono)" }}>
+                                {new Date(notif.created_at + "Z").toLocaleString()}
+                              </p>
+                            </div>
+                            {!notif.is_read && (
+                              <div className="w-2 h-2 rounded-full flex-shrink-0 mt-1.5" style={{ background: "var(--accent-gold)" }} />
+                            )}
+                            <button
+                              onClick={(e) => { e.stopPropagation(); deleteNotification(notif.id); }}
+                              className="text-[10px] flex-shrink-0 p-1 rounded transition-colors hover:bg-red-500/10"
+                              style={{ color: "#5a6a82" }}
+                              title="Delete"
+                            >
+                              ✕
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
 
           {!mounted ? (
             <div className="ml-4" style={{ width: 80 }} />
