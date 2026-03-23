@@ -902,7 +902,7 @@ export default function PuppyPredictorPage() {
           <button onClick={handlePredict}
             className="px-8 py-3 rounded-xl font-bold transition-all hover:scale-105 active:scale-95"
             style={{
-              background: "linear-gradient(135deg, #e8c86e, #d4a855, #b8860b)", color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)",
+              background: "linear-gradient(135deg, #e8c86e, #d4a855, #b8860b)", color: "#000",
               fontFamily: "var(--font-display)", letterSpacing: "0.05em", fontSize: "1rem",
               boxShadow: "0 4px 20px rgba(212,168,85,0.3)", transition: "all 0.3s ease",
             }}>

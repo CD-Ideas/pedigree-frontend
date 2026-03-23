@@ -259,7 +259,7 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
                 color: displayGens === g ? "#000" : "#9ca3af",
                 border: displayGens === g ? "1px solid rgba(212,168,85,0.5)" : "1px solid transparent",
                 boxShadow: displayGens === g ? "0 2px 8px rgba(212,168,85,0.25)" : "none",
-                fontFamily: "var(--font-display)",
+                fontFamily: "var(--font-table)",
                 letterSpacing: "0.03em",
               }}>
               {g}G
@@ -437,7 +437,7 @@ function NavAuthButton() {
   return (
     <div className="flex items-center gap-2">
       <Link href="/login" className="px-4 py-2 rounded-lg text-sm font-semibold transition-all hover:scale-105"
-        style={{ background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)", fontFamily: "var(--font-table)", letterSpacing: "0.02em" }}>
+        style={{ background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#000", fontFamily: "var(--font-table)", letterSpacing: "0.02em" }}>
         Sign In
       </Link>
     </div>
@@ -525,7 +525,7 @@ export default function PublishedPedigreePage() {
           <h2 className="text-xl font-bold mb-2" style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)" }}>Pedigree Not Found</h2>
           <p className="text-sm mb-6" style={{ color: "var(--text-muted)" }}>This pedigree doesn&apos;t exist or has been removed.</p>
           <Link href="/" className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-semibold transition-all hover:scale-105"
-            style={{ background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)", fontFamily: "var(--font-table)" }}>
+            style={{ background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#000", fontFamily: "var(--font-table)" }}>
             ← Back to Home
           </Link>
         </div>

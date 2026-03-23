@@ -348,8 +348,8 @@ export default function DogsPage() {
           />
           <button
             type="submit"
-            className="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all hover:scale-[1.03]"
-            style={{ background: "linear-gradient(135deg, #e8c86e, #b8860b, #d4a855)", color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)", fontFamily: "var(--font-display)", boxShadow: "0 2px 10px rgba(212,168,85,0.2), inset 0 1px 0 rgba(255,255,255,0.3)", border: "1px solid rgba(212,168,85,0.4)" }}
+            className="px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all hover:scale-[1.03]"
+            style={{ background: "linear-gradient(135deg, #e8c86e, #b8860b, #d4a855)", color: "#000", fontFamily: "var(--font-table)", boxShadow: "0 2px 10px rgba(212,168,85,0.2), inset 0 1px 0 rgba(255,255,255,0.3)", border: "1px solid rgba(212,168,85,0.4)" }}
           >
             Search
           </button>

@@ -2568,9 +2568,9 @@ function PedigreeLabInner() {
                     setPublishing(false);
                   }
                 }}
-                className="w-full rounded-2xl py-3 text-sm font-bold uppercase tracking-widest transition-all hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full rounded-2xl py-3 text-sm font-semibold uppercase tracking-widest transition-all hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{
-                  fontFamily: "var(--font-display, Oswald, sans-serif)",
+                  fontFamily: "var(--font-table, Rajdhani, sans-serif)",
                   background: "linear-gradient(135deg, #d4a855, #f5d994, #d4a855)",
                   color: "#0b1120",
                   border: "1.5px solid #d4a855",

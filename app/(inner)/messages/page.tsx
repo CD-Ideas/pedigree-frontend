@@ -313,11 +313,11 @@ function MessagesContent() {
         </div>
         <button
           onClick={() => { setShowCompose(!showCompose); setSelectedThread(null); setReplyText(""); setComposeMsg(""); }}
-          className="px-5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all hover:scale-[1.03]"
+          className="px-5 py-2.5 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all hover:scale-[1.03]"
           style={{
             background: "linear-gradient(135deg, #e8c86e, #b8860b)",
-            color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)",
-            fontFamily: "var(--font-display)",
+            color: "#000",
+            fontFamily: "var(--font-table)",
             boxShadow: "0 4px 15px rgba(212,168,85,0.2)",
           }}>
           + New Message
@@ -373,8 +373,8 @@ function MessagesContent() {
               Cancel
             </button>
             <button onClick={sendNewMessage} disabled={sending || !toUsername.trim() || !replyText.trim()}
-              className="px-5 py-2 rounded-lg text-xs font-bold uppercase transition-all hover:scale-[1.03] disabled:opacity-40"
-              style={{ background: "linear-gradient(135deg, #e8c86e, #b8860b)", color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)", fontFamily: "var(--font-display)" }}>
+              className="px-5 py-2 rounded-lg text-xs font-semibold uppercase transition-all hover:scale-[1.03] disabled:opacity-40"
+              style={{ background: "linear-gradient(135deg, #e8c86e, #b8860b)", color: "#000", fontFamily: "var(--font-table)" }}>
               {sending ? "Sending..." : "Send"}
             </button>
           </div>
@@ -611,8 +611,8 @@ function MessagesContent() {
                     onInput={(e) => { const t = e.target as HTMLTextAreaElement; t.style.height = "42px"; t.style.height = Math.min(t.scrollHeight, 120) + "px"; }}
                   />
                   <button onClick={sendReply} disabled={sending || !replyText.trim()}
-                    className="px-4 py-2.5 rounded-lg text-xs font-bold uppercase transition-all hover:scale-[1.03] disabled:opacity-40"
-                    style={{ background: "linear-gradient(135deg, #e8c86e, #b8860b)", color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)", fontFamily: "var(--font-display)" }}>
+                    className="px-4 py-2.5 rounded-lg text-xs font-semibold uppercase transition-all hover:scale-[1.03] disabled:opacity-40"
+                    style={{ background: "linear-gradient(135deg, #e8c86e, #b8860b)", color: "#000", fontFamily: "var(--font-table)" }}>
                     {sending ? "..." : "Send"}
                   </button>
                 </div>

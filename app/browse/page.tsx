@@ -289,7 +289,7 @@ export default function PublicDogsPage() {
           </Link>
           <Link href="/login"
             className="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all hover:scale-105"
-            style={{ background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)", fontFamily: "var(--font-table)" }}>
+            style={{ background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#000", fontFamily: "var(--font-table)" }}>
             Sign In
           </Link>
         </div>
@@ -376,7 +376,7 @@ export default function PublicDogsPage() {
               <button type="submit"
                 className="px-5 py-2.5 rounded-lg text-xs font-bold transition-all hover:scale-105 flex-shrink-0"
                 style={{
-                  background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)",
+                  background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#000",
                   fontFamily: "var(--font-table)", letterSpacing: "0.04em", textTransform: "uppercase",
                 }}>
                 Search
@@ -651,7 +651,7 @@ export default function PublicDogsPage() {
           <Link href="/register"
             className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg text-xs font-bold transition-all hover:scale-105"
             style={{
-              background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)",
+              background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#000",
               fontFamily: "var(--font-table)", letterSpacing: "0.04em", textTransform: "uppercase",
               boxShadow: "0 4px 20px rgba(212,168,85,0.2)",
             }}>

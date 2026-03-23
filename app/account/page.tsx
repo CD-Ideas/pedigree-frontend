@@ -327,11 +327,11 @@ export default function AccountPage() {
             <button
               onClick={handleSaveProfile}
               disabled={profileSaving || (editUsername === user.username && editEmail === (user.email || ""))}
-              className="px-5 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all hover:scale-[1.02] disabled:opacity-40 disabled:cursor-not-allowed"
+              className="px-5 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all hover:scale-[1.02] disabled:opacity-40 disabled:cursor-not-allowed"
               style={{
                 background: "linear-gradient(135deg, #d4a855, #b8860b)",
-                color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)",
-                fontFamily: "var(--font-display)",
+                color: "#000",
+                fontFamily: "var(--font-table)",
               }}
             >
               {profileSaving ? "Saving..." : "Save Changes"}
@@ -415,11 +415,11 @@ export default function AccountPage() {
             <button
               onClick={handleChangePassword}
               disabled={passwordSaving || !currentPassword || newPassword.length < 6 || newPassword !== confirmPassword}
-              className="px-5 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all hover:scale-[1.02] disabled:opacity-40 disabled:cursor-not-allowed"
+              className="px-5 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all hover:scale-[1.02] disabled:opacity-40 disabled:cursor-not-allowed"
               style={{
                 background: "linear-gradient(135deg, #d4a855, #b8860b)",
-                color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)",
-                fontFamily: "var(--font-display)",
+                color: "#000",
+                fontFamily: "var(--font-table)",
               }}
             >
               {passwordSaving ? "Changing..." : "Change Password"}
