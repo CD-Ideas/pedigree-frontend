@@ -390,7 +390,7 @@ function DonutChart({ ancestors, hoveredIdx, onHover }: { ancestors: SharedAnces
 export default function BreedingCalculatorPage() {
   const [sire, setSire] = useState<DogSearchResult | null>(null);
   const [dam, setDam] = useState<DogSearchResult | null>(null);
-  const [genDepth, setGenDepth] = useState<number>(8);
+  const [genDepth, setGenDepth] = useState<number>(6);
   const [includeHalf, setIncludeHalf] = useState(false);
   const [calculating, setCalculating] = useState(false);
   const [coi, setCoi] = useState<number | null>(null);

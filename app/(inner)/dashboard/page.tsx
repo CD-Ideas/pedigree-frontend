@@ -173,7 +173,7 @@ export default function Dashboard() {
       );
     }
     if (pp) {
-      return <img src={pp} alt="" className={`${size} rounded-full object-cover`} style={{ border: "3px solid var(--accent-gold)" }} />;
+      return <img src={pp} alt="" className={`${size} rounded-full object-cover`} style={{ border: "3px solid var(--accent-gold)" }} onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />;
     }
     return (
       <div className={`${size} rounded-full flex items-center justify-center font-bold`}

@@ -245,8 +245,18 @@ export default function NavBar() {
           </span>
         </Link>
         {mounted && loggedIn && pathname !== "/dashboard" && !pathname.startsWith("/marketplace") && (
-          <Link
-            href={pathname === "/dashboard/pedigrees" ? "/pedigree-lab" : "/dashboard"}
+          <button
+            onClick={() => {
+              if (pathname === "/dashboard/pedigrees") {
+                router.push("/pedigree-lab");
+              } else if (pathname === "/pedigree-lab") {
+                router.push("/dashboard/pedigrees");
+              } else if (window.history.length > 1) {
+                router.back();
+              } else {
+                router.push("/dashboard");
+              }
+            }}
             className="ml-4 flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold transition-all hover:scale-[1.02]"
             style={{
               color: "var(--accent-gold, #d4a855)",
@@ -256,7 +266,7 @@ export default function NavBar() {
             }}
           >
             ← Back
-          </Link>
+          </button>
         )}
         {(pathname.startsWith("/pedigree/") && pathname !== "/pedigree/spotlight" || pathname === "/dashboard") && (
           <div className="flex-1 max-w-md mx-4 overflow-visible">
@@ -314,7 +324,7 @@ export default function NavBar() {
                   {userPicture?.startsWith("emoji:") ? (
                     <span className="text-sm">{userPicture.replace("emoji:", "")}</span>
                   ) : userPicture ? (
-                    <img src={userPicture} alt="" className="w-full h-full object-cover rounded-full" />
+                    <img src={userPicture} alt="" className="w-full h-full object-cover rounded-full" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
                   ) : (
                     (userName || "U")[0].toUpperCase()
                   )}

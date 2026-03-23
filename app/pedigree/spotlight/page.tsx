@@ -41,7 +41,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
   const [lineage, setLineage] = useState<{ dog: { id: number; name: string; photo_url: string | null }; legendaryMatches: { id: number; name: string; photo_url: string | null; count: number }[] } | null>(null);
   const [lineageLoading, setLineageLoading] = useState(false);
   const [hovered, setHovered] = useState<number | null>(null);
-  const [genDepth, setGenDepth] = useState(8);
+  const [genDepth, setGenDepth] = useState(6);
   const lineageListRef = useRef<HTMLDivElement>(null);
   const ref = useRef<HTMLDivElement>(null);
   const timer = useRef<NodeJS.Timeout | null>(null);

@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
     const uploadDir = path.join(process.cwd(), "public", "uploads", "avatars");
     await mkdir(uploadDir, { recursive: true });
     await writeFile(path.join(uploadDir, filename), buffer);
-    const avatarPath = `/uploads/avatars/${filename}`;
+    const avatarPath = `/api/uploads/avatars/${filename}`;
 
     const script = `
 import sqlite3, json
