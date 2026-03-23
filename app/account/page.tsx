@@ -239,8 +239,8 @@ export default function AccountPage() {
               <img
                 src={avatarPreview}
                 alt="Avatar"
-                className="w-24 h-24 rounded-full object-cover"
-                style={{ border: "3px solid var(--accent-gold)" }}
+                className="rounded-2xl object-cover"
+                style={{ border: "3px solid var(--accent-gold)", width: "120px", height: "90px" }}
               />
             ) : (
               <div

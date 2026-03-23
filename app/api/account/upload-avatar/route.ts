@@ -31,27 +31,40 @@ export async function POST(req: NextRequest) {
     const finalPath = path.join(uploadDir, finalName);
     await writeFile(rawPath, buffer);
 
-    // Use Python/Pillow to auto-crop center square and resize to 200x200
+    // Use Python/Pillow to auto-rotate (EXIF), crop to 4:3 landscape rectangle, resize to 240x180
     const cropScript = `
 import sys
-from PIL import Image
+from PIL import Image, ImageOps
 import os
 
 raw = sys.argv[1]
 out = sys.argv[2]
 
 img = Image.open(raw)
+
+# Auto-rotate based on EXIF orientation data
+img = ImageOps.exif_transpose(img)
+
 img = img.convert("RGB")
 
-# Center crop to square
+# Crop to 4:3 landscape ratio (center crop)
 w, h = img.size
-size = min(w, h)
-left = (w - size) // 2
-top = (h - size) // 2
-img = img.crop((left, top, left + size, top + size))
+target_ratio = 4 / 3
+current_ratio = w / h
 
-# Resize to 200x200
-img = img.resize((200, 200), Image.LANCZOS)
+if current_ratio > target_ratio:
+    # Too wide — crop sides
+    new_w = int(h * target_ratio)
+    left = (w - new_w) // 2
+    img = img.crop((left, 0, left + new_w, h))
+else:
+    # Too tall — crop top/bottom
+    new_h = int(w / target_ratio)
+    top = (h - new_h) // 2
+    img = img.crop((0, top, w, top + new_h))
+
+# Resize to 240x180
+img = img.resize((240, 180), Image.LANCZOS)
 
 # Save as JPEG
 img.save(out, "JPEG", quality=90)

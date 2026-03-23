@@ -48,6 +48,20 @@ export async function POST(req: NextRequest) {
       const uploadDir = path.join(process.cwd(), "public", "uploads");
       await mkdir(uploadDir, { recursive: true });
       await writeFile(path.join(uploadDir, filename), buffer);
+
+      // Auto-rotate based on EXIF
+      if (/\.(jpg|jpeg|png|gif|webp)$/i.test(filename)) {
+        try {
+          await execFileAsync("python3", ["-c", `
+from PIL import Image, ImageOps
+import sys
+img = Image.open(sys.argv[1])
+img = ImageOps.exif_transpose(img)
+img.save(sys.argv[1])
+`, path.join(uploadDir, filename)], { timeout: 10000 });
+        } catch (_e) {}
+      }
+
       photoClause = `, photo_path = '/uploads/${filename}'`;
     }
 

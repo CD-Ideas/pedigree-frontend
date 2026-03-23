@@ -514,15 +514,15 @@ export default function NavBar() {
                 }}
               >
                 <span
-                  className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold relative cursor-pointer overflow-hidden flex-shrink-0"
-                  style={{ background: userPicture?.startsWith("emoji:") ? "linear-gradient(135deg, #1a2744, #0e1828)" : "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#000", border: "2px solid var(--accent-gold)" }}
+                  className={`flex items-center justify-center text-xs font-bold relative cursor-pointer overflow-hidden flex-shrink-0 ${userPicture && !userPicture.startsWith("emoji:") ? "rounded-lg" : "rounded-full w-7 h-7"}`}
+                  style={{ background: userPicture?.startsWith("emoji:") ? "linear-gradient(135deg, #1a2744, #0e1828)" : userPicture ? "transparent" : "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#000", border: "2px solid var(--accent-gold)", ...(userPicture && !userPicture.startsWith("emoji:") ? { width: "32px", height: "24px" } : {}) }}
                   onClick={(e) => { e.stopPropagation(); setShowAvatarPicker(!showAvatarPicker); }}
                   title="Click to change profile picture"
                 >
                   {userPicture?.startsWith("emoji:") ? (
                     <span className="text-sm">{userPicture.replace("emoji:", "")}</span>
                   ) : userPicture ? (
-                    <img src={userPicture} alt="" className="w-full h-full object-cover rounded-full" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                    <img src={userPicture} alt="" className="w-full h-full object-cover rounded-lg" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
                   ) : (
                     (userName || "U")[0].toUpperCase()
                   )}

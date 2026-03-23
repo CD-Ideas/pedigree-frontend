@@ -60,6 +60,7 @@ export default function Dashboard() {
   const [searchResults, setSearchResults] = useState<{ dog_id: number; registered_name: string }[]>([]);
   const [showSearch, setShowSearch] = useState(false);
   const [showAvatarPicker, setShowAvatarPicker] = useState(false);
+  const [showPhotoPreview, setShowPhotoPreview] = useState(false);
   const [avatarUploading, setAvatarUploading] = useState(false);
   const avatarInputRef = useRef<HTMLInputElement>(null);
 
@@ -171,6 +172,8 @@ export default function Dashboard() {
 
   const renderAvatar = (size: string, textSize: string) => {
     const pp = user?.profile_picture;
+    const isPhoto = pp && !pp.startsWith("emoji:");
+    const roundStyle = isPhoto ? "rounded-2xl" : "rounded-full";
     if (pp?.startsWith("emoji:")) {
       return (
         <div className={`${size} rounded-full flex items-center justify-center`}
@@ -180,7 +183,7 @@ export default function Dashboard() {
       );
     }
     if (pp) {
-      return <img src={pp} alt="" className={`${size} rounded-full object-cover`} style={{ border: "3px solid var(--accent-gold)" }} onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />;
+      return <img src={pp} alt="" className="rounded-2xl object-cover cursor-pointer transition-all hover:scale-105 hover:shadow-lg" onClick={() => setShowPhotoPreview(true)} style={{ border: "3px solid var(--accent-gold)", width: "120px", height: "90px" }} onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />;
     }
     return (
       <div className={`${size} rounded-full flex items-center justify-center font-bold`}
@@ -358,7 +361,7 @@ export default function Dashboard() {
           {/* Profile */}
           <div className="flex flex-col items-center text-center pb-4 relative" style={{ borderBottom: "1px solid rgba(30,64,120,0.3)" }}>
             <div className="relative group cursor-pointer" onClick={() => setShowAvatarPicker(!showAvatarPicker)}>
-              {renderAvatar("w-16 h-16", "text-2xl")}
+              {renderAvatar("w-24 h-24", "text-3xl")}
               <div className="absolute inset-0 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                 style={{ background: "rgba(0,0,0,0.5)" }}>
                 <span className="text-white text-[10px] font-bold" style={{ fontFamily: "var(--font-table)" }}>

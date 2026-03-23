@@ -1,8 +1,12 @@
 export const dynamic = "force-dynamic";
 
 import { NextRequest, NextResponse } from "next/server";
+import { promisify } from "util";
+import { execFile } from "child_process";
 import { writeFile, mkdir } from "fs/promises";
 import path from "path";
+
+const execFileAsync = promisify(execFile);
 
 export async function POST(req: NextRequest) {
   try {
@@ -21,6 +25,18 @@ export async function POST(req: NextRequest) {
     const uploadDir = path.join(process.cwd(), "public", "uploads", "marketplace");
     await mkdir(uploadDir, { recursive: true });
     await writeFile(path.join(uploadDir, filename), buffer);
+
+    // Auto-rotate based on EXIF
+    try {
+      await execFileAsync("python3", ["-c", `
+from PIL import Image, ImageOps
+import sys
+img = Image.open(sys.argv[1])
+img = ImageOps.exif_transpose(img)
+img.save(sys.argv[1])
+`, path.join(uploadDir, filename)], { timeout: 10000 });
+    } catch (_e) {}
+
     const photoPath = `/uploads/marketplace/${filename}`;
 
     return NextResponse.json({ success: true, path: photoPath });
