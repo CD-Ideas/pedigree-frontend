@@ -329,11 +329,11 @@ export default function MarketplacePage() {
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 mb-1">
             <Link
-              href="/"
+              href="/dashboard"
               className="text-[10px] font-medium hover:underline transition-colors"
               style={{ color: "#e8c86e", fontFamily: "var(--font-table)" }}
             >
-              Home
+              Dashboard
             </Link>
             <span style={{ color: "var(--text-muted, #5a6a82)", fontSize: "10px" }}>/</span>
             <span

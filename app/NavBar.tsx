@@ -244,7 +244,7 @@ export default function NavBar() {
             Pedigree Platform
           </span>
         </Link>
-        {mounted && loggedIn && pathname !== "/dashboard" && (
+        {mounted && loggedIn && pathname !== "/dashboard" && !pathname.startsWith("/marketplace") && (
           <Link
             href="/dashboard"
             className="ml-4 flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold transition-all hover:scale-[1.02]"
