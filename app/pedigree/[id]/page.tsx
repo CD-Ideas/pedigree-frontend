@@ -186,7 +186,7 @@ function PedigreeSearch() {
 
   return (
     <div ref={ref} className="relative">
-      <div className="glow-gold rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)" }}>
+      <div className="glow-gold rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(255,255,255,0.06)", boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)", background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)", backdropFilter: "blur(16px)" }}>
         <div className="px-4 py-2.5 flex items-center gap-3">
           <span className="text-base">🔍</span>
           <input type="text" placeholder="Search by dog name or paste a pedigree URL..."
@@ -268,15 +268,17 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
       {/* Controls bar */}
       <div className="absolute top-1 right-2 z-10 flex items-center gap-2">
         {/* Generation selector */}
-        <div className="flex items-center gap-0.5 rounded-md p-0.5" style={{ background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)", border: "1px solid rgba(30,64,120,0.8)" }}>
+        <div className="flex items-center gap-1 rounded-lg p-1" style={{ background: "linear-gradient(180deg, rgba(30,30,30,0.9) 0%, rgba(22,22,22,0.95) 100%)", border: "1.5px solid rgba(255,255,255,0.08)", boxShadow: "0 2px 10px rgba(0,0,0,0.3)" }}>
           {[3, 4, 5].map((g) => (
             <button key={g} onClick={() => { setDisplayGens(g); setZoom(1); if (containerRef.current) containerRef.current.scrollLeft = 0; }}
-              className="px-2 h-5 rounded flex items-center justify-center text-[10px] font-bold transition-all"
+              className="px-3 py-1 rounded-md flex items-center justify-center text-xs font-bold transition-all hover:scale-105"
               style={{
-                background: displayGens === g ? "linear-gradient(135deg, rgba(212,168,85,0.2), rgba(212,168,85,0.08))" : "transparent",
-                color: displayGens === g ? "var(--accent-gold)" : "var(--text-muted)",
-                border: displayGens === g ? "1px solid rgba(212,168,85,0.3)" : "1px solid transparent",
-                fontFamily: "var(--font-table)",
+                background: displayGens === g ? "linear-gradient(135deg, #e8c86e, #b8860b)" : "transparent",
+                color: displayGens === g ? "#000" : "#9ca3af",
+                border: displayGens === g ? "1px solid rgba(212,168,85,0.5)" : "1px solid transparent",
+                boxShadow: displayGens === g ? "0 2px 8px rgba(212,168,85,0.25)" : "none",
+                fontFamily: "var(--font-display)",
+                letterSpacing: "0.03em",
               }}>
               {g}G
             </button>
@@ -284,17 +286,17 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
         </div>
 
         {/* Zoom controls */}
-        <div className="flex items-center gap-0.5">
+        <div className="flex items-center gap-1 rounded-lg p-1" style={{ background: "linear-gradient(180deg, rgba(30,30,30,0.9) 0%, rgba(22,22,22,0.95) 100%)", border: "1.5px solid rgba(255,255,255,0.08)", boxShadow: "0 2px 10px rgba(0,0,0,0.3)" }}>
           <button onClick={() => setZoom(z => Math.max(0.5, z - 0.1))}
-            className="w-5 h-5 rounded flex items-center justify-center text-[10px] font-bold transition-colors"
-            style={{ background: "var(--bg-elevated)", color: "var(--text-secondary)", border: "1px solid var(--border)" }}>−</button>
-          <span className="text-[9px] px-1" style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>{Math.round(zoom * 100)}%</span>
+            className="w-7 h-7 rounded-md flex items-center justify-center text-sm font-bold transition-all hover:scale-110 hover:bg-white/10"
+            style={{ color: "#e2e8f0" }}>−</button>
+          <span className="text-xs px-1.5 font-bold" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-mono)", minWidth: "36px", textAlign: "center" }}>{Math.round(zoom * 100)}%</span>
           <button onClick={() => setZoom(z => Math.min(1.5, z + 0.1))}
-            className="w-5 h-5 rounded flex items-center justify-center text-[10px] font-bold transition-colors"
-            style={{ background: "var(--bg-elevated)", color: "var(--text-secondary)", border: "1px solid var(--border)" }}>+</button>
+            className="w-7 h-7 rounded-md flex items-center justify-center text-sm font-bold transition-all hover:scale-110 hover:bg-white/10"
+            style={{ color: "#e2e8f0" }}>+</button>
           <button onClick={() => setZoom(1)}
-            className="ml-0.5 px-1.5 h-5 rounded flex items-center justify-center text-[9px] transition-colors"
-            style={{ background: "var(--bg-elevated)", color: "var(--text-muted)", border: "1px solid var(--border)" }}>Reset</button>
+            className="ml-0.5 px-2.5 py-1 rounded-md flex items-center justify-center text-[11px] font-bold transition-all hover:scale-105 hover:bg-white/10"
+            style={{ color: "#9ca3af", fontFamily: "var(--font-table)" }}>Reset</button>
         </div>
       </div>
 
@@ -307,20 +309,20 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
           {/* Generation title */}
           <div className="text-center mb-2">
             <h3 style={{
-              fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "13px", letterSpacing: "0.06em",
-              textTransform: "uppercase", color: "#4a5568"
+              fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "15px", letterSpacing: "0.08em",
+              textTransform: "uppercase", color: "#1a202c"
             }}>{maxGen} Generation Pedigree</h3>
           </div>
 
           {/* Column headers */}
           <div className="mb-1" style={{ display: "grid", gridTemplateColumns: `${maxGen >= 5 ? "130px" : "170px"} repeat(${maxGen}, 1fr)`, gap: "4px" }}>
             <div className="px-1.5 py-1 text-center"
-                 style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: maxGen >= 5 ? "9px" : "10px", color: "#4a5568", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+                 style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: maxGen >= 5 ? "10px" : "11px", color: "#1a202c", textTransform: "uppercase", letterSpacing: "0.1em" }}>
               Dog
             </div>
             {gens.filter(g => g <= maxGen).map((g) => (
                 <div key={g} className="px-1.5 py-1 text-center"
-                     style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: maxGen >= 5 ? "9px" : "10px", color: "#4a5568", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+                     style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: maxGen >= 5 ? "10px" : "11px", color: "#1a202c", textTransform: "uppercase", letterSpacing: "0.1em" }}>
                   {genLabels[g - 1] || `Gen ${g}`}
                 </div>
             ))}
@@ -946,7 +948,7 @@ export default function PublicPedigreePage() {
 
         {/* ─── Dog Name Header ─── */}
         <div className="rounded-lg px-4 py-2 relative"
-             style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)" }}>
+             style={{ border: "1.5px solid rgba(255,255,255,0.06)", boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)", background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)", backdropFilter: "blur(16px)" }}>
           {titles.length > 0 && (
             <div className="h-0.5 -mx-4 -mt-2 mb-2 rounded-t-lg" style={{ background: "linear-gradient(90deg, var(--accent-red), var(--accent-gold), var(--accent-red))" }} />
           )}
@@ -960,7 +962,7 @@ export default function PublicPedigreePage() {
         </div>
 
         {/* ─── Photo + Details (like original site layout) ─── */}
-        <div className="glow-gold rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)", minHeight: "220px" }}>
+        <div className="glow-gold rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(255,255,255,0.06)", boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)", background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)", backdropFilter: "blur(16px)", minHeight: "220px" }}>
           <div className="flex flex-col sm:flex-row sm:items-stretch h-full">
             {/* Photo — stretches to match text height */}
             <div className="flex-shrink-0 relative m-2 w-full sm:w-[200px] h-[200px]">
@@ -1026,7 +1028,7 @@ export default function PublicPedigreePage() {
         {/* ─── Sire / Dam links (separate section below) ─── */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           <div className="glow-blue rounded-xl p-2.5"
-               style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)" }}
+               style={{ border: "1.5px solid rgba(255,255,255,0.06)", boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)", background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)", backdropFilter: "blur(16px)" }}
                onMouseEnter={() => { if (dog.sire?.photo_url) { const u = dog.sire.photo_url; setHoverPhoto(u.startsWith("http") ? u : `https://www.apbt.online-pedigrees.com/${u}`); } }}
                onMouseLeave={() => setHoverPhoto(null)}>
             <div className="text-[9px] uppercase tracking-wider mb-0.5 font-semibold"
@@ -1038,7 +1040,7 @@ export default function PublicPedigreePage() {
             ) : <span className="text-sm" style={{ color: "var(--text-muted)" }}>Unknown</span>}
           </div>
           <div className="glow-pink rounded-xl p-2.5"
-               style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)" }}
+               style={{ border: "1.5px solid rgba(255,255,255,0.06)", boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)", background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)", backdropFilter: "blur(16px)" }}
                onMouseEnter={() => { if (dog.dam?.photo_url) { const u = dog.dam.photo_url; setHoverPhoto(u.startsWith("http") ? u : `https://www.apbt.online-pedigrees.com/${u}`); } }}
                onMouseLeave={() => setHoverPhoto(null)}>
             <div className="text-[9px] uppercase tracking-wider mb-0.5 font-semibold"
@@ -1053,12 +1055,12 @@ export default function PublicPedigreePage() {
 
         {/* ─── Pedigree Tree (full width, contrasting frame) ─── */}
         <div className="glow-teal rounded-xl overflow-hidden" style={{
-          border: "1.5px solid rgba(50,50,55,0.9)",
-          boxShadow: "0 4px 30px rgba(0,0,0,0.35), 0 0 60px rgba(0,0,0,0.1)"
+          border: "1.5px solid rgba(255,255,255,0.06)",
+          boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)"
         }}>
           <div className="flex items-center justify-between px-4 py-2.5" style={{
-            background: "linear-gradient(180deg, #1a1a24 0%, #141418 100%)",
-            borderBottom: "1px solid rgba(30,64,120,0.5)"
+            background: "linear-gradient(180deg, rgba(30,30,30,0.95) 0%, rgba(22,22,22,0.95) 100%)",
+            borderBottom: "1px solid rgba(255,255,255,0.06)"
           }}>
             <div className="flex items-center gap-2.5">
               <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{
@@ -1106,11 +1108,11 @@ export default function PublicPedigreePage() {
           ];
           const currentTab = activeTab;
           return (
-            <div className="glow-teal rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)" }}>
+            <div className="glow-teal rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(255,255,255,0.06)", boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)", background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)", backdropFilter: "blur(16px)" }}>
               {/* Tab headers */}
               <div className="flex" style={{
-                background: "linear-gradient(180deg, #1a1a24 0%, #141418 100%)",
-                borderBottom: "1px solid rgba(30,64,120,0.5)",
+                background: "linear-gradient(180deg, rgba(30,30,30,0.95) 0%, rgba(22,22,22,0.95) 100%)",
+                borderBottom: "1px solid rgba(255,255,255,0.06)",
               }}>
                 {tabs.map((tab) => (
                   <button key={tab.key}
