@@ -664,8 +664,10 @@ export default function PuppyPredictorPage() {
         {/* ─── DNA Test Guide (#5) ─── */}
         {showGuide && (
           <div className="rounded-xl p-5 space-y-3" style={{
-            background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
-            border: "1.5px solid rgba(96,165,250,0.3)",
+            background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)",
+            backdropFilter: "blur(16px)",
+            border: "1.5px solid rgba(255,255,255,0.06)",
+            boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)",
           }}>
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-bold" style={{ color: "#60a5fa", fontFamily: "var(--font-display)", letterSpacing: "0.05em" }}>
@@ -698,9 +700,10 @@ export default function PuppyPredictorPage() {
         {/* ─── History (#8) ─── */}
         {showHistory && (
           <div className="rounded-xl p-4 space-y-2" style={{
-            background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
-            border: "1.5px solid rgba(212,168,85,0.3)",
-            boxShadow: "0 0 15px rgba(212,168,85,0.08)",
+            background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)",
+            backdropFilter: "blur(16px)",
+            border: "1.5px solid rgba(255,255,255,0.06)",
+            boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)",
             transition: "all 0.3s ease",
           }}>
             <div className="flex items-center justify-between">
@@ -768,10 +771,10 @@ export default function PuppyPredictorPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* ── Sire ── */}
           <div className="rounded-xl p-5 space-y-4" style={{
-            background: "linear-gradient(180deg, rgba(14,24,40,0.85) 0%, rgba(11,17,32,0.85) 100%)",
-            backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)",
+            background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)",
+            backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)",
             border: "1.5px solid rgba(96,165,250,0.3)",
-            boxShadow: "0 0 15px rgba(96,165,250,0.1), 0 4px 20px rgba(0,0,0,0.3), 0 10px 40px rgba(0,0,0,0.2)",
+            boxShadow: "0 0 15px rgba(96,165,250,0.1), 0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)",
             transition: "all 0.3s ease",
           }}>
             <div className="flex items-center gap-2">
@@ -832,10 +835,10 @@ export default function PuppyPredictorPage() {
 
           {/* ── Dam ── */}
           <div className="rounded-xl p-5 space-y-4" style={{
-            background: "linear-gradient(180deg, rgba(14,24,40,0.85) 0%, rgba(11,17,32,0.85) 100%)",
-            backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)",
+            background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)",
+            backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)",
             border: "1.5px solid rgba(244,114,182,0.3)",
-            boxShadow: "0 0 15px rgba(244,114,182,0.1), 0 4px 20px rgba(0,0,0,0.3), 0 10px 40px rgba(0,0,0,0.2)",
+            boxShadow: "0 0 15px rgba(244,114,182,0.1), 0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)",
             transition: "all 0.3s ease",
           }}>
             <div className="flex items-center gap-2">

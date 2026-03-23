@@ -144,7 +144,7 @@ export default function PredictionResultPage() {
             { label: "Dam Genotype", geno: data.dam_genotype, color: "#f472b6", icon: "♀" },
           ].map(g => (
             <div key={g.label} className="rounded-lg p-3 space-y-1" style={{
-              background: "linear-gradient(180deg, #0e1828, #0b1120)",
+              background: "linear-gradient(180deg, rgba(30,30,30,0.85), rgba(22,22,22,0.9))",
               border: `1px solid ${g.color}30`,
             }}>
               <h3 className="text-xs font-bold" style={{ color: g.color, fontFamily: "var(--font-table)" }}>
@@ -163,7 +163,7 @@ export default function PredictionResultPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {results.map((r, i) => (
             <div key={i} className="rounded-xl p-4 transition-all hover:scale-[1.02]" style={{
-              background: "linear-gradient(180deg, #0e1828, #0b1120)",
+              background: "linear-gradient(180deg, rgba(30,30,30,0.85), rgba(22,22,22,0.9))",
               border: "1.5px solid rgba(30,64,120,0.5)", boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
             }}>
               <div className="flex items-center gap-3 mb-3">

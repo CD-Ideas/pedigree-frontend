@@ -6,10 +6,10 @@ import { useRouter } from "next/navigation";
 import { getDogColor } from "@/app/utils/colors";
 
 const steelFrame = {
-  border: "1.5px solid rgba(30,64,120,0.4)",
-  boxShadow: "0 4px 30px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04)",
-  background: "linear-gradient(160deg, #1e2430 0%, #171c28 100%)",
-  backdropFilter: "blur(12px)",
+  border: "1.5px solid rgba(255,255,255,0.06)",
+  boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)",
+  background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)",
+  backdropFilter: "blur(16px)",
 };
 
 interface TitleAlert {
@@ -197,7 +197,7 @@ export default function Dashboard() {
         <div className="rounded-xl p-4 sticky top-20" style={steelFrame}>
           <h2 className="text-[10px] uppercase tracking-widest font-bold mb-4 px-2"
             style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)", textShadow: "0 0 12px rgba(212,168,85,0.3)" }}>
-            Menu
+            📋 Menu
           </h2>
 
           <nav className="space-y-0.5">
@@ -306,7 +306,7 @@ export default function Dashboard() {
             <h2 className="text-[10px] uppercase tracking-widest font-bold mb-4 flex items-center gap-2"
               style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)", textShadow: "0 0 12px rgba(212,168,85,0.3)" }}>
               <span style={{ width: 16, height: 2, background: "linear-gradient(90deg, var(--accent-gold), transparent)", borderRadius: 1 }} />
-              Quick Actions
+              ⚡ Quick Actions
             </h2>
             <div className="space-y-2">
               {[
@@ -337,7 +337,7 @@ export default function Dashboard() {
             <h2 className="text-[10px] uppercase tracking-widest font-bold mb-4 flex items-center gap-2"
               style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)", textShadow: "0 0 12px rgba(212,168,85,0.3)" }}>
               <span style={{ width: 16, height: 2, background: "linear-gradient(90deg, var(--accent-gold), transparent)", borderRadius: 1 }} />
-              Recent Activity
+              📊 Recent Activity
             </h2>
             <div className="flex flex-col items-center justify-center py-8 text-center">
               <span className="text-3xl mb-3">📊</span>
@@ -356,7 +356,7 @@ export default function Dashboard() {
       <aside className="w-56 flex-shrink-0 hidden xl:block">
         <div className="rounded-xl p-4 sticky top-20 space-y-4" style={steelFrame}>
           {/* Profile */}
-          <div className="flex flex-col items-center text-center pb-4 relative" style={{ borderBottom: "1px solid rgba(90,70,50,0.3)" }}>
+          <div className="flex flex-col items-center text-center pb-4 relative" style={{ borderBottom: "1px solid rgba(30,64,120,0.3)" }}>
             <div className="relative group cursor-pointer" onClick={() => setShowAvatarPicker(!showAvatarPicker)}>
               {renderAvatar("w-16 h-16", "text-2xl")}
               <div className="absolute inset-0 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
@@ -379,7 +379,7 @@ export default function Dashboard() {
                   </div>
                   <button onClick={() => { setShowAvatarPicker(false); avatarInputRef.current?.click(); }}
                     className="w-full flex items-center gap-2 px-3 py-2 transition-colors hover:bg-white/5"
-                    style={{ borderBottom: "1px solid rgba(90,70,50,0.3)", color: "var(--text-secondary)", fontFamily: "var(--font-table)", fontSize: "0.75rem" }}>
+                    style={{ borderBottom: "1px solid rgba(30,64,120,0.3)", color: "var(--text-secondary)", fontFamily: "var(--font-table)", fontSize: "0.75rem" }}>
                     <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs" style={{ background: "rgba(212,168,85,0.1)", border: "1px solid rgba(212,168,85,0.3)" }}>📷</span>
                     Upload Photo
                   </button>
@@ -415,10 +415,10 @@ export default function Dashboard() {
           </div>
 
           {/* Subscription */}
-          <div className="pb-4" style={{ borderBottom: "1px solid rgba(90,70,50,0.3)" }}>
+          <div className="pb-4" style={{ borderBottom: "1px solid rgba(30,64,120,0.3)" }}>
             <h3 className="text-[10px] uppercase tracking-widest font-bold mb-3"
               style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)", textShadow: "0 0 10px rgba(212,168,85,0.25)" }}>
-              Subscription
+              💳 Subscription
             </h3>
             <div className="rounded-lg p-3"
               style={{ background: "linear-gradient(135deg, rgba(212,168,85,0.1), rgba(184,134,11,0.05))", border: "1px solid rgba(212,168,85,0.25)", boxShadow: "0 0 15px rgba(212,168,85,0.06)" }}>
@@ -439,7 +439,7 @@ export default function Dashboard() {
           </div>
 
           {/* Messaging */}
-          <div className="pb-4" style={{ borderBottom: "1px solid rgba(90,70,50,0.3)" }}>
+          <div className="pb-4" style={{ borderBottom: "1px solid rgba(30,64,120,0.3)" }}>
             <a href="/messages" className="dash-nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg"
               style={{ fontFamily: "var(--font-table)", "--item-color": "96,165,250" } as React.CSSProperties}>
               <span className="relative">

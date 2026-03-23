@@ -212,7 +212,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
 
   return (
     <div ref={ref} className="relative mb-5">
-      <div className="glow-gold rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)" }}>
+      <div className="glow-gold rounded-xl overflow-hidden" style={{ background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)", backdropFilter: "blur(16px)", border: "1.5px solid rgba(255,255,255,0.06)", boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)" }}>
         <div className="px-4 py-3 flex items-center gap-3">
           <span className="text-lg">🔍</span>
           <input
@@ -405,7 +405,7 @@ export default function SpotlightPage() {
 
         {/* ── Search Controls ── */}
         <div ref={dropdownRef} className="glow-teal rounded-xl p-3 md:p-4 mb-5"
-             style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)", backdropFilter: "blur(20px)" }}>
+             style={{ background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)", backdropFilter: "blur(16px)", border: "1.5px solid rgba(255,255,255,0.06)", boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)" }}>
 
           <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-end">
 
@@ -603,7 +603,7 @@ export default function SpotlightPage() {
                 <Link key={r.id} href={`/pedigree/${r.id}`}
                       className="glow-blue group rounded-xl overflow-hidden transition-all hover:scale-[1.02] hover:shadow-xl relative"
                       style={{
-                        border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+                        background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)", backdropFilter: "blur(16px)", border: "1.5px solid rgba(255,255,255,0.06)", boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)",
                         animationDelay: `${idx * 50}ms`,
                       }}>
 

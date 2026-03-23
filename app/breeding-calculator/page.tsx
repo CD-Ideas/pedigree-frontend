@@ -79,9 +79,10 @@ function Card({ children, className = "", style = {} }: { children: React.ReactN
     <div
       className={`glow-blue rounded-xl ${className}`}
       style={{
-        border: "1.5px solid rgba(30,64,120,0.8)",
-        boxShadow: "0 2px 20px rgba(0,0,0,0.25)",
-        background: "linear-gradient(180deg, #1a1a24 0%, #141418 100%)",
+        background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)",
+        backdropFilter: "blur(16px)",
+        border: "1.5px solid rgba(255,255,255,0.06)",
+        boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)",
         ...style,
       }}
     >

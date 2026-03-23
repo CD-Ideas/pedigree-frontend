@@ -76,8 +76,10 @@ function AdCard({ ad, index }: { ad: MarketplaceAd; index: number }) {
       href={`/marketplace/${ad.id}`}
       className="group block rounded-xl overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
       style={{
-        background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
-        border: "1.5px solid rgba(30,64,120,0.3)",
+        background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)",
+        backdropFilter: "blur(16px)",
+        border: "1.5px solid rgba(255,255,255,0.06)",
+        boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)",
         animation: "cardReveal 0.4s ease both",
         animationDelay: `${index * 40}ms`,
       }}

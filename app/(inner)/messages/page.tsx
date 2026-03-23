@@ -5,9 +5,9 @@ import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
 const GLASS_BOX = {
-  background: "linear-gradient(180deg, rgba(40,40,45,0.95) 0%, rgba(30,30,35,0.95) 100%)",
-  backdropFilter: "blur(12px)",
-  border: "1.5px solid rgba(212,168,85,0.15)",
+  background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)",
+  backdropFilter: "blur(16px)",
+  border: "1.5px solid rgba(255,255,255,0.06)",
   boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)",
 };
 
