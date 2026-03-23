@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { getDogColor } from "@/app/utils/colors";
 
 interface Dog {
   id: number;
@@ -55,8 +56,9 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
       href={`/dogs/${dog.id}`}
       className="glow-gold group block rounded-lg overflow-hidden transition-all duration-300 hover:scale-[1.02] animate-reveal"
       style={{
-        background: "var(--bg-surface)",
-        border: "1px solid var(--border)",
+        background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)",
+        border: "1.5px solid rgba(255,255,255,0.06)",
+        boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)",
         animationDelay: `${index * 30}ms`,
       }}
     >
@@ -126,8 +128,8 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
       {/* Info */}
       <div className="px-3 pb-3 -mt-2 relative">
         <h3
-          className="font-semibold text-xs leading-tight mb-1 group-hover:text-[var(--accent-gold)] transition-colors line-clamp-2"
-          style={{ color: "var(--text-primary)" }}
+          className="font-semibold text-xs leading-tight mb-1 transition-colors line-clamp-2"
+          style={{ color: getDogColor(dog.name), fontFamily: "var(--font-table)" }}
         >
           {dog.name}
         </h3>
@@ -277,14 +279,20 @@ export default function DogsPage() {
   return (
     <div>
       <style>{`
-        .glow-gold { transition: border-color 0.3s ease; }
-        .glow-gold:hover { border-color: #d4a855 !important; }
+        .glow-gold { transition: all 0.3s ease; }
+        .glow-gold:hover { border-color: #d4a855 !important; box-shadow: 0 0 20px rgba(212,168,85,0.15), 0 4px 24px rgba(0,0,0,0.4) !important; }
+        .dogs-search:focus { border-color: rgba(212,168,85,0.4) !important; box-shadow: 0 0 15px rgba(212,168,85,0.1), 0 0 0 2px rgba(212,168,85,0.08) !important; }
+        .sort-btn { transition: all 0.2s ease; }
+        .sort-btn:hover { background: rgba(212,168,85,0.1) !important; color: var(--accent-gold) !important; transform: translateY(-1px); }
+        .sort-btn-active { background: linear-gradient(135deg, rgba(212,168,85,0.2), rgba(184,134,11,0.1)) !important; color: var(--accent-gold) !important; box-shadow: 0 0 10px rgba(212,168,85,0.1); }
+        .page-btn { transition: all 0.2s ease; }
+        .page-btn:hover:not(:disabled) { background: rgba(212,168,85,0.1) !important; color: var(--accent-gold) !important; transform: scale(1.05); }
       `}</style>
       {/* Header */}
       <div className="flex items-end justify-between mb-4">
         <div>
           <h1 style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", fontWeight: 700 }}>
-            Dogs
+            🐕 Dogs
           </h1>
           <p className="text-xs mt-0.5" style={{ color: "var(--text-secondary)" }}>
             <span style={{ fontFamily: "var(--font-mono)", color: "var(--accent-gold)" }}>
@@ -296,24 +304,26 @@ export default function DogsPage() {
         {/* View toggle */}
         <div
           className="flex rounded-lg overflow-hidden"
-          style={{ border: "1px solid var(--border)" }}
+          style={{ border: "1.5px solid rgba(255,255,255,0.06)", background: "rgba(22,22,22,0.9)" }}
         >
           <button
             onClick={() => { setViewMode("grid"); setPage(1); }}
-            className="px-3 py-1.5 text-xs"
+            className="px-3 py-1.5 text-xs font-medium transition-all"
             style={{
-              background: viewMode === "grid" ? "var(--bg-elevated)" : "transparent",
+              background: viewMode === "grid" ? "linear-gradient(135deg, rgba(212,168,85,0.2), rgba(184,134,11,0.1))" : "transparent",
               color: viewMode === "grid" ? "var(--accent-gold)" : "var(--text-muted)",
+              fontFamily: "var(--font-table)",
             }}
           >
             ▦ Grid
           </button>
           <button
             onClick={() => { setViewMode("table"); setPage(1); }}
-            className="px-3 py-1.5 text-xs"
+            className="px-3 py-1.5 text-xs font-medium transition-all"
             style={{
-              background: viewMode === "table" ? "var(--bg-elevated)" : "transparent",
+              background: viewMode === "table" ? "linear-gradient(135deg, rgba(212,168,85,0.2), rgba(184,134,11,0.1))" : "transparent",
               color: viewMode === "table" ? "var(--accent-gold)" : "var(--text-muted)",
+              fontFamily: "var(--font-table)",
             }}
           >
             ☰ Table
@@ -328,17 +338,18 @@ export default function DogsPage() {
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
             placeholder="Search by name or reg number..."
-            className="flex-1 rounded-lg px-3 py-2 text-xs transition-colors"
+            className="dogs-search flex-1 rounded-lg px-3 py-2 text-xs transition-all outline-none"
             style={{
-              background: "var(--bg-surface)",
-              border: "1px solid var(--border)",
+              background: "rgba(30,30,30,0.85)",
+              border: "1.5px solid rgba(255,255,255,0.06)",
               color: "var(--text-primary)",
+              fontFamily: "var(--font-table)",
             }}
           />
           <button
             type="submit"
-            className="px-4 py-2 rounded-lg text-xs font-medium"
-            style={{ background: "var(--accent-gold)", color: "#000" }}
+            className="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all hover:scale-[1.03]"
+            style={{ background: "linear-gradient(135deg, #e8c86e, #b8860b, #d4a855)", color: "#000", fontFamily: "var(--font-display)", boxShadow: "0 2px 10px rgba(212,168,85,0.2), inset 0 1px 0 rgba(255,255,255,0.3)", border: "1px solid rgba(212,168,85,0.4)" }}
           >
             Search
           </button>
@@ -347,8 +358,8 @@ export default function DogsPage() {
           onClick={() => setShowFilters(!showFilters)}
           className="px-3 py-2 rounded-lg text-xs font-medium relative transition-colors"
           style={{
-            background: showFilters ? "var(--bg-elevated)" : "var(--bg-surface)",
-            border: "1px solid var(--border)",
+            background: showFilters ? "rgba(30,30,30,0.95)" : "rgba(30,30,30,0.85)",
+            border: "1.5px solid rgba(255,255,255,0.06)",
             color: "var(--text-primary)",
           }}
         >
@@ -368,8 +379,9 @@ export default function DogsPage() {
       {showFilters && (
         <div
           style={{
-            background: "var(--bg-surface)",
-            border: "1px solid var(--border)",
+            background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)",
+            border: "1.5px solid rgba(255,255,255,0.06)",
+            boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)",
           }}
           className="rounded-lg p-3 mb-3 animate-reveal"
         >
@@ -383,8 +395,8 @@ export default function DogsPage() {
                 onChange={(e) => { setSexFilter(e.target.value); setPage(1); }}
                 className="w-full rounded-lg px-3 py-1.5 text-xs"
                 style={{
-                  background: "var(--bg-elevated)",
-                  border: "1px solid var(--border)",
+                  background: "rgba(30,30,30,0.85)",
+                  border: "1.5px solid rgba(255,255,255,0.06)",
                   color: "var(--text-primary)",
                 }}
               >
@@ -402,8 +414,8 @@ export default function DogsPage() {
                 onChange={(e) => { setColorFilter(e.target.value); setPage(1); }}
                 className="w-full rounded-lg px-3 py-1.5 text-xs"
                 style={{
-                  background: "var(--bg-elevated)",
-                  border: "1px solid var(--border)",
+                  background: "rgba(30,30,30,0.85)",
+                  border: "1.5px solid rgba(255,255,255,0.06)",
                   color: "var(--text-primary)",
                 }}
               >
@@ -422,8 +434,8 @@ export default function DogsPage() {
                 onChange={(e) => { setTitleFilter(e.target.value); setPage(1); }}
                 className="w-full rounded-lg px-3 py-1.5 text-xs"
                 style={{
-                  background: "var(--bg-elevated)",
-                  border: "1px solid var(--border)",
+                  background: "rgba(30,30,30,0.85)",
+                  border: "1.5px solid rgba(255,255,255,0.06)",
                   color: "var(--text-primary)",
                 }}
               >
@@ -477,11 +489,12 @@ export default function DogsPage() {
               }
               setPage(1);
             }}
-            className="px-2.5 py-1 rounded-md text-xs font-medium transition-colors"
+            className={`sort-btn px-2.5 py-1 rounded-md text-xs font-medium ${sort === s.key ? "sort-btn-active" : ""}`}
             style={{
-              background: sort === s.key ? "var(--bg-elevated)" : "transparent",
+              background: sort === s.key ? "linear-gradient(135deg, rgba(212,168,85,0.2), rgba(184,134,11,0.1))" : "transparent",
               color: sort === s.key ? "var(--accent-gold)" : "var(--text-muted)",
-              border: sort === s.key ? "1px solid var(--border)" : "1px solid transparent",
+              border: sort === s.key ? "1px solid rgba(212,168,85,0.25)" : "1px solid transparent",
+              fontFamily: "var(--font-table)",
             }}
           >
             {s.label} {sort === s.key ? (order === "asc" ? "↑" : "↓") : ""}
@@ -540,7 +553,7 @@ export default function DogsPage() {
                   style={{ borderBottom: "1px solid var(--border)" }}
                 >
                   <td className="px-3 py-2">
-                    <Link href={`/dogs/${dog.id}`} className="font-medium hover:underline" style={{ color: "var(--accent-gold)" }}>
+                    <Link href={`/dogs/${dog.id}`} className="font-medium hover:underline" style={{ color: getDogColor(dog.name), fontFamily: "var(--font-table)" }}>
                       {dog.name}
                     </Link>
                     <div className="text-[10px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
@@ -600,11 +613,12 @@ export default function DogsPage() {
           <button
             onClick={() => setPage(Math.max(1, page - 1))}
             disabled={page === 1}
-            className="px-3 py-1.5 rounded-lg text-xs font-medium disabled:opacity-30 transition-colors"
+            className="page-btn px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider disabled:opacity-30 transition-all"
             style={{
-              background: "var(--bg-surface)",
-              border: "1px solid var(--border)",
+              background: "rgba(30,30,30,0.85)",
+              border: "1.5px solid rgba(255,255,255,0.06)",
               color: "var(--text-primary)",
+              fontFamily: "var(--font-table)",
             }}
           >
             ← Prev
@@ -626,11 +640,13 @@ export default function DogsPage() {
                 <button
                   key={p}
                   onClick={() => setPage(p)}
-                  className="w-8 h-8 rounded-lg text-xs font-medium transition-colors"
+                  className="page-btn w-8 h-8 rounded-lg text-xs font-bold transition-all"
                   style={{
-                    background: page === p ? "var(--accent-gold)" : "var(--bg-surface)",
+                    background: page === p ? "linear-gradient(135deg, #e8c86e, #b8860b)" : "rgba(30,30,30,0.85)",
                     color: page === p ? "#000" : "var(--text-secondary)",
-                    border: page === p ? "none" : "1px solid var(--border)",
+                    border: page === p ? "1px solid rgba(212,168,85,0.4)" : "1.5px solid rgba(255,255,255,0.06)",
+                    boxShadow: page === p ? "0 2px 10px rgba(212,168,85,0.2)" : "none",
+                    fontFamily: "var(--font-table)",
                   }}
                 >
                   {p}
@@ -644,11 +660,12 @@ export default function DogsPage() {
           <button
             onClick={() => setPage(Math.min(totalPages, page + 1))}
             disabled={page === totalPages}
-            className="px-3 py-1.5 rounded-lg text-xs font-medium disabled:opacity-30 transition-colors"
+            className="page-btn px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider disabled:opacity-30 transition-all"
             style={{
-              background: "var(--bg-surface)",
-              border: "1px solid var(--border)",
+              background: "rgba(30,30,30,0.85)",
+              border: "1.5px solid rgba(255,255,255,0.06)",
               color: "var(--text-primary)",
+              fontFamily: "var(--font-table)",
             }}
           >
             Next →
