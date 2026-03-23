@@ -925,11 +925,11 @@ export default function PublishedPedigreePage() {
               <button
                 onClick={() => setShowDeleteConfirm(false)}
                 disabled={deleting}
-                className="flex-1 px-4 py-2.5 rounded-xl text-xs font-black transition-all hover:scale-105"
+                className="flex-1 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all hover:scale-105"
                 style={{
                   background: "linear-gradient(135deg, #cbd5e1, #94a3b8)",
                   color: "#000",
-                  fontFamily: "var(--font-display)",
+                  fontFamily: "var(--font-table)",
                   letterSpacing: "0.05em",
                 }}>
                 Cancel
@@ -937,11 +937,11 @@ export default function PublishedPedigreePage() {
               <button
                 onClick={handleDelete}
                 disabled={deleting}
-                className="flex-1 px-4 py-2.5 rounded-xl text-xs font-black transition-all hover:scale-105"
+                className="flex-1 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all hover:scale-105"
                 style={{
                   background: "linear-gradient(135deg, #ef4444, #b91c1c)",
                   color: "#fff",
-                  fontFamily: "var(--font-display)",
+                  fontFamily: "var(--font-table)",
                   letterSpacing: "0.05em",
                   boxShadow: "0 4px 20px rgba(239,68,68,0.3)",
                 }}>

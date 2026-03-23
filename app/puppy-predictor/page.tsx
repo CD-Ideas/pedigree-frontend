@@ -900,18 +900,18 @@ export default function PuppyPredictorPage() {
         {/* ─── Action Buttons ─── */}
         <div className="flex items-center justify-center gap-4 flex-wrap">
           <button onClick={handlePredict}
-            className="px-8 py-3 rounded-xl font-bold transition-all hover:scale-105 active:scale-95"
+            className="px-8 py-3 rounded-xl font-semibold transition-all hover:scale-105 active:scale-95"
             style={{
               background: "linear-gradient(135deg, #e8c86e, #d4a855, #b8860b)", color: "#000",
-              fontFamily: "var(--font-display)", letterSpacing: "0.05em", fontSize: "1rem",
+              fontFamily: "var(--font-table)", letterSpacing: "0.05em", fontSize: "1rem",
               boxShadow: "0 4px 20px rgba(212,168,85,0.3)", transition: "all 0.3s ease",
             }}>
             PREDICT LITTER
           </button>
           <button onClick={handleReset}
-            className="px-6 py-3 rounded-xl font-black transition-all hover:scale-105 active:scale-95"
+            className="px-6 py-3 rounded-xl font-semibold transition-all hover:scale-105 active:scale-95"
             style={{ background: "linear-gradient(135deg, #cbd5e1, #94a3b8)", color: "#000",
-              fontFamily: "var(--font-display)", letterSpacing: "0.05em", fontSize: "1rem",
+              fontFamily: "var(--font-table)", letterSpacing: "0.05em", fontSize: "1rem",
               boxShadow: "0 4px 20px rgba(148,163,184,0.3)", transition: "all 0.3s ease" }}>
             NEW PAIRING
           </button>

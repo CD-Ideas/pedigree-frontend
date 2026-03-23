@@ -350,8 +350,8 @@ export default function NavBar() {
                 style={isHome ? {
                   background: "linear-gradient(135deg, #e8e8e8, #b0b0b0, #d8d8d8, #a0a0a0)",
                   color: "#000",
-                  fontFamily: "var(--font-display)",
-                  fontWeight: 700,
+                  fontFamily: "var(--font-table)",
+                  fontWeight: 600,
                   fontSize: "0.75rem",
                   letterSpacing: "0.05em",
                   textTransform: "uppercase" as const,

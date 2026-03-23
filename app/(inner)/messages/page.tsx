@@ -368,8 +368,8 @@ function MessagesContent() {
           )}
           <div className="flex justify-end gap-2">
             <button onClick={() => { setShowCompose(false); setComposeMsg(""); }}
-              className="px-4 py-2 rounded-lg text-xs font-bold uppercase"
-              style={{ background: "linear-gradient(135deg, #e8e8e8, #b0b0b0, #d8d8d8, #a0a0a0)", color: "#000", fontFamily: "var(--font-display)" }}>
+              className="px-4 py-2 rounded-lg text-xs font-semibold uppercase"
+              style={{ background: "linear-gradient(135deg, #e8e8e8, #b0b0b0, #d8d8d8, #a0a0a0)", color: "#000", fontFamily: "var(--font-table)" }}>
               Cancel
             </button>
             <button onClick={sendNewMessage} disabled={sending || !toUsername.trim() || !replyText.trim()}
