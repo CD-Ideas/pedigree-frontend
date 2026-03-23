@@ -344,23 +344,58 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Recent Activity Placeholder */}
-          <div className="dash-box-hover rounded-xl p-5" style={steelFrame}>
-            <h2 className="text-[10px] uppercase tracking-widest font-bold mb-4 flex items-center gap-2"
-              style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)", textShadow: "0 0 12px rgba(212,168,85,0.3)" }}>
-              <span style={{ width: 16, height: 2, background: "linear-gradient(90deg, var(--accent-gold), transparent)", borderRadius: 1 }} />
-              📊 Recent Activity
-            </h2>
-            <div className="flex flex-col items-center justify-center py-8 text-center">
-              <span className="text-3xl mb-3">📊</span>
-              <p className="text-sm font-medium" style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)" }}>
-                Activity Feed
+          {/* Right column: Activity Feed + Who's Online */}
+          <div className="space-y-4">
+            {/* Recent Activity Placeholder */}
+            <div className="dash-box-hover rounded-xl p-5" style={steelFrame}>
+              <h2 className="text-[10px] uppercase tracking-widest font-bold mb-4 flex items-center gap-2"
+                style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)", textShadow: "0 0 12px rgba(212,168,85,0.3)" }}>
+                <span style={{ width: 16, height: 2, background: "linear-gradient(90deg, var(--accent-gold), transparent)", borderRadius: 1 }} />
+                📊 Recent Activity
+              </h2>
+              <div className="flex flex-col items-center justify-center py-8 text-center">
+                <span className="text-3xl mb-3">📊</span>
+                <p className="text-sm font-medium" style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)" }}>
+                  Activity Feed
+                </p>
+                <p className="text-[10px] mt-1" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                  Your recent pedigree activity will appear here
+                </p>
+              </div>
+            </div>
+
+            {/* Who's Online Widget */}
+            <div className="dash-box-hover rounded-xl p-5" style={steelFrame}>
+              <h2 className="text-[10px] uppercase tracking-widest font-bold mb-4 flex items-center gap-2"
+                style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)", textShadow: "0 0 12px rgba(212,168,85,0.3)" }}>
+                <span style={{ width: 16, height: 2, background: "linear-gradient(90deg, var(--accent-gold), transparent)", borderRadius: 1 }} />
+                <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#22c55e", boxShadow: "0 0 6px #22c55e" }} />
+                Who&apos;s Online
+              </h2>
+              <p className="text-xs mb-3" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                <span className="font-bold" style={{ color: "#22c55e" }}>{onlineData.guests_online}</span> guest{onlineData.guests_online !== 1 ? "s" : ""} and{" "}
+                <span className="font-bold" style={{ color: "#d4a855" }}>{onlineData.members_online}</span> member{onlineData.members_online !== 1 ? "s" : ""} online
               </p>
-              <p className="text-[10px] mt-1" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
-                Your recent pedigree activity will appear here
-              </p>
+              {onlineData.online_members.length > 0 && (
+                <div className="flex flex-wrap gap-1.5">
+                  {onlineData.online_members.map(m => (
+                    <Link key={m.id} href={`/profile/${m.username}`}
+                      className="flex items-center gap-1.5 px-2 py-1 rounded-md text-[10px] font-semibold transition-all hover:scale-105"
+                      style={{
+                        background: "linear-gradient(135deg, rgba(212,168,85,0.12), rgba(212,168,85,0.04))",
+                        border: "1px solid rgba(212,168,85,0.2)",
+                        color: "#d4a855",
+                        fontFamily: "var(--font-table)",
+                      }}>
+                      <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#22c55e" }} />
+                      {m.username}
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
+
         </div>
       </main>
 
@@ -489,36 +524,6 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Who's Online Widget */}
-        <div className="rounded-2xl p-4 mt-4" style={steelFrame}>
-          <div className="flex items-center gap-2 mb-3">
-            <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#22c55e", boxShadow: "0 0 6px #22c55e" }} />
-            <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: "#d4a855", fontFamily: "var(--font-table)" }}>
-              Who&apos;s Online
-            </p>
-          </div>
-          <p className="text-xs mb-2" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
-            <span className="font-bold" style={{ color: "#22c55e" }}>{onlineData.guests_online}</span> guest{onlineData.guests_online !== 1 ? "s" : ""} and{" "}
-            <span className="font-bold" style={{ color: "#d4a855" }}>{onlineData.members_online}</span> member{onlineData.members_online !== 1 ? "s" : ""} online
-          </p>
-          {onlineData.online_members.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 mt-2">
-              {onlineData.online_members.map(m => (
-                <Link key={m.id} href={`/profile/${m.username}`}
-                  className="flex items-center gap-1.5 px-2 py-1 rounded-md text-[10px] font-semibold transition-all hover:scale-105"
-                  style={{
-                    background: "linear-gradient(135deg, rgba(212,168,85,0.12), rgba(212,168,85,0.04))",
-                    border: "1px solid rgba(212,168,85,0.2)",
-                    color: "#d4a855",
-                    fontFamily: "var(--font-table)",
-                  }}>
-                  <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#22c55e" }} />
-                  {m.username}
-                </Link>
-              ))}
-            </div>
-          )}
-        </div>
       </aside>
 
       {/* Photo Preview Modal */}
