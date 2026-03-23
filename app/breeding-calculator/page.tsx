@@ -550,7 +550,7 @@ export default function BreedingCalculatorPage() {
           <div className="flex items-center justify-center gap-2 mb-2">
             <span className="text-2xl">&#x1f9ec;</span>
             <h1 className="font-bold" style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", fontWeight: 700, letterSpacing: "0.02em" }}>
-              BREEDING{" "}
+              BLOODLINE{" "}
               <span style={{
                 background: "linear-gradient(135deg, #d4a853, #f5d78e, #d4a853)",
                 WebkitBackgroundClip: "text",
@@ -611,7 +611,7 @@ export default function BreedingCalculatorPage() {
                   <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
                   Calculating...
                 </span>
-              ) : "Calculate Breeding"}
+              ) : "Calculate Bloodline"}
             </button>
 
             {/* Half-sib toggle */}
@@ -647,7 +647,7 @@ export default function BreedingCalculatorPage() {
           <div className="text-center py-10">
             <div className="text-4xl mb-3 opacity-30">&#x1f9ec;</div>
             <h3 className="text-sm font-semibold mb-1.5" style={{ fontFamily: "var(--font-table)", color: "var(--accent-gold)" }}>
-              Select a sire and dam, then hit &quot;Calculate Breeding&quot;
+              Select a sire and dam, then hit &quot;Calculate Bloodline&quot;
             </h3>
             <p className="text-[10px] max-w-md mx-auto" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
               The system will cross-reference both pedigrees, compute the Wright coefficient of inbreeding (COI), detect shared ancestors, and map bloodline composition.

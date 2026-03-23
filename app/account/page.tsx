@@ -462,7 +462,7 @@ export default function AccountPage() {
             {[
               { label: "Pedigrees Created", value: "Unlimited", icon: "📋" },
               { label: "Color Predictions", value: "Unlimited", icon: "🎨" },
-              { label: "Breeding Calculator", value: "Unlimited", icon: "🧬" },
+              { label: "Bloodline Calculator", value: "Unlimited", icon: "🧬" },
               { label: "Community Access", value: "Full", icon: "🌍" },
             ].map((item) => (
               <div key={item.label} className="flex items-center gap-2 py-2 px-3 rounded-lg"

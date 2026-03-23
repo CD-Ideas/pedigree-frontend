@@ -33,7 +33,7 @@ interface UserData {
 }
 
 const NAV_ITEMS = [
-  { icon: "🧬", label: "Breeding Calculator", href: "/breeding-calculator", desc: "COI & linebreeding analysis", color: "#a78bfa" },
+  { icon: "🧬", label: "Bloodline Calculator", href: "/breeding-calculator", desc: "COI & linebreeding analysis", color: "#a78bfa" },
   { icon: "🌍", label: "Community Pedigrees", href: "/community", desc: "Browse all pedigrees", color: "#34d399" },
   { icon: "🐕", label: "Dogs", href: "/dogs", desc: "Browse dog database", color: "#f472b6" },
   { icon: "🔦", label: "Lineage Spotlight", href: "/pedigree/spotlight", desc: "Explore lineage trees", color: "#f59e0b" },

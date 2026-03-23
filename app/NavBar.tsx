@@ -216,6 +216,7 @@ export default function NavBar() {
 
   const links = [
     { href: "/dashboard", label: "Dashboard" },
+    ...(pathname === "/dashboard" ? [{ href: "/", label: "Home" }] : []),
   ];
 
   return (
@@ -278,12 +279,23 @@ export default function NavBar() {
             const isActive =
               pathname === link.href ||
               pathname.startsWith(link.href + "/");
+            const isHome = link.label === "Home";
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
-                style={{
+                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${isHome ? "hover:scale-[1.03]" : "transition-colors"}`}
+                style={isHome ? {
+                  background: "linear-gradient(135deg, #e8e8e8, #b0b0b0, #d8d8d8, #a0a0a0)",
+                  color: "#000",
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 700,
+                  fontSize: "0.75rem",
+                  letterSpacing: "0.05em",
+                  textTransform: "uppercase" as const,
+                  boxShadow: "0 2px 10px rgba(200,200,200,0.15), inset 0 1px 0 rgba(255,255,255,0.4)",
+                  border: "1px solid rgba(200,200,200,0.3)",
+                } : {
                   color: isActive
                     ? "var(--accent-gold)"
                     : "var(--text-secondary)",

@@ -64,7 +64,7 @@ function _BreedingCalcPreview_UNUSED() {
     <section id="breeding-calculator" className="py-5 px-4">
       <div className="max-w-5xl mx-auto">
         <h2 className="subtitle-gold text-center mb-0.5" style={{ fontFamily: "var(--font-table)", fontWeight: 500, fontSize: "clamp(0.95rem, 2vw, 1.25rem)" }}>
-          Breeding Calculator
+          Bloodline Calculator
         </h2>
         <p className="text-center mb-3" style={{ color: "rgba(180,180,195,0.7)", fontFamily: "var(--font-table)", fontSize: "10px", fontWeight: 400 }}>
           Know Your Cross Before You Make It
@@ -207,7 +207,7 @@ function _BreedingCalcPreview_UNUSED() {
               }}
               onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 6px 30px rgba(220,38,38,0.35)"; e.currentTarget.style.transform = "translateY(-1px)"; }}
               onMouseLeave={e => { e.currentTarget.style.boxShadow = "0 4px 20px rgba(220,38,38,0.2)"; e.currentTarget.style.transform = "translateY(0)"; }}>
-              {isLive ? "Open Breeding Calculator" : "Try Breeding Calculator"}
+              {isLive ? "Open Bloodline Calculator" : "Try Bloodline Calculator"}
             </button>
           </div>
         </div>
@@ -277,7 +277,7 @@ export default function Home() {
           <a href="#features" style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--accent-gold)", transition: "color 0.2s" }}
             onMouseEnter={e => e.currentTarget.style.color = "var(--accent-gold-bright)"} onMouseLeave={e => e.currentTarget.style.color = "var(--accent-gold)"}>Features</a>
           <a href="#breeding-calculator" style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--accent-gold)", transition: "color 0.2s" }}
-            onMouseEnter={e => e.currentTarget.style.color = "var(--accent-gold-bright)"} onMouseLeave={e => e.currentTarget.style.color = "var(--accent-gold)"}>Breeding Calculator</a>
+            onMouseEnter={e => e.currentTarget.style.color = "var(--accent-gold-bright)"} onMouseLeave={e => e.currentTarget.style.color = "var(--accent-gold)"}>Bloodline Calculator</a>
           <a href="#marketplace" style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--accent-gold)", transition: "color 0.2s" }}
             onMouseEnter={e => e.currentTarget.style.color = "var(--accent-gold-bright)"} onMouseLeave={e => e.currentTarget.style.color = "var(--accent-gold)"}>Marketplace</a>
           <div className="relative">
@@ -341,7 +341,7 @@ export default function Home() {
           <div className="flex flex-col items-center justify-center h-full gap-6">
             {[
               { label: "Features", href: "#features" },
-              { label: "Breeding Calculator", href: "#breeding-calculator" },
+              { label: "Bloodline Calculator", href: "#breeding-calculator" },
               { label: "Marketplace", href: "#marketplace" },
             ].map((item) => (
               <a key={item.label} href={item.href} onClick={() => setMobileMenu(false)}
@@ -413,7 +413,7 @@ export default function Home() {
                 { icon: "🏆", title: "Title Tracking", desc: "CH, GR CH, ROM tracking across generations", color: "#d4a855", glow: "212,168,85" },
                 { icon: "🧬", title: "Puppy Predictor", desc: "Input sire + dam genotypes, predict litter coat colors & probabilities", color: "#ef4444", glow: "239,68,68", redirect: "/puppy-predictor" },
                 { icon: "👑", title: "Dog of the Month", desc: "Monthly photo contest with community voting & prizes", color: "#f97316", glow: "249,115,22" },
-                { icon: "🔦", title: "Lineage Spotlight", desc: "Pick a legend, find every descendant ranked by blood %", color: "#1d8cf8", glow: "29,140,248", redirect: "/pedigree/spotlight" },
+                { icon: "🔦", title: "Lineage Spotlight", desc: "Search any legendary dog, trace descendants and find the tightest bloodlines ranked by blood %", color: "#1d8cf8", glow: "29,140,248", redirect: "/pedigree/spotlight" },
                 { icon: "🧪", title: "Pedigree Lab", desc: "Build custom pedigrees with drag-and-drop, then publish and share", color: "#a78bfa", glow: "167,139,250", redirect: "/pedigree-lab" },
                 { icon: "🌍", title: "Community Pedigrees", desc: "Browse and discover pedigrees created by the community", color: "#22d3ee", glow: "34,211,238", redirect: "/community" },
               ].map((f, i) => (
@@ -497,11 +497,11 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── Breeding Calculator ── */}
+        {/* ── Bloodline Calculator ── */}
         <section id="breeding-calculator" className="py-5 px-4">
           <div className="max-w-5xl mx-auto">
             <h2 className="subtitle-gold text-center mb-0.5" style={{ fontFamily: "var(--font-table)", fontWeight: 500, fontSize: "clamp(0.95rem, 2vw, 1.25rem)" }}>
-              Breeding Calculator
+              Bloodline Calculator
             </h2>
             <p className="text-center mb-3" style={{ color: "rgba(180,180,195,0.7)", fontFamily: "var(--font-table)", fontSize: "10px", fontWeight: 400 }}>
               Know Your Cross Before You Make It
@@ -631,7 +631,7 @@ export default function Home() {
                 </div>
 
                 <button
-                  onClick={() => openAuth("#breeding-calculator")}
+                  onClick={() => openAuth("/breeding-calculator")}
                   className="w-full py-2 rounded-lg text-center"
                   style={{
                     fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.08em",
@@ -642,7 +642,7 @@ export default function Home() {
                   }}
                   onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 6px 30px rgba(220,38,38,0.35)"; e.currentTarget.style.transform = "translateY(-1px)"; }}
                   onMouseLeave={e => { e.currentTarget.style.boxShadow = "0 4px 20px rgba(220,38,38,0.2)"; e.currentTarget.style.transform = "translateY(0)"; }}>
-                  Try Breeding Calculator
+                  Try Bloodline Calculator
                 </button>
               </div>
             </div>
@@ -761,7 +761,7 @@ export default function Home() {
                 <div>
                   <h4 style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "9px", color: "var(--accent-gold-bright)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "6px" }}>Platform</h4>
                   <div className="flex flex-col gap-1.5">
-                    {[{ label: "Features", href: "#features" }, { label: "Breeding Calculator", href: "#breeding-calculator" }, { label: "Marketplace", href: "#marketplace" }].map((l) => (
+                    {[{ label: "Features", href: "#features" }, { label: "Bloodline Calculator", href: "#breeding-calculator" }, { label: "Marketplace", href: "#marketplace" }].map((l) => (
                       <a key={l.label} href={l.href} style={{ fontFamily: "var(--font-table)", fontSize: "10px", color: "rgba(200,200,210,0.8)", transition: "color 0.2s" }}
                         onMouseEnter={e => e.currentTarget.style.color = "#fff"}
                         onMouseLeave={e => e.currentTarget.style.color = "rgba(200,200,210,0.8)"}>{l.label}</a>
