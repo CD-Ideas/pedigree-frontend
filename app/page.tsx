@@ -25,7 +25,7 @@ function _BreedingCalcPreview_UNUSED() {
     } catch (_e) {}
   }, []);
 
-  const PIE_COLORS = ["#ef4444", "#3b82f6", "#a855f7", "#d4a855", "#22c55e", "#f97316", "#ec4899", "#14b8a6"];
+  const PIE_COLORS = ["#fc8181", "#ffffff", "#fb923c", "#ffffff", "#22c55e", "#f97316", "#ec4899", "#14b8a6"];
 
   /* Use stored data or fallback to static example */
   const isLive = !!data;
@@ -86,7 +86,7 @@ function _BreedingCalcPreview_UNUSED() {
                 </>
               ) : (
                 <>
-                  <span style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", color: "var(--accent-gold)" }}>GR CH Razor&apos;s Edge Bloodfire</span>
+                  <span style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", color: "#60a5fa" }}>GR CH Razor&apos;s Edge Bloodfire</span>
                 </>
               )}
             </div>
@@ -415,7 +415,7 @@ export default function Home() {
                 { icon: "👑", title: "Dog of the Month", desc: "Monthly photo contest with community voting & prizes", color: "#f97316", glow: "249,115,22" },
                 { icon: "🔦", title: "Lineage Spotlight", desc: "Search any legendary dog, trace descendants and find the tightest bloodlines ranked by blood %", color: "#1d8cf8", glow: "29,140,248", redirect: "/pedigree/spotlight" },
                 { icon: "🧪", title: "Pedigree Lab", desc: "Build custom pedigrees with drag-and-drop, then publish and share", color: "#a78bfa", glow: "167,139,250", redirect: "/pedigree-lab" },
-                { icon: "🌍", title: "Community Pedigrees", desc: "Browse and discover pedigrees created by the community", color: "#22d3ee", glow: "34,211,238", redirect: "/community" },
+                { icon: "🌍", title: "Community Pedigrees", desc: "Browse and discover pedigrees created by the community", color: "#22d3ee", glow: "34,211,238", redirect: "/community", gridCol: "2 / 4", center: true },
               ].map((f, i) => (
                 <div key={i} className="group relative rounded-lg p-2.5 text-center animate-scale-reveal cursor-pointer"
                   onClick={() => {
@@ -426,7 +426,7 @@ export default function Home() {
                   }}
                   style={{
                     animationDelay: `${i * 0.1}s`,
-                    ...((f as Record<string, unknown>).gridCol ? { gridColumn: String((f as Record<string, unknown>).gridCol) } : {}),
+                    ...((f as Record<string, unknown>).gridCol ? { gridColumn: String((f as Record<string, unknown>).gridCol), ...((f as Record<string, unknown>).center ? { justifySelf: "center" as const, width: "100%", maxWidth: "calc(50% - 4px)" } : {}) } : {}),
                     background: `linear-gradient(160deg, rgba(25,27,35,0.95) 0%, rgba(14,15,20,0.98) 100%)`,
                     border: "1px solid rgba(255,255,255,0.07)",
                     transition: "all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
@@ -517,41 +517,42 @@ export default function Home() {
                   boxShadow: "0 4px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04)",
                 }}>
                 <div className="text-center mb-2">
-                  <span style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", color: "var(--accent-gold)" }}>GR CH Razor&apos;s Edge Bloodfire</span>
+                  <span style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", color: "#60a5fa" }}>GR CH Razor&apos;s Edge Bloodfire</span>
                 </div>
                 <div className="flex justify-center">
                   <svg width="180" height="180" viewBox="0 0 220 220">
-                    <circle cx="110" cy="110" r="85" fill="none" stroke="#ef4444" strokeWidth="45"
+                    <circle cx="110" cy="110" r="85" fill="none" stroke="#fc8181" strokeWidth="45"
                       strokeDasharray={`${31 * 5.34} ${100 * 5.34}`} strokeDashoffset="0"
                       transform="rotate(-90 110 110)"
-                      style={{ filter: "drop-shadow(0 0 8px rgba(239,68,68,0.4))" }} />
-                    <circle cx="110" cy="110" r="85" fill="none" stroke="#3b82f6" strokeWidth="45"
+                      style={{ filter: "drop-shadow(0 0 8px rgba(252,129,129,0.4))" }} />
+                    <circle cx="110" cy="110" r="85" fill="none" stroke="#ffffff" strokeWidth="45"
                       strokeDasharray={`${22 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(31) * 5.34}`}
                       transform="rotate(-90 110 110)"
-                      style={{ filter: "drop-shadow(0 0 8px rgba(59,130,246,0.3))" }} />
-                    <circle cx="110" cy="110" r="85" fill="none" stroke="#a855f7" strokeWidth="45"
+                      style={{ filter: "drop-shadow(0 0 8px rgba(255,255,255,0.2))" }} />
+                    <circle cx="110" cy="110" r="85" fill="none" stroke="#fb923c" strokeWidth="45"
                       strokeDasharray={`${15 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(31 + 22) * 5.34}`}
                       transform="rotate(-90 110 110)"
-                      style={{ filter: "drop-shadow(0 0 6px rgba(168,85,247,0.3))" }} />
-                    <circle cx="110" cy="110" r="85" fill="none" stroke="#d4a855" strokeWidth="45"
+                      style={{ filter: "drop-shadow(0 0 6px rgba(251,146,60,0.3))" }} />
+                    <circle cx="110" cy="110" r="85" fill="none" stroke="#ffffff" strokeWidth="45"
                       strokeDasharray={`${12 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(31 + 22 + 15) * 5.34}`}
                       transform="rotate(-90 110 110)"
-                      style={{ filter: "drop-shadow(0 0 6px rgba(212,168,85,0.3))" }} />
+                      style={{ filter: "drop-shadow(0 0 6px rgba(255,255,255,0.2))" }} />
                     <circle cx="110" cy="110" r="85" fill="none" stroke="rgba(120,120,140,0.5)" strokeWidth="45"
                       strokeDasharray={`${20 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(31 + 22 + 15 + 12) * 5.34}`}
                       transform="rotate(-90 110 110)" />
                     <circle cx="110" cy="110" r="62" fill="rgba(14,15,20,0.95)" />
                     <text x="110" y="100" textAnchor="middle" fill="#fff" style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "22px" }}>31%</text>
-                    <text x="110" y="118" textAnchor="middle" fill="#ef4444" style={{ fontFamily: "var(--font-table)", fontWeight: 500, fontSize: "10px", letterSpacing: "0.05em" }}>JEEP DOMINANT</text>
+                    <text x="110" y="118" textAnchor="middle" fill="#fc8181" style={{ fontFamily: "var(--font-table)", fontWeight: 500, fontSize: "10px", letterSpacing: "0.05em" }}>JEEP DOMINANT</text>
                     <text x="110" y="134" textAnchor="middle" fill="rgba(180,180,195,0.6)" style={{ fontFamily: "var(--font-table)", fontWeight: 400, fontSize: "9px" }}>4-gen analysis</text>
                   </svg>
                 </div>
                 <div className="grid grid-cols-2 gap-x-3 gap-y-1 mt-2">
                   {[
-                    { name: "CH Jeep", pct: "31%", color: "#ef4444" },
-                    { name: "Red Boy", pct: "22%", color: "#3b82f6" },
-                    { name: "Eli Jr", pct: "15%", color: "#a855f7" },
-                    { name: "Carver", pct: "12%", color: "#d4a855" },
+                    { name: "CH Jeep", pct: "31%", color: "#fc8181" },
+                    { name: "Red Boy", pct: "22%", color: "#ffffff" },
+                    { name: "Eli Jr", pct: "15%", color: "#fb923c" },
+                    { name: "Carver", pct: "12%", color: "#ffffff" },
+                    { name: "Other", pct: "20%", color: "rgba(120,120,140,0.7)" },
                   ].map((b, i) => (
                     <div key={i} className="flex items-center gap-2">
                       <div className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ background: b.color, boxShadow: `0 0 6px ${b.color}40` }} />
