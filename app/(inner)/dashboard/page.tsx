@@ -6,9 +6,9 @@ import { useRouter } from "next/navigation";
 import { getDogColor } from "@/app/utils/colors";
 
 const steelFrame = {
-  border: "1.5px solid rgba(212,168,85,0.15)",
-  boxShadow: "0 4px 30px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04), 0 0 0 1px rgba(90,70,50,0.3)",
-  background: "linear-gradient(160deg, rgba(42,36,32,0.95) 0%, rgba(28,23,20,0.98) 100%)",
+  border: "1.5px solid rgba(30,64,120,0.4)",
+  boxShadow: "0 4px 30px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04)",
+  background: "linear-gradient(160deg, #1e2430 0%, #171c28 100%)",
   backdropFilter: "blur(12px)",
 };
 
