@@ -3,10 +3,18 @@
 import { useState } from "react";
 import Link from "next/link";
 
-const STEEL_FRAME = {
-  border: "1.5px solid rgba(30,64,120,0.8)",
-  boxShadow: "0 2px 20px rgba(0,0,0,0.25)",
-  background: "linear-gradient(180deg, rgba(22,28,42,0.95) 0%, rgba(15,20,32,0.95) 100%)",
+const GLASS_BOX = {
+  background: "linear-gradient(180deg, rgba(40,40,45,0.95) 0%, rgba(30,30,35,0.95) 100%)",
+  backdropFilter: "blur(12px)",
+  border: "1.5px solid rgba(212,168,85,0.15)",
+  boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)",
+};
+
+const INPUT_STYLE = {
+  background: "rgba(20,20,25,0.8)",
+  border: "1px solid rgba(212,168,85,0.15)",
+  color: "var(--text-primary, #e2e8f0)",
+  fontFamily: "var(--font-table, Rajdhani, sans-serif)",
 };
 
 export default function DogOfTheMonthPage() {
@@ -24,7 +32,7 @@ export default function DogOfTheMonthPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-3xl mx-auto space-y-6">
       {/* Header */}
       <div className="text-center">
         <div className="relative inline-block mb-3">
@@ -50,7 +58,11 @@ export default function DogOfTheMonthPage() {
       </div>
 
       {/* Coming Soon Badge */}
-      <div className="rounded-xl p-8 text-center" style={STEEL_FRAME}>
+      <div className="rounded-xl p-8 text-center" style={{
+        ...GLASS_BOX,
+        border: "1.5px solid rgba(212,168,85,0.25)",
+        boxShadow: "0 4px 30px rgba(0,0,0,0.4), 0 0 30px rgba(212,168,85,0.06), inset 0 1px 0 rgba(255,255,255,0.05)",
+      }}>
         <span className="block animate-pulse"
           style={{
             fontFamily: "var(--font-display)",
@@ -68,9 +80,10 @@ export default function DogOfTheMonthPage() {
       </div>
 
       {/* Teaser Description */}
-      <div className="rounded-xl p-6" style={STEEL_FRAME}>
-        <h2 className="text-sm font-bold uppercase tracking-wider mb-4"
+      <div className="rounded-xl p-6" style={GLASS_BOX}>
+        <h2 className="text-sm font-bold uppercase tracking-wider mb-4 flex items-center gap-2"
           style={{ color: "var(--accent-gold, #d4a855)", fontFamily: "var(--font-table)" }}>
+          <span style={{ filter: "drop-shadow(0 0 4px rgba(212,168,85,0.5))" }}>🌟</span>
           What&apos;s Coming
         </h2>
         <p className="leading-relaxed"
@@ -94,13 +107,22 @@ export default function DogOfTheMonthPage() {
           { icon: "🗳️", title: "Community Votes", desc: "The community picks the champion every month", color: "#a855f7" },
           { icon: "🏆", title: "Win Prizes", desc: "Permanent crown badge, spotlight, and exclusive rewards", color: "#d4a855" },
         ].map((item, i) => (
-          <div key={i} className="rounded-xl p-5 text-center transition-all hover:scale-[1.02]"
+          <div key={i} className="rounded-xl p-5 text-center transition-all hover:scale-[1.03]"
             style={{
-              ...STEEL_FRAME,
-              borderColor: `${item.color}33`,
+              ...GLASS_BOX,
+              borderColor: `${item.color}25`,
+              boxShadow: `0 4px 24px rgba(0,0,0,0.4), 0 0 15px ${item.color}08, inset 0 1px 0 rgba(255,255,255,0.04)`,
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.borderColor = `${item.color}50`;
+              e.currentTarget.style.boxShadow = `0 4px 30px rgba(0,0,0,0.5), 0 0 25px ${item.color}15, inset 0 1px 0 rgba(255,255,255,0.06)`;
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.borderColor = `${item.color}25`;
+              e.currentTarget.style.boxShadow = `0 4px 24px rgba(0,0,0,0.4), 0 0 15px ${item.color}08, inset 0 1px 0 rgba(255,255,255,0.04)`;
             }}>
             <span className="text-3xl mb-3 block"
-              style={{ filter: `drop-shadow(0 0 8px ${item.color}40)` }}>
+              style={{ filter: `drop-shadow(0 0 10px ${item.color}50)` }}>
               {item.icon}
             </span>
             <p className="text-sm font-bold mb-1"
@@ -116,9 +138,10 @@ export default function DogOfTheMonthPage() {
       </div>
 
       {/* Email Notification */}
-      <div className="rounded-xl p-6" style={STEEL_FRAME}>
-        <h2 className="text-sm font-bold uppercase tracking-wider mb-4"
+      <div className="rounded-xl p-6" style={GLASS_BOX}>
+        <h2 className="text-sm font-bold uppercase tracking-wider mb-4 flex items-center gap-2"
           style={{ color: "var(--accent-gold, #d4a855)", fontFamily: "var(--font-table)" }}>
+          <span style={{ filter: "drop-shadow(0 0 4px rgba(212,168,85,0.5))" }}>🔔</span>
           Get Notified on Launch
         </h2>
         <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
@@ -129,12 +152,7 @@ export default function DogOfTheMonthPage() {
             placeholder="Enter your email..."
             required
             className="flex-1 rounded-lg px-4 py-3 text-sm outline-none transition-all"
-            style={{
-              background: "var(--bg-deep, #0b1120)",
-              border: "1px solid rgba(30,64,120,0.5)",
-              color: "var(--text-primary, #e2e8f0)",
-              fontFamily: "var(--font-table, Rajdhani, sans-serif)",
-            }}
+            style={INPUT_STYLE}
           />
           <button
             type="submit"
@@ -147,7 +165,7 @@ export default function DogOfTheMonthPage() {
               fontFamily: "var(--font-display)",
               boxShadow: submitted
                 ? "0 4px 15px rgba(34,197,94,0.3)"
-                : "0 4px 15px rgba(212,168,85,0.2)",
+                : "0 4px 15px rgba(212,168,85,0.2), 0 0 20px rgba(212,168,85,0.1)",
             }}>
             {submitted ? "Subscribed!" : "Notify Me"}
           </button>
@@ -162,7 +180,7 @@ export default function DogOfTheMonthPage() {
             background: "linear-gradient(135deg, #e8c86e, #b8860b)",
             color: "#000",
             fontFamily: "var(--font-display)",
-            boxShadow: "0 4px 20px rgba(212,168,85,0.2), inset 0 1px 0 rgba(255,255,255,0.3)",
+            boxShadow: "0 4px 20px rgba(212,168,85,0.2), 0 0 25px rgba(212,168,85,0.1), inset 0 1px 0 rgba(255,255,255,0.3)",
           }}>
           Explore Pedigree Dogs
         </Link>

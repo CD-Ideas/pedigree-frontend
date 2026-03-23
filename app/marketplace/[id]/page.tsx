@@ -499,7 +499,7 @@ export default function MarketplaceAdPage() {
                   >
                     {ad.username.charAt(0).toUpperCase()}
                   </div>
-                  <div>
+                  <div className="flex-1">
                     <div className="text-[10px] uppercase tracking-wider" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
                       Listed By
                     </div>
@@ -507,6 +507,16 @@ export default function MarketplaceAdPage() {
                       {ad.username}
                     </div>
                   </div>
+                  <a href={`/messages?to=${encodeURIComponent(ad.username)}&subject=${encodeURIComponent(`Re: ${ad.title}`)}&adId=${ad.id}`}
+                    className="px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all hover:scale-[1.03]"
+                    style={{
+                      background: "linear-gradient(135deg, #e8c86e, #b8860b)",
+                      color: "#000",
+                      fontFamily: "var(--font-display)",
+                      boxShadow: "0 2px 10px rgba(212,168,85,0.15)",
+                    }}>
+                    Message Seller
+                  </a>
                 </div>
               )}
 

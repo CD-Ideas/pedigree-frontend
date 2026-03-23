@@ -35,6 +35,7 @@ interface UserData {
 const NAV_ITEMS = [
   { icon: "🧬", label: "Bloodline Calculator", href: "/breeding-calculator", desc: "COI & linebreeding analysis", color: "#a78bfa" },
   { icon: "🌍", label: "Community Pedigrees", href: "/community", desc: "Browse all pedigrees", color: "#34d399" },
+  { icon: "👑", label: "Dog of the Month", href: "/dog-of-the-month", desc: "Monthly photo contest", color: "#f97316" },
   { icon: "🐕", label: "Dogs", href: "/dogs", desc: "Browse dog database", color: "#f472b6" },
   { icon: "🔦", label: "Lineage Spotlight", href: "/pedigree/spotlight", desc: "Explore lineage trees", color: "#f59e0b" },
   { icon: "🏪", label: "Marketplace", href: "/marketplace", desc: "Buy, sell & advertise", color: "#ef4444" },
@@ -54,7 +55,7 @@ export default function Dashboard() {
   const [user, setUser] = useState<UserData | null>(null);
   const [alerts, setAlerts] = useState<TitleAlert[]>([]);
   const [alertsLoading, setAlertsLoading] = useState(true);
-  const [unreadMessages] = useState(0);
+  const [unreadMessages, setUnreadMessages] = useState(0);
   const [searchQ, setSearchQ] = useState("");
   const [searchResults, setSearchResults] = useState<{ dog_id: number; registered_name: string }[]>([]);
   const [showSearch, setShowSearch] = useState(false);
@@ -72,7 +73,13 @@ export default function Dashboard() {
   useEffect(() => {
     try {
       const u = JSON.parse(localStorage.getItem("user") || "null");
-      if (u) setUser(u);
+      if (u) {
+        setUser(u);
+        fetch(`/api/messages/unread?userId=${u.id}`)
+          .then(r => r.json())
+          .then(d => setUnreadMessages(d.unread || 0))
+          .catch(() => {});
+      }
     } catch (_e) {}
 
     // Fetch real title alerts
@@ -433,7 +440,7 @@ export default function Dashboard() {
 
           {/* Messaging */}
           <div className="pb-4" style={{ borderBottom: "1px solid rgba(90,70,50,0.3)" }}>
-            <button className="dash-nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg"
+            <a href="/messages" className="dash-nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg"
               style={{ fontFamily: "var(--font-table)", "--item-color": "96,165,250" } as React.CSSProperties}>
               <span className="relative">
                 <span className="text-base">🔔</span>
@@ -450,7 +457,7 @@ export default function Dashboard() {
                   {unreadMessages > 0 ? `${unreadMessages} unread` : "No new messages"}
                 </p>
               </div>
-            </button>
+            </a>
           </div>
 
           {/* Account & Logout */}
