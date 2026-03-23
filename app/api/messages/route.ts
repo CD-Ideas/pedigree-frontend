@@ -24,7 +24,8 @@ conn = sqlite3.connect("${DB_PATH}")
 conn.row_factory = sqlite3.Row
 
 if thread_id:
-    # Get all messages in a thread
+    # Get all messages in a thread (exclude soft-deleted)
+    uid_str = str(user_id)
     rows = conn.execute("""
         SELECT m.*,
             uf.username as from_username,
@@ -33,14 +34,16 @@ if thread_id:
         LEFT JOIN users uf ON m.from_user_id = uf.id
         LEFT JOIN users ut ON m.to_user_id = ut.id
         WHERE m.thread_id = ? AND (m.from_user_id = ? OR m.to_user_id = ?)
+        AND (m.deleted_by IS NULL OR m.deleted_by = '' OR m.deleted_by NOT LIKE '%' || ? || '%')
         ORDER BY m.created_at ASC
-    """, (thread_id, user_id, user_id)).fetchall()
+    """, (thread_id, user_id, user_id, uid_str)).fetchall()
     # Mark all as read
     conn.execute("UPDATE messages SET is_read = 1 WHERE thread_id = ? AND to_user_id = ? AND is_read = 0", (thread_id, user_id))
     conn.commit()
     result = {"messages": [dict(r) for r in rows]}
 elif folder == "threads":
-    # Get conversation threads (grouped)
+    # Get conversation threads (grouped, exclude soft-deleted)
+    uid_str = str(user_id)
     rows = conn.execute("""
         SELECT m.thread_id,
             m.body as last_body,
@@ -49,17 +52,18 @@ elif folder == "threads":
             m.marketplace_ad_id,
             CASE WHEN m.from_user_id = ? THEN m.to_user_id ELSE m.from_user_id END as other_user_id,
             CASE WHEN m.from_user_id = ? THEN ut.username ELSE uf.username END as other_username,
-            (SELECT COUNT(*) FROM messages m2 WHERE m2.thread_id = m.thread_id AND m2.to_user_id = ? AND m2.is_read = 0) as unread_count,
-            (SELECT COUNT(*) FROM messages m3 WHERE m3.thread_id = m.thread_id) as msg_count
+            (SELECT COUNT(*) FROM messages m2 WHERE m2.thread_id = m.thread_id AND m2.to_user_id = ? AND m2.is_read = 0 AND (m2.deleted_by IS NULL OR m2.deleted_by = '' OR m2.deleted_by NOT LIKE '%' || ? || '%')) as unread_count,
+            (SELECT COUNT(*) FROM messages m3 WHERE m3.thread_id = m.thread_id AND (m3.deleted_by IS NULL OR m3.deleted_by = '' OR m3.deleted_by NOT LIKE '%' || ? || '%')) as msg_count
         FROM messages m
         LEFT JOIN users uf ON m.from_user_id = uf.id
         LEFT JOIN users ut ON m.to_user_id = ut.id
         WHERE (m.from_user_id = ? OR m.to_user_id = ?)
+        AND (m.deleted_by IS NULL OR m.deleted_by = '' OR m.deleted_by NOT LIKE '%' || ? || '%')
         AND m.id = (
-            SELECT MAX(m4.id) FROM messages m4 WHERE m4.thread_id = m.thread_id
+            SELECT MAX(m4.id) FROM messages m4 WHERE m4.thread_id = m.thread_id AND (m4.deleted_by IS NULL OR m4.deleted_by = '' OR m4.deleted_by NOT LIKE '%' || ? || '%')
         )
         ORDER BY m.created_at DESC
-    """, (user_id, user_id, user_id, user_id, user_id)).fetchall()
+    """, (user_id, user_id, user_id, uid_str, uid_str, user_id, user_id, uid_str, uid_str)).fetchall()
     result = {"threads": [dict(r) for r in rows]}
 else:
     # Legacy: get individual messages
@@ -81,8 +85,9 @@ else:
         """, (user_id,)).fetchall()
     result = {"messages": [dict(r) for r in rows]}
 
-# Get unread count
-unread = conn.execute("SELECT COUNT(*) FROM messages WHERE to_user_id = ? AND is_read = 0", (user_id,)).fetchone()[0]
+# Get unread count (exclude soft-deleted)
+uid_s = str(user_id)
+unread = conn.execute("SELECT COUNT(*) FROM messages WHERE to_user_id = ? AND is_read = 0 AND (deleted_by IS NULL OR deleted_by = '' OR deleted_by NOT LIKE '%' || ? || '%')", (user_id, uid_s)).fetchone()[0]
 result["unread"] = unread
 conn.close()
 print(json.dumps(result))

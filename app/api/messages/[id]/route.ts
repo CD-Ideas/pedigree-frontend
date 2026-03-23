@@ -43,11 +43,27 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
     const script = `
 import sqlite3, json, sys
 msg_id = int(sys.argv[1])
-user_id = int(sys.argv[2])
+user_id = str(sys.argv[2])
 conn = sqlite3.connect("${DB_PATH}")
-# Only delete if you're sender or recipient
-deleted = conn.execute("DELETE FROM messages WHERE id = ? AND (from_user_id = ? OR to_user_id = ?)", (msg_id, user_id, user_id)).rowcount
-conn.commit()
+# Soft delete: add user ID to deleted_by instead of removing from DB
+row = conn.execute("SELECT deleted_by FROM messages WHERE id = ? AND (from_user_id = ? OR to_user_id = ?)", (msg_id, int(user_id), int(user_id))).fetchone()
+if row is not None:
+    deleted_by = row[0] or ""
+    ids = [x for x in deleted_by.split(",") if x]
+    if user_id not in ids:
+        ids.append(user_id)
+    new_deleted = ",".join(ids)
+    conn.execute("UPDATE messages SET deleted_by = ? WHERE id = ?", (new_deleted, msg_id))
+    # If both users have deleted it, actually remove it
+    msg = conn.execute("SELECT from_user_id, to_user_id FROM messages WHERE id = ?", (msg_id,)).fetchone()
+    if msg:
+        both_ids = {str(msg[0]), str(msg[1])}
+        if both_ids.issubset(set(ids)):
+            conn.execute("DELETE FROM messages WHERE id = ?", (msg_id,))
+    conn.commit()
+    deleted = 1
+else:
+    deleted = 0
 conn.close()
 print(json.dumps({"success": True, "deleted": deleted}))
 `;

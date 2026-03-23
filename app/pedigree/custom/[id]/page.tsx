@@ -178,7 +178,7 @@ function PedigreeSearch() {
 
   return (
     <div ref={ref} className="relative">
-      <div className="glow-gold rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)" }}>
+      <div className="glow-gold rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(255,255,255,0.06)", boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)", background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)", backdropFilter: "blur(16px)" }}>
         <div className="px-4 py-2.5 flex items-center gap-3">
           <span className="text-base">🔍</span>
           <input type="text" placeholder="Search by dog name or paste a pedigree URL..."
@@ -250,41 +250,43 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
     <div className="relative">
       {/* Controls bar */}
       <div className="absolute top-1 right-2 z-10 flex items-center gap-2">
-        <div className="flex items-center gap-0.5 rounded-md p-0.5" style={{ background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)", border: "1px solid rgba(30,64,120,0.8)" }}>
+        <div className="flex items-center gap-1 rounded-lg p-1" style={{ background: "linear-gradient(180deg, rgba(30,30,30,0.9) 0%, rgba(22,22,22,0.95) 100%)", border: "1.5px solid rgba(255,255,255,0.08)", boxShadow: "0 2px 10px rgba(0,0,0,0.3)" }}>
           {[3, 4, 5].map((g) => (
             <button key={g} onClick={() => { setDisplayGens(g); setZoom(1); if (containerRef.current) containerRef.current.scrollLeft = 0; }}
-              className="px-2 h-5 rounded flex items-center justify-center text-[10px] font-bold transition-all"
+              className="px-3 py-1 rounded-md flex items-center justify-center text-xs font-bold transition-all hover:scale-105"
               style={{
-                background: displayGens === g ? "linear-gradient(135deg, rgba(212,168,85,0.2), rgba(212,168,85,0.08))" : "transparent",
-                color: displayGens === g ? "var(--accent-gold)" : "var(--text-muted)",
-                border: displayGens === g ? "1px solid rgba(212,168,85,0.3)" : "1px solid transparent",
-                fontFamily: "var(--font-table)",
+                background: displayGens === g ? "linear-gradient(135deg, #e8c86e, #b8860b)" : "transparent",
+                color: displayGens === g ? "#000" : "#9ca3af",
+                border: displayGens === g ? "1px solid rgba(212,168,85,0.5)" : "1px solid transparent",
+                boxShadow: displayGens === g ? "0 2px 8px rgba(212,168,85,0.25)" : "none",
+                fontFamily: "var(--font-display)",
+                letterSpacing: "0.03em",
               }}>
               {g}G
             </button>
           ))}
         </div>
-        <div className="flex items-center gap-0.5">
-          <button onClick={() => setZoom((z) => Math.max(0.5, z - 0.1))} className="w-5 h-5 rounded flex items-center justify-center text-[10px] font-bold" style={{ background: "var(--bg-elevated)", color: "var(--text-secondary)", border: "1px solid var(--border)" }}>−</button>
-          <span className="text-[9px] px-1" style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>{Math.round(zoom * 100)}%</span>
-          <button onClick={() => setZoom((z) => Math.min(1.5, z + 0.1))} className="w-5 h-5 rounded flex items-center justify-center text-[10px] font-bold" style={{ background: "var(--bg-elevated)", color: "var(--text-secondary)", border: "1px solid var(--border)" }}>+</button>
-          <button onClick={() => setZoom(1)} className="ml-0.5 px-1.5 h-5 rounded flex items-center justify-center text-[9px]" style={{ background: "var(--bg-elevated)", color: "var(--text-muted)", border: "1px solid var(--border)" }}>Reset</button>
+        <div className="flex items-center gap-1 rounded-lg p-1" style={{ background: "linear-gradient(180deg, rgba(30,30,30,0.9) 0%, rgba(22,22,22,0.95) 100%)", border: "1.5px solid rgba(255,255,255,0.08)", boxShadow: "0 2px 10px rgba(0,0,0,0.3)" }}>
+          <button onClick={() => setZoom((z) => Math.max(0.5, z - 0.1))} className="w-7 h-7 rounded-md flex items-center justify-center text-sm font-bold transition-all hover:scale-110 hover:bg-white/10" style={{ color: "#e2e8f0" }}>−</button>
+          <span className="text-xs px-1.5 font-bold" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-mono)", minWidth: "36px", textAlign: "center" }}>{Math.round(zoom * 100)}%</span>
+          <button onClick={() => setZoom((z) => Math.min(1.5, z + 0.1))} className="w-7 h-7 rounded-md flex items-center justify-center text-sm font-bold transition-all hover:scale-110 hover:bg-white/10" style={{ color: "#e2e8f0" }}>+</button>
+          <button onClick={() => setZoom(1)} className="ml-0.5 px-2.5 py-1 rounded-md flex items-center justify-center text-[11px] font-bold transition-all hover:scale-105 hover:bg-white/10" style={{ color: "#9ca3af", fontFamily: "var(--font-table)" }}>Reset</button>
         </div>
       </div>
 
       <div ref={containerRef} className="overflow-x-auto overflow-y-hidden pb-1 pt-7" style={{ cursor: zoom !== 1 ? "grab" : "default" }}>
         <div style={{ transform: `scale(${zoom})`, transformOrigin: "top left", transition: "transform 0.2s", minWidth: "900px" }}>
           <div className="text-center mb-2">
-            <h3 style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "13px", letterSpacing: "0.06em", textTransform: "uppercase", color: "#4a5568" }}>
+            <h3 style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "15px", letterSpacing: "0.08em", textTransform: "uppercase", color: "#1a202c" }}>
               {maxGen} Generation Pedigree
             </h3>
           </div>
 
           {/* Column headers */}
           <div className="mb-1" style={{ display: "grid", gridTemplateColumns: `170px repeat(${maxGen}, 1fr)`, gap: "4px" }}>
-            <div className="px-1.5 py-1 text-center" style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "10px", color: "#4a5568", textTransform: "uppercase", letterSpacing: "0.1em" }}>Dog</div>
+            <div className="px-1.5 py-1 text-center" style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "11px", color: "#1a202c", textTransform: "uppercase", letterSpacing: "0.1em" }}>Dog</div>
             {gens.filter((g) => g <= maxGen).map((g) => (
-              <div key={g} className="px-1.5 py-1 text-center" style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "10px", color: "#4a5568", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+              <div key={g} className="px-1.5 py-1 text-center" style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "11px", color: "#1a202c", textTransform: "uppercase", letterSpacing: "0.1em" }}>
                 {genLabels[g - 1] || `Gen ${g}`}
               </div>
             ))}
@@ -571,7 +573,7 @@ export default function PublishedPedigreePage() {
 
         {/* ─── Dog Name Header ─── */}
         <div className="rounded-lg px-4 py-2 relative"
-          style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)" }}>
+          style={{ border: "1.5px solid rgba(255,255,255,0.06)", boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)", background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)", backdropFilter: "blur(16px)" }}>
           {titles.length > 0 && (
             <div className="h-0.5 -mx-4 -mt-2 mb-2 rounded-t-lg" style={{ background: "linear-gradient(90deg, var(--accent-red, #fc8181), var(--accent-gold, #d4a855), var(--accent-red, #fc8181))" }} />
           )}
@@ -624,7 +626,7 @@ export default function PublishedPedigreePage() {
         </div>
 
         {/* ─── Photo + Details ─── */}
-        <div className="glow-gold rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)", minHeight: "220px" }}>
+        <div className="glow-gold rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(255,255,255,0.06)", boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)", background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)", backdropFilter: "blur(16px)", minHeight: "220px" }}>
           <div className="flex flex-col sm:flex-row sm:items-stretch h-full">
             {/* Photo */}
             <div className="flex-shrink-0 relative m-2 w-full sm:w-[200px] h-[200px]">
@@ -677,9 +679,10 @@ export default function PublishedPedigreePage() {
         {/* ─── Pedigree Notes ─── */}
         {ped.pedigree_notes && (
           <div className="glow-gold rounded-xl px-3 py-2" style={{
-            border: "1.5px solid rgba(30,64,120,0.8)",
-            boxShadow: "0 2px 20px rgba(0,0,0,0.25)",
-            background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+            border: "1.5px solid rgba(255,255,255,0.06)",
+            boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)",
+            background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)",
+            backdropFilter: "blur(16px)",
           }}>
             <div className="flex items-center gap-2">
               <div className="w-5 h-5 rounded flex items-center justify-center flex-shrink-0" style={{ background: "rgba(212,168,85,0.15)", border: "1px solid rgba(212,168,85,0.3)" }}>
@@ -696,7 +699,7 @@ export default function PublishedPedigreePage() {
         {/* ─── Sire / Dam links ─── */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           <div className="glow-blue rounded-xl p-2.5"
-            style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)" }}>
+            style={{ border: "1.5px solid rgba(255,255,255,0.06)", boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)", background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)", backdropFilter: "blur(16px)" }}>
             <div className="text-[9px] uppercase tracking-wider mb-0.5 font-semibold" style={{ color: "var(--male-color, #60a5fa)", letterSpacing: "0.1em" }}>♂ Sire (Father)</div>
             {sire ? (
               <Link href={`/pedigree/${sire.dog_id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColor(sire.registered_name) }}>
@@ -705,7 +708,7 @@ export default function PublishedPedigreePage() {
             ) : <span className="text-sm" style={{ color: "var(--text-muted)" }}>Unknown</span>}
           </div>
           <div className="glow-pink rounded-xl p-2.5"
-            style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)" }}>
+            style={{ border: "1.5px solid rgba(255,255,255,0.06)", boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)", background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)", backdropFilter: "blur(16px)" }}>
             <div className="text-[9px] uppercase tracking-wider mb-0.5 font-semibold" style={{ color: "var(--female-color, #f472b6)", letterSpacing: "0.1em" }}>♀ Dam (Mother)</div>
             {dam ? (
               <Link href={`/pedigree/${dam.dog_id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColor(dam.registered_name) }}>
@@ -721,8 +724,8 @@ export default function PublishedPedigreePage() {
           boxShadow: "0 4px 30px rgba(0,0,0,0.35), 0 0 60px rgba(0,0,0,0.1)",
         }}>
           <div className="flex items-center justify-between px-4 py-2.5" style={{
-            background: "linear-gradient(180deg, #1a1a24 0%, #141418 100%)",
-            borderBottom: "1px solid rgba(30,64,120,0.5)",
+            background: "linear-gradient(180deg, rgba(30,30,30,0.95) 0%, rgba(22,22,22,0.95) 100%)",
+            borderBottom: "1px solid rgba(255,255,255,0.06)",
           }}>
             <div className="flex items-center gap-2.5">
               <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{
@@ -765,13 +768,14 @@ export default function PublishedPedigreePage() {
 
           return (
             <div className="glow-gold rounded-xl overflow-hidden" style={{
-              border: "1.5px solid rgba(212,168,85,0.4)",
-              boxShadow: "0 2px 20px rgba(0,0,0,0.25)",
-              background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+              border: "1.5px solid rgba(255,255,255,0.06)",
+              boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)",
+              background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)",
+              backdropFilter: "blur(16px)",
             }}>
               {/* Header */}
               <div className="flex items-center justify-between px-4 py-2.5" style={{
-                background: "linear-gradient(180deg, #1a1a24 0%, #141418 100%)",
+                background: "linear-gradient(180deg, rgba(30,30,30,0.95) 0%, rgba(22,22,22,0.95) 100%)",
                 borderBottom: "1px solid rgba(212,168,85,0.2)",
               }}>
                 <div className="flex items-center gap-2.5">
@@ -898,7 +902,7 @@ export default function PublishedPedigreePage() {
       {showDeleteConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4" style={{ background: "rgba(0,0,0,0.7)", backdropFilter: "blur(4px)" }}>
           <div className="rounded-xl p-6 max-w-sm w-full" style={{
-            background: "linear-gradient(180deg, #1a1a24 0%, #0e1018 100%)",
+            background: "linear-gradient(180deg, rgba(30,30,30,0.95) 0%, rgba(22,22,22,0.98) 100%)",
             border: "1px solid rgba(239,68,68,0.3)",
             boxShadow: "0 20px 50px rgba(0,0,0,0.6)",
           }}>
