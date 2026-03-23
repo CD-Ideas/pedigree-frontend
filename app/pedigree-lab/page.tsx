@@ -2474,6 +2474,14 @@ function PedigreeLabInner() {
                   }
                   setPublishing(true);
                   try {
+                    // Duplicate name check (global, case insensitive)
+                    const dupRes = await fetch(`/api/pedigrees/check-duplicate?name=${encodeURIComponent(publishForm.name.trim())}${editingId ? `&excludeId=${editingId}` : ""}`);
+                    const dupData = await dupRes.json();
+                    if (dupData.exists) {
+                      alert(`A pedigree with the name "${publishForm.name.trim()}" already exists. Please use a different name.`);
+                      setPublishing(false);
+                      return;
+                    }
                     // Auto-fetch tree if preview wasn't clicked but sire/dam exist
                     let treeData = previewTree;
                     if (treeData.length === 0) {

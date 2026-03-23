@@ -246,7 +246,7 @@ export default function NavBar() {
         </Link>
         {mounted && loggedIn && pathname !== "/dashboard" && !pathname.startsWith("/marketplace") && (
           <Link
-            href="/dashboard"
+            href={pathname === "/dashboard/pedigrees" ? "/pedigree-lab" : "/dashboard"}
             className="ml-4 flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold transition-all hover:scale-[1.02]"
             style={{
               color: "var(--accent-gold, #d4a855)",
