@@ -104,7 +104,7 @@ print(json.dumps(result))
 // POST /api/messages — send a message
 export async function POST(req: NextRequest) {
   try {
-    const { fromUserId, toUsername, subject, body, threadId, marketplaceAdId } = await req.json();
+    const { fromUserId, toUsername, subject, body, threadId, marketplaceAdId, attachments } = await req.json();
     if (!fromUserId || !toUsername || !body) {
       return NextResponse.json({ error: "fromUserId, toUsername, and body required" }, { status: 400 });
     }
@@ -136,9 +136,10 @@ else:
                 key += f"_ad{ad_id}"
             thread_id = hashlib.md5(key.encode()).hexdigest()[:16]
 
+        attachments_str = sys.argv[7] if len(sys.argv) > 7 and sys.argv[7] != "null" else ""
         conn.execute(
-            "INSERT INTO messages (from_user_id, to_user_id, subject, body, thread_id, marketplace_ad_id) VALUES (?, ?, ?, ?, ?, ?)",
-            (from_id, to_id, subject, body, thread_id, ad_id)
+            "INSERT INTO messages (from_user_id, to_user_id, subject, body, thread_id, marketplace_ad_id, attachments) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            (from_id, to_id, subject, body, thread_id, ad_id, attachments_str)
         )
         conn.commit()
         msg_id = conn.execute("SELECT last_insert_rowid()").fetchone()[0]
@@ -148,7 +149,8 @@ conn.close()
 
     const { stdout } = await execFileAsync("python3", [
       "-c", script, String(fromUserId), toUsername, subject || "", body,
-      threadId || "null", marketplaceAdId ? String(marketplaceAdId) : "null"
+      threadId || "null", marketplaceAdId ? String(marketplaceAdId) : "null",
+      attachments || "null"
     ], { timeout: 10000 });
     const data = JSON.parse(stdout);
     if (data.error) return NextResponse.json(data, { status: 400 });

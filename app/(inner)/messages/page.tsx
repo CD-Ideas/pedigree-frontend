@@ -59,6 +59,11 @@ function MessagesContent() {
   const [replyText, setReplyText] = useState("");
   const [sending, setSending] = useState(false);
   const [composeMsg, setComposeMsg] = useState("");
+  const [pendingAttachments, setPendingAttachments] = useState<{ url: string; name: string; size: number; isImage: boolean }[]>([]);
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const composeFileRef = useRef<HTMLInputElement>(null);
+  const [composePendingAttachments, setComposePendingAttachments] = useState<{ url: string; name: string; size: number; isImage: boolean }[]>([]);
 
   useEffect(() => {
     try {
@@ -108,12 +113,41 @@ function MessagesContent() {
       .catch(() => setThreadLoading(false));
   };
 
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, target: "reply" | "compose") => {
+    const file = e.target.files?.[0];
+    if (!file || !user) return;
+    if (file.size > 10 * 1024 * 1024) { alert("File too large (max 10MB)"); return; }
+    setUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append("userId", String(user.id));
+      fd.append("file", file);
+      const res = await fetch("/api/messages/upload", { method: "POST", body: fd });
+      const data = await res.json();
+      if (data.success) {
+        const att = { url: data.url, name: data.name, size: data.size, isImage: data.isImage };
+        if (target === "reply") setPendingAttachments(prev => [...prev, att]);
+        else setComposePendingAttachments(prev => [...prev, att]);
+      }
+    } catch (_e) {}
+    setUploading(false);
+    e.target.value = "";
+  };
+
+  const formatFileSize = (bytes: number) => {
+    if (bytes < 1024) return bytes + " B";
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+    return (bytes / (1024 * 1024)).toFixed(1) + " MB";
+  };
+
   const sendReply = async () => {
-    if (!user || !replyText.trim() || !selectedThread) return;
+    if (!user || (!replyText.trim() && pendingAttachments.length === 0) || !selectedThread) return;
     const thread = threads.find(t => t.thread_id === selectedThread);
     if (!thread) return;
     setSending(true);
     try {
+      const attachmentsJson = pendingAttachments.length > 0 ? JSON.stringify(pendingAttachments) : "";
+      const msgBody = replyText.trim() || (pendingAttachments.length > 0 ? `📎 ${pendingAttachments.map(a => a.name).join(", ")}` : "");
       const res = await fetch("/api/messages", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -121,13 +155,15 @@ function MessagesContent() {
           fromUserId: user.id,
           toUsername: thread.other_username,
           subject: thread.subject || "",
-          body: replyText.trim(),
+          body: msgBody,
           threadId: selectedThread,
+          attachments: attachmentsJson,
         }),
       });
       const data = await res.json();
       if (!data.error) {
         setReplyText("");
+        setPendingAttachments([]);
         openThread(selectedThread);
       }
     } catch (_e) {}
@@ -135,7 +171,7 @@ function MessagesContent() {
   };
 
   const sendNewMessage = async () => {
-    if (!user || !toUsername.trim() || !replyText.trim()) return;
+    if (!user || !toUsername.trim() || (!replyText.trim() && composePendingAttachments.length === 0)) return;
     setSending(true);
     setComposeMsg("");
     try {
@@ -146,7 +182,8 @@ function MessagesContent() {
           fromUserId: user.id,
           toUsername: toUsername.trim(),
           subject: subject.trim(),
-          body: replyText.trim(),
+          body: replyText.trim() || (composePendingAttachments.length > 0 ? `📎 ${composePendingAttachments.map(a => a.name).join(", ")}` : ""),
+          attachments: composePendingAttachments.length > 0 ? JSON.stringify(composePendingAttachments) : "",
         }),
       });
       const data = await res.json();
@@ -273,10 +310,12 @@ function MessagesContent() {
             <div>
               <label className="block text-[10px] uppercase tracking-widest font-semibold mb-1"
                 style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>Subject (optional)</label>
-              <input value={subject} onChange={e => setSubject(e.target.value)}
+              <textarea value={subject} onChange={e => setSubject(e.target.value)}
                 placeholder="Subject..."
-                className="w-full rounded-lg px-3 py-2 text-sm outline-none"
-                style={{ background: "rgba(20,20,25,0.8)", border: "1px solid rgba(212,168,85,0.15)", color: "var(--text-primary)", fontFamily: "var(--font-table)" }} />
+                rows={1}
+                className="w-full rounded-lg px-3 py-2 text-sm outline-none resize-none"
+                style={{ background: "rgba(20,20,25,0.8)", border: "1px solid rgba(212,168,85,0.15)", color: "var(--text-primary)", fontFamily: "var(--font-table)", minHeight: "38px", maxHeight: "80px", overflowY: "auto" }}
+                onInput={(e) => { const t = e.target as HTMLTextAreaElement; t.style.height = "38px"; t.style.height = Math.min(t.scrollHeight, 80) + "px"; }} />
             </div>
           </div>
           <textarea value={replyText} onChange={e => setReplyText(e.target.value)}
@@ -415,7 +454,7 @@ function MessagesContent() {
               </div>
 
               {/* Chat Messages */}
-              <div className="flex-1 overflow-y-auto px-2 sm:px-4 py-3 space-y-3" style={{ maxHeight: "min(350px, 50vh)" }}>
+              <div className="flex-1 overflow-y-auto px-2 sm:px-4 py-3 space-y-3" style={{ maxHeight: "min(350px, 50vh)", background: "linear-gradient(180deg, #eef1f5 0%, #e4e8ee 100%)" }}>
                 {threadLoading ? (
                   <div className="flex justify-center py-8">
                     <div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin"
@@ -428,18 +467,24 @@ function MessagesContent() {
                       <div className="max-w-[75%] rounded-xl px-3.5 py-2.5"
                         style={{
                           background: isMine
-                            ? "linear-gradient(135deg, rgba(212,168,85,0.15), rgba(184,134,11,0.1))"
-                            : "rgba(255,255,255,0.05)",
+                            ? "#dcfce7"
+                            : "#dbeafe",
                           border: isMine
-                            ? "1px solid rgba(212,168,85,0.2)"
-                            : "1px solid rgba(255,255,255,0.06)",
+                            ? "1px solid rgba(34,197,94,0.2)"
+                            : "1px solid rgba(96,165,250,0.2)",
                           borderRadius: isMine ? "16px 16px 4px 16px" : "16px 16px 16px 4px",
+                          boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
                         }}>
-                        <p className="text-sm whitespace-pre-wrap" style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)", lineHeight: 1.6 }}>
+                        <p className="text-sm whitespace-pre-wrap" style={{ color: "#1a202c", fontFamily: "var(--font-table)", lineHeight: 1.6 }}>
                           {msg.body}
                         </p>
-                        <p className={`text-[9px] mt-1 ${isMine ? "text-right" : ""}`} style={{ color: "var(--text-muted)" }}>
+                        <p className={`text-[9px] mt-1 flex items-center gap-1.5 ${isMine ? "justify-end" : ""}`} style={{ color: "#6b7280" }}>
                           {formatFullDate(msg.created_at)}
+                          {isMine && (
+                            <span style={{ color: msg.is_read ? "#7c3aed" : "#2563eb", fontSize: "10px", fontWeight: 700 }}>
+                              {msg.is_read ? "✓✓ Seen" : "✓ Delivered"}
+                            </span>
+                          )}
                         </p>
                       </div>
                     </div>
@@ -451,13 +496,15 @@ function MessagesContent() {
               {/* Reply Input */}
               <div className="px-4 py-3 flex-shrink-0" style={{ borderTop: "1px solid rgba(212,168,85,0.1)" }}>
                 <div className="flex gap-2">
-                  <input
+                  <textarea
                     value={replyText}
                     onChange={e => setReplyText(e.target.value)}
                     onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendReply(); } }}
                     placeholder="Type a message..."
-                    className="flex-1 rounded-lg px-3 py-2.5 text-sm outline-none"
-                    style={{ background: "rgba(20,20,25,0.8)", border: "1px solid rgba(212,168,85,0.15)", color: "var(--text-primary)", fontFamily: "var(--font-table)" }}
+                    rows={1}
+                    className="flex-1 rounded-lg px-3 py-2.5 text-sm outline-none resize-none"
+                    style={{ background: "rgba(20,20,25,0.8)", border: "1px solid rgba(212,168,85,0.15)", color: "var(--text-primary)", fontFamily: "var(--font-table)", minHeight: "42px", maxHeight: "120px", overflowY: "auto" }}
+                    onInput={(e) => { const t = e.target as HTMLTextAreaElement; t.style.height = "42px"; t.style.height = Math.min(t.scrollHeight, 120) + "px"; }}
                   />
                   <button onClick={sendReply} disabled={sending || !replyText.trim()}
                     className="px-4 py-2.5 rounded-lg text-xs font-bold uppercase transition-all hover:scale-[1.03] disabled:opacity-40"
