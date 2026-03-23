@@ -252,7 +252,13 @@ export default function NavBar() {
                 router.push("/pedigree-lab");
               } else if (pathname === "/pedigree-lab") {
                 router.push("/dashboard/pedigrees");
-              } else if (window.history.length > 1) {
+              } else if (pathname.startsWith("/pedigree/") && pathname !== "/pedigree/spotlight") {
+                if (window.history.length > 2) {
+                  router.back();
+                } else {
+                  router.push("/dogs");
+                }
+              } else if (window.history.length > 2) {
                 router.back();
               } else {
                 router.push("/dashboard");
@@ -284,7 +290,7 @@ export default function NavBar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${isHome ? "hover:scale-[1.03]" : "transition-colors"}`}
+                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${isHome || link.label === "Dashboard" ? "hover:scale-[1.03]" : "transition-colors"}`}
                 style={isHome ? {
                   background: "linear-gradient(135deg, #e8e8e8, #b0b0b0, #d8d8d8, #a0a0a0)",
                   color: "#000",
@@ -295,6 +301,16 @@ export default function NavBar() {
                   textTransform: "uppercase" as const,
                   boxShadow: "0 2px 10px rgba(200,200,200,0.15), inset 0 1px 0 rgba(255,255,255,0.4)",
                   border: "1px solid rgba(200,200,200,0.3)",
+                } : link.label === "Dashboard" ? {
+                  background: "linear-gradient(135deg, #e8c86e, #b8860b, #d4a855, #9a7209)",
+                  color: "#000",
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 700,
+                  fontSize: "0.75rem",
+                  letterSpacing: "0.05em",
+                  textTransform: "uppercase" as const,
+                  boxShadow: "0 2px 10px rgba(212,168,85,0.2), inset 0 1px 0 rgba(255,255,255,0.3)",
+                  border: "1px solid rgba(212,168,85,0.4)",
                 } : {
                   color: isActive
                     ? "var(--accent-gold)"

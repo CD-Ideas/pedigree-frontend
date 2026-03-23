@@ -426,6 +426,7 @@ export default function Home() {
                   }}
                   style={{
                     animationDelay: `${i * 0.1}s`,
+                    ...(f.title === "Community Pedigrees" ? { gridColumn: "2 / 4", maxWidth: "calc(50% - 4px)", justifySelf: "center" } : {}),
                     background: `linear-gradient(160deg, rgba(25,27,35,0.95) 0%, rgba(14,15,20,0.98) 100%)`,
                     border: "1px solid rgba(255,255,255,0.07)",
                     transition: "all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",

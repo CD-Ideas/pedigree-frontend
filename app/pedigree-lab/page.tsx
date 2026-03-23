@@ -789,12 +789,17 @@ function PedigreeLabInner() {
                       </div>
                       {/* Info */}
                       <div className="flex-1 min-w-0">
-                        <p
-                          className="text-xs font-bold truncate"
+                        <a
+                          href={`/pedigree/${dog.dog_id}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          onDragStart={(e) => e.preventDefault()}
+                          className="text-xs font-bold truncate block hover:underline"
                           style={{ color: titleColor, fontFamily: "var(--font-table, Rajdhani, sans-serif)" }}
                         >
                           {dog.registered_name}
-                        </p>
+                        </a>
                         <p className="text-[10px]" style={{ color: "#5a6a82" }}>
                           <span style={{ color: dog.sex?.toUpperCase() === "FEMALE" ? "#f472b6" : "#60a5fa" }}>{sexIcon(dog.sex)}</span> <span style={{ color: "#d4a855", fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}>ID: {dog.dog_id}</span>
                         </p>
