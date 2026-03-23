@@ -366,7 +366,7 @@ export default function NavBar() {
                 {showAvatarPicker && (
                   <>
                     <div className="fixed inset-0 z-[60]" onClick={(e) => { e.stopPropagation(); setShowAvatarPicker(false); }} />
-                    <div className="absolute right-0 top-full mt-2 w-64 rounded-xl overflow-hidden z-[70]"
+                    <div className="fixed right-2 sm:absolute sm:right-0 top-14 sm:top-full mt-0 sm:mt-2 w-[calc(100vw-16px)] sm:w-64 max-w-64 rounded-xl overflow-hidden z-[70]"
                       onClick={(e) => e.stopPropagation()}
                       style={{
                         background: "linear-gradient(180deg, #2a2420 0%, #1c1714 100%)",

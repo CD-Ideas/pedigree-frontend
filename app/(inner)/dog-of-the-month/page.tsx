@@ -32,7 +32,7 @@ export default function DogOfTheMonthPage() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6">
+    <div className="max-w-3xl mx-auto space-y-6 px-2 sm:px-0">
       {/* Header */}
       <div className="text-center">
         <div className="relative inline-block mb-3">
@@ -58,7 +58,7 @@ export default function DogOfTheMonthPage() {
       </div>
 
       {/* Coming Soon Badge */}
-      <div className="rounded-xl p-8 text-center" style={{
+      <div className="rounded-xl p-4 sm:p-8 text-center" style={{
         ...GLASS_BOX,
         border: "1.5px solid rgba(212,168,85,0.25)",
         boxShadow: "0 4px 30px rgba(0,0,0,0.4), 0 0 30px rgba(212,168,85,0.06), inset 0 1px 0 rgba(255,255,255,0.05)",
@@ -107,7 +107,7 @@ export default function DogOfTheMonthPage() {
           { icon: "🗳️", title: "Community Votes", desc: "The community picks the champion every month", color: "#a855f7" },
           { icon: "🏆", title: "Win Prizes", desc: "Permanent crown badge, spotlight, and exclusive rewards", color: "#d4a855" },
         ].map((item, i) => (
-          <div key={i} className="rounded-xl p-5 text-center transition-all hover:scale-[1.03]"
+          <div key={i} className="rounded-xl p-3 sm:p-5 text-center transition-all hover:scale-[1.03]"
             style={{
               ...GLASS_BOX,
               borderColor: `${item.color}25`,

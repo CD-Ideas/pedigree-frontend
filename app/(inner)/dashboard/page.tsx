@@ -371,7 +371,7 @@ export default function Dashboard() {
             {showAvatarPicker && (
               <>
                 <div className="fixed inset-0 z-[60]" onClick={() => setShowAvatarPicker(false)} />
-                <div className="absolute top-20 left-1/2 -translate-x-1/2 w-56 rounded-xl overflow-hidden z-[70]"
+                <div className="absolute top-20 left-1/2 -translate-x-1/2 w-48 sm:w-56 rounded-xl overflow-hidden z-[70]"
                   onClick={(e) => e.stopPropagation()}
                   style={{ background: "linear-gradient(180deg, #2a2420 0%, #1c1714 100%)", border: "1.5px solid rgba(90,70,50,0.6)", boxShadow: "0 12px 40px rgba(0,0,0,0.6)" }}>
                   <div className="px-3 py-2" style={{ borderBottom: "1px solid rgba(90,70,50,0.4)" }}>

@@ -1,11 +1,20 @@
 export const dynamic = "force-dynamic";
 
 import { NextRequest, NextResponse } from "next/server";
-import { execFile } from "child_process";
-import { promisify } from "util";
+import Database from "better-sqlite3";
 
-const execFileAsync = promisify(execFile);
 const DB_PATH = "/home/ubuntu/apbt-scraper/apbt_v2.db";
+
+let db: ReturnType<typeof Database> | null = null;
+
+function getDb() {
+  if (!db) {
+    db = new Database(DB_PATH, { readonly: true });
+    db.pragma("journal_mode = WAL");
+    db.pragma("cache_size = -20000"); // 20MB cache
+  }
+  return db;
+}
 
 export async function GET(req: NextRequest) {
   const q = req.nextUrl.searchParams.get("q") || "";
@@ -15,25 +24,25 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ dogs: [] });
   }
 
-  // Pass the search term as a base64-encoded argument to avoid quote issues
-  const searchB64 = Buffer.from(q).toString("base64");
-
   try {
-    const script = `
-import sqlite3, json, base64
-search = base64.b64decode("${searchB64}").decode("utf-8")
-conn = sqlite3.connect("${DB_PATH}")
-conn.row_factory = sqlite3.Row
-c = conn.cursor()
-c.execute("SELECT dog_id, registered_name, photo_url, sex FROM dogs WHERE registered_name LIKE ? ORDER BY view_count DESC LIMIT ?", ('%' + search + '%', ${limit}))
-rows = [dict(r) for r in c.fetchall()]
-conn.close()
-print(json.dumps(rows))
-`;
-    const { stdout } = await execFileAsync("python3", ["-c", script], { timeout: 10000 });
-    const dogs = JSON.parse(stdout || "[]");
+    const conn = getDb();
+
+    // Try prefix match first (uses index, very fast)
+    let dogs = conn.prepare(
+      "SELECT dog_id, registered_name, photo_url, sex FROM dogs WHERE registered_name LIKE ? ORDER BY view_count DESC LIMIT ?"
+    ).all(q + '%', limit) as { dog_id: number; registered_name: string; photo_url: string | null; sex: string }[];
+
+    // If not enough results, fall back to contains match
+    if (dogs.length < limit) {
+      dogs = conn.prepare(
+        "SELECT dog_id, registered_name, photo_url, sex FROM dogs WHERE registered_name LIKE ? ORDER BY view_count DESC LIMIT ?"
+      ).all('%' + q + '%', limit) as { dog_id: number; registered_name: string; photo_url: string | null; sex: string }[];
+    }
+
     return NextResponse.json({ dogs });
   } catch (_e) {
+    // If better-sqlite3 fails, reset connection
+    db = null;
     return NextResponse.json({ dogs: [] });
   }
 }

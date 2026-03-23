@@ -218,7 +218,7 @@ function MessagesContent() {
   const selectedThreadData = threads.find(t => t.thread_id === selectedThread);
 
   return (
-    <div className="max-w-5xl mx-auto space-y-4">
+    <div className="max-w-5xl mx-auto space-y-4 px-2 sm:px-0">
       {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
@@ -305,7 +305,7 @@ function MessagesContent() {
       )}
 
       {/* Main Layout: Thread List + Chat */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4" style={{ minHeight: "500px" }}>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4" style={{ minHeight: "min(500px, 70vh)" }}>
         {/* Thread List */}
         <div className="md:col-span-1 rounded-xl overflow-hidden" style={GLASS_BOX}>
           <div className="px-4 py-3" style={{ borderBottom: "1px solid rgba(212,168,85,0.1)" }}>
@@ -314,7 +314,7 @@ function MessagesContent() {
               Conversations
             </p>
           </div>
-          <div className="max-h-[450px] overflow-y-auto">
+          <div className="max-h-[300px] md:max-h-[450px] overflow-y-auto">
             {loading ? (
               <div className="p-6 text-center">
                 <div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin mx-auto mb-2"
@@ -415,7 +415,7 @@ function MessagesContent() {
               </div>
 
               {/* Chat Messages */}
-              <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3" style={{ maxHeight: "350px" }}>
+              <div className="flex-1 overflow-y-auto px-2 sm:px-4 py-3 space-y-3" style={{ maxHeight: "min(350px, 50vh)" }}>
                 {threadLoading ? (
                   <div className="flex justify-center py-8">
                     <div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin"
