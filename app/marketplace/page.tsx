@@ -372,7 +372,7 @@ export default function MarketplacePage() {
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-[11px] font-bold transition-all hover:scale-105 flex-shrink-0 mt-2"
               style={{
                 background: "linear-gradient(135deg, #e8c86e, #b8860b)",
-                color: "#000",
+                color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)",
                 fontFamily: "var(--font-table)",
                 letterSpacing: "0.03em",
                 boxShadow: "0 2px 12px rgba(212,168,85,0.2)",
@@ -529,7 +529,7 @@ export default function MarketplacePage() {
               className="px-5 py-2.5 rounded-lg text-xs font-bold transition-all hover:scale-105 flex-shrink-0"
               style={{
                 background: "linear-gradient(135deg, #e8c86e, #b8860b)",
-                color: "#000",
+                color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)",
                 fontFamily: "var(--font-table)",
                 letterSpacing: "0.04em",
                 textTransform: "uppercase",
@@ -686,7 +686,7 @@ export default function MarketplacePage() {
               className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg text-xs font-bold transition-all hover:scale-105"
               style={{
                 background: "linear-gradient(135deg, #e8c86e, #b8860b)",
-                color: "#000",
+                color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)",
                 fontFamily: "var(--font-table)",
                 letterSpacing: "0.04em",
                 textTransform: "uppercase",

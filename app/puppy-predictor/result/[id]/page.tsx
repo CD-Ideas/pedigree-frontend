@@ -207,7 +207,7 @@ export default function PredictionResultPage() {
           <Link href="/puppy-predictor"
             className="px-6 py-2.5 rounded-xl text-sm font-semibold transition-all hover:scale-105 inline-block"
             style={{
-              background: "linear-gradient(135deg, #e8c86e, #b8860b)", color: "#000",
+              background: "linear-gradient(135deg, #e8c86e, #b8860b)", color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)",
               fontFamily: "var(--font-display)", letterSpacing: "0.03em",
             }}>
             TRY YOUR OWN PREDICTION

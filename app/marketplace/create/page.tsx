@@ -296,7 +296,7 @@ function CreateAdContent() {
             className="px-6 py-2.5 rounded-lg text-xs font-bold transition-all hover:scale-105"
             style={{
               background: "linear-gradient(135deg, #e8c86e, #b8860b)",
-              color: "#000",
+              color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)",
               fontFamily: "var(--font-table)",
               letterSpacing: "0.04em",
               textTransform: "uppercase",
@@ -396,7 +396,7 @@ function CreateAdContent() {
                 className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
                 style={{
                   background: "linear-gradient(135deg, #e8c86e, #b8860b)",
-                  color: "#000",
+                  color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)",
                   fontFamily: "var(--font-table)",
                 }}
               >
@@ -1062,7 +1062,7 @@ function CreateAdContent() {
             className="w-full rounded-xl py-3.5 text-sm font-bold uppercase tracking-widest transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100"
             style={{
               background: "linear-gradient(135deg, #d4a855, #f5d994, #d4a855)",
-              color: "#000",
+              color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)",
               fontFamily: "var(--font-table)",
               boxShadow: "0 4px 24px rgba(212,168,85,0.35), 0 0 48px rgba(212,168,85,0.15)",
               letterSpacing: "0.08em",

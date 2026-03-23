@@ -184,7 +184,7 @@ export default function Dashboard() {
     }
     return (
       <div className={`${size} rounded-full flex items-center justify-center font-bold`}
-        style={{ background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#000", border: "3px solid var(--accent-gold)" }}>
+        style={{ background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)", border: "3px solid var(--accent-gold)" }}>
         <span className={textSize}>{(user?.username || "U")[0].toUpperCase()}</span>
       </div>
     );

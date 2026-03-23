@@ -630,7 +630,8 @@ export default function PuppyPredictorPage() {
               className="px-4 py-2 text-xs font-semibold transition-colors"
               style={{
                 background: mode === "simple" ? "linear-gradient(135deg, #e8c86e, #b8860b)" : "linear-gradient(135deg, #cbd5e1, #94a3b8)",
-                color: "#000",
+                color: mode === "simple" ? "#fff" : "#000",
+                textShadow: mode === "simple" ? "0 1px 2px rgba(0,0,0,0.3)" : "none",
                 fontFamily: "var(--font-table)",
                 transition: "all 0.3s ease",
               }}>
@@ -640,7 +641,8 @@ export default function PuppyPredictorPage() {
               className="px-4 py-2 text-xs font-semibold transition-colors"
               style={{
                 background: mode === "advanced" ? "linear-gradient(135deg, #e8c86e, #b8860b)" : "linear-gradient(135deg, #cbd5e1, #94a3b8)",
-                color: "#000",
+                color: mode === "advanced" ? "#fff" : "#000",
+                textShadow: mode === "advanced" ? "0 1px 2px rgba(0,0,0,0.3)" : "none",
                 fontFamily: "var(--font-table)",
                 transition: "all 0.3s ease",
               }}>
@@ -900,7 +902,7 @@ export default function PuppyPredictorPage() {
           <button onClick={handlePredict}
             className="px-8 py-3 rounded-xl font-bold transition-all hover:scale-105 active:scale-95"
             style={{
-              background: "linear-gradient(135deg, #e8c86e, #d4a855, #b8860b)", color: "#000",
+              background: "linear-gradient(135deg, #e8c86e, #d4a855, #b8860b)", color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)",
               fontFamily: "var(--font-display)", letterSpacing: "0.05em", fontSize: "1rem",
               boxShadow: "0 4px 20px rgba(212,168,85,0.3)", transition: "all 0.3s ease",
             }}>
@@ -926,7 +928,8 @@ export default function PuppyPredictorPage() {
                     className="px-4 py-2 text-xs font-semibold transition-colors capitalize"
                     style={{
                       background: tab === t ? "linear-gradient(135deg, #e8c86e, #b8860b)" : "linear-gradient(135deg, #cbd5e1, #94a3b8)",
-                      color: "#000",
+                      color: tab === t ? "#fff" : "#000",
+                      textShadow: tab === t ? "0 1px 2px rgba(0,0,0,0.3)" : "none",
                       fontFamily: "var(--font-table)",
                       transition: "all 0.3s ease",
                     }}>

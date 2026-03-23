@@ -247,7 +247,7 @@ export default function AccountPage() {
                 className="w-24 h-24 rounded-full flex items-center justify-center text-3xl font-bold"
                 style={{
                   background: "linear-gradient(135deg, var(--accent-gold), #b8860b)",
-                  color: "#000",
+                  color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)",
                   border: "3px solid var(--accent-gold)",
                 }}
               >
@@ -330,7 +330,7 @@ export default function AccountPage() {
               className="px-5 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all hover:scale-[1.02] disabled:opacity-40 disabled:cursor-not-allowed"
               style={{
                 background: "linear-gradient(135deg, #d4a855, #b8860b)",
-                color: "#000",
+                color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)",
                 fontFamily: "var(--font-display)",
               }}
             >
@@ -418,7 +418,7 @@ export default function AccountPage() {
               className="px-5 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all hover:scale-[1.02] disabled:opacity-40 disabled:cursor-not-allowed"
               style={{
                 background: "linear-gradient(135deg, #d4a855, #b8860b)",
-                color: "#000",
+                color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)",
                 fontFamily: "var(--font-display)",
               }}
             >
@@ -440,7 +440,7 @@ export default function AccountPage() {
           }}>
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-lg flex items-center justify-center text-lg"
-                style={{ background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#000" }}>
+                style={{ background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)" }}>
                 ★
               </div>
               <div>

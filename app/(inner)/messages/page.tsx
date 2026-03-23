@@ -35,6 +35,7 @@ interface Message {
   created_at: string;
   thread_id: string;
   marketplace_ad_id: number | null;
+  attachments?: string;
 }
 
 interface UserData {
@@ -62,7 +63,9 @@ function MessagesContent() {
   const [pendingAttachments, setPendingAttachments] = useState<{ url: string; name: string; size: number; isImage: boolean }[]>([]);
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const imageInputRef = useRef<HTMLInputElement>(null);
   const composeFileRef = useRef<HTMLInputElement>(null);
+  const composeImageRef = useRef<HTMLInputElement>(null);
   const [composePendingAttachments, setComposePendingAttachments] = useState<{ url: string; name: string; size: number; isImage: boolean }[]>([]);
 
   useEffect(() => {
@@ -96,6 +99,41 @@ function MessagesContent() {
     setLoading(true);
     fetchThreads();
   }, [user]);
+
+  // Auto-poll threads every 15 seconds
+  useEffect(() => {
+    if (!user) return;
+    const interval = setInterval(() => {
+      fetchThreads();
+    }, 15000);
+    return () => clearInterval(interval);
+  }, [user]);
+
+  // Auto-poll active conversation every 5 seconds
+  useEffect(() => {
+    if (!user || !selectedThread) return;
+    const interval = setInterval(() => {
+      fetch(`/api/messages?userId=${user.id}&threadId=${selectedThread}`)
+        .then(r => r.json())
+        .then(data => {
+          const newMsgs = data.messages || [];
+          setThreadMessages(prev => {
+            if (newMsgs.length !== prev.length || (newMsgs.length > 0 && prev.length > 0 && newMsgs[newMsgs.length - 1].id !== prev[prev.length - 1].id)) {
+              // New messages arrived — scroll to bottom
+              setTimeout(() => chatEndRef.current?.scrollIntoView({ behavior: "smooth" }), 100);
+              return newMsgs;
+            }
+            // Update read status without replacing (for Seen/Delivered updates)
+            if (JSON.stringify(newMsgs.map((m: Message) => m.is_read)) !== JSON.stringify(prev.map((m: Message) => m.is_read))) {
+              return newMsgs;
+            }
+            return prev;
+          });
+        })
+        .catch(() => {});
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [user, selectedThread]);
 
   const openThread = (threadId: string) => {
     if (!user) return;
@@ -278,7 +316,7 @@ function MessagesContent() {
           className="px-5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all hover:scale-[1.03]"
           style={{
             background: "linear-gradient(135deg, #e8c86e, #b8860b)",
-            color: "#000",
+            color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)",
             fontFamily: "var(--font-display)",
             boxShadow: "0 4px 15px rgba(212,168,85,0.2)",
           }}>
@@ -336,7 +374,7 @@ function MessagesContent() {
             </button>
             <button onClick={sendNewMessage} disabled={sending || !toUsername.trim() || !replyText.trim()}
               className="px-5 py-2 rounded-lg text-xs font-bold uppercase transition-all hover:scale-[1.03] disabled:opacity-40"
-              style={{ background: "linear-gradient(135deg, #e8c86e, #b8860b)", color: "#000", fontFamily: "var(--font-display)" }}>
+              style={{ background: "linear-gradient(135deg, #e8c86e, #b8860b)", color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)", fontFamily: "var(--font-display)" }}>
               {sending ? "Sending..." : "Send"}
             </button>
           </div>
@@ -379,7 +417,7 @@ function MessagesContent() {
                 <div className="flex items-center justify-between mb-0.5">
                   <div className="flex items-center gap-2">
                     <span className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0"
-                      style={{ background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#000" }}>
+                      style={{ background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)" }}>
                       {(t.other_username || "?")[0].toUpperCase()}
                     </span>
                     <span className="text-xs font-bold truncate"
@@ -432,7 +470,7 @@ function MessagesContent() {
                 style={{ borderBottom: "1px solid rgba(212,168,85,0.1)" }}>
                 <div className="flex items-center gap-2">
                   <span className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
-                    style={{ background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#000" }}>
+                    style={{ background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)" }}>
                     {(selectedThreadData.other_username || "?")[0].toUpperCase()}
                   </span>
                   <div>
@@ -478,6 +516,30 @@ function MessagesContent() {
                         <p className="text-sm whitespace-pre-wrap" style={{ color: "#1a202c", fontFamily: "var(--font-table)", lineHeight: 1.6 }}>
                           {msg.body}
                         </p>
+                        {msg.attachments && msg.attachments !== "" && (() => {
+                          try {
+                            const atts = JSON.parse(msg.attachments);
+                            return (
+                              <div className="mt-2 space-y-1.5">
+                                {atts.map((att: { url: string; name: string; size: number; isImage: boolean }, i: number) => (
+                                  att.isImage ? (
+                                    <a key={i} href={att.url} target="_blank" rel="noopener noreferrer" className="block">
+                                      <img src={att.url} alt={att.name} className="max-w-full rounded-lg max-h-48 object-cover" style={{ border: "1px solid rgba(0,0,0,0.1)" }} />
+                                    </a>
+                                  ) : (
+                                    <a key={i} href={att.url} target="_blank" rel="noopener noreferrer"
+                                      className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs transition-all hover:opacity-80"
+                                      style={{ background: "rgba(0,0,0,0.06)", color: "#2563eb", fontFamily: "var(--font-table)" }}>
+                                      <span>📎</span>
+                                      <span className="truncate">{att.name}</span>
+                                      <span className="text-[9px] flex-shrink-0" style={{ color: "#6b7280" }}>{formatFileSize(att.size)}</span>
+                                    </a>
+                                  )
+                                ))}
+                              </div>
+                            );
+                          } catch { return null; }
+                        })()}
                         <p className={`text-[9px] mt-1 flex items-center gap-1.5 ${isMine ? "justify-end" : ""}`} style={{ color: "#6b7280" }}>
                           {formatFullDate(msg.created_at)}
                           {isMine && (
@@ -495,7 +557,49 @@ function MessagesContent() {
 
               {/* Reply Input */}
               <div className="px-4 py-3 flex-shrink-0" style={{ borderTop: "1px solid rgba(212,168,85,0.1)" }}>
+                {/* Pending attachments preview */}
+                {pendingAttachments.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mb-2">
+                    {pendingAttachments.map((att, i) => (
+                      <div key={i} className="flex items-center gap-1.5 px-2 py-1 rounded-lg text-[10px]"
+                        style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }}>
+                        {att.isImage ? (
+                          <img src={att.url} alt="" className="w-8 h-8 rounded object-cover" />
+                        ) : (
+                          <span>📎</span>
+                        )}
+                        <span className="truncate max-w-[100px]" style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)" }}>{att.name}</span>
+                        <button onClick={() => setPendingAttachments(prev => prev.filter((_, j) => j !== i))}
+                          className="text-red-400 hover:text-red-300 ml-1">✕</button>
+                      </div>
+                    ))}
+                  </div>
+                )}
                 <div className="flex gap-2">
+                  <button
+                    onClick={() => imageInputRef.current?.click()}
+                    disabled={uploading}
+                    className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center transition-all hover:scale-105"
+                    style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }}
+                    title="Attach photo"
+                  >
+                    <span className="text-lg">🖼️</span>
+                  </button>
+                  <button
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={uploading}
+                    className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center transition-all hover:scale-105"
+                    style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }}
+                    title="Attach file"
+                  >
+                    {uploading ? (
+                      <span className="w-4 h-4 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: "var(--accent-gold)", borderTopColor: "transparent" }} />
+                    ) : (
+                      <span className="text-lg">📎</span>
+                    )}
+                  </button>
+                  <input ref={imageInputRef} type="file" className="hidden" accept="image/*" onChange={e => handleFileUpload(e, "reply")} />
+                  <input ref={fileInputRef} type="file" className="hidden" accept=".pdf,.doc,.docx,.txt,.zip,.xls,.xlsx,.csv" onChange={e => handleFileUpload(e, "reply")} />
                   <textarea
                     value={replyText}
                     onChange={e => setReplyText(e.target.value)}
@@ -508,7 +612,7 @@ function MessagesContent() {
                   />
                   <button onClick={sendReply} disabled={sending || !replyText.trim()}
                     className="px-4 py-2.5 rounded-lg text-xs font-bold uppercase transition-all hover:scale-[1.03] disabled:opacity-40"
-                    style={{ background: "linear-gradient(135deg, #e8c86e, #b8860b)", color: "#000", fontFamily: "var(--font-display)" }}>
+                    style={{ background: "linear-gradient(135deg, #e8c86e, #b8860b)", color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)", fontFamily: "var(--font-display)" }}>
                     {sending ? "..." : "Send"}
                   </button>
                 </div>

@@ -161,7 +161,7 @@ export default function DogOfTheMonthPage() {
               background: submitted
                 ? "linear-gradient(135deg, #22c55e, #16a34a)"
                 : "linear-gradient(135deg, #e8c86e, #b8860b)",
-              color: "#000",
+              color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)",
               fontFamily: "var(--font-display)",
               boxShadow: submitted
                 ? "0 4px 15px rgba(34,197,94,0.3)"
@@ -178,7 +178,7 @@ export default function DogOfTheMonthPage() {
           className="px-8 py-3 rounded-lg text-sm font-bold uppercase tracking-wider transition-all hover:scale-[1.03]"
           style={{
             background: "linear-gradient(135deg, #e8c86e, #b8860b)",
-            color: "#000",
+            color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)",
             fontFamily: "var(--font-display)",
             boxShadow: "0 4px 20px rgba(212,168,85,0.2), 0 0 25px rgba(212,168,85,0.1), inset 0 1px 0 rgba(255,255,255,0.3)",
           }}>
