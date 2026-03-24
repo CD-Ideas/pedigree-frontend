@@ -5,10 +5,10 @@ import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
 const GLASS_BOX = {
-  background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)",
-  backdropFilter: "blur(16px)",
-  border: "1.5px solid rgba(255,255,255,0.06)",
-  boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)",
+  background: "linear-gradient(145deg, rgba(22,26,35,0.97) 0%, rgba(14,17,24,0.99) 50%, rgba(18,22,30,0.97) 100%)",
+  backdropFilter: "blur(24px) saturate(1.3)",
+  border: "1px solid rgba(212,168,85,0.15)",
+  boxShadow: "0 12px 40px rgba(0,0,0,0.6), 0 4px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(212,168,85,0.08), inset 0 0 30px rgba(212,168,85,0.03)",
 };
 
 interface Thread {
@@ -366,7 +366,7 @@ function MessagesContent() {
 
       {/* Compose Panel */}
       {showCompose && (
-        <div className="rounded-xl p-5 space-y-3" style={GLASS_BOX}>
+        <div className="rounded-xl p-5 space-y-3 glass-panel-purple" style={GLASS_BOX}>
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-bold uppercase tracking-wider flex items-center gap-2"
               style={{ color: "#d4a855", fontFamily: "var(--font-table)" }}>
@@ -424,8 +424,8 @@ function MessagesContent() {
       {/* Main Layout: Thread List + Chat + Online */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4" style={{ minHeight: "min(500px, 70vh)" }}>
         {/* Thread List */}
-        <div className="md:col-span-1 rounded-xl overflow-hidden" style={GLASS_BOX}>
-          <div className="px-4 py-3 flex-shrink-0" style={{ borderBottom: "1px solid rgba(212,168,85,0.1)" }}>
+        <div className="md:col-span-1 rounded-xl overflow-hidden glass-panel-blue" style={GLASS_BOX}>
+          <div className="px-4 py-3 flex-shrink-0" style={{ borderBottom: "1px solid rgba(212,168,85,0.12)", background: "linear-gradient(180deg, rgba(212,168,85,0.05) 0%, transparent 100%)" }}>
             <div className="flex items-center justify-between">
               <p className="text-[10px] uppercase tracking-widest font-semibold"
                 style={{ color: "#d4a855", fontFamily: "var(--font-table)" }}>
@@ -564,12 +564,12 @@ function MessagesContent() {
         </div>
 
         {/* Chat View */}
-        <div className="md:col-span-2 rounded-xl flex flex-col" style={GLASS_BOX}>
+        <div className="md:col-span-2 rounded-xl flex flex-col glass-panel-gold" style={GLASS_BOX}>
           {selectedThread && selectedThreadData ? (
             <>
               {/* Chat Header */}
               <div className="px-4 py-3 flex items-center justify-between flex-shrink-0"
-                style={{ borderBottom: "1px solid rgba(212,168,85,0.1)" }}>
+                style={{ borderBottom: "1px solid rgba(212,168,85,0.12)", background: "linear-gradient(180deg, rgba(212,168,85,0.04) 0%, transparent 100%)" }}>
                 <div className="flex items-center gap-2">
                   <span className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
                     style={{ background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)" }}>
@@ -668,7 +668,7 @@ function MessagesContent() {
               </div>
 
               {/* Reply Input */}
-              <div className="px-4 py-3 flex-shrink-0" style={{ borderTop: "1px solid rgba(212,168,85,0.1)" }}>
+              <div className="px-4 py-3 flex-shrink-0" style={{ borderTop: "1px solid rgba(212,168,85,0.12)", background: "linear-gradient(0deg, rgba(212,168,85,0.04) 0%, transparent 100%)" }}>
                 {/* Pending attachments preview */}
                 {pendingAttachments.length > 0 && (
                   <div className="flex flex-wrap gap-2 mb-2">
@@ -744,8 +744,8 @@ function MessagesContent() {
         </div>
 
         {/* Who's Online - Right Panel */}
-        <div className="hidden md:flex md:flex-col md:col-span-1 rounded-xl overflow-hidden" style={GLASS_BOX}>
-          <div className="px-4 py-3 flex-shrink-0" style={{ borderBottom: "1px solid rgba(212,168,85,0.1)" }}>
+        <div className="hidden md:flex md:flex-col md:col-span-1 rounded-xl overflow-hidden glass-panel-green" style={GLASS_BOX}>
+          <div className="px-4 py-3 flex-shrink-0" style={{ borderBottom: "1px solid rgba(212,168,85,0.12)", background: "linear-gradient(180deg, rgba(34,197,94,0.04) 0%, transparent 100%)" }}>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#22c55e", boxShadow: "0 0 6px #22c55e" }} />
