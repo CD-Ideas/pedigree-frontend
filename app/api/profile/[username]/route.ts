@@ -38,7 +38,6 @@ if not user_row:
 
 user = dict(user_row)
 user_id = user["id"]
-del user["id"]
 
 # Fetch published pedigrees
 pedigree_rows = conn.execute(

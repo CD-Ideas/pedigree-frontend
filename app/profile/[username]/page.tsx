@@ -14,6 +14,7 @@ const steelFrame = {
 };
 
 interface ProfileUser {
+  id: number;
   username: string;
   profile_picture: string | null;
   role: string;
@@ -83,11 +84,16 @@ export default function ProfilePage() {
   const [ads, setAds] = useState<Ad[]>([]);
   const [showPhotoModal, setShowPhotoModal] = useState(false);
   const [currentUsername, setCurrentUsername] = useState<string | null>(null);
+  const [currentUserId, setCurrentUserId] = useState<number | null>(null);
+  const [isBlocked, setIsBlocked] = useState(false);
+  const [blockLoading, setBlockLoading] = useState(false);
+  const [profileUserId, setProfileUserId] = useState<number | null>(null);
 
   useEffect(() => {
     try {
       const u = JSON.parse(localStorage.getItem("user") || "null");
       if (u?.username) setCurrentUsername(u.username);
+      if (u?.id) setCurrentUserId(u.id);
     } catch {}
   }, []);
 
@@ -104,11 +110,37 @@ export default function ProfilePage() {
           setUser(data.user);
           setPedigrees(data.pedigrees || []);
           setAds(data.ads || []);
+          // Check if this user is blocked
+          if (data.user?.id) {
+            fetch(`/api/users/block?user_id=${data.user.id}`)
+              .then(r => r.json())
+              .then(d => { if (typeof d.blocked === "boolean") setIsBlocked(d.blocked); })
+              .catch(() => {});
+          }
         }
       })
       .catch(() => setError("Failed to load profile"))
       .finally(() => setLoading(false));
   }, [username]);
+
+  const toggleBlock = async () => {
+    if (!user?.id || blockLoading) return;
+    setBlockLoading(true);
+    try {
+      if (isBlocked) {
+        await fetch(`/api/users/block?blocked_id=${user.id}`, { method: "DELETE" });
+        setIsBlocked(false);
+      } else {
+        await fetch("/api/users/block", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ blocked_id: user.id }),
+        });
+        setIsBlocked(true);
+      }
+    } catch {}
+    setBlockLoading(false);
+  };
 
   const renderAvatar = () => {
     const pp = user?.profile_picture;
@@ -254,19 +286,36 @@ export default function ProfilePage() {
                 {user.role || "Member"}
               </span>
               {currentUsername && currentUsername !== user.username && (
-                <button
-                  onClick={() => router.push(`/messages?to=${encodeURIComponent(user.username)}`)}
-                  className="flex items-center gap-1.5 px-3 py-1 rounded-lg text-[11px] font-semibold transition-all hover:scale-105"
-                  style={{
-                    background: "rgba(212,168,85,0.12)",
-                    border: "1px solid rgba(212,168,85,0.25)",
-                    color: "var(--accent-gold)",
-                    fontFamily: "var(--font-table)",
-                  }}
-                  title={`Message ${user.username}`}
-                >
-                  <span>💬</span> Message
-                </button>
+                <>
+                  <button
+                    onClick={() => router.push(`/messages?to=${encodeURIComponent(user.username)}`)}
+                    className="flex items-center gap-1.5 px-3 py-1 rounded-lg text-[11px] font-semibold transition-all hover:scale-105"
+                    style={{
+                      background: "rgba(212,168,85,0.12)",
+                      border: "1px solid rgba(212,168,85,0.25)",
+                      color: "var(--accent-gold)",
+                      fontFamily: "var(--font-table)",
+                    }}
+                    title={`Message ${user.username}`}
+                  >
+                    <span>💬</span> Message
+                  </button>
+                  <button
+                    onClick={toggleBlock}
+                    disabled={blockLoading}
+                    className="flex items-center gap-1.5 px-3 py-1 rounded-lg text-[11px] font-semibold transition-all hover:scale-105"
+                    style={{
+                      background: isBlocked ? "rgba(239,68,68,0.12)" : "rgba(107,114,128,0.12)",
+                      border: `1px solid ${isBlocked ? "rgba(239,68,68,0.3)" : "rgba(107,114,128,0.25)"}`,
+                      color: isBlocked ? "#ef4444" : "#6b7280",
+                      fontFamily: "var(--font-table)",
+                      opacity: blockLoading ? 0.5 : 1,
+                    }}
+                    title={isBlocked ? `Unblock ${user.username}` : `Block ${user.username}`}
+                  >
+                    <span>{isBlocked ? "🚫" : "🛑"}</span> {isBlocked ? "Unblock" : "Block"}
+                  </button>
+                </>
               )}
             </div>
 

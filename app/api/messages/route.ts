@@ -63,8 +63,11 @@ elif folder == "threads":
         AND m.id = (
             SELECT MAX(m4.id) FROM messages m4 WHERE m4.thread_id = m.thread_id AND (m4.deleted_by IS NULL OR m4.deleted_by = '' OR m4.deleted_by NOT LIKE '%' || ? || '%')
         )
+        AND CASE WHEN m.from_user_id = ? THEN m.to_user_id ELSE m.from_user_id END NOT IN (
+            SELECT blocked_id FROM blocked_users WHERE blocker_id = ?
+        )
         ORDER BY m.created_at DESC
-    """, (user_id, user_id, user_id, user_id, uid_str, uid_str, user_id, user_id, uid_str, uid_str)).fetchall()
+    """, (user_id, user_id, user_id, user_id, uid_str, uid_str, user_id, user_id, uid_str, uid_str, user_id, user_id)).fetchall()
     result = {"threads": [dict(r) for r in rows]}
 else:
     # Legacy: get individual messages

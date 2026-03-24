@@ -313,10 +313,10 @@ export default function Dashboard() {
             </h2>
             <div className="space-y-2">
               {[
-                { label: "Create New Pedigree", href: "/pedigree-lab", icon: "🧪", color: "#22c55e" },
                 { label: "Search Dogs", href: "/dogs", icon: "🔍", color: "#60a5fa" },
+                { label: "Create New Pedigree", href: "/pedigree-lab", icon: "🧪", color: "#22c55e" },
+                { label: "Bloodline Calculator", href: "/breeding-calculator", icon: "🧬", color: "#a78bfa" },
                 { label: "Post Ad on Marketplace", href: "/marketplace/create", icon: "📢", color: "#d4a855" },
-                { label: "Predict Puppy Colors", href: "/puppy-predictor", icon: "🎨", color: "#f472b6" },
               ].map((action) => (
                 <Link key={action.href} href={action.href}
                   className="dash-nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg group"
