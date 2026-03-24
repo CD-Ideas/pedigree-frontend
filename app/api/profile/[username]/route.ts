@@ -27,7 +27,7 @@ conn.row_factory = sqlite3.Row
 
 # Fetch user
 user_row = conn.execute(
-    "SELECT id, username, profile_picture, role, created_at, last_active FROM users WHERE username = ?",
+    "SELECT id, username, profile_picture, role, created_at, last_active, show_online FROM users WHERE username = ?",
     (username,)
 ).fetchone()
 
@@ -38,6 +38,10 @@ if not user_row:
 
 user = dict(user_row)
 user_id = user["id"]
+# If user has hidden their online status, don't show last_active
+if user.get("show_online") == 0:
+    user["last_active"] = None
+del user["show_online"]
 
 # Fetch published pedigrees
 pedigree_rows = conn.execute(

@@ -55,6 +55,9 @@ export default function AccountPage() {
   // Sound mute
   const [soundMuted, setSoundMuted] = useState(false);
 
+  // Active status
+  const [activeStatus, setActiveStatus] = useState(true);
+
   // Messages
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState<"success" | "error">("success");
@@ -78,6 +81,11 @@ export default function AccountPage() {
       } else router.push("/login");
     } catch (_e) { router.push("/login"); }
     setSoundMuted(localStorage.getItem("soundMuted") === "true");
+    // Load active status
+    fetch("/api/account/active-status")
+      .then(r => r.json())
+      .then(d => { if (typeof d.active_status === "boolean") setActiveStatus(d.active_status); })
+      .catch(() => {});
   }, [router]);
 
   // Save profile (username/email)
@@ -609,6 +617,46 @@ export default function AccountPage() {
                 style={{
                   background: soundMuted ? "#5a6a82" : "#22c55e",
                   transform: soundMuted ? "translateX(0)" : "translateX(20px)",
+                }}
+              />
+            </button>
+          </div>
+
+          {/* Active Status */}
+          <div className="flex items-center justify-between py-2">
+            <div>
+              <p className="text-sm font-semibold" style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)" }}>Active Status</p>
+              <p className="text-[10px] mt-0.5" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                Show when you&apos;re online to other users
+              </p>
+            </div>
+            <button
+              onClick={async () => {
+                const newStatus = !activeStatus;
+                setActiveStatus(newStatus);
+                try {
+                  await fetch("/api/account/active-status", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ active_status: newStatus }),
+                  });
+                  showMsg(`Active status ${newStatus ? "visible" : "hidden"}`, "success");
+                } catch {
+                  setActiveStatus(!newStatus);
+                  showMsg("Failed to update active status", "error");
+                }
+              }}
+              className="relative w-11 h-6 rounded-full transition-all flex-shrink-0"
+              style={{
+                background: activeStatus ? "rgba(34,197,94,0.3)" : "rgba(30,64,120,0.2)",
+                border: `1px solid ${activeStatus ? "rgba(34,197,94,0.3)" : "rgba(30,64,120,0.3)"}`,
+              }}
+            >
+              <span
+                className="absolute top-0.5 left-0.5 w-5 h-5 rounded-full transition-all"
+                style={{
+                  background: activeStatus ? "#22c55e" : "#5a6a82",
+                  transform: activeStatus ? "translateX(20px)" : "translateX(0)",
                 }}
               />
             </button>

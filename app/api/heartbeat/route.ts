@@ -60,10 +60,11 @@ import sqlite3, json
 
 conn = sqlite3.connect("${DB_PATH}")
 
-# Members online (active in last 5 minutes)
+# Members online (active in last 5 minutes, only those with show_online enabled)
 members = conn.execute("""
     SELECT id, username, profile_picture FROM users
     WHERE last_active IS NOT NULL AND last_active > datetime('now', '-5 minutes')
+    AND (show_online IS NULL OR show_online = 1)
 """).fetchall()
 
 # Guests online (active in last 5 minutes)
