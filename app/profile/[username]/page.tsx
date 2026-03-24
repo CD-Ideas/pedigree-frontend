@@ -80,6 +80,7 @@ export default function ProfilePage() {
   const [user, setUser] = useState<ProfileUser | null>(null);
   const [pedigrees, setPedigrees] = useState<Pedigree[]>([]);
   const [ads, setAds] = useState<Ad[]>([]);
+  const [showPhotoModal, setShowPhotoModal] = useState(false);
 
   useEffect(() => {
     if (!username) return;
@@ -217,7 +218,9 @@ export default function ProfilePage() {
       {/* Profile Header */}
       <div className="rounded-xl p-6" style={steelFrame}>
         <div className="flex items-start gap-5">
-          {renderAvatar()}
+          <div className="cursor-pointer transition-transform hover:scale-105" onClick={() => { if (user?.profile_picture && !user.profile_picture.startsWith("emoji:")) setShowPhotoModal(true); }}>
+            {renderAvatar()}
+          </div>
           <div className="flex-1 min-w-0">
             {/* Username + Role */}
             <div className="flex items-center gap-3 flex-wrap">
@@ -422,6 +425,44 @@ export default function ProfilePage() {
           </div>
         )}
       </div>
+
+      {/* Photo Preview Modal */}
+      {showPhotoModal && user?.profile_picture && !user.profile_picture.startsWith("emoji:") && (
+        <div
+          className="fixed inset-0 z-[9999] flex items-center justify-center"
+          style={{ background: "rgba(0,0,0,0.85)", backdropFilter: "blur(8px)" }}
+          onClick={() => setShowPhotoModal(false)}
+        >
+          <div className="relative max-w-[90vw] max-h-[90vh]" onClick={(e) => e.stopPropagation()}>
+            <img
+              src={user.profile_picture}
+              alt={user.username}
+              className="rounded-xl"
+              style={{
+                maxWidth: "90vw",
+                maxHeight: "85vh",
+                objectFit: "contain",
+                border: "2px solid rgba(212,168,85,0.3)",
+                boxShadow: "0 20px 60px rgba(0,0,0,0.8)",
+              }}
+            />
+            <button
+              onClick={() => setShowPhotoModal(false)}
+              className="absolute -top-3 -right-3 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all hover:scale-110"
+              style={{
+                background: "rgba(30,30,30,0.9)",
+                color: "#fff",
+                border: "1px solid rgba(212,168,85,0.3)",
+              }}
+            >
+              ✕
+            </button>
+            <p className="text-center mt-3 text-sm font-medium" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+              {user.username}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

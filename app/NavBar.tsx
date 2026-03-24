@@ -433,7 +433,7 @@ export default function NavBar() {
                         </button>
                       )}
                     </div>
-                    {/* Notification List */}
+                    {/* Notification List - Grouped */}
                     <div className="max-h-80 overflow-y-auto">
                       {notifications.length === 0 ? (
                         <div className="p-6 text-center">
@@ -442,52 +442,109 @@ export default function NavBar() {
                             No notifications
                           </p>
                         </div>
-                      ) : notifications.map(notif => {
-                        const typeIcon = notif.type === "message" ? "💬" : notif.type === "marketplace" ? "🏪" : notif.type === "title" ? "🏆" : "🔔";
-                        return (
-                          <div key={notif.id}
+                      ) : (() => {
+                        // Group notifications
+                        const groups: { key: string; icon: string; title: string; body: string; link: string; ids: number[]; count: number; hasUnread: boolean; latestTime: string }[] = [];
+                        const groupMap = new Map<string, typeof groups[0]>();
+
+                        for (const notif of notifications) {
+                          let groupKey: string;
+                          if (notif.type === "message") {
+                            // Group by sender name (extract from title "New message from X")
+                            const match = notif.title.match(/from (.+)$/i);
+                            const sender = match ? match[1] : notif.title;
+                            groupKey = `msg_${sender}`;
+                            if (!groupMap.has(groupKey)) {
+                              groupMap.set(groupKey, { key: groupKey, icon: "💬", title: sender, body: notif.body, link: notif.link, ids: [], count: 0, hasUnread: false, latestTime: notif.created_at });
+                            }
+                          } else if (notif.type === "marketplace") {
+                            // Group by ad link
+                            const adLink = notif.link || "marketplace";
+                            groupKey = `mkt_${adLink}`;
+                            if (!groupMap.has(groupKey)) {
+                              const adTitle = notif.body || notif.title.replace(/^New /, "");
+                              groupMap.set(groupKey, { key: groupKey, icon: "🏪", title: adTitle, body: "", link: notif.link, ids: [], count: 0, hasUnread: false, latestTime: notif.created_at });
+                            }
+                          } else if (notif.type === "title") {
+                            groupKey = "title_all";
+                            if (!groupMap.has(groupKey)) {
+                              groupMap.set(groupKey, { key: groupKey, icon: "🏆", title: "Title tracking updates", body: "", link: notif.link, ids: [], count: 0, hasUnread: false, latestTime: notif.created_at });
+                            }
+                          } else {
+                            groupKey = `other_${notif.id}`;
+                            groupMap.set(groupKey, { key: groupKey, icon: "🔔", title: notif.title, body: notif.body, link: notif.link, ids: [], count: 0, hasUnread: false, latestTime: notif.created_at });
+                          }
+                          const g = groupMap.get(groupKey)!;
+                          g.ids.push(notif.id);
+                          g.count++;
+                          if (!notif.is_read) g.hasUnread = true;
+                          if (notif.created_at > g.latestTime) {
+                            g.latestTime = notif.created_at;
+                            g.body = notif.body;
+                            g.link = notif.link;
+                          }
+                        }
+
+                        return Array.from(groupMap.values()).sort((a, b) => b.latestTime.localeCompare(a.latestTime)).map(group => (
+                          <div key={group.key}
                             className="flex items-start gap-3 px-4 py-3 transition-colors hover:bg-white/5 cursor-pointer"
                             style={{
                               borderBottom: "1px solid rgba(30,64,120,0.2)",
-                              background: notif.is_read ? "transparent" : "rgba(212,168,85,0.03)",
+                              background: group.hasUnread ? "rgba(212,168,85,0.03)" : "transparent",
                             }}
                             onClick={() => {
-                              if (!notif.is_read) markNotificationRead(notif.id);
-                              if (notif.link) router.push(notif.link);
+                              group.ids.forEach(id => {
+                                const n = notifications.find(nn => nn.id === id);
+                                if (n && !n.is_read) markNotificationRead(id);
+                              });
+                              if (group.link) router.push(group.link);
                               setShowNotifications(false);
                             }}
                           >
-                            <span className="text-sm mt-0.5 flex-shrink-0">{typeIcon}</span>
+                            <span className="text-sm mt-0.5 flex-shrink-0">{group.icon}</span>
                             <div className="flex-1 min-w-0">
                               <p className="text-xs font-semibold truncate" style={{
-                                color: notif.is_read ? "var(--text-secondary)" : "var(--text-primary)",
+                                color: group.hasUnread ? "var(--text-primary)" : "var(--text-secondary)",
                                 fontFamily: "var(--font-table)",
                               }}>
-                                {notif.title}
+                                {group.count > 1 ? (
+                                  group.key.startsWith("msg_") ? `${group.count} new messages from ${group.title}` :
+                                  group.key.startsWith("mkt_") ? `${group.count} responses on ${group.title}` :
+                                  group.key === "title_all" ? `${group.count} title tracking updates` :
+                                  group.title
+                                ) : (
+                                  group.key.startsWith("msg_") ? `New message from ${group.title}` :
+                                  group.key.startsWith("mkt_") ? group.title :
+                                  group.key === "title_all" ? "1 title tracking update" :
+                                  group.title
+                                )}
                               </p>
-                              {notif.body && (
+                              {group.body && (
                                 <p className="text-[10px] mt-0.5 truncate" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
-                                  {notif.body}
+                                  {group.body}
                                 </p>
                               )}
                               <p className="text-[9px] mt-1" style={{ color: "#5a6a82", fontFamily: "var(--font-mono)" }}>
-                                {new Date(notif.created_at + "Z").toLocaleString()}
+                                {new Date(group.latestTime + "Z").toLocaleString()}
                               </p>
                             </div>
-                            {!notif.is_read && (
-                              <div className="w-2 h-2 rounded-full flex-shrink-0 mt-1.5" style={{ background: "var(--accent-gold)" }} />
+                            {group.hasUnread && (
+                              <div className="flex items-center gap-1 flex-shrink-0 mt-1.5">
+                                {group.count > 1 && <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full" style={{ background: "rgba(212,168,85,0.15)", color: "var(--accent-gold)" }}>{group.count}</span>}
+                                <div className="w-2 h-2 rounded-full" style={{ background: "var(--accent-gold)" }} />
+                              </div>
                             )}
                             <button
-                              onClick={(e) => { e.stopPropagation(); deleteNotification(notif.id); }}
+                              onClick={(e) => { e.stopPropagation(); group.ids.forEach(id => deleteNotification(id)); }}
                               className="text-[10px] flex-shrink-0 p-1 rounded transition-colors hover:bg-red-500/10"
                               style={{ color: "#5a6a82" }}
-                              title="Delete"
+                              title="Delete all"
                             >
                               ✕
                             </button>
                           </div>
-                        );
-                      })}
+                        ));
+                      })()}
                     </div>
                   </div>
                 </>
