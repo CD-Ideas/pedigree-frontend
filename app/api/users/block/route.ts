@@ -11,7 +11,8 @@ function getDb() {
   return db;
 }
 
-function getUser(cookieStore: ReturnType<typeof cookies>) {
+async function getUser() {
+  const cookieStore = await cookies();
   const raw = cookieStore.get("session")?.value;
   if (!raw) return null;
   try { return JSON.parse(raw); } catch { return null; }
@@ -19,8 +20,7 @@ function getUser(cookieStore: ReturnType<typeof cookies>) {
 
 // GET — check if a user is blocked + get blocked list
 export async function GET(req: NextRequest) {
-  const cookieStore = cookies();
-  const user = getUser(cookieStore);
+  const user = await getUser();
   if (!user) return NextResponse.json({ error: "Not logged in" }, { status: 401 });
 
   const blockedUserId = req.nextUrl.searchParams.get("user_id");
@@ -48,8 +48,7 @@ export async function GET(req: NextRequest) {
 
 // POST — block a user
 export async function POST(req: NextRequest) {
-  const cookieStore = cookies();
-  const user = getUser(cookieStore);
+  const user = await getUser();
   if (!user) return NextResponse.json({ error: "Not logged in" }, { status: 401 });
 
   const { blocked_id } = await req.json();
@@ -70,8 +69,7 @@ export async function POST(req: NextRequest) {
 
 // DELETE — unblock a user
 export async function DELETE(req: NextRequest) {
-  const cookieStore = cookies();
-  const user = getUser(cookieStore);
+  const user = await getUser();
   if (!user) return NextResponse.json({ error: "Not logged in" }, { status: 401 });
 
   const blocked_id = req.nextUrl.searchParams.get("blocked_id");
