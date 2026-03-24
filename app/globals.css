@@ -41,6 +41,90 @@
   --font-table: 'Rajdhani', sans-serif;
 }
 
+/* ── LIGHT THEME ──────────────────────────────────────────────────── */
+html.light {
+  --bg-deep: #f0f2f5;
+  --bg-surface: #ffffff;
+  --bg-elevated: #f8f9fa;
+  --bg-hover: rgba(0, 0, 0, 0.04);
+  --border: rgba(0, 0, 0, 0.1);
+  --border-bright: rgba(0, 0, 0, 0.15);
+
+  --text-primary: #1a1a2e;
+  --text-secondary: #4a5568;
+  --text-muted: #8a94a6;
+
+  --accent-red: #1d8cf8;
+  --accent-red-bright: #409eff;
+  --accent-red-dim: #1565c0;
+  --accent-red-glow: rgba(29, 140, 248, 0.1);
+
+  --accent-gold: #b8860b;
+  --accent-gold-bright: #d4a855;
+  --accent-gold-dim: #8b6914;
+  --accent-gold-glow: rgba(184, 134, 11, 0.08);
+  --accent-gold-glow-strong: rgba(184, 134, 11, 0.16);
+
+  --accent-blue: #2b7de9;
+  --accent-green: #16a34a;
+  --male-color: #3b82f6;
+  --female-color: #ec4899;
+}
+
+html.light body {
+  background: var(--bg-deep);
+  color: var(--text-primary);
+}
+
+html.light .ambient-bg {
+  background: var(--bg-deep) !important;
+}
+html.light .ambient-bg::before,
+html.light .ambient-bg::after,
+html.light .ambient-orb-3 {
+  display: none;
+}
+html.light .vignette::after {
+  display: none;
+}
+html.light .grain::before {
+  display: none;
+}
+html.light .particles {
+  display: none;
+}
+
+/* Light theme scrollbars */
+html.light ::-webkit-scrollbar { width: 8px; height: 8px; }
+html.light ::-webkit-scrollbar-track { background: #e5e7eb; }
+html.light ::-webkit-scrollbar-thumb { background: #b0b8c4; border-radius: 4px; }
+html.light ::-webkit-scrollbar-thumb:hover { background: #8a94a6; }
+
+/* Light theme glass panels */
+html.light .glass-panel-blue,
+html.light .glass-panel-gold,
+html.light .glass-panel-green,
+html.light .glass-panel-purple {
+  background: #ffffff !important;
+  border-color: rgba(0,0,0,0.1) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+  backdrop-filter: none !important;
+}
+html.light .glass-panel-blue:hover { border-color: rgba(29,140,248,0.4) !important; box-shadow: 0 4px 16px rgba(29,140,248,0.1) !important; }
+html.light .glass-panel-gold:hover { border-color: rgba(184,134,11,0.4) !important; box-shadow: 0 4px 16px rgba(184,134,11,0.1) !important; }
+html.light .glass-panel-green:hover { border-color: rgba(34,197,94,0.4) !important; box-shadow: 0 4px 16px rgba(34,197,94,0.1) !important; }
+html.light .glass-panel-purple:hover { border-color: rgba(168,85,247,0.4) !important; box-shadow: 0 4px 16px rgba(168,85,247,0.1) !important; }
+
+/* Light theme dash boxes */
+html.light .dash-box-hover {
+  background: #ffffff !important;
+  border-color: rgba(0,0,0,0.08) !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05) !important;
+}
+
+/* Light theme selection */
+html.light ::selection { background: rgba(29, 140, 248, 0.15); color: #1a1a2e; }
+
 @theme inline {
   --color-background: var(--bg-deep);
   --color-foreground: var(--text-primary);

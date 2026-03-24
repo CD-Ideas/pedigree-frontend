@@ -527,22 +527,22 @@ export default function AccountPage() {
                 { value: "dark", label: "Dark", icon: "🌙" },
                 { value: "light", label: "Light", icon: "☀️", disabled: true },
               ].map((t) => (
-                <button
-                  key={t.value}
-                  disabled={t.disabled}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
-                  style={{
-                    background: t.value === "dark" ? "rgba(212,168,85,0.1)" : "rgba(30,64,120,0.1)",
-                    border: t.value === "dark" ? "1px solid rgba(212,168,85,0.3)" : "1px solid rgba(30,64,120,0.2)",
-                    color: t.value === "dark" ? "var(--accent-gold)" : "#5a6a82",
-                    fontFamily: "var(--font-table)",
-                    opacity: t.disabled ? 0.4 : 1,
-                    cursor: t.disabled ? "not-allowed" : "pointer",
-                  }}
-                >
-                  <span>{t.icon}</span> {t.label}
-                  {t.disabled && <span className="text-[8px] ml-1">(Soon)</span>}
-                </button>
+                  <button
+                    key={t.value}
+                    disabled={t.disabled}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                    style={{
+                      background: t.value === "dark" ? "rgba(212,168,85,0.1)" : "rgba(30,64,120,0.1)",
+                      border: t.value === "dark" ? "1px solid rgba(212,168,85,0.3)" : "1px solid rgba(30,64,120,0.2)",
+                      color: t.value === "dark" ? "var(--accent-gold)" : "#5a6a82",
+                      fontFamily: "var(--font-table)",
+                      opacity: t.disabled ? 0.4 : 1,
+                      cursor: t.disabled ? "not-allowed" : "pointer",
+                    }}
+                  >
+                    <span>{t.icon}</span> {t.label}
+                    {t.disabled && <span className="text-[8px] ml-1">(Soon)</span>}
+                  </button>
               ))}
             </div>
           </div>
