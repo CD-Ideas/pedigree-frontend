@@ -108,6 +108,17 @@ function MessagesContent() {
     fetchThreads();
   }, [user]);
 
+  // Auto-open thread when ?user= param is present (from notification click)
+  useEffect(() => {
+    const targetUser = searchParams.get("user");
+    if (targetUser && threads.length > 0 && !selectedThread) {
+      const thread = threads.find(t => t.other_username.toLowerCase() === targetUser.toLowerCase());
+      if (thread) {
+        openThread(thread.thread_id);
+      }
+    }
+  }, [threads, searchParams]);
+
   // Auto-poll threads every 15 seconds
   useEffect(() => {
     if (!user) return;
@@ -188,6 +199,21 @@ function MessagesContent() {
         // Update thread unread count locally
         setThreads(prev => prev.map(t => t.thread_id === threadId ? { ...t, unread_count: 0 } : t));
         setTimeout(() => { if (chatContainerRef.current) chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight; }, 50);
+        // Mark message notifications from this sender as read
+        setThreads(prev => {
+          const thread = prev.find(t => t.thread_id === threadId);
+          if (thread) {
+            fetch("/api/notifications", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ action: "mark_read_by_sender", userId: user.id, senderName: thread.other_username }),
+            }).then(() => {
+              // Tell NavBar to refresh notifications
+              window.dispatchEvent(new Event("refreshNotifications"));
+            }).catch(() => {});
+          }
+          return prev;
+        });
       })
       .catch(() => setThreadLoading(false));
   };

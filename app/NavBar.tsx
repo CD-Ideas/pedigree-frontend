@@ -208,7 +208,10 @@ export default function NavBar() {
     };
     fetchNotifications();
     const interval = setInterval(fetchNotifications, 30000); // every 30s
-    return () => clearInterval(interval);
+    // Listen for custom event to re-fetch notifications immediately
+    const handleRefresh = () => fetchNotifications();
+    window.addEventListener("refreshNotifications", handleRefresh);
+    return () => { clearInterval(interval); window.removeEventListener("refreshNotifications", handleRefresh); };
   }, [userId, loggedIn]);
 
   const markNotificationRead = useCallback(async (notifId: number) => {
@@ -487,7 +490,7 @@ export default function NavBar() {
                             const sender = match ? match[1] : notif.title;
                             groupKey = `msg_${sender}`;
                             if (!groupMap.has(groupKey)) {
-                              groupMap.set(groupKey, { key: groupKey, icon: "💬", title: sender, body: notif.body, link: notif.link, ids: [], count: 0, hasUnread: false, latestTime: notif.created_at });
+                              groupMap.set(groupKey, { key: groupKey, icon: "💬", title: sender, body: notif.body, link: `/messages?user=${encodeURIComponent(sender)}`, ids: [], count: 0, hasUnread: false, latestTime: notif.created_at });
                             }
                           } else if (notif.type === "marketplace") {
                             // Group by ad link

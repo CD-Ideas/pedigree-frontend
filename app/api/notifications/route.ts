@@ -100,6 +100,24 @@ print(json.dumps({"success": True}))
       return NextResponse.json(JSON.parse(stdout));
     }
 
+    if (action === "mark_read_by_sender") {
+      const { senderName } = body;
+      if (!userId || !senderName) return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+      const script = `
+import sqlite3, json, sys
+user_id = int(sys.argv[1])
+sender = sys.argv[2]
+conn = sqlite3.connect("${DB_PATH}")
+conn.execute("UPDATE notifications SET is_read = 1 WHERE user_id = ? AND type = 'message' AND title LIKE '%' || ? || '%' AND is_read = 0", (user_id, sender))
+conn.commit()
+updated = conn.execute("SELECT changes()").fetchone()[0]
+conn.close()
+print(json.dumps({"success": True, "updated": updated}))
+`;
+      const { stdout } = await execFileAsync("python3", ["-c", script, String(userId), senderName], { timeout: 10000 });
+      return NextResponse.json(JSON.parse(stdout));
+    }
+
     if (action === "create") {
       if (!userId || !type || !title) return NextResponse.json({ error: "Missing fields" }, { status: 400 });
       const script = `
