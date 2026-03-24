@@ -53,6 +53,7 @@ function MessagesContent() {
   const [loading, setLoading] = useState(true);
   const [threadLoading, setThreadLoading] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   // Compose
   const [showCompose, setShowCompose] = useState(false);
@@ -152,7 +153,7 @@ function MessagesContent() {
           setThreadMessages(prev => {
             if (newMsgs.length !== prev.length || (newMsgs.length > 0 && prev.length > 0 && newMsgs[newMsgs.length - 1].id !== prev[prev.length - 1].id)) {
               // New messages arrived — scroll to bottom
-              setTimeout(() => chatEndRef.current?.scrollIntoView({ behavior: "smooth" }), 100);
+              setTimeout(() => { if (chatContainerRef.current) chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight; }, 50);
               return newMsgs;
             }
             // Update read status without replacing (for Seen/Delivered updates)
@@ -178,7 +179,7 @@ function MessagesContent() {
         setThreadLoading(false);
         // Update thread unread count locally
         setThreads(prev => prev.map(t => t.thread_id === threadId ? { ...t, unread_count: 0 } : t));
-        setTimeout(() => chatEndRef.current?.scrollIntoView({ behavior: "smooth" }), 100);
+        setTimeout(() => { if (chatContainerRef.current) chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight; }, 50);
       })
       .catch(() => setThreadLoading(false));
   };
@@ -232,9 +233,29 @@ function MessagesContent() {
       });
       const data = await res.json();
       if (!data.error) {
+        const sentMsg = replyText.trim();
+        const sentAttachments = [...pendingAttachments];
         setReplyText("");
         setPendingAttachments([]);
-        openThread(selectedThread);
+        // Append message locally instead of re-fetching
+        setThreadMessages(prev => [...prev, {
+          id: data.messageId || Date.now(),
+          from_user_id: user.id,
+          to_user_id: thread.other_user_id,
+          body: msgBody,
+          created_at: new Date().toISOString(),
+          is_read: 0,
+          attachments: attachmentsJson || null,
+          thread_id: selectedThread,
+        } as Message]);
+        // Update thread list preview
+        setThreads(prev => prev.map(t => t.thread_id === selectedThread ? { ...t, last_body: msgBody, last_time: new Date().toISOString() } : t));
+        // Scroll chat to bottom instantly
+        setTimeout(() => {
+          if (chatContainerRef.current) {
+            chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+          }
+        }, 50);
       }
     } catch (_e) {}
     setSending(false);
@@ -614,7 +635,7 @@ function MessagesContent() {
               </div>
 
               {/* Chat Messages */}
-              <div className="flex-1 overflow-y-auto px-2 sm:px-4 py-3 space-y-3" style={{ maxHeight: "min(350px, 50vh)", background: "linear-gradient(180deg, #eef1f5 0%, #e4e8ee 100%)" }}>
+              <div ref={chatContainerRef} className="flex-1 overflow-y-auto px-2 sm:px-4 py-3 space-y-3" style={{ maxHeight: "min(350px, 50vh)", background: "linear-gradient(180deg, #eef1f5 0%, #e4e8ee 100%)" }}>
                 {threadLoading ? (
                   <div className="flex justify-center py-8">
                     <div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin"
