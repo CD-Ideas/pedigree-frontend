@@ -27,10 +27,10 @@ export async function GET(req: NextRequest) {
   try {
     const conn = getDb();
 
-    // Use FTS5 for fast full-text search
-    const ftsQuery = q.replace(/['"]/g, '').split(/\s+/).map(w => `"${w}"*`).join(' ');
     let dogs: { dog_id: number; registered_name: string; photo_url: string | null; sex: string }[] = [];
 
+    // 1. Try FTS5 first (fast, 2ms)
+    const ftsQuery = q.replace(/['"]/g, '').split(/\s+/).map(w => `"${w}"*`).join(' ');
     try {
       dogs = conn.prepare(
         `SELECT d.dog_id, d.registered_name, d.photo_url, d.sex
@@ -41,10 +41,23 @@ export async function GET(req: NextRequest) {
          LIMIT ?`
       ).all(ftsQuery, limit) as typeof dogs;
     } catch (_ftsErr) {
-      // FTS fallback: use LIKE if FTS fails
-      dogs = conn.prepare(
+      // FTS failed, will fall through to LIKE
+    }
+
+    // 2. If FTS returned few results, supplement with LIKE search
+    //    Handles apostrophes (BWK'S), special chars, and partial matches
+    if (dogs.length < limit) {
+      const existing = new Set(dogs.map(d => d.dog_id));
+      const likeResults = conn.prepare(
         "SELECT dog_id, registered_name, photo_url, sex FROM dogs WHERE registered_name LIKE ? ORDER BY view_count DESC LIMIT ?"
       ).all('%' + q + '%', limit) as typeof dogs;
+
+      for (const d of likeResults) {
+        if (!existing.has(d.dog_id) && dogs.length < limit) {
+          dogs.push(d);
+          existing.add(d.dog_id);
+        }
+      }
     }
 
     return NextResponse.json({ dogs });
