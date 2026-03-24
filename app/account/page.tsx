@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { playNotifChime } from "@/app/sounds";
 
 const steelFrame = {
   background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)",
@@ -51,6 +52,9 @@ export default function AccountPage() {
   const [showDelete, setShowDelete] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState("");
 
+  // Sound mute
+  const [soundMuted, setSoundMuted] = useState(false);
+
   // Messages
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState<"success" | "error">("success");
@@ -73,6 +77,7 @@ export default function AccountPage() {
         setAvatarPreview(u.profile_picture || "");
       } else router.push("/login");
     } catch (_e) { router.push("/login"); }
+    setSoundMuted(localStorage.getItem("soundMuted") === "true");
   }, [router]);
 
   // Save profile (username/email)
@@ -548,7 +553,7 @@ export default function AccountPage() {
           </div>
 
           {/* Notifications */}
-          <div className="flex items-center justify-between py-2">
+          <div className="flex items-center justify-between py-2" style={{ borderBottom: "1px solid rgba(30,64,120,0.3)" }}>
             <div>
               <p className="text-sm font-semibold" style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)" }}>Email Notifications</p>
               <p className="text-[10px] mt-0.5" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
@@ -571,6 +576,41 @@ export default function AccountPage() {
               style={{ background: "rgba(30,64,120,0.2)", border: "1px solid rgba(30,64,120,0.3)" }}
             >
               <span className="absolute top-0.5 left-0.5 w-5 h-5 rounded-full transition-all" style={{ background: "#5a6a82" }} />
+            </button>
+          </div>
+
+          {/* Notification Sounds */}
+          <div className="flex items-center justify-between py-2">
+            <div>
+              <p className="text-sm font-semibold" style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)" }}>Notification Sounds</p>
+              <p className="text-[10px] mt-0.5" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                Play sounds for new notifications and messages
+              </p>
+            </div>
+            <button
+              onClick={() => {
+                const newMuted = !soundMuted;
+                setSoundMuted(newMuted);
+                localStorage.setItem("soundMuted", newMuted ? "true" : "false");
+                showMsg(`Notification sounds ${newMuted ? "muted" : "enabled"}`, "success");
+                if (!newMuted) {
+                  // Play a preview chime so user hears the sound is on
+                  setTimeout(() => playNotifChime(), 200);
+                }
+              }}
+              className="relative w-11 h-6 rounded-full transition-all flex-shrink-0"
+              style={{
+                background: soundMuted ? "rgba(30,64,120,0.2)" : "rgba(34,197,94,0.3)",
+                border: `1px solid ${soundMuted ? "rgba(30,64,120,0.3)" : "rgba(34,197,94,0.3)"}`,
+              }}
+            >
+              <span
+                className="absolute top-0.5 left-0.5 w-5 h-5 rounded-full transition-all"
+                style={{
+                  background: soundMuted ? "#5a6a82" : "#22c55e",
+                  transform: soundMuted ? "translateX(0)" : "translateX(20px)",
+                }}
+              />
             </button>
           </div>
         </div>

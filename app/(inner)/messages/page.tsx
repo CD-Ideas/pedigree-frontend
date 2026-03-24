@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
+import { playChatBubble } from "@/app/sounds";
 
 const GLASS_BOX = {
   background: "linear-gradient(145deg, rgba(22,26,35,0.97) 0%, rgba(14,17,24,0.99) 50%, rgba(18,22,30,0.97) 100%)",
@@ -152,7 +153,14 @@ function MessagesContent() {
           const newMsgs = data.messages || [];
           setThreadMessages(prev => {
             if (newMsgs.length !== prev.length || (newMsgs.length > 0 && prev.length > 0 && newMsgs[newMsgs.length - 1].id !== prev[prev.length - 1].id)) {
-              // New messages arrived — scroll to bottom
+              // New messages arrived — check if from other user and play sound
+              if (newMsgs.length > prev.length) {
+                const latestMsg = newMsgs[newMsgs.length - 1];
+                if (latestMsg && latestMsg.from_user_id !== user.id) {
+                  playChatBubble();
+                }
+              }
+              // Scroll to bottom
               setTimeout(() => { if (chatContainerRef.current) chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight; }, 50);
               return newMsgs;
             }
@@ -656,7 +664,7 @@ function MessagesContent() {
                           borderRadius: isMine ? "16px 16px 4px 16px" : "16px 16px 16px 4px",
                           boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
                         }}>
-                        <p className="text-sm whitespace-pre-wrap" style={{ color: "#1a202c", fontFamily: "var(--font-table)", lineHeight: 1.6 }}>
+                        <p className="text-sm whitespace-pre-wrap" style={{ color: "#1a202c", fontFamily: "var(--font-table)", lineHeight: 1.6, wordBreak: "break-word", overflowWrap: "break-word" }}>
                           {msg.body}
                         </p>
                         {msg.attachments && msg.attachments !== "" && (() => {

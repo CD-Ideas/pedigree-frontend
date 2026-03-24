@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { getDogColor } from "@/app/utils/colors";
+import { playNotifChime, playMessagePop } from "@/app/sounds";
 
 const LOGO = "https://i.imgur.com/cAvQemZ.png";
 
@@ -124,6 +125,8 @@ export default function NavBar() {
   const [notifications, setNotifications] = useState<{ id: number; type: string; title: string; body: string; link: string; is_read: number; created_at: string }[]>([]);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showAvatarPicker, setShowAvatarPicker] = useState(false);
+  const prevUnreadCountRef = useRef<number | null>(null);
+  const prevMessageNotifCountRef = useRef<number | null>(null);
 
   const AVATAR_OPTIONS = [
     { id: "dog1", emoji: "🐕", label: "Dog" },
@@ -169,8 +172,37 @@ export default function NavBar() {
       fetch(`/api/notifications?userId=${userId}`)
         .then(r => r.json())
         .then(data => {
-          setUnreadCount(data.unread_count || 0);
-          setNotifications(data.notifications || []);
+          const newUnread = data.unread_count || 0;
+          const notifs = data.notifications || [];
+
+          // Count message-type notifications
+          const msgNotifCount = notifs.filter((n: { type: string; is_read: number }) => n.type === "message" && !n.is_read).length;
+
+          // Play sounds only when counts INCREASE (not on first load)
+          if (prevUnreadCountRef.current !== null && newUnread > prevUnreadCountRef.current) {
+            // Check if the increase is from message notifications
+            const isOnMessagesPage = typeof window !== "undefined" && window.location.pathname.startsWith("/messages");
+            if (prevMessageNotifCountRef.current !== null && msgNotifCount > prevMessageNotifCountRef.current && !isOnMessagesPage) {
+              playMessagePop();
+            } else if (msgNotifCount === (prevMessageNotifCountRef.current || 0)) {
+              // Non-message notification increased
+              playNotifChime();
+            } else if (isOnMessagesPage) {
+              // On messages page, still chime for non-message notifs
+              if (newUnread - msgNotifCount > (prevUnreadCountRef.current - (prevMessageNotifCountRef.current || 0))) {
+                playNotifChime();
+              }
+            } else {
+              // Mixed — play message pop (takes priority)
+              playMessagePop();
+            }
+          }
+
+          prevUnreadCountRef.current = newUnread;
+          prevMessageNotifCountRef.current = msgNotifCount;
+
+          setUnreadCount(newUnread);
+          setNotifications(notifs);
         })
         .catch(() => {});
     };
