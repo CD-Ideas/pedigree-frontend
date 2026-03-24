@@ -72,6 +72,7 @@ function MessagesContent() {
   const [onlineData, setOnlineData] = useState<{ members_online: number; guests_online: number; online_members: { id: number; username: string; profile_picture: string | null }[] }>({ members_online: 0, guests_online: 0, online_members: [] });
   const [showAllOnline, setShowAllOnline] = useState(false);
   const [onlineSearch, setOnlineSearch] = useState("");
+  const [convSearch, setConvSearch] = useState("");
 
   useEffect(() => {
     try {
@@ -424,13 +425,31 @@ function MessagesContent() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4" style={{ minHeight: "min(500px, 70vh)" }}>
         {/* Thread List */}
         <div className="md:col-span-1 rounded-xl overflow-hidden" style={GLASS_BOX}>
-          <div className="px-4 py-3" style={{ borderBottom: "1px solid rgba(212,168,85,0.1)" }}>
-            <p className="text-[10px] uppercase tracking-widest font-semibold"
-              style={{ color: "#d4a855", fontFamily: "var(--font-table)" }}>
-              Conversations
-            </p>
+          <div className="px-4 py-3 flex-shrink-0" style={{ borderBottom: "1px solid rgba(212,168,85,0.1)" }}>
+            <div className="flex items-center justify-between">
+              <p className="text-[10px] uppercase tracking-widest font-semibold"
+                style={{ color: "#d4a855", fontFamily: "var(--font-table)" }}>
+                Conversations
+              </p>
+              <p className="text-[9px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                <span style={{ color: "#d4a855", fontWeight: 700 }}>{threads.length}</span> total
+              </p>
+            </div>
+            <input
+              type="text"
+              placeholder="Search conversations..."
+              value={convSearch}
+              onChange={e => setConvSearch(e.target.value)}
+              className="w-full mt-2 rounded-lg px-2.5 py-1.5 text-[10px] outline-none"
+              style={{
+                background: "rgba(20,20,25,0.8)",
+                border: "1px solid rgba(212,168,85,0.15)",
+                color: "var(--text-primary)",
+                fontFamily: "var(--font-table)",
+              }}
+            />
           </div>
-          <div className="max-h-[300px] md:max-h-[450px] overflow-y-auto">
+          <div className="overflow-y-auto" style={{ maxHeight: "290px" }}>
             {loading ? (
               <div className="p-6 text-center">
                 <div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin mx-auto mb-2"
@@ -446,7 +465,13 @@ function MessagesContent() {
                   Click &quot;+ New Message&quot; to start
                 </p>
               </div>
-            ) : threads.map(t => {
+            ) : threads.filter(t => t.other_username.toLowerCase().includes(convSearch.toLowerCase())).length === 0 ? (
+              <div className="p-4 text-center">
+                <p className="text-[10px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                  No conversations found
+                </p>
+              </div>
+            ) : threads.filter(t => t.other_username.toLowerCase().includes(convSearch.toLowerCase())).map(t => {
               const accentColor = selectedThread === t.thread_id ? "#d4a855" : t.unread_count > 0 ? "#60a5fa" : "#d4a855";
               return (
               <button key={t.thread_id} onClick={() => { openThread(t.thread_id); setShowCompose(false); }}
