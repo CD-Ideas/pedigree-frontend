@@ -71,6 +71,7 @@ function MessagesContent() {
   const [composePendingAttachments, setComposePendingAttachments] = useState<{ url: string; name: string; size: number; isImage: boolean }[]>([]);
   const [onlineData, setOnlineData] = useState<{ members_online: number; guests_online: number; online_members: { id: number; username: string; profile_picture: string | null }[] }>({ members_online: 0, guests_online: 0, online_members: [] });
   const [showAllOnline, setShowAllOnline] = useState(false);
+  const [onlineSearch, setOnlineSearch] = useState("");
 
   useEffect(() => {
     try {
@@ -419,45 +420,10 @@ function MessagesContent() {
         </div>
       )}
 
-      {/* Main Layout: Thread List + Chat */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4" style={{ minHeight: "min(500px, 70vh)" }}>
+      {/* Main Layout: Thread List + Chat + Online */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4" style={{ minHeight: "min(500px, 70vh)" }}>
         {/* Thread List */}
         <div className="md:col-span-1 rounded-xl overflow-hidden" style={GLASS_BOX}>
-          {/* Who's Online */}
-          <div className="px-4 py-3" style={{ borderBottom: "1px solid rgba(212,168,85,0.1)" }}>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#22c55e", boxShadow: "0 0 6px #22c55e" }} />
-              <p className="text-[10px] uppercase tracking-widest font-semibold"
-                style={{ color: "#d4a855", fontFamily: "var(--font-table)" }}>
-                Online — <span style={{ color: "#22c55e" }}>{onlineData.members_online}</span> member{onlineData.members_online !== 1 ? "s" : ""}
-              </p>
-            </div>
-            {onlineData.online_members.length > 0 && (
-              <div className="flex flex-wrap gap-1.5">
-                {(showAllOnline ? onlineData.online_members : onlineData.online_members.slice(0, 10)).map(m => (
-                  <a key={m.id} href={`/profile/${m.username}`}
-                    className="flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-semibold transition-all hover:scale-105"
-                    style={{
-                      background: "linear-gradient(135deg, rgba(34,197,94,0.12), rgba(34,197,94,0.04))",
-                      border: "1px solid rgba(34,197,94,0.2)",
-                      color: "#22c55e",
-                      fontFamily: "var(--font-table)",
-                    }}>
-                    <span className="w-1 h-1 rounded-full" style={{ background: "#22c55e" }} />
-                    {m.username}
-                  </a>
-                ))}
-                {onlineData.online_members.length > 10 && (
-                  <button onClick={() => setShowAllOnline(!showAllOnline)}
-                    className="text-[9px] font-semibold px-1.5 py-0.5 rounded transition-all hover:scale-105"
-                    style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
-                    {showAllOnline ? "Show less" : `+ ${onlineData.online_members.length - 10} more`}
-                  </button>
-                )}
-              </div>
-            )}
-          </div>
-
           <div className="px-4 py-3" style={{ borderBottom: "1px solid rgba(212,168,85,0.1)" }}>
             <p className="text-[10px] uppercase tracking-widest font-semibold"
               style={{ color: "#d4a855", fontFamily: "var(--font-table)" }}>
@@ -750,6 +716,91 @@ function MessagesContent() {
               </p>
             </div>
           )}
+        </div>
+
+        {/* Who's Online - Right Panel */}
+        <div className="hidden md:flex md:flex-col md:col-span-1 rounded-xl overflow-hidden" style={GLASS_BOX}>
+          <div className="px-4 py-3 flex-shrink-0" style={{ borderBottom: "1px solid rgba(212,168,85,0.1)" }}>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#22c55e", boxShadow: "0 0 6px #22c55e" }} />
+                <p className="text-[10px] uppercase tracking-widest font-semibold"
+                  style={{ color: "#d4a855", fontFamily: "var(--font-table)" }}>
+                  Online
+                </p>
+              </div>
+              <p className="text-[9px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                <span style={{ color: "#22c55e", fontWeight: 700 }}>{onlineData.members_online}</span> member{onlineData.members_online !== 1 ? "s" : ""} : <span style={{ color: "#d4a855", fontWeight: 700 }}>{onlineData.guests_online}</span> guest{onlineData.guests_online !== 1 ? "s" : ""}
+              </p>
+            </div>
+            <input
+              type="text"
+              value={onlineSearch}
+              onChange={e => setOnlineSearch(e.target.value)}
+              placeholder="Search online..."
+              className="w-full mt-2 rounded-lg px-2.5 py-1.5 text-[10px] outline-none"
+              style={{
+                background: "rgba(20,20,25,0.8)",
+                border: "1px solid rgba(212,168,85,0.15)",
+                color: "var(--text-primary)",
+                fontFamily: "var(--font-table)",
+              }}
+            />
+          </div>
+          <div className="overflow-y-auto" style={{ maxHeight: "290px" }}>
+            {(() => {
+              const filtered = onlineData.online_members.filter(m =>
+                m.username.toLowerCase().includes(onlineSearch.toLowerCase())
+              );
+              return filtered.length > 0 ? (
+                <div className="py-1">
+                  {filtered.map(m => (
+                    <a key={m.id} href={`/profile/${m.username}`}
+                      className="block mx-2 my-1.5 rounded-lg p-2.5 hover:scale-[1.02] transition-all"
+                      style={{
+                        background: `linear-gradient(135deg, #22c55e0a, #22c55e05, #0b1120)`,
+                        border: `1px solid #22c55e22`,
+                      }}>
+                      <div className="flex items-center gap-2.5">
+                        <div className="relative flex-shrink-0">
+                          {m.profile_picture ? (
+                            <img src={m.profile_picture} alt="" className="w-10 h-8 rounded-md object-cover"
+                              style={{ border: "1.5px solid #22c55e55" }} />
+                          ) : (
+                            <div className="w-10 h-10 rounded-md flex items-center justify-center text-sm font-bold"
+                              style={{
+                                background: `linear-gradient(135deg, #22c55e30, #22c55e15)`,
+                                border: `1.5px solid #22c55e55`,
+                                color: "#22c55e",
+                              }}>
+                              {m.username[0].toUpperCase()}
+                            </div>
+                          )}
+                          <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2"
+                            style={{ background: "#22c55e", borderColor: "#1e1e1e" }} />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <span className="text-xs font-bold truncate block"
+                            style={{ color: "#22c55e", fontFamily: "var(--font-table)" }}>
+                            {m.username}
+                          </span>
+                          <span className="text-[9px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                            Online now
+                          </span>
+                        </div>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              ) : (
+                <div className="p-4 text-center">
+                  <p className="text-[10px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                    {onlineSearch ? "No matches" : "No members online"}
+                  </p>
+                </div>
+              );
+            })()}
+          </div>
         </div>
       </div>
     </div>
