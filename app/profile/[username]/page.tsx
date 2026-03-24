@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 const steelFrame = {
   border: "1.5px solid rgba(255,255,255,0.06)",
@@ -73,6 +73,7 @@ function formatDate(dateStr: string): string {
 
 export default function ProfilePage() {
   const params = useParams();
+  const router = useRouter();
   const username = params.username as string;
 
   const [loading, setLoading] = useState(true);
@@ -81,6 +82,14 @@ export default function ProfilePage() {
   const [pedigrees, setPedigrees] = useState<Pedigree[]>([]);
   const [ads, setAds] = useState<Ad[]>([]);
   const [showPhotoModal, setShowPhotoModal] = useState(false);
+  const [currentUsername, setCurrentUsername] = useState<string | null>(null);
+
+  useEffect(() => {
+    try {
+      const u = JSON.parse(localStorage.getItem("user") || "null");
+      if (u?.username) setCurrentUsername(u.username);
+    } catch {}
+  }, []);
 
   useEffect(() => {
     if (!username) return;
@@ -222,7 +231,7 @@ export default function ProfilePage() {
             {renderAvatar()}
           </div>
           <div className="flex-1 min-w-0">
-            {/* Username + Role */}
+            {/* Username + Role + Message */}
             <div className="flex items-center gap-3 flex-wrap">
               <h1
                 className="text-xl font-bold"
@@ -244,6 +253,21 @@ export default function ProfilePage() {
               >
                 {user.role || "Member"}
               </span>
+              {currentUsername && currentUsername !== user.username && (
+                <button
+                  onClick={() => router.push(`/messages?to=${encodeURIComponent(user.username)}`)}
+                  className="flex items-center gap-1.5 px-3 py-1 rounded-lg text-[11px] font-semibold transition-all hover:scale-105"
+                  style={{
+                    background: "rgba(212,168,85,0.12)",
+                    border: "1px solid rgba(212,168,85,0.25)",
+                    color: "var(--accent-gold)",
+                    fontFamily: "var(--font-table)",
+                  }}
+                  title={`Message ${user.username}`}
+                >
+                  <span>💬</span> Message
+                </button>
+              )}
             </div>
 
             {/* Online Status */}

@@ -571,10 +571,20 @@ function MessagesContent() {
               <div className="px-4 py-3 flex items-center justify-between flex-shrink-0"
                 style={{ borderBottom: "1px solid rgba(212,168,85,0.12)", background: "linear-gradient(180deg, rgba(212,168,85,0.04) 0%, transparent 100%)" }}>
                 <div className="flex items-center gap-2">
-                  <span className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
-                    style={{ background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)" }}>
-                    {(selectedThreadData.other_username || "?")[0].toUpperCase()}
-                  </span>
+                  {selectedThreadData.other_profile_picture && !selectedThreadData.other_profile_picture.startsWith("emoji:") ? (
+                    <img src={selectedThreadData.other_profile_picture} alt="" className="w-9 h-7 rounded-md object-cover"
+                      style={{ border: "1.5px solid var(--accent-gold)" }} />
+                  ) : selectedThreadData.other_profile_picture?.startsWith("emoji:") ? (
+                    <span className="w-8 h-8 rounded-full flex items-center justify-center"
+                      style={{ background: "linear-gradient(135deg, #1a2744, #0e1828)", border: "1.5px solid var(--accent-gold)" }}>
+                      <span className="text-sm">{selectedThreadData.other_profile_picture.replace("emoji:", "")}</span>
+                    </span>
+                  ) : (
+                    <span className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
+                      style={{ background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)" }}>
+                      {(selectedThreadData.other_username || "?")[0].toUpperCase()}
+                    </span>
+                  )}
                   <div>
                     <div className="flex items-center gap-2">
                       <p className="text-sm font-bold" style={{ color: "#d4a855", fontFamily: "var(--font-table)" }}>
@@ -775,19 +785,19 @@ function MessagesContent() {
           <div className="overflow-y-auto" style={{ maxHeight: "290px" }}>
             {(() => {
               const filtered = onlineData.online_members.filter(m =>
-                m.username.toLowerCase().includes(onlineSearch.toLowerCase())
+                m.id !== user?.id && m.username.toLowerCase().includes(onlineSearch.toLowerCase())
               );
               return filtered.length > 0 ? (
                 <div className="py-1">
                   {filtered.map(m => (
-                    <a key={m.id} href={`/profile/${m.username}`}
-                      className="block mx-2 my-1.5 rounded-lg p-2.5 hover:scale-[1.02] transition-all"
+                    <div key={m.id}
+                      className="mx-2 my-1.5 rounded-lg p-2.5 hover:scale-[1.02] transition-all"
                       style={{
                         background: `linear-gradient(135deg, #22c55e0a, #22c55e05, #0b1120)`,
                         border: `1px solid #22c55e22`,
                       }}>
                       <div className="flex items-center gap-2.5">
-                        <div className="relative flex-shrink-0">
+                        <a href={`/profile/${m.username}`} className="relative flex-shrink-0 hover:opacity-80 transition-opacity">
                           {m.profile_picture ? (
                             <img src={m.profile_picture} alt="" className="w-10 h-8 rounded-md object-cover"
                               style={{ border: "1.5px solid #22c55e55" }} />
@@ -803,8 +813,8 @@ function MessagesContent() {
                           )}
                           <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2"
                             style={{ background: "#22c55e", borderColor: "#1e1e1e" }} />
-                        </div>
-                        <div className="flex-1 min-w-0">
+                        </a>
+                        <a href={`/profile/${m.username}`} className="flex-1 min-w-0 hover:opacity-80 transition-opacity">
                           <span className="text-xs font-bold truncate block"
                             style={{ color: "#22c55e", fontFamily: "var(--font-table)" }}>
                             {m.username}
@@ -812,9 +822,17 @@ function MessagesContent() {
                           <span className="text-[9px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
                             Online now
                           </span>
-                        </div>
+                        </a>
+                        <button
+                          onClick={() => { setToUsername(m.username); setShowCompose(true); setSelectedThread(null); }}
+                          className="flex-shrink-0 w-7 h-7 rounded-md flex items-center justify-center transition-all hover:scale-110"
+                          style={{ background: "rgba(212,168,85,0.12)", border: "1px solid rgba(212,168,85,0.25)" }}
+                          title={`Message ${m.username}`}
+                        >
+                          <span className="text-xs">💬</span>
+                        </button>
                       </div>
-                    </a>
+                    </div>
                   ))}
                 </div>
               ) : (

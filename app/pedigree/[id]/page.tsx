@@ -852,7 +852,7 @@ export default function PublicPedigreePage() {
   const [tab, setTab] = useState<"pedigree" | "photos" | "offspring" | "siblings" | "pedstats" | "titles">("pedigree");
   const [hoverPhoto, setHoverPhoto] = useState<string | null>(null);
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
-  const [activeTab, setActiveTab] = useState<string>("offspring");
+  const [activeTab, setActiveTab] = useState<string>("");
 
   useEffect(() => {
     setLoading(true);
