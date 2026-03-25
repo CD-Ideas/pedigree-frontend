@@ -62,7 +62,7 @@ import sqlite3, json
 
 conn = sqlite3.connect("${DB_PATH}")
 conn.row_factory = sqlite3.Row
-rows = conn.execute("SELECT * FROM support_messages ORDER BY created_at DESC LIMIT 100").fetchall()
+rows = conn.execute("SELECT * FROM support_messages WHERE (deleted_by IS NULL OR deleted_by = '' OR deleted_by NOT LIKE '%admin%') ORDER BY created_at DESC LIMIT 100").fetchall()
 result = [dict(r) for r in rows]
 conn.close()
 print(json.dumps(result, default=str))
@@ -75,8 +75,8 @@ username = sys.argv[2]
 conn = sqlite3.connect("${DB_PATH}")
 conn.row_factory = sqlite3.Row
 rows = conn.execute(
-    "SELECT * FROM support_messages WHERE name = ? OR email = (SELECT email FROM users WHERE id = ?) ORDER BY created_at DESC LIMIT 50",
-    (username, user_id)
+    "SELECT * FROM support_messages WHERE (name = ? OR email = (SELECT email FROM users WHERE id = ?)) AND (deleted_by IS NULL OR deleted_by = '' OR deleted_by NOT LIKE '%user_' || CAST(? AS TEXT) || '%') ORDER BY created_at DESC LIMIT 50",
+    (username, user_id, user_id)
 ).fetchall()
 result = [dict(r) for r in rows]
 conn.close()
@@ -89,5 +89,42 @@ print(json.dumps(result, default=str))
   } catch (e) {
     console.error("Support GET error:", e);
     return NextResponse.json({ error: "Failed to fetch messages" }, { status: 500 });
+  }
+}
+
+// DELETE — soft delete a support message (one-sided)
+export async function DELETE(req: NextRequest) {
+  try {
+    const messageId = req.nextUrl.searchParams.get("id");
+    const userId = req.nextUrl.searchParams.get("userId");
+    const role = req.nextUrl.searchParams.get("role");
+
+    if (!messageId || !userId) return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+
+    const deletedBy = role === "admin" ? "admin" : `user_${userId}`;
+
+    const script = `
+import sqlite3, json, sys
+
+msg_id = int(sys.argv[1])
+deleted_by_tag = sys.argv[2]
+
+conn = sqlite3.connect("${DB_PATH}")
+current = conn.execute("SELECT deleted_by FROM support_messages WHERE id = ?", (msg_id,)).fetchone()
+if current:
+    existing = current[0] or ""
+    if deleted_by_tag not in existing:
+        new_val = (existing + "," + deleted_by_tag).strip(",")
+        conn.execute("UPDATE support_messages SET deleted_by = ? WHERE id = ?", (new_val, msg_id))
+        conn.commit()
+conn.close()
+print(json.dumps({"success": True}))
+`;
+
+    const { stdout } = await execFileAsync("python3", ["-c", script, messageId, deletedBy], { timeout: 5000 });
+    return NextResponse.json(JSON.parse(stdout));
+  } catch (e) {
+    console.error("Support DELETE error:", e);
+    return NextResponse.json({ error: "Failed to delete" }, { status: 500 });
   }
 }

@@ -239,7 +239,7 @@ export default function NavBar() {
         .catch(() => {});
     };
     fetchNotifications();
-    const interval = setInterval(fetchNotifications, 30000); // every 30s
+    const interval = setInterval(fetchNotifications, 15000); // every 15s
     // Listen for custom event to re-fetch notifications immediately
     const handleRefresh = () => fetchNotifications();
     window.addEventListener("refreshNotifications", handleRefresh);

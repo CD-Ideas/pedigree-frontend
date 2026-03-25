@@ -58,10 +58,18 @@ export default function SupportPage() {
         })
         .catch(() => {})
         .finally(() => setLoading(false));
+      // Mark all support notifications as read on page load
+      fetch("/api/notifications", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "mark_read_support", userId: u.id }),
+      }).then(() => {
+        window.dispatchEvent(new Event("notifications-updated"));
+      }).catch(() => {});
     } catch { setLoading(false); }
   }, []);
 
-  // Fetch replies when selecting a message
+  // Fetch replies when selecting a message + mark support notifications as read
   useEffect(() => {
     if (!selected || !currentUser) return;
     fetch(`/api/support/replies?message_id=${selected}&userId=${currentUser.id}`)
@@ -71,6 +79,14 @@ export default function SupportPage() {
         if (data.replies) setReplies(data.replies);
       })
       .catch(() => {});
+    // Mark support notifications as read
+    fetch("/api/notifications", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "mark_read_support", userId: currentUser.id }),
+    }).then(() => {
+      window.dispatchEvent(new Event("notifications-updated"));
+    }).catch(() => {});
   }, [selected, currentUser]);
 
   // Scroll to bottom when replies change
@@ -97,6 +113,19 @@ export default function SupportPage() {
       }
     } catch {}
     setSending(false);
+  };
+
+  const deleteTicket = async (id: number) => {
+    if (!currentUser || !confirm("Delete this ticket? It will only be removed from your view.")) return;
+    try {
+      await fetch(`/api/support?id=${id}&userId=${currentUser.id}&role=${currentUser.role}`, { method: "DELETE" });
+      setMessages(prev => prev.filter(m => m.id !== id));
+      if (selected === id) {
+        setSelected(null);
+        setReplies([]);
+        setOriginalMessage(null);
+      }
+    } catch {}
   };
 
   return (
@@ -184,13 +213,27 @@ export default function SupportPage() {
             {selected && originalMessage ? (
               <>
                 {/* Thread Header */}
-                <div className="px-4 py-3 flex-shrink-0" style={{ borderBottom: "1px solid rgba(212,168,85,0.1)" }}>
-                  <p className="text-sm font-bold" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
-                    {originalMessage.subject}
-                  </p>
-                  <p className="text-[10px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
-                    Opened {formatDate(originalMessage.created_at)}
-                  </p>
+                <div className="px-4 py-3 flex-shrink-0 flex items-center justify-between" style={{ borderBottom: "1px solid rgba(212,168,85,0.1)" }}>
+                  <div>
+                    <p className="text-sm font-bold" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+                      {originalMessage.subject}
+                    </p>
+                    <p className="text-[10px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                      Opened {formatDate(originalMessage.created_at)}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => deleteTicket(selected!)}
+                    className="px-3 py-1 rounded-lg text-[10px] font-semibold uppercase tracking-wider transition-all hover:scale-105"
+                    style={{
+                      background: "rgba(239,68,68,0.1)",
+                      border: "1px solid rgba(239,68,68,0.3)",
+                      color: "#ef4444",
+                      fontFamily: "var(--font-table)",
+                    }}
+                  >
+                    Delete
+                  </button>
                 </div>
 
                 {/* Messages */}

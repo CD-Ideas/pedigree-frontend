@@ -118,6 +118,24 @@ print(json.dumps({"success": True, "updated": updated}))
       return NextResponse.json(JSON.parse(stdout));
     }
 
+    if (action === "mark_read_support") {
+      if (!userId) return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+      const script = `
+import sqlite3, json, sys
+user_id = int(sys.argv[1])
+conn = sqlite3.connect("${DB_PATH}")
+conn.execute("UPDATE notifications SET is_read = 1 WHERE user_id = ? AND type = 'support' AND is_read = 0", (user_id,))
+conn.commit()
+updated = conn.execute("SELECT changes()").fetchone()[0]
+conn.close()
+print(json.dumps({"success": True, "updated": updated}))
+`;
+      const { stdout } = await execFileAsync("python3", ["-c", script, String(userId)], { timeout: 10000 });
+      const result = JSON.parse(stdout);
+      // Dispatch event to refresh navbar
+      return NextResponse.json(result);
+    }
+
     if (action === "create") {
       if (!userId || !type || !title) return NextResponse.json({ error: "Missing fields" }, { status: 400 });
       const script = `
