@@ -55,9 +55,10 @@ export async function GET(req: NextRequest) {
 
     let user;
     try { user = JSON.parse(raw); } catch { return NextResponse.json({ error: "Invalid session" }, { status: 401 }); }
-    if (user.role !== "admin") return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
 
-    const script = `
+    // Admin gets all messages, regular users get only their own
+    const isAdmin = user.role === "admin";
+    const script = isAdmin ? `
 import sqlite3, json
 
 conn = sqlite3.connect("${DB_PATH}")
@@ -66,9 +67,25 @@ rows = conn.execute("SELECT * FROM support_messages ORDER BY created_at DESC LIM
 result = [dict(r) for r in rows]
 conn.close()
 print(json.dumps(result, default=str))
+` : `
+import sqlite3, json, sys
+
+user_id = int(sys.argv[1])
+username = sys.argv[2]
+
+conn = sqlite3.connect("${DB_PATH}")
+conn.row_factory = sqlite3.Row
+rows = conn.execute(
+    "SELECT * FROM support_messages WHERE name = ? OR email = (SELECT email FROM users WHERE id = ?) ORDER BY created_at DESC LIMIT 50",
+    (username, user_id)
+).fetchall()
+result = [dict(r) for r in rows]
+conn.close()
+print(json.dumps(result, default=str))
 `;
 
-    const { stdout } = await execFileAsync("python3", ["-c", script], { timeout: 5000 });
+    const args = isAdmin ? ["-c", script] : ["-c", script, String(user.id), user.username];
+    const { stdout } = await execFileAsync("python3", args, { timeout: 5000 });
     return NextResponse.json({ messages: JSON.parse(stdout) });
   } catch (e) {
     console.error("Support GET error:", e);

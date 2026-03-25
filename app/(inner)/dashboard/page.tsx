@@ -466,7 +466,7 @@ export default function Dashboard() {
 
           {/* Support Messages */}
           <div className="pb-4" style={{ borderBottom: "1px solid rgba(30,64,120,0.3)" }}>
-            <a href="/account#support" className="dash-nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg"
+            <a href="/dashboard/support" className="dash-nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg"
               style={{ fontFamily: "var(--font-table)", "--item-color": "212,168,85" } as React.CSSProperties}>
               <span className="text-base">📩</span>
               <div className="text-left">
