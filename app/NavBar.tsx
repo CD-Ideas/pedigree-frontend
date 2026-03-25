@@ -12,6 +12,7 @@ const LOGO = "https://i.imgur.com/cAvQemZ.png";
 function NavSearch() {
   const [q, setQ] = useState("");
   const [results, setResults] = useState<{ dog_id: number; registered_name: string; photo_url?: string | null }[]>([]);
+  const [suggestions, setSuggestions] = useState<{ dog_id: number; registered_name: string; photo_url?: string | null }[]>([]);
   const [show, setShow] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -45,7 +46,7 @@ function NavSearch() {
     timerRef.current = setTimeout(() => {
       fetch(`/api/dogs/search?q=${encodeURIComponent(val)}&limit=8`)
         .then((r) => r.json())
-        .then((d) => { setResults(d.dogs || d); setShow(true); })
+        .then((d) => { setResults(d.dogs || d); setSuggestions(d.suggestions || []); setShow(true); })
         .catch(() => {});
     }, 300);
   };

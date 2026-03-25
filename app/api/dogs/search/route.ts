@@ -60,7 +60,46 @@ export async function GET(req: NextRequest) {
       }
     }
 
-    return NextResponse.json({ dogs });
+    // 3. If still no results, try fuzzy/similar search by splitting words
+    //    e.g. "BWK'S BLACK RAGE" → search for dogs matching "BWK" AND "BLACK", or "BWK" AND "RAGE"
+    let suggestions: typeof dogs = [];
+    if (dogs.length === 0) {
+      const words = q.replace(/['"]/g, '').split(/\s+/).filter(w => w.length >= 2);
+      if (words.length >= 2) {
+        // Try each pair of words
+        const existing = new Set<number>();
+        for (let i = 0; i < words.length && suggestions.length < limit; i++) {
+          for (let j = i + 1; j < words.length && suggestions.length < limit; j++) {
+            const results = conn.prepare(
+              "SELECT dog_id, registered_name, photo_url, sex FROM dogs WHERE registered_name LIKE ? AND registered_name LIKE ? ORDER BY view_count DESC LIMIT ?"
+            ).all('%' + words[i] + '%', '%' + words[j] + '%', limit) as typeof dogs;
+            for (const d of results) {
+              if (!existing.has(d.dog_id) && suggestions.length < limit) {
+                suggestions.push(d);
+                existing.add(d.dog_id);
+              }
+            }
+          }
+        }
+        // If still nothing, try individual words
+        if (suggestions.length === 0) {
+          for (const word of words) {
+            if (suggestions.length >= limit) break;
+            const results = conn.prepare(
+              "SELECT dog_id, registered_name, photo_url, sex FROM dogs WHERE registered_name LIKE ? ORDER BY view_count DESC LIMIT ?"
+            ).all('%' + word + '%', limit - suggestions.length) as typeof dogs;
+            for (const d of results) {
+              if (!existing.has(d.dog_id) && suggestions.length < limit) {
+                suggestions.push(d);
+                existing.add(d.dog_id);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    return NextResponse.json({ dogs, suggestions });
   } catch (_e) {
     // If better-sqlite3 fails, reset connection
     db = null;
