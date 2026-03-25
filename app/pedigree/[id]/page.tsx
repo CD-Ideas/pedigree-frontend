@@ -239,32 +239,26 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
     byGen[a.generation].push(a);
   });
 
-  // Sort each generation by position string to maintain correct sire/dam order
-  // Positions like: G4_S_0, G4_D_1, G4_S_0_S, G4_S_0_D, G4_D_1_S, G4_D_1_D
-  // We need to sort so that each parent pair (S then D) appears in the right slot
+  // Sort each generation by position to maintain correct sire/dam order
+  // Gen 1: G1_sire_0, G1_dam_1  |  Gen 2+: G2_S_0, G2_D_1  |  Gen 5: G4_S_0_S, G4_S_0_D
+  // The numeric part determines display order (even=sire on top, odd=dam below)
   Object.values(byGen).forEach(arr => arr.sort((a, b) => {
     const posA = a.position || "";
     const posB = b.position || "";
-    // Extract all numeric and S/D parts for hierarchical comparison
-    const partsA = posA.split("_").slice(1); // remove "G4" prefix
-    const partsB = posB.split("_").slice(1);
-    for (let i = 0; i < Math.max(partsA.length, partsB.length); i++) {
-      const pA = partsA[i] || "";
-      const pB = partsB[i] || "";
-      // Compare numerically if both are numbers
-      const nA = parseInt(pA);
-      const nB = parseInt(pB);
-      if (!isNaN(nA) && !isNaN(nB)) {
-        if (nA !== nB) return nA - nB;
-      } else {
-        // S comes before D (sire before dam)
-        if (pA !== pB) {
-          if (pA === "S" && pB === "D") return -1;
-          if (pA === "D" && pB === "S") return 1;
-          return pA.localeCompare(pB);
-        }
-      }
-    }
+    // Extract all numbers from the position string and use the key numeric index
+    const numsA = posA.match(/\d+/g) || ["0"];
+    const numsB = posB.match(/\d+/g) || ["0"];
+    // For gen 1-4: compare the main position number (last number before any _S/_D suffix)
+    // For gen 5: the parent position number determines grouping, then S before D
+    // The simplest correct approach: sort by the second number (position index)
+    const idxA = parseInt(numsA.length > 1 ? numsA[1] : numsA[0]);
+    const idxB = parseInt(numsB.length > 1 ? numsB[1] : numsB[0]);
+    if (idxA !== idxB) return idxA - idxB;
+    // Same parent position — S/sire before D/dam
+    const isSireA = posA.includes("_S") || posA.includes("sire");
+    const isSireB = posB.includes("_S") || posB.includes("sire");
+    if (isSireA && !isSireB) return -1;
+    if (!isSireA && isSireB) return 1;
     return 0;
   }));
 
