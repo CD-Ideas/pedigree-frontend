@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 const steelFrame = {
@@ -24,6 +24,25 @@ export default function ContactPage() {
   const [message, setMessage] = useState("");
   const [sending, setSending] = useState(false);
   const [status, setStatus] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Auto-fill name and email if logged in
+  useEffect(() => {
+    try {
+      const u = JSON.parse(localStorage.getItem("user") || "null");
+      if (u?.username) {
+        setName(u.username);
+        setIsLoggedIn(true);
+        // Fetch email from account API
+        fetch("/api/account", { credentials: "include" })
+          .then(r => r.json())
+          .then(data => {
+            if (data.email) setEmail(data.email);
+          })
+          .catch(() => {});
+      }
+    } catch {}
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,8 +61,7 @@ export default function ContactPage() {
       const data = await res.json();
       if (data.success) {
         setStatus({ type: "success", text: "Message sent successfully! We'll get back to you soon." });
-        setName("");
-        setEmail("");
+        if (!isLoggedIn) { setName(""); setEmail(""); }
         setSubject("");
         setMessage("");
       } else {
@@ -88,10 +106,11 @@ export default function ContactPage() {
               <input
                 type="text"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => !isLoggedIn && setName(e.target.value)}
                 placeholder="Enter your name..."
+                readOnly={isLoggedIn}
                 className="w-full rounded-lg px-3 py-2.5 text-sm outline-none transition-all focus:ring-1 focus:ring-[rgba(212,168,85,0.3)]"
-                style={inputStyle}
+                style={{ ...inputStyle, opacity: isLoggedIn ? 0.7 : 1, cursor: isLoggedIn ? "not-allowed" : "text" }}
                 maxLength={100}
               />
             </div>
@@ -103,10 +122,11 @@ export default function ContactPage() {
               <input
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => !isLoggedIn && setEmail(e.target.value)}
                 placeholder="Enter your email..."
+                readOnly={isLoggedIn}
                 className="w-full rounded-lg px-3 py-2.5 text-sm outline-none transition-all focus:ring-1 focus:ring-[rgba(212,168,85,0.3)]"
-                style={inputStyle}
+                style={{ ...inputStyle, opacity: isLoggedIn ? 0.7 : 1, cursor: isLoggedIn ? "not-allowed" : "text" }}
                 maxLength={200}
               />
             </div>
