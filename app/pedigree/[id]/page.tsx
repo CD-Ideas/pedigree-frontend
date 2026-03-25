@@ -239,11 +239,33 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
     byGen[a.generation].push(a);
   });
 
-  // Sort each generation by numeric suffix in position (correct display order)
+  // Sort each generation by position string to maintain correct sire/dam order
+  // Positions like: G4_S_0, G4_D_1, G4_S_0_S, G4_S_0_D, G4_D_1_S, G4_D_1_D
+  // We need to sort so that each parent pair (S then D) appears in the right slot
   Object.values(byGen).forEach(arr => arr.sort((a, b) => {
-    const numA = parseInt((a.position || "0").match(/\d+$/)?.[0] || "0");
-    const numB = parseInt((b.position || "0").match(/\d+$/)?.[0] || "0");
-    return numA - numB;
+    const posA = a.position || "";
+    const posB = b.position || "";
+    // Extract all numeric and S/D parts for hierarchical comparison
+    const partsA = posA.split("_").slice(1); // remove "G4" prefix
+    const partsB = posB.split("_").slice(1);
+    for (let i = 0; i < Math.max(partsA.length, partsB.length); i++) {
+      const pA = partsA[i] || "";
+      const pB = partsB[i] || "";
+      // Compare numerically if both are numbers
+      const nA = parseInt(pA);
+      const nB = parseInt(pB);
+      if (!isNaN(nA) && !isNaN(nB)) {
+        if (nA !== nB) return nA - nB;
+      } else {
+        // S comes before D (sire before dam)
+        if (pA !== pB) {
+          if (pA === "S" && pB === "D") return -1;
+          if (pA === "D" && pB === "S") return 1;
+          return pA.localeCompare(pB);
+        }
+      }
+    }
+    return 0;
   }));
 
   const gens = Object.keys(byGen).map(Number).sort();
