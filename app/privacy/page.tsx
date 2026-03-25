@@ -19,7 +19,7 @@ export default function PrivacyPage() {
           <p>We use essential cookies for authentication and session management. No third-party tracking cookies are used.</p>
 
           <h2 style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "1.1rem", color: "var(--accent-gold)" }}>5. Your Rights</h2>
-          <p>You may request access to, correction of, or deletion of your personal data at any time by contacting us at support@pedigreeplatform.com.</p>
+          <p>You may request access to, correction of, or deletion of your personal data at any time by <a href="/contact" style={{ color: "var(--accent-gold)", textDecoration: "underline" }}>contacting us here</a>.</p>
 
           <h2 style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "1.1rem", color: "var(--accent-gold)" }}>6. Changes to This Policy</h2>
           <p>We may update this policy from time to time. Changes will be posted on this page with an updated revision date.</p>

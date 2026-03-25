@@ -28,7 +28,7 @@ export default function TermsPage() {
           <p>Pedigree Platform is provided &ldquo;as is&rdquo; without warranty. We are not liable for any decisions made based on pedigree data, bloodline analysis, or breeding recommendations provided by the platform.</p>
 
           <h2 style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "1.1rem", color: "var(--accent-gold)" }}>8. Contact</h2>
-          <p>For questions about these terms, contact us at support@pedigreeplatform.com.</p>
+          <p>For questions about these terms, <a href="/contact" style={{ color: "var(--accent-gold)", textDecoration: "underline" }}>contact us here</a>.</p>
         </div>
       </div>
     </div>
