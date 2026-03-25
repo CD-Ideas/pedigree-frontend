@@ -42,30 +42,36 @@ export default function SupportPage() {
   const [replyText, setReplyText] = useState("");
   const [sending, setSending] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [currentUser, setCurrentUser] = useState<{ id: number; username: string; role: string } | null>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
   // Fetch all support messages
   useEffect(() => {
-    fetch("/api/support")
-      .then(r => r.json())
-      .then(data => {
-        if (data.messages) setMessages(data.messages);
-      })
-      .catch(() => {})
-      .finally(() => setLoading(false));
+    try {
+      const u = JSON.parse(localStorage.getItem("user") || "null");
+      if (!u?.id) { setLoading(false); return; }
+      setCurrentUser({ id: u.id, username: u.username, role: u.role || "user" });
+      fetch(`/api/support?userId=${u.id}&username=${encodeURIComponent(u.username)}&role=${u.role || "user"}`)
+        .then(r => r.json())
+        .then(data => {
+          if (data.messages) setMessages(data.messages);
+        })
+        .catch(() => {})
+        .finally(() => setLoading(false));
+    } catch { setLoading(false); }
   }, []);
 
   // Fetch replies when selecting a message
   useEffect(() => {
-    if (!selected) return;
-    fetch(`/api/support/replies?message_id=${selected}`)
+    if (!selected || !currentUser) return;
+    fetch(`/api/support/replies?message_id=${selected}&userId=${currentUser.id}`)
       .then(r => r.json())
       .then(data => {
         if (data.message) setOriginalMessage(data.message);
         if (data.replies) setReplies(data.replies);
       })
       .catch(() => {});
-  }, [selected]);
+  }, [selected, currentUser]);
 
   // Scroll to bottom when replies change
   useEffect(() => {
@@ -73,19 +79,19 @@ export default function SupportPage() {
   }, [replies]);
 
   const sendReply = async () => {
-    if (!replyText.trim() || !selected || sending) return;
+    if (!replyText.trim() || !selected || sending || !currentUser) return;
     setSending(true);
     try {
       const res = await fetch("/api/support/replies", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message_id: selected, message: replyText.trim() }),
+        body: JSON.stringify({ message_id: selected, message: replyText.trim(), userId: currentUser.id, username: currentUser.username }),
       });
       const data = await res.json();
       if (data.success) {
         setReplyText("");
         // Refresh replies
-        const r2 = await fetch(`/api/support/replies?message_id=${selected}`);
+        const r2 = await fetch(`/api/support/replies?message_id=${selected}&userId=${currentUser.id}`);
         const d2 = await r2.json();
         if (d2.replies) setReplies(d2.replies);
       }

@@ -17,10 +17,9 @@ async function getUser() {
 
 // GET — get all replies for a support message
 export async function GET(req: NextRequest) {
-  const user = await getUser();
-  if (!user) return NextResponse.json({ error: "Not logged in" }, { status: 401 });
-
+  const userId = req.nextUrl.searchParams.get("userId");
   const messageId = req.nextUrl.searchParams.get("message_id");
+  if (!userId) return NextResponse.json({ error: "Not logged in" }, { status: 401 });
   if (!messageId) return NextResponse.json({ error: "Missing message_id" }, { status: 400 });
 
   const script = `
@@ -52,7 +51,7 @@ print(json.dumps(result, default=str))
 `;
 
   try {
-    const { stdout } = await execFileAsync("python3", ["-c", script, messageId, String(user.id)], { timeout: 5000 });
+    const { stdout } = await execFileAsync("python3", ["-c", script, messageId, userId], { timeout: 5000 });
     return NextResponse.json(JSON.parse(stdout));
   } catch (e) {
     console.error("Support replies GET error:", e);
@@ -62,10 +61,8 @@ print(json.dumps(result, default=str))
 
 // POST — user replies to a support thread
 export async function POST(req: NextRequest) {
-  const user = await getUser();
-  if (!user) return NextResponse.json({ error: "Not logged in" }, { status: 401 });
-
-  const { message_id, message } = await req.json();
+  const { message_id, message, userId, username } = await req.json();
+  if (!userId || !username) return NextResponse.json({ error: "Not logged in" }, { status: 401 });
   if (!message_id || !message?.trim()) {
     return NextResponse.json({ error: "Missing fields" }, { status: 400 });
   }
@@ -100,7 +97,7 @@ print(json.dumps({"success": True}))
 `;
 
   try {
-    const { stdout } = await execFileAsync("python3", ["-c", script, String(message_id), String(user.id), user.username, message.trim()], { timeout: 5000 });
+    const { stdout } = await execFileAsync("python3", ["-c", script, String(message_id), String(userId), username, message.trim()], { timeout: 5000 });
     return NextResponse.json(JSON.parse(stdout));
   } catch (e) {
     console.error("Support reply POST error:", e);

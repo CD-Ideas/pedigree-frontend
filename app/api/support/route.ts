@@ -46,18 +46,17 @@ print(json.dumps({"success": True}))
   }
 }
 
-// GET — admin: get all support messages
+// GET — get support messages (user gets own, admin gets all)
 export async function GET(req: NextRequest) {
   try {
-    const cookieStore = req.cookies;
-    const raw = cookieStore.get("session")?.value;
-    if (!raw) return NextResponse.json({ error: "Not logged in" }, { status: 401 });
+    const userId = req.nextUrl.searchParams.get("userId");
+    const username = req.nextUrl.searchParams.get("username");
+    const role = req.nextUrl.searchParams.get("role");
 
-    let user;
-    try { user = JSON.parse(raw); } catch { return NextResponse.json({ error: "Invalid session" }, { status: 401 }); }
+    if (!userId || !username) return NextResponse.json({ error: "userId and username required" }, { status: 400 });
 
     // Admin gets all messages, regular users get only their own
-    const isAdmin = user.role === "admin";
+    const isAdmin = role === "admin";
     const script = isAdmin ? `
 import sqlite3, json
 
@@ -84,7 +83,7 @@ conn.close()
 print(json.dumps(result, default=str))
 `;
 
-    const args = isAdmin ? ["-c", script] : ["-c", script, String(user.id), user.username];
+    const args = isAdmin ? ["-c", script] : ["-c", script, userId, username];
     const { stdout } = await execFileAsync("python3", args, { timeout: 5000 });
     return NextResponse.json({ messages: JSON.parse(stdout) });
   } catch (e) {
