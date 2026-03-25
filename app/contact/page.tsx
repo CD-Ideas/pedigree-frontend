@@ -1,64 +1,192 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+
+const steelFrame = {
+  border: "1.5px solid rgba(255,255,255,0.06)",
+  boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)",
+  background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)",
+  backdropFilter: "blur(16px)",
+};
+
+const inputStyle = {
+  background: "rgba(20,20,25,0.8)",
+  border: "1px solid rgba(212,168,85,0.15)",
+  color: "var(--text-primary)",
+  fontFamily: "var(--font-table)",
+};
 
 export default function ContactPage() {
-  const [sent, setSent] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+  const [sending, setSending] = useState(false);
+  const [status, setStatus] = useState<{ type: "success" | "error"; text: string } | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name.trim() || !email.trim() || !subject.trim() || !message.trim()) {
+      setStatus({ type: "error", text: "All fields are required" });
+      return;
+    }
+    setSending(true);
+    setStatus(null);
+    try {
+      const res = await fetch("/api/support", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: name.trim(), email: email.trim(), subject: subject.trim(), message: message.trim() }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setStatus({ type: "success", text: "Message sent successfully! We'll get back to you soon." });
+        setName("");
+        setEmail("");
+        setSubject("");
+        setMessage("");
+      } else {
+        setStatus({ type: "error", text: data.error || "Failed to send message" });
+      }
+    } catch {
+      setStatus({ type: "error", text: "Failed to send message. Please try again." });
+    }
+    setSending(false);
+  };
 
   return (
-    <div className="min-h-screen px-4 py-20">
-      <div className="max-w-2xl mx-auto">
-        <h1 style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "2rem" }} className="text-white mb-2">Contact Us</h1>
-        <p style={{ fontFamily: "var(--font-table)", fontSize: "13px", color: "var(--text-secondary)", marginBottom: "1.5rem" }}>
-          Have a question, feedback, or need support? We&apos;d love to hear from you.
+    <div className="max-w-2xl mx-auto py-10 px-4">
+      {/* Header */}
+      <div className="text-center mb-8">
+        <h1
+          className="text-2xl font-bold mb-2"
+          style={{
+            fontFamily: "var(--font-display)",
+            background: "linear-gradient(135deg, #e8c86e, #d4a855, #b8860b)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+          }}
+        >
+          Contact Us
+        </h1>
+        <p className="text-sm" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+          Have a question, feedback, or need help? Send us a message.
         </p>
+      </div>
 
-        {/* Contact info */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-          <div className="rounded-xl p-4" style={{ background: "rgba(25,27,35,0.95)", border: "1px solid rgba(255,255,255,0.07)" }}>
-            <h3 style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "12px", color: "var(--accent-gold)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "6px" }}>Email</h3>
-            <a href="mailto:support@pedigreeplatform.com" className="break-all" style={{ fontFamily: "var(--font-table)", fontSize: "13px", color: "#fff" }}>support@pedigreeplatform.com</a>
-          </div>
-          <div className="rounded-xl p-4" style={{ background: "rgba(25,27,35,0.95)", border: "1px solid rgba(255,255,255,0.07)" }}>
-            <h3 style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "12px", color: "var(--accent-gold)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "6px" }}>Response Time</h3>
-            <p style={{ fontFamily: "var(--font-table)", fontSize: "13px", color: "#fff" }}>Within 24 hours</p>
-          </div>
-        </div>
-
-        {/* Contact form */}
-        <div className="rounded-xl p-6" style={{ background: "rgba(25,27,35,0.95)", border: "1px solid rgba(255,255,255,0.07)" }}>
-          {sent ? (
-            <div className="text-center py-8">
-              <div style={{ fontSize: "32px", marginBottom: "12px" }}>&#10003;</div>
-              <h3 style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "16px", color: "#fff", marginBottom: "8px" }}>Message Sent!</h3>
-              <p style={{ fontFamily: "var(--font-table)", fontSize: "13px", color: "var(--text-secondary)" }}>We&apos;ll get back to you within 24 hours.</p>
+      {/* Form */}
+      <div className="rounded-xl p-6" style={steelFrame}>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Name & Email row */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-[10px] uppercase tracking-widest font-bold mb-1.5"
+                style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+                Your Name
+              </label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter your name..."
+                className="w-full rounded-lg px-3 py-2.5 text-sm outline-none transition-all focus:ring-1 focus:ring-[rgba(212,168,85,0.3)]"
+                style={inputStyle}
+                maxLength={100}
+              />
             </div>
-          ) : (
-            <form onSubmit={(e) => { e.preventDefault(); setSent(true); }} className="space-y-4">
-              <div>
-                <label style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.06em", color: "var(--text-secondary)" }} className="block mb-1.5">Email</label>
-                <input type="email" required placeholder="your@email.com"
-                  className="w-full px-4 py-2.5 rounded-lg outline-none"
-                  style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "#fff", fontFamily: "var(--font-table)", fontSize: "13px" }} />
-              </div>
-              <div>
-                <label style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.06em", color: "var(--text-secondary)" }} className="block mb-1.5">Subject</label>
-                <input type="text" required placeholder="What's this about?"
-                  className="w-full px-4 py-2.5 rounded-lg outline-none"
-                  style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "#fff", fontFamily: "var(--font-table)", fontSize: "13px" }} />
-              </div>
-              <div>
-                <label style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.06em", color: "var(--text-secondary)" }} className="block mb-1.5">Message</label>
-                <textarea required rows={5} placeholder="Tell us more..."
-                  className="w-full px-4 py-2.5 rounded-lg outline-none resize-none"
-                  style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "#fff", fontFamily: "var(--font-table)", fontSize: "13px" }} />
-              </div>
-              <button type="submit" className="btn-primary w-full py-2.5 rounded-lg" style={{ fontSize: "12px", fontWeight: 600 }}>
-                Send Message
-              </button>
-            </form>
+            <div>
+              <label className="block text-[10px] uppercase tracking-widest font-bold mb-1.5"
+                style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+                Your Email
+              </label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email..."
+                className="w-full rounded-lg px-3 py-2.5 text-sm outline-none transition-all focus:ring-1 focus:ring-[rgba(212,168,85,0.3)]"
+                style={inputStyle}
+                maxLength={200}
+              />
+            </div>
+          </div>
+
+          {/* Subject */}
+          <div>
+            <label className="block text-[10px] uppercase tracking-widest font-bold mb-1.5"
+              style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+              Subject
+            </label>
+            <input
+              type="text"
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
+              placeholder="What is this about?"
+              className="w-full rounded-lg px-3 py-2.5 text-sm outline-none transition-all focus:ring-1 focus:ring-[rgba(212,168,85,0.3)]"
+              style={inputStyle}
+              maxLength={200}
+            />
+          </div>
+
+          {/* Message */}
+          <div>
+            <label className="block text-[10px] uppercase tracking-widest font-bold mb-1.5"
+              style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+              Message
+            </label>
+            <textarea
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder="Write your message here..."
+              rows={6}
+              className="w-full rounded-lg px-3 py-2.5 text-sm outline-none resize-none transition-all focus:ring-1 focus:ring-[rgba(212,168,85,0.3)]"
+              style={inputStyle}
+              maxLength={5000}
+            />
+            <p className="text-right text-[10px] mt-1" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+              {message.length}/5000
+            </p>
+          </div>
+
+          {/* Status */}
+          {status && (
+            <p className="text-xs font-medium px-3 py-2 rounded-lg"
+              style={{
+                background: status.type === "success" ? "rgba(34,197,94,0.1)" : "rgba(239,68,68,0.1)",
+                color: status.type === "success" ? "#22c55e" : "#ef4444",
+                border: `1px solid ${status.type === "success" ? "rgba(34,197,94,0.2)" : "rgba(239,68,68,0.2)"}`,
+                fontFamily: "var(--font-table)",
+              }}>
+              {status.text}
+            </p>
           )}
-        </div>
+
+          {/* Submit */}
+          <button
+            type="submit"
+            disabled={sending}
+            className="w-full py-3 rounded-lg text-sm font-semibold uppercase tracking-wider transition-all hover:scale-[1.02] disabled:opacity-50"
+            style={{
+              background: "linear-gradient(135deg, #e8c86e, #b8860b)",
+              color: "#000",
+              fontFamily: "var(--font-table)",
+            }}
+          >
+            {sending ? "Sending..." : "Send Message"}
+          </button>
+        </form>
+      </div>
+
+      {/* Back link */}
+      <div className="text-center mt-6">
+        <Link
+          href="/"
+          className="text-xs transition-colors hover:opacity-80"
+          style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}
+        >
+          ← Back to Home
+        </Link>
       </div>
     </div>
   );

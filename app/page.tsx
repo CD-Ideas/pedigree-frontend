@@ -786,9 +786,9 @@ export default function Home() {
                     <Link href="/contact" style={{ fontFamily: "var(--font-table)", fontSize: "10px", color: "rgba(200,200,210,0.8)", transition: "color 0.2s" }}
                       onMouseEnter={e => e.currentTarget.style.color = "#fff"}
                       onMouseLeave={e => e.currentTarget.style.color = "rgba(200,200,210,0.8)"}>Contact Us</Link>
-                    <a href="mailto:support@pedigreeplatform.com" style={{ fontFamily: "var(--font-table)", fontSize: "10px", color: "rgba(200,200,210,0.8)", transition: "color 0.2s" }}
+                    <Link href="/contact" style={{ fontFamily: "var(--font-table)", fontSize: "10px", color: "rgba(200,200,210,0.8)", transition: "color 0.2s" }}
                       onMouseEnter={e => e.currentTarget.style.color = "#fff"}
-                      onMouseLeave={e => e.currentTarget.style.color = "rgba(200,200,210,0.8)"}>support@pedigreeplatform.com</a>
+                      onMouseLeave={e => e.currentTarget.style.color = "rgba(200,200,210,0.8)"}>Send us a message</Link>
                   </div>
                 </div>
               </div>
