@@ -42,7 +42,7 @@ function NavSearch() {
         .catch(() => {});
       return;
     }
-    if (val.length < 2) { setResults([]); setShow(false); return; }
+    if (val.length < 2) { setResults([]); setSuggestions([]); setShow(false); return; }
     timerRef.current = setTimeout(() => {
       fetch(`/api/dogs/search?q=${encodeURIComponent(val)}&limit=8`)
         .then((r) => r.json())
@@ -64,14 +64,14 @@ function NavSearch() {
           type="text"
           value={q}
           onChange={(e) => doSearch(e.target.value)}
-          onFocus={() => results.length > 0 && setShow(true)}
+          onFocus={() => (results.length > 0 || suggestions.length > 0) && setShow(true)}
           placeholder="Search dog or paste URL..."
           className="flex-1 bg-transparent text-xs outline-none"
           style={{ color: q && getDogColor(q) !== "#ffffff" ? getDogColor(q) : "var(--text-primary, #e2e8f0)", fontFamily: "var(--font-table, Rajdhani, sans-serif)", minWidth: 0 }}
         />
-        {q && <button onClick={() => { setQ(""); setResults([]); setShow(false); }} className="text-[10px] opacity-50 hover:opacity-100">✕</button>}
+        {q && <button onClick={() => { setQ(""); setResults([]); setSuggestions([]); setShow(false); }} className="text-[10px] opacity-50 hover:opacity-100">✕</button>}
       </div>
-      {show && results.length > 0 && (
+      {show && (results.length > 0 || suggestions.length > 0) && (
         <div
           className="absolute top-full mt-1 left-0 right-0 rounded-lg overflow-hidden z-[100]"
           style={{
@@ -105,6 +105,37 @@ function NavSearch() {
               </a>
             );
           })}
+          {results.length === 0 && suggestions.length > 0 && (
+            <>
+              <div className="px-3 py-2 text-[10px] uppercase tracking-wider font-semibold"
+                style={{ color: "var(--accent-gold, #d4a855)", fontFamily: "var(--font-table)", borderBottom: "1px solid rgba(212,168,85,0.15)", background: "rgba(212,168,85,0.05)" }}>
+                Similar names
+              </div>
+              {suggestions.map((r) => {
+                const photoSrc = r.photo_url
+                  ? r.photo_url.startsWith("http") ? r.photo_url : `https://www.apbt.online-pedigrees.com/${r.photo_url}`
+                  : null;
+                return (
+                  <a
+                    key={r.dog_id}
+                    href={`/pedigree/${r.dog_id}`}
+                    className="flex items-center gap-2 px-3 py-2 transition-all hover:bg-white/5 text-xs"
+                    style={{ borderBottom: "1px solid rgba(40,44,60,0.3)" }}
+                  >
+                    {photoSrc ? (
+                      <img src={photoSrc} alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "1px solid var(--border, rgba(30,64,120,0.5))" }} />
+                    ) : (
+                      <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-[10px]"
+                           style={{ background: "var(--bg-deep, #0b1120)", border: "1px solid var(--border, rgba(30,64,120,0.5))" }}>🐕</div>
+                    )}
+                    <span className="font-semibold truncate" style={{ color: getDogColor(r.registered_name), fontFamily: "var(--font-table)" }}>
+                      {r.registered_name}
+                    </span>
+                  </a>
+                );
+              })}
+            </>
+          )}
         </div>
       )}
     </div>
