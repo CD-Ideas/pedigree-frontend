@@ -152,9 +152,14 @@ export default function SupportPage() {
                     background: selected === m.id ? "rgba(212,168,85,0.08)" : "transparent",
                   }}>
                   <div className="flex items-center justify-between">
-                    <p className="text-xs font-semibold truncate" style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)" }}>
-                      {m.subject}
-                    </p>
+                    <div className="truncate">
+                      <p className="text-xs font-semibold truncate" style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)" }}>
+                        {m.subject}
+                      </p>
+                      <p className="text-[10px] truncate" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)", opacity: 0.8 }}>
+                        {m.name}
+                      </p>
+                    </div>
                     <span className="text-[9px] px-1.5 py-0.5 rounded-full ml-2 flex-shrink-0" style={{
                       background: m.status === "new" ? "rgba(234,179,8,0.15)" : m.status === "replied" ? "rgba(34,197,94,0.15)" : "rgba(107,114,128,0.15)",
                       color: m.status === "new" ? "#eab308" : m.status === "replied" ? "#22c55e" : "#6b7280",

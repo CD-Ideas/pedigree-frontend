@@ -532,6 +532,11 @@ export default function NavBar() {
                               const adTitle = notif.body || notif.title.replace(/^New /, "");
                               groupMap.set(groupKey, { key: groupKey, icon: "🏪", title: adTitle, body: "", link: notif.link, ids: [], count: 0, hasUnread: false, latestTime: notif.created_at });
                             }
+                          } else if (notif.type === "support") {
+                            groupKey = "support_all";
+                            if (!groupMap.has(groupKey)) {
+                              groupMap.set(groupKey, { key: groupKey, icon: "🎫", title: "Support replies", body: notif.body, link: "/dashboard/support", ids: [], count: 0, hasUnread: false, latestTime: notif.created_at });
+                            }
                           } else if (notif.type === "title") {
                             groupKey = "title_all";
                             if (!groupMap.has(groupKey)) {
@@ -578,11 +583,13 @@ export default function NavBar() {
                                   group.key.startsWith("msg_") ? `${group.count} new messages from ${group.title}` :
                                   group.key.startsWith("mkt_") ? `${group.count} responses on ${group.title}` :
                                   group.key === "title_all" ? `${group.count} title tracking updates` :
+                                  group.key === "support_all" ? `${group.count} support replies` :
                                   group.title
                                 ) : (
                                   group.key.startsWith("msg_") ? `New message from ${group.title}` :
                                   group.key.startsWith("mkt_") ? group.title :
                                   group.key === "title_all" ? "1 title tracking update" :
+                                  group.key === "support_all" ? "1 support reply" :
                                   group.title
                                 )}
                               </p>

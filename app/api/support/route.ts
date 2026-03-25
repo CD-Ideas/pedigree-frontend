@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
   try {
     const { name, email, subject, message } = await req.json();
 
-    if (!name?.trim() || !email?.trim() || !subject?.trim() || !message?.trim()) {
+    if (!name?.trim() || !subject?.trim() || !message?.trim()) {
       return NextResponse.json({ error: "All fields are required" }, { status: 400 });
     }
 
