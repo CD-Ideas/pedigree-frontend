@@ -24,7 +24,8 @@ export default function ContactPage() {
   const [message, setMessage] = useState("");
   const [sending, setSending] = useState(false);
   const [status, setStatus] = useState<{ type: "success" | "error"; text: string } | null>(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [nameAutoFilled, setNameAutoFilled] = useState(false);
+  const [emailAutoFilled, setEmailAutoFilled] = useState(false);
 
   // Auto-fill name and email if logged in
   useEffect(() => {
@@ -32,12 +33,15 @@ export default function ContactPage() {
       const u = JSON.parse(localStorage.getItem("user") || "null");
       if (u?.username) {
         setName(u.username);
-        setIsLoggedIn(true);
+        setNameAutoFilled(true);
         // Fetch email from account API
         fetch("/api/account", { credentials: "include" })
           .then(r => r.json())
           .then(data => {
-            if (data.email) setEmail(data.email);
+            if (data.email) {
+              setEmail(data.email);
+              setEmailAutoFilled(true);
+            }
           })
           .catch(() => {});
       }
@@ -61,7 +65,8 @@ export default function ContactPage() {
       const data = await res.json();
       if (data.success) {
         setStatus({ type: "success", text: "Message sent successfully! We'll get back to you soon." });
-        if (!isLoggedIn) { setName(""); setEmail(""); }
+        if (!nameAutoFilled) setName("");
+        if (!emailAutoFilled) setEmail("");
         setSubject("");
         setMessage("");
       } else {
@@ -106,11 +111,11 @@ export default function ContactPage() {
               <input
                 type="text"
                 value={name}
-                onChange={(e) => !isLoggedIn && setName(e.target.value)}
+                onChange={(e) => !nameAutoFilled && setName(e.target.value)}
                 placeholder="Enter your name..."
-                readOnly={isLoggedIn}
+                readOnly={nameAutoFilled}
                 className="w-full rounded-lg px-3 py-2.5 text-sm outline-none transition-all focus:ring-1 focus:ring-[rgba(212,168,85,0.3)]"
-                style={{ ...inputStyle, opacity: isLoggedIn ? 0.7 : 1, cursor: isLoggedIn ? "not-allowed" : "text" }}
+                style={{ ...inputStyle, opacity: nameAutoFilled ? 0.7 : 1, cursor: nameAutoFilled ? "not-allowed" : "text" }}
                 maxLength={100}
               />
             </div>
@@ -122,11 +127,11 @@ export default function ContactPage() {
               <input
                 type="email"
                 value={email}
-                onChange={(e) => !isLoggedIn && setEmail(e.target.value)}
+                onChange={(e) => !emailAutoFilled && setEmail(e.target.value)}
                 placeholder="Enter your email..."
-                readOnly={isLoggedIn}
+                readOnly={emailAutoFilled}
                 className="w-full rounded-lg px-3 py-2.5 text-sm outline-none transition-all focus:ring-1 focus:ring-[rgba(212,168,85,0.3)]"
-                style={{ ...inputStyle, opacity: isLoggedIn ? 0.7 : 1, cursor: isLoggedIn ? "not-allowed" : "text" }}
+                style={{ ...inputStyle, opacity: emailAutoFilled ? 0.7 : 1, cursor: emailAutoFilled ? "not-allowed" : "text" }}
                 maxLength={200}
               />
             </div>
