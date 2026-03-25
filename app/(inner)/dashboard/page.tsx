@@ -472,6 +472,12 @@ export default function Dashboard() {
               <span className="text-base transition-transform group-hover:scale-110">⚙️</span>
               <span className="dash-nav-label text-xs font-medium transition-colors" style={{ color: "var(--text-primary)" }}>Account Settings</span>
             </Link>
+            <Link href="/contact"
+              className="dash-nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg group"
+              style={{ fontFamily: "var(--font-table)", "--item-color": "212,168,85" } as React.CSSProperties}>
+              <span className="text-base transition-transform group-hover:scale-110">📩</span>
+              <span className="dash-nav-label text-xs font-medium transition-colors" style={{ color: "var(--text-primary)" }}>Contact Support</span>
+            </Link>
             <button onClick={handleLogout}
               className="dash-nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg group"
               style={{ fontFamily: "var(--font-table)", "--item-color": "239,68,68" } as React.CSSProperties}>
