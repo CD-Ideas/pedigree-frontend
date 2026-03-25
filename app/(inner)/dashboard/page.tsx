@@ -464,6 +464,20 @@ export default function Dashboard() {
             </a>
           </div>
 
+          {/* Support Messages */}
+          <div className="pb-4" style={{ borderBottom: "1px solid rgba(30,64,120,0.3)" }}>
+            <a href="/account#support" className="dash-nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg"
+              style={{ fontFamily: "var(--font-table)", "--item-color": "212,168,85" } as React.CSSProperties}>
+              <span className="text-base">📩</span>
+              <div className="text-left">
+                <span className="text-xs font-medium" style={{ color: "var(--text-primary)" }}>Support Messages</span>
+                <p className="text-[9px]" style={{ color: "var(--text-muted)" }}>
+                  View replies from support
+                </p>
+              </div>
+            </a>
+          </div>
+
           {/* Account & Logout */}
           <div className="space-y-0.5">
             <Link href="/account"
