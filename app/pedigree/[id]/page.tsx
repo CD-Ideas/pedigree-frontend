@@ -60,7 +60,7 @@ const PG = {
   darkCharcoal: "#1C1C1C",
   sandyBrown: "#C9B29F",
   sandyBorder: "2px solid #C9B29F",
-  wrapperBg: "#FAF7F2",
+  wrapperBg: "#FAFAFA",
 };
 
 const TC: Record<string, string> = {

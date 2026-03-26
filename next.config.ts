@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  /* Disable turbopack for build to avoid filesystem race conditions */
+  experimental: {
+  },
 };
 
 export default nextConfig;
