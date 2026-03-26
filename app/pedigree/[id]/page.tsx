@@ -1009,7 +1009,7 @@ export default function PublicPedigreePage() {
         })()}
 
         {/* ─── Photo + Details ─── */}
-        <div className="rounded-xl overflow-hidden" style={{ border: "2px solid #C9B29F", background: PG.cardBg, borderRadius: PG.cardRadius, minHeight: "220px" }}>
+        <div className="rounded-xl overflow-hidden" style={{ border: "2px solid #C9B29F", background: "#FAFAFA", borderRadius: PG.cardRadius, minHeight: "220px" }}>
           <div className="flex flex-col sm:flex-row sm:items-stretch h-full">
             {/* Photo */}
             <div className="flex-shrink-0 relative m-2 w-full sm:w-[200px] h-[200px]">
@@ -1075,7 +1075,7 @@ export default function PublicPedigreePage() {
         {/* ─── Sire / Dam links ─── */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           <div className="rounded-xl p-2.5"
-               style={{ border: "2px solid #C9B29F", background: PG.cardBg, borderRadius: PG.cardRadius }}
+               style={{ border: "2px solid #C9B29F", background: "#FAFAFA", borderRadius: PG.cardRadius }}
                onMouseEnter={() => { if (dog.sire?.photo_url) { const u = dog.sire.photo_url; setHoverPhoto(u.startsWith("http") ? u : `https://www.apbt.online-pedigrees.com/${u}`); } }}
                onMouseLeave={() => setHoverPhoto(null)}>
             <div className="text-[9px] uppercase tracking-wider mb-0.5 font-semibold"
@@ -1087,7 +1087,7 @@ export default function PublicPedigreePage() {
             ) : <span className="text-sm" style={{ color: PG.textMuted }}>Unknown</span>}
           </div>
           <div className="rounded-xl p-2.5"
-               style={{ border: "2px solid #C9B29F", background: PG.cardBg, borderRadius: PG.cardRadius }}
+               style={{ border: "2px solid #C9B29F", background: "#FAFAFA", borderRadius: PG.cardRadius }}
                onMouseEnter={() => { if (dog.dam?.photo_url) { const u = dog.dam.photo_url; setHoverPhoto(u.startsWith("http") ? u : `https://www.apbt.online-pedigrees.com/${u}`); } }}
                onMouseLeave={() => setHoverPhoto(null)}>
             <div className="text-[9px] uppercase tracking-wider mb-0.5 font-semibold"
@@ -1153,7 +1153,7 @@ export default function PublicPedigreePage() {
               {/* Tab headers */}
               <div className="flex" style={{
                 background: PG.tabBg,
-                borderBottom: "1px solid #333",
+                borderBottom: `2px solid ${PG.sandyBrown}`,
               }}>
                 {tabs.map((tab) => (
                   <button key={tab.key}
