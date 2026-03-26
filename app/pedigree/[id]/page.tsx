@@ -360,7 +360,7 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
       </div>
 
       <div ref={containerRef} className="overflow-x-auto overflow-y-hidden pb-1 pt-7"
-           style={{ cursor: zoom !== 1 ? "grab" : "default" }}>
+           style={{ cursor: zoom !== 1 ? "grab" : "default", background: "#FAFAFA", borderRadius: "12px", padding: "16px", border: "1px solid #D6CEBF" }}>
         <div style={{
           transform: `scale(${zoom})`, transformOrigin: "top left", transition: "transform 0.2s",
           minWidth: maxGen >= 5 ? "1100px" : "900px",
@@ -942,7 +942,7 @@ export default function PublicPedigreePage() {
     );
 
   const isMale = dog.sex === "MALE" || dog.sex === "M";
-  const sexColor = isMale ? "#3B82F6" : "#EC4899";
+  const sexColor = isMale ? "#1d4ed8" : "#9f1239";
 
   const photoUrl = dog.photo_url
     ? dog.photo_url.startsWith("http") ? dog.photo_url : `https://www.apbt.online-pedigrees.com/${dog.photo_url}`
@@ -1074,7 +1074,7 @@ export default function PublicPedigreePage() {
                onMouseEnter={() => { if (dog.sire?.photo_url) { const u = dog.sire.photo_url; setHoverPhoto(u.startsWith("http") ? u : `https://www.apbt.online-pedigrees.com/${u}`); } }}
                onMouseLeave={() => setHoverPhoto(null)}>
             <div className="text-[9px] uppercase tracking-wider mb-0.5 font-semibold"
-                 style={{ color: "#3B82F6", letterSpacing: "0.1em" }}>♂ Sire (Father)</div>
+                 style={{ color: "#1d4ed8", letterSpacing: "0.1em" }}>♂ Sire (Father)</div>
             {dog.sire ? (
               <Link href={`/pedigree/${dog.sire.id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColorDark(dog.sire.name) }}>
                 {dog.sire.name}
@@ -1086,7 +1086,7 @@ export default function PublicPedigreePage() {
                onMouseEnter={() => { if (dog.dam?.photo_url) { const u = dog.dam.photo_url; setHoverPhoto(u.startsWith("http") ? u : `https://www.apbt.online-pedigrees.com/${u}`); } }}
                onMouseLeave={() => setHoverPhoto(null)}>
             <div className="text-[9px] uppercase tracking-wider mb-0.5 font-semibold"
-                 style={{ color: "#EC4899", letterSpacing: "0.1em" }}>♀ Dam (Mother)</div>
+                 style={{ color: "#9f1239", letterSpacing: "0.1em" }}>♀ Dam (Mother)</div>
             {dog.dam ? (
               <Link href={`/pedigree/${dog.dam.id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColorDark(dog.dam.name) }}>
                 {dog.dam.name}
