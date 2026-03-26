@@ -1,9 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* Disable turbopack for build to avoid filesystem race conditions */
-  experimental: {
-  },
+  /* Use webpack for builds to avoid Turbopack filesystem race conditions */
+  buildActivity: true,
 };
 
 export default nextConfig;
