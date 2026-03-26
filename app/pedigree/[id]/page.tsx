@@ -68,8 +68,22 @@ const TC: Record<string, string> = {
 /* ─── Dog Color Helper ─── */
 
 function cardStyle(cc: string) {
+  const tints: Record<string, string> = {
+    "sire-line": "rgba(96,165,250,0.08)",    // blue tint for sire line
+    "dam-line": "rgba(244,114,182,0.08)",     // pink tint for dam line
+    "gr-ch": "rgba(96,165,250,0.12)",         // blue for GR CH
+    "ch": "rgba(252,129,129,0.10)",           // red for CH
+    "rom": "rgba(34,211,238,0.10)",           // cyan for ROM
+    "por": "rgba(167,139,250,0.10)",          // purple for POR
+    "1xw": "rgba(45,212,191,0.10)",           // teal
+    "2xw": "rgba(251,146,60,0.10)",           // orange
+    "3xw": "rgba(212,168,85,0.10)",           // gold
+    "4xw": "rgba(244,114,182,0.10)",          // pink
+    "5xw": "rgba(192,132,252,0.10)",          // purple
+  };
+  const bg = tints[cc?.toLowerCase()] || PG.cardBg;
   return {
-    background: PG.cardBg,
+    background: bg === PG.cardBg ? bg : `linear-gradient(135deg, ${bg}, ${PG.cardBg})`,
     border: PG.cardBorder,
     borderRadius: PG.cardRadius,
   };
@@ -420,11 +434,23 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
                         ? "#c02828"
                         : xwNum === 1 ? "#0d7468" : xwNum === 2 ? "#b45a0a" : xwNum === 3 ? "#8a6518" : xwNum === 4 ? "#b03878" : xwNum >= 5 ? "#6d30b0" : isChampion ? "#c02828"
                           : "#3a3a3a";
+                    // Subtle background tint based on title
+                    const cellTint = isGrCh
+                      ? "rgba(96,165,250,0.08)"
+                      : isCh
+                        ? "rgba(252,129,129,0.07)"
+                        : xwNum === 1 ? "rgba(45,212,191,0.07)"
+                        : xwNum === 2 ? "rgba(251,146,60,0.07)"
+                        : xwNum === 3 ? "rgba(212,168,85,0.08)"
+                        : xwNum === 4 ? "rgba(244,114,182,0.07)"
+                        : xwNum >= 5 ? "rgba(192,132,252,0.07)"
+                        : male ? "rgba(96,165,250,0.04)" : "rgba(244,114,182,0.04)";
+
                     return (
                       <div key={`${gen}-${i}`}
                            className="flex-1 rounded-lg px-2.5 py-1.5 flex items-center group relative transition-all duration-200"
                            style={{
-                             background: PG.cardBg,
+                             background: `linear-gradient(135deg, ${cellTint}, ${PG.cardBg})`,
                              borderLeft: `${maxGen >= 5 ? "3px" : "4px"} solid ${cellBorderColor}`,
                              border: PG.cardBorder,
                              borderLeftColor: cellBorderColor,
