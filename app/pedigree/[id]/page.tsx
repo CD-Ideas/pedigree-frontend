@@ -59,10 +59,10 @@ const PG = {
 };
 
 const TC: Record<string, string> = {
-  "GR CH": "#60a5fa", CH: "#fc8181", ROM: "#22d3ee", POR: "#a78bfa",
-  "1XW": "#2dd4bf", "2XW": "#fb923c", "3XW": "#d4a855",
-  "4XW": "#f472b6", "5XW": "#c084fc", "6XW": "#c084fc", "7XW": "#c084fc",
-  "1XL": "#2dd4bf", "2XL": "#fb923c", "3XL": "#d4a855",
+  "GR CH": "#1d5bbf", CH: "#c02828", ROM: "#0d7468", POR: "#6d30b0",
+  "1XW": "#0d7468", "2XW": "#b45a0a", "3XW": "#8a6518",
+  "4XW": "#b03878", "5XW": "#6d30b0", "6XW": "#6d30b0", "7XW": "#6d30b0",
+  "1XL": "#0d7468", "2XL": "#b45a0a", "3XL": "#8a6518",
 };
 
 /* ─── Dog Color Helper ─── */
@@ -89,16 +89,35 @@ function cardStyle(cc: string) {
   };
 }
 
+/* ─── Dark dog color for light background ─── */
+function getDogColorDark(name: string): string {
+  const n = (name || "").toUpperCase();
+  if (/\bGR\s*CH\b/.test(n)) return "#1d5bbf";
+  if (/(?:^|\s|\()CH\b/.test(n)) return "#c02828";
+  if (/\bROM\b/.test(n)) return "#0d7468";
+  if (/\bPOR\b/.test(n)) return "#6d30b0";
+  const xw = n.match(/\b(\d+)X[WL]\b/);
+  if (xw) {
+    const num = parseInt(xw[1]);
+    if (num >= 5) return "#6d30b0";
+    if (num === 4) return "#b03878";
+    if (num === 3) return "#8a6518";
+    if (num === 2) return "#b45a0a";
+    if (num === 1) return "#0d7468";
+  }
+  return "#3a3a3a";
+}
+
 /* ─── DogLink ─── */
 function getXWColor(name: string): string | null {
   const nameUpper = (name || "").toUpperCase();
   const match = nameUpper.match(/\b(\d+)X[WL]\b/);
   if (!match) return null;
   const num = parseInt(match[1]);
-  if (num === 1) return "#2dd4bf";
-  if (num === 2) return "#fb923c";
-  if (num === 4) return "#f472b6";
-  if (num >= 5) return "#c084fc";
+  if (num === 1) return "#0d7468";
+  if (num === 2) return "#b45a0a";
+  if (num === 4) return "#b03878";
+  if (num >= 5) return "#6d30b0";
   return null;
 }
 
@@ -110,7 +129,7 @@ function DogLink({ dogId, name, isMale }: { dogId: number | null; name: string; 
   const isRom = !isGrCh && !isCh && !xwColor && /\bROM\b/.test(nameUpper);
   const isPor = !isGrCh && !isCh && !xwColor && !isRom && /\bPOR\b/.test(nameUpper);
   const hasTitle = isGrCh || isCh || xwColor || isRom || isPor || /\b\d+X[WL]\b/i.test(nameUpper);
-  const color = isGrCh ? "#60a5fa" : isCh ? "#fc8181" : xwColor ? xwColor : isRom ? "#22d3ee" : isPor ? "#a78bfa" : !hasTitle ? "#1C1C1C" : isMale === true ? "#60a5fa" : isMale === false ? "#f472b6" : "#d4a855";
+  const color = isGrCh ? "#1d5bbf" : isCh ? "#c02828" : xwColor ? xwColor : isRom ? "#0d7468" : isPor ? "#6d30b0" : !hasTitle ? "#3a3a3a" : isMale === true ? "#1d5bbf" : isMale === false ? "#b03878" : "#8a6518";
   if (!dogId) return <span style={{ color: PG.textMuted }}>{name}</span>;
   return (
     <Link href={`/pedigree/${dogId}`} className="hover:underline transition-colors" style={{ color }}>
@@ -242,7 +261,7 @@ function PedigreeSearch() {
                 <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm"
                      style={{ background: PG.bg, border: "2px solid #EDE4D5" }}>🐕</div>
               )}
-              <span className="text-sm font-semibold truncate" style={{ color: getDogColor(d.registered_name), fontFamily: PG.font }}>
+              <span className="text-sm font-semibold truncate" style={{ color: getDogColorDark(d.registered_name), fontFamily: PG.font }}>
                 {d.registered_name}
               </span>
             </a>
@@ -517,7 +536,7 @@ function OffspringTab({ offspring }: { offspring: Offspring[] }) {
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1.5">
       {offspring.map((o, i) => {
-        const cc = getDogColor(o.offspring_name);
+        const cc = getDogColorDark(o.offspring_name);
         return (
           <div key={i} className="rounded-md flex items-center overflow-hidden transition-all"
                style={{
@@ -549,9 +568,9 @@ function SiblingsTab({ siblings }: { siblings: Dog["siblings"] }) {
   );
 
   const sections = [
-    { key: "full", label: "Full Siblings", list: siblings.full || [], color: "#d4a855" },
-    { key: "halfSire", label: "Half Siblings (Same Sire)", list: siblings.halfSire || [], color: "#60a5fa" },
-    { key: "halfDam", label: "Half Siblings (Same Dam)", list: siblings.halfDam || [], color: "#f472b6" },
+    { key: "full", label: "Full Siblings", list: siblings.full || [], color: "#8a6518" },
+    { key: "halfSire", label: "Half Siblings (Same Sire)", list: siblings.halfSire || [], color: "#1d5bbf" },
+    { key: "halfDam", label: "Half Siblings (Same Dam)", list: siblings.halfDam || [], color: "#b03878" },
   ].filter(s => s.list.length > 0);
 
   return (
@@ -583,7 +602,7 @@ function SiblingsTab({ siblings }: { siblings: Dog["siblings"] }) {
         return (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1.5">
             {sec.list.map((s, i) => {
-              const cc = getDogColor(s.sibling_name);
+              const cc = getDogColorDark(s.sibling_name);
               return (
                 <div key={i} className="rounded-md flex items-center overflow-hidden transition-all"
                      style={{
@@ -628,8 +647,8 @@ function PedStatsTab({ genetics }: { genetics: Genetic[] }) {
   ];
   const slices = genetics.map((g, i) => ({
     ...g,
-    color: getDogColor(g.ancestor_name) !== "#e8e8e8" && getDogColor(g.ancestor_name) !== "rgba(176,190,206,0.85)"
-      ? getDogColor(g.ancestor_name)
+    color: getDogColorDark(g.ancestor_name) !== "#e8e8e8" && getDogColorDark(g.ancestor_name) !== "rgba(176,190,206,0.85)"
+      ? getDogColorDark(g.ancestor_name)
       : pieColors[i % pieColors.length],
   }));
 
@@ -752,7 +771,7 @@ function PhotosTab({ offspring }: { offspring: Offspring[] }) {
     <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-1.5">
       {withPhotos.map((o, i) => {
         const src = o.photo_url!.startsWith("http") ? o.photo_url! : `https://www.apbt.online-pedigrees.com/${o.photo_url}`;
-        const cc = getDogColor(o.offspring_name);
+        const cc = getDogColorDark(o.offspring_name);
         return (
           <Link key={i} href={`/pedigree/${o.offspring_id}`} className="group relative rounded-md overflow-hidden transition-all"
                 style={{ background: PG.cardBg, border: PG.cardBorder, borderRadius: PG.cardRadius }}>
@@ -855,7 +874,7 @@ function TitlesTab({ offspring }: { offspring: Offspring[] }) {
       {openTitle && groups[openTitle] && (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1.5 mt-2">
           {groups[openTitle].map((o, i) => {
-            const cc = getDogColor(o.offspring_name);
+            const cc = getDogColorDark(o.offspring_name);
             return (
               <div key={i} className="rounded-md flex items-center overflow-hidden transition-all"
                    style={{
@@ -1049,7 +1068,7 @@ export default function PublicPedigreePage() {
             <div className="text-[9px] uppercase tracking-wider mb-0.5 font-semibold"
                  style={{ color: "#3B82F6", letterSpacing: "0.1em" }}>♂ Sire (Father)</div>
             {dog.sire ? (
-              <Link href={`/pedigree/${dog.sire.id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColor(dog.sire.name) }}>
+              <Link href={`/pedigree/${dog.sire.id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColorDark(dog.sire.name) }}>
                 {dog.sire.name}
               </Link>
             ) : <span className="text-sm" style={{ color: PG.textMuted }}>Unknown</span>}
@@ -1061,7 +1080,7 @@ export default function PublicPedigreePage() {
             <div className="text-[9px] uppercase tracking-wider mb-0.5 font-semibold"
                  style={{ color: "#EC4899", letterSpacing: "0.1em" }}>♀ Dam (Mother)</div>
             {dog.dam ? (
-              <Link href={`/pedigree/${dog.dam.id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColor(dog.dam.name) }}>
+              <Link href={`/pedigree/${dog.dam.id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColorDark(dog.dam.name) }}>
                 {dog.dam.name}
               </Link>
             ) : <span className="text-sm" style={{ color: PG.textMuted }}>Unknown</span>}
