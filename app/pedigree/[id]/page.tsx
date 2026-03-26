@@ -391,11 +391,22 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
           <div style={{ display: "grid", gridTemplateColumns: `${maxGen >= 5 ? "130px" : "170px"} repeat(${maxGen}, 1fr)`, gap: "4px" }}>
             {/* Root dog */}
             <div className="flex items-center" style={{ minWidth: 0, overflow: "hidden" }}>
+              {(() => {
+                const sc = getDogColorDark(dog.registered_name);
+                const sn = (dog.registered_name || "").toUpperCase();
+                const st = /\bGR\s*CH\b/.test(sn) || /(?:^|\s|\()CH\b/.test(sn) || /\b\d+X[WL]\b/.test(sn) || /\bROM\b/.test(sn) || /\bPOR\b/.test(sn);
+                return null;
+              })()}
               <div className="w-full rounded-lg px-2 py-1.5 font-bold"
                    style={{
-                     background: PG.subjectBg,
-                     border: PG.subjectBorder,
-                     color: PG.text,
+                     background: (() => {
+                       const sc = getDogColorDark(dog.registered_name);
+                       const sn = (dog.registered_name || "").toUpperCase();
+                       const st = /\bGR\s*CH\b/.test(sn) || /(?:^|\s|\()CH\b/.test(sn) || /\b\d+X[WL]\b/.test(sn) || /\bROM\b/.test(sn) || /\bPOR\b/.test(sn);
+                       return st ? `linear-gradient(135deg, ${sc}10, ${PG.cardBg})` : `linear-gradient(135deg, rgba(58,58,58,0.08), ${PG.cardBg})`;
+                     })(),
+                     border: `2px solid ${getDogColorDark(dog.registered_name)}`,
+                     color: getDogColorDark(dog.registered_name),
                      fontFamily: PG.font,
                      fontSize: maxGen >= 5 ? "10px" : "12px",
                      borderRadius: PG.cardRadius,
@@ -430,40 +441,35 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
                     const xwMatch = (a.ancestor_name || "").toUpperCase().match(/\b(\d+)X[WL]\b/);
                     const xwNum = xwMatch ? parseInt(xwMatch[1]) : 0;
 
-                    // Minimalist: all ancestor cells use off-white with subtle left border color
+                    // Border, text, and tint all use dark matching colors
                     const cellBorderColor = isGrCh
-                      ? "#60a5fa"
+                      ? "#1d5bbf"
                       : isCh
-                        ? "#fc8181"
-                        : xwNum === 3
-                          ? "#d4a855"
-                          : xwNum === 1
-                            ? "#2dd4bf"
-                            : xwNum === 2
-                              ? "#fb923c"
-                              : xwNum === 4
-                                ? "#f472b6"
-                                : xwNum >= 5
-                                  ? "#c084fc"
-                                  : "#D6CEBF";
+                        ? "#c02828"
+                        : xwNum === 3 ? "#8a6518"
+                        : xwNum === 1 ? "#0d7468"
+                        : xwNum === 2 ? "#b45a0a"
+                        : xwNum === 4 ? "#b03878"
+                        : xwNum >= 5 ? "#6d30b0"
+                        : "#3a3a3a";
 
                     const cellTextColor = isGrCh
                       ? "#1d5bbf"
                       : isCh
                         ? "#c02828"
-                        : xwNum === 1 ? "#0d7468" : xwNum === 2 ? "#b45a0a" : xwNum === 3 ? "#8a6518" : xwNum === 4 ? "#b03878" : xwNum >= 5 ? "#6d30b0" : isChampion ? "#c02828"
+                        : xwNum === 1 ? "#0d7468" : xwNum === 2 ? "#b45a0a" : xwNum === 3 ? "#8a6518" : xwNum === 4 ? "#b03878" : xwNum >= 5 ? "#6d30b0"
                           : "#3a3a3a";
-                    // Subtle background tint based on title
+                    // Subtle background tint matching border color
                     const cellTint = isGrCh
-                      ? "rgba(96,165,250,0.08)"
+                      ? "rgba(29,91,191,0.06)"
                       : isCh
-                        ? "rgba(252,129,129,0.07)"
-                        : xwNum === 1 ? "rgba(45,212,191,0.07)"
-                        : xwNum === 2 ? "rgba(251,146,60,0.07)"
-                        : xwNum === 3 ? "rgba(212,168,85,0.08)"
-                        : xwNum === 4 ? "rgba(244,114,182,0.07)"
-                        : xwNum >= 5 ? "rgba(192,132,252,0.07)"
-                        : male ? "rgba(96,165,250,0.04)" : "rgba(244,114,182,0.04)";
+                        ? "rgba(192,40,40,0.06)"
+                        : xwNum === 1 ? "rgba(13,116,104,0.06)"
+                        : xwNum === 2 ? "rgba(180,90,10,0.06)"
+                        : xwNum === 3 ? "rgba(138,101,24,0.06)"
+                        : xwNum === 4 ? "rgba(176,56,120,0.06)"
+                        : xwNum >= 5 ? "rgba(109,48,176,0.06)"
+                        : "rgba(58,58,58,0.08)";
 
                     return (
                       <div key={`${gen}-${i}`}
@@ -984,16 +990,29 @@ export default function PublicPedigreePage() {
         </div>
 
         {/* ─── Dog Name Header ─── */}
-        <div className="rounded-lg px-4 py-2 relative"
-             style={{ border: PG.subjectBorder, background: PG.subjectBg, borderRadius: PG.cardRadius }}>
-          <h1 className="text-center" style={{
-            fontFamily: PG.font, fontWeight: 700,
-            fontSize: "clamp(1rem, 2.5vw, 1.5rem)", letterSpacing: "0.02em",
-            color: PG.text,
-          }}>
-            {dog.registered_name}
-          </h1>
-        </div>
+        {(() => {
+          const subjColor = getDogColorDark(dog.registered_name);
+          const subjN = (dog.registered_name || "").toUpperCase();
+          const subjHasTitle = /\bGR\s*CH\b/.test(subjN) || /(?:^|\s|\()CH\b/.test(subjN) || /\b\d+X[WL]\b/.test(subjN) || /\bROM\b/.test(subjN) || /\bPOR\b/.test(subjN);
+          return (
+            <div className="rounded-lg px-4 py-2 relative"
+                 style={{
+                   border: `2px solid ${subjHasTitle ? subjColor : "#3a3a3a"}`,
+                   background: subjHasTitle
+                     ? `linear-gradient(135deg, ${subjColor}10, ${PG.cardBg})`
+                     : `linear-gradient(135deg, rgba(58,58,58,0.08), ${PG.cardBg})`,
+                   borderRadius: PG.cardRadius,
+                 }}>
+              <h1 className="text-center" style={{
+                fontFamily: PG.font, fontWeight: 700,
+                fontSize: "clamp(1rem, 2.5vw, 1.5rem)", letterSpacing: "0.02em",
+                color: subjColor,
+              }}>
+                {dog.registered_name}
+              </h1>
+            </div>
+          );
+        })()}
 
         {/* ─── Photo + Details ─── */}
         <div className="rounded-xl overflow-hidden" style={{ border: PG.cardBorder, background: PG.cardBg, borderRadius: PG.cardRadius, minHeight: "220px" }}>
