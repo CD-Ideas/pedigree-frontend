@@ -1149,7 +1149,7 @@ export default function PublicPedigreePage() {
           ];
           const currentTab = activeTab;
           return (
-            <div className="rounded-xl overflow-hidden" style={{ border: PG.cardBorder, background: PG.cardBg, borderRadius: PG.cardRadius }}>
+            <div className="rounded-xl overflow-hidden" style={{ border: `2px solid ${PG.sandyBrown}`, background: PG.cardBg, borderRadius: PG.cardRadius }}>
               {/* Tab headers */}
               <div className="flex" style={{
                 background: PG.tabBg,
