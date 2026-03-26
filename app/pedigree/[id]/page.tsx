@@ -393,9 +393,9 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
             <div className="flex items-center" style={{ minWidth: 0, overflow: "hidden" }}>
               <div className="w-full rounded-lg px-2 py-1.5 font-bold"
                    style={{
-                     background: `linear-gradient(135deg, ${getDogColorDark(dog.registered_name)}10, ${PG.cardBg})`,
-                     border: `2px solid ${getDogColorDark(dog.registered_name)}`,
-                     color: getDogColorDark(dog.registered_name),
+                     background: `linear-gradient(135deg, ${getDogColorDark(dogName)}10, ${PG.cardBg})`,
+                     border: `2px solid ${getDogColorDark(dogName)}`,
+                     color: getDogColorDark(dogName),
                      fontFamily: PG.font,
                      fontSize: maxGen >= 5 ? "10px" : "12px",
                      borderRadius: PG.cardRadius,
