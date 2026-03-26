@@ -56,6 +56,10 @@ const PG = {
   tabText: "#FAF7F2",
   tabActive: "#C9B29F",
   tabActiveTxt: "#1C1C1C",
+  // Static reusable colors
+  darkCharcoal: "#1C1C1C",
+  sandyBrown: "#C9B29F",
+  sandyBorder: "2px solid #C9B29F",
 };
 
 const TC: Record<string, string> = {
@@ -68,18 +72,19 @@ const TC: Record<string, string> = {
 /* ─── Dog Color Helper ─── */
 
 function cardStyle(cc: string) {
+  const TINT_OPACITY = 0.15; // Static tint opacity
   const tints: Record<string, string> = {
-    "sire-line": "rgba(96,165,250,0.08)",    // blue tint for sire line
-    "dam-line": "rgba(244,114,182,0.08)",     // pink tint for dam line
-    "gr-ch": "rgba(96,165,250,0.12)",         // blue for GR CH
-    "ch": "rgba(252,129,129,0.10)",           // red for CH
-    "rom": "rgba(34,211,238,0.10)",           // cyan for ROM
-    "por": "rgba(167,139,250,0.10)",          // purple for POR
-    "1xw": "rgba(45,212,191,0.10)",           // teal
-    "2xw": "rgba(251,146,60,0.10)",           // orange
-    "3xw": "rgba(212,168,85,0.10)",           // gold
-    "4xw": "rgba(244,114,182,0.10)",          // pink
-    "5xw": "rgba(192,132,252,0.10)",          // purple
+    "sire-line": `rgba(96,165,250,${TINT_OPACITY})`,    // blue tint for sire line
+    "dam-line": `rgba(244,114,182,${TINT_OPACITY})`,     // pink tint for dam line
+    "gr-ch": `rgba(96,165,250,${TINT_OPACITY})`,         // blue for GR CH
+    "ch": `rgba(252,129,129,${TINT_OPACITY})`,           // red for CH
+    "rom": `rgba(34,211,238,${TINT_OPACITY})`,           // cyan for ROM
+    "por": `rgba(167,139,250,${TINT_OPACITY})`,          // purple for POR
+    "1xw": `rgba(45,212,191,${TINT_OPACITY})`,           // teal
+    "2xw": `rgba(251,146,60,${TINT_OPACITY})`,           // orange
+    "3xw": `rgba(212,168,85,${TINT_OPACITY})`,           // gold
+    "4xw": `rgba(244,114,182,${TINT_OPACITY})`,          // pink
+    "5xw": `rgba(192,132,252,${TINT_OPACITY})`,          // purple
   };
   const bg = tints[cc?.toLowerCase()] || PG.cardBg;
   return {
@@ -445,17 +450,17 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
                         ? "#c02828"
                         : xwNum === 1 ? "#0d7468" : xwNum === 2 ? "#b45a0a" : xwNum === 3 ? "#8a6518" : xwNum === 4 ? "#b03878" : xwNum >= 5 ? "#6d30b0"
                           : "#3a3a3a";
-                    // Subtle background tint matching border color
+                    // Subtle background tint matching border color (static 0.15 opacity)
                     const cellTint = isGrCh
-                      ? "rgba(29,91,191,0.06)"
+                      ? "rgba(29,91,191,0.15)"
                       : isCh
-                        ? "rgba(192,40,40,0.06)"
-                        : xwNum === 1 ? "rgba(13,116,104,0.06)"
-                        : xwNum === 2 ? "rgba(180,90,10,0.06)"
-                        : xwNum === 3 ? "rgba(138,101,24,0.06)"
-                        : xwNum === 4 ? "rgba(176,56,120,0.06)"
-                        : xwNum >= 5 ? "rgba(109,48,176,0.06)"
-                        : "rgba(58,58,58,0.08)";
+                        ? "rgba(192,40,40,0.15)"
+                        : xwNum === 1 ? "rgba(13,116,104,0.15)"
+                        : xwNum === 2 ? "rgba(180,90,10,0.15)"
+                        : xwNum === 3 ? "rgba(138,101,24,0.15)"
+                        : xwNum === 4 ? "rgba(176,56,120,0.15)"
+                        : xwNum >= 5 ? "rgba(109,48,176,0.15)"
+                        : "rgba(58,58,58,0.15)";
 
                     return (
                       <div key={`${gen}-${i}`}
@@ -989,7 +994,7 @@ export default function PublicPedigreePage() {
                    border: `2px solid ${subjHasTitle ? subjColor : "#3a3a3a"}`,
                    background: subjHasTitle
                      ? `linear-gradient(135deg, ${subjColor}10, ${PG.cardBg})`
-                     : `linear-gradient(135deg, rgba(58,58,58,0.08), ${PG.cardBg})`,
+                     : `linear-gradient(135deg, rgba(58,58,58,0.15), ${PG.cardBg})`,
                    borderRadius: PG.cardRadius,
                  }}>
               <h1 className="text-center" style={{
@@ -1101,8 +1106,8 @@ export default function PublicPedigreePage() {
           borderRadius: PG.cardRadius,
         }}>
           <div className="flex items-center justify-between px-4 py-2.5" style={{
-            background: PG.tabBg,
-            borderBottom: "1px solid #333",
+            background: PG.darkCharcoal,
+            borderBottom: `2px solid ${PG.sandyBrown}`,
           }}>
             <div className="flex items-center gap-2.5">
               <span className="text-sm">🌳</span>
