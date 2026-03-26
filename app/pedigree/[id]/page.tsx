@@ -360,7 +360,7 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
       </div>
 
       <div ref={containerRef} className="overflow-x-auto overflow-y-hidden pb-1 pt-7"
-           style={{ cursor: zoom !== 1 ? "grab" : "default", background: "#FAFAFA", borderRadius: "12px", padding: "16px", border: "1px solid #D6CEBF" }}>
+           style={{ cursor: zoom !== 1 ? "grab" : "default" }}>
         <div style={{
           transform: `scale(${zoom})`, transformOrigin: "top left", transition: "transform 0.2s",
           minWidth: maxGen >= 5 ? "1100px" : "900px",
@@ -1097,7 +1097,7 @@ export default function PublicPedigreePage() {
 
         {/* ─── Pedigree Tree ─── */}
         <div className="rounded-xl overflow-hidden" style={{
-          border: PG.cardBorder,
+          border: "2px solid #C9B29F",
           borderRadius: PG.cardRadius,
         }}>
           <div className="flex items-center justify-between px-4 py-2.5" style={{
@@ -1127,7 +1127,7 @@ export default function PublicPedigreePage() {
             </div>
           </div>
           <div className="p-3 md:p-4" style={{
-            background: PG.bg,
+            background: "#FAFAFA",
           }}>
             <PedigreeTree pedigree={dog.pedigree || []} dogName={dog.registered_name} dogId={dog.id} isMale={isMale} />
           </div>
