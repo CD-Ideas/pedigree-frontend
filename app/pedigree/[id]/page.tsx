@@ -391,20 +391,9 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
           <div style={{ display: "grid", gridTemplateColumns: `${maxGen >= 5 ? "130px" : "170px"} repeat(${maxGen}, 1fr)`, gap: "4px" }}>
             {/* Root dog */}
             <div className="flex items-center" style={{ minWidth: 0, overflow: "hidden" }}>
-              {(() => {
-                const sc = getDogColorDark(dog.registered_name);
-                const sn = (dog.registered_name || "").toUpperCase();
-                const st = /\bGR\s*CH\b/.test(sn) || /(?:^|\s|\()CH\b/.test(sn) || /\b\d+X[WL]\b/.test(sn) || /\bROM\b/.test(sn) || /\bPOR\b/.test(sn);
-                return null;
-              })()}
               <div className="w-full rounded-lg px-2 py-1.5 font-bold"
                    style={{
-                     background: (() => {
-                       const sc = getDogColorDark(dog.registered_name);
-                       const sn = (dog.registered_name || "").toUpperCase();
-                       const st = /\bGR\s*CH\b/.test(sn) || /(?:^|\s|\()CH\b/.test(sn) || /\b\d+X[WL]\b/.test(sn) || /\bROM\b/.test(sn) || /\bPOR\b/.test(sn);
-                       return st ? `linear-gradient(135deg, ${sc}10, ${PG.cardBg})` : `linear-gradient(135deg, rgba(58,58,58,0.08), ${PG.cardBg})`;
-                     })(),
+                     background: `linear-gradient(135deg, ${getDogColorDark(dog.registered_name)}10, ${PG.cardBg})`,
                      border: `2px solid ${getDogColorDark(dog.registered_name)}`,
                      color: getDogColorDark(dog.registered_name),
                      fontFamily: PG.font,
