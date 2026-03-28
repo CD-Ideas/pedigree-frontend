@@ -543,7 +543,7 @@ export default function PublishedPedigreePage() {
   const isMale = ped.sex === "Male" || ped.sex === "MALE" || ped.sex === "M";
   const sexColor = isMale ? "#1d5bbf" : "#9f1239";
   const titleColor = getDogColor(displayName);
-  const hasTitles = titleColor !== "#ffffff";
+  const hasTitles = titleColor !== "#3a3a3a";
 
   const titlePatterns = ["GR CH", "CH", "ROM", "POR", "1XW", "2XW", "3XW", "4XW", "5XW", "6XW", "1XL", "2XL", "3XL"];
   const titles = titlePatterns.filter((t) => displayName.toUpperCase().includes(t));
@@ -580,15 +580,18 @@ export default function PublishedPedigreePage() {
 
         {/* ─── Dog Name Header ─── */}
         <div className="rounded-lg px-4 py-2 relative"
-          style={{ border: "2px solid #C9B29F",  background: "#FAF7F2",  }}>
-          {titles.length > 0 && (
-            <div className="h-0.5 -mx-4 -mt-2 mb-2 rounded-t-lg" style={{ background: "#C9B29F" }} />
-          )}
+          style={{
+            border: `2px solid ${hasTitles ? titleColor : "#3a3a3a"}`,
+            background: hasTitles
+              ? `linear-gradient(135deg, ${titleColor}10, #FAF7F2)`
+              : `linear-gradient(135deg, rgba(58,58,58,0.15), #FAF7F2)`,
+            borderRadius: "8px",
+          }}>
           <div className="text-center">
             <h1 style={{
               fontFamily: "var(--font-display)", fontWeight: 700,
               fontSize: "clamp(1rem, 2.5vw, 1.5rem)", letterSpacing: "0.02em",
-              color: hasTitles ? "#C9B29F" : "#1C1C1C",
+              color: titleColor,
             }}>
               {displayName}
             </h1>
@@ -769,11 +772,9 @@ export default function PublishedPedigreePage() {
           };
 
           return (
-            <div className="glow-gold rounded-xl overflow-hidden" style={{
+            <div className="rounded-xl overflow-hidden" style={{
               border: "2px solid #C9B29F",
-
-              background: "#FAF7F2",
-
+              background: "#FAFAFA",
             }}>
               {/* Header */}
               <div className="flex items-center justify-between px-4 py-2.5" style={{
@@ -828,7 +829,7 @@ export default function PublishedPedigreePage() {
                     <div className="space-y-1.5">
                       {journal.vaccines.filter(v => v.checked).map(v => (
                         <div key={v.name} className="flex items-center justify-between rounded-lg px-3 py-2"
-                          style={{ background: "rgba(34,197,94,0.06)", border: "1px solid rgba(34,197,94,0.15)" }}>
+                          style={{ background: "#FAF7F2", border: "2px solid #EDE4D5" }}>
                           <span className="text-xs font-semibold" style={{ color: "#22c55e", fontFamily: "var(--font-table)" }}>✓ {v.name}</span>
                           {v.date && <span className="text-[10px]" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{fmtDate(v.date)}</span>}
                         </div>
@@ -844,7 +845,7 @@ export default function PublishedPedigreePage() {
                     <div className="space-y-1.5">
                       {journal.worming.map((w, i) => (
                         <div key={i} className="flex items-center justify-between rounded-lg px-3 py-2"
-                          style={{ background: "rgba(96,165,250,0.06)", border: "1px solid rgba(96,165,250,0.15)" }}>
+                          style={{ background: "#FAF7F2", border: "2px solid #EDE4D5" }}>
                           <div className="flex items-center gap-2">
                             {w.remindMe && <span className="text-[9px]">🔔</span>}
                             <span className="text-xs font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
