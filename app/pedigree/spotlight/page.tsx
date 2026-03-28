@@ -254,7 +254,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
                     style={{
                       fontFamily: "var(--font-table)",
                       background: genDepth === g ? "#C9B29F" : "#FAFAFA",
-                      color: genDepth === g ? "#fff" : "#1C1C1C",
+                      color: genDepth === g ? "#1C1C1C" : "#1C1C1C",
                       border: `2px solid #C9B29F`,
                       borderRadius: "10px",
                     }}>
@@ -453,7 +453,7 @@ export default function SpotlightPage() {
                       className="w-full py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all hover:scale-[1.02] disabled:opacity-50"
                       style={{
                         background: "#C9B29F",
-                        color: "#fff", fontFamily: "var(--font-table)", letterSpacing: "0.1em",
+                        color: "#1C1C1C", fontFamily: "var(--font-table)", letterSpacing: "0.1em",
                         border: "2px solid #C9B29F", borderRadius: "10px",
                       }}>
                 {loading ? (
@@ -519,7 +519,7 @@ export default function SpotlightPage() {
                         className="text-[10px] px-2 py-1 rounded-md font-semibold transition-all"
                         style={{
                           background: sort === s.key ? "#C9B29F" : "#FAFAFA",
-                          color: sort === s.key ? "#fff" : "#6B7280",
+                          color: sort === s.key ? "#1C1C1C" : "#6B7280",
                           border: "2px solid #C9B29F",
                           borderRadius: "10px",
                           fontFamily: "var(--font-table)",

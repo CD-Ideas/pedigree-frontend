@@ -1159,7 +1159,7 @@ export default function PublicPedigreePage() {
                 {tabs.map((tab) => (
                   <button key={tab.key}
                     onClick={() => setActiveTab(prev => prev === tab.key ? "" : tab.key)}
-                    className="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 mx-1 my-1.5 rounded-lg transition-all cursor-pointer"
+                    className="flex-1 flex items-center justify-center gap-2 px-3 py-1.5 mx-1 my-1 rounded-lg transition-all cursor-pointer"
                     style={{
                       fontFamily: PG.font,
                       background: currentTab === tab.key ? PG.tabActive : "transparent",
