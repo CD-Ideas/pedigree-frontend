@@ -6,14 +6,14 @@ import { playNotifChime } from "@/app/sounds";
 
 const cardStyle = {
   background: "#FAF7F2",
-  border: "2px solid #C9B29F",
-  borderRadius: "10px",
+  border: "2px solid #EDE4D5",
+  borderRadius: "8px",
 };
 
 const inputStyle = {
   background: "#FAFAFA",
-  border: "2px solid #C9B29F",
-  borderRadius: "10px",
+  border: "2px solid #EDE4D5",
+  borderRadius: "8px",
   color: "#1C1C1C",
   fontFamily: "var(--font-table)",
 };
@@ -241,7 +241,7 @@ export default function AccountPage() {
         <h1 style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", fontWeight: 700, color: "#1C1C1C" }}>
           Account Settings
         </h1>
-        <p className="mt-1 text-sm" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+        <p className="mt-1 text-sm" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
           Manage your profile, password, and account
         </p>
       </div>
@@ -251,7 +251,7 @@ export default function AccountPage() {
         <div className="px-4 py-3 text-sm transition-all" style={{
           background: messageType === "success" ? "#F0FDF4" : "#FEF2F2",
           border: `2px solid ${messageType === "success" ? "#86EFAC" : "#FCA5A5"}`,
-          borderRadius: "10px",
+          borderRadius: "8px",
           color: messageType === "success" ? "#166534" : "#991B1B",
           fontFamily: "var(--font-table)",
         }}>
@@ -271,7 +271,7 @@ export default function AccountPage() {
                 className="w-24 h-24 rounded-full flex items-center justify-center text-4xl"
                 style={{
                   background: "#FAF7F2",
-                  border: "2px solid #C9B29F",
+                  border: "2px solid #EDE4D5",
                 }}
               >
                 {avatarPreview.replace("emoji:", "")}
@@ -281,7 +281,7 @@ export default function AccountPage() {
                 src={avatarPreview}
                 alt="Avatar"
                 className="rounded-2xl object-cover"
-                style={{ border: "2px solid #C9B29F", width: "120px", height: "90px" }}
+                style={{ border: "2px solid #EDE4D5", width: "120px", height: "90px" }}
               />
             ) : (
               <div
@@ -289,7 +289,7 @@ export default function AccountPage() {
                 style={{
                   background: "#C9B29F",
                   color: "#fff",
-                  border: "2px solid #C9B29F",
+                  border: "2px solid #EDE4D5",
                 }}
               >
                 {(user.username || "U")[0].toUpperCase()}
@@ -310,10 +310,10 @@ export default function AccountPage() {
             <p className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               {user.username}
             </p>
-            <p className="text-xs mt-0.5" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+            <p className="text-xs mt-0.5" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
               Click on the picture to upload a new one
             </p>
-            <p className="text-[10px] mt-1" style={{ color: "#6B7280", fontFamily: "var(--font-mono)" }}>
+            <p className="text-[10px] mt-1" style={{ color: "#6B6B6B", fontFamily: "var(--font-mono)" }}>
               JPG, PNG or GIF. Max 5MB.
             </p>
           </div>
@@ -328,7 +328,7 @@ export default function AccountPage() {
         <div className="space-y-4">
           <div>
             <label className="block text-[10px] uppercase tracking-widest font-semibold mb-1.5"
-              style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+              style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
               Username
             </label>
             <input
@@ -341,7 +341,7 @@ export default function AccountPage() {
           </div>
           <div>
             <label className="block text-[10px] uppercase tracking-widest font-semibold mb-1.5"
-              style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+              style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
               Email
             </label>
             <input
@@ -353,13 +353,13 @@ export default function AccountPage() {
               style={inputStyle}
             />
           </div>
-          <div className="flex items-center justify-between pt-2" style={{ borderTop: "2px solid #C9B29F" }}>
+          <div className="flex items-center justify-between pt-2" style={{ borderTop: "2px solid #EDE4D5" }}>
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2">
-                <span className="text-[10px] uppercase tracking-wider" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>Role</span>
+                <span className="text-[10px] uppercase tracking-wider" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Role</span>
                 <span className="text-xs font-bold uppercase" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{user.role}</span>
               </div>
-              <span className="text-[10px]" style={{ color: "#6B7280" }}>|</span>
+              <span className="text-[10px]" style={{ color: "#6B6B6B" }}>|</span>
               <div className="flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full" style={{ background: "#22c55e" }} />
                 <span className="text-xs font-bold" style={{ color: "#22c55e", fontFamily: "var(--font-table)" }}>Active</span>
@@ -372,7 +372,7 @@ export default function AccountPage() {
               style={{
                 background: "#C9B29F",
                 color: "#1C1C1C",
-                borderRadius: "10px",
+                borderRadius: "8px",
                 fontFamily: "var(--font-table)",
               }}
             >
@@ -390,7 +390,7 @@ export default function AccountPage() {
         <div className="space-y-4">
           <div>
             <label className="block text-[10px] uppercase tracking-widest font-semibold mb-1.5"
-              style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+              style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
               Current Password
             </label>
             <div className="relative">
@@ -405,7 +405,7 @@ export default function AccountPage() {
                 type="button"
                 onClick={() => setShowCurrentPw(!showCurrentPw)}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-xs"
-                style={{ color: "#6B7280" }}
+                style={{ color: "#6B6B6B" }}
               >
                 {showCurrentPw ? "Hide" : "Show"}
               </button>
@@ -413,7 +413,7 @@ export default function AccountPage() {
           </div>
           <div>
             <label className="block text-[10px] uppercase tracking-widest font-semibold mb-1.5"
-              style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+              style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
               New Password
             </label>
             <div className="relative">
@@ -429,7 +429,7 @@ export default function AccountPage() {
                 type="button"
                 onClick={() => setShowNewPw(!showNewPw)}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-xs"
-                style={{ color: "#6B7280" }}
+                style={{ color: "#6B6B6B" }}
               >
                 {showNewPw ? "Hide" : "Show"}
               </button>
@@ -437,7 +437,7 @@ export default function AccountPage() {
           </div>
           <div>
             <label className="block text-[10px] uppercase tracking-widest font-semibold mb-1.5"
-              style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+              style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
               Confirm New Password
             </label>
             <input
@@ -453,7 +453,7 @@ export default function AccountPage() {
               </p>
             )}
           </div>
-          <div className="flex justify-end pt-2" style={{ borderTop: "2px solid #C9B29F" }}>
+          <div className="flex justify-end pt-2" style={{ borderTop: "2px solid #EDE4D5" }}>
             <button
               onClick={handleChangePassword}
               disabled={passwordSaving || !currentPassword || newPassword.length < 6 || newPassword !== confirmPassword}
@@ -461,7 +461,7 @@ export default function AccountPage() {
               style={{
                 background: "#C9B29F",
                 color: "#1C1C1C",
-                borderRadius: "10px",
+                borderRadius: "8px",
                 fontFamily: "var(--font-table)",
               }}
             >
@@ -479,20 +479,20 @@ export default function AccountPage() {
         <div className="space-y-4">
           <div className="flex items-center justify-between py-3 px-4" style={{
             background: "#FAFAFA",
-            border: "2px solid #C9B29F",
-            borderRadius: "10px",
+            border: "2px solid #EDE4D5",
+            borderRadius: "8px",
           }}>
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-lg flex items-center justify-center text-lg"
-                style={{ background: "#C9B29F", color: "#fff", borderRadius: "10px" }}>
+                style={{ background: "#C9B29F", color: "#fff", borderRadius: "8px" }}>
                 ★
               </div>
               <div>
                 <p className="text-sm font-bold" style={{ fontFamily: "var(--font-display)" }}>
                   <span style={{ color: "#1C1C1C" }}>FREE PLAN</span>
-                  <span className="text-xs font-normal ml-1" style={{ color: "#6B7280" }}>/ 3 MONTHS</span>
+                  <span className="text-xs font-normal ml-1" style={{ color: "#6B6B6B" }}>/ 3 MONTHS</span>
                 </p>
-                <p className="text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                <p className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                   Basic access to all features
                 </p>
               </div>
@@ -511,18 +511,18 @@ export default function AccountPage() {
               { label: "Community Access", value: "Full", icon: "🌍" },
             ].map((item) => (
               <div key={item.label} className="flex items-center gap-2 py-2 px-3"
-                style={{ background: "#FAFAFA", border: "2px solid #C9B29F", borderRadius: "10px" }}>
+                style={{ background: "#FAFAFA", border: "2px solid #EDE4D5", borderRadius: "8px" }}>
                 <span className="text-sm">{item.icon}</span>
                 <div>
-                  <p className="text-[10px] uppercase tracking-wider" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>{item.label}</p>
+                  <p className="text-[10px] uppercase tracking-wider" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>{item.label}</p>
                   <p className="text-xs font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{item.value}</p>
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="pt-2 text-center" style={{ borderTop: "2px solid #C9B29F" }}>
-            <p className="text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+          <div className="pt-2 text-center" style={{ borderTop: "2px solid #EDE4D5" }}>
+            <p className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
               Premium plans coming soon with advanced features
             </p>
           </div>
@@ -536,10 +536,10 @@ export default function AccountPage() {
         </h2>
         <div className="space-y-4">
           {/* Default Generation View */}
-          <div className="flex items-center justify-between py-2" style={{ borderBottom: "2px solid #C9B29F" }}>
+          <div className="flex items-center justify-between py-2" style={{ borderBottom: "2px solid #EDE4D5" }}>
             <div>
               <p className="text-sm font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Default Pedigree Generations</p>
-              <p className="text-[10px] mt-0.5" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+              <p className="text-[10px] mt-0.5" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                 How many generations to show by default
               </p>
             </div>
@@ -559,10 +559,10 @@ export default function AccountPage() {
           </div>
 
           {/* Theme */}
-          <div className="flex items-center justify-between py-2" style={{ borderBottom: "2px solid #C9B29F" }}>
+          <div className="flex items-center justify-between py-2" style={{ borderBottom: "2px solid #EDE4D5" }}>
             <div>
               <p className="text-sm font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Theme</p>
-              <p className="text-[10px] mt-0.5" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+              <p className="text-[10px] mt-0.5" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                 Choose your display theme
               </p>
             </div>
@@ -577,9 +577,9 @@ export default function AccountPage() {
                     className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold transition-all"
                     style={{
                       background: t.value === "dark" ? "#FAF7F2" : "#FAFAFA",
-                      border: "2px solid #C9B29F",
-                      borderRadius: "10px",
-                      color: t.value === "dark" ? "#1C1C1C" : "#6B7280",
+                      border: "2px solid #EDE4D5",
+                      borderRadius: "8px",
+                      color: t.value === "dark" ? "#1C1C1C" : "#6B6B6B",
                       fontFamily: "var(--font-table)",
                       opacity: t.disabled ? 0.4 : 1,
                       cursor: t.disabled ? "not-allowed" : "pointer",
@@ -593,10 +593,10 @@ export default function AccountPage() {
           </div>
 
           {/* Notifications */}
-          <div className="flex items-center justify-between py-2" style={{ borderBottom: "2px solid #C9B29F" }}>
+          <div className="flex items-center justify-between py-2" style={{ borderBottom: "2px solid #EDE4D5" }}>
             <div>
               <p className="text-sm font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Email Notifications</p>
-              <p className="text-[10px] mt-0.5" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+              <p className="text-[10px] mt-0.5" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                 Receive updates about your pedigrees and community activity
               </p>
             </div>
@@ -607,15 +607,15 @@ export default function AccountPage() {
                 btn.dataset.on = isOn ? "false" : "true";
                 btn.style.background = isOn ? "#E5E7EB" : "rgba(34,197,94,0.3)";
                 btn.querySelector("span")!.style.transform = isOn ? "translateX(0)" : "translateX(20px)";
-                btn.querySelector("span")!.style.background = isOn ? "#6B7280" : "#22c55e";
+                btn.querySelector("span")!.style.background = isOn ? "#6B6B6B" : "#22c55e";
                 localStorage.setItem("pref_email_notifs", isOn ? "off" : "on");
                 showMsg(`Email notifications ${isOn ? "disabled" : "enabled"}`, "success");
               }}
               data-on="false"
               className="relative w-11 h-6 rounded-full transition-all flex-shrink-0"
-              style={{ background: "#E5E7EB", border: "2px solid #C9B29F" }}
+              style={{ background: "#E5E7EB", border: "2px solid #EDE4D5" }}
             >
-              <span className="absolute top-0.5 left-0.5 w-5 h-5 rounded-full transition-all" style={{ background: "#6B7280" }} />
+              <span className="absolute top-0.5 left-0.5 w-5 h-5 rounded-full transition-all" style={{ background: "#6B6B6B" }} />
             </button>
           </div>
 
@@ -623,7 +623,7 @@ export default function AccountPage() {
           <div className="flex items-center justify-between py-2">
             <div>
               <p className="text-sm font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Notification Sounds</p>
-              <p className="text-[10px] mt-0.5" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+              <p className="text-[10px] mt-0.5" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                 Play sounds for new notifications and messages
               </p>
             </div>
@@ -641,13 +641,13 @@ export default function AccountPage() {
               className="relative w-11 h-6 rounded-full transition-all flex-shrink-0"
               style={{
                 background: soundMuted ? "#E5E7EB" : "rgba(34,197,94,0.3)",
-                border: "2px solid #C9B29F",
+                border: "2px solid #EDE4D5",
               }}
             >
               <span
                 className="absolute top-0.5 left-0.5 w-5 h-5 rounded-full transition-all"
                 style={{
-                  background: soundMuted ? "#6B7280" : "#22c55e",
+                  background: soundMuted ? "#6B6B6B" : "#22c55e",
                   transform: soundMuted ? "translateX(0)" : "translateX(20px)",
                 }}
               />
@@ -658,7 +658,7 @@ export default function AccountPage() {
           <div className="flex items-center justify-between py-2">
             <div>
               <p className="text-sm font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Active Status</p>
-              <p className="text-[10px] mt-0.5" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+              <p className="text-[10px] mt-0.5" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                 Show when you&apos;re online to other users
               </p>
             </div>
@@ -681,13 +681,13 @@ export default function AccountPage() {
               className="relative w-11 h-6 rounded-full transition-all flex-shrink-0"
               style={{
                 background: activeStatus ? "rgba(34,197,94,0.3)" : "#E5E7EB",
-                border: "2px solid #C9B29F",
+                border: "2px solid #EDE4D5",
               }}
             >
               <span
                 className="absolute top-0.5 left-0.5 w-5 h-5 rounded-full transition-all"
                 style={{
-                  background: activeStatus ? "#22c55e" : "#6B7280",
+                  background: activeStatus ? "#22c55e" : "#6B6B6B",
                   transform: activeStatus ? "translateX(20px)" : "translateX(0)",
                 }}
               />
@@ -708,7 +708,7 @@ export default function AccountPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Deactivate Account</p>
-              <p className="text-xs mt-0.5" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+              <p className="text-xs mt-0.5" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                 Temporarily disable your account. You can reactivate by logging in again.
               </p>
             </div>
@@ -716,7 +716,7 @@ export default function AccountPage() {
               className="px-4 py-2 text-xs font-bold uppercase tracking-wider transition-colors flex-shrink-0"
               style={{
                 color: "#f97316", background: "#FFF7ED",
-                border: "2px solid #f97316", borderRadius: "10px", fontFamily: "var(--font-table)",
+                border: "2px solid #f97316", borderRadius: "8px", fontFamily: "var(--font-table)",
               }}>
               Deactivate
             </button>
@@ -729,7 +729,7 @@ export default function AccountPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Delete Account Permanently</p>
-                <p className="text-xs mt-0.5" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                <p className="text-xs mt-0.5" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                   This action is irreversible. All your data will be permanently removed.
                 </p>
               </div>
@@ -737,14 +737,14 @@ export default function AccountPage() {
                 className="px-4 py-2 text-xs font-bold uppercase tracking-wider transition-colors flex-shrink-0"
                 style={{
                   color: "#ef4444", background: "#FEF2F2",
-                  border: "2px solid #ef4444", borderRadius: "10px", fontFamily: "var(--font-table)",
+                  border: "2px solid #ef4444", borderRadius: "8px", fontFamily: "var(--font-table)",
                 }}>
                 Delete
               </button>
             </div>
 
             {showDelete && (
-              <div className="mt-4 p-4" style={{ background: "#FEF2F2", border: "2px solid #FCA5A5", borderRadius: "10px" }}>
+              <div className="mt-4 p-4" style={{ background: "#FEF2F2", border: "2px solid #FCA5A5", borderRadius: "8px" }}>
                 <p className="text-xs mb-3" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
                   Type <strong>DELETE</strong> to confirm permanent deletion:
                 </p>
@@ -757,7 +757,7 @@ export default function AccountPage() {
                     className="flex-1 px-3 py-2 text-sm outline-none"
                     style={{
                       background: "#FAFAFA", border: "2px solid #FCA5A5",
-                      borderRadius: "10px",
+                      borderRadius: "8px",
                       color: "#1C1C1C", fontFamily: "var(--font-mono)",
                     }}
                   />
@@ -769,7 +769,7 @@ export default function AccountPage() {
                       background: deleteConfirm === "DELETE" ? "#ef4444" : "#FEF2F2",
                       color: deleteConfirm === "DELETE" ? "#fff" : "#FCA5A5",
                       border: "2px solid #ef4444",
-                      borderRadius: "10px",
+                      borderRadius: "8px",
                       fontFamily: "var(--font-table)",
                       cursor: deleteConfirm === "DELETE" ? "pointer" : "not-allowed",
                     }}>

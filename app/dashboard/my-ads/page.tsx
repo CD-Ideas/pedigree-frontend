@@ -35,7 +35,7 @@ const CATEGORIES: Record<string, { label: string; icon: string; color: string }>
 const STATUS_STYLES: Record<string, { bg: string; color: string; border: string; label: string }> = {
   active: { bg: "rgba(34,197,94,0.12)", color: "#22c55e", border: "rgba(34,197,94,0.3)", label: "Active" },
   pending: { bg: "rgba(234,179,8,0.12)", color: "#eab308", border: "rgba(234,179,8,0.3)", label: "Pending" },
-  expired: { bg: "rgba(148,163,184,0.12)", color: "#6B7280", border: "rgba(148,163,184,0.3)", label: "Expired" },
+  expired: { bg: "rgba(148,163,184,0.12)", color: "#6B6B6B", border: "rgba(148,163,184,0.3)", label: "Expired" },
   removed: { bg: "rgba(239,68,68,0.12)", color: "#ef4444", border: "rgba(239,68,68,0.3)", label: "Removed" },
 };
 
@@ -110,7 +110,7 @@ export default function MyAdsPage() {
         style={{
           background: "#FAF7F2",
           
-          borderBottom: "1px solid #C9B29F",
+          borderBottom: "1px solid #EDE4D5",
         }}
       >
         <Link href="/" className="flex items-center gap-2.5">
@@ -165,7 +165,7 @@ export default function MyAdsPage() {
             >
               MY ADS
             </h1>
-            <p className="text-xs mt-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+            <p className="text-xs mt-1" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
               Manage your marketplace listings
             </p>
           </div>
@@ -177,7 +177,7 @@ export default function MyAdsPage() {
               style={{
                 background: "rgba(201,178,159,0.1)",
                 color: "#1C1C1C",
-                border: "2px solid #C9B29F",
+                border: "2px solid #EDE4D5",
                 fontFamily: "var(--font-mono)",
               }}
             >
@@ -202,7 +202,7 @@ export default function MyAdsPage() {
         {/* Ads List */}
         {loading ? (
           <div className="flex items-center justify-center py-16">
-            <div className="flex items-center gap-3" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+            <div className="flex items-center gap-3" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
               <div
                 className="w-5 h-5 rounded-lg border-2 border-t-transparent animate-spin"
                 style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }}
@@ -221,7 +221,7 @@ export default function MyAdsPage() {
             </h3>
             <p
               className="text-sm mb-6"
-              style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
+              style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
             >
               Create your first marketplace listing to start selling or advertising.
             </p>
@@ -252,7 +252,7 @@ export default function MyAdsPage() {
                   className="rounded-xl overflow-hidden transition-all duration-300 hover:scale-[1.01]"
                   style={{
                     background: "#FAF7F2",
-                    border: "2px solid #C9B29F",
+                    border: "2px solid #EDE4D5",
                     
                   }}
                 >
@@ -308,7 +308,7 @@ export default function MyAdsPage() {
                           {/* Views */}
                           <span
                             className="text-[10px] flex items-center gap-1 flex-shrink-0"
-                            style={{ color: "#6B7280", fontFamily: "var(--font-mono)" }}
+                            style={{ color: "#6B6B6B", fontFamily: "var(--font-mono)" }}
                           >
                             {"\uD83D\uDC41"} {(ad.views || 0).toLocaleString()}
                           </span>
@@ -335,8 +335,8 @@ export default function MyAdsPage() {
                       </div>
 
                       {/* Footer */}
-                      <div className="flex items-center justify-between mt-3 pt-3" style={{ borderTop: "1px solid #C9B29F" }}>
-                        <span className="text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-mono)" }}>
+                      <div className="flex items-center justify-between mt-3 pt-3" style={{ borderTop: "1px solid #EDE4D5" }}>
+                        <span className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-mono)" }}>
                           Created {formatDate(ad.created_at)}
                         </span>
 
@@ -347,7 +347,7 @@ export default function MyAdsPage() {
                             style={{
                               background: "rgba(201,178,159,0.1)",
                               color: "#1C1C1C",
-                              border: "2px solid #C9B29F",
+                              border: "2px solid #EDE4D5",
                               fontFamily: "var(--font-table)",
                             }}
                           >
@@ -390,7 +390,7 @@ export default function MyAdsPage() {
       </div>
 
       {/* ─── Footer ─── */}
-      <footer className="text-center py-6 mt-4" style={{ borderTop: "2px solid #C9B29F" }}>
+      <footer className="text-center py-6 mt-4" style={{ borderTop: "2px solid #EDE4D5" }}>
         <div className="flex items-center justify-center gap-2 mb-2">
           <img src={LOGO} alt="Logo" className="w-5 h-5 rounded-lg" style={{ background: "#C9B29F", padding: "1px" }} />
           <span
@@ -407,11 +407,11 @@ export default function MyAdsPage() {
           </span>
         </div>
         <div className="flex items-center justify-center gap-4">
-          <Link href="/" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Home</Link>
+          <Link href="/" className="text-[10px] hover:underline" style={{ color: "#6B6B6B" }}>Home</Link>
           <Link href="/marketplace" className="text-[10px] hover:underline" style={{ color: "#1C1C1C" }}>Marketplace</Link>
           <Link href="/dashboard/my-ads" className="text-[10px] hover:underline" style={{ color: "#1C1C1C" }}>My Ads</Link>
-          <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Privacy</Link>
-          <Link href="/terms" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Terms</Link>
+          <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "#6B6B6B" }}>Privacy</Link>
+          <Link href="/terms" className="text-[10px] hover:underline" style={{ color: "#6B6B6B" }}>Terms</Link>
         </div>
       </footer>
     </div>

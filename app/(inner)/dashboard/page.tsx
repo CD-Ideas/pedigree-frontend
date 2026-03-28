@@ -7,8 +7,8 @@ import { getDogColor } from "@/app/utils/colors";
 
 const steelFrame = {
   background: "#FAF7F2",
-  border: "2px solid #C9B29F",
-  borderRadius: "10px",
+  border: "2px solid #EDE4D5",
+  borderRadius: "8px",
 };
 
 interface TitleAlert {
@@ -218,7 +218,7 @@ export default function Dashboard() {
                     style={{ color: "#1C1C1C" }}>
                     {item.label}
                   </span>
-                  <p className="text-[9px] mt-0.5" style={{ color: "#6B7280" }}>{item.desc}</p>
+                  <p className="text-[9px] mt-0.5" style={{ color: "#6B6B6B" }}>{item.desc}</p>
                 </div>
               </Link>
             ))}
@@ -231,7 +231,7 @@ export default function Dashboard() {
       <main className="flex-1 min-w-0">
         {/* Title Alert Banners */}
         {alertsLoading ? (
-          <div className="mb-6 flex items-center gap-2 text-xs" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+          <div className="mb-6 flex items-center gap-2 text-xs" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
             <span className="w-3 h-3 border border-current border-t-transparent rounded-full animate-spin" />
             Loading title alerts...
           </div>
@@ -241,7 +241,7 @@ export default function Dashboard() {
               <span className="text-[10px] uppercase tracking-widest font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                 🏆 Recent Titled Dogs
               </span>
-              <span className="text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+              <span className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                 User-published titles
               </span>
             </div>
@@ -254,7 +254,7 @@ export default function Dashboard() {
                     if (alert.pedigree_id) router.push(`/pedigree/custom/${alert.pedigree_id}`);
                     else if (alert.dog_id) router.push(`/pedigree/${alert.dog_id}`);
                   }}
-                  style={{ background: c.bg, border: `2px solid ${c.border}`, borderRadius: "10px" }}>
+                  style={{ background: c.bg, border: `2px solid ${c.border}`, borderRadius: "8px" }}>
                   <div className="flex items-center gap-3">
                     <span className="text-lg">{alert.color === "blue" ? "🥇" : "🏆"}</span>
                     <div>
@@ -264,7 +264,7 @@ export default function Dashboard() {
                       <span className="text-xs ml-2" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                         <strong style={{ color: getDogColor(alert.dog) }}>{alert.dog}</strong>
                         {alert.username && (
-                          <span className="ml-2 text-[10px]" style={{ color: "#6B7280" }}>
+                          <span className="ml-2 text-[10px]" style={{ color: "#6B6B6B" }}>
                             by {alert.username}
                           </span>
                         )}
@@ -273,7 +273,7 @@ export default function Dashboard() {
                   </div>
                   <button onClick={(e) => { e.stopPropagation(); dismissAlert(alert.id); }}
                     className="text-xs px-2 py-1 rounded hover:bg-black/5 transition-colors"
-                    style={{ color: "#6B7280" }}>
+                    style={{ color: "#6B6B6B" }}>
                     ✕
                   </button>
                 </div>
@@ -287,7 +287,7 @@ export default function Dashboard() {
           <h1 style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", fontWeight: 700, color: "#1C1C1C" }}>
             Welcome back, <span style={{ color: "#C9B29F" }}>{user?.username || "User"}</span>
           </h1>
-          <p className="text-xs mt-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+          <p className="text-xs mt-1" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
             APBT Pedigree Platform Dashboard
           </p>
         </div>
@@ -333,7 +333,7 @@ export default function Dashboard() {
                     style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                     {action.label}
                   </span>
-                  <span className="dash-arrow ml-auto text-xs transition-all" style={{ color: "#6B7280" }}>→</span>
+                  <span className="dash-arrow ml-auto text-xs transition-all" style={{ color: "#6B6B6B" }}>→</span>
                 </Link>
               ))}
             </div>
@@ -351,7 +351,7 @@ export default function Dashboard() {
               <p className="text-sm font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                 Activity Feed
               </p>
-              <p className="text-[10px] mt-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+              <p className="text-[10px] mt-1" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                 Your recent pedigree activity will appear here
               </p>
             </div>
@@ -364,7 +364,7 @@ export default function Dashboard() {
       <aside className="w-56 flex-shrink-0 hidden xl:block">
         <div className="rounded-xl p-4 sticky top-20 space-y-4" style={steelFrame}>
           {/* Profile */}
-          <div className="flex flex-col items-center text-center pb-4 relative" style={{ borderBottom: "2px solid #C9B29F" }}>
+          <div className="flex flex-col items-center text-center pb-4 relative" style={{ borderBottom: "2px solid #EDE4D5" }}>
             <div className="relative group cursor-pointer" onClick={() => setShowAvatarPicker(!showAvatarPicker)}>
               {renderAvatar("w-24 h-24", "text-3xl")}
               <div className="absolute inset-0 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
@@ -381,14 +381,14 @@ export default function Dashboard() {
                 <div className="fixed inset-0 z-[60]" onClick={() => setShowAvatarPicker(false)} />
                 <div className="absolute top-20 left-1/2 -translate-x-1/2 w-48 sm:w-56 overflow-hidden z-[70]"
                   onClick={(e) => e.stopPropagation()}
-                  style={{ background: "#FAFAFA", border: "2px solid #C9B29F", borderRadius: "10px" }}>
-                  <div className="px-3 py-2" style={{ borderBottom: "2px solid #C9B29F" }}>
+                  style={{ background: "#FAFAFA", border: "2px solid #EDE4D5", borderRadius: "8px" }}>
+                  <div className="px-3 py-2" style={{ borderBottom: "2px solid #EDE4D5" }}>
                     <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Choose Avatar</p>
                   </div>
                   <button onClick={() => { setShowAvatarPicker(false); avatarInputRef.current?.click(); }}
                     className="w-full flex items-center gap-2 px-3 py-2 transition-colors hover:bg-black/5"
-                    style={{ borderBottom: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)", fontSize: "0.75rem" }}>
-                    <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs" style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}>📷</span>
+                    style={{ borderBottom: "2px solid #EDE4D5", color: "#1C1C1C", fontFamily: "var(--font-table)", fontSize: "0.75rem" }}>
+                    <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs" style={{ background: "#FAF7F2", border: "2px solid #EDE4D5" }}>📷</span>
                     Upload Photo
                   </button>
                   <div className="p-2 grid grid-cols-6 gap-1.5">
@@ -397,7 +397,7 @@ export default function Dashboard() {
                         className="w-7 h-7 rounded-full flex items-center justify-center text-sm transition-all hover:scale-110"
                         style={{
                           background: user?.profile_picture === `emoji:${av.emoji}` ? "#FAF7F2" : "#FAFAFA",
-                          border: user?.profile_picture === `emoji:${av.emoji}` ? "2px solid #C9B29F" : "1px solid #C9B29F",
+                          border: user?.profile_picture === `emoji:${av.emoji}` ? "2px solid #EDE4D5" : "1px solid #EDE4D5",
                         }}>
                         {av.emoji}
                       </button>
@@ -406,7 +406,7 @@ export default function Dashboard() {
                   {user?.profile_picture && (
                     <button onClick={() => handleAvatarSelect("")}
                       className="w-full flex items-center justify-center gap-1 px-3 py-1.5 transition-colors hover:bg-red-500/5 text-[10px]"
-                      style={{ borderTop: "2px solid #C9B29F", color: "#ef4444", fontFamily: "var(--font-table)" }}>
+                      style={{ borderTop: "2px solid #EDE4D5", color: "#ef4444", fontFamily: "var(--font-table)" }}>
                       Remove
                     </button>
                   )}
@@ -417,26 +417,26 @@ export default function Dashboard() {
               {user?.username || "User"}
             </p>
             <span className="text-[10px] px-2 py-0.5 rounded-full mt-1"
-              style={{ background: "#FAF7F2", color: "#C9B29F", border: "2px solid #C9B29F", fontFamily: "var(--font-table)" }}>
+              style={{ background: "#FAF7F2", color: "#C9B29F", border: "2px solid #EDE4D5", fontFamily: "var(--font-table)" }}>
               {user?.role || "Member"}
             </span>
           </div>
 
           {/* Subscription */}
-          <div className="pb-4" style={{ borderBottom: "2px solid #C9B29F" }}>
+          <div className="pb-4" style={{ borderBottom: "2px solid #EDE4D5" }}>
             <h3 className="text-[10px] uppercase tracking-widest font-bold mb-3"
               style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               💳 Subscription
             </h3>
             <div className="p-3"
-              style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "10px" }}>
+              style={{ background: "#FAF7F2", border: "2px solid #EDE4D5", borderRadius: "8px" }}>
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-sm">★</span>
                 <span className="text-xs font-bold" style={{ color: "#C9B29F", fontFamily: "var(--font-display)" }}>
                   FREE PLAN
                 </span>
               </div>
-              <p className="text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+              <p className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                 Basic access to all features
               </p>
               <div className="mt-2 flex items-center gap-1.5">
@@ -447,7 +447,7 @@ export default function Dashboard() {
           </div>
 
           {/* Messaging */}
-          <div className="pb-4" style={{ borderBottom: "2px solid #C9B29F" }}>
+          <div className="pb-4" style={{ borderBottom: "2px solid #EDE4D5" }}>
             <a href="/messages" className="dash-nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg"
               style={{ fontFamily: "var(--font-table)", "--item-color": "96,165,250" } as React.CSSProperties}>
               <span className="relative">
@@ -461,7 +461,7 @@ export default function Dashboard() {
               </span>
               <div className="text-left">
                 <span className="text-xs font-medium" style={{ color: "#1C1C1C" }}>Messages</span>
-                <p className="text-[9px]" style={{ color: "#6B7280" }}>
+                <p className="text-[9px]" style={{ color: "#6B6B6B" }}>
                   {unreadMessages > 0 ? `${unreadMessages} unread` : "No new messages"}
                 </p>
               </div>
@@ -469,13 +469,13 @@ export default function Dashboard() {
           </div>
 
           {/* Support Messages */}
-          <div className="pb-4" style={{ borderBottom: "2px solid #C9B29F" }}>
+          <div className="pb-4" style={{ borderBottom: "2px solid #EDE4D5" }}>
             <a href="/dashboard/support" className="dash-nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg"
               style={{ fontFamily: "var(--font-table)", "--item-color": "212,168,85" } as React.CSSProperties}>
               <span className="text-base">📩</span>
               <div className="text-left">
                 <span className="text-xs font-medium" style={{ color: "#1C1C1C" }}>Support Messages</span>
-                <p className="text-[9px]" style={{ color: "#6B7280" }}>
+                <p className="text-[9px]" style={{ color: "#6B6B6B" }}>
                   View replies from support
                 </p>
               </div>

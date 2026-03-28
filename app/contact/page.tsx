@@ -4,17 +4,17 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 const pgCard = {
-  border: "2px solid #C9B29F",
+  border: "2px solid #EDE4D5",
   background: "#FAF7F2",
-  borderRadius: "10px",
+  borderRadius: "8px",
 };
 
 const inputStyle = {
   background: "#FAFAFA",
-  border: "2px solid #C9B29F",
+  border: "2px solid #EDE4D5",
   color: "#1C1C1C",
   fontFamily: "var(--font-table)",
-  borderRadius: "10px",
+  borderRadius: "8px",
 };
 
 export default function ContactPage() {
@@ -80,7 +80,7 @@ export default function ContactPage() {
         >
           Contact Us
         </h1>
-        <p className="text-sm" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+        <p className="text-sm" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
           Have a question, feedback, or need help? Send us a message.
         </p>
       </div>
@@ -138,7 +138,7 @@ export default function ContactPage() {
               style={inputStyle}
               maxLength={5000}
             />
-            <p className="text-right text-[10px] mt-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+            <p className="text-right text-[10px] mt-1" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
               {message.length}/5000
             </p>
           </div>
@@ -151,7 +151,7 @@ export default function ContactPage() {
                 color: status.type === "success" ? "#22c55e" : "#ef4444",
                 border: `2px solid ${status.type === "success" ? "rgba(34,197,94,0.3)" : "rgba(239,68,68,0.3)"}`,
                 fontFamily: "var(--font-table)",
-                borderRadius: "10px",
+                borderRadius: "8px",
               }}>
               {status.text}
             </p>
@@ -166,7 +166,7 @@ export default function ContactPage() {
               background: "#1C1C1C",
               color: "#FAF7F2",
               fontFamily: "var(--font-table)",
-              borderRadius: "10px",
+              borderRadius: "8px",
             }}
           >
             {sending ? "Sending..." : "Send Message"}
@@ -179,7 +179,7 @@ export default function ContactPage() {
         <Link
           href="/"
           className="text-xs transition-colors hover:opacity-80"
-          style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
+          style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
         >
           Back to Home
         </Link>

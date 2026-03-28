@@ -66,7 +66,7 @@ function _BreedingCalcPreview_UNUSED() {
         <h2 className="text-center mb-0.5" style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "clamp(0.95rem, 2vw, 1.25rem)", color: "#1C1C1C" }}>
           Bloodline Calculator
         </h2>
-        <p className="text-center mb-3" style={{ color: "#6B7280", fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 400 }}>
+        <p className="text-center mb-3" style={{ color: "#6B6B6B", fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 400 }}>
           Know Your Cross Before You Make It
         </p>
 
@@ -74,13 +74,13 @@ function _BreedingCalcPreview_UNUSED() {
           {/* Pie Chart */}
           <div className="relative rounded-lg p-4" style={{
             background: "#FAF7F2",
-            border: "2px solid #C9B29F",
+            border: "2px solid #EDE4D5",
           }}>
             <div className="text-center mb-2">
               {isLive ? (
                 <>
                   <span style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "11px", color: "#1d5bbf" }}>{data.sire.name}</span>
-                  <span style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "11px", color: "#6B7280" }}> × </span>
+                  <span style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "11px", color: "#6B6B6B" }}> × </span>
                   <span style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "11px", color: "#9f1239" }}>{data.dam.name}</span>
                 </>
               ) : (
@@ -106,7 +106,7 @@ function _BreedingCalcPreview_UNUSED() {
                 <text x="110" y="118" textAnchor="middle" fill={slices[0]?.color || "#ef4444"} style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "10px", letterSpacing: "0.05em" }}>
                   {topLine.name.toUpperCase()}
                 </text>
-                <text x="110" y="134" textAnchor="middle" fill="#6B7280" style={{ fontFamily: "var(--font-body)", fontWeight: 400, fontSize: "9px" }}>
+                <text x="110" y="134" textAnchor="middle" fill="#6B6B6B" style={{ fontFamily: "var(--font-body)", fontWeight: 400, fontSize: "9px" }}>
                   {isLive ? `${data.genDepth}-gen analysis` : "4-gen analysis"}
                 </text>
               </svg>
@@ -138,7 +138,7 @@ function _BreedingCalcPreview_UNUSED() {
                   {coiLabel} — {coiVal.toFixed(1)}% COI
                 </span>
               </div>
-              <p style={{ fontFamily: "var(--font-body)", fontSize: "9.5px", color: "#6B7280", lineHeight: 1.5 }}>
+              <p style={{ fontFamily: "var(--font-body)", fontSize: "9.5px", color: "#6B6B6B", lineHeight: 1.5 }}>
                 {isLive && data.topAncestor
                   ? <>{data.topAncestor} appears on <span style={{ color: coiColor, fontWeight: 600 }}>both sire and dam side</span>. {coiVal < 10 ? "Low risk." : "Monitor joint health and temperament stability."}</>
                   : <>Jeep appears on <span style={{ color: "#ef4444", fontWeight: 600 }}>both sire and dam side</span>. Moderate risk. Monitor joint health and temperament stability.</>
@@ -149,14 +149,14 @@ function _BreedingCalcPreview_UNUSED() {
             {/* Breeder Insights */}
             <div className="rounded-lg p-3" style={{
               background: "#FAF7F2",
-              border: "2px solid #C9B29F",
+              border: "2px solid #EDE4D5",
             }}>
               <h4 style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "10px", color: "#C9B29F", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "6px" }}>
-                Breeder Insights {isLive && <span style={{ color: "#6B7280", fontWeight: 400 }}>— Live Result</span>}
+                Breeder Insights {isLive && <span style={{ color: "#6B6B6B", fontWeight: 400 }}>— Live Result</span>}
               </h4>
               <ul className="space-y-1.5">
                 {insights.map((tip, i) => (
-                  <li key={i} className="flex items-start gap-1.5" style={{ fontFamily: "var(--font-body)", fontSize: "9.5px", color: "#6B7280", lineHeight: 1.45 }}>
+                  <li key={i} className="flex items-start gap-1.5" style={{ fontFamily: "var(--font-body)", fontSize: "9.5px", color: "#6B6B6B", lineHeight: 1.45 }}>
                     <span style={{ color: "#C9B29F", fontSize: "7px", marginTop: "3px" }}>◆</span>
                     {tip}
                   </li>
@@ -167,7 +167,7 @@ function _BreedingCalcPreview_UNUSED() {
             {/* How it works */}
             <div className="rounded-lg p-3" style={{
               background: "#FAF7F2",
-              border: "2px solid #C9B29F",
+              border: "2px solid #EDE4D5",
             }}>
               <h4 style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "10px", color: "#1C1C1C", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "6px" }}>
                 How It Works
@@ -183,7 +183,7 @@ function _BreedingCalcPreview_UNUSED() {
                       style={{ background: "#1C1C1C", fontSize: "9px", fontWeight: 700, fontFamily: "var(--font-body)", color: "#FAF7F2" }}>
                       {s.step}
                     </div>
-                    <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", color: "#6B7280", fontWeight: 500 }}>{s.text}</span>
+                    <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", color: "#6B6B6B", fontWeight: 500 }}>{s.text}</span>
                     {i < 2 && <span style={{ color: "#C9B29F", fontSize: "12px" }}>→</span>}
                   </div>
                 ))}
@@ -248,7 +248,7 @@ export default function Home() {
         className="fixed top-0 left-0 right-0 z-50 px-4 md:px-6 py-2.5 flex items-center justify-end transition-all duration-300"
         style={{
           background: scrolled ? "#1C1C1C" : "transparent",
-          borderBottom: scrolled ? "2px solid #C9B29F" : "2px solid transparent",
+          borderBottom: scrolled ? "2px solid #EDE4D5" : "2px solid transparent",
         }}
       >
         {/* Mobile hamburger */}
@@ -283,18 +283,18 @@ export default function Home() {
             </button>
             {pricingOpen && (
               <div className="absolute top-full right-0 mt-3 rounded-xl overflow-hidden"
-                style={{ width: "min(320px, 90vw)", background: "#FAFAFA", border: "2px solid #C9B29F" }}
+                style={{ width: "min(320px, 90vw)", background: "#FAFAFA", border: "2px solid #EDE4D5" }}
                 onClick={(e) => e.stopPropagation()}>
                   {/* Free tier */}
                   <div className="px-6 py-6">
                     <div className="flex items-baseline gap-2 mb-4">
                       <span style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "1.15rem", color: "#1C1C1C" }}>Free Trial</span>
                       <span style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "1.4rem", color: "#1C1C1C" }}>$0</span>
-                      <span style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 400, color: "#6B7280" }}>/3 months</span>
+                      <span style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 400, color: "#6B6B6B" }}>/3 months</span>
                     </div>
                     <ul className="space-y-2.5 mb-5">
                       {["Unlimited dog registrations", "3-generation pedigree trees", "Basic search & browse", "Share pedigree links"].map((item, i) => (
-                        <li key={i} className="flex items-center gap-2.5" style={{ color: "#6B7280", fontFamily: "var(--font-body)", fontSize: "13px", fontWeight: 400 }}>
+                        <li key={i} className="flex items-center gap-2.5" style={{ color: "#6B6B6B", fontFamily: "var(--font-body)", fontSize: "13px", fontWeight: 400 }}>
                           <span style={{ color: "#22c55e", fontSize: "11px" }}>&#10003;</span>{item}
                         </li>
                       ))}
@@ -308,12 +308,12 @@ export default function Home() {
               </div>
             )}
           </div>
-          <Link href="/login" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: scrolled ? "#FAF7F2" : "#1C1C1C", padding: "0.4rem 1.2rem", border: "2px solid #C9B29F", borderRadius: "0.5rem", transition: "all 0.2s" }}>Login</Link>
+          <Link href="/login" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: scrolled ? "#FAF7F2" : "#1C1C1C", padding: "0.4rem 1.2rem", border: "2px solid #EDE4D5", borderRadius: "0.5rem", transition: "all 0.2s" }}>Login</Link>
           <Link href="/register" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#FAF7F2", padding: "0.4rem 1.2rem", background: scrolled ? "#C9B29F" : "#1C1C1C", borderRadius: "0.5rem", transition: "all 0.2s" }}>Sign Up</Link>
         </div>
         {/* Mobile: Login + Sign Up always visible */}
         <div className="flex md:hidden items-center gap-3">
-          <Link href="/login" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.08em", color: scrolled ? "#FAF7F2" : "#1C1C1C", padding: "0.35rem 0.8rem", border: "2px solid #C9B29F", borderRadius: "0.4rem" }}>Login</Link>
+          <Link href="/login" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.08em", color: scrolled ? "#FAF7F2" : "#1C1C1C", padding: "0.35rem 0.8rem", border: "2px solid #EDE4D5", borderRadius: "0.4rem" }}>Login</Link>
           <Link href="/register" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#FAF7F2", padding: "0.35rem 0.8rem", background: scrolled ? "#C9B29F" : "#1C1C1C", borderRadius: "0.4rem" }}>Sign Up</Link>
         </div>
       </nav>
@@ -350,7 +350,7 @@ export default function Home() {
               <h1 style={{ fontFamily: "var(--font-body)", fontSize: "clamp(1.2rem, 3.5vw, 2.2rem)", fontWeight: 500, lineHeight: 1.1, color: "#1C1C1C" }} className="mb-1.5">
                 The Ultimate <span style={{ color: "#C9B29F" }}>Pedigree Hub</span>
               </h1>
-              <p className="max-w-md mb-3 mx-auto md:mx-0" style={{ color: "#6B7280", fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 400, lineHeight: 1.6 }}>
+              <p className="max-w-md mb-3 mx-auto md:mx-0" style={{ color: "#6B6B6B", fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 400, lineHeight: 1.6 }}>
                 Track, manage, and share dog pedigrees with the most comprehensive lineage platform.
               </p>
               <Link href="/register" className="px-6 py-1.5 rounded-lg inline-block" style={{ fontSize: "10px", fontWeight: 500, background: "#1C1C1C", color: "#FAF7F2" }}>Get Started Free</Link>
@@ -369,9 +369,9 @@ export default function Home() {
             ].map((s, i) => (
               <div key={i} className="text-center">
                 <div style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "clamp(0.9rem, 2vw, 1.2rem)", color: "#C9B29F", lineHeight: 1 }}>
-                  {s.value}{s.suffix && <span style={{ fontSize: "0.65em", color: "#6B7280" }}>{s.suffix}</span>}
+                  {s.value}{s.suffix && <span style={{ fontSize: "0.65em", color: "#6B6B6B" }}>{s.suffix}</span>}
                 </div>
-                <div style={{ fontFamily: "var(--font-body)", fontWeight: 400, fontSize: "9px", color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.1em", marginTop: "2px" }}>
+                <div style={{ fontFamily: "var(--font-body)", fontWeight: 400, fontSize: "9px", color: "#6B6B6B", textTransform: "uppercase", letterSpacing: "0.1em", marginTop: "2px" }}>
                   {s.label}
                 </div>
               </div>
@@ -408,8 +408,8 @@ export default function Home() {
                     animationDelay: `${i * 0.1}s`,
                     ...((f as Record<string, unknown>).gridCol ? { gridColumn: String((f as Record<string, unknown>).gridCol), ...((f as Record<string, unknown>).center ? { justifySelf: "center" as const, width: "100%", maxWidth: "calc(50% - 4px)" } : {}) } : {}),
                     background: "#FAF7F2",
-                    border: "2px solid #C9B29F",
-                    borderRadius: "10px",
+                    border: "2px solid #EDE4D5",
+                    borderRadius: "8px",
                     transition: "all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
                     overflow: "hidden",
                   }}
@@ -454,7 +454,7 @@ export default function Home() {
                   </div>
                   <h3 style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "11px", color: "#1C1C1C", letterSpacing: "0.03em" }} className="mb-0.5">{f.title}</h3>
                   <div className="w-5 h-[1px] mx-auto mb-1" style={{ background: "#C9B29F" }} />
-                  <p style={{ color: "#6B7280", fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 400, lineHeight: 1.45 }}>{f.desc}</p>
+                  <p style={{ color: "#6B6B6B", fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 400, lineHeight: 1.45 }}>{f.desc}</p>
                 </div>
               ))}
             </div>
@@ -467,7 +467,7 @@ export default function Home() {
             <h2 className="text-center mb-0.5" style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "clamp(0.95rem, 2vw, 1.25rem)", color: "#1C1C1C" }}>
               Bloodline Calculator
             </h2>
-            <p className="text-center mb-3" style={{ color: "#6B7280", fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 400 }}>
+            <p className="text-center mb-3" style={{ color: "#6B6B6B", fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 400 }}>
               Know Your Cross Before You Make It
             </p>
 
@@ -476,8 +476,8 @@ export default function Home() {
               <div className="relative rounded-lg p-4"
                 style={{
                   background: "#FAF7F2",
-                  border: "2px solid #C9B29F",
-                  borderRadius: "10px",
+                  border: "2px solid #EDE4D5",
+                  borderRadius: "8px",
                 }}>
                 <div className="text-center mb-2">
                   <span style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "11px", color: "#1d5bbf" }}>GR CH Razor&apos;s Edge Bloodfire</span>
@@ -502,7 +502,7 @@ export default function Home() {
                     <circle cx="110" cy="110" r="62" fill="#FAFAFA" />
                     <text x="110" y="100" textAnchor="middle" fill="#1C1C1C" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "22px" }}>31%</text>
                     <text x="110" y="118" textAnchor="middle" fill="#c02828" style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "10px", letterSpacing: "0.05em" }}>JEEP DOMINANT</text>
-                    <text x="110" y="134" textAnchor="middle" fill="#6B7280" style={{ fontFamily: "var(--font-body)", fontWeight: 400, fontSize: "9px" }}>4-gen analysis</text>
+                    <text x="110" y="134" textAnchor="middle" fill="#6B6B6B" style={{ fontFamily: "var(--font-body)", fontWeight: 400, fontSize: "9px" }}>4-gen analysis</text>
                   </svg>
                 </div>
                 <div className="grid grid-cols-2 gap-x-3 gap-y-1 mt-2">
@@ -528,7 +528,7 @@ export default function Home() {
                   style={{
                     background: "#FAF7F2",
                     border: "2px solid rgba(239,68,68,0.4)",
-                    borderRadius: "10px",
+                    borderRadius: "8px",
                   }}>
                   <div className="flex items-center gap-2 mb-1.5">
                     <div className="w-6 h-6 rounded-md flex items-center justify-center" style={{ background: "rgba(239,68,68,0.15)", border: "1px solid rgba(239,68,68,0.3)" }}>
@@ -536,7 +536,7 @@ export default function Home() {
                     </div>
                     <span style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "10px", color: "#ef4444", textTransform: "uppercase", letterSpacing: "0.06em" }}>Inbreeding Alert — 4.5% COI</span>
                   </div>
-                  <p style={{ fontFamily: "var(--font-body)", fontSize: "9.5px", color: "#6B7280", lineHeight: 1.5 }}>
+                  <p style={{ fontFamily: "var(--font-body)", fontSize: "9.5px", color: "#6B6B6B", lineHeight: 1.5 }}>
                     Jeep appears on <span style={{ color: "#ef4444", fontWeight: 600 }}>both sire and dam side</span>. Moderate risk. Monitor joint health and temperament stability.
                   </p>
                 </div>
@@ -544,8 +544,8 @@ export default function Home() {
                 <div className="rounded-lg p-3"
                   style={{
                     background: "#FAF7F2",
-                    border: "2px solid #C9B29F",
-                    borderRadius: "10px",
+                    border: "2px solid #EDE4D5",
+                    borderRadius: "8px",
                   }}>
                   <h4 style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "10px", color: "#C9B29F", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "6px" }}>
                     Breeder Insights
@@ -557,7 +557,7 @@ export default function Home() {
                       "22% Red Boy adds gameness & stamina",
                       "Test for joint health due to inbreeding overlap",
                     ].map((tip, i) => (
-                      <li key={i} className="flex items-start gap-1.5" style={{ fontFamily: "var(--font-body)", fontSize: "9.5px", color: "#6B7280", lineHeight: 1.45 }}>
+                      <li key={i} className="flex items-start gap-1.5" style={{ fontFamily: "var(--font-body)", fontSize: "9.5px", color: "#6B6B6B", lineHeight: 1.45 }}>
                         <span style={{ color: "#C9B29F", fontSize: "7px", marginTop: "3px" }}>◆</span>
                         {tip}
                       </li>
@@ -568,8 +568,8 @@ export default function Home() {
                 <div className="rounded-lg p-3"
                   style={{
                     background: "#FAF7F2",
-                    border: "2px solid #C9B29F",
-                    borderRadius: "10px",
+                    border: "2px solid #EDE4D5",
+                    borderRadius: "8px",
                   }}>
                   <h4 style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "10px", color: "#1C1C1C", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "6px" }}>
                     How It Works
@@ -585,7 +585,7 @@ export default function Home() {
                           style={{ background: "#1C1C1C", fontSize: "9px", fontWeight: 700, fontFamily: "var(--font-body)", color: "#FAF7F2" }}>
                           {s.step}
                         </div>
-                        <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", color: "#6B7280", fontWeight: 500 }}>{s.text}</span>
+                        <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", color: "#6B6B6B", fontWeight: 500 }}>{s.text}</span>
                         {i < 2 && <span style={{ color: "#C9B29F", fontSize: "12px" }}>→</span>}
                       </div>
                     ))}
@@ -614,7 +614,7 @@ export default function Home() {
             <h2 className="text-center mb-1" style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "clamp(0.95rem, 2vw, 1.25rem)", color: "#1C1C1C" }}>
               Marketplace
             </h2>
-            <p className="text-center mb-3" style={{ color: "#6B7280", fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 400 }}>
+            <p className="text-center mb-3" style={{ color: "#6B6B6B", fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 400 }}>
               Buy, sell, and connect with breeders worldwide
             </p>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
@@ -632,8 +632,8 @@ export default function Home() {
                   style={{
                     animationDelay: `${i * 0.08}s`,
                     background: "#FAF7F2",
-                    border: "2px solid #C9B29F",
-                    borderRadius: "10px",
+                    border: "2px solid #EDE4D5",
+                    borderRadius: "8px",
                     transition: "all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
                     overflow: "hidden",
                   }}
@@ -675,7 +675,7 @@ export default function Home() {
                           }}>{m.tag}</span>
                         )}
                       </div>
-                      <p style={{ color: "#6B7280", fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 400, lineHeight: 1.4, marginTop: "1px" }}>{m.desc}</p>
+                      <p style={{ color: "#6B6B6B", fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 400, lineHeight: 1.4, marginTop: "1px" }}>{m.desc}</p>
                     </div>
                   </div>
                 </div>
@@ -687,7 +687,7 @@ export default function Home() {
                 }} className="inline-block px-5 py-1.5 rounded-lg"
                 style={{
                   fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.08em",
-                  color: "#1C1C1C", border: "2px solid #C9B29F", transition: "all 0.2s", cursor: "pointer", background: "transparent",
+                  color: "#1C1C1C", border: "2px solid #EDE4D5", transition: "all 0.2s", cursor: "pointer", background: "transparent",
                 }}
                 onMouseEnter={e => { e.currentTarget.style.borderColor = "#1C1C1C"; }}
                 onMouseLeave={e => { e.currentTarget.style.borderColor = "#C9B29F"; }}>
@@ -698,7 +698,7 @@ export default function Home() {
         </section>
 
         {/* ── Footer ── */}
-        <footer className="py-4 px-4" style={{ borderTop: "2px solid #C9B29F" }}>
+        <footer className="py-4 px-4" style={{ borderTop: "2px solid #EDE4D5" }}>
           <div className="max-w-5xl mx-auto">
             {/* Top row */}
             <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-4 mb-4">
@@ -708,7 +708,7 @@ export default function Home() {
                   <img src={LOGO} alt="" width={24} height={24} className="rounded-lg" style={{ background: "#C9B29F", padding: "1px" }} />
                   <span style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "11px", color: "#1C1C1C", textTransform: "uppercase", letterSpacing: "0.1em" }}>Pedigree Platform</span>
                 </div>
-                <p style={{ fontFamily: "var(--font-body)", fontSize: "10px", color: "#6B7280", maxWidth: "240px", lineHeight: 1.5 }} className="text-center md:text-left">
+                <p style={{ fontFamily: "var(--font-body)", fontSize: "10px", color: "#6B6B6B", maxWidth: "240px", lineHeight: 1.5 }} className="text-center md:text-left">
                   The most comprehensive pedigree management platform for breeders worldwide.
                 </p>
               </div>
@@ -719,9 +719,9 @@ export default function Home() {
                   <h4 style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "9px", color: "#1C1C1C", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "6px" }}>Platform</h4>
                   <div className="flex flex-col gap-1.5">
                     {[{ label: "Features", href: "#features" }, { label: "Bloodline Calculator", href: "#breeding-calculator" }, { label: "Marketplace", href: "#marketplace" }].map((l) => (
-                      <a key={l.label} href={l.href} style={{ fontFamily: "var(--font-body)", fontSize: "10px", color: "#6B7280", transition: "color 0.2s" }}
+                      <a key={l.label} href={l.href} style={{ fontFamily: "var(--font-body)", fontSize: "10px", color: "#6B6B6B", transition: "color 0.2s" }}
                         onMouseEnter={e => e.currentTarget.style.color = "#1C1C1C"}
-                        onMouseLeave={e => e.currentTarget.style.color = "#6B7280"}>{l.label}</a>
+                        onMouseLeave={e => e.currentTarget.style.color = "#6B6B6B"}>{l.label}</a>
                     ))}
                   </div>
                 </div>
@@ -729,21 +729,21 @@ export default function Home() {
                   <h4 style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "9px", color: "#1C1C1C", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "6px" }}>Legal</h4>
                   <div className="flex flex-col gap-1.5">
                     {[{ label: "Privacy", href: "/privacy" }, { label: "Terms", href: "/terms" }].map((l) => (
-                      <Link key={l.label} href={l.href} style={{ fontFamily: "var(--font-body)", fontSize: "10px", color: "#6B7280", transition: "color 0.2s" }}
+                      <Link key={l.label} href={l.href} style={{ fontFamily: "var(--font-body)", fontSize: "10px", color: "#6B6B6B", transition: "color 0.2s" }}
                         onMouseEnter={e => e.currentTarget.style.color = "#1C1C1C"}
-                        onMouseLeave={e => e.currentTarget.style.color = "#6B7280"}>{l.label}</Link>
+                        onMouseLeave={e => e.currentTarget.style.color = "#6B6B6B"}>{l.label}</Link>
                     ))}
                   </div>
                 </div>
                 <div>
                   <h4 style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "9px", color: "#1C1C1C", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "6px" }}>Support</h4>
                   <div className="flex flex-col gap-1.5">
-                    <Link href="/contact" style={{ fontFamily: "var(--font-body)", fontSize: "10px", color: "#6B7280", transition: "color 0.2s" }}
+                    <Link href="/contact" style={{ fontFamily: "var(--font-body)", fontSize: "10px", color: "#6B6B6B", transition: "color 0.2s" }}
                       onMouseEnter={e => e.currentTarget.style.color = "#1C1C1C"}
-                      onMouseLeave={e => e.currentTarget.style.color = "#6B7280"}>Contact Us</Link>
-                    <Link href="/contact" style={{ fontFamily: "var(--font-body)", fontSize: "10px", color: "#6B7280", transition: "color 0.2s" }}
+                      onMouseLeave={e => e.currentTarget.style.color = "#6B6B6B"}>Contact Us</Link>
+                    <Link href="/contact" style={{ fontFamily: "var(--font-body)", fontSize: "10px", color: "#6B6B6B", transition: "color 0.2s" }}
                       onMouseEnter={e => e.currentTarget.style.color = "#1C1C1C"}
-                      onMouseLeave={e => e.currentTarget.style.color = "#6B7280"}>Send us a message</Link>
+                      onMouseLeave={e => e.currentTarget.style.color = "#6B6B6B"}>Send us a message</Link>
                   </div>
                 </div>
               </div>
@@ -754,7 +754,7 @@ export default function Home() {
 
             {/* Bottom row */}
             <div className="flex flex-col md:flex-row items-center justify-between gap-2">
-              <p style={{ color: "#6B7280", fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 400 }}>&copy; 2026 Pedigree Platform. All rights reserved.</p>
+              <p style={{ color: "#6B6B6B", fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 400 }}>&copy; 2026 Pedigree Platform. All rights reserved.</p>
               <div className="flex items-center gap-4">
                 <span style={{ fontFamily: "var(--font-body)", fontSize: "10px", color: "#1C1C1C", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: 600 }}>Follow us</span>
                 {/* Telegram */}
@@ -777,16 +777,16 @@ export default function Home() {
           <div className="relative rounded-2xl p-8 max-w-sm w-full mx-4 animate-scale-reveal"
             style={{
               background: "#FAFAFA",
-              border: "2px solid #C9B29F",
-              borderRadius: "10px",
+              border: "2px solid #EDE4D5",
+              borderRadius: "8px",
             }}
             onClick={e => e.stopPropagation()}>
             {/* Close button */}
             <button onClick={() => setAuthModal(false)}
               className="absolute top-3 right-3 w-7 h-7 flex items-center justify-center rounded-lg"
-              style={{ background: "#EDE4D5", border: "2px solid #C9B29F", color: "#6B7280", fontSize: "14px", cursor: "pointer", transition: "all 0.2s" }}
+              style={{ background: "#EDE4D5", border: "2px solid #EDE4D5", color: "#6B6B6B", fontSize: "14px", cursor: "pointer", transition: "all 0.2s" }}
               onMouseEnter={e => { e.currentTarget.style.color = "#1C1C1C"; e.currentTarget.style.borderColor = "#1C1C1C"; }}
-              onMouseLeave={e => { e.currentTarget.style.color = "#6B7280"; e.currentTarget.style.borderColor = "#C9B29F"; }}>
+              onMouseLeave={e => { e.currentTarget.style.color = "#6B6B6B"; e.currentTarget.style.borderColor = "#C9B29F"; }}>
               ✕
             </button>
             {/* Logo */}
@@ -795,7 +795,7 @@ export default function Home() {
               <h3 style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "18px", color: "#1C1C1C", letterSpacing: "0.02em" }}>
                 Sign in to continue
               </h3>
-              <p style={{ fontFamily: "var(--font-body)", fontSize: "12px", color: "#6B7280", marginTop: "6px" }}>
+              <p style={{ fontFamily: "var(--font-body)", fontSize: "12px", color: "#6B6B6B", marginTop: "6px" }}>
                 Create an account or log in to access this feature
               </p>
             </div>
@@ -816,7 +816,7 @@ export default function Home() {
                 className="w-full py-3 rounded-xl text-center block"
                 style={{
                   fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "13px", textTransform: "uppercase", letterSpacing: "0.08em",
-                  color: "#1C1C1C", border: "2px solid #C9B29F",
+                  color: "#1C1C1C", border: "2px solid #EDE4D5",
                   transition: "all 0.2s",
                 }}
                 onMouseEnter={e => { e.currentTarget.style.borderColor = "#1C1C1C"; }}

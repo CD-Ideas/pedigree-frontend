@@ -58,11 +58,11 @@ export default function RegisterPage() {
       <Link
         href="/"
         className="fixed top-6 left-6 flex items-center gap-2 px-4 py-2.5 rounded-lg transition-all z-10"
-        style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", fontSize: "1rem", fontWeight: 600, letterSpacing: "0.05em", border: "2px solid #C9B29F", borderRadius: "10px", background: "#FAF7F2" }}
+        style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", fontSize: "1rem", fontWeight: 600, letterSpacing: "0.05em", border: "2px solid #EDE4D5", borderRadius: "8px", background: "#FAF7F2" }}
       >
         <span style={{ fontSize: "1.3rem" }}>&larr;</span> BACK
       </Link>
-      <div className="rounded-2xl p-6 w-full max-w-md" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "10px" }}>
+      <div className="rounded-2xl p-6 w-full max-w-md" style={{ background: "#FAF7F2", border: "2px solid #EDE4D5", borderRadius: "8px" }}>
         <div className="flex flex-col items-center mb-5">
           <img
             src={LOGO}
@@ -77,7 +77,7 @@ export default function RegisterPage() {
           >
             Create Account
           </h1>
-          <p style={{ color: "#6B7280", fontSize: "0.9rem" }}>
+          <p style={{ color: "#6B6B6B", fontSize: "0.9rem" }}>
             Join the ultimate pedigree platform
           </p>
         </div>
@@ -99,10 +99,10 @@ export default function RegisterPage() {
               className="w-full px-4 py-2.5 rounded-lg outline-none transition-all focus:ring-1 focus:ring-[#C9B29F]"
               style={{
                 background: "#FAFAFA",
-                border: "2px solid #C9B29F",
+                border: "2px solid #EDE4D5",
                 color: "#1C1C1C",
                 fontFamily: "var(--font-body)",
-                borderRadius: "10px",
+                borderRadius: "8px",
               }}
             />
           </div>
@@ -123,10 +123,10 @@ export default function RegisterPage() {
               className="w-full px-4 py-2.5 rounded-lg outline-none transition-all focus:ring-1 focus:ring-[#C9B29F]"
               style={{
                 background: "#FAFAFA",
-                border: "2px solid #C9B29F",
+                border: "2px solid #EDE4D5",
                 color: "#1C1C1C",
                 fontFamily: "var(--font-body)",
-                borderRadius: "10px",
+                borderRadius: "8px",
               }}
             />
           </div>
@@ -147,10 +147,10 @@ export default function RegisterPage() {
               className="w-full px-4 py-2.5 rounded-lg outline-none transition-all focus:ring-1 focus:ring-[#C9B29F]"
               style={{
                 background: "#FAFAFA",
-                border: "2px solid #C9B29F",
+                border: "2px solid #EDE4D5",
                 color: "#1C1C1C",
                 fontFamily: "var(--font-body)",
-                borderRadius: "10px",
+                borderRadius: "8px",
               }}
             />
           </div>
@@ -171,10 +171,10 @@ export default function RegisterPage() {
               className="w-full px-4 py-2.5 rounded-lg outline-none transition-all focus:ring-1 focus:ring-[#C9B29F]"
               style={{
                 background: "#FAFAFA",
-                border: "2px solid #C9B29F",
+                border: "2px solid #EDE4D5",
                 color: "#1C1C1C",
                 fontFamily: "var(--font-body)",
-                borderRadius: "10px",
+                borderRadius: "8px",
               }}
             />
           </div>
@@ -183,7 +183,7 @@ export default function RegisterPage() {
             type="submit"
             disabled={loading}
             className="w-full py-3 rounded-lg text-sm font-bold uppercase tracking-wider transition-all disabled:opacity-50"
-            style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)", borderRadius: "10px" }}
+            style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)", borderRadius: "8px" }}
           >
             {loading ? "Creating account..." : "Create Account"}
           </button>
@@ -200,7 +200,7 @@ export default function RegisterPage() {
           )}
         </form>
 
-        <p className="text-center mt-6" style={{ color: "#6B7280", fontSize: "0.9rem" }}>
+        <p className="text-center mt-6" style={{ color: "#6B6B6B", fontSize: "0.9rem" }}>
           Already have an account?{" "}
           <Link href="/login" className="hover:underline" style={{ color: "#1C1C1C", fontWeight: 600 }}>
             Sign in

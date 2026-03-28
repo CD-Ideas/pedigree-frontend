@@ -114,7 +114,7 @@ const SLOT_LABELS: Record<SlotKey, string> = {
 };
 
 const STEEL_FRAME: React.CSSProperties = {
-  border: "2px solid #C9B29F",
+  border: "2px solid #EDE4D5",
 };
 
 const PANEL_BG = "#FAF7F2";
@@ -677,14 +677,14 @@ function PedigreeLabInner() {
             <div className="p-4 pb-3">
               <p
                 className="text-[10px] uppercase tracking-widest font-semibold mb-3"
-                style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
+                style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
               >
                 Search Dogs
               </p>
               <div className="relative">
                 <span
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-sm"
-                  style={{ color: "#6B7280" }}
+                  style={{ color: "#6B6B6B" }}
                 >
                   {"\uD83D\uDD0D"}
                 </span>
@@ -696,7 +696,7 @@ function PedigreeLabInner() {
                   className="w-full rounded-lg pl-9 pr-3 py-2 text-sm outline-none focus:ring-1"
                   style={{
                     background: "#FAFAFA",
-                    border: "2px solid #C9B29F",
+                    border: "2px solid #EDE4D5",
                     color: searchTerm && getDogColor(searchTerm) !== "#3a3a3a" ? getDogColor(searchTerm) : "#1C1C1C",
                     fontFamily: "var(--font-table)",
                     outline: "none",
@@ -716,12 +716,12 @@ function PedigreeLabInner() {
             {/* Results */}
             <div className="flex-1 overflow-y-auto px-3 pb-3 space-y-2" style={{ scrollbarWidth: "thin" }}>
               {searchLoading && (
-                <p className="text-center text-xs py-4" style={{ color: "#6B7280" }}>
+                <p className="text-center text-xs py-4" style={{ color: "#6B6B6B" }}>
                   Searching...
                 </p>
               )}
               {!searchLoading && searchTerm && searchResults.length === 0 && (
-                <p className="text-center text-xs py-4" style={{ color: "#6B7280" }}>
+                <p className="text-center text-xs py-4" style={{ color: "#6B6B6B" }}>
                   No results found
                 </p>
               )}
@@ -735,7 +735,7 @@ function PedigreeLabInner() {
                     className="p-2.5 cursor-grab active:cursor-grabbing hover:scale-[1.02]"
                     style={{
                       background: "#FAF7F2",
-                      border: "2px solid #C9B29F",
+                      border: "2px solid #EDE4D5",
                       borderRadius: 10,
                       transition: "all 0.3s ease",
                     }}
@@ -755,11 +755,11 @@ function PedigreeLabInner() {
                             ? `url(${PHOTO_BASE}${dog.photo_url})`
                             : "none",
                           backgroundColor: dog.photo_url ? "transparent" : "#FAFAFA",
-                          border: `2px solid #C9B29F`,
+                          border: `2px solid #EDE4D5`,
                         }}
                       >
                         {!dog.photo_url && (
-                          <div className="w-full h-full flex items-center justify-center text-xs" style={{ color: "#6B7280" }}>
+                          <div className="w-full h-full flex items-center justify-center text-xs" style={{ color: "#6B6B6B" }}>
                             {"\uD83D\uDC36"}
                           </div>
                         )}
@@ -777,8 +777,8 @@ function PedigreeLabInner() {
                         >
                           {dog.registered_name}
                         </a>
-                        <p className="text-[10px]" style={{ color: "#6B7280" }}>
-                          <span style={{ color: dog.sex?.toUpperCase() === "FEMALE" ? "#9f1239" : "#1d5bbf" }}>{sexIcon(dog.sex)}</span> <span style={{ color: "#6B7280", fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}>ID: {dog.dog_id}</span>
+                        <p className="text-[10px]" style={{ color: "#6B6B6B" }}>
+                          <span style={{ color: dog.sex?.toUpperCase() === "FEMALE" ? "#9f1239" : "#1d5bbf" }}>{sexIcon(dog.sex)}</span> <span style={{ color: "#6B6B6B", fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}>ID: {dog.dog_id}</span>
                         </p>
                       </div>
                       {/* Drag indicator */}
@@ -805,7 +805,7 @@ function PedigreeLabInner() {
                 className="px-5 py-3 flex items-center justify-between"
                 style={{
                   background: "#FAF7F2",
-                  borderBottom: "2px solid #C9B29F",
+                  borderBottom: "2px solid #EDE4D5",
                 }}
               >
                 <div className="flex items-center gap-3">
@@ -953,7 +953,7 @@ function PedigreeLabInner() {
                             style={{
                               background: cellBg,
                               borderLeft: `4px solid ${cellBorder}`,
-                              borderTop: "1px solid #C9B29F",
+                              borderTop: "1px solid #EDE4D5",
                               borderRadius: 6,
                               padding: "6px 10px",
                               minHeight: 40,
@@ -973,7 +973,7 @@ function PedigreeLabInner() {
                                   background: "#fef3c7",
                                   width: 15,
                                   height: 15,
-                                  border: "1px solid #C9B29F",
+                                  border: "1px solid #EDE4D5",
                                 }}
                               >
                                 ★
@@ -1062,8 +1062,8 @@ function PedigreeLabInner() {
 
                 {/* Lines: Subject -> Parents */}
                 <div className="flex flex-col justify-center" style={{ width: 40 }}>
-                  <div style={{ borderTop: "2px solid #C9B29F", width: "100%", marginBottom: 80 }} />
-                  <div style={{ borderTop: "2px solid #C9B29F", width: "100%", marginTop: 80 }} />
+                  <div style={{ borderTop: "2px solid #EDE4D5", width: "100%", marginBottom: 80 }} />
+                  <div style={{ borderTop: "2px solid #EDE4D5", width: "100%", marginTop: 80 }} />
                   {/* Vertical connector */}
                   <div
                     className="absolute"
@@ -1113,7 +1113,7 @@ function PedigreeLabInner() {
 
                 {/* Lines: Parents -> Grandparents */}
                 <div className="flex flex-col justify-center" style={{ width: 40 }}>
-                  <div style={{ borderTop: "2px solid #C9B29F", width: "100%" }} />
+                  <div style={{ borderTop: "2px solid #EDE4D5", width: "100%" }} />
                 </div>
 
                 {/* Grandparents (right) */}
@@ -1192,7 +1192,7 @@ function PedigreeLabInner() {
               {/* Panel header */}
               <p
                 className="text-[10px] uppercase tracking-widest font-semibold"
-                style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
+                style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
               >
                 Details &amp; Actions
               </p>
@@ -1202,7 +1202,7 @@ function PedigreeLabInner() {
                 <div className="space-y-3">
                   <div
                     className="overflow-hidden"
-                    style={{ border: `2px solid #C9B29F`, borderRadius: 10 }}
+                    style={{ border: `2px solid #EDE4D5`, borderRadius: 10 }}
                   >
                     {selectedDog.photo_url ? (
                       <img
@@ -1213,7 +1213,7 @@ function PedigreeLabInner() {
                     ) : (
                       <div
                         className="w-full h-36 flex items-center justify-center text-3xl"
-                        style={{ background: "#FAFAFA", color: "#6B7280" }}
+                        style={{ background: "#FAFAFA", color: "#6B6B6B" }}
                       >
                         {"\uD83D\uDC36"}
                       </div>
@@ -1228,20 +1228,20 @@ function PedigreeLabInner() {
                   >
                     {sexIcon(selectedDog.sex)} {selectedDog.registered_name}
                   </p>
-                  <p className="text-[10px]" style={{ color: "#6B7280" }}>
+                  <p className="text-[10px]" style={{ color: "#6B6B6B" }}>
                     Slot: {selectedSlot ? SLOT_LABELS[selectedSlot] : "--"} | ID: <span style={{ color: "#1C1C1C", fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}>{selectedDog.dog_id}</span>
                   </p>
                 </div>
               ) : (
                 <div className="py-8 text-center">
-                  <p className="text-xs" style={{ color: "#6B7280" }}>
+                  <p className="text-xs" style={{ color: "#6B6B6B" }}>
                     Select a dog on the canvas to view details
                   </p>
                 </div>
               )}
 
               {/* Divider */}
-              <div style={{ borderTop: "2px solid #C9B29F" }} />
+              <div style={{ borderTop: "2px solid #EDE4D5" }} />
 
               {/* Preview toggle */}
               <button
@@ -1272,7 +1272,7 @@ function PedigreeLabInner() {
                   fontFamily: "var(--font-table)",
                   background: previewMode ? "#C9B29F" : "#1C1C1C",
                   color: previewMode ? "#1C1C1C" : "#FAF7F2",
-                  border: "2px solid #C9B29F",
+                  border: "2px solid #EDE4D5",
                   borderRadius: 10,
                   transition: "all 0.3s ease",
                 }}
@@ -1291,7 +1291,7 @@ function PedigreeLabInner() {
                   fontFamily: "var(--font-table)",
                   background: "#C9B29F",
                   color: "#1C1C1C",
-                  border: "2px solid #C9B29F",
+                  border: "2px solid #EDE4D5",
                   borderRadius: 10,
                   transition: "all 0.3s ease",
                 }}
@@ -1339,8 +1339,8 @@ function PedigreeLabInner() {
           style={{
             fontFamily: "var(--font-table)",
             background: previewMode ? "#C9B29F" : "#FAF7F2",
-            color: previewMode ? "#1C1C1C" : "#6B7280",
-            border: `2px solid #C9B29F`,
+            color: previewMode ? "#1C1C1C" : "#6B6B6B",
+            border: `2px solid #EDE4D5`,
           }}
         >
           {previewMode ? "Preview Mode" : "Edit Mode"}
@@ -1362,7 +1362,7 @@ function PedigreeLabInner() {
               margin: 16,
               padding: 0,
               background: "#FAF7F2",
-              border: "2px solid #C9B29F",
+              border: "2px solid #EDE4D5",
               borderRadius: 10,
             }}
           >
@@ -1385,9 +1385,9 @@ function PedigreeLabInner() {
                   onClick={() => setShowPublishModal(false)}
                   className="text-sm transition-colors"
                   style={{
-                    color: "#6B7280",
+                    color: "#6B6B6B",
                     background: "#FAFAFA",
-                    border: "2px solid #C9B29F",
+                    border: "2px solid #EDE4D5",
                     borderRadius: 10,
                     width: 32,
                     height: 32,
@@ -1405,7 +1405,7 @@ function PedigreeLabInner() {
                 <div>
                   <label
                     className="block text-[10px] uppercase tracking-widest font-semibold mb-1"
-                    style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
+                    style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
                   >
                     🏷️ Prefix
                   </label>
@@ -1415,7 +1415,7 @@ function PedigreeLabInner() {
                     className="rounded-2xl px-2 py-2 text-xs outline-none transition-all"
                     style={{
                       background: "#FAFAFA",
-                      border: "2px solid #C9B29F",
+                      border: "2px solid #EDE4D5",
                       color: "#1C1C1C",
                       fontFamily: "var(--font-table)",
                       width: 90,
@@ -1435,7 +1435,7 @@ function PedigreeLabInner() {
                     background: publishForm.showInTitleFeed
                       ? "#C9B29F"
                       : "#FAFAFA",
-                    border: "2px solid #C9B29F",
+                    border: "2px solid #EDE4D5",
                     borderRadius: 10,
                   }}
                   title="Show in Dashboard Title Feed"
@@ -1455,7 +1455,7 @@ function PedigreeLabInner() {
                       background: publishForm.showInTitleFeed
                         ? "#C9B29F"
                         : "#FAFAFA",
-                      border: "2px solid #C9B29F",
+                      border: "2px solid #EDE4D5",
                     }}>
                     <span className="absolute top-0.5 left-0.5 w-5 h-5 rounded-full transition-all"
                       style={{
@@ -1478,7 +1478,7 @@ function PedigreeLabInner() {
               <div>
                 <label
                   className="block text-[10px] uppercase tracking-widest font-semibold mb-1"
-                  style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
+                  style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
                 >
                   🏅 Suffix
                 </label>
@@ -1489,7 +1489,7 @@ function PedigreeLabInner() {
                     className="rounded-2xl px-2 py-2 text-xs outline-none transition-all"
                     style={{
                       background: "#FAFAFA",
-                      border: "2px solid #C9B29F",
+                      border: "2px solid #EDE4D5",
                       color: "#1C1C1C",
                       fontFamily: "var(--font-table)",
                       width: 90,
@@ -1506,7 +1506,7 @@ function PedigreeLabInner() {
                     className="rounded-2xl px-2 py-2 text-xs outline-none transition-all"
                     style={{
                       background: "#FAFAFA",
-                      border: "2px solid #C9B29F",
+                      border: "2px solid #EDE4D5",
                       color: "#1C1C1C",
                       fontFamily: "var(--font-table)",
                       width: 90,
@@ -1523,7 +1523,7 @@ function PedigreeLabInner() {
                     className="rounded-2xl px-2 py-2 text-xs outline-none transition-all"
                     style={{
                       background: "#FAFAFA",
-                      border: "2px solid #C9B29F",
+                      border: "2px solid #EDE4D5",
                       color: "#1C1C1C",
                       fontFamily: "var(--font-table)",
                       width: 90,
@@ -1540,7 +1540,7 @@ function PedigreeLabInner() {
                     className="rounded-2xl px-2 py-2 text-xs outline-none transition-all"
                     style={{
                       background: "#FAFAFA",
-                      border: "2px solid #C9B29F",
+                      border: "2px solid #EDE4D5",
                       color: "#1C1C1C",
                       fontFamily: "var(--font-table)",
                       width: 90,
@@ -1575,7 +1575,7 @@ function PedigreeLabInner() {
                 <div>
                   <label
                     className="block text-[10px] uppercase tracking-widest font-semibold mb-1"
-                    style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
+                    style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
                   >
                     🔹 Sex
                   </label>
@@ -1585,7 +1585,7 @@ function PedigreeLabInner() {
                     className="w-full rounded-2xl px-3 py-2 text-sm outline-none uppercase transition-all"
                     style={{
                       background: "#FAFAFA",
-                      border: "2px solid #C9B29F",
+                      border: "2px solid #EDE4D5",
                       color: "#1C1C1C",
                       fontFamily: "var(--font-table)",
                       textTransform: "uppercase",
@@ -1615,7 +1615,7 @@ function PedigreeLabInner() {
                 <div>
                   <label
                     className="block text-[10px] uppercase tracking-widest font-semibold mb-1"
-                    style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
+                    style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
                   >
                     🌍 Continent
                   </label>
@@ -1625,7 +1625,7 @@ function PedigreeLabInner() {
                     className="w-full rounded-2xl px-3 py-2 text-sm outline-none uppercase transition-all"
                     style={{
                       background: "#FAFAFA",
-                      border: "2px solid #C9B29F",
+                      border: "2px solid #EDE4D5",
                       color: "#1C1C1C",
                       fontFamily: "var(--font-table)",
                       textTransform: "uppercase",
@@ -1643,7 +1643,7 @@ function PedigreeLabInner() {
                 <div>
                   <label
                     className="block text-[10px] uppercase tracking-widest font-semibold mb-1"
-                    style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
+                    style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
                   >
                     🏳️ Country
                   </label>
@@ -1653,7 +1653,7 @@ function PedigreeLabInner() {
                     className="w-full rounded-2xl px-3 py-2 text-sm outline-none uppercase transition-all"
                     style={{
                       background: "#FAFAFA",
-                      border: "2px solid #C9B29F",
+                      border: "2px solid #EDE4D5",
                       color: "#1C1C1C",
                       fontFamily: "var(--font-table)",
                       textTransform: "uppercase",
@@ -1672,7 +1672,7 @@ function PedigreeLabInner() {
                 <div>
                   <label
                     className="block text-[10px] uppercase tracking-widest font-semibold mb-2"
-                    style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
+                    style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
                   >
                     👑 Owner
                   </label>
@@ -1681,7 +1681,7 @@ function PedigreeLabInner() {
                     className="w-full rounded-2xl px-3 py-2 text-sm outline-none transition-all focus:ring-1"
                     style={{
                       background: "#FAFAFA",
-                      border: "2px solid #C9B29F",
+                      border: "2px solid #EDE4D5",
                       color: "#1C1C1C",
                       fontFamily: "var(--font-table)",
                       textTransform: "uppercase",
@@ -1694,7 +1694,7 @@ function PedigreeLabInner() {
                 <div>
                   <label
                     className="block text-[10px] uppercase tracking-widest font-semibold mb-2"
-                    style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
+                    style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
                   >
                     ⚖️ Cond. Weight
                   </label>
@@ -1703,7 +1703,7 @@ function PedigreeLabInner() {
                     className="w-full rounded-2xl px-3 py-2 text-sm outline-none transition-all focus:ring-1"
                     style={{
                       background: "#FAFAFA",
-                      border: "2px solid #C9B29F",
+                      border: "2px solid #EDE4D5",
                       color: "#1C1C1C",
                       fontFamily: "var(--font-table)",
                       textTransform: "uppercase",
@@ -1720,7 +1720,7 @@ function PedigreeLabInner() {
                 <div>
                   <label
                     className="block text-[10px] uppercase tracking-widest font-semibold mb-2"
-                    style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
+                    style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
                   >
                     Views
                   </label>
@@ -1728,19 +1728,19 @@ function PedigreeLabInner() {
                     className="w-full rounded-2xl px-3 py-2 text-sm flex items-center"
                     style={{
                       background: "#FAFAFA",
-                      border: "2px solid #C9B29F",
+                      border: "2px solid #EDE4D5",
                       fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
                       minHeight: 38,
                     }}
                   >
                     <span style={{ color: "#C9B29F" }}>{publishForm.viewCount}</span>
-                    <span className="ml-1 text-[10px]" style={{ color: "#6B7280" }}>views</span>
+                    <span className="ml-1 text-[10px]" style={{ color: "#6B6B6B" }}>views</span>
                   </div>
                 </div>
                 <div>
                   <label
                     className="block text-[10px] uppercase tracking-widest font-semibold mb-2"
-                    style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
+                    style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
                   >
                     Date Posted
                   </label>
@@ -1748,12 +1748,12 @@ function PedigreeLabInner() {
                     className="w-full rounded-2xl px-3 py-2 text-sm flex items-center"
                     style={{
                       background: "#FAFAFA",
-                      border: "2px solid #C9B29F",
+                      border: "2px solid #EDE4D5",
                       fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
                       minHeight: 38,
                     }}
                   >
-                    <span style={{ color: publishForm.datePosted ? "#1C1C1C" : "#6B7280" }}>
+                    <span style={{ color: publishForm.datePosted ? "#1C1C1C" : "#6B6B6B" }}>
                       {publishForm.datePosted ? new Date(publishForm.datePosted).toLocaleDateString() : editingId ? "—" : "Auto on publish"}
                     </span>
                   </div>
@@ -1761,7 +1761,7 @@ function PedigreeLabInner() {
                 <div>
                   <label
                     className="block text-[10px] uppercase tracking-widest font-semibold mb-2"
-                    style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
+                    style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
                   >
                     Last Modified
                   </label>
@@ -1769,12 +1769,12 @@ function PedigreeLabInner() {
                     className="w-full rounded-2xl px-3 py-2 text-sm flex items-center"
                     style={{
                       background: "#FAFAFA",
-                      border: "2px solid #C9B29F",
+                      border: "2px solid #EDE4D5",
                       fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
                       minHeight: 38,
                     }}
                   >
-                    <span style={{ color: publishForm.lastModified ? "#1C1C1C" : "#6B7280" }}>
+                    <span style={{ color: publishForm.lastModified ? "#1C1C1C" : "#6B6B6B" }}>
                       {publishForm.lastModified ? new Date(publishForm.lastModified).toLocaleDateString() : editingId ? "—" : "Auto on publish"}
                     </span>
                   </div>
@@ -1785,7 +1785,7 @@ function PedigreeLabInner() {
               <div>
                 <label
                   className="block text-[10px] uppercase tracking-widest font-semibold mb-2"
-                  style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
+                  style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
                 >
                   📝 Pedigree Notes
                 </label>
@@ -1794,7 +1794,7 @@ function PedigreeLabInner() {
                   className="w-full rounded-2xl px-3 py-2 text-sm outline-none transition-all focus:ring-1"
                   style={{
                     background: "#FAFAFA",
-                    border: "2px solid #C9B29F",
+                    border: "2px solid #EDE4D5",
                     color: "#1C1C1C",
                     fontFamily: "var(--font-table)",
                     resize: "vertical",
@@ -1809,7 +1809,7 @@ function PedigreeLabInner() {
               <div>
                 <label
                   className="block text-[10px] uppercase tracking-widest font-semibold mb-2"
-                  style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
+                  style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
                 >
                   📸 Photo
                 </label>
@@ -1830,10 +1830,10 @@ function PedigreeLabInner() {
                     />
                   ) : (
                     <>
-                      <span className="text-2xl mb-1" style={{ color: "#6B7280" }}>
+                      <span className="text-2xl mb-1" style={{ color: "#6B6B6B" }}>
                         {"\uD83D\uDCF7"}
                       </span>
-                      <span className="text-[10px]" style={{ color: "#6B7280" }}>
+                      <span className="text-[10px]" style={{ color: "#6B6B6B" }}>
                         Click to upload photo
                       </span>
                     </>
@@ -1849,7 +1849,7 @@ function PedigreeLabInner() {
               </div>
 
               {/* Divider */}
-              <div style={{ borderTop: "2px solid #C9B29F" }} />
+              <div style={{ borderTop: "2px solid #EDE4D5" }} />
 
               {/* Journal Section */}
               <p
@@ -1873,7 +1873,7 @@ function PedigreeLabInner() {
                 <div>
                   <label
                     className="block text-[10px] uppercase tracking-widest font-semibold mb-1"
-                    style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
+                    style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
                   >
                     Rabies: Next Due
                   </label>
@@ -1881,8 +1881,8 @@ function PedigreeLabInner() {
                     className="w-full rounded-2xl px-3 py-2 text-sm"
                     style={{
                       background: "#FAFAFA",
-                      border: "2px solid #C9B29F",
-                      color: publishForm.journal.rabiesNextDue ? "#22c55e" : "#6B7280",
+                      border: "2px solid #EDE4D5",
+                      color: publishForm.journal.rabiesNextDue ? "#22c55e" : "#6B6B6B",
                       fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
                     }}
                   >
@@ -1908,7 +1908,7 @@ function PedigreeLabInner() {
               <div>
                 <label
                   className="block text-[10px] uppercase tracking-widest font-semibold mb-2"
-                  style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
+                  style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
                 >
                   Vaccines
                 </label>
@@ -1919,7 +1919,7 @@ function PedigreeLabInner() {
                       className="flex items-center gap-3 rounded-2xl px-3 py-2"
                       style={{
                         background: "#FAFAFA",
-                        border: "2px solid #C9B29F",
+                        border: "2px solid #EDE4D5",
                       }}
                     >
                       <input
@@ -1932,7 +1932,7 @@ function PedigreeLabInner() {
                       <span
                         className="text-xs flex-1 font-semibold"
                         style={{
-                          color: vax.checked ? "#1C1C1C" : "#6B7280",
+                          color: vax.checked ? "#1C1C1C" : "#6B6B6B",
                           fontFamily: "var(--font-table)",
                         }}
                       >
@@ -1946,7 +1946,7 @@ function PedigreeLabInner() {
                           className="rounded-xl px-2 py-1 text-[10px] outline-none transition-all"
                           style={{
                             background: "#FAFAFA",
-                            border: "2px solid #C9B29F",
+                            border: "2px solid #EDE4D5",
                             color: "#1C1C1C",
                             fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
                           }}
@@ -1961,7 +1961,7 @@ function PedigreeLabInner() {
               <div>
                 <label
                   className="block text-[10px] uppercase tracking-widest font-semibold mb-2"
-                  style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
+                  style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
                 >
                   Worming
                 </label>
@@ -1969,7 +1969,7 @@ function PedigreeLabInner() {
                 {/* Worming Draft Form */}
                 <div
                   className="rounded-2xl p-3 space-y-3"
-                  style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}
+                  style={{ background: "#FAFAFA", border: "2px solid #EDE4D5" }}
                 >
                   {/* Type */}
                   <select
@@ -1983,7 +1983,7 @@ function PedigreeLabInner() {
                     className="w-full rounded-2xl px-3 py-2 text-xs outline-none transition-all"
                     style={{
                       background: "#FAFAFA",
-                      border: "2px solid #C9B29F",
+                      border: "2px solid #EDE4D5",
                       color: "#1C1C1C",
                       fontFamily: "var(--font-table)",
                     }}
@@ -2010,7 +2010,7 @@ function PedigreeLabInner() {
                       className="w-full rounded-2xl px-3 py-2 text-xs outline-none transition-all"
                       style={{
                         background: "#FAFAFA",
-                        border: "2px solid #C9B29F",
+                        border: "2px solid #EDE4D5",
                         color: "#1C1C1C",
                         fontFamily: "var(--font-table)",
                       }}
@@ -2019,7 +2019,7 @@ function PedigreeLabInner() {
 
                   {/* Date Wormed */}
                   <div>
-                    <span className="text-[9px] uppercase tracking-widest font-semibold" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                    <span className="text-[9px] uppercase tracking-widest font-semibold" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                       Date Wormed
                     </span>
                     <input
@@ -2043,7 +2043,7 @@ function PedigreeLabInner() {
                       className="w-full rounded-2xl px-3 py-2 text-xs outline-none mt-1 transition-all"
                       style={{
                         background: "#FAFAFA",
-                        border: "2px solid #C9B29F",
+                        border: "2px solid #EDE4D5",
                         color: "#1C1C1C",
                         fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
                       }}
@@ -2052,7 +2052,7 @@ function PedigreeLabInner() {
 
                   {/* Next Due toggle buttons */}
                   <div>
-                    <span className="text-[9px] uppercase tracking-widest font-semibold" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                    <span className="text-[9px] uppercase tracking-widest font-semibold" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                       Next Due
                     </span>
                     <div className="flex gap-2 mt-1">
@@ -2082,8 +2082,8 @@ function PedigreeLabInner() {
                               : "#FAFAFA",
                             color: publishForm.journal.wormingDraft.intervalDays === days
                               ? "#1C1C1C"
-                              : "#6B7280",
-                            border: `2px solid #C9B29F`,
+                              : "#6B6B6B",
+                            border: `2px solid #EDE4D5`,
                           }}
                         >
                           {days} days
@@ -2110,7 +2110,7 @@ function PedigreeLabInner() {
                       }
                       style={{ accentColor: "#C9B29F" }}
                     />
-                    <span className="text-[10px] uppercase tracking-widest font-semibold" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                    <span className="text-[10px] uppercase tracking-widest font-semibold" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                       Remind Me
                     </span>
                   </div>
@@ -2135,7 +2135,7 @@ function PedigreeLabInner() {
                       fontFamily: "var(--font-table)",
                       background: "#1C1C1C",
                       color: "#FAF7F2",
-                      border: "2px solid #C9B29F",
+                      border: "2px solid #EDE4D5",
                       borderRadius: 10,
                     }}
                   >
@@ -2152,7 +2152,7 @@ function PedigreeLabInner() {
                         className="flex items-center justify-between rounded-2xl px-3 py-2"
                         style={{
                           background: "#FAFAFA",
-                          border: "2px solid #C9B29F",
+                          border: "2px solid #EDE4D5",
                         }}
                       >
                         <div className="flex items-center gap-2">
@@ -2171,7 +2171,7 @@ function PedigreeLabInner() {
                           </span>
                           {entry.nextDue && (
                             <>
-                              <span className="text-[9px]" style={{ color: "#6B7280" }}>→</span>
+                              <span className="text-[9px]" style={{ color: "#6B6B6B" }}>→</span>
                               <span className="text-[10px]" style={{ color: "#22c55e", fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}>
                                 Due: {formatDateShort(entry.nextDue)}
                               </span>
@@ -2186,7 +2186,7 @@ function PedigreeLabInner() {
                               }))
                             }
                             className="text-[10px] hover:text-red-400 transition-colors"
-                            style={{ color: "#6B7280" }}
+                            style={{ color: "#6B6B6B" }}
                           >
                             {"\u2716"}
                           </button>
@@ -2225,7 +2225,7 @@ function PedigreeLabInner() {
                 return (
                   <div className="rounded-2xl p-4" style={{
                     background: "#FAF7F2",
-                    border: isUpcoming ? "2px solid #fb923c" : isOverdue ? "2px solid #ef4444" : "2px solid #C9B29F",
+                    border: isUpcoming ? "2px solid #fb923c" : isOverdue ? "2px solid #ef4444" : "2px solid #EDE4D5",
                     borderRadius: 10,
                   }}>
                     <div className="flex items-center gap-2 mb-3">
@@ -2237,7 +2237,7 @@ function PedigreeLabInner() {
                       <span className="text-[8px] px-1.5 py-0.5 rounded-full" style={{
                         background: "#FAF7F2",
                         color: "#9f1239",
-                        border: "2px solid #C9B29F",
+                        border: "2px solid #EDE4D5",
                         fontFamily: "var(--font-table)",
                       }}>Private</span>
                     </div>
@@ -2246,7 +2246,7 @@ function PedigreeLabInner() {
                       {/* Last Heat Date */}
                       <div>
                         <label className="block text-[9px] uppercase tracking-widest font-semibold mb-1"
-                          style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                          style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                           Last Heat Date
                         </label>
                         <input
@@ -2256,7 +2256,7 @@ function PedigreeLabInner() {
                           className="w-full rounded-xl px-3 py-2 text-xs outline-none transition-all"
                           style={{
                             background: "#FAFAFA",
-                            border: "2px solid #C9B29F",
+                            border: "2px solid #EDE4D5",
                             color: "#1C1C1C",
                             fontFamily: "var(--font-table)",
                             colorScheme: "light",
@@ -2267,7 +2267,7 @@ function PedigreeLabInner() {
                       {/* Frequency */}
                       <div>
                         <label className="block text-[9px] uppercase tracking-widest font-semibold mb-1"
-                          style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                          style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                           Cycle Frequency
                         </label>
                         <select
@@ -2276,7 +2276,7 @@ function PedigreeLabInner() {
                           className="w-full rounded-xl px-3 py-2 text-xs outline-none transition-all"
                           style={{
                             background: "#FAFAFA",
-                            border: "2px solid #C9B29F",
+                            border: "2px solid #EDE4D5",
                             color: "#1C1C1C",
                             fontFamily: "var(--font-table)",
                             colorScheme: "light",
@@ -2294,7 +2294,7 @@ function PedigreeLabInner() {
                     {hc.interval === "custom" && (
                       <div className="mt-2">
                         <label className="block text-[9px] uppercase tracking-widest font-semibold mb-1"
-                          style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                          style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                           Custom Interval (days, min 90)
                         </label>
                         <input
@@ -2305,7 +2305,7 @@ function PedigreeLabInner() {
                           className="w-32 rounded-xl px-3 py-2 text-xs outline-none transition-all"
                           style={{
                             background: "#FAFAFA",
-                            border: "2px solid #C9B29F",
+                            border: "2px solid #EDE4D5",
                             color: "#1C1C1C",
                             fontFamily: "var(--font-table)",
                           }}
@@ -2317,7 +2317,7 @@ function PedigreeLabInner() {
                     {hc.lastHeatDate && nextHeatDate && (
                       <div className="mt-3 rounded-xl px-3 py-2.5 flex items-center justify-between" style={{
                         background: "#FAF7F2",
-                        border: isOverdue ? "2px solid #ef4444" : isUpcoming ? "2px solid #fb923c" : "2px solid #C9B29F",
+                        border: isOverdue ? "2px solid #ef4444" : isUpcoming ? "2px solid #fb923c" : "2px solid #EDE4D5",
                       }}>
                         <div className="flex items-center gap-2">
                           <span className="text-sm">{isOverdue ? "🔴" : isUpcoming ? "🟠" : "🌷"}</span>
@@ -2340,7 +2340,7 @@ function PedigreeLabInner() {
                           }}>
                             {isOverdue ? `${Math.abs(daysUntilNext!)}d ago` : `${daysUntilNext}d`}
                           </p>
-                          <p className="text-[8px] uppercase" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                          <p className="text-[8px] uppercase" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                             {isOverdue ? "past due" : "remaining"}
                           </p>
                         </div>
@@ -2351,7 +2351,7 @@ function PedigreeLabInner() {
                     {lastLoggedMonths !== null && lastLoggedMonths >= 12 && (
                       <div className="mt-2 rounded-xl px-3 py-2 flex items-center gap-2" style={{
                         background: "#FAF7F2",
-                        border: "2px solid #C9B29F",
+                        border: "2px solid #EDE4D5",
                       }}>
                         <span className="text-sm">💬</span>
                         <p className="text-[10px]" style={{ color: "#fb923c", fontFamily: "var(--font-table)" }}>
@@ -2364,7 +2364,7 @@ function PedigreeLabInner() {
                     <div className="mt-2 flex items-center justify-between px-1">
                       <div className="flex items-center gap-2">
                         <span className="text-xs">🔔</span>
-                        <span className="text-[9px] font-medium" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                        <span className="text-[9px] font-medium" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                           Remind me 7 days before
                         </span>
                       </div>
@@ -2374,7 +2374,7 @@ function PedigreeLabInner() {
                         className="relative w-9 h-5 rounded-full transition-all flex-shrink-0"
                         style={{
                           background: hc.reminderEnabled ? "#9f1239" : "#FAFAFA",
-                          border: "2px solid #C9B29F",
+                          border: "2px solid #EDE4D5",
                         }}
                       >
                         <span className="absolute top-0.5 left-0.5 w-4 h-4 rounded-full transition-all"
@@ -2392,7 +2392,7 @@ function PedigreeLabInner() {
               <div>
                 <label
                   className="block text-[10px] uppercase tracking-widest font-semibold mb-1"
-                  style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
+                  style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
                 >
                   Journal Notes
                 </label>
@@ -2409,7 +2409,7 @@ function PedigreeLabInner() {
                   className="w-full rounded-2xl px-3 py-2 text-sm outline-none resize-none transition-all"
                   style={{
                     background: "#FAFAFA",
-                    border: "2px solid #C9B29F",
+                    border: "2px solid #EDE4D5",
                     color: "#1C1C1C",
                     fontFamily: "var(--font-table)",
                   }}
@@ -2604,11 +2604,11 @@ function DropZone({
               ? `url(${PHOTO_BASE}${dog.photo_url})`
               : "none",
             backgroundColor: dog.photo_url ? "transparent" : "#FAFAFA",
-            border: `2px solid #C9B29F`,
+            border: `2px solid #EDE4D5`,
           }}
         >
           {!dog.photo_url && (
-            <div className="w-full h-full flex items-center justify-center text-sm" style={{ color: "#6B7280" }}>
+            <div className="w-full h-full flex items-center justify-center text-sm" style={{ color: "#6B6B6B" }}>
               {"\uD83D\uDC36"}
             </div>
           )}
@@ -2641,7 +2641,7 @@ function DropZone({
               fontWeight: 800,
               color: "#FAF7F2",
               background: "#dc2626",
-              border: "2px solid #C9B29F",
+              border: "2px solid #EDE4D5",
               lineHeight: 1,
             }}
           >
@@ -2667,7 +2667,7 @@ function DropZone({
               fontSize: 12,
               color: "#1C1C1C",
               background: "#FAF7F2",
-              border: "2px solid #C9B29F",
+              border: "2px solid #EDE4D5",
               borderRadius: "5px",
               lineHeight: 1,
               fontFamily: "var(--font-mono, monospace)",
@@ -2691,7 +2691,7 @@ function DropZone({
           width: isSm ? 140 : 155,
           height: isSm ? 70 : 90,
           background: "#FAFAFA",
-          border: "2px solid #C9B29F",
+          border: "2px solid #EDE4D5",
           borderRadius: 10,
         }}
       />
@@ -2761,7 +2761,7 @@ function ModalInput({
     <div>
       <label
         className="block text-[10px] uppercase tracking-widest font-semibold mb-1"
-        style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
+        style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
       >
         {label}
       </label>
@@ -2773,7 +2773,7 @@ function ModalInput({
         className="w-full rounded-2xl px-3 py-2 text-sm outline-none transition-all focus:ring-1"
         style={{
           background: "#FAFAFA",
-          border: "2px solid #C9B29F",
+          border: "2px solid #EDE4D5",
           color: "#1C1C1C",
           fontFamily: "var(--font-table)",
           ...extraStyle,
@@ -2788,7 +2788,7 @@ function ModalInput({
 /* ================================================================== */
 export default function PedigreeLabPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center" style={{ background: "#EDE4D5", color: "#6B7280" }}>Loading...</div>}>
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center" style={{ background: "#EDE4D5", color: "#6B6B6B" }}>Loading...</div>}>
       <PedigreeLabInner />
     </Suspense>
   );

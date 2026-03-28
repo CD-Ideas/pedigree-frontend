@@ -55,7 +55,7 @@ function NavSearch() {
     <div ref={containerRef} className="relative">
       <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl transition-all duration-300 focus-within:scale-[1.02]" style={{
         background: "#FAFAFA",
-        border: "2px solid #C9B29F",
+        border: "2px solid #EDE4D5",
       }}>
         <span className="text-sm">🔍</span>
         <input
@@ -74,7 +74,7 @@ function NavSearch() {
           className="absolute top-full mt-1 left-0 right-0 rounded-lg overflow-hidden z-[100]"
           style={{
             background: "#FAFAFA",
-            border: "2px solid #C9B29F",
+            border: "2px solid #EDE4D5",
             maxHeight: 300,
             overflowY: "auto",
           }}
@@ -88,13 +88,13 @@ function NavSearch() {
                 key={r.dog_id}
                 href={`/pedigree/${r.dog_id}`}
                 className="flex items-center gap-2 px-3 py-2 transition-all hover:bg-[#C9B29F]/10 text-xs"
-                style={{ borderBottom: "1px solid #C9B29F" }}
+                style={{ borderBottom: "1px solid #EDE4D5" }}
               >
                 {photoSrc ? (
-                  <img src={photoSrc} alt="" className="w-6 h-6 rounded-lg object-cover flex-shrink-0" style={{ border: "1px solid #C9B29F" }} />
+                  <img src={photoSrc} alt="" className="w-6 h-6 rounded-lg object-cover flex-shrink-0" style={{ border: "1px solid #EDE4D5" }} />
                 ) : (
                   <div className="w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0 text-[10px]"
-                       style={{ background: "#FAFAFA", border: "1px solid #C9B29F" }}>🐕</div>
+                       style={{ background: "#FAFAFA", border: "1px solid #EDE4D5" }}>🐕</div>
                 )}
                 <span className="font-semibold truncate" style={{ color: getDogColor(r.registered_name), fontFamily: "var(--font-table)" }}>
                   {r.registered_name}
@@ -105,7 +105,7 @@ function NavSearch() {
           {results.length === 0 && suggestions.length > 0 && (
             <>
               <div className="px-3 py-2 text-[10px] uppercase tracking-wider font-semibold"
-                style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", borderBottom: "1px solid #C9B29F", background: "rgba(201,178,159,0.1)" }}>
+                style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", borderBottom: "1px solid #EDE4D5", background: "rgba(201,178,159,0.1)" }}>
                 Similar names
               </div>
               {suggestions.map((r) => {
@@ -117,13 +117,13 @@ function NavSearch() {
                     key={r.dog_id}
                     href={`/pedigree/${r.dog_id}`}
                     className="flex items-center gap-2 px-3 py-2 transition-all hover:bg-[#C9B29F]/10 text-xs"
-                    style={{ borderBottom: "1px solid #C9B29F" }}
+                    style={{ borderBottom: "1px solid #EDE4D5" }}
                   >
                     {photoSrc ? (
-                      <img src={photoSrc} alt="" className="w-6 h-6 rounded-lg object-cover flex-shrink-0" style={{ border: "1px solid #C9B29F" }} />
+                      <img src={photoSrc} alt="" className="w-6 h-6 rounded-lg object-cover flex-shrink-0" style={{ border: "1px solid #EDE4D5" }} />
                     ) : (
                       <div className="w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0 text-[10px]"
-                           style={{ background: "#FAFAFA", border: "1px solid #C9B29F" }}>🐕</div>
+                           style={{ background: "#FAFAFA", border: "1px solid #EDE4D5" }}>🐕</div>
                     )}
                     <span className="font-semibold truncate" style={{ color: getDogColor(r.registered_name), fontFamily: "var(--font-table)" }}>
                       {r.registered_name}
@@ -343,7 +343,7 @@ export default function NavBar() {
     <nav
       style={{
         background: "#1C1C1C",
-        borderBottom: "2px solid #C9B29F",
+        borderBottom: "2px solid #EDE4D5",
       }}
       className="sticky top-0 z-50 overflow-visible"
     >
@@ -386,7 +386,7 @@ export default function NavBar() {
               color: "#FAF7F2",
               fontFamily: "var(--font-table, system-ui, sans-serif)",
               background: "transparent",
-              border: "1px solid #C9B29F",
+              border: "1px solid #EDE4D5",
             }}
           >
             ← Back
@@ -416,7 +416,7 @@ export default function NavBar() {
                   fontSize: "0.75rem",
                   letterSpacing: "0.05em",
                   textTransform: "uppercase" as const,
-                  border: "1px solid #C9B29F",
+                  border: "1px solid #EDE4D5",
                 } : link.label === "Dashboard" ? {
                   background: "#C9B29F",
                   color: "#1C1C1C",
@@ -425,7 +425,7 @@ export default function NavBar() {
                   fontSize: "0.75rem",
                   letterSpacing: "0.05em",
                   textTransform: "uppercase" as const,
-                  border: "1px solid #C9B29F",
+                  border: "1px solid #EDE4D5",
                 } : {
                   color: isActive
                     ? "#1C1C1C"
@@ -448,7 +448,7 @@ export default function NavBar() {
                 className="relative px-2.5 py-1.5 rounded-lg transition-all"
                 style={{
                   background: "#FAFAFA",
-                  border: "2px solid #C9B29F",
+                  border: "2px solid #EDE4D5",
                 }}
                 title="Notifications"
               >
@@ -474,10 +474,10 @@ export default function NavBar() {
                   <div className="absolute right-0 top-full mt-2 w-80 sm:w-96 max-w-[calc(100vw-16px)] rounded-xl overflow-hidden z-50"
                     style={{
                       background: "#FAFAFA",
-                      border: "2px solid #C9B29F",
+                      border: "2px solid #EDE4D5",
                     }}>
                     {/* Header */}
-                    <div className="px-4 py-3 flex items-center justify-between" style={{ borderBottom: "1px solid #C9B29F" }}>
+                    <div className="px-4 py-3 flex items-center justify-between" style={{ borderBottom: "1px solid #EDE4D5" }}>
                       <p className="text-xs font-bold uppercase tracking-wider" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                         Notifications {unreadCount > 0 && <span className="ml-1 text-[10px]" style={{ color: "#ef4444" }}>({unreadCount} new)</span>}
                       </p>
@@ -550,7 +550,7 @@ export default function NavBar() {
                           <div key={group.key}
                             className="flex items-start gap-3 px-4 py-3 transition-colors hover:bg-[#C9B29F]/10 cursor-pointer"
                             style={{
-                              borderBottom: "1px solid #C9B29F",
+                              borderBottom: "1px solid #EDE4D5",
                               background: group.hasUnread ? "rgba(201,178,159,0.1)" : "transparent",
                             }}
                             onClick={() => {
@@ -635,7 +635,7 @@ export default function NavBar() {
               >
                 <span
                   className={`flex items-center justify-center text-xs font-bold relative cursor-pointer overflow-hidden flex-shrink-0 ${userPicture && !userPicture.startsWith("emoji:") ? "rounded-lg" : "rounded-lg w-7 h-7"}`}
-                  style={{ background: userPicture?.startsWith("emoji:") ? "#1C1C1C" : userPicture ? "transparent" : "#C9B29F", color: "#FAF7F2", border: "2px solid #C9B29F", ...(userPicture && !userPicture.startsWith("emoji:") ? { width: "32px", height: "24px" } : {}) }}
+                  style={{ background: userPicture?.startsWith("emoji:") ? "#1C1C1C" : userPicture ? "transparent" : "#C9B29F", color: "#FAF7F2", border: "2px solid #EDE4D5", ...(userPicture && !userPicture.startsWith("emoji:") ? { width: "32px", height: "24px" } : {}) }}
                   onClick={(e) => { e.stopPropagation(); setShowAvatarPicker(!showAvatarPicker); }}
                   title="Click to change profile picture"
                 >
@@ -661,9 +661,9 @@ export default function NavBar() {
                       onClick={(e) => e.stopPropagation()}
                       style={{
                         background: "#FAFAFA",
-                        border: "2px solid #C9B29F",
+                        border: "2px solid #EDE4D5",
                       }}>
-                      <div className="px-4 py-3" style={{ borderBottom: "1px solid #C9B29F" }}>
+                      <div className="px-4 py-3" style={{ borderBottom: "1px solid #EDE4D5" }}>
                         <p className="text-xs font-bold uppercase tracking-wider" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                           Choose Avatar
                         </p>
@@ -672,8 +672,8 @@ export default function NavBar() {
                       <button
                         onClick={() => { setShowAvatarPicker(false); avatarInputRef.current?.click(); }}
                         className="w-full flex items-center gap-3 px-4 py-3 transition-colors hover:bg-[#C9B29F]/10"
-                        style={{ borderBottom: "1px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)", fontSize: "0.8rem" }}>
-                        <span className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "rgba(201,178,159,0.15)", border: "1px solid #C9B29F" }}>📷</span>
+                        style={{ borderBottom: "1px solid #EDE4D5", color: "#1C1C1C", fontFamily: "var(--font-table)", fontSize: "0.8rem" }}>
+                        <span className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "rgba(201,178,159,0.15)", border: "1px solid #EDE4D5" }}>📷</span>
                         Upload Photo
                       </button>
                       {/* Avatar Grid */}
@@ -686,7 +686,7 @@ export default function NavBar() {
                             className="w-9 h-9 rounded-lg flex items-center justify-center text-lg transition-all hover:scale-110 hover:bg-[#C9B29F]/10"
                             style={{
                               background: userPicture === `emoji:${av.emoji}` ? "rgba(201,178,159,0.25)" : "#FAFAFA",
-                              border: userPicture === `emoji:${av.emoji}` ? "2px solid #C9B29F" : "1px solid #C9B29F",
+                              border: userPicture === `emoji:${av.emoji}` ? "2px solid #EDE4D5" : "1px solid #EDE4D5",
                             }}
                           >
                             {av.emoji}
@@ -698,7 +698,7 @@ export default function NavBar() {
                         <button
                           onClick={() => handleAvatarSelect("")}
                           className="w-full flex items-center justify-center gap-2 px-4 py-2 transition-colors hover:bg-red-500/5 text-xs"
-                          style={{ borderTop: "1px solid #C9B29F", color: "#ef4444", fontFamily: "var(--font-table)" }}>
+                          style={{ borderTop: "1px solid #EDE4D5", color: "#ef4444", fontFamily: "var(--font-table)" }}>
                           Remove Avatar
                         </button>
                       )}
@@ -718,10 +718,10 @@ export default function NavBar() {
                   <div className="absolute right-0 top-full mt-2 w-56 rounded-xl overflow-hidden z-50"
                     style={{
                       background: "#FAFAFA",
-                      border: "2px solid #C9B29F",
+                      border: "2px solid #EDE4D5",
                     }}>
                     {/* User info */}
-                    <div className="px-4 py-3" style={{ borderBottom: "1px solid #C9B29F" }}>
+                    <div className="px-4 py-3" style={{ borderBottom: "1px solid #EDE4D5" }}>
                       <p className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{userName}</p>
                       <p className="text-[10px] mt-0.5" style={{ color: "#888", fontFamily: "var(--font-mono)" }}>Admin</p>
                     </div>
@@ -749,7 +749,7 @@ export default function NavBar() {
                     </div>
 
                     {/* Divider */}
-                    <div style={{ borderTop: "1px solid #C9B29F" }} />
+                    <div style={{ borderTop: "1px solid #EDE4D5" }} />
 
                     {/* Logout */}
                     <div className="py-1">
