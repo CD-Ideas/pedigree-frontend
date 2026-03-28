@@ -335,7 +335,7 @@ export default function EditAdPage() {
         <h2
           className="text-xl font-black uppercase tracking-widest"
           style={{
-            fontFamily: "var(--font-display, Oswald, sans-serif)",
+            fontFamily: "var(--font-display)",
             background: "#1C1C1C",
             
             
@@ -386,7 +386,7 @@ export default function EditAdPage() {
         <h2
           className="text-xl font-black uppercase tracking-widest"
           style={{
-            fontFamily: "var(--font-display, Oswald, sans-serif)",
+            fontFamily: "var(--font-display)",
             background: "#ef4444",
             
             
@@ -489,7 +489,7 @@ export default function EditAdPage() {
         <h1
           className="text-2xl font-black uppercase tracking-widest mb-1"
           style={{
-            fontFamily: "var(--font-display, Oswald, sans-serif)",
+            fontFamily: "var(--font-display)",
             background: "#1C1C1C",
             
             
@@ -507,7 +507,7 @@ export default function EditAdPage() {
             className="rounded-xl p-5"
             style={{
               background: "#FAF7F2",
-              border: errors.category ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid rgba(30,64,120,0.3)",
+              border: errors.category ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid #C9B29F",
               
             }}
           >
@@ -525,8 +525,8 @@ export default function EditAdPage() {
                   }}
                   className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-left transition-all duration-200 hover:scale-[1.02]"
                   style={{
-                    background: category === cat.key ? `${cat.color}18` : "rgba(30,64,120,0.1)",
-                    border: category === cat.key ? `1.5px solid ${cat.color}55` : "1.5px solid rgba(30,64,120,0.2)",
+                    background: category === cat.key ? `${cat.color}18` : "rgba(201,178,159,0.1)",
+                    border: category === cat.key ? `1.5px solid ${cat.color}55` : "1.5px solid rgba(201,178,159,0.3)",
                   }}
                 >
                   <span className="text-base">{cat.icon}</span>
@@ -554,7 +554,7 @@ export default function EditAdPage() {
             className="rounded-xl p-5 relative"
             style={{
               background: "#FAF7F2",
-              border: errors.dog ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid rgba(30,64,120,0.3)",
+              border: errors.dog ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid #C9B29F",
               
               overflow: "visible",
               zIndex: 10,
@@ -652,8 +652,8 @@ export default function EditAdPage() {
                             setPhotos([photoUrl]);
                           }
                         }}
-                        className="w-full text-left px-3 py-2 text-xs flex items-center gap-2 transition-colors hover:bg-[rgba(212,168,85,0.08)]"
-                        style={{ borderBottom: "1px solid rgba(30,64,120,0.2)" }}
+                        className="w-full text-left px-3 py-2 text-xs flex items-center gap-2 transition-colors hover:bg-[rgba(201,178,159,0.1)]"
+                        style={{ borderBottom: "1px solid #C9B29F" }}
                       >
                         <span style={{ color: getDogColor(dog.name), fontFamily: "var(--font-table)", fontWeight: 600 }}>
                           {dog.name}
@@ -674,7 +674,7 @@ export default function EditAdPage() {
             className="rounded-xl p-5"
             style={{
               background: "#FAF7F2",
-              border: errors.title ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid rgba(30,64,120,0.3)",
+              border: errors.title ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid #C9B29F",
               
             }}
           >
@@ -704,8 +704,8 @@ export default function EditAdPage() {
               readOnly={!!selectedDogName}
               className="w-full rounded-lg px-4 py-2.5 text-sm outline-none font-bold"
               style={{
-                background: selectedDogName ? "rgba(212,168,85,0.08)" : "rgba(30,64,120,0.15)",
-                border: selectedDogName ? "1px solid rgba(212,168,85,0.25)" : "1px solid rgba(30,64,120,0.3)",
+                background: selectedDogName ? "rgba(201,178,159,0.1)" : "#FAFAFA",
+                border: selectedDogName ? "1px solid rgba(201,178,159,0.3)" : "1px solid #C9B29F",
                 color: selectedDogName ? getDogColor(selectedDogName) : "var(--text-primary, #e2e8f0)",
                 fontFamily: "var(--font-table)",
                 cursor: selectedDogName ? "not-allowed" : "text",
@@ -728,7 +728,7 @@ export default function EditAdPage() {
             className="rounded-xl p-5"
             style={{
               background: "#FAF7F2",
-              border: errors.description ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid rgba(30,64,120,0.3)",
+              border: errors.description ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid #C9B29F",
               
             }}
           >
@@ -815,7 +815,7 @@ export default function EditAdPage() {
             className="rounded-xl p-5"
             style={{
               background: "#FAF7F2",
-              border: errors.photos ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid rgba(30,64,120,0.3)",
+              border: errors.photos ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid #C9B29F",
               
             }}
           >
@@ -883,7 +883,7 @@ export default function EditAdPage() {
                   <div className="flex flex-col items-center gap-2">
                     <span
                       className="w-6 h-6 rounded-full border-2 border-t-transparent animate-spin"
-                      style={{ borderColor: "rgba(212,168,85,0.5)", borderTopColor: "transparent" }}
+                      style={{ borderColor: "rgba(201,178,159,0.5)", borderTopColor: "transparent" }}
                     />
                     <span className="text-xs" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                       Uploading...
@@ -915,7 +915,7 @@ export default function EditAdPage() {
             className="rounded-xl p-5"
             style={{
               background: "#FAF7F2",
-              border: errors.location ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid rgba(30,64,120,0.3)",
+              border: errors.location ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid #C9B29F",
               
             }}
           >
@@ -978,7 +978,7 @@ export default function EditAdPage() {
             className="rounded-xl p-5"
             style={{
               background: "#FAF7F2",
-              border: errors.contact ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid rgba(30,64,120,0.3)",
+              border: errors.contact ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid #C9B29F",
               
             }}
           >

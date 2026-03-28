@@ -13,7 +13,7 @@ const INPUT_STYLE = {
   background: "#FAFAFA",
   border: "2px solid #C9B29F",
   color: "#1C1C1C",
-  fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+  fontFamily: "var(--font-table)",
   borderRadius: "10px",
 };
 
@@ -79,7 +79,7 @@ export default function DogOfTheMonthPage() {
         </h2>
         <p className="leading-relaxed"
           style={{
-            fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+            fontFamily: "var(--font-table)",
             fontSize: "0.9rem",
             color: "#6B7280",
             lineHeight: 1.8,

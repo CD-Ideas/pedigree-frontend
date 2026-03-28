@@ -28,10 +28,10 @@ const SORT_OPTIONS = [
 ];
 
 const TITLE_COLORS: Record<string, string> = {
-  "GR CH": "#60a5fa", "CH": "#fc8181", "ROM": "#22d3ee", "POR": "#a78bfa",
-  "7XW": "#c084fc", "6XW": "#c084fc", "5XW": "#c084fc", "4XW": "#f472b6",
-  "3XW": "#8a6518", "2XW": "#fb923c", "1XW": "#2dd4bf",
-  "3XL": "#2dd4bf", "2XL": "#fb923c", "1XL": "#2dd4bf",
+  "GR CH": "#1d5bbf", "CH": "#c02828", "ROM": "#0d7468", "POR": "#6d30b0",
+  "7XW": "#6d30b0", "6XW": "#6d30b0", "5XW": "#6d30b0", "4XW": "#b03878",
+  "3XW": "#8a6518", "2XW": "#b45a0a", "1XW": "#0d7468",
+  "3XL": "#8a6518", "2XL": "#b45a0a", "1XL": "#0d7468",
 };
 
 function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number) => void; famousDogs: FamousDog[] }) {
@@ -223,7 +223,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
             onChange={(e) => search(e.target.value)}
             onFocus={() => { if (results.length > 0) setOpen(true); }}
             className="flex-1 bg-transparent text-sm outline-none"
-            style={{ color: query && getDogColor(query) !== "#ffffff" ? getDogColor(query) : "#1C1C1C", fontFamily: "var(--font-table)" }}
+            style={{ color: query && getDogColor(query) !== "#3a3a3a" ? getDogColor(query) : "#1C1C1C", fontFamily: "var(--font-table)" }}
           />
           {(query || lineage) && (
             <button onClick={() => { setQuery(""); setResults([]); setOpen(false); setLineage(null); }} className="text-xs" style={{ color: "#6B7280" }}>✕</button>
@@ -381,8 +381,6 @@ export default function SpotlightPage() {
 
   return (
     <div className="min-h-screen" style={{ background: "#FAFAFA" }}>
-      <div className="ambient-bg" />
-
       <main className="max-w-7xl mx-auto px-4 md:px-5 py-5">
 
         {/* -- Hero Header -- */}

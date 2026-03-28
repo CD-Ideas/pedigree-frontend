@@ -271,7 +271,7 @@ export default function MarketplaceAdPage() {
                       border:
                         selectedPhoto === i
                           ? "2px solid #C9B29F"
-                          : "2px solid rgba(30,64,120,0.3)",
+                          : "2px solid #C9B29F",
                       opacity: selectedPhoto === i ? 1 : 0.6,
                     }}
                   >
@@ -311,7 +311,7 @@ export default function MarketplaceAdPage() {
                 className="flex items-center gap-3 rounded-xl p-4 transition-all duration-300 hover:scale-[1.02]"
                 style={{
                   background: "rgba(201,178,159,0.06)",
-                  border: "1.5px solid rgba(212,168,85,0.25)",
+                  border: "1.5px solid rgba(201,178,159,0.25)",
                 }}
               >
                 <div
@@ -359,8 +359,8 @@ export default function MarketplaceAdPage() {
                   }}
                   className="flex-1 flex items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-xs font-bold transition-all hover:scale-[1.02]"
                   style={{
-                    background: copied ? "rgba(34,197,94,0.1)" : "rgba(255,255,255,0.04)",
-                    border: copied ? "1px solid rgba(34,197,94,0.3)" : "1px solid rgba(255,255,255,0.08)",
+                    background: copied ? "rgba(34,197,94,0.1)" : "#FAFAFA",
+                    border: copied ? "1px solid rgba(34,197,94,0.3)" : "1px solid #C9B29F",
                     color: copied ? "#22c55e" : "#94a3b8",
                     fontFamily: "var(--font-table)",
                   }}
@@ -436,7 +436,7 @@ export default function MarketplaceAdPage() {
               <h1
                 className="text-xl font-black leading-tight mb-3"
                 style={{
-                  fontFamily: "var(--font-display, Oswald, sans-serif)",
+                  fontFamily: "var(--font-display)",
                   background: "#1C1C1C",
                   
                   
@@ -589,7 +589,7 @@ export default function MarketplaceAdPage() {
                 className="rounded-xl p-4"
                 style={{
                   background: "#FAF7F2",
-                  border: "1.5px solid rgba(212,168,85,0.25)",
+                  border: "1.5px solid rgba(201,178,159,0.25)",
                   
                 }}
               >
@@ -672,7 +672,7 @@ export default function MarketplaceAdPage() {
                   background: "#FAF7F2",
                   border: ad.verification_requested
                     ? "1.5px solid rgba(234,179,8,0.3)"
-                    : "1.5px solid rgba(30,64,120,0.3)",
+                    : "1.5px solid #C9B29F",
                   
                 }}
               >

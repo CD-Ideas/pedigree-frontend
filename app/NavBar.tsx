@@ -65,7 +65,7 @@ function NavSearch() {
           onFocus={() => (results.length > 0 || suggestions.length > 0) && setShow(true)}
           placeholder="Search dog or paste URL..."
           className="flex-1 bg-transparent text-xs outline-none"
-          style={{ color: q && getDogColor(q) !== "#ffffff" ? getDogColor(q) : "#1C1C1C", fontFamily: "var(--font-table, system-ui, sans-serif)", minWidth: 0 }}
+          style={{ color: q && getDogColor(q) !== "#3a3a3a" ? getDogColor(q) : "#1C1C1C", fontFamily: "var(--font-table, system-ui, sans-serif)", minWidth: 0 }}
         />
         {q && <button onClick={() => { setQ(""); setResults([]); setSuggestions([]); setShow(false); }} className="text-[10px] opacity-50 hover:opacity-100">✕</button>}
       </div>
@@ -383,7 +383,7 @@ export default function NavBar() {
             }}
             className="ml-4 flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold transition-all"
             style={{
-              color: "#1C1C1C",
+              color: "#FAF7F2",
               fontFamily: "var(--font-table, system-ui, sans-serif)",
               background: "transparent",
               border: "1px solid #C9B29F",
@@ -635,7 +635,7 @@ export default function NavBar() {
               >
                 <span
                   className={`flex items-center justify-center text-xs font-bold relative cursor-pointer overflow-hidden flex-shrink-0 ${userPicture && !userPicture.startsWith("emoji:") ? "rounded-lg" : "rounded-full w-7 h-7"}`}
-                  style={{ background: userPicture?.startsWith("emoji:") ? "#1C1C1C" : userPicture ? "transparent" : "#C9B29F", color: "#1C1C1C", border: "2px solid #C9B29F", ...(userPicture && !userPicture.startsWith("emoji:") ? { width: "32px", height: "24px" } : {}) }}
+                  style={{ background: userPicture?.startsWith("emoji:") ? "#1C1C1C" : userPicture ? "transparent" : "#C9B29F", color: "#FAF7F2", border: "2px solid #C9B29F", ...(userPicture && !userPicture.startsWith("emoji:") ? { width: "32px", height: "24px" } : {}) }}
                   onClick={(e) => { e.stopPropagation(); setShowAvatarPicker(!showAvatarPicker); }}
                   title="Click to change profile picture"
                 >

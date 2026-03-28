@@ -157,7 +157,7 @@ export default function MyAdsPage() {
             <h1
               className="text-2xl font-black uppercase tracking-widest"
               style={{
-                fontFamily: "var(--font-display, Oswald, sans-serif)",
+                fontFamily: "var(--font-display)",
                 background: "#1C1C1C",
                 
                 
@@ -264,7 +264,7 @@ export default function MyAdsPage() {
                       ) : (
                         <div
                           className="w-full h-full flex items-center justify-center min-h-[100px]"
-                          style={{ background: "linear-gradient(135deg, #0c1929, #152744)" }}
+                          style={{ background: "#C9B29F" }}
                         >
                           <span className="text-3xl opacity-20">{cat?.icon || "\uD83D\uDC15"}</span>
                         </div>
@@ -335,7 +335,7 @@ export default function MyAdsPage() {
                       </div>
 
                       {/* Footer */}
-                      <div className="flex items-center justify-between mt-3 pt-3" style={{ borderTop: "1px solid rgba(30,64,120,0.2)" }}>
+                      <div className="flex items-center justify-between mt-3 pt-3" style={{ borderTop: "1px solid #C9B29F" }}>
                         <span className="text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-mono)" }}>
                           Created {formatDate(ad.created_at)}
                         </span>

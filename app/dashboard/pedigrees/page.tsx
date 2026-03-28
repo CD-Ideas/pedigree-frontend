@@ -153,7 +153,7 @@ export default function MyPedigreesPage() {
         <div>
           <h1 className="text-2xl font-black uppercase tracking-widest"
             style={{
-              fontFamily: "var(--font-display, Oswald, sans-serif)",
+              fontFamily: "var(--font-display)",
               color: "#1C1C1C",
               
             }}>
@@ -251,13 +251,13 @@ export default function MyPedigreesPage() {
                     background: p.photo_path
                       ? `url(${p.photo_path}) center/cover`
                       : isMale
-                        ? "linear-gradient(135deg, #0c1929, #1a2e4a)"
-                        : "linear-gradient(135deg, #29101c, #3d1a2e)",
+                        ? "#1d5bbf"
+                        : "#9f1239",
                   }}>
                     <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(201,178,159,0.3), transparent)" }} />
                     {/* View count */}
                     <div className="absolute top-2 right-2 flex items-center gap-1 px-2 py-0.5 rounded-full"
-                      style={{ background: "rgba(250,247,242,0.9)", border: "1px solid rgba(255,255,255,0.1)" }}>
+                      style={{ background: "rgba(250,247,242,0.9)", border: "1px solid #C9B29F" }}>
                       <span className="text-[9px]" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
                         👁 {(p.view_count || 0).toLocaleString()}
                       </span>

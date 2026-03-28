@@ -15,7 +15,7 @@ const inputStyle = {
   border: "2px solid #C9B29F",
   borderRadius: "10px",
   color: "#1C1C1C",
-  fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+  fontFamily: "var(--font-table)",
 };
 
 interface UserData {

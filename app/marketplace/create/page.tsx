@@ -278,7 +278,7 @@ function CreateAdContent() {
         <h2
           className="text-xl font-black uppercase tracking-widest"
           style={{
-            fontFamily: "var(--font-display, Oswald, sans-serif)",
+            fontFamily: "var(--font-display)",
             background: "#1C1C1C",
             
             
@@ -417,7 +417,7 @@ function CreateAdContent() {
               className="rounded-2xl p-4 flex items-center gap-3"
               style={{
                 ...GLASS_BOX,
-                border: `1.5px solid ${CATEGORIES.find(c => c.key === category)?.color || "rgba(255,255,255,0.06)"}55`,
+                border: `1.5px solid ${CATEGORIES.find(c => c.key === category)?.color || "#C9B29F"}55`,
               }}
             >
               <span className="text-lg">{CATEGORIES.find(c => c.key === category)?.icon}</span>
@@ -436,7 +436,7 @@ function CreateAdContent() {
                   router.replace("/marketplace/create");
                 }}
                 className="ml-auto text-[10px] px-2.5 py-1 rounded-lg transition-all duration-200 hover:scale-105 hover:brightness-125"
-                style={{ background: "#FAFAFA", border: "1px solid rgba(255,255,255,0.1)", color: "#6B7280", fontFamily: "var(--font-table)" }}
+                style={{ background: "#FAFAFA", border: "1px solid #C9B29F", color: "#6B7280", fontFamily: "var(--font-table)" }}
               >
                 Change
               </button>
@@ -464,8 +464,8 @@ function CreateAdContent() {
                     }}
                     className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-left transition-all duration-300 hover:scale-[1.03]"
                     style={{
-                      background: category === cat.key ? `${cat.color}18` : "rgba(255,255,255,0.03)",
-                      border: category === cat.key ? `1.5px solid ${cat.color}55` : "1.5px solid rgba(255,255,255,0.06)",
+                      background: category === cat.key ? `${cat.color}18` : "rgba(201,178,159,0.05)",
+                      border: category === cat.key ? `1.5px solid ${cat.color}55` : "1.5px solid #C9B29F",
                     }}
                     
                     
@@ -590,8 +590,8 @@ function CreateAdContent() {
                             setPhotos([photoUrl]);
                           }
                         }}
-                        className="w-full text-left px-3 py-2 text-xs flex items-center gap-2 transition-colors hover:bg-[rgba(212,168,85,0.08)]"
-                        style={{ borderBottom: "1px solid rgba(30,64,120,0.2)" }}
+                        className="w-full text-left px-3 py-2 text-xs flex items-center gap-2 transition-colors hover:bg-[rgba(201,178,159,0.1)]"
+                        style={{ borderBottom: "1px solid #C9B29F" }}
                       >
                         {dog.photo_url && (
                           <img src={dog.photo_url.startsWith("http") ? dog.photo_url : `https://www.apbt.online-pedigrees.com/${dog.photo_url}`}
@@ -645,8 +645,8 @@ function CreateAdContent() {
               readOnly={!!selectedDogName}
               className="w-full rounded-lg px-4 py-2.5 text-sm outline-none font-bold"
               style={{
-                background: selectedDogName ? "rgba(212,168,85,0.08)" : "rgba(255,255,255,0.04)",
-                border: selectedDogName ? "1px solid rgba(212,168,85,0.25)" : "1px solid rgba(255,255,255,0.08)",
+                background: selectedDogName ? "rgba(201,178,159,0.1)" : "#FAFAFA",
+                border: selectedDogName ? "1px solid rgba(201,178,159,0.3)" : "1px solid 1px solid #C9B29F",
                 color: selectedDogName ? getDogColor(selectedDogName) : "var(--text-primary, #e2e8f0)",
                 fontFamily: "var(--font-table)",
                 cursor: selectedDogName ? "not-allowed" : "text",
@@ -777,7 +777,7 @@ function CreateAdContent() {
                         src={photo}
                         alt={`Photo ${i + 1}`}
                         className="w-full h-full object-cover rounded-lg"
-                        style={{ border: isAutoPhoto ? "1.5px solid rgba(212,168,85,0.3)" : "1.5px solid rgba(30,64,120,0.3)" }}
+                        style={{ border: isAutoPhoto ? "1.5px solid rgba(201,178,159,0.3)" : "1.5px solid #C9B29F" }}
                       />
                       {isAutoPhoto && (
                         <div
@@ -840,7 +840,7 @@ function CreateAdContent() {
                   <div className="flex flex-col items-center gap-2">
                     <span
                       className="w-6 h-6 rounded-full border-2 border-t-transparent animate-spin"
-                      style={{ borderColor: "rgba(212,168,85,0.5)", borderTopColor: "transparent" }}
+                      style={{ borderColor: "rgba(201,178,159,0.5)", borderTopColor: "transparent" }}
                     />
                     <span className="text-xs" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                       Uploading...

@@ -25,7 +25,7 @@ function _BreedingCalcPreview_UNUSED() {
     } catch (_e) {}
   }, []);
 
-  const PIE_COLORS = ["#fc8181", "#ffffff", "#fb923c", "#ffffff", "#22c55e", "#f97316", "#ec4899", "#14b8a6"];
+  const PIE_COLORS = ["#fc8181", "#C9B29F", "#fb923c", "#6B7280", "#22c55e", "#f97316", "#ec4899", "#14b8a6"];
 
   /* Use stored data or fallback to static example */
   const isLive = !!data;
@@ -63,7 +63,7 @@ function _BreedingCalcPreview_UNUSED() {
   return (
     <section id="breeding-calculator" className="py-5 px-4">
       <div className="max-w-5xl mx-auto">
-        <h2 className="subtitle-gold text-center mb-0.5" style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "clamp(0.95rem, 2vw, 1.25rem)" }}>
+        <h2 className="text-center mb-0.5" style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "clamp(0.95rem, 2vw, 1.25rem)", color: "#1C1C1C" }}>
           Bloodline Calculator
         </h2>
         <p className="text-center mb-3" style={{ color: "#6B7280", fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 400 }}>
@@ -308,13 +308,13 @@ export default function Home() {
               </div>
             )}
           </div>
-          <Link href="/login" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#1C1C1C", padding: "0.4rem 1.2rem", border: "2px solid #C9B29F", borderRadius: "0.5rem", transition: "all 0.2s" }}>Login</Link>
-          <Link href="/register" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#FAF7F2", padding: "0.4rem 1.2rem", background: "#1C1C1C", borderRadius: "0.5rem", transition: "all 0.2s" }}>Sign Up</Link>
+          <Link href="/login" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: scrolled ? "#FAF7F2" : "#1C1C1C", padding: "0.4rem 1.2rem", border: "2px solid #C9B29F", borderRadius: "0.5rem", transition: "all 0.2s" }}>Login</Link>
+          <Link href="/register" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#FAF7F2", padding: "0.4rem 1.2rem", background: scrolled ? "#C9B29F" : "#1C1C1C", borderRadius: "0.5rem", transition: "all 0.2s" }}>Sign Up</Link>
         </div>
         {/* Mobile: Login + Sign Up always visible */}
         <div className="flex md:hidden items-center gap-3">
-          <Link href="/login" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#1C1C1C", padding: "0.35rem 0.8rem", border: "2px solid #C9B29F", borderRadius: "0.4rem" }}>Login</Link>
-          <Link href="/register" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#FAF7F2", padding: "0.35rem 0.8rem", background: "#1C1C1C", borderRadius: "0.4rem" }}>Sign Up</Link>
+          <Link href="/login" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.08em", color: scrolled ? "#FAF7F2" : "#1C1C1C", padding: "0.35rem 0.8rem", border: "2px solid #C9B29F", borderRadius: "0.4rem" }}>Login</Link>
+          <Link href="/register" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#FAF7F2", padding: "0.35rem 0.8rem", background: scrolled ? "#C9B29F" : "#1C1C1C", borderRadius: "0.4rem" }}>Sign Up</Link>
         </div>
       </nav>
 
@@ -382,7 +382,7 @@ export default function Home() {
         {/* ── Features ── */}
         <section id="features" className="py-4 px-4">
           <div className="max-w-5xl mx-auto">
-            <h2 className="subtitle-gold text-center mb-3" style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "clamp(0.95rem, 2vw, 1.25rem)" }}>
+            <h2 className="text-center mb-3" style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "clamp(0.95rem, 2vw, 1.25rem)", color: "#1C1C1C" }}>
               Why Pedigree Platform?
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
@@ -464,7 +464,7 @@ export default function Home() {
         {/* ── Bloodline Calculator ── */}
         <section id="breeding-calculator" className="py-5 px-4">
           <div className="max-w-5xl mx-auto">
-            <h2 className="subtitle-gold text-center mb-0.5" style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "clamp(0.95rem, 2vw, 1.25rem)" }}>
+            <h2 className="text-center mb-0.5" style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "clamp(0.95rem, 2vw, 1.25rem)", color: "#1C1C1C" }}>
               Bloodline Calculator
             </h2>
             <p className="text-center mb-3" style={{ color: "#6B7280", fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 400 }}>
@@ -487,13 +487,13 @@ export default function Home() {
                     <circle cx="110" cy="110" r="85" fill="none" stroke="#fc8181" strokeWidth="45"
                       strokeDasharray={`${31 * 5.34} ${100 * 5.34}`} strokeDashoffset="0"
                       transform="rotate(-90 110 110)" />
-                    <circle cx="110" cy="110" r="85" fill="none" stroke="#ffffff" strokeWidth="45"
+                    <circle cx="110" cy="110" r="85" fill="none" stroke="#C9B29F" strokeWidth="45"
                       strokeDasharray={`${22 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(31) * 5.34}`}
                       transform="rotate(-90 110 110)" />
                     <circle cx="110" cy="110" r="85" fill="none" stroke="#fb923c" strokeWidth="45"
                       strokeDasharray={`${15 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(31 + 22) * 5.34}`}
                       transform="rotate(-90 110 110)" />
-                    <circle cx="110" cy="110" r="85" fill="none" stroke="#ffffff" strokeWidth="45"
+                    <circle cx="110" cy="110" r="85" fill="none" stroke="#6B7280" strokeWidth="45"
                       strokeDasharray={`${12 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(31 + 22 + 15) * 5.34}`}
                       transform="rotate(-90 110 110)" />
                     <circle cx="110" cy="110" r="85" fill="none" stroke="rgba(120,120,140,0.5)" strokeWidth="45"
@@ -508,9 +508,9 @@ export default function Home() {
                 <div className="grid grid-cols-2 gap-x-3 gap-y-1 mt-2">
                   {[
                     { name: "CH Jeep", pct: "31%", color: "#fc8181" },
-                    { name: "Red Boy", pct: "22%", color: "#ffffff" },
+                    { name: "Red Boy", pct: "22%", color: "#C9B29F" },
                     { name: "Eli Jr", pct: "15%", color: "#fb923c" },
-                    { name: "Carver", pct: "12%", color: "#ffffff" },
+                    { name: "Carver", pct: "12%", color: "#6B7280" },
                     { name: "Other", pct: "20%", color: "rgba(120,120,140,0.7)" },
                   ].map((b, i) => (
                     <div key={i} className="flex items-center gap-2">
@@ -611,7 +611,7 @@ export default function Home() {
         {/* ── Marketplace ── */}
         <section id="marketplace" className="py-4 px-4">
           <div className="max-w-5xl mx-auto">
-            <h2 className="subtitle-gold text-center mb-1" style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "clamp(0.95rem, 2vw, 1.25rem)" }}>
+            <h2 className="text-center mb-1" style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "clamp(0.95rem, 2vw, 1.25rem)", color: "#1C1C1C" }}>
               Marketplace
             </h2>
             <p className="text-center mb-3" style={{ color: "#6B7280", fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 400 }}>

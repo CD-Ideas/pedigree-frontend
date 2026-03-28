@@ -290,7 +290,7 @@ function DogSlot({
                   background: "#FAFAFA",
                   border: "2px solid #C9B29F",
                   borderRadius: "10px",
-                  color: query && getDogColor(query) !== "#ffffff" ? getDogColor(query) : "#1C1C1C",
+                  color: query && getDogColor(query) !== "#3a3a3a" ? getDogColor(query) : "#1C1C1C",
                   fontFamily: "var(--font-table)",
                 }}
               />

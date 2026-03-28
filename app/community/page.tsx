@@ -89,7 +89,7 @@ export default function CommunityPedigreesPage() {
             <h1
               className="text-2xl font-black uppercase tracking-widest"
               style={{
-                fontFamily: "var(--font-display, Oswald, sans-serif)",
+                fontFamily: "var(--font-display)",
                 background: "#C9B29F",
                 
                 
@@ -115,7 +115,7 @@ export default function CommunityPedigreesPage() {
               className="w-full rounded-lg px-4 py-2 text-xs outline-none"
               style={{
                 background: "#FAFAFA",
-                border: "1.5px solid rgba(30,64,120,0.4)",
+                border: "1.5px solid #C9B29F",
                 color: "#1C1C1C",
                 fontFamily: "var(--font-table)",
               }}
@@ -214,8 +214,8 @@ export default function CommunityPedigreesPage() {
                       background: p.photo_path
                         ? `url(${p.photo_path}) center/cover`
                         : isMale
-                        ? "linear-gradient(135deg, #0c1929, #1a2e4a)"
-                        : "linear-gradient(135deg, #29101c, #3d1a2e)",
+                        ? "#1d5bbf"
+                        : "#9f1239",
                     }}
                   >
                     <div
@@ -230,7 +230,7 @@ export default function CommunityPedigreesPage() {
                       className="absolute top-2 right-2 flex items-center gap-1 px-2 py-0.5 rounded-full"
                       style={{
                         background: "rgba(250,247,242,0.9)",
-                        border: "1px solid rgba(255,255,255,0.1)",
+                        border: "1px solid #C9B29F",
                       }}
                     >
                       <span

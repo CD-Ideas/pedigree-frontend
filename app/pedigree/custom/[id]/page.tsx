@@ -98,9 +98,9 @@ function ShareButton({ dogName }: { dogName: string }) {
     <button onClick={share}
       className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all hover:scale-105"
       style={{
-        background: copied ? "rgba(34,197,94,0.15)" : "rgba(212,168,85,0.1)",
+        background: copied ? "rgba(34,197,94,0.15)" : "rgba(201,178,159,0.1)",
         color: copied ? "#22c55e" : "#1C1C1C",
-        border: `1px solid ${copied ? "rgba(34,197,94,0.3)" : "rgba(212,168,85,0.2)"}`,
+        border: `1px solid ${copied ? "rgba(34,197,94,0.3)" : "rgba(201,178,159,0.2)"}`,
       }}>
       {copied ? "✓ Copied!" : "🔗 Share"}
     </button>
@@ -276,16 +276,16 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
       <div ref={containerRef} className="overflow-x-auto overflow-y-hidden pb-1 pt-7" style={{ cursor: zoom !== 1 ? "grab" : "default" }}>
         <div style={{ transform: `scale(${zoom})`, transformOrigin: "top left", transition: "transform 0.2s", minWidth: "900px" }}>
           <div className="text-center mb-2">
-            <h3 style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "15px", letterSpacing: "0.08em", textTransform: "uppercase", color: "#1a202c" }}>
+            <h3 style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "15px", letterSpacing: "0.08em", textTransform: "uppercase", color: "#1C1C1C" }}>
               {maxGen} Generation Pedigree
             </h3>
           </div>
 
           {/* Column headers */}
           <div className="mb-1" style={{ display: "grid", gridTemplateColumns: `170px repeat(${maxGen}, 1fr)`, gap: "4px" }}>
-            <div className="px-1.5 py-1 text-center" style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "11px", color: "#1a202c", textTransform: "uppercase", letterSpacing: "0.1em" }}>Dog</div>
+            <div className="px-1.5 py-1 text-center" style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "11px", color: "#1C1C1C", textTransform: "uppercase", letterSpacing: "0.1em" }}>Dog</div>
             {gens.filter((g) => g <= maxGen).map((g) => (
-              <div key={g} className="px-1.5 py-1 text-center" style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "11px", color: "#1a202c", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+              <div key={g} className="px-1.5 py-1 text-center" style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "11px", color: "#1C1C1C", textTransform: "uppercase", letterSpacing: "0.1em" }}>
                 {genLabels[g - 1] || `Gen ${g}`}
               </div>
             ))}
@@ -778,7 +778,7 @@ export default function PublishedPedigreePage() {
                     <span className="text-sm">📋</span>
                   </div>
                   <span className="text-sm font-bold uppercase tracking-widest" style={{
-                    fontFamily: "var(--font-display, Oswald, sans-serif)",
+                    fontFamily: "var(--font-display)",
                     color: "#1C1C1C",
                     
                   }}>

@@ -185,7 +185,7 @@ export default function PredictionResultPage() {
                 </div>
               </div>
               <h3 className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-display)" }}>{r.phenotype}</h3>
-              <div className="mt-2 w-full h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.05)" }}>
+              <div className="mt-2 w-full h-1.5 rounded-full overflow-hidden" style={{ background: "#E5E7EB" }}>
                 <div className="h-full rounded-full" style={{ width: `${r.percentage}%`, background: "#C9B29F" }} />
               </div>
               {r.carriers.length > 0 && (

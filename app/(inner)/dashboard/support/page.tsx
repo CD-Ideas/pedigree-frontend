@@ -240,7 +240,7 @@ export default function SupportPage() {
                   {/* Original message */}
                   <div className="flex justify-end">
                     <div className="max-w-[75%] rounded-xl px-3 py-2" style={{ background: "rgba(187,247,208,0.8)" }}>
-                      <p className="text-xs" style={{ color: "#1a1a1a", fontFamily: "var(--font-table)", wordBreak: "break-word" }}>
+                      <p className="text-xs" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", wordBreak: "break-word" }}>
                         {originalMessage.message}
                       </p>
                       <p className="text-[9px] mt-1 text-right" style={{ color: "#666" }}>
@@ -259,7 +259,7 @@ export default function SupportPage() {
                         {r.sender_type === "admin" && (
                           <p className="text-[9px] font-bold mb-1" style={{ color: "#1C1C1C" }}>⚡ Support Team</p>
                         )}
-                        <p className="text-xs" style={{ color: "#1a1a1a", fontFamily: "var(--font-table)", wordBreak: "break-word" }}>
+                        <p className="text-xs" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", wordBreak: "break-word" }}>
                           {r.message}
                         </p>
                         <p className="text-[9px] mt-1" style={{ color: "#666", textAlign: r.sender_type === "user" ? "right" : "left" }}>

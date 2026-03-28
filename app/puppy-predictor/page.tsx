@@ -601,7 +601,7 @@ export default function PuppyPredictorPage() {
     background: "#FAFAFA",
     border: "2px solid #C9B29F",
     color: "#1C1C1C",
-    fontFamily: "var(--font-table, Rajdhani, sans-serif)",
+    fontFamily: "var(--font-table)",
     fontSize: "0.85rem",
     borderRadius: "10px",
   };
@@ -613,7 +613,7 @@ export default function PuppyPredictorPage() {
         {/* --- Header --- */}
         <div className="text-center space-y-2">
           <h1 style={{
-            fontFamily: "var(--font-display, Oswald, sans-serif)", fontWeight: 700, fontSize: "2.5rem",
+            fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "2.5rem",
             color: "#1C1C1C", letterSpacing: "0.03em",
           }}>
             PUPPY COLOR PREDICTOR

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { getDogColor } from "@/app/utils/colors";
 
 const steelFrame = {
-  background: "#FAFAFA",
+  background: "#FAF7F2",
   border: "2px solid #C9B29F",
   borderRadius: "10px",
 };

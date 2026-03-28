@@ -18,9 +18,9 @@ interface DogResult {
 }
 
 const TC: Record<string, string> = {
-  "GR CH": "#1d5bbf", CH: "#c02828", ROM: "#0d7468",
-  "1XW": "#b45a0a", "2XW": "#b45a0a", "3XW": "#b45a0a",
-  "4XW": "#9f1239", "5XW": "#9f1239",
+  "GR CH": "#1d5bbf", CH: "#c02828", ROM: "#0d7468", POR: "#6d30b0",
+  "1XW": "#0d7468", "2XW": "#b45a0a", "3XW": "#8a6518",
+  "4XW": "#b03878", "5XW": "#6d30b0", "6XW": "#6d30b0", "7XW": "#6d30b0",
 };
 
 const FAMOUS_DOGS = [

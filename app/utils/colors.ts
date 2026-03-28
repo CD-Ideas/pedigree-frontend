@@ -1,33 +1,33 @@
 /**
- * Shared dog title color function.
+ * Shared dog title color function (PG getDogColorDark).
  * Returns a color based on the dog's registered name/title.
  *
  * Color mapping:
- *   GR CH  → #60a5fa (blue)
- *   CH     → #fc8181 (red)
- *   ROM    → #22d3ee (cyan)
- *   POR    → #a78bfa (purple)
- *   5XW+   → #c084fc (violet)
- *   4XW    → #f472b6 (pink)
- *   3XW    → #d4a855 (gold)
- *   2XW    → #fb923c (orange)
- *   1XW    → #2dd4bf (teal)
- *   No title → #ffffff (white)
+ *   GR CH  → #1d5bbf (dark blue)
+ *   CH     → #c02828 (dark red)
+ *   ROM    → #0d7468 (dark teal)
+ *   POR    → #6d30b0 (dark purple)
+ *   5XW+   → #6d30b0 (dark purple)
+ *   4XW    → #b03878 (dark pink)
+ *   3XW    → #8a6518 (dark gold)
+ *   2XW    → #b45a0a (dark orange)
+ *   1XW    → #0d7468 (dark teal)
+ *   No title → #3a3a3a (dark gray)
  */
 export function getDogColor(name: string): string {
   const n = (name || "").toUpperCase();
-  if (/\bGR\s*CH\b/.test(n)) return "#60a5fa";
-  if (/(?:^|\s|\()CH\b/.test(n)) return "#fc8181";
-  if (/\bROM\b/.test(n)) return "#22d3ee";
-  if (/\bPOR\b/.test(n)) return "#a78bfa";
+  if (/\bGR\s*CH\b/.test(n)) return "#1d5bbf";
+  if (/(?:^|\s|\()CH\b/.test(n)) return "#c02828";
+  if (/\bROM\b/.test(n)) return "#0d7468";
+  if (/\bPOR\b/.test(n)) return "#6d30b0";
   const xw = n.match(/\b(\d+)X[WL]\b/);
   if (xw) {
     const num = parseInt(xw[1]);
-    if (num >= 5) return "#c084fc";
-    if (num === 4) return "#f472b6";
-    if (num === 3) return "#d4a855";
-    if (num === 2) return "#fb923c";
-    if (num === 1) return "#2dd4bf";
+    if (num >= 5) return "#6d30b0";
+    if (num === 4) return "#b03878";
+    if (num === 3) return "#8a6518";
+    if (num === 2) return "#b45a0a";
+    if (num === 1) return "#0d7468";
   }
-  return "#ffffff";
+  return "#3a3a3a";
 }
