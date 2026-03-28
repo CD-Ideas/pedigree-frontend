@@ -54,15 +54,15 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
+    <div className="min-h-screen flex items-center justify-center px-4" style={{ background: "#FAFAFA" }}>
       <Link
         href="/"
-        className="fixed top-6 left-6 flex items-center gap-2 px-4 py-2.5 rounded-lg transition-all hover:bg-white/10 z-10 border border-[var(--accent-gold)]/30"
-        style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)", fontSize: "1rem", fontWeight: 600, letterSpacing: "0.05em" }}
+        className="fixed top-6 left-6 flex items-center gap-2 px-4 py-2.5 rounded-lg transition-all z-10"
+        style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", fontSize: "1rem", fontWeight: 600, letterSpacing: "0.05em", border: "2px solid #C9B29F", borderRadius: "10px", background: "#FAF7F2" }}
       >
         <span style={{ fontSize: "1.3rem" }}>&larr;</span> BACK
       </Link>
-      <div className="glass-card rounded-2xl p-6 w-full max-w-md animate-scale-reveal">
+      <div className="rounded-2xl p-6 w-full max-w-md" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "10px" }}>
         <div className="flex flex-col items-center mb-5">
           <img
             src={LOGO}
@@ -70,15 +70,13 @@ export default function RegisterPage() {
             width={88}
             height={88}
             className="rounded-xl mb-3"
-            style={{ boxShadow: "0 0 30px rgba(220,38,38,0.3)" }}
           />
           <h1
-            style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "1.75rem" }}
-            className="text-white"
+            style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "1.75rem", color: "#1C1C1C" }}
           >
             Create Account
           </h1>
-          <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem" }}>
+          <p style={{ color: "#6B7280", fontSize: "0.9rem" }}>
             Join the ultimate pedigree platform
           </p>
         </div>
@@ -86,7 +84,7 @@ export default function RegisterPage() {
         <form onSubmit={handleRegister} className="space-y-3.5">
           <div>
             <label
-              style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "0.85rem", letterSpacing: "0.06em" }}
+              style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "0.85rem", letterSpacing: "0.06em", color: "#1C1C1C" }}
               className="block mb-1 uppercase"
             >
               Username
@@ -97,19 +95,20 @@ export default function RegisterPage() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
-              className="w-full px-4 py-2.5 rounded-lg outline-none transition-all focus:ring-1"
+              className="w-full px-4 py-2.5 rounded-lg outline-none transition-all focus:ring-1 focus:ring-[#C9B29F]"
               style={{
-                background: "var(--bg-elevated)",
-                border: "1px solid var(--border)",
-                color: "var(--text-primary)",
+                background: "#FAFAFA",
+                border: "2px solid #C9B29F",
+                color: "#1C1C1C",
                 fontFamily: "var(--font-body)",
+                borderRadius: "10px",
               }}
             />
           </div>
 
           <div>
             <label
-              style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "0.85rem", letterSpacing: "0.06em" }}
+              style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "0.85rem", letterSpacing: "0.06em", color: "#1C1C1C" }}
               className="block mb-1 uppercase"
             >
               Email
@@ -120,19 +119,20 @@ export default function RegisterPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-4 py-2.5 rounded-lg outline-none transition-all focus:ring-1"
+              className="w-full px-4 py-2.5 rounded-lg outline-none transition-all focus:ring-1 focus:ring-[#C9B29F]"
               style={{
-                background: "var(--bg-elevated)",
-                border: "1px solid var(--border)",
-                color: "var(--text-primary)",
+                background: "#FAFAFA",
+                border: "2px solid #C9B29F",
+                color: "#1C1C1C",
                 fontFamily: "var(--font-body)",
+                borderRadius: "10px",
               }}
             />
           </div>
 
           <div>
             <label
-              style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "0.85rem", letterSpacing: "0.06em" }}
+              style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "0.85rem", letterSpacing: "0.06em", color: "#1C1C1C" }}
               className="block mb-1 uppercase"
             >
               Password
@@ -143,19 +143,20 @@ export default function RegisterPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full px-4 py-2.5 rounded-lg outline-none transition-all focus:ring-1"
+              className="w-full px-4 py-2.5 rounded-lg outline-none transition-all focus:ring-1 focus:ring-[#C9B29F]"
               style={{
-                background: "var(--bg-elevated)",
-                border: "1px solid var(--border)",
-                color: "var(--text-primary)",
+                background: "#FAFAFA",
+                border: "2px solid #C9B29F",
+                color: "#1C1C1C",
                 fontFamily: "var(--font-body)",
+                borderRadius: "10px",
               }}
             />
           </div>
 
           <div>
             <label
-              style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "0.85rem", letterSpacing: "0.06em" }}
+              style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "0.85rem", letterSpacing: "0.06em", color: "#1C1C1C" }}
               className="block mb-1 uppercase"
             >
               Confirm Password
@@ -166,12 +167,13 @@ export default function RegisterPage() {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
-              className="w-full px-4 py-2.5 rounded-lg outline-none transition-all focus:ring-1"
+              className="w-full px-4 py-2.5 rounded-lg outline-none transition-all focus:ring-1 focus:ring-[#C9B29F]"
               style={{
-                background: "var(--bg-elevated)",
-                border: "1px solid var(--border)",
-                color: "var(--text-primary)",
+                background: "#FAFAFA",
+                border: "2px solid #C9B29F",
+                color: "#1C1C1C",
                 fontFamily: "var(--font-body)",
+                borderRadius: "10px",
               }}
             />
           </div>
@@ -179,7 +181,8 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={loading}
-            className="btn-primary w-full py-3 rounded-lg text-sm"
+            className="w-full py-3 rounded-lg text-sm font-bold uppercase tracking-wider transition-all disabled:opacity-50"
+            style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)", borderRadius: "10px" }}
           >
             {loading ? "Creating account..." : "Create Account"}
           </button>
@@ -188,7 +191,7 @@ export default function RegisterPage() {
             <p
               className="text-center text-sm mt-2"
               style={{
-                color: messageType === "success" ? "var(--accent-green)" : "var(--accent-red-bright)",
+                color: messageType === "success" ? "#22c55e" : "#ef4444",
               }}
             >
               {message}
@@ -196,9 +199,9 @@ export default function RegisterPage() {
           )}
         </form>
 
-        <p className="text-center mt-6" style={{ color: "var(--text-secondary)", fontSize: "0.9rem" }}>
+        <p className="text-center mt-6" style={{ color: "#6B7280", fontSize: "0.9rem" }}>
           Already have an account?{" "}
-          <Link href="/login" className="hover:underline" style={{ color: "var(--accent-red-bright)" }}>
+          <Link href="/login" className="hover:underline" style={{ color: "#1C1C1C", fontWeight: 600 }}>
             Sign in
           </Link>
         </p>

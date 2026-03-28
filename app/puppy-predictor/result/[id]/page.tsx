@@ -103,7 +103,7 @@ export default function PredictionResultPage() {
 
   if (loading) return (
     <div className="min-h-screen flex items-center justify-center" style={{ background: "#080c14" }}>
-      <p className="text-sm animate-pulse" style={{ color: "#e8c86e", fontFamily: "var(--font-table)" }}>Loading prediction...</p>
+      <p className="text-sm animate-pulse" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Loading prediction...</p>
     </div>
   );
 
@@ -122,8 +122,8 @@ export default function PredictionResultPage() {
         <div className="text-center space-y-2">
           <h1 style={{
             fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "2rem",
-            background: "linear-gradient(135deg, #e8c86e, #d4a855, #b8860b)",
-            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+            color: "#1C1C1C",
+            
           }}>
             LITTER COLOR PREDICTION
           </h1>
@@ -150,9 +150,9 @@ export default function PredictionResultPage() {
               <h3 className="text-xs font-bold" style={{ color: g.color, fontFamily: "var(--font-table)" }}>
                 {g.icon} {g.label}
               </h3>
-              <div className="grid grid-cols-5 gap-1 text-[10px]" style={{ fontFamily: "var(--font-mono)", color: "#94a3b8" }}>
+              <div className="grid grid-cols-5 gap-1 text-[10px]" style={{ fontFamily: "var(--font-mono)", color: "#6B7280" }}>
                 {Object.entries(g.geno).map(([k, v]) => (
-                  <div key={k}><span style={{ color: "#e8c86e" }}>{k}:</span> {v}</div>
+                  <div key={k}><span style={{ color: "#1C1C1C" }}>{k}:</span> {v}</div>
                 ))}
               </div>
             </div>
@@ -164,7 +164,7 @@ export default function PredictionResultPage() {
           {results.map((r, i) => (
             <div key={i} className="rounded-xl p-4 transition-all hover:scale-[1.02]" style={{
               background: "linear-gradient(180deg, rgba(30,30,30,0.85), rgba(22,22,22,0.9))",
-              border: "1.5px solid rgba(30,64,120,0.5)", boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+              border: "2px solid #C9B29F", 
             }}>
               <div className="flex items-center gap-3 mb-3">
                 <DogSilhouette phenotype={r.phenotype} size={56} />
@@ -179,13 +179,13 @@ export default function PredictionResultPage() {
                       }} />
                     )}
                     <div className="absolute top-1 right-2 px-2 py-0.5 rounded-full text-xs font-bold"
-                      style={{ background: "rgba(0,0,0,0.6)", color: "#e8c86e", fontFamily: "var(--font-mono)", fontSize: "0.7rem" }}>
+                      style={{ background: "rgba(0,0,0,0.6)", color: "#1C1C1C", fontFamily: "var(--font-mono)", fontSize: "0.7rem" }}>
                       {r.percentage}%
                     </div>
                   </div>
                 </div>
               </div>
-              <h3 className="text-sm font-bold" style={{ color: "#e2e8f0", fontFamily: "var(--font-display)" }}>{r.phenotype}</h3>
+              <h3 className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-display)" }}>{r.phenotype}</h3>
               <div className="mt-2 w-full h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.05)" }}>
                 <div className="h-full rounded-full" style={{ width: `${r.percentage}%`, background: "linear-gradient(90deg, #e8c86e, #d4a855)" }} />
               </div>
@@ -207,7 +207,7 @@ export default function PredictionResultPage() {
           <Link href="/puppy-predictor"
             className="px-6 py-2.5 rounded-xl text-sm font-semibold transition-all hover:scale-105 inline-block"
             style={{
-              background: "linear-gradient(135deg, #e8c86e, #b8860b)", color: "#000",
+              background: "#1C1C1C", color: "#FAF7F2",
               fontFamily: "var(--font-table)", letterSpacing: "0.03em",
             }}>
             TRY YOUR OWN PREDICTION

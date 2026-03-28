@@ -4,13 +4,10 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 
-const steelFrame = {
-  border: "1.5px solid rgba(255,255,255,0.06)",
-  boxShadow:
-    "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)",
-  background:
-    "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)",
-  backdropFilter: "blur(16px)",
+const pgCard = {
+  border: "2px solid #C9B29F",
+  background: "#FAF7F2",
+  borderRadius: "10px",
 };
 
 interface ProfileUser {
@@ -149,8 +146,8 @@ export default function ProfilePage() {
         <div
           className="w-24 h-24 rounded-full flex items-center justify-center"
           style={{
-            background: "linear-gradient(135deg, #1a2744, #0e1828)",
-            border: "3px solid var(--accent-gold)",
+            background: "#FAF7F2",
+            border: "2px solid #C9B29F",
           }}
         >
           <span className="text-3xl">{pp.replace("emoji:", "")}</span>
@@ -164,7 +161,7 @@ export default function ProfilePage() {
           alt={user?.username || ""}
           className="rounded-2xl object-cover"
           style={{
-            border: "3px solid var(--accent-gold)",
+            border: "2px solid #C9B29F",
             width: "120px",
             height: "90px",
           }}
@@ -178,10 +175,9 @@ export default function ProfilePage() {
       <div
         className="w-24 h-24 rounded-full flex items-center justify-center font-bold"
         style={{
-          background: "linear-gradient(135deg, var(--accent-gold), #b8860b)",
-          color: "#fff",
-          textShadow: "0 1px 2px rgba(0,0,0,0.3)",
-          border: "3px solid var(--accent-gold)",
+          background: "#C9B29F",
+          color: "#1C1C1C",
+          border: "2px solid #C9B29F",
         }}
       >
         <span className="text-3xl">
@@ -196,11 +192,11 @@ export default function ProfilePage() {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="flex flex-col items-center gap-3">
-          <span className="w-6 h-6 border-2 border-current border-t-transparent rounded-full animate-spin" style={{ color: "var(--accent-gold)" }} />
+          <span className="w-6 h-6 border-2 border-current border-t-transparent rounded-full animate-spin" style={{ color: "#C9B29F" }} />
           <span
             className="text-xs"
             style={{
-              color: "var(--text-muted)",
+              color: "#6B7280",
               fontFamily: "var(--font-table)",
             }}
           >
@@ -215,12 +211,12 @@ export default function ProfilePage() {
   if (error || !user) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="rounded-xl p-8 text-center" style={steelFrame}>
+        <div className="p-8 text-center" style={pgCard}>
           <span className="text-4xl block mb-4">👤</span>
           <h2
             className="text-lg font-bold mb-2"
             style={{
-              color: "var(--text-primary)",
+              color: "#1C1C1C",
               fontFamily: "var(--font-table)",
             }}
           >
@@ -229,7 +225,7 @@ export default function ProfilePage() {
           <p
             className="text-xs mb-4"
             style={{
-              color: "var(--text-muted)",
+              color: "#6B7280",
               fontFamily: "var(--font-table)",
             }}
           >
@@ -239,9 +235,10 @@ export default function ProfilePage() {
             href="/dashboard"
             className="text-xs font-medium px-4 py-2 rounded-lg inline-block transition-colors hover:opacity-80"
             style={{
-              background: "rgba(212,168,85,0.15)",
-              color: "#d4a855",
-              border: "1px solid rgba(212,168,85,0.3)",
+              background: "#FAF7F2",
+              color: "#1C1C1C",
+              border: "2px solid #C9B29F",
+              borderRadius: "10px",
               fontFamily: "var(--font-table)",
             }}
           >
@@ -255,9 +252,9 @@ export default function ProfilePage() {
   const online = isOnline(user.last_active);
 
   return (
-    <div className="max-w-3xl mx-auto py-6 px-4 space-y-6">
+    <div className="max-w-3xl mx-auto py-6 px-4 space-y-6" style={{ background: "#FAFAFA", minHeight: "100vh" }}>
       {/* Profile Header */}
-      <div className="rounded-xl p-6" style={steelFrame}>
+      <div className="p-6" style={pgCard}>
         <div className="flex items-start gap-5">
           <div className="cursor-pointer transition-transform hover:scale-105" onClick={() => { if (user?.profile_picture && !user.profile_picture.startsWith("emoji:")) setShowPhotoModal(true); }}>
             {renderAvatar()}
@@ -268,7 +265,7 @@ export default function ProfilePage() {
               <h1
                 className="text-xl font-bold"
                 style={{
-                  color: "var(--text-primary)",
+                  color: "#1C1C1C",
                   fontFamily: "var(--font-table)",
                 }}
               >
@@ -277,9 +274,9 @@ export default function ProfilePage() {
               <span
                 className="text-[10px] px-2 py-0.5 rounded-full"
                 style={{
-                  background: "rgba(212,168,85,0.1)",
-                  color: "var(--accent-gold)",
-                  border: "1px solid rgba(212,168,85,0.2)",
+                  background: "#FAF7F2",
+                  color: "#1C1C1C",
+                  border: "2px solid #C9B29F",
                   fontFamily: "var(--font-table)",
                 }}
               >
@@ -291,9 +288,10 @@ export default function ProfilePage() {
                     onClick={() => router.push(`/messages?to=${encodeURIComponent(user.username)}`)}
                     className="flex items-center gap-1.5 px-3 py-1 rounded-lg text-[11px] font-semibold transition-all hover:scale-105"
                     style={{
-                      background: "rgba(212,168,85,0.12)",
-                      border: "1px solid rgba(212,168,85,0.25)",
-                      color: "var(--accent-gold)",
+                      background: "#FAF7F2",
+                      border: "2px solid #C9B29F",
+                      borderRadius: "10px",
+                      color: "#1C1C1C",
                       fontFamily: "var(--font-table)",
                     }}
                     title={`Message ${user.username}`}
@@ -305,9 +303,10 @@ export default function ProfilePage() {
                     disabled={blockLoading}
                     className="flex items-center gap-1.5 px-3 py-1 rounded-lg text-[11px] font-semibold transition-all hover:scale-105"
                     style={{
-                      background: isBlocked ? "rgba(239,68,68,0.12)" : "rgba(107,114,128,0.12)",
-                      border: `1px solid ${isBlocked ? "rgba(239,68,68,0.3)" : "rgba(107,114,128,0.25)"}`,
-                      color: isBlocked ? "#ef4444" : "#6b7280",
+                      background: isBlocked ? "#FEF2F2" : "#FAF7F2",
+                      border: `2px solid ${isBlocked ? "#ef4444" : "#C9B29F"}`,
+                      borderRadius: "10px",
+                      color: isBlocked ? "#ef4444" : "#6B7280",
                       fontFamily: "var(--font-table)",
                       opacity: blockLoading ? 0.5 : 1,
                     }}
@@ -324,14 +323,13 @@ export default function ProfilePage() {
               <span
                 className="w-2 h-2 rounded-full"
                 style={{
-                  background: online ? "#22c55e" : "#6b7280",
-                  boxShadow: online ? "0 0 6px #22c55e" : "none",
+                  background: online ? "#22c55e" : "#6B7280",
                 }}
               />
               <span
                 className="text-xs"
                 style={{
-                  color: online ? "#22c55e" : "var(--text-muted)",
+                  color: online ? "#22c55e" : "#6B7280",
                   fontFamily: "var(--font-table)",
                 }}
               >
@@ -348,7 +346,7 @@ export default function ProfilePage() {
               <p
                 className="text-[11px] mt-2"
                 style={{
-                  color: "var(--text-muted)",
+                  color: "#6B7280",
                   fontFamily: "var(--font-table)",
                 }}
               >
@@ -360,21 +358,19 @@ export default function ProfilePage() {
       </div>
 
       {/* Published Pedigrees */}
-      <div className="rounded-xl p-5" style={steelFrame}>
+      <div className="p-5" style={pgCard}>
         <h2
           className="text-[10px] uppercase tracking-widest font-bold mb-4 flex items-center gap-2"
           style={{
-            color: "var(--accent-gold)",
+            color: "#1C1C1C",
             fontFamily: "var(--font-table)",
-            textShadow: "0 0 12px rgba(212,168,85,0.3)",
           }}
         >
           <span
             style={{
               width: 16,
               height: 2,
-              background:
-                "linear-gradient(90deg, var(--accent-gold), transparent)",
+              background: "#C9B29F",
               borderRadius: 1,
             }}
           />
@@ -387,7 +383,7 @@ export default function ProfilePage() {
             <p
               className="text-xs"
               style={{
-                color: "var(--text-muted)",
+                color: "#6B7280",
                 fontFamily: "var(--font-table)",
               }}
             >
@@ -400,21 +396,21 @@ export default function ProfilePage() {
               <Link
                 key={ped.id}
                 href={`/pedigree/custom/${ped.id}`}
-                className="flex items-center justify-between px-3 py-2.5 rounded-lg transition-all hover:bg-white/5 group"
-                style={{ fontFamily: "var(--font-table)" }}
+                className="flex items-center justify-between px-3 py-2.5 rounded-lg transition-all group"
+                style={{ fontFamily: "var(--font-table)", borderRadius: "10px" }}
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <span className="text-base w-6 text-center">🧬</span>
                   <span
-                    className="text-sm font-medium truncate transition-colors group-hover:text-[#d4a855]"
-                    style={{ color: "var(--text-primary)" }}
+                    className="text-sm font-medium truncate transition-colors"
+                    style={{ color: "#1C1C1C" }}
                   >
                     {ped.name}
                   </span>
                 </div>
                 <span
                   className="text-[10px] flex-shrink-0 ml-3"
-                  style={{ color: "var(--text-muted)" }}
+                  style={{ color: "#6B7280" }}
                 >
                   {formatDate(ped.created_at)}
                 </span>
@@ -425,21 +421,19 @@ export default function ProfilePage() {
       </div>
 
       {/* Marketplace Ads */}
-      <div className="rounded-xl p-5" style={steelFrame}>
+      <div className="p-5" style={pgCard}>
         <h2
           className="text-[10px] uppercase tracking-widest font-bold mb-4 flex items-center gap-2"
           style={{
-            color: "var(--accent-gold)",
+            color: "#1C1C1C",
             fontFamily: "var(--font-table)",
-            textShadow: "0 0 12px rgba(212,168,85,0.3)",
           }}
         >
           <span
             style={{
               width: 16,
               height: 2,
-              background:
-                "linear-gradient(90deg, var(--accent-gold), transparent)",
+              background: "#C9B29F",
               borderRadius: 1,
             }}
           />
@@ -452,7 +446,7 @@ export default function ProfilePage() {
             <p
               className="text-xs"
               style={{
-                color: "var(--text-muted)",
+                color: "#6B7280",
                 fontFamily: "var(--font-table)",
               }}
             >
@@ -465,15 +459,15 @@ export default function ProfilePage() {
               <Link
                 key={ad.id}
                 href={`/marketplace/${ad.id}`}
-                className="flex items-center justify-between px-3 py-2.5 rounded-lg transition-all hover:bg-white/5 group"
-                style={{ fontFamily: "var(--font-table)" }}
+                className="flex items-center justify-between px-3 py-2.5 rounded-lg transition-all group"
+                style={{ fontFamily: "var(--font-table)", borderRadius: "10px" }}
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <span className="text-base w-6 text-center">🏷️</span>
                   <div className="min-w-0">
                     <span
-                      className="text-sm font-medium truncate block transition-colors group-hover:text-[#d4a855]"
-                      style={{ color: "var(--text-primary)" }}
+                      className="text-sm font-medium truncate block transition-colors"
+                      style={{ color: "#1C1C1C" }}
                     >
                       {ad.title}
                     </span>
@@ -489,7 +483,7 @@ export default function ProfilePage() {
                 </div>
                 <span
                   className="text-[10px] flex-shrink-0 ml-3"
-                  style={{ color: "var(--text-muted)" }}
+                  style={{ color: "#6B7280" }}
                 >
                   {formatDate(ad.created_at)}
                 </span>
@@ -503,34 +497,33 @@ export default function ProfilePage() {
       {showPhotoModal && user?.profile_picture && !user.profile_picture.startsWith("emoji:") && (
         <div
           className="fixed inset-0 z-[9999] flex items-center justify-center"
-          style={{ background: "rgba(0,0,0,0.85)", backdropFilter: "blur(8px)" }}
+          style={{ background: "rgba(0,0,0,0.6)" }}
           onClick={() => setShowPhotoModal(false)}
         >
           <div className="relative max-w-[90vw] max-h-[90vh]" onClick={(e) => e.stopPropagation()}>
             <img
               src={user.profile_picture}
               alt={user.username}
-              className="rounded-xl"
               style={{
                 maxWidth: "90vw",
                 maxHeight: "85vh",
                 objectFit: "contain",
-                border: "2px solid rgba(212,168,85,0.3)",
-                boxShadow: "0 20px 60px rgba(0,0,0,0.8)",
+                border: "2px solid #C9B29F",
+                borderRadius: "10px",
               }}
             />
             <button
               onClick={() => setShowPhotoModal(false)}
               className="absolute -top-3 -right-3 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all hover:scale-110"
               style={{
-                background: "rgba(30,30,30,0.9)",
-                color: "#fff",
-                border: "1px solid rgba(212,168,85,0.3)",
+                background: "#FAF7F2",
+                color: "#1C1C1C",
+                border: "2px solid #C9B29F",
               }}
             >
               ✕
             </button>
-            <p className="text-center mt-3 text-sm font-medium" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+            <p className="text-center mt-3 text-sm font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               {user.username}
             </p>
           </div>

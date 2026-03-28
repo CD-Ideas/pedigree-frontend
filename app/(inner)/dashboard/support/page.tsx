@@ -4,10 +4,9 @@ import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 
 const steelFrame = {
-  border: "1.5px solid rgba(255,255,255,0.06)",
-  boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)",
-  background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)",
-  backdropFilter: "blur(16px)",
+  border: "2px solid #C9B29F",
+  background: "#FAF7F2",
+  borderRadius: "10px",
 };
 
 interface SupportMessage {
@@ -137,55 +136,55 @@ export default function SupportPage() {
             fontFamily: "var(--font-display)",
             fontWeight: 700,
             fontSize: "1.6rem",
-            background: "linear-gradient(135deg, #e8c86e, #d4a855, #b8860b)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
+            color: "#1C1C1C",
+            
+            
           }}>
             My Support Messages
           </h1>
-          <p className="text-sm" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+          <p className="text-sm" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
             Your conversations with support
           </p>
         </div>
         <Link href="/contact" className="px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all hover:scale-[1.03]"
-          style={{ background: "linear-gradient(135deg, #e8c86e, #b8860b)", color: "#000", fontFamily: "var(--font-table)" }}>
+          style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)" }}>
           + New Message
         </Link>
       </div>
 
       {loading ? (
         <div className="flex items-center justify-center py-16">
-          <span className="w-6 h-6 border-2 border-current border-t-transparent rounded-full animate-spin" style={{ color: "var(--accent-gold)" }} />
+          <span className="w-6 h-6 border-2 border-current border-t-transparent rounded-full animate-spin" style={{ color: "#1C1C1C" }} />
         </div>
       ) : messages.length === 0 ? (
         <div className="rounded-xl p-12 text-center" style={steelFrame}>
           <span className="text-4xl block mb-3">📭</span>
-          <p className="text-sm font-medium" style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)" }}>No support messages yet</p>
-          <p className="text-xs mt-1" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>Contact support to get help</p>
+          <p className="text-sm font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>No support messages yet</p>
+          <p className="text-xs mt-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>Contact support to get help</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4" style={{ minHeight: "500px" }}>
           {/* Message List */}
           <div className="md:col-span-1 rounded-xl overflow-hidden" style={steelFrame}>
-            <div className="px-4 py-3" style={{ borderBottom: "1px solid rgba(212,168,85,0.1)" }}>
-              <p className="text-[10px] uppercase tracking-widest font-semibold" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+            <div className="px-4 py-3" style={{ borderBottom: "2px solid #C9B29F" }}>
+              <p className="text-[10px] uppercase tracking-widest font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                 Tickets ({messages.length})
               </p>
             </div>
             <div className="overflow-y-auto" style={{ maxHeight: "450px" }}>
               {messages.map(m => (
                 <button key={m.id} onClick={() => setSelected(m.id)}
-                  className="w-full text-left px-4 py-3 transition-all hover:bg-white/5"
+                  className="w-full text-left px-4 py-3 transition-all hover:bg-gray-100"
                   style={{
-                    borderBottom: "1px solid rgba(255,255,255,0.04)",
-                    background: selected === m.id ? "rgba(212,168,85,0.08)" : "transparent",
+                    borderBottom: "1px solid #C9B29F",
+                    background: selected === m.id ? "rgba(201,178,159,0.15)" : "transparent",
                   }}>
                   <div className="flex items-center justify-between">
                     <div className="truncate">
-                      <p className="text-xs font-semibold truncate" style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)" }}>
+                      <p className="text-xs font-semibold truncate" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                         {m.subject}
                       </p>
-                      <p className="text-[10px] truncate" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)", opacity: 0.8 }}>
+                      <p className="text-[10px] truncate" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", opacity: 0.8 }}>
                         {m.name}
                       </p>
                     </div>
@@ -197,10 +196,10 @@ export default function SupportPage() {
                       {m.status}
                     </span>
                   </div>
-                  <p className="text-[10px] truncate mt-0.5" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                  <p className="text-[10px] truncate mt-0.5" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                     {m.message}
                   </p>
-                  <p className="text-[9px] mt-1" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                  <p className="text-[9px] mt-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                     {formatDate(m.created_at)}
                   </p>
                 </button>
@@ -213,12 +212,12 @@ export default function SupportPage() {
             {selected && originalMessage ? (
               <>
                 {/* Thread Header */}
-                <div className="px-4 py-3 flex-shrink-0 flex items-center justify-between" style={{ borderBottom: "1px solid rgba(212,168,85,0.1)" }}>
+                <div className="px-4 py-3 flex-shrink-0 flex items-center justify-between" style={{ borderBottom: "2px solid #C9B29F" }}>
                   <div>
-                    <p className="text-sm font-bold" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+                    <p className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                       {originalMessage.subject}
                     </p>
-                    <p className="text-[10px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                    <p className="text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                       Opened {formatDate(originalMessage.created_at)}
                     </p>
                   </div>
@@ -255,10 +254,10 @@ export default function SupportPage() {
                     <div key={r.id} className={`flex ${r.sender_type === "user" ? "justify-end" : "justify-start"}`}>
                       <div className="max-w-[75%] rounded-xl px-3 py-2" style={{
                         background: r.sender_type === "user" ? "rgba(187,247,208,0.8)" : "rgba(255,255,255,0.9)",
-                        border: r.sender_type === "admin" ? "1px solid rgba(212,168,85,0.2)" : "none",
+                        border: r.sender_type === "admin" ? "2px solid #C9B29F" : "none",
                       }}>
                         {r.sender_type === "admin" && (
-                          <p className="text-[9px] font-bold mb-1" style={{ color: "#d4a855" }}>⚡ Support Team</p>
+                          <p className="text-[9px] font-bold mb-1" style={{ color: "#1C1C1C" }}>⚡ Support Team</p>
                         )}
                         <p className="text-xs" style={{ color: "#1a1a1a", fontFamily: "var(--font-table)", wordBreak: "break-word" }}>
                           {r.message}
@@ -273,7 +272,7 @@ export default function SupportPage() {
                 </div>
 
                 {/* Reply Input */}
-                <div className="px-4 py-3 flex-shrink-0" style={{ borderTop: "1px solid rgba(212,168,85,0.1)" }}>
+                <div className="px-4 py-3 flex-shrink-0" style={{ borderTop: "2px solid #C9B29F" }}>
                   <div className="flex gap-2">
                     <textarea
                       value={replyText}
@@ -282,12 +281,12 @@ export default function SupportPage() {
                       placeholder="Type your reply..."
                       rows={1}
                       className="flex-1 rounded-lg px-3 py-2.5 text-sm outline-none resize-none"
-                      style={{ background: "rgba(20,20,25,0.8)", border: "1px solid rgba(212,168,85,0.15)", color: "var(--text-primary)", fontFamily: "var(--font-table)", minHeight: "42px", maxHeight: "100px", overflowY: "auto" }}
+                      style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)", minHeight: "42px", maxHeight: "100px", overflowY: "auto" }}
                       onInput={(e) => { const t = e.target as HTMLTextAreaElement; t.style.height = "42px"; t.style.height = Math.min(t.scrollHeight, 100) + "px"; }}
                     />
                     <button onClick={sendReply} disabled={sending || !replyText.trim()}
                       className="px-4 py-2.5 rounded-lg text-xs font-semibold uppercase transition-all hover:scale-[1.03] disabled:opacity-40"
-                      style={{ background: "linear-gradient(135deg, #e8c86e, #b8860b)", color: "#000", fontFamily: "var(--font-table)" }}>
+                      style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)" }}>
                       {sending ? "..." : "Send"}
                     </button>
                   </div>
@@ -296,10 +295,10 @@ export default function SupportPage() {
             ) : (
               <div className="flex flex-col items-center justify-center h-full py-16">
                 <span className="text-3xl mb-3">💬</span>
-                <p className="text-sm font-medium" style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)" }}>
+                <p className="text-sm font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                   Select a ticket to view
                 </p>
-                <p className="text-[10px] mt-1" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                <p className="text-[10px] mt-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                   Click a ticket on the left to see the conversation
                 </p>
               </div>

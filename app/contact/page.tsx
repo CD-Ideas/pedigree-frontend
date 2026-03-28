@@ -3,18 +3,18 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-const steelFrame = {
-  border: "1.5px solid rgba(255,255,255,0.06)",
-  boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)",
-  background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)",
-  backdropFilter: "blur(16px)",
+const pgCard = {
+  border: "2px solid #C9B29F",
+  background: "#FAF7F2",
+  borderRadius: "10px",
 };
 
 const inputStyle = {
-  background: "rgba(20,20,25,0.8)",
-  border: "1px solid rgba(212,168,85,0.15)",
-  color: "var(--text-primary)",
+  background: "#FAFAFA",
+  border: "2px solid #C9B29F",
+  color: "#1C1C1C",
   fontFamily: "var(--font-table)",
+  borderRadius: "10px",
 };
 
 export default function ContactPage() {
@@ -75,25 +75,23 @@ export default function ContactPage() {
           className="text-2xl font-bold mb-2"
           style={{
             fontFamily: "var(--font-display)",
-            background: "linear-gradient(135deg, #e8c86e, #d4a855, #b8860b)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
+            color: "#1C1C1C",
           }}
         >
           Contact Us
         </h1>
-        <p className="text-sm" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+        <p className="text-sm" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
           Have a question, feedback, or need help? Send us a message.
         </p>
       </div>
 
       {/* Form */}
-      <div className="rounded-xl p-6" style={steelFrame}>
+      <div className="rounded-xl p-6" style={pgCard}>
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Name */}
           <div>
             <label className="block text-[10px] uppercase tracking-widest font-bold mb-1.5"
-              style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+              style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               Your Name
             </label>
             <input
@@ -102,7 +100,7 @@ export default function ContactPage() {
               onChange={(e) => !nameAutoFilled && setName(e.target.value)}
               placeholder="Enter your name..."
               readOnly={nameAutoFilled}
-              className="w-full rounded-lg px-3 py-2.5 text-sm outline-none transition-all focus:ring-1 focus:ring-[rgba(212,168,85,0.3)]"
+              className="w-full rounded-lg px-3 py-2.5 text-sm outline-none transition-all focus:ring-1 focus:ring-[#C9B29F]"
               style={{ ...inputStyle, opacity: nameAutoFilled ? 0.7 : 1, cursor: nameAutoFilled ? "not-allowed" : "text" }}
               maxLength={100}
             />
@@ -111,7 +109,7 @@ export default function ContactPage() {
           {/* Subject */}
           <div>
             <label className="block text-[10px] uppercase tracking-widest font-bold mb-1.5"
-              style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+              style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               Subject
             </label>
             <input
@@ -119,7 +117,7 @@ export default function ContactPage() {
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
               placeholder="What is this about?"
-              className="w-full rounded-lg px-3 py-2.5 text-sm outline-none transition-all focus:ring-1 focus:ring-[rgba(212,168,85,0.3)]"
+              className="w-full rounded-lg px-3 py-2.5 text-sm outline-none transition-all focus:ring-1 focus:ring-[#C9B29F]"
               style={inputStyle}
               maxLength={200}
             />
@@ -128,7 +126,7 @@ export default function ContactPage() {
           {/* Message */}
           <div>
             <label className="block text-[10px] uppercase tracking-widest font-bold mb-1.5"
-              style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+              style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               Message
             </label>
             <textarea
@@ -136,11 +134,11 @@ export default function ContactPage() {
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Write your message here..."
               rows={6}
-              className="w-full rounded-lg px-3 py-2.5 text-sm outline-none resize-none transition-all focus:ring-1 focus:ring-[rgba(212,168,85,0.3)]"
+              className="w-full rounded-lg px-3 py-2.5 text-sm outline-none resize-none transition-all focus:ring-1 focus:ring-[#C9B29F]"
               style={inputStyle}
               maxLength={5000}
             />
-            <p className="text-right text-[10px] mt-1" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+            <p className="text-right text-[10px] mt-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
               {message.length}/5000
             </p>
           </div>
@@ -151,8 +149,9 @@ export default function ContactPage() {
               style={{
                 background: status.type === "success" ? "rgba(34,197,94,0.1)" : "rgba(239,68,68,0.1)",
                 color: status.type === "success" ? "#22c55e" : "#ef4444",
-                border: `1px solid ${status.type === "success" ? "rgba(34,197,94,0.2)" : "rgba(239,68,68,0.2)"}`,
+                border: `2px solid ${status.type === "success" ? "rgba(34,197,94,0.3)" : "rgba(239,68,68,0.3)"}`,
                 fontFamily: "var(--font-table)",
+                borderRadius: "10px",
               }}>
               {status.text}
             </p>
@@ -162,11 +161,12 @@ export default function ContactPage() {
           <button
             type="submit"
             disabled={sending}
-            className="w-full py-3 rounded-lg text-sm font-semibold uppercase tracking-wider transition-all hover:scale-[1.02] disabled:opacity-50"
+            className="w-full py-3 rounded-lg text-sm font-semibold uppercase tracking-wider transition-all disabled:opacity-50"
             style={{
-              background: "linear-gradient(135deg, #e8c86e, #b8860b)",
-              color: "#000",
+              background: "#1C1C1C",
+              color: "#FAF7F2",
               fontFamily: "var(--font-table)",
+              borderRadius: "10px",
             }}
           >
             {sending ? "Sending..." : "Send Message"}
@@ -179,9 +179,9 @@ export default function ContactPage() {
         <Link
           href="/"
           className="text-xs transition-colors hover:opacity-80"
-          style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}
+          style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
         >
-          ← Back to Home
+          Back to Home
         </Link>
       </div>
     </div>

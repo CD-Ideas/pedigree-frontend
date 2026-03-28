@@ -99,7 +99,7 @@ function ShareButton({ dogName }: { dogName: string }) {
       className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all hover:scale-105"
       style={{
         background: copied ? "rgba(34,197,94,0.15)" : "rgba(212,168,85,0.1)",
-        color: copied ? "var(--accent-green)" : "var(--accent-gold)",
+        color: copied ? "#22c55e" : "#1C1C1C",
         border: `1px solid ${copied ? "rgba(34,197,94,0.3)" : "rgba(212,168,85,0.2)"}`,
       }}>
       {copied ? "✓ Copied!" : "🔗 Share"}
@@ -178,30 +178,30 @@ function PedigreeSearch() {
 
   return (
     <div ref={ref} className="relative">
-      <div className="glow-gold rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(255,255,255,0.06)", boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)", background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)", backdropFilter: "blur(16px)" }}>
+      <div className="glow-gold rounded-xl overflow-hidden" style={{ border: "2px solid #C9B29F",  background: "#FAF7F2",  }}>
         <div className="px-4 py-2.5 flex items-center gap-3">
           <span className="text-base">🔍</span>
           <input type="text" placeholder="Search by dog name or paste a pedigree URL..."
             value={query} onChange={(e) => search(e.target.value)}
             onFocus={() => { if (results.length > 0) setOpen(true); }}
             className="flex-1 bg-transparent text-sm outline-none"
-            style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)" }} />
+            style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
           {query && <button onClick={() => { setQuery(""); setResults([]); setOpen(false); }} className="text-xs opacity-50 hover:opacity-100">✕</button>}
         </div>
       </div>
       {open && results.length > 0 && (
         <div className="absolute left-0 right-0 top-full mt-1 rounded-xl overflow-hidden z-50 max-h-80 overflow-y-auto"
-             style={{ background: "var(--bg-elevated)", border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}>
+             style={{ background: "#FAF7F2", border: "2px solid #C9B29F",  }}>
           {results.map((d) => (
             <a key={d.dog_id} href={`/pedigree/${d.dog_id}`}
                className="flex items-center gap-3 px-4 py-2.5 transition-all hover:bg-white/5"
-               style={{ borderBottom: "1px solid rgba(40,44,60,0.3)" }}>
+               style={{ borderBottom: "1px solid #C9B29F" }}>
               {d.photo_url ? (
                 <img src={d.photo_url.startsWith("http") ? d.photo_url : `https://www.apbt.online-pedigrees.com/${d.photo_url}`}
-                     alt="" className="w-8 h-8 rounded-full object-cover flex-shrink-0" style={{ border: "1px solid var(--border)" }} />
+                     alt="" className="w-8 h-8 rounded-full object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} />
               ) : (
                 <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm"
-                     style={{ background: "var(--bg-deep)", border: "2px solid var(--border)" }}>🐕</div>
+                     style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}>🐕</div>
               )}
               <span className="text-sm font-semibold truncate" style={{ color: getDogColor(d.registered_name), fontFamily: "var(--font-table)" }}>
                 {d.registered_name}
@@ -212,7 +212,7 @@ function PedigreeSearch() {
       )}
       {open && query.length >= 2 && results.length === 0 && (
         <div className="absolute left-0 right-0 top-full mt-1 rounded-xl px-4 py-3 text-center text-xs z-50"
-             style={{ background: "var(--bg-elevated)", border: "1.5px solid rgba(30,64,120,0.8)", color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+             style={{ background: "#FAF7F2", border: "2px solid #C9B29F", color: "#6B7280", fontFamily: "var(--font-table)" }}>
           No dogs found for &quot;{query}&quot;
         </div>
       )}
@@ -238,7 +238,7 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
     return (
       <div className="text-center py-16">
         <div className="text-5xl mb-4 opacity-30">🌳</div>
-        <p style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)", fontSize: "15px" }}>No pedigree data available</p>
+        <p style={{ color: "#6B7280", fontFamily: "var(--font-table)", fontSize: "15px" }}>No pedigree data available</p>
       </div>
     );
 
@@ -250,15 +250,14 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
     <div className="relative">
       {/* Controls bar */}
       <div className="absolute top-1 right-2 z-10 flex items-center gap-2">
-        <div className="flex items-center gap-1 rounded-lg p-1" style={{ background: "linear-gradient(180deg, rgba(30,30,30,0.9) 0%, rgba(22,22,22,0.95) 100%)", border: "1.5px solid rgba(255,255,255,0.08)", boxShadow: "0 2px 10px rgba(0,0,0,0.3)" }}>
+        <div className="flex items-center gap-1 rounded-lg p-1" style={{ background: "#FAF7F2", border: "2px solid #C9B29F",  }}>
           {[3, 4, 5].map((g) => (
             <button key={g} onClick={() => { setDisplayGens(g); setZoom(1); if (containerRef.current) containerRef.current.scrollLeft = 0; }}
               className="px-3 py-1 rounded-md flex items-center justify-center text-xs font-bold transition-all hover:scale-105"
               style={{
-                background: displayGens === g ? "linear-gradient(135deg, #e8c86e, #b8860b)" : "transparent",
-                color: displayGens === g ? "#000" : "#9ca3af",
-                border: displayGens === g ? "1px solid rgba(212,168,85,0.5)" : "1px solid transparent",
-                boxShadow: displayGens === g ? "0 2px 8px rgba(212,168,85,0.25)" : "none",
+                background: displayGens === g ? "#1C1C1C" : "transparent",
+                color: displayGens === g ? "#FAF7F2" : "#6B7280",
+                border: displayGens === g ? "2px solid #C9B29F" : "1px solid transparent",
                 fontFamily: "var(--font-table)",
                 letterSpacing: "0.03em",
               }}>
@@ -266,11 +265,11 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
             </button>
           ))}
         </div>
-        <div className="flex items-center gap-1 rounded-lg p-1" style={{ background: "linear-gradient(180deg, rgba(30,30,30,0.9) 0%, rgba(22,22,22,0.95) 100%)", border: "1.5px solid rgba(255,255,255,0.08)", boxShadow: "0 2px 10px rgba(0,0,0,0.3)" }}>
-          <button onClick={() => setZoom((z) => Math.max(0.5, z - 0.1))} className="w-7 h-7 rounded-md flex items-center justify-center text-sm font-bold transition-all hover:scale-110 hover:bg-white/10" style={{ color: "#e2e8f0" }}>−</button>
-          <span className="text-xs px-1.5 font-bold" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-mono)", minWidth: "36px", textAlign: "center" }}>{Math.round(zoom * 100)}%</span>
-          <button onClick={() => setZoom((z) => Math.min(1.5, z + 0.1))} className="w-7 h-7 rounded-md flex items-center justify-center text-sm font-bold transition-all hover:scale-110 hover:bg-white/10" style={{ color: "#e2e8f0" }}>+</button>
-          <button onClick={() => setZoom(1)} className="ml-0.5 px-2.5 py-1 rounded-md flex items-center justify-center text-[11px] font-bold transition-all hover:scale-105 hover:bg-white/10" style={{ color: "#9ca3af", fontFamily: "var(--font-table)" }}>Reset</button>
+        <div className="flex items-center gap-1 rounded-lg p-1" style={{ background: "#FAF7F2", border: "2px solid #C9B29F",  }}>
+          <button onClick={() => setZoom((z) => Math.max(0.5, z - 0.1))} className="w-7 h-7 rounded-md flex items-center justify-center text-sm font-bold transition-all hover:scale-110 hover:bg-white/10" style={{ color: "#1C1C1C" }}>−</button>
+          <span className="text-xs px-1.5 font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)", minWidth: "36px", textAlign: "center" }}>{Math.round(zoom * 100)}%</span>
+          <button onClick={() => setZoom((z) => Math.min(1.5, z + 0.1))} className="w-7 h-7 rounded-md flex items-center justify-center text-sm font-bold transition-all hover:scale-110 hover:bg-white/10" style={{ color: "#1C1C1C" }}>+</button>
+          <button onClick={() => setZoom(1)} className="ml-0.5 px-2.5 py-1 rounded-md flex items-center justify-center text-[11px] font-bold transition-all hover:scale-105 hover:bg-white/10" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>Reset</button>
         </div>
       </div>
 
@@ -297,10 +296,9 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
             {/* Root dog */}
             <div className="flex items-center" style={{ minWidth: 0, overflow: "hidden" }}>
               <div className="w-full rounded-lg px-2 py-1.5 font-bold" style={{
-                background: "linear-gradient(135deg, #fef9ee, #fdf3dc)",
+                background: "#FAF7F2",
                 border: "2px solid rgba(161,120,40,0.5)",
                 color: "#7a5c10",
-                boxShadow: "0 2px 8px rgba(161,120,40,0.15), inset 0 1px 0 rgba(255,255,255,0.8)",
                 fontFamily: "var(--font-table)",
                 fontSize: "12px",
               }}>
@@ -367,16 +365,14 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
                           borderLeft: `4px solid ${cellBorder}`,
                           minHeight: cellMinH,
                           cursor: hasLink ? "pointer" : "default",
-                          boxShadow: "0 1px 4px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.03)",
                           borderTop: "1px solid rgba(255,255,255,0.8)",
                         }}
                       >
                         {isChampion && (
                           <span className="absolute -top-0.5 -right-0.5 flex items-center justify-center rounded-full" style={{
                             fontSize: "9px", color: "#b8860b",
-                            background: "linear-gradient(135deg, #fef3c7, #fde68a)",
+                            background: "rgba(201,178,159,0.2)",
                             width: "15px", height: "15px",
-                            boxShadow: "0 1px 3px rgba(0,0,0,0.15)",
                             border: "1px solid rgba(184,134,11,0.3)",
                           }}>★</span>
                         )}
@@ -386,7 +382,6 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
                             style={{
                               color: cellTextColor, fontSize, fontFamily: "var(--font-table)",
                               fontWeight: isChampion ? 700 : 600, lineHeight: 1.1,
-                              textShadow: "0 0.5px 0 rgba(255,255,255,0.5)",
                             }}>
                             {a.name}
                           </Link>
@@ -421,13 +416,13 @@ function NavAuthButton() {
   if (user) {
     return (
       <div className="flex items-center gap-2">
-        <span className="text-xs font-semibold" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+        <span className="text-xs font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
           {user.username}
         </span>
         <button
           onClick={() => { localStorage.removeItem("token"); localStorage.removeItem("refreshToken"); localStorage.removeItem("user"); window.location.reload(); }}
           className="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all hover:scale-105"
-          style={{ background: "rgba(220,38,38,0.15)", color: "#fc8181", border: "1px solid rgba(220,38,38,0.3)", fontFamily: "var(--font-table)" }}>
+          style={{ background: "rgba(220,38,38,0.15)", color: "#ef4444", border: "1px solid rgba(220,38,38,0.3)", fontFamily: "var(--font-table)" }}>
           Logout
         </button>
       </div>
@@ -437,7 +432,7 @@ function NavAuthButton() {
   return (
     <div className="flex items-center gap-2">
       <Link href="/login" className="px-4 py-2 rounded-lg text-sm font-semibold transition-all hover:scale-105"
-        style={{ background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#000", fontFamily: "var(--font-table)", letterSpacing: "0.02em" }}>
+        style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)", letterSpacing: "0.02em" }}>
         Sign In
       </Link>
     </div>
@@ -506,11 +501,11 @@ export default function PublishedPedigreePage() {
 
   if (loading)
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--bg-deep)" }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "#FAFAFA" }}>
         <div className="flex flex-col items-center gap-4">
           <img src={LOGO} alt="Logo" className="w-12 h-12 rounded-xl animate-pulse" />
-          <div className="flex items-center gap-3" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
-            <div className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "var(--accent-gold)", borderTopColor: "transparent" }} />
+          <div className="flex items-center gap-3" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+            <div className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} />
             Loading pedigree...
           </div>
         </div>
@@ -519,13 +514,13 @@ export default function PublishedPedigreePage() {
 
   if (!ped)
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--bg-deep)" }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "#FAFAFA" }}>
         <div className="text-center">
           <div className="text-6xl mb-4">🐕</div>
-          <h2 className="text-xl font-bold mb-2" style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)" }}>Pedigree Not Found</h2>
-          <p className="text-sm mb-6" style={{ color: "var(--text-muted)" }}>This pedigree doesn&apos;t exist or has been removed.</p>
+          <h2 className="text-xl font-bold mb-2" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Pedigree Not Found</h2>
+          <p className="text-sm mb-6" style={{ color: "#6B7280" }}>This pedigree doesn&apos;t exist or has been removed.</p>
           <Link href="/" className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-semibold transition-all hover:scale-105"
-            style={{ background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#000", fontFamily: "var(--font-table)" }}>
+            style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)" }}>
             ← Back to Home
           </Link>
         </div>
@@ -534,7 +529,7 @@ export default function PublishedPedigreePage() {
 
   const displayName = buildDisplayName(ped);
   const isMale = ped.sex === "Male" || ped.sex === "MALE" || ped.sex === "M";
-  const sexColor = isMale ? "var(--male-color, #60a5fa)" : "var(--female-color, #f472b6)";
+  const sexColor = isMale ? "#1d5bbf" : "#9f1239";
   const titleColor = getDogColor(displayName);
   const hasTitles = titleColor !== "#ffffff";
 
@@ -551,7 +546,7 @@ export default function PublishedPedigreePage() {
   const photoUrl = ped.photo_path || null;
 
   return (
-    <div className="min-h-screen" style={{ background: "var(--bg-deep)" }}>
+    <div className="min-h-screen" style={{ background: "#FAFAFA" }}>
       <style>{`
         .glow-gold { transition: border-color 0.3s ease; }
         .glow-gold:hover { border-color: #d4a855 !important; }
@@ -573,9 +568,9 @@ export default function PublishedPedigreePage() {
 
         {/* ─── Dog Name Header ─── */}
         <div className="rounded-lg px-4 py-2 relative"
-          style={{ border: "1.5px solid rgba(255,255,255,0.06)", boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)", background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)", backdropFilter: "blur(16px)" }}>
+          style={{ border: "2px solid #C9B29F",  background: "#FAF7F2",  }}>
           {titles.length > 0 && (
-            <div className="h-0.5 -mx-4 -mt-2 mb-2 rounded-t-lg" style={{ background: "linear-gradient(90deg, var(--accent-red, #fc8181), var(--accent-gold, #d4a855), var(--accent-red, #fc8181))" }} />
+            <div className="h-0.5 -mx-4 -mt-2 mb-2 rounded-t-lg" style={{ background: "#C9B29F" }} />
           )}
           <div className="text-center">
             <h1 style={{
@@ -587,8 +582,8 @@ export default function PublishedPedigreePage() {
             </h1>
             <div className="flex items-center justify-center gap-2 mt-1">
               <span className="text-[10px] px-2 py-0.5 rounded-full" style={{
-                background: "rgba(212,168,85,0.15)", color: "#d4a855",
-                fontFamily: "var(--font-mono)", border: "1px solid rgba(212,168,85,0.3)",
+                background: "rgba(201,178,159,0.15)", color: "#1C1C1C",
+                fontFamily: "var(--font-mono)", border: "2px solid #C9B29F",
               }}>
                 Community Pedigree
               </span>
@@ -626,7 +621,7 @@ export default function PublishedPedigreePage() {
         </div>
 
         {/* ─── Photo + Details ─── */}
-        <div className="glow-gold rounded-xl overflow-hidden" style={{ border: "1.5px solid rgba(255,255,255,0.06)", boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)", background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)", backdropFilter: "blur(16px)", minHeight: "220px" }}>
+        <div className="glow-gold rounded-xl overflow-hidden" style={{ border: "2px solid #C9B29F",  background: "#FAF7F2",  minHeight: "220px" }}>
           <div className="flex flex-col sm:flex-row sm:items-stretch h-full">
             {/* Photo */}
             <div className="flex-shrink-0 relative m-2 w-full sm:w-[200px] h-[200px]">
@@ -634,7 +629,7 @@ export default function PublishedPedigreePage() {
                 <img src={photoUrl} alt={displayName} className="rounded-md w-full sm:w-[200px] h-[200px]" style={{ objectFit: "fill" }} />
               ) : (
                 <div className="rounded-md flex items-center justify-center w-full sm:w-[200px] h-[200px]"
-                  style={{ background: isMale ? "linear-gradient(135deg, #0c1929, #1a2e4a)" : "linear-gradient(135deg, #29101c, #3d1a2e)" }}>
+                  style={{ background: isMale ? "rgba(29,91,191,0.08)" : "rgba(159,18,57,0.08)" }}>
                   <span className="text-2xl opacity-10" style={{ color: sexColor }}>{isMale ? "♂" : "♀"}</span>
                 </div>
               )}
@@ -644,32 +639,32 @@ export default function PublishedPedigreePage() {
             <div className="flex-1 py-2 pr-2.5 pl-0.5 overflow-y-auto" style={{ fontFamily: "var(--font-table)" }}>
               <div className="space-y-0" style={{ fontSize: "13px", lineHeight: "1.6" }}>
                 {ped.breeder && (
-                  <div><span style={{ color: "var(--text-muted, #64748b)", fontWeight: 700 }}>BREEDER: </span><span style={{ color: "var(--text-primary, #e2e8f0)" }}>{ped.breeder}</span></div>
+                  <div><span style={{ color: "#6B7280", fontWeight: 700 }}>BREEDER: </span><span style={{ color: "#1C1C1C" }}>{ped.breeder}</span></div>
                 )}
                 {ped.owner && (
-                  <div><span style={{ color: "var(--text-muted, #64748b)", fontWeight: 700 }}>OWNER: </span><span style={{ color: "var(--text-primary, #e2e8f0)" }}>{ped.owner}</span></div>
+                  <div><span style={{ color: "#6B7280", fontWeight: 700 }}>OWNER: </span><span style={{ color: "#1C1C1C" }}>{ped.owner}</span></div>
                 )}
                 <div>
-                  <span style={{ color: "var(--text-muted, #64748b)", fontWeight: 700 }}>SEX: </span>
+                  <span style={{ color: "#6B7280", fontWeight: 700 }}>SEX: </span>
                   <span style={{ color: sexColor, fontWeight: 700 }}>{isMale ? "♂" : "♀"} {ped.sex?.toUpperCase()}</span>
                 </div>
                 {ped.color && (
-                  <div><span style={{ color: "var(--text-muted, #64748b)", fontWeight: 700 }}>COLOR: </span><span style={{ color: "var(--text-primary, #e2e8f0)" }}>{ped.color}</span></div>
+                  <div><span style={{ color: "#6B7280", fontWeight: 700 }}>COLOR: </span><span style={{ color: "#1C1C1C" }}>{ped.color}</span></div>
                 )}
                 {ped.dob && (
-                  <div><span style={{ color: "var(--text-muted, #64748b)", fontWeight: 700 }}>DOB: </span><span style={{ color: "var(--text-primary, #e2e8f0)" }}>{ped.dob}</span></div>
+                  <div><span style={{ color: "#6B7280", fontWeight: 700 }}>DOB: </span><span style={{ color: "#1C1C1C" }}>{ped.dob}</span></div>
                 )}
                 {ped.conditioned_weight && (
-                  <div><span style={{ color: "var(--text-muted, #64748b)", fontWeight: 700 }}>CONDITIONED WEIGHT: </span><span style={{ color: "var(--text-primary, #e2e8f0)" }}>{ped.conditioned_weight}</span></div>
+                  <div><span style={{ color: "#6B7280", fontWeight: 700 }}>CONDITIONED WEIGHT: </span><span style={{ color: "#1C1C1C" }}>{ped.conditioned_weight}</span></div>
                 )}
                 {ped.continent && (
-                  <div><span style={{ color: "var(--text-muted, #64748b)", fontWeight: 700 }}>LOCATION: </span><span style={{ color: "var(--text-primary, #e2e8f0)" }}>{ped.country ? `${ped.country}, ${ped.continent}` : ped.continent}</span></div>
+                  <div><span style={{ color: "#6B7280", fontWeight: 700 }}>LOCATION: </span><span style={{ color: "#1C1C1C" }}>{ped.country ? `${ped.country}, ${ped.continent}` : ped.continent}</span></div>
                 )}
                 {ped.date_posted && (
-                  <div><span style={{ color: "var(--text-muted, #64748b)", fontWeight: 700 }}>POSTED: </span><span style={{ color: "var(--text-primary, #e2e8f0)" }}>{formatDate(ped.date_posted)}</span></div>
+                  <div><span style={{ color: "#6B7280", fontWeight: 700 }}>POSTED: </span><span style={{ color: "#1C1C1C" }}>{formatDate(ped.date_posted)}</span></div>
                 )}
                 {ped.last_modified && (
-                  <div><span style={{ color: "var(--text-muted, #64748b)", fontWeight: 700 }}>LAST MODIFIED: </span><span style={{ color: "var(--text-primary, #e2e8f0)" }}>{formatDate(ped.last_modified)}</span></div>
+                  <div><span style={{ color: "#6B7280", fontWeight: 700 }}>LAST MODIFIED: </span><span style={{ color: "#1C1C1C" }}>{formatDate(ped.last_modified)}</span></div>
                 )}
               </div>
             </div>
@@ -679,17 +674,17 @@ export default function PublishedPedigreePage() {
         {/* ─── Pedigree Notes ─── */}
         {ped.pedigree_notes && (
           <div className="glow-gold rounded-xl px-3 py-2" style={{
-            border: "1.5px solid rgba(255,255,255,0.06)",
-            boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)",
-            background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)",
-            backdropFilter: "blur(16px)",
+            border: "2px solid #C9B29F",
+            
+            background: "#FAF7F2",
+            
           }}>
             <div className="flex items-center gap-2">
-              <div className="w-5 h-5 rounded flex items-center justify-center flex-shrink-0" style={{ background: "rgba(212,168,85,0.15)", border: "1px solid rgba(212,168,85,0.3)" }}>
+              <div className="w-5 h-5 rounded flex items-center justify-center flex-shrink-0" style={{ background: "rgba(201,178,159,0.15)", border: "2px solid #C9B29F" }}>
                 <span className="text-[10px]">📝</span>
               </div>
-              <span className="text-xs font-semibold flex-shrink-0" style={{ color: "#d4a855", fontFamily: "var(--font-table)" }}>Pedigree Notes:</span>
-              <p className="text-xs" style={{ color: "var(--text-primary, #e2e8f0)", fontFamily: "var(--font-table)", lineHeight: "1.4" }}>
+              <span className="text-xs font-semibold flex-shrink-0" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Pedigree Notes:</span>
+              <p className="text-xs" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", lineHeight: "1.4" }}>
                 {ped.pedigree_notes}
               </p>
             </div>
@@ -699,33 +694,33 @@ export default function PublishedPedigreePage() {
         {/* ─── Sire / Dam links ─── */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           <div className="glow-blue rounded-xl p-2.5"
-            style={{ border: "1.5px solid rgba(255,255,255,0.06)", boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)", background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)", backdropFilter: "blur(16px)" }}>
-            <div className="text-[9px] uppercase tracking-wider mb-0.5 font-semibold" style={{ color: "var(--male-color, #60a5fa)", letterSpacing: "0.1em" }}>♂ Sire (Father)</div>
+            style={{ border: "2px solid #C9B29F",  background: "#FAF7F2",  }}>
+            <div className="text-[9px] uppercase tracking-wider mb-0.5 font-semibold" style={{ color: "#1d5bbf", letterSpacing: "0.1em" }}>♂ Sire (Father)</div>
             {sire ? (
               <Link href={`/pedigree/${sire.dog_id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColor(sire.registered_name) }}>
                 {sire.registered_name}
               </Link>
-            ) : <span className="text-sm" style={{ color: "var(--text-muted)" }}>Unknown</span>}
+            ) : <span className="text-sm" style={{ color: "#6B7280" }}>Unknown</span>}
           </div>
           <div className="glow-pink rounded-xl p-2.5"
-            style={{ border: "1.5px solid rgba(255,255,255,0.06)", boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)", background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)", backdropFilter: "blur(16px)" }}>
-            <div className="text-[9px] uppercase tracking-wider mb-0.5 font-semibold" style={{ color: "var(--female-color, #f472b6)", letterSpacing: "0.1em" }}>♀ Dam (Mother)</div>
+            style={{ border: "2px solid #C9B29F",  background: "#FAF7F2",  }}>
+            <div className="text-[9px] uppercase tracking-wider mb-0.5 font-semibold" style={{ color: "#9f1239", letterSpacing: "0.1em" }}>♀ Dam (Mother)</div>
             {dam ? (
               <Link href={`/pedigree/${dam.dog_id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColor(dam.registered_name) }}>
                 {dam.registered_name}
               </Link>
-            ) : <span className="text-sm" style={{ color: "var(--text-muted)" }}>Unknown</span>}
+            ) : <span className="text-sm" style={{ color: "#6B7280" }}>Unknown</span>}
           </div>
         </div>
 
         {/* ─── Pedigree Tree ─── */}
         <div className="glow-teal rounded-xl overflow-hidden" style={{
           border: "1.5px solid rgba(50,50,55,0.9)",
-          boxShadow: "0 4px 30px rgba(0,0,0,0.35), 0 0 60px rgba(0,0,0,0.1)",
+          
         }}>
           <div className="flex items-center justify-between px-4 py-2.5" style={{
-            background: "linear-gradient(180deg, rgba(30,30,30,0.95) 0%, rgba(22,22,22,0.95) 100%)",
-            borderBottom: "1px solid rgba(255,255,255,0.06)",
+            background: "#FAF7F2",
+            borderBottom: "2px solid #C9B29F",
           }}>
             <div className="flex items-center gap-2.5">
               <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{
@@ -733,13 +728,13 @@ export default function PublishedPedigreePage() {
               }}>
                 <span className="text-sm">🌳</span>
               </div>
-              <span className="text-sm font-semibold" style={{ color: "#d4a855", fontFamily: "var(--font-table)" }}>Pedigree</span>
+              <span className="text-sm font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Pedigree</span>
               {tree.length > 0 && (
                 <span className="text-[10px] px-2 py-0.5 rounded-full font-medium" style={{
-                  background: "rgba(212,168,85,0.15)",
-                  color: "var(--accent-gold)",
+                  background: "rgba(201,178,159,0.15)",
+                  color: "#1C1C1C",
                   fontFamily: "var(--font-mono)",
-                  border: "1px solid rgba(212,168,85,0.3)"
+                  border: "2px solid #C9B29F"
                 }}>
                   {tree.length}
                 </span>
@@ -749,7 +744,7 @@ export default function PublishedPedigreePage() {
               <span>👁 {((ped.view_count || 0) + 1).toLocaleString()} views</span>
             </div>
           </div>
-          <div className="p-3 md:p-4" style={{ background: "linear-gradient(180deg, #eef1f5 0%, #e4e8ee 100%)" }}>
+          <div className="p-3 md:p-4" style={{ background: "#FAFAFA" }}>
             <PedigreeTreeView tree={tree} dogName={displayName} isMale={isMale} />
           </div>
         </div>
@@ -768,30 +763,30 @@ export default function PublishedPedigreePage() {
 
           return (
             <div className="glow-gold rounded-xl overflow-hidden" style={{
-              border: "1.5px solid rgba(255,255,255,0.06)",
-              boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)",
-              background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)",
-              backdropFilter: "blur(16px)",
+              border: "2px solid #C9B29F",
+              
+              background: "#FAF7F2",
+              
             }}>
               {/* Header */}
               <div className="flex items-center justify-between px-4 py-2.5" style={{
-                background: "linear-gradient(180deg, rgba(30,30,30,0.95) 0%, rgba(22,22,22,0.95) 100%)",
-                borderBottom: "1px solid rgba(212,168,85,0.2)",
+                background: "#FAF7F2",
+                borderBottom: "2px solid #C9B29F",
               }}>
                 <div className="flex items-center gap-2.5">
-                  <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: "rgba(212,168,85,0.15)", border: "1px solid rgba(212,168,85,0.3)" }}>
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: "rgba(201,178,159,0.15)", border: "2px solid #C9B29F" }}>
                     <span className="text-sm">📋</span>
                   </div>
                   <span className="text-sm font-bold uppercase tracking-widest" style={{
                     fontFamily: "var(--font-display, Oswald, sans-serif)",
-                    background: "linear-gradient(135deg, #d4a855 0%, #f5d994 50%, #d4a855 100%)",
-                    WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+                    color: "#1C1C1C",
+                    
                   }}>
                     Journal
                   </span>
                 </div>
                 <span className="text-[9px] px-2 py-0.5 rounded-full" style={{
-                  background: "rgba(220,38,38,0.12)", color: "#fc8181",
+                  background: "rgba(220,38,38,0.12)", color: "#ef4444",
                   fontFamily: "var(--font-table)", border: "1px solid rgba(220,38,38,0.3)",
                 }}>
                   Private — Only You
@@ -803,11 +798,11 @@ export default function PublishedPedigreePage() {
                 {journal.rabiesDate && (
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <span className="text-[10px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>Rabies: Date Given</span>
-                      <span className="text-sm" style={{ color: "#e2e8f0", fontFamily: "var(--font-mono)" }}>{fmtDate(journal.rabiesDate)}</span>
+                      <span className="text-[10px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>Rabies: Date Given</span>
+                      <span className="text-sm" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{fmtDate(journal.rabiesDate)}</span>
                     </div>
                     <div>
-                      <span className="text-[10px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>Rabies: Next Due</span>
+                      <span className="text-[10px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>Rabies: Next Due</span>
                       <span className="text-sm" style={{ color: "#22c55e", fontFamily: "var(--font-mono)" }}>{fmtDate(journal.rabiesNextDue || "")}</span>
                     </div>
                   </div>
@@ -816,21 +811,21 @@ export default function PublishedPedigreePage() {
                 {/* AVID Chip */}
                 {journal.avidChip && (
                   <div>
-                    <span className="text-[10px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>AVID Chip</span>
-                    <span className="text-sm" style={{ color: "#e2e8f0", fontFamily: "var(--font-mono)" }}>{journal.avidChip}</span>
+                    <span className="text-[10px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>AVID Chip</span>
+                    <span className="text-sm" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{journal.avidChip}</span>
                   </div>
                 )}
 
                 {/* Vaccines */}
                 {journal.vaccines && journal.vaccines.some(v => v.checked) && (
                   <div>
-                    <span className="text-[10px] uppercase tracking-widest font-semibold block mb-2" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>Vaccines</span>
+                    <span className="text-[10px] uppercase tracking-widest font-semibold block mb-2" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>Vaccines</span>
                     <div className="space-y-1.5">
                       {journal.vaccines.filter(v => v.checked).map(v => (
                         <div key={v.name} className="flex items-center justify-between rounded-lg px-3 py-2"
                           style={{ background: "rgba(34,197,94,0.06)", border: "1px solid rgba(34,197,94,0.15)" }}>
                           <span className="text-xs font-semibold" style={{ color: "#22c55e", fontFamily: "var(--font-table)" }}>✓ {v.name}</span>
-                          {v.date && <span className="text-[10px]" style={{ color: "#e2e8f0", fontFamily: "var(--font-mono)" }}>{fmtDate(v.date)}</span>}
+                          {v.date && <span className="text-[10px]" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{fmtDate(v.date)}</span>}
                         </div>
                       ))}
                     </div>
@@ -840,22 +835,22 @@ export default function PublishedPedigreePage() {
                 {/* Worming History */}
                 {journal.worming && journal.worming.length > 0 && (
                   <div>
-                    <span className="text-[10px] uppercase tracking-widest font-semibold block mb-2" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>Worming History</span>
+                    <span className="text-[10px] uppercase tracking-widest font-semibold block mb-2" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>Worming History</span>
                     <div className="space-y-1.5">
                       {journal.worming.map((w, i) => (
                         <div key={i} className="flex items-center justify-between rounded-lg px-3 py-2"
                           style={{ background: "rgba(96,165,250,0.06)", border: "1px solid rgba(96,165,250,0.15)" }}>
                           <div className="flex items-center gap-2">
                             {w.remindMe && <span className="text-[9px]">🔔</span>}
-                            <span className="text-xs font-semibold" style={{ color: "#e2e8f0", fontFamily: "var(--font-table)" }}>
+                            <span className="text-xs font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                               {w.type === "Other" ? w.otherType || "Other" : w.type}
                             </span>
                           </div>
                           <div className="flex items-center gap-3">
-                            <span className="text-[10px]" style={{ color: "#e2e8f0", fontFamily: "var(--font-mono)" }}>{fmtDate(w.dateWormed)}</span>
+                            <span className="text-[10px]" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{fmtDate(w.dateWormed)}</span>
                             {w.nextDue && (
                               <>
-                                <span className="text-[9px]" style={{ color: "#5a6a82" }}>→</span>
+                                <span className="text-[9px]" style={{ color: "#6B7280" }}>→</span>
                                 <span className="text-[10px]" style={{ color: "#22c55e", fontFamily: "var(--font-mono)" }}>Due: {fmtDate(w.nextDue)}</span>
                               </>
                             )}
@@ -869,8 +864,8 @@ export default function PublishedPedigreePage() {
                 {/* Journal Notes */}
                 {journal.notes && (
                   <div>
-                    <span className="text-[10px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>Journal Notes</span>
-                    <p className="text-sm leading-relaxed" style={{ color: "#e2e8f0", fontFamily: "var(--font-table)" }}>{journal.notes}</p>
+                    <span className="text-[10px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>Journal Notes</span>
+                    <p className="text-sm leading-relaxed" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{journal.notes}</p>
                   </div>
                 )}
               </div>
@@ -879,32 +874,32 @@ export default function PublishedPedigreePage() {
         })()}
 
         {/* ─── Footer ─── */}
-        <footer className="text-center py-8 mt-8" style={{ borderTop: "1px solid var(--border, rgba(30,64,120,0.5))" }}>
+        <footer className="text-center py-8 mt-8" style={{ borderTop: "2px solid #C9B29F" }}>
           <div className="flex items-center justify-center gap-2 mb-3">
             <img src={LOGO} alt="Logo" className="w-6 h-6 rounded" />
             <span style={{
               fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "14px",
-              background: "linear-gradient(135deg, #e8c86e, #d4a855)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+              background: "#1C1C1C", 
             }}>Pedigree Platform</span>
           </div>
-          <p className="text-xs" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+          <p className="text-xs" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
             The modern pedigree hub for breeders, owners, and enthusiasts.
           </p>
           <div className="flex items-center justify-center gap-4 mt-3">
-            <Link href="/privacy" className="text-xs hover:underline" style={{ color: "var(--text-muted)" }}>Privacy</Link>
-            <Link href="/terms" className="text-xs hover:underline" style={{ color: "var(--text-muted)" }}>Terms</Link>
-            <Link href="/contact" className="text-xs hover:underline" style={{ color: "var(--text-muted)" }}>Contact</Link>
+            <Link href="/privacy" className="text-xs hover:underline" style={{ color: "#6B7280" }}>Privacy</Link>
+            <Link href="/terms" className="text-xs hover:underline" style={{ color: "#6B7280" }}>Terms</Link>
+            <Link href="/contact" className="text-xs hover:underline" style={{ color: "#6B7280" }}>Contact</Link>
           </div>
         </footer>
       </div>
 
       {/* Delete Confirmation Modal */}
       {showDeleteConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center px-4" style={{ background: "rgba(0,0,0,0.7)", backdropFilter: "blur(4px)" }}>
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-4" style={{ background: "rgba(0,0,0,0.4)",  }}>
           <div className="rounded-xl p-6 max-w-sm w-full" style={{
-            background: "linear-gradient(180deg, rgba(30,30,30,0.95) 0%, rgba(22,22,22,0.98) 100%)",
+            background: "#FAF7F2",
             border: "1px solid rgba(239,68,68,0.3)",
-            boxShadow: "0 20px 50px rgba(0,0,0,0.6)",
+            
           }}>
             <div className="text-center mb-4">
               <span className="text-3xl">⚠️</span>
@@ -912,10 +907,10 @@ export default function PublishedPedigreePage() {
             <h3 className="text-sm font-bold text-center mb-2" style={{ color: "#ef4444", fontFamily: "var(--font-display)", letterSpacing: "0.03em" }}>
               Delete Pedigree
             </h3>
-            <p className="text-xs text-center mb-1" style={{ color: "var(--text-primary, #e2e8f0)", fontFamily: "var(--font-table)" }}>
+            <p className="text-xs text-center mb-1" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               Are you sure you want to permanently delete
             </p>
-            <p className="text-xs text-center font-bold mb-4" style={{ color: "var(--accent-gold, #d4a855)", fontFamily: "var(--font-table)" }}>
+            <p className="text-xs text-center font-bold mb-4" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               {ped?.name || "this pedigree"}?
             </p>
             <p className="text-[10px] text-center mb-5" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
@@ -927,8 +922,8 @@ export default function PublishedPedigreePage() {
                 disabled={deleting}
                 className="flex-1 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all hover:scale-105"
                 style={{
-                  background: "linear-gradient(135deg, #cbd5e1, #94a3b8)",
-                  color: "#000",
+                  background: "#C9B29F",
+                  color: "#FAF7F2",
                   fontFamily: "var(--font-table)",
                   letterSpacing: "0.05em",
                 }}>
@@ -939,11 +934,11 @@ export default function PublishedPedigreePage() {
                 disabled={deleting}
                 className="flex-1 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all hover:scale-105"
                 style={{
-                  background: "linear-gradient(135deg, #ef4444, #b91c1c)",
+                  background: "#ef4444",
                   color: "#fff",
                   fontFamily: "var(--font-table)",
                   letterSpacing: "0.05em",
-                  boxShadow: "0 4px 20px rgba(239,68,68,0.3)",
+                  
                 }}>
                 {deleting ? "Deleting..." : "Delete Forever"}
               </button>

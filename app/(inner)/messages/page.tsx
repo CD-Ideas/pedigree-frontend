@@ -696,7 +696,7 @@ function MessagesContent() {
                                   ) : (
                                     <a key={i} href={att.url} target="_blank" rel="noopener noreferrer"
                                       className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs transition-all hover:opacity-80"
-                                      style={{ background: "rgba(0,0,0,0.06)", color: "#2563eb", fontFamily: "var(--font-table)" }}>
+                                      style={{ background: "#FAF7F2", color: "#1C1C1C", fontFamily: "var(--font-table)", border: "1px solid #C9B29F" }}>
                                       <span>📎</span>
                                       <span className="truncate">{att.name}</span>
                                       <span className="text-[9px] flex-shrink-0" style={{ color: "#6b7280" }}>{formatFileSize(att.size)}</span>

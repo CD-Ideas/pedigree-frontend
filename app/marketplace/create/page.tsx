@@ -17,16 +17,15 @@ interface DogSearchResult {
 const LOGO = "https://i.imgur.com/cAvQemZ.png";
 
 const GLASS_BOX = {
-  background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)",
-  backdropFilter: "blur(16px)",
-  border: "1.5px solid rgba(255,255,255,0.06)",
-  boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)",
+  background: "#FAF7F2",
+  border: "2px solid #C9B29F",
+  borderRadius: "10px",
 };
 
 const INPUT_STYLE: React.CSSProperties = {
-  background: "rgba(255,255,255,0.04)",
-  border: "1px solid rgba(255,255,255,0.08)",
-  color: "var(--text-primary, #e2e8f0)",
+  background: "#FAFAFA",
+  border: "2px solid #C9B29F",
+  color: "#1C1C1C",
   fontFamily: "var(--font-table)",
   transition: "all 0.2s ease",
 };
@@ -37,7 +36,7 @@ const CATEGORIES = [
   { key: "litters_for_sale", label: "Litters for Sale", icon: "\uD83C\uDF7C", color: "#f472b6" },
   { key: "supplies_gear", label: "Supplies & Gear", icon: "\uD83C\uDF92", color: "#22c55e" },
   { key: "courier_services", label: "Courier Services", icon: "\uD83D\uDE9A", color: "#60a5fa" },
-  { key: "puppies_wanted", label: "Puppies Wanted", icon: "\uD83D\uDCE2", color: "#e8c86e" },
+  { key: "puppies_wanted", label: "Puppies Wanted", icon: "\uD83D\uDCE2", color: "#1C1C1C" },
 ];
 
 const COUNTRY_MAP: Record<string, string[]> = {
@@ -52,7 +51,7 @@ const COUNTRY_MAP: Record<string, string[]> = {
 /* ─── Main Create Ad Page ─── */
 export default function CreateAdPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen" style={{ background: "var(--bg-primary, #080d18)" }} />}>
+    <Suspense fallback={<div className="min-h-screen" style={{ background: "#FAFAFA" }} />}>
       <CreateAdContent />
     </Suspense>
   );
@@ -274,20 +273,20 @@ function CreateAdContent() {
   // Not logged in state
   if (notLoggedIn) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-6" style={{ background: "var(--bg-deep, #0b1120)" }}>
+      <div className="min-h-screen flex flex-col items-center justify-center gap-6" style={{ background: "#FAFAFA" }}>
         <div className="text-5xl opacity-30">{"\uD83D\uDD12"}</div>
         <h2
           className="text-xl font-black uppercase tracking-widest"
           style={{
             fontFamily: "var(--font-display, Oswald, sans-serif)",
-            background: "linear-gradient(135deg, #e8c86e, #d4a855)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
+            background: "#1C1C1C",
+            
+            
           }}
         >
           Please Log In
         </h2>
-        <p className="text-sm" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+        <p className="text-sm" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
           You need to be logged in to create a marketplace ad.
         </p>
         <div className="flex gap-3">
@@ -295,8 +294,8 @@ function CreateAdContent() {
             href="/login?redirect=/marketplace/create"
             className="px-6 py-2.5 rounded-lg text-xs font-bold transition-all hover:scale-105"
             style={{
-              background: "linear-gradient(135deg, #e8c86e, #b8860b)",
-              color: "#000",
+              background: "#1C1C1C",
+              color: "#FAF7F2",
               fontFamily: "var(--font-table)",
               letterSpacing: "0.04em",
               textTransform: "uppercase",
@@ -308,8 +307,8 @@ function CreateAdContent() {
             href="/marketplace"
             className="px-6 py-2.5 rounded-lg text-xs font-bold transition-all hover:scale-105"
             style={{
-              background: "linear-gradient(135deg, #cbd5e1, #94a3b8)",
-              color: "#000",
+              background: "#C9B29F",
+              color: "#FAF7F2",
               fontFamily: "var(--font-table)",
               letterSpacing: "0.04em",
               textTransform: "uppercase",
@@ -323,20 +322,20 @@ function CreateAdContent() {
   }
 
   const dropzoneStyle: React.CSSProperties = {
-    border: dragOver ? "2px dashed rgba(212,168,85,0.7)" : "2px dashed rgba(212,168,85,0.3)",
-    background: dragOver ? "rgba(212,168,85,0.06)" : "rgba(30,64,120,0.08)",
+    border: dragOver ? "2px dashed #C9B29F" : "2px dashed rgba(201,178,159,0.4)",
+    background: dragOver ? "rgba(201,178,159,0.08)" : "rgba(201,178,159,0.04)",
     borderRadius: "12px",
     padding: "28px 16px",
     textAlign: "center",
     cursor: photos.length >= 5 ? "not-allowed" : "pointer",
     transition: "all 0.2s ease",
-    ...(dragOver ? { boxShadow: "0 0 20px rgba(212,168,85,0.15)" } : {}),
+    
   };
 
   const selectStyle: React.CSSProperties = {
-    background: "rgba(255,255,255,0.04)",
-    border: "1px solid rgba(255,255,255,0.08)",
-    color: "var(--text-primary, #e2e8f0)",
+    background: "#FAFAFA",
+    border: "2px solid #C9B29F",
+    color: "#1C1C1C",
     fontFamily: "var(--font-table)",
     appearance: "none" as const,
     backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235a6a82' d='M2 4l4 4 4-4'/%3E%3C/svg%3E")`,
@@ -347,15 +346,15 @@ function CreateAdContent() {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: "var(--bg-deep, #0b1120)" }}>
+    <div className="min-h-screen" style={{ background: "#FAFAFA" }}>
       <div className="max-w-[700px] mx-auto px-4 md:px-6 py-6">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 mb-4">
-          <Link href="/marketplace" className="text-[10px] font-medium hover:underline" style={{ color: "#e8c86e", fontFamily: "var(--font-table)" }}>
+          <Link href="/marketplace" className="text-[10px] font-medium hover:underline" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
             Marketplace
           </Link>
-          <span style={{ color: "#5a6a82", fontSize: "10px" }}>/</span>
-          <span className="text-[10px] font-medium" style={{ color: "#e8c86e", fontFamily: "var(--font-table)" }}>
+          <span style={{ color: "#6B7280", fontSize: "10px" }}>/</span>
+          <span className="text-[10px] font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
             Create Ad
           </span>
         </div>
@@ -365,14 +364,14 @@ function CreateAdContent() {
           className="text-2xl font-black uppercase tracking-widest mb-1"
           style={{
             fontFamily: "var(--font-display)",
-            background: "linear-gradient(135deg, #d4a855, #f5d994, #d4a855)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
+            background: "#1C1C1C",
+            
+            
           }}
         >
           Create Ad
         </h1>
-        <p className="text-xs mb-6" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+        <p className="text-xs mb-6" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
           Fill in the details below to post your marketplace listing
         </p>
 
@@ -382,21 +381,21 @@ function CreateAdContent() {
             className="rounded-2xl p-5"
             style={{ ...GLASS_BOX }}
           >
-            <label className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+            <label className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
               👤 Listed By
             </label>
             <div
               className="flex items-center gap-3 rounded-lg px-4 py-2.5"
               style={{
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.08)",
+                background: "#FAFAFA",
+                border: "2px solid #C9B29F",
               }}
             >
               <div
                 className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
                 style={{
-                  background: "linear-gradient(135deg, #e8c86e, #b8860b)",
-                  color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)",
+                  background: "#1C1C1C",
+                  color: "#fff", 
                   fontFamily: "var(--font-table)",
                 }}
               >
@@ -404,7 +403,7 @@ function CreateAdContent() {
               </div>
               <span
                 className="text-sm font-bold"
-                style={{ color: "var(--text-primary, #e2e8f0)", fontFamily: "var(--font-table)" }}
+                style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}
               >
                 {user?.username || "Loading..."}
               </span>
@@ -423,7 +422,7 @@ function CreateAdContent() {
             >
               <span className="text-lg">{CATEGORIES.find(c => c.key === category)?.icon}</span>
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-widest block" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+                <span className="text-[10px] font-bold uppercase tracking-widest block" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                   📂 Category
                 </span>
                 <span className="text-sm font-bold" style={{ color: CATEGORIES.find(c => c.key === category)?.color, fontFamily: "var(--font-table)" }}>
@@ -437,7 +436,7 @@ function CreateAdContent() {
                   router.replace("/marketplace/create");
                 }}
                 className="ml-auto text-[10px] px-2.5 py-1 rounded-lg transition-all duration-200 hover:scale-105 hover:brightness-125"
-                style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", color: "#5a6a82", fontFamily: "var(--font-table)" }}
+                style={{ background: "#FAFAFA", border: "1px solid rgba(255,255,255,0.1)", color: "#6B7280", fontFamily: "var(--font-table)" }}
               >
                 Change
               </button>
@@ -451,7 +450,7 @@ function CreateAdContent() {
                 border: errors.category ? "1.5px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
               }}
             >
-              <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+              <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                 📂 Category <span style={{ color: "#ef4444" }}>*</span>
               </label>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -467,10 +466,9 @@ function CreateAdContent() {
                     style={{
                       background: category === cat.key ? `${cat.color}18` : "rgba(255,255,255,0.03)",
                       border: category === cat.key ? `1.5px solid ${cat.color}55` : "1.5px solid rgba(255,255,255,0.06)",
-                      boxShadow: category === cat.key ? `0 0 12px ${cat.color}20` : "none",
                     }}
-                    onMouseEnter={(e) => { if (category !== cat.key) (e.currentTarget.style.boxShadow = `0 0 16px ${cat.color}15`); }}
-                    onMouseLeave={(e) => { if (category !== cat.key) (e.currentTarget.style.boxShadow = "none"); }}
+                    
+                    
                   >
                     <span className="text-lg">{cat.icon}</span>
                     <span
@@ -503,12 +501,12 @@ function CreateAdContent() {
               zIndex: 10,
             }}
           >
-            <label className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+            <label className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
               🐕 Link to Dog {["dogs_for_sale", "stud_service", "litters_for_sale"].includes(category)
                 ? <span className="text-[9px] normal-case tracking-normal font-normal" style={{ color: "#ef4444" }}>(required)</span>
                 : <span className="text-[9px] normal-case tracking-normal font-normal">(optional)</span>}
             </label>
-            <p className="text-[10px] mb-3" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+            <p className="text-[10px] mb-3" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
               Link this ad to a registered pedigree on the platform — the heading will be auto-filled
             </p>
             {errors.dog && (
@@ -521,13 +519,13 @@ function CreateAdContent() {
               <div className="flex items-center gap-2">
                 <div
                   className="flex-1 flex items-center gap-2 rounded-lg px-3 py-2"
-                  style={{ background: "rgba(212,168,85,0.08)", border: "1px solid rgba(212,168,85,0.25)" }}
+                  style={{ background: "rgba(201,178,159,0.1)", border: "2px solid #C9B29F" }}
                 >
                   <span className="text-xs">{"\uD83D\uDC15"}</span>
                   <span className="text-xs font-bold" style={{ color: getDogColor(selectedDogName), fontFamily: "var(--font-table)" }}>
                     {selectedDogName}
                   </span>
-                  <span className="text-[9px]" style={{ color: "#e8c86e", fontFamily: "var(--font-mono)" }}>
+                  <span className="text-[9px]" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
                     ID: {dogId}
                   </span>
                 </div>
@@ -549,7 +547,7 @@ function CreateAdContent() {
             ) : (
               <div className="relative">
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm" style={{ color: "#e8c86e" }}>🔍</span>
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm" style={{ color: "#1C1C1C" }}>🔍</span>
                   <input
                     type="text"
                     value={dogSearchQuery}
@@ -570,7 +568,7 @@ function CreateAdContent() {
                     className="absolute top-full left-0 right-0 mt-1 rounded-lg overflow-hidden z-50 max-h-48 overflow-y-auto"
                     style={{
                       ...GLASS_BOX,
-                      boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
+                      
                     }}
                   >
                     {dogSearchResults.map((dog) => (
@@ -602,7 +600,7 @@ function CreateAdContent() {
                         <span style={{ color: getDogColor(dog.registered_name), fontFamily: "var(--font-table)", fontWeight: 600 }}>
                           {dog.registered_name}
                         </span>
-                        <span className="text-[9px] ml-auto" style={{ color: "#e8c86e", fontFamily: "var(--font-mono)" }}>
+                        <span className="text-[9px] ml-auto" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
                           ID: {dog.dog_id}
                         </span>
                       </button>
@@ -622,7 +620,7 @@ function CreateAdContent() {
             }}
           >
             <div className="flex items-center justify-between mb-2">
-              <label className="text-xs font-bold uppercase tracking-widest" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+              <label className="text-xs font-bold uppercase tracking-widest" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                 ✏️ Heading <span style={{ color: "#ef4444" }}>*</span>
               </label>
               <span
@@ -656,7 +654,7 @@ function CreateAdContent() {
               }}
             />
             {selectedDogName && (
-              <p className="text-[10px] mt-1.5" style={{ color: "#e8c86e", fontFamily: "var(--font-table)" }}>
+              <p className="text-[10px] mt-1.5" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                 Auto-filled from linked dog
               </p>
             )}
@@ -676,7 +674,7 @@ function CreateAdContent() {
             }}
           >
             <div className="flex items-center justify-between mb-2">
-              <label className="text-xs font-bold uppercase tracking-widest" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+              <label className="text-xs font-bold uppercase tracking-widest" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                 📝 Description <span style={{ color: "#ef4444" }}>*</span>
               </label>
               <span
@@ -715,7 +713,7 @@ function CreateAdContent() {
             className="rounded-2xl p-5"
             style={{ ...GLASS_BOX }}
           >
-            <label className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+            <label className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
               💰 Price <span className="text-[9px] normal-case tracking-normal font-normal">(optional)</span>
             </label>
             <div className="relative">
@@ -734,15 +732,15 @@ function CreateAdContent() {
                 step="0.01"
                 className="w-full rounded-lg pl-8 pr-4 py-2.5 text-sm outline-none"
                 style={{
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid rgba(255,255,255,0.08)",
+                  background: "#FAFAFA",
+                  border: "2px solid #C9B29F",
                   color: "#22c55e",
                   fontFamily: "var(--font-mono)",
                   transition: "all 0.2s ease",
                 }}
               />
             </div>
-            <p className="text-[9px] mt-1.5" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+            <p className="text-[9px] mt-1.5" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
               Leave blank to show &ldquo;Contact for Price&rdquo;
             </p>
           </div>
@@ -756,10 +754,10 @@ function CreateAdContent() {
             }}
           >
             <div className="flex items-center justify-between mb-3">
-              <label className="text-xs font-bold uppercase tracking-widest" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+              <label className="text-xs font-bold uppercase tracking-widest" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                 📸 Photos <span style={{ color: "#ef4444" }}>*</span>
               </label>
-              <span className="text-[10px]" style={{ color: "#5a6a82", fontFamily: "var(--font-mono)" }}>
+              <span className="text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-mono)" }}>
                 {photos.length}/5
               </span>
             </div>
@@ -784,9 +782,9 @@ function CreateAdContent() {
                       {isAutoPhoto && (
                         <div
                           className="absolute bottom-0 left-0 right-0 rounded-b-lg px-1 py-0.5 text-center"
-                          style={{ background: "rgba(0,0,0,0.7)", backdropFilter: "blur(4px)" }}
+                          style={{ background: "rgba(0,0,0,0.4)",  }}
                         >
-                          <span className="text-[8px] font-bold" style={{ color: "#e8c86e", fontFamily: "var(--font-table)" }}>
+                          <span className="text-[8px] font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                             Auto
                           </span>
                         </div>
@@ -800,7 +798,6 @@ function CreateAdContent() {
                           style={{
                             background: "rgba(239,68,68,0.9)",
                             color: "#fff",
-                            boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
                           }}
                         >
                           {"\u2715"}
@@ -814,7 +811,7 @@ function CreateAdContent() {
 
             {/* Auto-loaded note */}
             {selectedDogName && photos.length > 0 && (photos[0].includes("online-pedigrees.com") || photos[0].includes("apbt")) && (
-              <p className="text-[10px] mb-3" style={{ color: "#e8c86e", fontFamily: "var(--font-table)" }}>
+              <p className="text-[10px] mb-3" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                 First photo auto-loaded from database — you can add up to {5 - photos.length} more below
               </p>
             )}
@@ -845,17 +842,17 @@ function CreateAdContent() {
                       className="w-6 h-6 rounded-full border-2 border-t-transparent animate-spin"
                       style={{ borderColor: "rgba(212,168,85,0.5)", borderTopColor: "transparent" }}
                     />
-                    <span className="text-xs" style={{ color: "#e8c86e", fontFamily: "var(--font-table)" }}>
+                    <span className="text-xs" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                       Uploading...
                     </span>
                   </div>
                 ) : (
                   <div className="flex flex-col items-center gap-2">
                     <span className="text-2xl opacity-50">{"\uD83D\uDCF7"}</span>
-                    <span className="text-xs font-medium" style={{ color: "#e8c86e", fontFamily: "var(--font-table)" }}>
+                    <span className="text-xs font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                       {selectedDogName ? "Add more photos" : "Drag photos here or click to browse"}
                     </span>
-                    <span className="text-[10px]" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+                    <span className="text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                       JPG, PNG, WebP — Max 5MB each — Up to {5 - photos.length} more
                     </span>
                   </div>
@@ -878,13 +875,13 @@ function CreateAdContent() {
               border: errors.location ? "1.5px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
             }}
           >
-            <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+            <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
               📍 Location <span style={{ color: "#ef4444" }}>*</span>
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {/* Continent */}
               <div>
-                <label className="text-[10px] font-medium uppercase tracking-wider mb-1.5 block" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+                <label className="text-[10px] font-medium uppercase tracking-wider mb-1.5 block" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                   Continent
                 </label>
                 <select
@@ -905,7 +902,7 @@ function CreateAdContent() {
               </div>
               {/* Country */}
               <div>
-                <label className="text-[10px] font-medium uppercase tracking-wider mb-1.5 block" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+                <label className="text-[10px] font-medium uppercase tracking-wider mb-1.5 block" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                   Country
                 </label>
                 <select
@@ -940,10 +937,10 @@ function CreateAdContent() {
               border: errors.contact ? "1.5px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
             }}
           >
-            <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+            <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
               📞 Contact Information <span style={{ color: "#ef4444" }}>*</span>
             </label>
-            <p className="text-[10px] mb-3" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+            <p className="text-[10px] mb-3" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
               Provide at least one contact method
             </p>
             <div className="space-y-3">
@@ -961,9 +958,9 @@ function CreateAdContent() {
                   placeholder="Phone number"
                   className="flex-1 rounded-lg px-3 py-2 text-xs outline-none"
                   style={{
-                    background: "rgba(255,255,255,0.04)",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    color: "var(--text-primary, #e2e8f0)",
+                    background: "#FAFAFA",
+                    border: "2px solid #C9B29F",
+                    color: "#1C1C1C",
                     fontFamily: "var(--font-mono)",
                     transition: "all 0.2s ease",
                   }}
@@ -983,9 +980,9 @@ function CreateAdContent() {
                   placeholder="Email address"
                   className="flex-1 rounded-lg px-3 py-2 text-xs outline-none"
                   style={{
-                    background: "rgba(255,255,255,0.04)",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    color: "var(--text-primary, #e2e8f0)",
+                    background: "#FAFAFA",
+                    border: "2px solid #C9B29F",
+                    color: "#1C1C1C",
                     fontFamily: "var(--font-mono)",
                     transition: "all 0.2s ease",
                   }}
@@ -1005,9 +1002,9 @@ function CreateAdContent() {
                   placeholder="Venmo username"
                   className="flex-1 rounded-lg px-3 py-2 text-xs outline-none"
                   style={{
-                    background: "rgba(255,255,255,0.04)",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    color: "var(--text-primary, #e2e8f0)",
+                    background: "#FAFAFA",
+                    border: "2px solid #C9B29F",
+                    color: "#1C1C1C",
                     fontFamily: "var(--font-mono)",
                     transition: "all 0.2s ease",
                   }}
@@ -1027,9 +1024,9 @@ function CreateAdContent() {
                   placeholder="PayPal email or username"
                   className="flex-1 rounded-lg px-3 py-2 text-xs outline-none"
                   style={{
-                    background: "rgba(255,255,255,0.04)",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    color: "var(--text-primary, #e2e8f0)",
+                    background: "#FAFAFA",
+                    border: "2px solid #C9B29F",
+                    color: "#1C1C1C",
                     fontFamily: "var(--font-mono)",
                     transition: "all 0.2s ease",
                   }}
@@ -1061,10 +1058,9 @@ function CreateAdContent() {
             disabled={submitting}
             className="w-full rounded-xl py-3.5 text-sm font-bold uppercase tracking-widest transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100"
             style={{
-              background: "linear-gradient(135deg, #d4a855, #f5d994, #d4a855)",
-              color: "#000",
+              background: "#1C1C1C",
+              color: "#FAF7F2",
               fontFamily: "var(--font-table)",
-              boxShadow: "0 4px 24px rgba(212,168,85,0.35), 0 0 48px rgba(212,168,85,0.15)",
               letterSpacing: "0.08em",
             }}
           >
@@ -1084,7 +1080,7 @@ function CreateAdContent() {
       </div>
 
       {/* ─── Footer ─── */}
-      <footer className="text-center py-6 mt-4" style={{ borderTop: "1px solid var(--border, rgba(30,64,120,0.3))" }}>
+      <footer className="text-center py-6 mt-4" style={{ borderTop: "2px solid #C9B29F" }}>
         <div className="flex items-center justify-center gap-2 mb-2">
           <img src={LOGO} alt="Logo" className="w-5 h-5 rounded" />
           <span
@@ -1092,19 +1088,19 @@ function CreateAdContent() {
               fontFamily: "var(--font-table)",
               fontWeight: 700,
               fontSize: "12px",
-              background: "linear-gradient(135deg, #e8c86e, #d4a855)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
+              background: "#1C1C1C",
+              
+              
             }}
           >
             Pedigree Platform
           </span>
         </div>
         <div className="flex items-center justify-center gap-4">
-          <Link href="/" className="text-[10px] hover:underline" style={{ color: "#5a6a82" }}>Home</Link>
-          <Link href="/marketplace" className="text-[10px] hover:underline" style={{ color: "#e8c86e" }}>Marketplace</Link>
-          <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "#5a6a82" }}>Privacy</Link>
-          <Link href="/terms" className="text-[10px] hover:underline" style={{ color: "#5a6a82" }}>Terms</Link>
+          <Link href="/" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Home</Link>
+          <Link href="/marketplace" className="text-[10px] hover:underline" style={{ color: "#1C1C1C" }}>Marketplace</Link>
+          <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Privacy</Link>
+          <Link href="/terms" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Terms</Link>
         </div>
       </footer>
 
@@ -1113,25 +1109,24 @@ function CreateAdContent() {
         .rounded-lg select:focus,
         .rounded-lg input:focus,
         .rounded-lg textarea:focus {
-          border-color: rgba(212,168,85,0.4) !important;
-          box-shadow: 0 0 0 2px rgba(212,168,85,0.12), 0 0 12px rgba(212,168,85,0.08);
+          border-color: #C9B29F !important;
         }
         select {
-          color-scheme: dark !important;
-          background-color: #1e1e1e !important;
-          color: #e2e8f0 !important;
-          border-color: rgba(255,255,255,0.08) !important;
+          color-scheme: light !important;
+          background-color: #FAFAFA !important;
+          color: #1C1C1C !important;
+          border-color: #C9B29F !important;
         }
         select option {
-          background-color: #1e1e1e !important;
-          color: #e2e8f0 !important;
+          background-color: #FAF7F2 !important;
+          color: #1C1C1C !important;
           border: none !important;
           padding: 6px 8px;
         }
         select option:hover,
         select option:checked {
-          background-color: #333 !important;
-          color: #e8c86e !important;
+          background-color: #C9B29F !important;
+          color: #1C1C1C !important;
         }
       `}</style>
     </div>

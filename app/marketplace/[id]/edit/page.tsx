@@ -44,7 +44,7 @@ const CATEGORIES = [
   { key: "litters_for_sale", label: "Litters for Sale", icon: "\uD83C\uDF7C", color: "#f472b6" },
   { key: "supplies_gear", label: "Supplies & Gear", icon: "\uD83C\uDF92", color: "#22c55e" },
   { key: "courier_services", label: "Courier Services", icon: "\uD83D\uDE9A", color: "#60a5fa" },
-  { key: "puppies_wanted", label: "Puppies Wanted", icon: "\uD83D\uDCE2", color: "#e8c86e" },
+  { key: "puppies_wanted", label: "Puppies Wanted", icon: "\uD83D\uDCE2", color: "#1C1C1C" },
 ];
 
 const COUNTRY_MAP: Record<string, string[]> = {
@@ -315,8 +315,8 @@ export default function EditAdPage() {
   // Loading state
   if (loadingAd) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--bg-deep, #0b1120)" }}>
-        <div className="flex items-center gap-3" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "#FAFAFA" }}>
+        <div className="flex items-center gap-3" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
           <div
             className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin"
             style={{ borderColor: "#e8c86e", borderTopColor: "transparent" }}
@@ -330,20 +330,20 @@ export default function EditAdPage() {
   // Not logged in state
   if (notLoggedIn) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-6" style={{ background: "var(--bg-deep, #0b1120)" }}>
+      <div className="min-h-screen flex flex-col items-center justify-center gap-6" style={{ background: "#FAFAFA" }}>
         <div className="text-5xl opacity-30">{"\uD83D\uDD12"}</div>
         <h2
           className="text-xl font-black uppercase tracking-widest"
           style={{
             fontFamily: "var(--font-display, Oswald, sans-serif)",
-            background: "linear-gradient(135deg, #e8c86e, #d4a855)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
+            background: "#1C1C1C",
+            
+            
           }}
         >
           Please Log In
         </h2>
-        <p className="text-sm" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+        <p className="text-sm" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
           You need to be logged in to edit a marketplace ad.
         </p>
         <div className="flex gap-3">
@@ -351,8 +351,8 @@ export default function EditAdPage() {
             href="/login"
             className="px-6 py-2.5 rounded-lg text-xs font-bold transition-all hover:scale-105"
             style={{
-              background: "linear-gradient(135deg, #e8c86e, #b8860b)",
-              color: "#000",
+              background: "#1C1C1C",
+              color: "#FAF7F2",
               fontFamily: "var(--font-table)",
               letterSpacing: "0.04em",
               textTransform: "uppercase",
@@ -364,8 +364,8 @@ export default function EditAdPage() {
             href="/marketplace"
             className="px-6 py-2.5 rounded-lg text-xs font-bold transition-all hover:scale-105"
             style={{
-              background: "linear-gradient(135deg, #cbd5e1, #94a3b8)",
-              color: "#000",
+              background: "#C9B29F",
+              color: "#FAF7F2",
               fontFamily: "var(--font-table)",
               letterSpacing: "0.04em",
               textTransform: "uppercase",
@@ -381,28 +381,28 @@ export default function EditAdPage() {
   // Not owner state
   if (notOwner) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-6" style={{ background: "var(--bg-deep, #0b1120)" }}>
+      <div className="min-h-screen flex flex-col items-center justify-center gap-6" style={{ background: "#FAFAFA" }}>
         <div className="text-5xl opacity-30">{"\uD83D\uDEAB"}</div>
         <h2
           className="text-xl font-black uppercase tracking-widest"
           style={{
             fontFamily: "var(--font-display, Oswald, sans-serif)",
-            background: "linear-gradient(135deg, #ef4444, #dc2626)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
+            background: "#ef4444",
+            
+            
           }}
         >
           Access Denied
         </h2>
-        <p className="text-sm" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+        <p className="text-sm" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
           You can only edit your own ads.
         </p>
         <Link
           href="/marketplace"
           className="px-6 py-2.5 rounded-lg text-xs font-bold transition-all hover:scale-105"
           style={{
-            background: "linear-gradient(135deg, #e8c86e, #b8860b)",
-            color: "#000",
+            background: "#1C1C1C",
+            color: "#FAF7F2",
             fontFamily: "var(--font-table)",
             letterSpacing: "0.04em",
             textTransform: "uppercase",
@@ -417,11 +417,11 @@ export default function EditAdPage() {
   // Load error state
   if (loadError) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: "var(--bg-deep, #0b1120)" }}>
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: "#FAFAFA" }}>
         <div className="text-5xl opacity-30">{"\uD83D\uDEAB"}</div>
         <h2
           className="text-lg font-bold"
-          style={{ color: "var(--text-primary, #e2e8f0)", fontFamily: "var(--font-table)" }}
+          style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}
         >
           {loadError}
         </h2>
@@ -429,8 +429,8 @@ export default function EditAdPage() {
           href="/marketplace"
           className="px-5 py-2 rounded-lg text-xs font-bold transition-all hover:scale-105"
           style={{
-            background: "linear-gradient(135deg, #e8c86e, #b8860b)",
-            color: "#000",
+            background: "#1C1C1C",
+            color: "#FAF7F2",
             fontFamily: "var(--font-table)",
           }}
         >
@@ -441,20 +441,20 @@ export default function EditAdPage() {
   }
 
   const dropzoneStyle: React.CSSProperties = {
-    border: dragOver ? "2px dashed rgba(212,168,85,0.7)" : "2px dashed rgba(212,168,85,0.3)",
-    background: dragOver ? "rgba(212,168,85,0.06)" : "rgba(30,64,120,0.08)",
+    border: dragOver ? "2px dashed #C9B29F" : "2px dashed rgba(201,178,159,0.4)",
+    background: dragOver ? "rgba(201,178,159,0.08)" : "rgba(201,178,159,0.04)",
     borderRadius: "12px",
     padding: "28px 16px",
     textAlign: "center",
     cursor: photos.length >= 5 ? "not-allowed" : "pointer",
     transition: "all 0.2s ease",
-    ...(dragOver ? { boxShadow: "0 0 20px rgba(212,168,85,0.15)" } : {}),
+    
   };
 
   const selectStyle: React.CSSProperties = {
-    background: "rgba(30,64,120,0.15)",
-    border: "1px solid rgba(30,64,120,0.3)",
-    color: "var(--text-primary, #e2e8f0)",
+    background: "#FAFAFA",
+    border: "2px solid #C9B29F",
+    color: "#1C1C1C",
     fontFamily: "var(--font-table)",
     appearance: "none" as const,
     backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235a6a82' d='M2 4l4 4 4-4'/%3E%3C/svg%3E")`,
@@ -464,23 +464,23 @@ export default function EditAdPage() {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: "var(--bg-deep, #0b1120)" }}>
+    <div className="min-h-screen" style={{ background: "#FAFAFA" }}>
       <div className="max-w-[700px] mx-auto px-4 md:px-6 py-6">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 mb-4">
-          <Link href="/" className="text-[10px] font-medium hover:underline" style={{ color: "#e8c86e", fontFamily: "var(--font-table)" }}>
+          <Link href="/" className="text-[10px] font-medium hover:underline" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
             Home
           </Link>
-          <span style={{ color: "#5a6a82", fontSize: "10px" }}>/</span>
-          <Link href="/marketplace" className="text-[10px] font-medium hover:underline" style={{ color: "#e8c86e", fontFamily: "var(--font-table)" }}>
+          <span style={{ color: "#6B7280", fontSize: "10px" }}>/</span>
+          <Link href="/marketplace" className="text-[10px] font-medium hover:underline" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
             Marketplace
           </Link>
-          <span style={{ color: "#5a6a82", fontSize: "10px" }}>/</span>
-          <Link href={`/marketplace/${adId}`} className="text-[10px] font-medium hover:underline" style={{ color: "#e8c86e", fontFamily: "var(--font-table)" }}>
+          <span style={{ color: "#6B7280", fontSize: "10px" }}>/</span>
+          <Link href={`/marketplace/${adId}`} className="text-[10px] font-medium hover:underline" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
             Ad #{adId}
           </Link>
-          <span style={{ color: "#5a6a82", fontSize: "10px" }}>/</span>
-          <span className="text-[10px] font-medium" style={{ color: "#e8c86e", fontFamily: "var(--font-table)" }}>
+          <span style={{ color: "#6B7280", fontSize: "10px" }}>/</span>
+          <span className="text-[10px] font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
             Edit
           </span>
         </div>
@@ -490,14 +490,14 @@ export default function EditAdPage() {
           className="text-2xl font-black uppercase tracking-widest mb-1"
           style={{
             fontFamily: "var(--font-display, Oswald, sans-serif)",
-            background: "linear-gradient(135deg, #e8c86e, #d4a855)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
+            background: "#1C1C1C",
+            
+            
           }}
         >
           Edit Ad
         </h1>
-        <p className="text-xs mb-6" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+        <p className="text-xs mb-6" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
           Update your marketplace listing details below
         </p>
 
@@ -506,12 +506,12 @@ export default function EditAdPage() {
           <div
             className="rounded-xl p-5"
             style={{
-              background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+              background: "#FAF7F2",
               border: errors.category ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid rgba(30,64,120,0.3)",
-              backdropFilter: "blur(12px)",
+              
             }}
           >
-            <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+            <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
               Category <span style={{ color: "#ef4444" }}>*</span>
             </label>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -553,19 +553,19 @@ export default function EditAdPage() {
           <div
             className="rounded-xl p-5 relative"
             style={{
-              background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+              background: "#FAF7F2",
               border: errors.dog ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid rgba(30,64,120,0.3)",
-              backdropFilter: "blur(12px)",
+              
               overflow: "visible",
               zIndex: 10,
             }}
           >
-            <label className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+            <label className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
               Link to Dog {["dogs_for_sale", "stud_service", "litters_for_sale"].includes(category)
                 ? <span className="text-[9px] normal-case tracking-normal font-normal" style={{ color: "#ef4444" }}>(required)</span>
                 : <span className="text-[9px] normal-case tracking-normal font-normal">(optional)</span>}
             </label>
-            <p className="text-[10px] mb-3" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+            <p className="text-[10px] mb-3" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
               Link this ad to a registered pedigree on the platform — the heading will be auto-filled
             </p>
             {errors.dog && (
@@ -578,13 +578,13 @@ export default function EditAdPage() {
               <div className="flex items-center gap-2">
                 <div
                   className="flex-1 flex items-center gap-2 rounded-lg px-3 py-2"
-                  style={{ background: "rgba(212,168,85,0.08)", border: "1px solid rgba(212,168,85,0.25)" }}
+                  style={{ background: "rgba(201,178,159,0.1)", border: "2px solid #C9B29F" }}
                 >
                   <span className="text-xs">{"\uD83D\uDC15"}</span>
                   <span className="text-xs font-bold" style={{ color: getDogColor(selectedDogName), fontFamily: "var(--font-table)" }}>
                     {selectedDogName}
                   </span>
-                  <span className="text-[9px]" style={{ color: "#e8c86e", fontFamily: "var(--font-mono)" }}>
+                  <span className="text-[9px]" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
                     ID: {dogId}
                   </span>
                 </div>
@@ -616,9 +616,9 @@ export default function EditAdPage() {
                   placeholder="Search for a dog by name..."
                   className="w-full rounded-lg px-4 py-2.5 text-xs outline-none"
                   style={{
-                    background: "rgba(30,64,120,0.15)",
-                    border: "1px solid rgba(30,64,120,0.3)",
-                    color: "var(--text-primary, #e2e8f0)",
+                    background: "#FAFAFA",
+                    border: "2px solid #C9B29F",
+                    color: "#1C1C1C",
                     fontFamily: "var(--font-table)",
                   }}
                 />
@@ -626,9 +626,9 @@ export default function EditAdPage() {
                   <div
                     className="absolute top-full left-0 right-0 mt-1 rounded-lg overflow-hidden z-50 max-h-48 overflow-y-auto"
                     style={{
-                      background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
-                      border: "1.5px solid rgba(30,64,120,0.5)",
-                      boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
+                      background: "#FAF7F2",
+                      border: "2px solid #C9B29F",
+                      
                     }}
                   >
                     {dogSearchResults.map((dog) => (
@@ -658,7 +658,7 @@ export default function EditAdPage() {
                         <span style={{ color: getDogColor(dog.name), fontFamily: "var(--font-table)", fontWeight: 600 }}>
                           {dog.name}
                         </span>
-                        <span className="text-[9px] ml-auto" style={{ color: "#e8c86e", fontFamily: "var(--font-mono)" }}>
+                        <span className="text-[9px] ml-auto" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
                           {dog.reg_number}
                         </span>
                       </button>
@@ -673,13 +673,13 @@ export default function EditAdPage() {
           <div
             className="rounded-xl p-5"
             style={{
-              background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+              background: "#FAF7F2",
               border: errors.title ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid rgba(30,64,120,0.3)",
-              backdropFilter: "blur(12px)",
+              
             }}
           >
             <div className="flex items-center justify-between mb-2">
-              <label className="text-xs font-bold uppercase tracking-widest" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+              <label className="text-xs font-bold uppercase tracking-widest" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                 Heading <span style={{ color: "#ef4444" }}>*</span>
               </label>
               <span
@@ -712,7 +712,7 @@ export default function EditAdPage() {
               }}
             />
             {selectedDogName && (
-              <p className="text-[10px] mt-1.5" style={{ color: "#e8c86e", fontFamily: "var(--font-table)" }}>
+              <p className="text-[10px] mt-1.5" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                 Auto-filled from linked dog
               </p>
             )}
@@ -727,13 +727,13 @@ export default function EditAdPage() {
           <div
             className="rounded-xl p-5"
             style={{
-              background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+              background: "#FAF7F2",
               border: errors.description ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid rgba(30,64,120,0.3)",
-              backdropFilter: "blur(12px)",
+              
             }}
           >
             <div className="flex items-center justify-between mb-2">
-              <label className="text-xs font-bold uppercase tracking-widest" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+              <label className="text-xs font-bold uppercase tracking-widest" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                 Description <span style={{ color: "#ef4444" }}>*</span>
               </label>
               <span
@@ -757,9 +757,9 @@ export default function EditAdPage() {
               maxLength={500}
               className="w-full rounded-lg px-4 py-2.5 text-sm outline-none resize-none"
               style={{
-                background: "rgba(30,64,120,0.15)",
-                border: "1px solid rgba(30,64,120,0.3)",
-                color: "var(--text-primary, #e2e8f0)",
+                background: "#FAFAFA",
+                border: "2px solid #C9B29F",
+                color: "#1C1C1C",
                 fontFamily: "var(--font-table)",
               }}
             />
@@ -774,12 +774,12 @@ export default function EditAdPage() {
           <div
             className="rounded-xl p-5"
             style={{
-              background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
-              border: "1.5px solid rgba(30,64,120,0.3)",
-              backdropFilter: "blur(12px)",
+              background: "#FAF7F2",
+              border: "2px solid #C9B29F",
+              
             }}
           >
-            <label className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+            <label className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
               Price <span className="text-[9px] normal-case tracking-normal font-normal">(optional)</span>
             </label>
             <div className="relative">
@@ -798,14 +798,14 @@ export default function EditAdPage() {
                 step="0.01"
                 className="w-full rounded-lg pl-8 pr-4 py-2.5 text-sm outline-none"
                 style={{
-                  background: "rgba(30,64,120,0.15)",
-                  border: "1px solid rgba(30,64,120,0.3)",
+                  background: "#FAFAFA",
+                  border: "2px solid #C9B29F",
                   color: "#22c55e",
                   fontFamily: "var(--font-mono)",
                 }}
               />
             </div>
-            <p className="text-[9px] mt-1.5" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+            <p className="text-[9px] mt-1.5" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
               Leave blank to show &ldquo;Contact for Price&rdquo;
             </p>
           </div>
@@ -814,16 +814,16 @@ export default function EditAdPage() {
           <div
             className="rounded-xl p-5"
             style={{
-              background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+              background: "#FAF7F2",
               border: errors.photos ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid rgba(30,64,120,0.3)",
-              backdropFilter: "blur(12px)",
+              
             }}
           >
             <div className="flex items-center justify-between mb-3">
-              <label className="text-xs font-bold uppercase tracking-widest" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+              <label className="text-xs font-bold uppercase tracking-widest" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                 Photos <span style={{ color: "#ef4444" }}>*</span>
               </label>
-              <span className="text-[10px]" style={{ color: "#5a6a82", fontFamily: "var(--font-mono)" }}>
+              <span className="text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-mono)" }}>
                 {photos.length}/5
               </span>
             </div>
@@ -841,7 +841,7 @@ export default function EditAdPage() {
                       src={photo}
                       alt={`Photo ${i + 1}`}
                       className="w-full h-full object-cover rounded-lg"
-                      style={{ border: "1.5px solid rgba(30,64,120,0.3)" }}
+                      style={{ border: "2px solid #C9B29F" }}
                     />
                     <button
                       type="button"
@@ -850,7 +850,6 @@ export default function EditAdPage() {
                       style={{
                         background: "rgba(239,68,68,0.9)",
                         color: "#fff",
-                        boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
                       }}
                     >
                       {"\u2715"}
@@ -886,17 +885,17 @@ export default function EditAdPage() {
                       className="w-6 h-6 rounded-full border-2 border-t-transparent animate-spin"
                       style={{ borderColor: "rgba(212,168,85,0.5)", borderTopColor: "transparent" }}
                     />
-                    <span className="text-xs" style={{ color: "#e8c86e", fontFamily: "var(--font-table)" }}>
+                    <span className="text-xs" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                       Uploading...
                     </span>
                   </div>
                 ) : (
                   <div className="flex flex-col items-center gap-2">
                     <span className="text-2xl opacity-50">{"\uD83D\uDCF7"}</span>
-                    <span className="text-xs font-medium" style={{ color: "#e8c86e", fontFamily: "var(--font-table)" }}>
+                    <span className="text-xs font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                       Drag photos here or click to browse
                     </span>
-                    <span className="text-[10px]" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+                    <span className="text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                       JPG, PNG, WebP — Max 5MB each — Up to {5 - photos.length} more
                     </span>
                   </div>
@@ -915,18 +914,18 @@ export default function EditAdPage() {
           <div
             className="rounded-xl p-5"
             style={{
-              background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+              background: "#FAF7F2",
               border: errors.location ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid rgba(30,64,120,0.3)",
-              backdropFilter: "blur(12px)",
+              
             }}
           >
-            <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+            <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
               Location <span style={{ color: "#ef4444" }}>*</span>
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {/* Continent */}
               <div>
-                <label className="text-[10px] font-medium uppercase tracking-wider mb-1.5 block" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+                <label className="text-[10px] font-medium uppercase tracking-wider mb-1.5 block" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                   Continent
                 </label>
                 <select
@@ -947,7 +946,7 @@ export default function EditAdPage() {
               </div>
               {/* Country */}
               <div>
-                <label className="text-[10px] font-medium uppercase tracking-wider mb-1.5 block" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+                <label className="text-[10px] font-medium uppercase tracking-wider mb-1.5 block" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                   Country
                 </label>
                 <select
@@ -978,15 +977,15 @@ export default function EditAdPage() {
           <div
             className="rounded-xl p-5"
             style={{
-              background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
+              background: "#FAF7F2",
               border: errors.contact ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid rgba(30,64,120,0.3)",
-              backdropFilter: "blur(12px)",
+              
             }}
           >
-            <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+            <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
               Contact Information <span style={{ color: "#ef4444" }}>*</span>
             </label>
-            <p className="text-[10px] mb-3" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+            <p className="text-[10px] mb-3" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
               Provide at least one contact method
             </p>
             <div className="space-y-3">
@@ -1004,9 +1003,9 @@ export default function EditAdPage() {
                   placeholder="Phone number"
                   className="flex-1 rounded-lg px-3 py-2 text-xs outline-none"
                   style={{
-                    background: "rgba(30,64,120,0.15)",
-                    border: "1px solid rgba(30,64,120,0.3)",
-                    color: "var(--text-primary, #e2e8f0)",
+                    background: "#FAFAFA",
+                    border: "2px solid #C9B29F",
+                    color: "#1C1C1C",
                     fontFamily: "var(--font-mono)",
                   }}
                 />
@@ -1025,9 +1024,9 @@ export default function EditAdPage() {
                   placeholder="Email address"
                   className="flex-1 rounded-lg px-3 py-2 text-xs outline-none"
                   style={{
-                    background: "rgba(30,64,120,0.15)",
-                    border: "1px solid rgba(30,64,120,0.3)",
-                    color: "var(--text-primary, #e2e8f0)",
+                    background: "#FAFAFA",
+                    border: "2px solid #C9B29F",
+                    color: "#1C1C1C",
                     fontFamily: "var(--font-mono)",
                   }}
                 />
@@ -1046,9 +1045,9 @@ export default function EditAdPage() {
                   placeholder="Venmo username"
                   className="flex-1 rounded-lg px-3 py-2 text-xs outline-none"
                   style={{
-                    background: "rgba(30,64,120,0.15)",
-                    border: "1px solid rgba(30,64,120,0.3)",
-                    color: "var(--text-primary, #e2e8f0)",
+                    background: "#FAFAFA",
+                    border: "2px solid #C9B29F",
+                    color: "#1C1C1C",
                     fontFamily: "var(--font-mono)",
                   }}
                 />
@@ -1067,9 +1066,9 @@ export default function EditAdPage() {
                   placeholder="PayPal email or username"
                   className="flex-1 rounded-lg px-3 py-2 text-xs outline-none"
                   style={{
-                    background: "rgba(30,64,120,0.15)",
-                    border: "1px solid rgba(30,64,120,0.3)",
-                    color: "var(--text-primary, #e2e8f0)",
+                    background: "#FAFAFA",
+                    border: "2px solid #C9B29F",
+                    color: "#1C1C1C",
                     fontFamily: "var(--font-mono)",
                   }}
                 />
@@ -1100,10 +1099,10 @@ export default function EditAdPage() {
             disabled={submitting}
             className="w-full rounded-xl py-3.5 text-sm font-bold uppercase tracking-widest transition-all hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100"
             style={{
-              background: "linear-gradient(135deg, #e8c86e, #b8860b)",
-              color: "#000",
+              background: "#1C1C1C",
+              color: "#FAF7F2",
               fontFamily: "var(--font-table)",
-              boxShadow: "0 4px 20px rgba(212,168,85,0.25)",
+              
             }}
           >
             {submitting ? (
@@ -1122,7 +1121,7 @@ export default function EditAdPage() {
       </div>
 
       {/* ─── Footer ─── */}
-      <footer className="text-center py-6 mt-4" style={{ borderTop: "1px solid var(--border, rgba(30,64,120,0.3))" }}>
+      <footer className="text-center py-6 mt-4" style={{ borderTop: "2px solid #C9B29F" }}>
         <div className="flex items-center justify-center gap-2 mb-2">
           <img src={LOGO} alt="Logo" className="w-5 h-5 rounded" />
           <span
@@ -1130,31 +1129,30 @@ export default function EditAdPage() {
               fontFamily: "var(--font-table)",
               fontWeight: 700,
               fontSize: "12px",
-              background: "linear-gradient(135deg, #e8c86e, #d4a855)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
+              background: "#1C1C1C",
+              
+              
             }}
           >
             Pedigree Platform
           </span>
         </div>
         <div className="flex items-center justify-center gap-4">
-          <Link href="/" className="text-[10px] hover:underline" style={{ color: "#5a6a82" }}>Home</Link>
-          <Link href="/marketplace" className="text-[10px] hover:underline" style={{ color: "#e8c86e" }}>Marketplace</Link>
-          <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "#5a6a82" }}>Privacy</Link>
-          <Link href="/terms" className="text-[10px] hover:underline" style={{ color: "#5a6a82" }}>Terms</Link>
+          <Link href="/" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Home</Link>
+          <Link href="/marketplace" className="text-[10px] hover:underline" style={{ color: "#1C1C1C" }}>Marketplace</Link>
+          <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Privacy</Link>
+          <Link href="/terms" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Terms</Link>
         </div>
       </footer>
 
       {/* ─── Focus styles for selects ─── */}
       <style jsx global>{`
         .rounded-lg select:focus {
-          border-color: rgba(212,168,85,0.6) !important;
-          box-shadow: 0 0 0 2px rgba(212,168,85,0.15);
+          border-color: #C9B29F !important;
         }
         .rounded-lg select option {
-          background: #0e1828;
-          color: #e2e8f0;
+          background: #FAF7F2;
+          color: #1C1C1C;
         }
       `}</style>
     </div>

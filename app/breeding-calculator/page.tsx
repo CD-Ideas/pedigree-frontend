@@ -77,12 +77,10 @@ const PIE_COLORS = [
 function Card({ children, className = "", style = {} }: { children: React.ReactNode; className?: string; style?: React.CSSProperties }) {
   return (
     <div
-      className={`glow-blue rounded-xl ${className}`}
+      className={`rounded-[10px] ${className}`}
       style={{
-        background: "linear-gradient(180deg, rgba(30,30,30,0.85) 0%, rgba(22,22,22,0.9) 100%)",
-        backdropFilter: "blur(16px)",
-        border: "1.5px solid rgba(255,255,255,0.06)",
-        boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)",
+        background: "#FAF7F2",
+        border: "2px solid #C9B29F",
         ...style,
       }}
     >
@@ -95,7 +93,7 @@ function SectionHeader({ children, color }: { children: React.ReactNode; color?:
   return (
     <p
       className="text-[10px] uppercase tracking-widest font-semibold mb-3"
-      style={{ color: color || "var(--text-muted)", fontFamily: "var(--font-table)" }}
+      style={{ color: color || "#6B7280", fontFamily: "var(--font-table)" }}
     >
       {children}
     </p>
@@ -131,7 +129,7 @@ function TachoGauge({ coi }: { coi: number }) {
           </linearGradient>
         </defs>
         {/* Track */}
-        <path d="M 30 160 A 110 110 0 0 1 250 160" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="18" strokeLinecap="round" />
+        <path d="M 30 160 A 110 110 0 0 1 250 160" fill="none" stroke="#C9B29F" strokeWidth="18" strokeLinecap="round" opacity="0.3" />
         {/* Colored arc */}
         <path d="M 30 160 A 110 110 0 0 1 250 160" fill="none" stroke="url(#gaugeGrad)" strokeWidth="18" strokeLinecap="round" opacity="0.7" />
         {/* Tick marks */}
@@ -145,8 +143,8 @@ function TachoGauge({ coi }: { coi: number }) {
           const ty = 155 + 128 * Math.sin(a);
           return (
             <g key={val}>
-              <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
-              <text x={tx} y={ty} textAnchor="middle" dominantBaseline="middle" fill="var(--accent-gold)" fontSize="9" fontFamily="var(--font-mono)">{val}%</text>
+              <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="#C9B29F" strokeWidth="1.5" />
+              <text x={tx} y={ty} textAnchor="middle" dominantBaseline="middle" fill="#1C1C1C" fontSize="9" fontFamily="var(--font-mono)">{val}%</text>
             </g>
           );
         })}
@@ -154,7 +152,7 @@ function TachoGauge({ coi }: { coi: number }) {
         <g style={{ transform: `rotate(${angle}deg)`, transformOrigin: "140px 155px", transition: "transform 1s cubic-bezier(0.34, 1.56, 0.64, 1)" }}>
           <line x1="140" y1="155" x2="140" y2="60" stroke={color} strokeWidth="3" strokeLinecap="round" />
           <circle cx="140" cy="155" r="8" fill={color} />
-          <circle cx="140" cy="155" r="4" fill="var(--bg-deep)" />
+          <circle cx="140" cy="155" r="4" fill="#FAFAFA" />
         </g>
         {/* Center value */}
         <text x="140" y="140" textAnchor="middle" fill={color} fontSize="32" fontWeight="900" fontFamily="var(--font-mono)">
@@ -163,7 +161,7 @@ function TachoGauge({ coi }: { coi: number }) {
       </svg>
       <div
         className={`text-xs font-bold uppercase tracking-[0.2em] mt-1 ${danger ? "animate-pulse" : ""}`}
-        style={{ color, fontFamily: "var(--font-table)", textShadow: danger ? `0 0 20px ${color}` : "none" }}
+        style={{ color, fontFamily: "var(--font-table)" }}
       >
         {riskLabel(coi)}
       </div>
@@ -244,20 +242,17 @@ function DogSlot({
     ? selected.photo_url.startsWith("http") ? selected.photo_url : `https://www.apbt.online-pedigrees.com/${selected.photo_url}`
     : null;
 
-  const glowClass = label === "Sire" ? "glow-sire" : "glow-dam";
-
   return (
     <div ref={containerRef} className="flex-1 relative">
-      <Card className={glowClass} style={{
-        borderColor: selected ? `${color}60` : undefined,
-        boxShadow: selected ? `0 0 25px ${color}15, 0 2px 20px rgba(0,0,0,0.25)` : undefined,
+      <Card style={{
+        borderColor: selected ? color : "#C9B29F",
       }}>
         {/* Header bar */}
-        <div className="flex items-center gap-2 px-4 py-2.5" style={{ borderBottom: `1px solid ${selected ? `${color}25` : "var(--border)"}` }}>
+        <div className="flex items-center gap-2 px-4 py-2.5" style={{ borderBottom: `2px solid #C9B29F` }}>
           <span className="text-sm" style={{ color }}>{icon}</span>
           <span className="text-[10px] font-semibold uppercase tracking-widest" style={{ color, fontFamily: "var(--font-table)" }}>{label}</span>
           {selected && (
-            <button onClick={clear} className="ml-auto text-[10px] px-2 py-0.5 rounded-md transition-all hover:bg-red-500/10" style={{ color: "#ef4444", background: "rgba(239,68,68,0.06)", border: "1px solid rgba(239,68,68,0.15)" }}>
+            <button onClick={clear} className="ml-auto text-[10px] px-2 py-0.5 rounded-md transition-all hover:bg-red-500/10" style={{ color: "#ef4444", background: "#FAFAFA", border: "2px solid #C9B29F" }}>
               Clear
             </button>
           )}
@@ -266,7 +261,7 @@ function DogSlot({
         <div className="p-4">
           {selected ? (
             <div className="flex items-center gap-3">
-              <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0" style={{ border: `1.5px solid ${color}30`, background: "var(--bg-deep)" }}>
+              <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0" style={{ border: "2px solid #C9B29F", background: "#FAFAFA" }}>
                 {photoSrc ? (
                   <img src={photoSrc} alt="" className="w-full h-full object-cover" />
                 ) : (
@@ -278,7 +273,7 @@ function DogSlot({
                   {selected.registered_name}
                 </p>
                 <p className="text-[10px] mt-0.5" style={{ fontFamily: "var(--font-mono)" }}>
-                  <span style={{ color: "#d4a855" }}>ID </span><span style={{ color: "#d4a855" }}>{selected.dog_id}</span>
+                  <span style={{ color: "#6B7280" }}>ID </span><span style={{ color: "#6B7280" }}>{selected.dog_id}</span>
                 </p>
               </div>
             </div>
@@ -292,9 +287,10 @@ function DogSlot({
                 placeholder={`Search ${label.toLowerCase()} or paste URL...`}
                 className="w-full rounded-lg px-3 py-2.5 text-xs outline-none"
                 style={{
-                  background: "var(--bg-elevated)",
-                  border: "1px solid var(--border)",
-                  color: query && getDogColor(query) !== "#ffffff" ? getDogColor(query) : "var(--text-primary)",
+                  background: "#FAFAFA",
+                  border: "2px solid #C9B29F",
+                  borderRadius: "10px",
+                  color: query && getDogColor(query) !== "#ffffff" ? getDogColor(query) : "#1C1C1C",
                   fontFamily: "var(--font-table)",
                 }}
               />
@@ -302,12 +298,12 @@ function DogSlot({
                 <div className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: `${color}60`, borderTopColor: "transparent" }} />
               )}
               {showDrop && results.length > 0 && (
-                <div className="absolute top-full left-0 right-0 mt-1 rounded-lg overflow-hidden z-50 max-h-64 overflow-y-auto" style={{ background: "var(--bg-elevated)", border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}>
+                <div className="absolute top-full left-0 right-0 mt-1 rounded-[10px] overflow-hidden z-50 max-h-64 overflow-y-auto" style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}>
                   {results.map((dog) => {
                     const src = dog.photo_url ? (dog.photo_url.startsWith("http") ? dog.photo_url : `https://www.apbt.online-pedigrees.com/${dog.photo_url}`) : null;
                     return (
-                      <button key={dog.dog_id} onClick={() => pick(dog)} className="w-full flex items-center gap-2.5 px-3 py-2 text-left transition-all hover:bg-white/5" style={{ borderBottom: "1px solid rgba(40,44,60,0.3)" }}>
-                        <div className="w-6 h-6 rounded-full overflow-hidden flex-shrink-0" style={{ background: "var(--bg-deep)", border: "1px solid var(--border)" }}>
+                      <button key={dog.dog_id} onClick={() => pick(dog)} className="w-full flex items-center gap-2.5 px-3 py-2 text-left transition-all hover:bg-[#F0EBE3]" style={{ borderBottom: "1px solid #C9B29F" }}>
+                        <div className="w-6 h-6 rounded-full overflow-hidden flex-shrink-0" style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}>
                           {src ? <img src={src} alt="" className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-[9px] opacity-20">&#x1f415;</div>}
                         </div>
                         <span className="text-xs font-semibold truncate" style={{ color: getDogColor(dog.registered_name), fontFamily: "var(--font-table)" }}>{dog.registered_name}</span>
@@ -317,7 +313,7 @@ function DogSlot({
                 </div>
               )}
               {showDrop && results.length === 0 && query.length >= 2 && !loading && (
-                <div className="absolute top-full left-0 right-0 mt-1 rounded-lg px-3 py-2.5 text-center text-xs z-50" style={{ background: "var(--bg-elevated)", border: "1.5px solid rgba(30,64,120,0.8)", color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                <div className="absolute top-full left-0 right-0 mt-1 rounded-[10px] px-3 py-2.5 text-center text-xs z-50" style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#6B7280", fontFamily: "var(--font-table)" }}>
                   No dogs found for &ldquo;{query}&rdquo;
                 </div>
               )}
@@ -367,18 +363,18 @@ function DonutChart({ ancestors, hoveredIdx, onHover }: { ancestors: SharedAnces
     <div className="flex flex-col items-center gap-2">
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
         {slices}
-        <circle cx={cx} cy={cy} r={innerR - 2} fill="var(--bg-deep)" stroke="rgba(30,64,120,0.5)" strokeWidth="1" />
-        <text x={cx} y={cy - 6} textAnchor="middle" fill="var(--accent-gold)" fontSize="22" fontWeight="bold" fontFamily="var(--font-table)">
+        <circle cx={cx} cy={cy} r={innerR - 2} fill="#FAFAFA" stroke="#C9B29F" strokeWidth="2" />
+        <text x={cx} y={cy - 6} textAnchor="middle" fill="#1C1C1C" fontSize="22" fontWeight="bold" fontFamily="var(--font-table)">
           {ancestors.length}
         </text>
-        <text x={cx} y={cy + 10} textAnchor="middle" fill="var(--text-muted)" fontSize="8" fontFamily="var(--font-mono)">
+        <text x={cx} y={cy + 10} textAnchor="middle" fill="#6B7280" fontSize="8" fontFamily="var(--font-mono)">
           SHARED
         </text>
       </svg>
       {hovered !== null && ancestors[hovered] && (
-        <div className="text-center px-3 py-1.5 rounded-lg" style={{ background: "var(--bg-elevated)", border: `1px solid ${getDogColor(ancestors[hovered].name)}40` }}>
+        <div className="text-center px-3 py-1.5 rounded-[10px]" style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}>
           <span className="text-xs font-bold" style={{ color: getDogColor(ancestors[hovered].name), fontFamily: "var(--font-table)" }}>{ancestors[hovered].name}</span>
-          <span className="text-[10px] ml-2" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-mono)" }}>{ancestors[hovered].count}x ({((ancestors[hovered].count / total) * 100).toFixed(1)}%)</span>
+          <span className="text-[10px] ml-2" style={{ color: "#6B7280", fontFamily: "var(--font-mono)" }}>{ancestors[hovered].count}x ({((ancestors[hovered].count / total) * 100).toFixed(1)}%)</span>
         </div>
       )}
     </div>
@@ -530,19 +526,11 @@ export default function BreedingCalculatorPage() {
   const bothReady = sire && dam;
 
   return (
-    <div className="min-h-screen" style={{ background: "var(--bg-deep)" }}>
+    <div className="min-h-screen" style={{ background: "#FAFAFA" }}>
       <style>{`
-        .glow-gold:hover { border-color: #d4a855 !important; }
-        .glow-blue:hover { border-color: #60a5fa !important; }
-        .glow-pink:hover { border-color: #f472b6 !important; }
-        .glow-sire:hover { border-color: #60a5fa !important; box-shadow: 0 0 20px rgba(96,165,250,0.15) !important; }
-        .glow-dam:hover { border-color: #f472b6 !important; box-shadow: 0 0 20px rgba(244,114,182,0.15) !important; }
         @keyframes slide-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .animate-slide-up { animation: slide-up 0.5s ease-out forwards; }
-        @keyframes pulse-gold { 0%, 100% { box-shadow: 0 0 15px rgba(212,168,85,0.25); } 50% { box-shadow: 0 0 30px rgba(212,168,85,0.5); } }
-        .breed-btn-ready { animation: pulse-gold 2s ease-in-out infinite; }
       `}</style>
-      <div className="ambient-bg" />
 
       <main className="max-w-7xl mx-auto px-4 md:px-5 py-5">
 
@@ -550,16 +538,12 @@ export default function BreedingCalculatorPage() {
         <div className="text-center mb-6">
           <div className="flex items-center justify-center gap-2 mb-2">
             <span className="text-2xl">&#x1f9ec;</span>
-            <h1 className="font-bold" style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", fontWeight: 700, letterSpacing: "0.02em" }}>
+            <h1 className="font-bold" style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", fontWeight: 700, letterSpacing: "0.02em", color: "#1C1C1C" }}>
               BLOODLINE{" "}
-              <span style={{
-                background: "linear-gradient(135deg, #d4a853, #f5d78e, #d4a853)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}>CALCULATOR</span>
+              <span style={{ color: "#1C1C1C" }}>CALCULATOR</span>
             </h1>
           </div>
-          <p className="text-xs max-w-xl mx-auto" style={{ color: "var(--text-secondary)", fontFamily: "var(--font-table)" }}>
+          <p className="text-xs max-w-xl mx-auto" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
             Know your cross before you make it. Select sire and dam, calculate COI, and analyze shared bloodlines across generations.
           </p>
         </div>
@@ -567,18 +551,18 @@ export default function BreedingCalculatorPage() {
         {/* Dog Selector Controls — card wrapper */}
         <Card className="p-3 md:p-4 mb-4">
           <div className="flex flex-col md:flex-row gap-3 mb-3">
-            <DogSlot label="Sire" color="var(--male-color)" icon="&#x2642;" selected={sire} onSelect={setSire} />
+            <DogSlot label="Sire" color="#1d5bbf" icon="&#x2642;" selected={sire} onSelect={setSire} />
             <div className="hidden md:flex items-center justify-center px-2">
-              <span className="text-xl font-bold" style={{ color: bothReady ? "var(--accent-gold)" : "var(--text-muted)", fontFamily: "var(--font-display)", opacity: bothReady ? 1 : 0.2 }}>&#xd7;</span>
+              <span className="text-xl font-bold" style={{ color: bothReady ? "#1C1C1C" : "#6B7280", fontFamily: "var(--font-display)", opacity: bothReady ? 1 : 0.2 }}>&#xd7;</span>
             </div>
-            <DogSlot label="Dam" color="var(--female-color)" icon="&#x2640;" selected={dam} onSelect={setDam} />
+            <DogSlot label="Dam" color="#9f1239" icon="&#x2640;" selected={dam} onSelect={setDam} />
           </div>
 
           {/* Controls row */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3" style={{ borderTop: "1px solid var(--border)" }}>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3" style={{ borderTop: "2px solid #C9B29F" }}>
             {/* Gen buttons */}
             <div className="flex items-center gap-1.5">
-              <span className="text-xs uppercase tracking-widest font-bold mr-2" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+              <span className="text-xs uppercase tracking-widest font-bold mr-2" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                 Depth:
               </span>
               {[6, 8, 10, 12].map((g) => (
@@ -586,10 +570,10 @@ export default function BreedingCalculatorPage() {
                   className="text-[10px] px-2.5 py-1 rounded-lg font-bold transition-all"
                   style={{
                     fontFamily: "var(--font-table)",
-                    background: genDepth === g ? "rgba(212,168,85,0.25)" : "var(--bg-elevated)",
-                    color: genDepth === g ? "#d4a855" : "#d4a855",
-                    border: genDepth === g ? "1.5px solid rgba(212,168,85,0.6)" : "1px solid rgba(212,168,85,0.2)",
-                    textShadow: genDepth === g ? "0 0 8px rgba(212,168,85,0.4)" : "none",
+                    background: genDepth === g ? "#C9B29F" : "#FAFAFA",
+                    color: genDepth === g ? "#FAFAFA" : "#1C1C1C",
+                    border: "2px solid #C9B29F",
+                    borderRadius: "10px",
                   }}>
                   {g}G
                 </button>
@@ -598,14 +582,13 @@ export default function BreedingCalculatorPage() {
 
             {/* Calculate button */}
             <button onClick={() => calculate()} disabled={!bothReady || calculating}
-              className={`px-8 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all hover:scale-[1.02] disabled:opacity-50 ${bothReady && !calculating ? "breed-btn-ready cursor-pointer" : "cursor-not-allowed"}`}
+              className={`px-8 py-2 rounded-[10px] text-xs font-bold uppercase tracking-wider transition-all hover:scale-[1.02] disabled:opacity-50 ${bothReady && !calculating ? "cursor-pointer" : "cursor-not-allowed"}`}
               style={{
                 fontFamily: "var(--font-table)",
-                background: bothReady && !calculating ? "linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dim))" : "var(--bg-elevated)",
-                color: bothReady && !calculating ? "#000" : "var(--text-muted)",
-                border: bothReady ? "1px solid var(--accent-gold)" : "1px solid var(--border)",
+                background: bothReady && !calculating ? "#C9B29F" : "#FAFAFA",
+                color: bothReady && !calculating ? "#FAFAFA" : "#6B7280",
+                border: "2px solid #C9B29F",
                 letterSpacing: "0.1em",
-                boxShadow: bothReady && !calculating ? "0 4px 20px rgba(212,168,85,0.3)" : "none",
               }}>
               {calculating ? (
                 <span className="flex items-center gap-2">
@@ -617,11 +600,11 @@ export default function BreedingCalculatorPage() {
 
             {/* Half-sib toggle */}
             <label className="flex items-center gap-2 cursor-pointer">
-              <div className="relative inline-block w-8 h-[18px] rounded-full transition-colors" style={{ background: includeHalf ? "var(--accent-gold-glow-strong)" : "rgba(255,255,255,0.06)" }}
+              <div className="relative inline-block w-8 h-[18px] rounded-full transition-colors" style={{ background: includeHalf ? "#C9B29F" : "#E5E7EB" }}
                 onClick={() => setIncludeHalf(!includeHalf)}>
-                <span className="absolute top-[2px] left-[2px] w-[14px] h-[14px] rounded-full transition-transform" style={{ transform: includeHalf ? "translateX(14px)" : "translateX(0)", background: includeHalf ? "var(--accent-gold)" : "var(--text-muted)" }} />
+                <span className="absolute top-[2px] left-[2px] w-[14px] h-[14px] rounded-full transition-transform" style={{ transform: includeHalf ? "translateX(14px)" : "translateX(0)", background: includeHalf ? "#1C1C1C" : "#6B7280" }} />
               </div>
-              <span className="text-[10px] uppercase tracking-widest font-semibold" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>Half-Sib Mode</span>
+              <span className="text-[10px] uppercase tracking-widest font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Half-Sib Mode</span>
             </label>
           </div>
         </Card>
@@ -631,13 +614,13 @@ export default function BreedingCalculatorPage() {
           <div className="text-center py-12">
             <div className="inline-flex flex-col items-center gap-3">
               <div className="relative w-12 h-12">
-                <div className="absolute inset-0 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "var(--accent-gold)", borderTopColor: "transparent" }} />
-                <div className="absolute inset-2 rounded-full border-2 border-b-transparent animate-spin" style={{ borderColor: "var(--male-color)", borderBottomColor: "transparent", animationDirection: "reverse", animationDuration: "0.8s" }} />
+                <div className="absolute inset-0 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} />
+                <div className="absolute inset-2 rounded-full border-2 border-b-transparent animate-spin" style={{ borderColor: "#1d5bbf", borderBottomColor: "transparent", animationDirection: "reverse", animationDuration: "0.8s" }} />
                 <div className="absolute inset-0 flex items-center justify-center text-xl">&#x1f9ec;</div>
               </div>
               <div>
-                <p className="text-sm font-semibold" style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)" }}>Analyzing Pedigrees...</p>
-                <p className="text-xs mt-1" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>Computing COI across {genDepth} generations</p>
+                <p className="text-sm font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Analyzing Pedigrees...</p>
+                <p className="text-xs mt-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>Computing COI across {genDepth} generations</p>
               </div>
             </div>
           </div>
@@ -647,10 +630,10 @@ export default function BreedingCalculatorPage() {
         {!hasResults && !calculating && (
           <div className="text-center py-10">
             <div className="text-4xl mb-3 opacity-30">&#x1f9ec;</div>
-            <h3 className="text-sm font-semibold mb-1.5" style={{ fontFamily: "var(--font-table)", color: "var(--accent-gold)" }}>
+            <h3 className="text-sm font-semibold mb-1.5" style={{ fontFamily: "var(--font-table)", color: "#1C1C1C" }}>
               Select a sire and dam, then hit &quot;Calculate Bloodline&quot;
             </h3>
-            <p className="text-[10px] max-w-md mx-auto" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+            <p className="text-[10px] max-w-md mx-auto" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
               The system will cross-reference both pedigrees, compute the Wright coefficient of inbreeding (COI), detect shared ancestors, and map bloodline composition.
             </p>
           </div>
@@ -663,33 +646,33 @@ export default function BreedingCalculatorPage() {
             {/* Row 1: Tachometer + Risk Assessment */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {/* Gauge Card */}
-              <Card className="p-5 flex flex-col items-center justify-center" style={{ borderColor: "rgba(34,197,94,0.4)", boxShadow: "0 2px 20px rgba(34,197,94,0.08)" }}>
+              <Card className="p-5 flex flex-col items-center justify-center">
                 <SectionHeader color="#22c55e">COI Gauge</SectionHeader>
                 <TachoGauge coi={coi} />
               </Card>
 
               {/* Risk Card */}
-              <Card className="p-5" style={{ borderColor: `${riskColor(coi)}30` }}>
+              <Card className="p-5">
                 <SectionHeader color={riskColor(coi)}>Risk Assessment</SectionHeader>
                 <div className="space-y-3">
-                  <div className="flex justify-between items-center py-2" style={{ borderBottom: "1px solid var(--border)" }}>
-                    <span className="text-xs" style={{ color: "var(--text-secondary)", fontFamily: "var(--font-table)" }}>Coefficient of Inbreeding (COI)</span>
+                  <div className="flex justify-between items-center py-2" style={{ borderBottom: "2px solid #C9B29F" }}>
+                    <span className="text-xs" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>Coefficient of Inbreeding (COI)</span>
                     <span className="text-sm font-bold" style={{ color: riskColor(coi), fontFamily: "var(--font-mono)" }}>{coi.toFixed(2)}%</span>
                   </div>
-                  <div className="flex justify-between items-center py-2" style={{ borderBottom: "1px solid var(--border)" }}>
-                    <span className="text-xs" style={{ color: "var(--text-secondary)", fontFamily: "var(--font-table)" }}>Shared Ancestors</span>
-                    <span className="text-sm font-bold" style={{ color: "var(--text-primary)", fontFamily: "var(--font-mono)" }}>{directShared.length}</span>
+                  <div className="flex justify-between items-center py-2" style={{ borderBottom: "2px solid #C9B29F" }}>
+                    <span className="text-xs" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>Shared Ancestors</span>
+                    <span className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{directShared.length}</span>
                   </div>
                   {topAncestor && topAncestor.sireGens.length > 0 && topAncestor.damGens.length > 0 && (
-                    <div className="flex justify-between items-center py-2" style={{ borderBottom: "1px solid var(--border)" }}>
-                      <span className="text-xs" style={{ color: "var(--text-secondary)", fontFamily: "var(--font-table)" }}>Most Repeated</span>
+                    <div className="flex justify-between items-center py-2" style={{ borderBottom: "2px solid #C9B29F" }}>
+                      <span className="text-xs" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>Most Repeated</span>
                       <span className="text-xs font-bold truncate max-w-[120px] sm:max-w-[200px] text-right" style={{ color: getDogColor(topAncestor.name), fontFamily: "var(--font-table)" }}>
                         {topAncestor.name} ({topAncestor.count}x)
                       </span>
                     </div>
                   )}
                   {/* Verdict */}
-                  <div className="mt-3 rounded-lg px-4 py-3" style={{ background: `${riskColor(coi)}08`, border: `1px solid ${riskColor(coi)}20` }}>
+                  <div className="mt-3 rounded-[10px] px-4 py-3" style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}>
                     <p className="text-xs font-semibold leading-relaxed" style={{ color: riskColor(coi), fontFamily: "var(--font-mono)" }}>
                       {riskVerdict(coi, topAncestor)}
                     </p>
@@ -702,24 +685,24 @@ export default function BreedingCalculatorPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {/* AVK */}
               {avk !== null && (
-                <Card className="p-5" style={{ borderColor: "rgba(34,197,94,0.4)", boxShadow: "0 2px 20px rgba(34,197,94,0.08)" }}>
+                <Card className="p-5">
                   <SectionHeader color={avk > 80 ? "#22c55e" : avk > 60 ? "#eab308" : "#ef4444"}>Ancestor Loss Coefficient (AVK)</SectionHeader>
                   <div className="flex items-end gap-3">
                     <span className="text-3xl font-bold" style={{ color: avk > 80 ? "#22c55e" : avk > 60 ? "#eab308" : "#ef4444", fontFamily: "var(--font-mono)" }}>{avk.toFixed(1)}%</span>
-                    <span className="text-[10px] mb-1.5" style={{ color: "var(--text-secondary)", fontFamily: "var(--font-table)" }}>
+                    <span className="text-[10px] mb-1.5" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                       {avk > 80 ? "High diversity -- wide gene pool" : avk > 60 ? "Moderate -- some repeat ancestors" : "Low diversity -- heavy linebreeding"}
                     </span>
                   </div>
-                  <div className="mt-3 h-2 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.05)" }}>
-                    <div className="h-full rounded-full transition-all duration-1000" style={{ width: `${Math.min(avk, 100)}%`, background: avk > 80 ? "linear-gradient(90deg, #22c55e, #4ade80)" : avk > 60 ? "linear-gradient(90deg, #eab308, #facc15)" : "linear-gradient(90deg, #ef4444, #f87171)" }} />
+                  <div className="mt-3 h-2 rounded-full overflow-hidden" style={{ background: "#E5E7EB" }}>
+                    <div className="h-full rounded-full transition-all duration-1000" style={{ width: `${Math.min(avk, 100)}%`, background: avk > 80 ? "#22c55e" : avk > 60 ? "#eab308" : "#ef4444" }} />
                   </div>
                 </Card>
               )}
 
               {/* Bloodline Radar */}
               {bloodlines.length > 0 && (
-                <Card className="p-5" style={{ borderColor: "rgba(139,92,246,0.4)", boxShadow: "0 2px 20px rgba(139,92,246,0.08)" }}>
-                  <SectionHeader color="#d4a855">Bloodline Radar</SectionHeader>
+                <Card className="p-5">
+                  <SectionHeader color="#6B7280">Bloodline Radar</SectionHeader>
                   <div className="space-y-2.5">
                     {bloodlines.slice(0, 8).map((bl, i) => {
                       const colors = ["#d4a855", "#60a5fa", "#fc8181", "#4ade80", "#f472b6", "#fb923c", "#c084fc", "#22d3ee"];
@@ -730,7 +713,7 @@ export default function BreedingCalculatorPage() {
                             <span className="text-xs font-bold" style={{ color: col, fontFamily: "var(--font-table)" }}>{bl.name}</span>
                             <span className="text-xs font-bold" style={{ color: col, fontFamily: "var(--font-mono)" }}>{bl.pct}%</span>
                           </div>
-                          <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.04)" }}>
+                          <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "#E5E7EB" }}>
                             <div className="h-full rounded-full transition-all duration-1000" style={{ width: `${bl.pct}%`, background: col, opacity: 0.8 }} />
                           </div>
                         </div>
@@ -744,8 +727,8 @@ export default function BreedingCalculatorPage() {
             {/* Row 3: Donut + Shared Ancestors List */}
             <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-4">
               {/* Donut */}
-              <Card className="p-5 flex flex-col items-center" style={{ borderColor: "rgba(212,168,85,0.4)", boxShadow: "0 2px 20px rgba(212,168,85,0.08)" }}>
-                <SectionHeader color="#d4a855">Ancestor Overlap</SectionHeader>
+              <Card className="p-5 flex flex-col items-center">
+                <SectionHeader color="#6B7280">Ancestor Overlap</SectionHeader>
                 {directShared.length > 0 ? <DonutChart ancestors={directShared} hoveredIdx={sharedHover} onHover={(i) => {
                   setSharedHover(i);
                   if (i !== null && sharedListRef.current) {
@@ -754,14 +737,14 @@ export default function BreedingCalculatorPage() {
                   }
                 }} /> : (
                   <div className="flex-1 flex items-center justify-center py-8">
-                    <p className="text-xs" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>No shared blood</p>
+                    <p className="text-xs" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>No shared blood</p>
                   </div>
                 )}
               </Card>
 
               {/* Shared list */}
               <Card className="p-5">
-                <SectionHeader color="#d4a855">Shared Ancestors ({directShared.length})</SectionHeader>
+                <SectionHeader color="#6B7280">Shared Ancestors ({directShared.length})</SectionHeader>
                 <div ref={sharedListRef} className="space-y-1.5 max-h-[320px] sm:max-h-[480px] overflow-y-auto pr-1">
                   {directShared.map((a, i) => {
                     const photoSrc = a.photo ? (a.photo.startsWith("http") ? a.photo : `https://www.apbt.online-pedigrees.com/${a.photo}`) : null;
@@ -771,25 +754,26 @@ export default function BreedingCalculatorPage() {
                         onMouseEnter={() => setSharedHover(i)}
                         onMouseLeave={() => setSharedHover(null)}
                         style={{
-                          border: isHovered ? `1px solid ${getDogColor(a.name)}40` : "1px solid rgba(255,255,255,0.06)",
-                          background: isHovered ? `${getDogColor(a.name)}10` : "rgba(255,255,255,0.02)",
+                          border: isHovered ? `2px solid ${getDogColor(a.name)}` : "2px solid #C9B29F",
+                          background: isHovered ? "#F0EBE3" : "#FAFAFA",
                           transform: isHovered ? "scale(1.01)" : "scale(1)",
+                          borderRadius: "10px",
                         }}>
                         <div className="w-2.5 h-7 rounded-full flex-shrink-0" style={{ background: getDogColor(a.name) }} />
-                        <div className="w-7 h-7 rounded-full overflow-hidden flex-shrink-0" style={{ background: "var(--bg-deep)", border: "1px solid var(--border)" }}>
+                        <div className="w-7 h-7 rounded-full overflow-hidden flex-shrink-0" style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}>
                           {photoSrc ? <img src={photoSrc} alt="" className="w-full h-full object-cover" /> : (
                             <div className="w-full h-full flex items-center justify-center text-[9px] font-bold" style={{ color: getDogColor(a.name) }}>{i + 1}</div>
                           )}
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-xs font-semibold truncate" style={{ color: getDogColor(a.name), fontFamily: "var(--font-table)" }}>{a.name}</p>
-                          <p className="text-[9px] mt-0.5" style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
+                          <p className="text-[9px] mt-0.5" style={{ color: "#6B7280", fontFamily: "var(--font-mono)" }}>
                             Sire: Gen {a.sireGens.join(",")} &middot; Dam: Gen {a.damGens.join(",")}
                           </p>
                         </div>
                         <div className="flex items-center gap-1.5 flex-shrink-0">
                           <span className="text-sm font-bold" style={{ color: getDogColor(a.name), fontFamily: "var(--font-mono)" }}>{a.count}x</span>
-                          <span className="text-[10px] font-bold" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-mono)" }}>
+                          <span className="text-[10px] font-bold" style={{ color: "#6B7280", fontFamily: "var(--font-mono)" }}>
                             ({((a.count / directShared.reduce((s, x) => s + x.count, 0)) * 100).toFixed(1)}%)
                           </span>
                         </div>
@@ -798,7 +782,7 @@ export default function BreedingCalculatorPage() {
                   })}
                   {directShared.length === 0 && (
                     <div className="text-center py-8">
-                      <p className="text-xs" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>No shared ancestors in {genDepth} generations. Clean slate.</p>
+                      <p className="text-xs" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>No shared ancestors in {genDepth} generations. Clean slate.</p>
                     </div>
                   )}
                 </div>

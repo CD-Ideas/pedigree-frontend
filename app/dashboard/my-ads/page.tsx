@@ -29,13 +29,13 @@ const CATEGORIES: Record<string, { label: string; icon: string; color: string }>
   litters_for_sale: { label: "Litters for Sale", icon: "\uD83C\uDF7C", color: "#f472b6" },
   supplies_gear: { label: "Supplies & Gear", icon: "\uD83C\uDF92", color: "#22c55e" },
   courier_services: { label: "Courier Services", icon: "\uD83D\uDE9A", color: "#60a5fa" },
-  puppies_wanted: { label: "Puppies Wanted", icon: "\uD83D\uDCE2", color: "#e8c86e" },
+  puppies_wanted: { label: "Puppies Wanted", icon: "\uD83D\uDCE2", color: "#1C1C1C" },
 };
 
 const STATUS_STYLES: Record<string, { bg: string; color: string; border: string; label: string }> = {
   active: { bg: "rgba(34,197,94,0.12)", color: "#22c55e", border: "rgba(34,197,94,0.3)", label: "Active" },
   pending: { bg: "rgba(234,179,8,0.12)", color: "#eab308", border: "rgba(234,179,8,0.3)", label: "Pending" },
-  expired: { bg: "rgba(148,163,184,0.12)", color: "#94a3b8", border: "rgba(148,163,184,0.3)", label: "Expired" },
+  expired: { bg: "rgba(148,163,184,0.12)", color: "#6B7280", border: "rgba(148,163,184,0.3)", label: "Expired" },
   removed: { bg: "rgba(239,68,68,0.12)", color: "#ef4444", border: "rgba(239,68,68,0.3)", label: "Removed" },
 };
 
@@ -103,13 +103,13 @@ export default function MyAdsPage() {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: "var(--bg-deep, #0b1120)" }}>
+    <div className="min-h-screen" style={{ background: "#FAFAFA" }}>
       {/* ─── Nav ─── */}
       <nav
         className="sticky top-0 z-50 px-4 md:px-6 py-2.5 flex items-center justify-between"
         style={{
           background: "rgba(11,17,32,0.95)",
-          backdropFilter: "blur(20px)",
+          
           borderBottom: "1px solid var(--border, rgba(30,64,120,0.3))",
         }}
       >
@@ -120,9 +120,9 @@ export default function MyAdsPage() {
               fontFamily: "var(--font-table)",
               fontWeight: 700,
               fontSize: "1rem",
-              background: "linear-gradient(135deg, #e8c86e, #d4a855, #b8860b)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
+              color: "#1C1C1C",
+              
+              
             }}
           >
             Pedigree Platform
@@ -140,8 +140,8 @@ export default function MyAdsPage() {
             href="/marketplace/create"
             className="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all hover:scale-105"
             style={{
-              background: "linear-gradient(135deg, #e8c86e, #b8860b)",
-              color: "#000",
+              background: "#1C1C1C",
+              color: "#FAF7F2",
               fontFamily: "var(--font-table)",
             }}
           >
@@ -158,14 +158,14 @@ export default function MyAdsPage() {
               className="text-2xl font-black uppercase tracking-widest"
               style={{
                 fontFamily: "var(--font-display, Oswald, sans-serif)",
-                background: "linear-gradient(135deg, #e8c86e, #d4a855)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
+                background: "#1C1C1C",
+                
+                
               }}
             >
               MY ADS
             </h1>
-            <p className="text-xs mt-1" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+            <p className="text-xs mt-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
               Manage your marketplace listings
             </p>
           </div>
@@ -175,9 +175,9 @@ export default function MyAdsPage() {
             <span
               className="text-[10px] px-3 py-1 rounded-full"
               style={{
-                background: "rgba(212,168,85,0.1)",
-                color: "#e8c86e",
-                border: "1px solid rgba(212,168,85,0.2)",
+                background: "rgba(201,178,159,0.1)",
+                color: "#1C1C1C",
+                border: "2px solid #C9B29F",
                 fontFamily: "var(--font-mono)",
               }}
             >
@@ -187,8 +187,8 @@ export default function MyAdsPage() {
               href="/marketplace/create"
               className="px-4 py-1.5 rounded-lg text-[11px] font-bold transition-all hover:scale-105"
               style={{
-                background: "linear-gradient(135deg, #e8c86e, #b8860b)",
-                color: "#000",
+                background: "#1C1C1C",
+                color: "#FAF7F2",
                 fontFamily: "var(--font-table)",
                 letterSpacing: "0.04em",
                 textTransform: "uppercase",
@@ -202,7 +202,7 @@ export default function MyAdsPage() {
         {/* Ads List */}
         {loading ? (
           <div className="flex items-center justify-center py-16">
-            <div className="flex items-center gap-3" style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>
+            <div className="flex items-center gap-3" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
               <div
                 className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin"
                 style={{ borderColor: "#e8c86e", borderTopColor: "transparent" }}
@@ -215,13 +215,13 @@ export default function MyAdsPage() {
             <div className="text-6xl mb-4 opacity-30">{"\uD83D\uDED2"}</div>
             <h3
               className="text-lg font-bold mb-2"
-              style={{ color: "var(--text-primary, #e2e8f0)", fontFamily: "var(--font-table)" }}
+              style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}
             >
               No ads yet
             </h3>
             <p
               className="text-sm mb-6"
-              style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}
+              style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
             >
               Create your first marketplace listing to start selling or advertising.
             </p>
@@ -229,8 +229,8 @@ export default function MyAdsPage() {
               href="/marketplace/create"
               className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg text-xs font-bold transition-all hover:scale-105"
               style={{
-                background: "linear-gradient(135deg, #e8c86e, #b8860b)",
-                color: "#000",
+                background: "#1C1C1C",
+                color: "#FAF7F2",
                 fontFamily: "var(--font-table)",
                 letterSpacing: "0.04em",
                 textTransform: "uppercase",
@@ -252,9 +252,9 @@ export default function MyAdsPage() {
                   key={ad.id}
                   className="rounded-xl overflow-hidden transition-all duration-300 hover:scale-[1.01]"
                   style={{
-                    background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
-                    border: "1.5px solid rgba(30,64,120,0.3)",
-                    backdropFilter: "blur(12px)",
+                    background: "#FAF7F2",
+                    border: "2px solid #C9B29F",
+                    
                   }}
                 >
                   <div className="flex flex-col sm:flex-row">
@@ -309,7 +309,7 @@ export default function MyAdsPage() {
                           {/* Views */}
                           <span
                             className="text-[10px] flex items-center gap-1 flex-shrink-0"
-                            style={{ color: "#5a6a82", fontFamily: "var(--font-mono)" }}
+                            style={{ color: "#6B7280", fontFamily: "var(--font-mono)" }}
                           >
                             {"\uD83D\uDC41"} {(ad.views || 0).toLocaleString()}
                           </span>
@@ -319,7 +319,7 @@ export default function MyAdsPage() {
                         <Link
                           href={`/marketplace/${ad.id}`}
                           className="text-sm font-bold leading-tight hover:underline transition-colors"
-                          style={{ color: "var(--text-primary, #e2e8f0)", fontFamily: "var(--font-table)" }}
+                          style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}
                         >
                           {ad.title}
                         </Link>
@@ -337,7 +337,7 @@ export default function MyAdsPage() {
 
                       {/* Footer */}
                       <div className="flex items-center justify-between mt-3 pt-3" style={{ borderTop: "1px solid rgba(30,64,120,0.2)" }}>
-                        <span className="text-[10px]" style={{ color: "#5a6a82", fontFamily: "var(--font-mono)" }}>
+                        <span className="text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-mono)" }}>
                           Created {formatDate(ad.created_at)}
                         </span>
 
@@ -346,9 +346,9 @@ export default function MyAdsPage() {
                             href={`/marketplace/${ad.id}`}
                             className="px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all hover:scale-105"
                             style={{
-                              background: "rgba(212,168,85,0.1)",
-                              color: "#e8c86e",
-                              border: "1px solid rgba(212,168,85,0.25)",
+                              background: "rgba(201,178,159,0.1)",
+                              color: "#1C1C1C",
+                              border: "2px solid #C9B29F",
                               fontFamily: "var(--font-table)",
                             }}
                           >
@@ -391,7 +391,7 @@ export default function MyAdsPage() {
       </div>
 
       {/* ─── Footer ─── */}
-      <footer className="text-center py-6 mt-4" style={{ borderTop: "1px solid var(--border, rgba(30,64,120,0.3))" }}>
+      <footer className="text-center py-6 mt-4" style={{ borderTop: "2px solid #C9B29F" }}>
         <div className="flex items-center justify-center gap-2 mb-2">
           <img src={LOGO} alt="Logo" className="w-5 h-5 rounded" />
           <span
@@ -399,20 +399,20 @@ export default function MyAdsPage() {
               fontFamily: "var(--font-table)",
               fontWeight: 700,
               fontSize: "12px",
-              background: "linear-gradient(135deg, #e8c86e, #d4a855)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
+              background: "#1C1C1C",
+              
+              
             }}
           >
             Pedigree Platform
           </span>
         </div>
         <div className="flex items-center justify-center gap-4">
-          <Link href="/" className="text-[10px] hover:underline" style={{ color: "#5a6a82" }}>Home</Link>
-          <Link href="/marketplace" className="text-[10px] hover:underline" style={{ color: "#e8c86e" }}>Marketplace</Link>
-          <Link href="/dashboard/my-ads" className="text-[10px] hover:underline" style={{ color: "#e8c86e" }}>My Ads</Link>
-          <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "#5a6a82" }}>Privacy</Link>
-          <Link href="/terms" className="text-[10px] hover:underline" style={{ color: "#5a6a82" }}>Terms</Link>
+          <Link href="/" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Home</Link>
+          <Link href="/marketplace" className="text-[10px] hover:underline" style={{ color: "#1C1C1C" }}>Marketplace</Link>
+          <Link href="/dashboard/my-ads" className="text-[10px] hover:underline" style={{ color: "#1C1C1C" }}>My Ads</Link>
+          <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Privacy</Link>
+          <Link href="/terms" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Terms</Link>
         </div>
       </footer>
     </div>

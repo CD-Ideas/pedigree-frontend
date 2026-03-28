@@ -21,10 +21,10 @@ interface Dog {
 const LOGO = "https://i.imgur.com/cAvQemZ.png";
 
 const TC: Record<string, string> = {
-  "GR CH": "#fbbf24", CH: "#60a5fa", ROM: "#34d399", POR: "#a78bfa",
-  "1XW": "#f97316", "2XW": "#f97316", "3XW": "#f97316",
-  "4XW": "#ef4444", "5XW": "#ef4444", "6XW": "#ef4444",
-  "1XL": "#fb7185", "2XL": "#fb7185",
+  "GR CH": "#b8860b", CH: "#1d5bbf", ROM: "#16a34a", POR: "#7c3aed",
+  "1XW": "#ea580c", "2XW": "#ea580c", "3XW": "#ea580c",
+  "4XW": "#dc2626", "5XW": "#dc2626", "6XW": "#dc2626",
+  "1XL": "#9f1239", "2XL": "#9f1239",
 };
 
 const TITLE_PATTERNS = ["GR CH", "CH", "ROM", "POR", "1XW", "2XW", "3XW", "4XW", "5XW", "6XW", "1XL", "2XL", "3XL"];
@@ -63,42 +63,38 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
 
   return (
     <Link href={`/pedigree/${dog.id}`}
-      className="group block rounded-lg overflow-hidden transition-all duration-300 hover:-translate-y-1"
+      className="group block overflow-hidden transition-all duration-300 hover:-translate-y-1"
       style={{
-        background: "var(--bg-surface)",
-        border: `1px solid ${hasTitle ? "rgba(212,168,85,0.2)" : "var(--border)"}`,
-        boxShadow: hasTitle ? "0 0 20px rgba(212,168,85,0.04)" : "none",
+        background: "#FAF7F2",
+        border: "2px solid #C9B29F",
+        borderRadius: "10px",
         animation: `cardReveal 0.4s ease both`,
         animationDelay: `${index * 25}ms`,
       }}>
       {/* Photo */}
-      <div className="relative h-36 overflow-hidden">
+      <div className="relative h-36 overflow-hidden" style={{ borderBottom: "2px solid #C9B29F" }}>
         {photoUrl ? (
           <img src={photoUrl} alt={dog.name}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             loading="lazy" />
         ) : (
           <div className="w-full h-full flex items-center justify-center"
-            style={{
-              background: isMale
-                ? "linear-gradient(135deg, #0c1929 0%, #152744 50%, #1a2e4a 100%)"
-                : "linear-gradient(135deg, #29101c 0%, #3d1a2e 50%, #4a2040 100%)",
-            }}>
-            <span className="text-5xl opacity-10 transition-all duration-500 group-hover:opacity-20 group-hover:scale-125"
-              style={{ color: isMale ? "var(--male-color)" : "var(--female-color)" }}>
-              {isMale ? "♂" : "♀"}
+            style={{ background: "#FAFAFA" }}>
+            <span className="text-5xl opacity-20 transition-all duration-500 group-hover:opacity-30 group-hover:scale-125"
+              style={{ color: isMale ? "#1d5bbf" : "#9f1239" }}>
+              {isMale ? "\u2642" : "\u2640"}
             </span>
           </div>
         )}
 
         {/* Sex badge */}
         <div className="absolute top-1.5 right-1.5">
-          <span className="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold backdrop-blur-md"
+          <span className="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold"
             style={{
-              background: isMale ? "rgba(96,165,250,0.85)" : "rgba(244,114,182,0.85)",
-              color: "#000",
+              background: isMale ? "#1d5bbf" : "#9f1239",
+              color: "#fff",
             }}>
-            {isMale ? "♂" : "♀"}
+            {isMale ? "\u2642" : "\u2640"}
           </span>
         </div>
 
@@ -106,10 +102,11 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
         {hasTitle && (
           <div className="absolute top-1.5 left-1.5 flex gap-1 flex-wrap">
             {titles.slice(0, 3).map((t) => (
-              <span key={t} className="text-[8px] font-bold px-1.5 py-0.5 rounded backdrop-blur-md"
+              <span key={t} className="text-[8px] font-bold px-1.5 py-0.5 rounded"
                 style={{
-                  background: "rgba(0,0,0,0.65)",
-                  color: TC[t] || "var(--accent-gold)",
+                  background: "#FAF7F2",
+                  border: "1px solid #C9B29F",
+                  color: TC[t] || "#1C1C1C",
                   fontFamily: "var(--font-table)",
                   letterSpacing: "0.05em",
                 }}>
@@ -118,22 +115,18 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
             ))}
           </div>
         )}
-
-        {/* Bottom gradient */}
-        <div className="absolute inset-x-0 bottom-0 h-12"
-          style={{ background: "linear-gradient(transparent, var(--bg-surface))" }} />
       </div>
 
       {/* Info */}
-      <div className="px-2.5 pb-2.5 -mt-1 relative">
-        <h3 className="text-xs font-bold leading-tight mb-1 line-clamp-2 transition-colors duration-200 group-hover:text-[var(--accent-gold)]"
-          style={{ color: hasTitle ? "var(--accent-gold)" : "var(--text-primary)", fontFamily: "var(--font-table)" }}>
+      <div className="px-2.5 pb-2.5 pt-2 relative">
+        <h3 className="text-xs font-bold leading-tight mb-1 line-clamp-2 transition-colors duration-200"
+          style={{ color: hasTitle ? "#1d5bbf" : "#1C1C1C", fontFamily: "var(--font-table)" }}>
           {dog.name}
         </h3>
 
         {dog.color && (
           <span className="inline-block text-[9px] px-1.5 py-0.5 rounded mb-1.5"
-            style={{ background: "var(--bg-elevated)", color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+            style={{ background: "#FAFAFA", border: "1px solid #C9B29F", color: "#6B7280", fontFamily: "var(--font-table)" }}>
             {dog.color}
           </span>
         )}
@@ -142,24 +135,24 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
         <div className="space-y-0.5">
           {dog.sire_name && (
             <div className="flex items-center gap-1 text-[9px]" style={{ fontFamily: "var(--font-table)" }}>
-              <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: "var(--male-color)" }} />
-              <span className="truncate" style={{ color: "var(--male-color)", opacity: 0.7 }}>{dog.sire_name}</span>
+              <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: "#1d5bbf" }} />
+              <span className="truncate" style={{ color: "#1d5bbf" }}>{dog.sire_name}</span>
             </div>
           )}
           {dog.dam_name && (
             <div className="flex items-center gap-1 text-[9px]" style={{ fontFamily: "var(--font-table)" }}>
-              <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: "var(--female-color)" }} />
-              <span className="truncate" style={{ color: "var(--female-color)", opacity: 0.7 }}>{dog.dam_name}</span>
+              <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: "#9f1239" }} />
+              <span className="truncate" style={{ color: "#9f1239" }}>{dog.dam_name}</span>
             </div>
           )}
         </div>
 
         {/* Footer */}
         <div className="flex items-center justify-between mt-1.5 pt-1 text-[8px]"
-          style={{ borderTop: "1px solid var(--border)", color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>
+          style={{ borderTop: "1px solid #C9B29F", color: "#6B7280", fontFamily: "var(--font-mono)" }}>
           <span>{dog.reg_number}</span>
           <span className="opacity-0 group-hover:opacity-100 transition-opacity text-[9px] font-semibold"
-            style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+            style={{ color: "#1d5bbf", fontFamily: "var(--font-table)" }}>
             View →
           </span>
         </div>
@@ -248,7 +241,7 @@ export default function PublicDogsPage() {
   }, []);
 
   return (
-    <div className="min-h-screen" style={{ background: "var(--bg-deep)" }}>
+    <div className="min-h-screen" style={{ background: "#FAFAFA" }}>
       {/* Keyframe animations */}
       <style>{`
         @keyframes cardReveal {
@@ -259,10 +252,6 @@ export default function PublicDogsPage() {
           0% { background-position: -200% 0; }
           100% { background-position: 200% 0; }
         }
-        @keyframes pulseGlow {
-          0%, 100% { box-shadow: 0 0 20px rgba(212,168,85,0.05); }
-          50% { box-shadow: 0 0 40px rgba(212,168,85,0.12); }
-        }
         @keyframes countUp {
           from { opacity: 0; transform: translateY(8px); }
           to { opacity: 1; transform: translateY(0); }
@@ -271,25 +260,24 @@ export default function PublicDogsPage() {
 
       {/* ─── Nav ─── */}
       <nav className="sticky top-0 z-50 px-4 md:px-6 py-2.5 flex items-center justify-between"
-        style={{ background: "rgba(11,17,32,0.95)", backdropFilter: "blur(20px)", borderBottom: "1px solid var(--border)" }}>
+        style={{ background: "#FAF7F2", borderBottom: "2px solid #C9B29F" }}>
         <Link href="/" className="flex items-center gap-2.5">
           <img src={LOGO} alt="Logo" className="w-7 h-7 rounded-lg" />
           <span style={{
             fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "1rem",
-            background: "linear-gradient(135deg, #e8c86e, #d4a855, #b8860b)",
-            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+            color: "#1C1C1C",
           }}>
             Pedigree Platform
           </span>
         </Link>
         <div className="flex items-center gap-2">
           <Link href="/pedigree" className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all hover:scale-105"
-            style={{ color: "var(--text-secondary)", fontFamily: "var(--font-table)" }}>
+            style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
             Search
           </Link>
           <Link href="/login"
-            className="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all hover:scale-105"
-            style={{ background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#000", fontFamily: "var(--font-table)" }}>
+            className="px-3.5 py-1.5 text-xs font-semibold transition-all hover:scale-105"
+            style={{ background: "#1d5bbf", color: "#fff", fontFamily: "var(--font-table)", borderRadius: "10px" }}>
             Sign In
           </Link>
         </div>
@@ -297,36 +285,32 @@ export default function PublicDogsPage() {
 
       {/* ─── Hero Header ─── */}
       <div className="relative overflow-hidden">
-        {/* Ambient glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[600px] h-[200px] opacity-[0.07]"
-          style={{ background: "radial-gradient(ellipse, rgba(212,168,85,1) 0%, transparent 70%)" }} />
-
         <div className="relative max-w-[1600px] mx-auto px-4 md:px-6 pt-8 pb-5">
           {/* Title row */}
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <Link href="/" className="text-[10px] font-medium hover:underline transition-colors"
-                  style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                  style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                   Home
                 </Link>
-                <span style={{ color: "var(--text-muted)", fontSize: "10px" }}>/</span>
+                <span style={{ color: "#6B7280", fontSize: "10px" }}>/</span>
                 <span className="text-[10px] font-medium"
-                  style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+                  style={{ color: "#1d5bbf", fontFamily: "var(--font-table)" }}>
                   Dogs
                 </span>
               </div>
               <h1 style={{
                 fontFamily: "var(--font-display)", fontWeight: 700,
                 fontSize: "clamp(1.6rem, 4vw, 2.4rem)", lineHeight: 1.1,
-                color: "var(--text-primary)",
+                color: "#1C1C1C",
               }}>
-                Browse <span style={{ color: "var(--accent-gold)" }}>Dogs</span>
+                Browse <span style={{ color: "#1d5bbf" }}>Dogs</span>
               </h1>
               <p className="mt-1.5" style={{
-                fontFamily: "var(--font-table)", fontSize: "13px", color: "var(--text-secondary)",
+                fontFamily: "var(--font-table)", fontSize: "13px", color: "#6B7280",
               }}>
-                Explore <span style={{ color: "var(--accent-gold)", fontWeight: 700, fontFamily: "var(--font-mono)" }}>
+                Explore <span style={{ color: "#1d5bbf", fontWeight: 700, fontFamily: "var(--font-mono)" }}>
                   <AnimatedCount value={total} />
                 </span> registered dogs — filter by sex, color, titles &amp; more
               </p>
@@ -335,13 +319,13 @@ export default function PublicDogsPage() {
             {/* Quick stats */}
             <div className="flex items-center gap-3">
               {[
-                { label: "Total", value: total, color: "var(--accent-gold)" },
+                { label: "Total", value: total, color: "#1d5bbf" },
               ].map((s) => (
                 <div key={s.label} className="text-right">
                   <div className="text-lg font-bold" style={{ color: s.color, fontFamily: "var(--font-mono)" }}>
                     {s.value.toLocaleString()}
                   </div>
-                  <div className="text-[9px] uppercase tracking-wider" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                  <div className="text-[9px] uppercase tracking-wider" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                     {s.label}
                   </div>
                 </div>
@@ -352,13 +336,14 @@ export default function PublicDogsPage() {
           {/* ─── Search Bar ─── */}
           <form onSubmit={handleSearch} className="relative mb-4">
             <div className="flex gap-2">
-              <div className="flex-1 flex items-center rounded-lg overflow-hidden transition-all duration-200"
+              <div className="flex-1 flex items-center overflow-hidden transition-all duration-200"
                 style={{
-                  background: "var(--bg-surface)",
-                  border: "1px solid var(--border)",
+                  background: "#FAF7F2",
+                  border: "2px solid #C9B29F",
+                  borderRadius: "10px",
                 }}>
                 <div className="pl-3.5 pr-2 flex-shrink-0">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" strokeWidth="2.5" strokeLinecap="round">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7280" strokeWidth="2.5" strokeLinecap="round">
                     <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
                   </svg>
                 </div>
@@ -366,18 +351,19 @@ export default function PublicDogsPage() {
                   type="text" value={searchInput} onChange={(e) => setSearchInput(e.target.value)}
                   placeholder="Search by name... press / to focus"
                   className="flex-1 bg-transparent outline-none py-2.5 pr-3"
-                  style={{ fontFamily: "var(--font-table)", fontSize: "13px", color: "var(--text-primary)" }}
+                  style={{ fontFamily: "var(--font-table)", fontSize: "13px", color: "#1C1C1C" }}
                 />
                 {searchInput && (
                   <button type="button" onClick={() => { setSearchInput(""); setSearch(""); setPage(1); }}
-                    className="pr-3 text-xs" style={{ color: "var(--text-muted)" }}>✕</button>
+                    className="pr-3 text-xs" style={{ color: "#6B7280" }}>✕</button>
                 )}
               </div>
               <button type="submit"
-                className="px-5 py-2.5 rounded-lg text-xs font-bold transition-all hover:scale-105 flex-shrink-0"
+                className="px-5 py-2.5 text-xs font-bold transition-all hover:scale-105 flex-shrink-0"
                 style={{
-                  background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#000",
+                  background: "#1d5bbf", color: "#fff",
                   fontFamily: "var(--font-table)", letterSpacing: "0.04em", textTransform: "uppercase",
+                  borderRadius: "10px",
                 }}>
                 Search
               </button>
@@ -387,23 +373,23 @@ export default function PublicDogsPage() {
           {/* ─── Filter Bar ─── */}
           <div className="flex flex-wrap items-center gap-2">
             {/* Sex filter pills */}
-            <div className="flex items-center gap-1 rounded-lg p-0.5" style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)" }}>
+            <div className="flex items-center gap-1 p-0.5" style={{ border: "2px solid #C9B29F", borderRadius: "10px", background: "#FAF7F2" }}>
               {[
                 { label: "All", value: "", icon: "" },
-                { label: "Males", value: "MALE", icon: "♂" },
-                { label: "Females", value: "FEMALE", icon: "♀" },
+                { label: "Males", value: "MALE", icon: "\u2642" },
+                { label: "Females", value: "FEMALE", icon: "\u2640" },
               ].map((f) => (
                 <button key={f.value} onClick={() => { setSexFilter(f.value); setPage(1); }}
                   className="px-3 py-1.5 rounded-md text-[11px] font-semibold transition-all"
                   style={{
                     fontFamily: "var(--font-table)",
                     background: sexFilter === f.value
-                      ? f.value === "MALE" ? "rgba(96,165,250,0.15)" : f.value === "FEMALE" ? "rgba(244,114,182,0.15)" : "rgba(212,168,85,0.12)"
+                      ? f.value === "MALE" ? "rgba(29,91,191,0.12)" : f.value === "FEMALE" ? "rgba(159,18,57,0.12)" : "rgba(29,91,191,0.08)"
                       : "transparent",
                     color: sexFilter === f.value
-                      ? f.value === "MALE" ? "var(--male-color)" : f.value === "FEMALE" ? "var(--female-color)" : "var(--accent-gold)"
-                      : "var(--text-muted)",
-                    border: sexFilter === f.value ? "1px solid transparent" : "1px solid transparent",
+                      ? f.value === "MALE" ? "#1d5bbf" : f.value === "FEMALE" ? "#9f1239" : "#1d5bbf"
+                      : "#6B7280",
+                    border: "1px solid transparent",
                   }}>
                   {f.icon && <span className="mr-1">{f.icon}</span>}{f.label}
                 </button>
@@ -413,14 +399,15 @@ export default function PublicDogsPage() {
             {/* Color filter */}
             <select value={colorFilter}
               onChange={(e) => { setColorFilter(e.target.value); setPage(1); }}
-              className="rounded-lg px-3 py-1.5 text-[11px] font-medium appearance-none cursor-pointer"
+              className="px-3 py-1.5 text-[11px] font-medium appearance-none cursor-pointer"
               style={{
-                background: colorFilter ? "rgba(212,168,85,0.12)" : "var(--bg-surface)",
-                border: "1px solid var(--border)",
-                color: colorFilter ? "var(--accent-gold)" : "var(--text-muted)",
+                background: colorFilter ? "rgba(29,91,191,0.08)" : "#FAF7F2",
+                border: "2px solid #C9B29F",
+                borderRadius: "10px",
+                color: colorFilter ? "#1d5bbf" : "#6B7280",
                 fontFamily: "var(--font-table)",
                 paddingRight: "24px",
-                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%234b5f80'/%3E%3C/svg%3E")`,
+                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236B7280'/%3E%3C/svg%3E")`,
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "right 8px center",
               }}>
@@ -432,29 +419,31 @@ export default function PublicDogsPage() {
 
             {/* Photo filter */}
             <button onClick={() => { setHasPhotoFilter(!hasPhotoFilter); setPage(1); }}
-              className="rounded-lg px-3 py-1.5 text-[11px] font-medium transition-all flex items-center gap-1.5"
+              className="px-3 py-1.5 text-[11px] font-medium transition-all flex items-center gap-1.5"
               style={{
-                background: hasPhotoFilter ? "rgba(212,168,85,0.12)" : "var(--bg-surface)",
-                border: "1px solid var(--border)",
-                color: hasPhotoFilter ? "var(--accent-gold)" : "var(--text-muted)",
+                background: hasPhotoFilter ? "rgba(29,91,191,0.08)" : "#FAF7F2",
+                border: "2px solid #C9B29F",
+                borderRadius: "10px",
+                color: hasPhotoFilter ? "#1d5bbf" : "#6B7280",
                 fontFamily: "var(--font-table)",
               }}>
-              📷 {hasPhotoFilter ? "With Photos ✓" : "Has Photo"}
+              📷 {hasPhotoFilter ? "With Photos \u2713" : "Has Photo"}
             </button>
 
             {/* More filters toggle */}
             <button onClick={() => setShowFilters(!showFilters)}
-              className="rounded-lg px-3 py-1.5 text-[11px] font-medium transition-all relative"
+              className="px-3 py-1.5 text-[11px] font-medium transition-all relative"
               style={{
-                background: showFilters ? "var(--bg-elevated)" : "var(--bg-surface)",
-                border: "1px solid var(--border)",
-                color: showFilters ? "var(--accent-gold)" : "var(--text-muted)",
+                background: showFilters ? "#FAFAFA" : "#FAF7F2",
+                border: "2px solid #C9B29F",
+                borderRadius: "10px",
+                color: showFilters ? "#1d5bbf" : "#6B7280",
                 fontFamily: "var(--font-table)",
               }}>
               ⚙ Sort
               {activeFilters > 0 && (
                 <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-bold"
-                  style={{ background: "var(--accent-gold)", color: "#000" }}>
+                  style={{ background: "#1d5bbf", color: "#fff" }}>
                   {activeFilters}
                 </span>
               )}
@@ -463,8 +452,8 @@ export default function PublicDogsPage() {
             {/* Clear all */}
             {(search || activeFilters > 0) && (
               <button onClick={clearFilters}
-                className="text-[11px] font-medium px-3 py-1.5 rounded-lg transition-all hover:scale-105"
-                style={{ color: "var(--accent-red, #ef4444)", background: "rgba(239,68,68,0.08)", fontFamily: "var(--font-table)" }}>
+                className="text-[11px] font-medium px-3 py-1.5 transition-all hover:scale-105"
+                style={{ color: "#dc2626", background: "rgba(220,38,38,0.06)", fontFamily: "var(--font-table)", border: "2px solid #C9B29F", borderRadius: "10px" }}>
                 ✕ Clear
               </button>
             )}
@@ -472,9 +461,9 @@ export default function PublicDogsPage() {
 
           {/* Sort panel */}
           {showFilters && (
-            <div className="mt-2 p-3 rounded-lg flex flex-wrap items-center gap-2"
-              style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)", animation: "cardReveal 0.2s ease both" }}>
-              <span className="text-[10px] uppercase tracking-wider mr-1" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+            <div className="mt-2 p-3 flex flex-wrap items-center gap-2"
+              style={{ border: "2px solid #C9B29F", borderRadius: "10px", background: "#FAF7F2", animation: "cardReveal 0.2s ease both" }}>
+              <span className="text-[10px] uppercase tracking-wider mr-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                 Sort by:
               </span>
               {[
@@ -490,13 +479,13 @@ export default function PublicDogsPage() {
                   }}
                   className="px-3 py-1.5 rounded-md text-[11px] font-semibold transition-all flex items-center gap-1.5"
                   style={{
-                    background: sort === s.key ? "rgba(212,168,85,0.12)" : "transparent",
-                    color: sort === s.key ? "var(--accent-gold)" : "var(--text-muted)",
-                    border: sort === s.key ? "1px solid rgba(212,168,85,0.2)" : "1px solid transparent",
+                    background: sort === s.key ? "rgba(29,91,191,0.08)" : "transparent",
+                    color: sort === s.key ? "#1d5bbf" : "#6B7280",
+                    border: sort === s.key ? "1px solid #C9B29F" : "1px solid transparent",
                     fontFamily: "var(--font-table)",
                   }}>
                   <span className="opacity-70">{s.icon}</span> {s.label}
-                  {sort === s.key && <span className="ml-0.5">{order === "asc" ? "↑" : "↓"}</span>}
+                  {sort === s.key && <span className="ml-0.5">{order === "asc" ? "\u2191" : "\u2193"}</span>}
                 </button>
               ))}
             </div>
@@ -509,11 +498,11 @@ export default function PublicDogsPage() {
         {/* Results info */}
         {search && !loading && (
           <div className="mb-3 flex items-center gap-2">
-            <span className="text-xs" style={{ color: "var(--text-secondary)", fontFamily: "var(--font-table)" }}>
+            <span className="text-xs" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
               Showing results for
             </span>
             <span className="text-xs font-bold px-2 py-0.5 rounded-md"
-              style={{ background: "rgba(212,168,85,0.1)", color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+              style={{ background: "rgba(29,91,191,0.06)", color: "#1d5bbf", fontFamily: "var(--font-table)" }}>
               &ldquo;{search}&rdquo;
             </span>
           </div>
@@ -526,23 +515,23 @@ export default function PublicDogsPage() {
               /* Skeleton grid for initial load */
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2.5">
                 {Array.from({ length: 18 }).map((_, i) => (
-                  <div key={i} className="rounded-lg overflow-hidden" style={{ border: "1.5px solid rgba(30,64,120,0.8)", boxShadow: "0 2px 20px rgba(0,0,0,0.25)", background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)" }}>
+                  <div key={i} className="overflow-hidden" style={{ border: "2px solid #C9B29F", borderRadius: "10px", background: "#FAF7F2" }}>
                     <div className="h-36" style={{
-                      background: "linear-gradient(90deg, var(--bg-surface) 0%, var(--bg-elevated) 50%, var(--bg-surface) 100%)",
+                      background: "linear-gradient(90deg, #FAF7F2 0%, #FAFAFA 50%, #FAF7F2 100%)",
                       backgroundSize: "200% 100%",
                       animation: "shimmer 1.5s infinite",
                     }} />
                     <div className="p-2.5 space-y-2">
-                      <div className="h-3 rounded" style={{ background: "var(--bg-elevated)", width: "80%" }} />
-                      <div className="h-2 rounded" style={{ background: "var(--bg-elevated)", width: "50%" }} />
+                      <div className="h-3 rounded" style={{ background: "#e5e0d8", width: "80%" }} />
+                      <div className="h-2 rounded" style={{ background: "#e5e0d8", width: "50%" }} />
                     </div>
                   </div>
                 ))}
               </div>
             ) : (
-              <div className="flex items-center justify-center gap-3" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+              <div className="flex items-center justify-center gap-3" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                 <div className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin"
-                  style={{ borderColor: "var(--accent-gold)", borderTopColor: "transparent" }} />
+                  style={{ borderColor: "#1d5bbf", borderTopColor: "transparent" }} />
                 Loading dogs...
               </div>
             )}
@@ -551,15 +540,15 @@ export default function PublicDogsPage() {
           /* Empty state */
           <div className="text-center py-20">
             <div className="text-6xl mb-4 opacity-30">🐕</div>
-            <h3 className="text-lg font-bold mb-2" style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)" }}>
+            <h3 className="text-lg font-bold mb-2" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               No dogs found
             </h3>
-            <p className="text-sm mb-4" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+            <p className="text-sm mb-4" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
               Try adjusting your search or filters
             </p>
             <button onClick={clearFilters}
-              className="px-5 py-2 rounded-lg text-sm font-semibold transition-all hover:scale-105"
-              style={{ background: "rgba(212,168,85,0.1)", color: "var(--accent-gold)", border: "1px solid rgba(212,168,85,0.2)", fontFamily: "var(--font-table)" }}>
+              className="px-5 py-2 text-sm font-semibold transition-all hover:scale-105"
+              style={{ background: "rgba(29,91,191,0.06)", color: "#1d5bbf", border: "2px solid #C9B29F", fontFamily: "var(--font-table)", borderRadius: "10px" }}>
               Clear All Filters
             </button>
           </div>
@@ -577,17 +566,17 @@ export default function PublicDogsPage() {
             {totalPages > 1 && (
               <div className="mt-8 flex flex-col items-center gap-3">
                 {/* Page info */}
-                <div className="text-[11px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
-                  Showing <span style={{ color: "var(--accent-gold)", fontWeight: 700 }}>{((page - 1) * LIMIT) + 1}–{Math.min(page * LIMIT, total)}</span> of{" "}
-                  <span style={{ color: "var(--text-primary)", fontWeight: 600 }}>{total.toLocaleString()}</span> dogs
+                <div className="text-[11px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                  Showing <span style={{ color: "#1d5bbf", fontWeight: 700 }}>{((page - 1) * LIMIT) + 1}–{Math.min(page * LIMIT, total)}</span> of{" "}
+                  <span style={{ color: "#1C1C1C", fontWeight: 600 }}>{total.toLocaleString()}</span> dogs
                 </div>
 
                 {/* Page controls */}
                 <div className="flex items-center gap-1.5">
                   {/* Prev */}
                   <button onClick={() => goToPage(page - 1)} disabled={page === 1}
-                    className="px-3 py-1.5 rounded-lg text-xs font-medium disabled:opacity-20 transition-all hover:scale-105"
-                    style={{ background: "var(--bg-surface)", color: "var(--text-secondary)", border: "1px solid var(--border)", fontFamily: "var(--font-table)" }}>
+                    className="px-3 py-1.5 text-xs font-medium disabled:opacity-20 transition-all hover:scale-105"
+                    style={{ background: "#FAF7F2", color: "#6B7280", border: "2px solid #C9B29F", fontFamily: "var(--font-table)", borderRadius: "10px" }}>
                     ←
                   </button>
 
@@ -605,15 +594,16 @@ export default function PublicDogsPage() {
                     }
                     return pages.map((p, i) =>
                       typeof p === "string" ? (
-                        <span key={`dots-${i}`} className="px-1 text-xs" style={{ color: "var(--text-muted)" }}>…</span>
+                        <span key={`dots-${i}`} className="px-1 text-xs" style={{ color: "#6B7280" }}>…</span>
                       ) : (
                         <button key={p} onClick={() => goToPage(p)}
-                          className="w-8 h-8 rounded-lg text-xs font-bold transition-all hover:scale-105"
+                          className="w-8 h-8 text-xs font-bold transition-all hover:scale-105"
                           style={{
-                            background: page === p ? "linear-gradient(135deg, var(--accent-gold), #b8860b)" : "var(--bg-surface)",
-                            color: page === p ? "#000" : "var(--text-muted)",
-                            border: page === p ? "none" : "1px solid var(--border)",
+                            background: page === p ? "#1d5bbf" : "#FAF7F2",
+                            color: page === p ? "#fff" : "#6B7280",
+                            border: page === p ? "2px solid #1d5bbf" : "2px solid #C9B29F",
                             fontFamily: "var(--font-mono)",
+                            borderRadius: "10px",
                           }}>
                           {p}
                         </button>
@@ -623,8 +613,8 @@ export default function PublicDogsPage() {
 
                   {/* Next */}
                   <button onClick={() => goToPage(page + 1)} disabled={page === totalPages}
-                    className="px-3 py-1.5 rounded-lg text-xs font-medium disabled:opacity-20 transition-all hover:scale-105"
-                    style={{ background: "var(--bg-surface)", color: "var(--text-secondary)", border: "1px solid var(--border)", fontFamily: "var(--font-table)" }}>
+                    className="px-3 py-1.5 text-xs font-medium disabled:opacity-20 transition-all hover:scale-105"
+                    style={{ background: "#FAF7F2", color: "#6B7280", border: "2px solid #C9B29F", fontFamily: "var(--font-table)", borderRadius: "10px" }}>
                     →
                   </button>
                 </div>
@@ -634,26 +624,24 @@ export default function PublicDogsPage() {
         )}
 
         {/* ─── CTA Banner ─── */}
-        <div className="mt-10 rounded-xl p-6 text-center relative overflow-hidden"
+        <div className="mt-10 p-6 text-center relative overflow-hidden"
           style={{
-            background: "linear-gradient(160deg, rgba(212,168,85,0.06), rgba(14,15,20,0.98))",
-            border: "1px solid rgba(212,168,85,0.15)",
-            animation: "pulseGlow 4s ease infinite",
+            background: "#FAF7F2",
+            border: "2px solid #C9B29F",
+            borderRadius: "10px",
           }}>
-          <div className="absolute top-0 left-0 right-0 h-px"
-            style={{ background: "linear-gradient(90deg, transparent, rgba(212,168,85,0.3), transparent)" }} />
-          <h2 style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "1.1rem", color: "var(--text-primary)" }}>
+          <h2 style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "1.1rem", color: "#1C1C1C" }}>
             Want to add your dogs?
           </h2>
-          <p className="mt-1.5 mb-4" style={{ fontFamily: "var(--font-table)", fontSize: "12px", color: "var(--text-muted)" }}>
+          <p className="mt-1.5 mb-4" style={{ fontFamily: "var(--font-table)", fontSize: "12px", color: "#6B7280" }}>
             Create an account to register dogs, build pedigree trees, track litters, and more.
           </p>
           <Link href="/register"
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg text-xs font-bold transition-all hover:scale-105"
+            className="inline-flex items-center gap-2 px-6 py-2.5 text-xs font-bold transition-all hover:scale-105"
             style={{
-              background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#000",
+              background: "#1d5bbf", color: "#fff",
               fontFamily: "var(--font-table)", letterSpacing: "0.04em", textTransform: "uppercase",
-              boxShadow: "0 4px 20px rgba(212,168,85,0.2)",
+              borderRadius: "10px",
             }}>
             Get Started Free →
           </Link>
@@ -661,20 +649,20 @@ export default function PublicDogsPage() {
       </div>
 
       {/* ─── Footer ─── */}
-      <footer className="text-center py-6" style={{ borderTop: "1px solid var(--border)" }}>
+      <footer className="text-center py-6" style={{ borderTop: "2px solid #C9B29F" }}>
         <div className="flex items-center justify-center gap-2 mb-2">
           <img src={LOGO} alt="Logo" className="w-5 h-5 rounded" />
           <span style={{
             fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "12px",
-            background: "linear-gradient(135deg, #e8c86e, #d4a855)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+            color: "#1C1C1C",
           }}>Pedigree Platform</span>
         </div>
         <div className="flex items-center justify-center gap-4">
-          <Link href="/" className="text-[10px] hover:underline" style={{ color: "var(--text-muted)" }}>Home</Link>
-          <Link href="/pedigree" className="text-[10px] hover:underline" style={{ color: "var(--text-muted)" }}>Search</Link>
-          <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "var(--text-muted)" }}>Privacy</Link>
-          <Link href="/terms" className="text-[10px] hover:underline" style={{ color: "var(--text-muted)" }}>Terms</Link>
-          <Link href="/contact" className="text-[10px] hover:underline" style={{ color: "var(--text-muted)" }}>Contact</Link>
+          <Link href="/" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Home</Link>
+          <Link href="/pedigree" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Search</Link>
+          <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Privacy</Link>
+          <Link href="/terms" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Terms</Link>
+          <Link href="/contact" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Contact</Link>
         </div>
       </footer>
     </div>

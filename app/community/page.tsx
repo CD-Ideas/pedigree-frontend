@@ -81,7 +81,7 @@ export default function CommunityPedigreesPage() {
     : pedigrees;
 
   return (
-    <div className="min-h-screen" style={{ background: "var(--bg-deep, #0b1120)" }}>
+    <div className="min-h-screen" style={{ background: "#FAFAFA" }}>
       <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-6 space-y-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -92,15 +92,15 @@ export default function CommunityPedigreesPage() {
                 fontFamily: "var(--font-display, Oswald, sans-serif)",
                 background:
                   "linear-gradient(135deg, #d4a855 0%, #f5d994 50%, #d4a855 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
+                
+                
               }}
             >
               Community Pedigrees
             </h1>
             <p
               className="text-xs mt-1"
-              style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}
+              style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
             >
               Browse pedigrees created by the community
             </p>
@@ -115,15 +115,15 @@ export default function CommunityPedigreesPage() {
               onChange={(e) => setSearch(e.target.value)}
               className="w-full rounded-lg px-4 py-2 text-xs outline-none"
               style={{
-                background: "rgba(30,64,120,0.15)",
+                background: "#FAFAFA",
                 border: "1.5px solid rgba(30,64,120,0.4)",
-                color: "#e2e8f0",
+                color: "#1C1C1C",
                 fontFamily: "var(--font-table)",
               }}
             />
             <span
               className="absolute right-3 top-1/2 -translate-y-1/2 text-sm"
-              style={{ color: "#5a6a82" }}
+              style={{ color: "#6B7280" }}
             >
               🔍
             </span>
@@ -135,9 +135,9 @@ export default function CommunityPedigreesPage() {
           <span
             className="text-[10px] px-3 py-1 rounded-full"
             style={{
-              background: "rgba(212,168,85,0.1)",
-              color: "#d4a855",
-              border: "1px solid rgba(212,168,85,0.2)",
+              background: "rgba(201,178,159,0.1)",
+              color: "#1C1C1C",
+              border: "2px solid #C9B29F",
               fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
             }}
           >
@@ -164,14 +164,14 @@ export default function CommunityPedigreesPage() {
             <div
               className="flex items-center gap-3"
               style={{
-                color: "var(--text-muted)",
+                color: "#6B7280",
                 fontFamily: "var(--font-table)",
               }}
             >
               <div
                 className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin"
                 style={{
-                  borderColor: "var(--accent-gold)",
+                  borderColor: "#C9B29F",
                   borderTopColor: "transparent",
                 }}
               />
@@ -183,7 +183,7 @@ export default function CommunityPedigreesPage() {
             <div className="text-5xl mb-4 opacity-30">🐕</div>
             <p
               className="text-sm"
-              style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}
+              style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
             >
               {search.trim()
                 ? "No pedigrees match your search"
@@ -204,7 +204,7 @@ export default function CommunityPedigreesPage() {
                   href={`/pedigree/custom/${p.id}`}
                   className="rounded-xl overflow-hidden transition-all hover:scale-[1.02] hover:shadow-lg group"
                   style={{
-                    background: `linear-gradient(135deg, ${titleColor}10, ${titleColor}05, #0b1120)`,
+                    background: `linear-gradient(135deg, ${titleColor}10, ${titleColor}05, #FAFAFA)`,
                     border: `1.5px solid ${titleColor}33`,
                   }}
                 >
@@ -230,14 +230,14 @@ export default function CommunityPedigreesPage() {
                     <div
                       className="absolute top-2 right-2 flex items-center gap-1 px-2 py-0.5 rounded-full"
                       style={{
-                        background: "rgba(0,0,0,0.5)",
+                        background: "rgba(250,247,242,0.9)",
                         border: "1px solid rgba(255,255,255,0.1)",
                       }}
                     >
                       <span
                         className="text-[9px]"
                         style={{
-                          color: "#d4a855",
+                          color: "#1C1C1C",
                           fontFamily: "var(--font-mono)",
                         }}
                       >
@@ -275,7 +275,7 @@ export default function CommunityPedigreesPage() {
                       >
                         {displayName}
                       </p>
-                      <p className="text-[10px]" style={{ color: "#5a6a82" }}>
+                      <p className="text-[10px]" style={{ color: "#6B7280" }}>
                         <span
                           style={{ color: isMale ? "#60a5fa" : "#f472b6" }}
                         >
@@ -293,7 +293,7 @@ export default function CommunityPedigreesPage() {
                       <span
                         className="text-[10px]"
                         style={{
-                          color: "#5a6a82",
+                          color: "#6B7280",
                           fontFamily: "var(--font-table)",
                         }}
                       >
@@ -302,12 +302,12 @@ export default function CommunityPedigreesPage() {
                       <span
                         className="text-[10px]"
                         style={{
-                          color: "#5a6a82",
+                          color: "#6B7280",
                           fontFamily: "var(--font-mono)",
                         }}
                       >
                         ID:{" "}
-                        <span style={{ color: "#d4a855" }}>{p.id}</span>
+                        <span style={{ color: "#1C1C1C" }}>{p.id}</span>
                       </span>
                     </div>
 
@@ -317,9 +317,9 @@ export default function CommunityPedigreesPage() {
                         <span
                           className="text-[9px] px-1.5 py-0.5 rounded-full"
                           style={{
-                            background: "rgba(212,168,85,0.1)",
-                            color: "#d4a855",
-                            border: "1px solid rgba(212,168,85,0.2)",
+                            background: "rgba(201,178,159,0.1)",
+                            color: "#1C1C1C",
+                            border: "2px solid #C9B29F",
                             fontFamily: "var(--font-table)",
                           }}
                         >
@@ -346,9 +346,9 @@ export default function CommunityPedigreesPage() {
                       <span
                         className="text-[10px] px-2 py-1 rounded-lg font-semibold transition-all group-hover:scale-105"
                         style={{
-                          background: "rgba(212,168,85,0.12)",
-                          color: "#d4a855",
-                          border: "1px solid rgba(212,168,85,0.3)",
+                          background: "rgba(201,178,159,0.1)",
+                          color: "#1C1C1C",
+                          border: "2px solid #C9B29F",
                           fontFamily: "var(--font-table)",
                         }}
                       >
