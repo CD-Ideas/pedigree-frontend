@@ -201,10 +201,11 @@ export default function CommunityPedigreesPage() {
                 <Link
                   key={p.id}
                   href={`/pedigree/custom/${p.id}`}
-                  className="rounded-xl overflow-hidden transition-all hover:scale-[1.02] hover:shadow-lg group"
+                  className="rounded-xl overflow-hidden transition-all hover:scale-[1.02] group"
                   style={{
-                    background: `linear-gradient(135deg, ${titleColor}10, ${titleColor}05, #FAFAFA)`,
-                    border: `1.5px solid ${titleColor}33`,
+                    background: "#FAF7F2",
+                    border: "2px solid #C9B29F",
+                    borderRadius: "10px",
                   }}
                 >
                   {/* Photo header */}
@@ -213,9 +214,7 @@ export default function CommunityPedigreesPage() {
                     style={{
                       background: p.photo_path
                         ? `url(${p.photo_path}) center/cover`
-                        : isMale
-                        ? "#1d5bbf"
-                        : "#9f1239",
+                        : `${titleColor}15`,
                     }}
                   >
                     <div
@@ -248,8 +247,8 @@ export default function CommunityPedigreesPage() {
                       <div
                         className="absolute top-2 left-2 flex items-center gap-1 px-2 py-0.5 rounded-full"
                         style={{
-                          background: "rgba(96,165,250,0.15)",
-                          border: "1px solid rgba(96,165,250,0.3)",
+                          background: "rgba(201,178,159,0.15)",
+                          border: "1px solid #C9B29F",
                         }}
                       >
                         <span
