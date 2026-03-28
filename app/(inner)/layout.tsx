@@ -24,11 +24,11 @@ export default function InnerLayout({
 
   if (!checked) {
     return (
-      <div className="flex items-center justify-center py-32">
-        <div className="flex items-center gap-3" style={{ color: "var(--text-muted)" }}>
+      <div className="flex items-center justify-center py-32" style={{ background: "#EDE4D5" }}>
+        <div className="flex items-center gap-3" style={{ color: "#6B7280" }}>
           <div
             className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin"
-            style={{ borderColor: "var(--accent-gold)", borderTopColor: "transparent" }}
+            style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }}
           />
           Loading...
         </div>
@@ -39,7 +39,7 @@ export default function InnerLayout({
   if (!authed) return null;
 
   return (
-    <div className="max-w-[1600px] mx-auto px-6 py-8">
+    <div className="max-w-[1600px] mx-auto px-4 md:px-6 py-4 space-y-3">
       {children}
     </div>
   );

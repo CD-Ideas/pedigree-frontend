@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Particles from "./Particles";
 import NavBar from "./NavBar";
 import HeartbeatTracker from "./HeartbeatTracker";
 
@@ -22,11 +21,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className="grain vignette antialiased">
-        <div className="ambient-bg">
-          <Particles />
-        </div>
+    <html lang="en">
+      <body className="antialiased">
         <NavBar />
         <HeartbeatTracker />
         <main className="relative z-10">

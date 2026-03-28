@@ -54,12 +54,10 @@ function NavSearch() {
   return (
     <div ref={containerRef} className="relative">
       <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl transition-all duration-300 focus-within:scale-[1.02]" style={{
-        background: "linear-gradient(135deg, rgba(30,64,120,0.25), rgba(20,40,80,0.15))",
-        border: "1.5px solid rgba(96,165,250,0.3)",
-        boxShadow: "0 0 15px rgba(96,165,250,0.08), inset 0 1px 0 rgba(255,255,255,0.05)",
-        backdropFilter: "blur(10px)",
+        background: "#FAFAFA",
+        border: "2px solid #C9B29F",
       }}>
-        <span className="text-sm" style={{ filter: "drop-shadow(0 0 4px rgba(96,165,250,0.5))" }}>🔍</span>
+        <span className="text-sm">🔍</span>
         <input
           type="text"
           value={q}
@@ -67,7 +65,7 @@ function NavSearch() {
           onFocus={() => (results.length > 0 || suggestions.length > 0) && setShow(true)}
           placeholder="Search dog or paste URL..."
           className="flex-1 bg-transparent text-xs outline-none"
-          style={{ color: q && getDogColor(q) !== "#ffffff" ? getDogColor(q) : "var(--text-primary, #e2e8f0)", fontFamily: "var(--font-table, Rajdhani, sans-serif)", minWidth: 0 }}
+          style={{ color: q && getDogColor(q) !== "#ffffff" ? getDogColor(q) : "#1C1C1C", fontFamily: "var(--font-table, system-ui, sans-serif)", minWidth: 0 }}
         />
         {q && <button onClick={() => { setQ(""); setResults([]); setSuggestions([]); setShow(false); }} className="text-[10px] opacity-50 hover:opacity-100">✕</button>}
       </div>
@@ -75,11 +73,10 @@ function NavSearch() {
         <div
           className="absolute top-full mt-1 left-0 right-0 rounded-lg overflow-hidden z-[100]"
           style={{
-            background: "var(--bg-elevated, #151d2e)",
-            border: "1px solid rgba(30,64,120,0.8)",
+            background: "#FAFAFA",
+            border: "2px solid #C9B29F",
             maxHeight: 300,
             overflowY: "auto",
-            boxShadow: "0 15px 50px rgba(0,0,0,0.5)",
           }}
         >
           {results.map((r) => {
@@ -90,14 +87,14 @@ function NavSearch() {
               <a
                 key={r.dog_id}
                 href={`/pedigree/${r.dog_id}`}
-                className="flex items-center gap-2 px-3 py-2 transition-all hover:bg-white/5 text-xs"
-                style={{ borderBottom: "1px solid rgba(40,44,60,0.3)" }}
+                className="flex items-center gap-2 px-3 py-2 transition-all hover:bg-[#C9B29F]/10 text-xs"
+                style={{ borderBottom: "1px solid #C9B29F" }}
               >
                 {photoSrc ? (
-                  <img src={photoSrc} alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "1px solid var(--border, rgba(30,64,120,0.5))" }} />
+                  <img src={photoSrc} alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "1px solid #C9B29F" }} />
                 ) : (
                   <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-[10px]"
-                       style={{ background: "var(--bg-deep, #0b1120)", border: "1px solid var(--border, rgba(30,64,120,0.5))" }}>🐕</div>
+                       style={{ background: "#FAFAFA", border: "1px solid #C9B29F" }}>🐕</div>
                 )}
                 <span className="font-semibold truncate" style={{ color: getDogColor(r.registered_name), fontFamily: "var(--font-table)" }}>
                   {r.registered_name}
@@ -108,7 +105,7 @@ function NavSearch() {
           {results.length === 0 && suggestions.length > 0 && (
             <>
               <div className="px-3 py-2 text-[10px] uppercase tracking-wider font-semibold"
-                style={{ color: "var(--accent-gold, #d4a855)", fontFamily: "var(--font-table)", borderBottom: "1px solid rgba(212,168,85,0.15)", background: "rgba(212,168,85,0.05)" }}>
+                style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", borderBottom: "1px solid #C9B29F", background: "rgba(201,178,159,0.1)" }}>
                 Similar names
               </div>
               {suggestions.map((r) => {
@@ -119,14 +116,14 @@ function NavSearch() {
                   <a
                     key={r.dog_id}
                     href={`/pedigree/${r.dog_id}`}
-                    className="flex items-center gap-2 px-3 py-2 transition-all hover:bg-white/5 text-xs"
-                    style={{ borderBottom: "1px solid rgba(40,44,60,0.3)" }}
+                    className="flex items-center gap-2 px-3 py-2 transition-all hover:bg-[#C9B29F]/10 text-xs"
+                    style={{ borderBottom: "1px solid #C9B29F" }}
                   >
                     {photoSrc ? (
-                      <img src={photoSrc} alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "1px solid var(--border, rgba(30,64,120,0.5))" }} />
+                      <img src={photoSrc} alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "1px solid #C9B29F" }} />
                     ) : (
                       <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-[10px]"
-                           style={{ background: "var(--bg-deep, #0b1120)", border: "1px solid var(--border, rgba(30,64,120,0.5))" }}>🐕</div>
+                           style={{ background: "#FAFAFA", border: "1px solid #C9B29F" }}>🐕</div>
                     )}
                     <span className="font-semibold truncate" style={{ color: getDogColor(r.registered_name), fontFamily: "var(--font-table)" }}>
                       {r.registered_name}
@@ -345,9 +342,8 @@ export default function NavBar() {
   return (
     <nav
       style={{
-        background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
-        borderBottom: "1.5px solid rgba(30,64,120,0.8)",
-        backdropFilter: "blur(20px)",
+        background: "#1C1C1C",
+        borderBottom: "2px solid #C9B29F",
       }}
       className="sticky top-0 z-50 overflow-visible"
     >
@@ -359,9 +355,7 @@ export default function NavBar() {
               fontFamily: "var(--font-display)",
               fontWeight: 700,
               fontSize: "1.25rem",
-              background: "linear-gradient(135deg, #e8c86e, #d4a855, #b8860b)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
+              color: "#FAF7F2",
               letterSpacing: "0.02em",
             }}
           >
@@ -387,12 +381,12 @@ export default function NavBar() {
                 router.push("/dashboard");
               }
             }}
-            className="ml-4 flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold transition-all hover:scale-[1.02]"
+            className="ml-4 flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold transition-all"
             style={{
-              color: "var(--accent-gold, #d4a855)",
-              fontFamily: "var(--font-table, Rajdhani, sans-serif)",
-              background: "rgba(212,168,85,0.06)",
-              border: "1px solid rgba(212,168,85,0.15)",
+              color: "#1C1C1C",
+              fontFamily: "var(--font-table, system-ui, sans-serif)",
+              background: "rgba(201,178,159,0.15)",
+              border: "1px solid #C9B29F",
             }}
           >
             ← Back
@@ -413,33 +407,31 @@ export default function NavBar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${isHome || link.label === "Dashboard" ? "hover:scale-[1.03]" : "transition-colors"}`}
+                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all`}
                 style={isHome ? {
-                  background: "linear-gradient(135deg, #e8e8e8, #b0b0b0, #d8d8d8, #a0a0a0)",
-                  color: "#000",
+                  background: isActive ? "#C9B29F" : "transparent",
+                  color: isActive ? "#1C1C1C" : "#FAF7F2",
                   fontFamily: "var(--font-table)",
                   fontWeight: 600,
                   fontSize: "0.75rem",
                   letterSpacing: "0.05em",
                   textTransform: "uppercase" as const,
-                  boxShadow: "0 2px 10px rgba(200,200,200,0.15), inset 0 1px 0 rgba(255,255,255,0.4)",
-                  border: "1px solid rgba(200,200,200,0.3)",
+                  border: "1px solid #C9B29F",
                 } : link.label === "Dashboard" ? {
-                  background: "linear-gradient(135deg, #e8c86e, #b8860b, #d4a855, #9a7209)",
-                  color: "#000",
+                  background: "#C9B29F",
+                  color: "#1C1C1C",
                   fontFamily: "var(--font-table)",
                   fontWeight: 600,
                   fontSize: "0.75rem",
                   letterSpacing: "0.05em",
                   textTransform: "uppercase" as const,
-                  boxShadow: "0 2px 10px rgba(212,168,85,0.2), inset 0 1px 0 rgba(255,255,255,0.3)",
-                  border: "1px solid rgba(212,168,85,0.4)",
+                  border: "1px solid #C9B29F",
                 } : {
                   color: isActive
-                    ? "var(--accent-gold)"
-                    : "var(--text-secondary)",
+                    ? "#1C1C1C"
+                    : "#FAF7F2",
                   background: isActive
-                    ? "rgba(212,168,85,0.08)"
+                    ? "#C9B29F"
                     : "transparent",
                 }}
               >
@@ -453,24 +445,22 @@ export default function NavBar() {
             <div className="relative" style={{ order: -1 }}>
               <button
                 onClick={() => { setShowNotifications(!showNotifications); setDropdownOpen(false); }}
-                className="relative px-2.5 py-1.5 rounded-lg transition-all hover:scale-[1.03]"
+                className="relative px-2.5 py-1.5 rounded-lg transition-all"
                 style={{
-                  background: "linear-gradient(135deg, #e8e8e8, #b0b0b0, #d8d8d8, #a0a0a0)",
-                  boxShadow: showNotifications ? "0 2px 12px rgba(200,200,200,0.3), inset 0 1px 0 rgba(255,255,255,0.4)" : "0 2px 10px rgba(200,200,200,0.15), inset 0 1px 0 rgba(255,255,255,0.4)",
-                  border: "1px solid rgba(200,200,200,0.3)",
+                  background: "#C9B29F",
+                  border: "1px solid #C9B29F",
                 }}
                 title="Notifications"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C1C1C" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
                   <path d="M13.73 21a2 2 0 0 1-3.46 0" />
                 </svg>
                 {unreadCount > 0 && (
                   <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-1 rounded-full flex items-center justify-center text-[9px] font-bold"
                     style={{
-                      background: "linear-gradient(135deg, #ef4444, #dc2626)",
+                      background: "#ef4444",
                       color: "#fff",
-                      boxShadow: "0 0 8px rgba(239,68,68,0.5)",
                       fontFamily: "var(--font-mono)",
                     }}>
                     {unreadCount > 99 ? "99+" : unreadCount}
@@ -483,19 +473,18 @@ export default function NavBar() {
                   <div className="fixed inset-0 z-40" onClick={() => setShowNotifications(false)} />
                   <div className="absolute right-0 top-full mt-2 w-80 sm:w-96 max-w-[calc(100vw-16px)] rounded-xl overflow-hidden z-50"
                     style={{
-                      background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
-                      border: "1.5px solid rgba(30,64,120,0.8)",
-                      boxShadow: "0 12px 40px rgba(0,0,0,0.5)",
+                      background: "#FAFAFA",
+                      border: "2px solid #C9B29F",
                     }}>
                     {/* Header */}
-                    <div className="px-4 py-3 flex items-center justify-between" style={{ borderBottom: "1px solid rgba(30,64,120,0.4)" }}>
-                      <p className="text-xs font-bold uppercase tracking-wider" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+                    <div className="px-4 py-3 flex items-center justify-between" style={{ borderBottom: "1px solid #C9B29F" }}>
+                      <p className="text-xs font-bold uppercase tracking-wider" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                         Notifications {unreadCount > 0 && <span className="ml-1 text-[10px]" style={{ color: "#ef4444" }}>({unreadCount} new)</span>}
                       </p>
                       {notifications.length > 0 && (
                         <button onClick={clearAllNotifications}
                           className="text-[10px] px-2 py-0.5 rounded transition-colors hover:bg-red-500/10"
-                          style={{ color: "#ef4444", fontFamily: "var(--font-table)", border: "1px solid rgba(239,68,68,0.2)" }}>
+                          style={{ color: "#ef4444", fontFamily: "var(--font-table)", border: "1px solid #ef4444" }}>
                           Clear All
                         </button>
                       )}
@@ -505,7 +494,7 @@ export default function NavBar() {
                       {notifications.length === 0 ? (
                         <div className="p-6 text-center">
                           <span className="text-2xl block mb-2">🔔</span>
-                          <p className="text-xs" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                          <p className="text-xs" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                             No notifications
                           </p>
                         </div>
@@ -559,10 +548,10 @@ export default function NavBar() {
 
                         return Array.from(groupMap.values()).sort((a, b) => b.latestTime.localeCompare(a.latestTime)).map(group => (
                           <div key={group.key}
-                            className="flex items-start gap-3 px-4 py-3 transition-colors hover:bg-white/5 cursor-pointer"
+                            className="flex items-start gap-3 px-4 py-3 transition-colors hover:bg-[#C9B29F]/10 cursor-pointer"
                             style={{
-                              borderBottom: "1px solid rgba(30,64,120,0.2)",
-                              background: group.hasUnread ? "rgba(212,168,85,0.03)" : "transparent",
+                              borderBottom: "1px solid #C9B29F",
+                              background: group.hasUnread ? "rgba(201,178,159,0.1)" : "transparent",
                             }}
                             onClick={() => {
                               group.ids.forEach(id => {
@@ -576,7 +565,7 @@ export default function NavBar() {
                             <span className="text-sm mt-0.5 flex-shrink-0">{group.icon}</span>
                             <div className="flex-1 min-w-0">
                               <p className="text-xs font-semibold truncate" style={{
-                                color: group.hasUnread ? "var(--text-primary)" : "var(--text-secondary)",
+                                color: group.hasUnread ? "#1C1C1C" : "#5a5a5a",
                                 fontFamily: "var(--font-table)",
                               }}>
                                 {group.count > 1 ? (
@@ -594,18 +583,18 @@ export default function NavBar() {
                                 )}
                               </p>
                               {group.body && (
-                                <p className="text-[10px] mt-0.5 truncate" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                                <p className="text-[10px] mt-0.5 truncate" style={{ color: "#5a5a5a", fontFamily: "var(--font-table)" }}>
                                   {group.body}
                                 </p>
                               )}
-                              <p className="text-[9px] mt-1" style={{ color: "#5a6a82", fontFamily: "var(--font-mono)" }}>
+                              <p className="text-[9px] mt-1" style={{ color: "#888", fontFamily: "var(--font-mono)" }}>
                                 {new Date(group.latestTime + "Z").toLocaleString()}
                               </p>
                             </div>
                             {group.hasUnread && (
                               <div className="flex items-center gap-1 flex-shrink-0 mt-1.5">
-                                {group.count > 1 && <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full" style={{ background: "rgba(212,168,85,0.15)", color: "var(--accent-gold)" }}>{group.count}</span>}
-                                <div className="w-2 h-2 rounded-full" style={{ background: "var(--accent-gold)" }} />
+                                {group.count > 1 && <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full" style={{ background: "rgba(201,178,159,0.2)", color: "#1C1C1C" }}>{group.count}</span>}
+                                <div className="w-2 h-2 rounded-full" style={{ background: "#C9B29F" }} />
                               </div>
                             )}
                             <button
@@ -636,8 +625,8 @@ export default function NavBar() {
                 onClick={() => setDropdownOpen(!dropdownOpen)}
                 className="flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors"
                 style={{
-                  color: dropdownOpen ? "var(--accent-gold)" : "var(--text-secondary)",
-                  background: dropdownOpen ? "rgba(212,168,85,0.08)" : "transparent",
+                  color: "#FAF7F2",
+                  background: dropdownOpen ? "rgba(201,178,159,0.15)" : "transparent",
                   border: "1px solid transparent",
                   fontFamily: "var(--font-table)",
                   fontSize: "0.875rem",
@@ -646,7 +635,7 @@ export default function NavBar() {
               >
                 <span
                   className={`flex items-center justify-center text-xs font-bold relative cursor-pointer overflow-hidden flex-shrink-0 ${userPicture && !userPicture.startsWith("emoji:") ? "rounded-lg" : "rounded-full w-7 h-7"}`}
-                  style={{ background: userPicture?.startsWith("emoji:") ? "linear-gradient(135deg, #1a2744, #0e1828)" : userPicture ? "transparent" : "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#000", border: "2px solid var(--accent-gold)", ...(userPicture && !userPicture.startsWith("emoji:") ? { width: "32px", height: "24px" } : {}) }}
+                  style={{ background: userPicture?.startsWith("emoji:") ? "#1C1C1C" : userPicture ? "transparent" : "#C9B29F", color: "#1C1C1C", border: "2px solid #C9B29F", ...(userPicture && !userPicture.startsWith("emoji:") ? { width: "32px", height: "24px" } : {}) }}
                   onClick={(e) => { e.stopPropagation(); setShowAvatarPicker(!showAvatarPicker); }}
                   title="Click to change profile picture"
                 >
@@ -671,21 +660,20 @@ export default function NavBar() {
                     <div className="fixed right-2 sm:absolute sm:right-0 top-14 sm:top-full mt-0 sm:mt-2 w-[calc(100vw-16px)] sm:w-64 max-w-64 rounded-xl overflow-hidden z-[70]"
                       onClick={(e) => e.stopPropagation()}
                       style={{
-                        background: "linear-gradient(180deg, #2a2420 0%, #1c1714 100%)",
-                        border: "1.5px solid rgba(90,70,50,0.6)",
-                        boxShadow: "0 12px 40px rgba(0,0,0,0.6)",
+                        background: "#FAFAFA",
+                        border: "2px solid #C9B29F",
                       }}>
-                      <div className="px-4 py-3" style={{ borderBottom: "1px solid rgba(90,70,50,0.4)" }}>
-                        <p className="text-xs font-bold uppercase tracking-wider" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>
+                      <div className="px-4 py-3" style={{ borderBottom: "1px solid #C9B29F" }}>
+                        <p className="text-xs font-bold uppercase tracking-wider" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                           Choose Avatar
                         </p>
                       </div>
                       {/* Upload Photo Option */}
                       <button
                         onClick={() => { setShowAvatarPicker(false); avatarInputRef.current?.click(); }}
-                        className="w-full flex items-center gap-3 px-4 py-3 transition-colors hover:bg-white/5"
-                        style={{ borderBottom: "1px solid rgba(90,70,50,0.3)", color: "var(--text-secondary)", fontFamily: "var(--font-table)", fontSize: "0.8rem" }}>
-                        <span className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: "rgba(212,168,85,0.1)", border: "1px solid rgba(212,168,85,0.3)" }}>📷</span>
+                        className="w-full flex items-center gap-3 px-4 py-3 transition-colors hover:bg-[#C9B29F]/10"
+                        style={{ borderBottom: "1px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)", fontSize: "0.8rem" }}>
+                        <span className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: "rgba(201,178,159,0.15)", border: "1px solid #C9B29F" }}>📷</span>
                         Upload Photo
                       </button>
                       {/* Avatar Grid */}
@@ -695,10 +683,10 @@ export default function NavBar() {
                             key={av.id}
                             onClick={() => handleAvatarSelect(av.emoji)}
                             title={av.label}
-                            className="w-9 h-9 rounded-full flex items-center justify-center text-lg transition-all hover:scale-110 hover:bg-white/10"
+                            className="w-9 h-9 rounded-full flex items-center justify-center text-lg transition-all hover:scale-110 hover:bg-[#C9B29F]/10"
                             style={{
-                              background: userPicture === `emoji:${av.emoji}` ? "rgba(212,168,85,0.25)" : "rgba(60,45,35,0.5)",
-                              border: userPicture === `emoji:${av.emoji}` ? "2px solid var(--accent-gold)" : "1px solid rgba(90,70,50,0.4)",
+                              background: userPicture === `emoji:${av.emoji}` ? "rgba(201,178,159,0.25)" : "#FAFAFA",
+                              border: userPicture === `emoji:${av.emoji}` ? "2px solid #C9B29F" : "1px solid #C9B29F",
                             }}
                           >
                             {av.emoji}
@@ -710,7 +698,7 @@ export default function NavBar() {
                         <button
                           onClick={() => handleAvatarSelect("")}
                           className="w-full flex items-center justify-center gap-2 px-4 py-2 transition-colors hover:bg-red-500/5 text-xs"
-                          style={{ borderTop: "1px solid rgba(90,70,50,0.3)", color: "#ef4444", fontFamily: "var(--font-table)" }}>
+                          style={{ borderTop: "1px solid #C9B29F", color: "#ef4444", fontFamily: "var(--font-table)" }}>
                           Remove Avatar
                         </button>
                       )}
@@ -729,22 +717,21 @@ export default function NavBar() {
                   <div className="fixed inset-0 z-40" onClick={() => setDropdownOpen(false)} />
                   <div className="absolute right-0 top-full mt-2 w-56 rounded-xl overflow-hidden z-50"
                     style={{
-                      background: "linear-gradient(180deg, #0e1828 0%, #0b1120 100%)",
-                      border: "1.5px solid rgba(30,64,120,0.8)",
-                      boxShadow: "0 12px 40px rgba(0,0,0,0.5)",
+                      background: "#FAFAFA",
+                      border: "2px solid #C9B29F",
                     }}>
                     {/* User info */}
-                    <div className="px-4 py-3" style={{ borderBottom: "1px solid rgba(30,64,120,0.4)" }}>
-                      <p className="text-sm font-bold" style={{ color: "var(--accent-gold)", fontFamily: "var(--font-table)" }}>{userName}</p>
-                      <p className="text-[10px] mt-0.5" style={{ color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>Admin</p>
+                    <div className="px-4 py-3" style={{ borderBottom: "1px solid #C9B29F" }}>
+                      <p className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{userName}</p>
+                      <p className="text-[10px] mt-0.5" style={{ color: "#888", fontFamily: "var(--font-mono)" }}>Admin</p>
                     </div>
 
                     {/* Account Settings */}
                     <div className="py-1">
                       <Link href="/account"
                         onClick={() => setDropdownOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2.5 transition-colors hover:bg-white/5"
-                        style={{ color: "var(--text-secondary)", fontFamily: "var(--font-table)", fontSize: "0.8rem" }}>
+                        className="flex items-center gap-3 px-4 py-2.5 transition-colors hover:bg-[#C9B29F]/10"
+                        style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", fontSize: "0.8rem" }}>
                         <span className="text-sm">⚙️</span>
                         Account Settings
                       </Link>
@@ -754,15 +741,15 @@ export default function NavBar() {
                     <div className="py-1">
                       <Link href="/contact"
                         onClick={() => setDropdownOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2.5 transition-colors hover:bg-white/5"
-                        style={{ color: "var(--text-secondary)", fontFamily: "var(--font-table)", fontSize: "0.8rem" }}>
+                        className="flex items-center gap-3 px-4 py-2.5 transition-colors hover:bg-[#C9B29F]/10"
+                        style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", fontSize: "0.8rem" }}>
                         <span className="text-sm">📩</span>
                         Contact Support
                       </Link>
                     </div>
 
                     {/* Divider */}
-                    <div style={{ borderTop: "1px solid rgba(30,64,120,0.4)" }} />
+                    <div style={{ borderTop: "1px solid #C9B29F" }} />
 
                     {/* Logout */}
                     <div className="py-1">
@@ -783,7 +770,7 @@ export default function NavBar() {
               <Link
                 href="/login"
                 className="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
-                style={{ color: "var(--text-secondary)" }}
+                style={{ color: "#FAF7F2" }}
               >
                 Sign In
               </Link>
@@ -791,8 +778,8 @@ export default function NavBar() {
                 href="/register"
                 className="px-4 py-1.5 rounded-lg text-sm font-medium transition-colors"
                 style={{
-                  background: "var(--accent-gold)",
-                  color: "#000",
+                  background: "#C9B29F",
+                  color: "#1C1C1C",
                 }}
               >
                 Sign Up

@@ -6,10 +6,9 @@ import { Suspense } from "react";
 import { playChatBubble } from "@/app/sounds";
 
 const GLASS_BOX = {
-  background: "linear-gradient(145deg, rgba(22,26,35,0.97) 0%, rgba(14,17,24,0.99) 50%, rgba(18,22,30,0.97) 100%)",
-  backdropFilter: "blur(24px) saturate(1.3)",
-  border: "1px solid rgba(212,168,85,0.15)",
-  boxShadow: "0 12px 40px rgba(0,0,0,0.6), 0 4px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(212,168,85,0.08), inset 0 0 30px rgba(212,168,85,0.03)",
+  background: "#FAFAFA",
+  border: "2px solid #C9B29F",
+  borderRadius: "10px",
 };
 
 interface Thread {
@@ -396,13 +395,11 @@ function MessagesContent() {
             fontFamily: "var(--font-display)",
             fontWeight: 700,
             fontSize: "1.6rem",
-            background: "linear-gradient(135deg, #e8c86e, #d4a855, #b8860b)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
+            color: "#1C1C1C",
           }}>
             Messages
           </h1>
-          <p className="text-sm" style={{ color: "var(--text-muted, #5a6a82)", fontFamily: "var(--font-table)" }}>
+          <p className="text-sm" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
             Private conversations
           </p>
         </div>
@@ -410,10 +407,9 @@ function MessagesContent() {
           onClick={() => { setShowCompose(!showCompose); setSelectedThread(null); setReplyText(""); setComposeMsg(""); }}
           className="px-5 py-2.5 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all hover:scale-[1.03]"
           style={{
-            background: "linear-gradient(135deg, #e8c86e, #b8860b)",
-            color: "#000",
+            background: "#C9B29F",
+            color: "#1C1C1C",
             fontFamily: "var(--font-table)",
-            boxShadow: "0 4px 15px rgba(212,168,85,0.2)",
           }}>
           + New Message
         </button>
@@ -424,30 +420,30 @@ function MessagesContent() {
         <div className="rounded-xl p-5 space-y-3 glass-panel-purple" style={GLASS_BOX}>
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-bold uppercase tracking-wider flex items-center gap-2"
-              style={{ color: "#d4a855", fontFamily: "var(--font-table)" }}>
-              <span style={{ filter: "drop-shadow(0 0 4px rgba(212,168,85,0.5))" }}>✉️</span>
+              style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+              <span>✉️</span>
               New Conversation
             </h2>
             <button onClick={() => { setShowCompose(false); setComposeMsg(""); }}
-              className="text-sm" style={{ color: "var(--text-muted)" }}>✕</button>
+              className="text-sm" style={{ color: "#6B7280" }}>✕</button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="block text-[10px] uppercase tracking-widest font-semibold mb-1"
-                style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>To (username)</label>
+                style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>To (username)</label>
               <input value={toUsername} onChange={e => setToUsername(e.target.value)}
                 placeholder="Enter username..."
                 className="w-full rounded-lg px-3 py-2 text-sm outline-none"
-                style={{ background: "rgba(20,20,25,0.8)", border: "1px solid rgba(212,168,85,0.15)", color: "var(--text-primary)", fontFamily: "var(--font-table)" }} />
+                style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
             </div>
             <div>
               <label className="block text-[10px] uppercase tracking-widest font-semibold mb-1"
-                style={{ color: "#5a6a82", fontFamily: "var(--font-table)" }}>Subject (optional)</label>
+                style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>Subject (optional)</label>
               <textarea value={subject} onChange={e => setSubject(e.target.value)}
                 placeholder="Subject..."
                 rows={1}
                 className="w-full rounded-lg px-3 py-2 text-sm outline-none resize-none"
-                style={{ background: "rgba(20,20,25,0.8)", border: "1px solid rgba(212,168,85,0.15)", color: "var(--text-primary)", fontFamily: "var(--font-table)", minHeight: "38px", maxHeight: "80px", overflowY: "auto" }}
+                style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)", minHeight: "38px", maxHeight: "80px", overflowY: "auto" }}
                 onInput={(e) => { const t = e.target as HTMLTextAreaElement; t.style.height = "38px"; t.style.height = Math.min(t.scrollHeight, 80) + "px"; }} />
             </div>
           </div>
@@ -455,7 +451,7 @@ function MessagesContent() {
             placeholder="Write your message..."
             rows={3}
             className="w-full rounded-lg px-3 py-2 text-sm outline-none resize-none"
-            style={{ background: "rgba(20,20,25,0.8)", border: "1px solid rgba(212,168,85,0.15)", color: "var(--text-primary)", fontFamily: "var(--font-table)" }} />
+            style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
           {composeMsg && (
             <p className="text-xs" style={{ color: composeMsg === "Message sent!" ? "#22c55e" : "#ef4444", fontFamily: "var(--font-table)" }}>
               {composeMsg}
@@ -464,12 +460,12 @@ function MessagesContent() {
           <div className="flex justify-end gap-2">
             <button onClick={() => { setShowCompose(false); setComposeMsg(""); }}
               className="px-4 py-2 rounded-lg text-xs font-semibold uppercase"
-              style={{ background: "linear-gradient(135deg, #e8e8e8, #b0b0b0, #d8d8d8, #a0a0a0)", color: "#000", fontFamily: "var(--font-table)" }}>
+              style={{ background: "#E5E7EB", color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               Cancel
             </button>
             <button onClick={sendNewMessage} disabled={sending || !toUsername.trim() || !replyText.trim()}
               className="px-5 py-2 rounded-lg text-xs font-semibold uppercase transition-all hover:scale-[1.03] disabled:opacity-40"
-              style={{ background: "linear-gradient(135deg, #e8c86e, #b8860b)", color: "#000", fontFamily: "var(--font-table)" }}>
+              style={{ background: "#C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               {sending ? "Sending..." : "Send"}
             </button>
           </div>
@@ -480,14 +476,14 @@ function MessagesContent() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4" style={{ minHeight: "min(500px, 70vh)" }}>
         {/* Thread List */}
         <div className="md:col-span-1 rounded-xl overflow-hidden glass-panel-blue" style={GLASS_BOX}>
-          <div className="px-4 py-3 flex-shrink-0" style={{ borderBottom: "1px solid rgba(212,168,85,0.12)", background: "linear-gradient(180deg, rgba(212,168,85,0.05) 0%, transparent 100%)" }}>
+          <div className="px-4 py-3 flex-shrink-0" style={{ borderBottom: "2px solid #C9B29F" }}>
             <div className="flex items-center justify-between">
               <p className="text-[10px] uppercase tracking-widest font-semibold"
-                style={{ color: "#d4a855", fontFamily: "var(--font-table)" }}>
+                style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                 Conversations
               </p>
-              <p className="text-[9px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
-                <span style={{ color: "#d4a855", fontWeight: 700 }}>{threads.length}</span> total
+              <p className="text-[9px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                <span style={{ color: "#1C1C1C", fontWeight: 700 }}>{threads.length}</span> total
               </p>
             </div>
             <input
@@ -497,9 +493,9 @@ function MessagesContent() {
               onChange={e => setConvSearch(e.target.value)}
               className="w-full mt-2 rounded-lg px-2.5 py-1.5 text-[10px] outline-none"
               style={{
-                background: "rgba(20,20,25,0.8)",
-                border: "1px solid rgba(212,168,85,0.15)",
-                color: "var(--text-primary)",
+                background: "#FAFAFA",
+                border: "2px solid #C9B29F",
+                color: "#1C1C1C",
                 fontFamily: "var(--font-table)",
               }}
             />
@@ -508,46 +504,43 @@ function MessagesContent() {
             {loading ? (
               <div className="p-6 text-center">
                 <div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin mx-auto mb-2"
-                  style={{ borderColor: "var(--accent-gold)", borderTopColor: "transparent" }} />
+                  style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} />
               </div>
             ) : threads.length === 0 ? (
               <div className="p-6 text-center">
                 <span className="text-3xl block mb-2">📭</span>
-                <p className="text-xs" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                <p className="text-xs" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                   No conversations yet
                 </p>
-                <p className="text-[10px] mt-1" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                <p className="text-[10px] mt-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                   Click &quot;+ New Message&quot; to start
                 </p>
               </div>
             ) : threads.filter(t => t.other_username.toLowerCase().includes(convSearch.toLowerCase())).length === 0 ? (
               <div className="p-4 text-center">
-                <p className="text-[10px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                <p className="text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                   No conversations found
                 </p>
               </div>
             ) : threads.filter(t => t.other_username.toLowerCase().includes(convSearch.toLowerCase())).map(t => {
-              const accentColor = selectedThread === t.thread_id ? "#d4a855" : t.unread_count > 0 ? "#60a5fa" : "#d4a855";
               return (
               <button key={t.thread_id} onClick={() => { openThread(t.thread_id); setShowCompose(false); }}
                 className="w-full text-left mx-2 my-1.5 rounded-lg p-2.5 hover:scale-[1.02]"
                 style={{
                   background: selectedThread === t.thread_id
-                    ? `linear-gradient(135deg, ${accentColor}18, ${accentColor}08, #0b1120)`
+                    ? "#FAF7F2"
                     : t.unread_count > 0
-                    ? `linear-gradient(135deg, #60a5fa12, #60a5fa06, #0b1120)`
-                    : `linear-gradient(135deg, ${accentColor}0a, ${accentColor}05, #0b1120)`,
-                  border: selectedThread === t.thread_id ? `1px solid ${accentColor}55` : `1px solid ${accentColor}22`,
+                    ? "#FAF7F2"
+                    : "#FAFAFA",
+                  border: selectedThread === t.thread_id ? "2px solid #C9B29F" : "2px solid #E5E7EB",
                   transition: "all 0.3s ease",
                   width: "calc(100% - 16px)",
                 }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.boxShadow = `0 0 12px ${accentColor}30`;
-                  (e.currentTarget as HTMLElement).style.borderColor = `${accentColor}66`;
+                  (e.currentTarget as HTMLElement).style.borderColor = "#C9B29F";
                 }}
                 onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.boxShadow = "none";
-                  (e.currentTarget as HTMLElement).style.borderColor = selectedThread === t.thread_id ? `${accentColor}55` : `${accentColor}22`;
+                  (e.currentTarget as HTMLElement).style.borderColor = selectedThread === t.thread_id ? "#C9B29F" : "#E5E7EB";
                 }}
               >
                 <div className="flex items-center gap-2.5">
@@ -557,16 +550,16 @@ function MessagesContent() {
                       className="w-10 h-10 rounded-md flex-shrink-0 bg-cover bg-center"
                       style={{
                         backgroundImage: `url(${t.other_profile_picture})`,
-                        border: `1.5px solid ${accentColor}55`,
+                        border: "2px solid #C9B29F",
                       }}
                     />
                   ) : (
                     <div
                       className="w-10 h-10 rounded-md flex-shrink-0 flex items-center justify-center text-sm font-bold"
                       style={{
-                        background: `linear-gradient(135deg, ${accentColor}30, ${accentColor}15)`,
-                        border: `1.5px solid ${accentColor}55`,
-                        color: accentColor,
+                        background: "#FAF7F2",
+                        border: "2px solid #C9B29F",
+                        color: "#1C1C1C",
                       }}
                     >
                       {(t.other_username || "?")[0].toUpperCase()}
@@ -576,21 +569,21 @@ function MessagesContent() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-bold truncate"
-                        style={{ color: accentColor, fontFamily: "var(--font-table)" }}>
+                        style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                         {t.other_username || "Unknown"}
                       </span>
-                      <span className="text-[9px] flex-shrink-0 ml-1" style={{ color: "var(--text-muted)" }}>
+                      <span className="text-[9px] flex-shrink-0 ml-1" style={{ color: "#6B7280" }}>
                         {formatDate(t.last_time)}
                       </span>
                     </div>
                     {t.subject && (
                       <p className="text-[10px] font-semibold truncate"
-                        style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)" }}>
+                        style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                         {t.subject}
                       </p>
                     )}
                     <p className="text-[10px] truncate"
-                      style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                      style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                       {t.last_body.substring(0, 60)}
                     </p>
                     <div className="flex items-center gap-2 mt-0.5">
@@ -602,11 +595,11 @@ function MessagesContent() {
                       )}
                       {t.marketplace_ad_id && (
                         <span className="text-[8px] px-1.5 py-0.5 rounded-full"
-                          style={{ background: "rgba(212,168,85,0.15)", color: "#d4a855", fontFamily: "var(--font-table)" }}>
+                          style={{ background: "#FAF7F2", color: "#1C1C1C", fontFamily: "var(--font-table)", border: "1px solid #C9B29F" }}>
                           🏪 Ad
                         </span>
                       )}
-                      <span className="text-[8px]" style={{ color: "var(--text-muted)" }}>
+                      <span className="text-[8px]" style={{ color: "#6B7280" }}>
                         {t.msg_count} msg{t.msg_count !== 1 ? "s" : ""}
                       </span>
                     </div>
@@ -624,25 +617,25 @@ function MessagesContent() {
             <>
               {/* Chat Header */}
               <div className="px-4 py-3 flex items-center justify-between flex-shrink-0"
-                style={{ borderBottom: "1px solid rgba(212,168,85,0.12)", background: "linear-gradient(180deg, rgba(212,168,85,0.04) 0%, transparent 100%)" }}>
+                style={{ borderBottom: "2px solid #C9B29F" }}>
                 <div className="flex items-center gap-2">
                   {selectedThreadData.other_profile_picture && !selectedThreadData.other_profile_picture.startsWith("emoji:") ? (
                     <img src={selectedThreadData.other_profile_picture} alt="" className="w-9 h-7 rounded-md object-cover"
-                      style={{ border: "1.5px solid var(--accent-gold)" }} />
+                      style={{ border: "2px solid #C9B29F" }} />
                   ) : selectedThreadData.other_profile_picture?.startsWith("emoji:") ? (
                     <span className="w-8 h-8 rounded-full flex items-center justify-center"
-                      style={{ background: "linear-gradient(135deg, #1a2744, #0e1828)", border: "1.5px solid var(--accent-gold)" }}>
+                      style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}>
                       <span className="text-sm">{selectedThreadData.other_profile_picture.replace("emoji:", "")}</span>
                     </span>
                   ) : (
                     <span className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
-                      style={{ background: "linear-gradient(135deg, var(--accent-gold), #b8860b)", color: "#fff", textShadow: "0 1px 2px rgba(0,0,0,0.3)" }}>
+                      style={{ background: "#C9B29F", color: "#1C1C1C" }}>
                       {(selectedThreadData.other_username || "?")[0].toUpperCase()}
                     </span>
                   )}
                   <div>
                     <div className="flex items-center gap-2">
-                      <p className="text-sm font-bold" style={{ color: "#d4a855", fontFamily: "var(--font-table)" }}>
+                      <p className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                         {selectedThreadData.other_username}
                       </p>
                       {otherUserStatus && (
@@ -655,7 +648,7 @@ function MessagesContent() {
                       )}
                     </div>
                     {selectedThreadData.subject && (
-                      <p className="text-[10px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                      <p className="text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                         {selectedThreadData.subject}
                       </p>
                     )}
@@ -663,17 +656,17 @@ function MessagesContent() {
                 </div>
                 <button onClick={() => deleteThread(selectedThread)}
                   className="text-[10px] px-2 py-1 rounded transition-colors hover:bg-red-500/10"
-                  style={{ color: "#ef4444", fontFamily: "var(--font-table)", border: "1px solid rgba(239,68,68,0.2)" }}>
+                  style={{ color: "#ef4444", fontFamily: "var(--font-table)", border: "2px solid #ef444433" }}>
                   Delete
                 </button>
               </div>
 
               {/* Chat Messages */}
-              <div ref={chatContainerRef} className="flex-1 overflow-y-auto px-2 sm:px-4 py-3 space-y-3" style={{ maxHeight: "min(350px, 50vh)", background: "linear-gradient(180deg, #eef1f5 0%, #e4e8ee 100%)" }}>
+              <div ref={chatContainerRef} className="flex-1 overflow-y-auto px-2 sm:px-4 py-3 space-y-3" style={{ maxHeight: "min(350px, 50vh)", background: "#FAF7F2" }}>
                 {threadLoading ? (
                   <div className="flex justify-center py-8">
                     <div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin"
-                      style={{ borderColor: "var(--accent-gold)", borderTopColor: "transparent" }} />
+                      style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} />
                   </div>
                 ) : threadMessages.map(msg => {
                   const isMine = msg.from_user_id === user.id;
@@ -682,15 +675,12 @@ function MessagesContent() {
                       <div className="max-w-[75%] rounded-xl px-3.5 py-2.5"
                         style={{
                           background: isMine
-                            ? "#dcfce7"
-                            : "#dbeafe",
-                          border: isMine
-                            ? "1px solid rgba(34,197,94,0.2)"
-                            : "1px solid rgba(96,165,250,0.2)",
+                            ? "#C9B29F"
+                            : "#FAF7F2",
+                          border: "2px solid #C9B29F",
                           borderRadius: isMine ? "16px 16px 4px 16px" : "16px 16px 16px 4px",
-                          boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
                         }}>
-                        <p className="text-sm whitespace-pre-wrap" style={{ color: "#1a202c", fontFamily: "var(--font-table)", lineHeight: 1.6, wordBreak: "break-word", overflowWrap: "break-word" }}>
+                        <p className="text-sm whitespace-pre-wrap" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", lineHeight: 1.6, wordBreak: "break-word", overflowWrap: "break-word" }}>
                           {msg.body}
                         </p>
                         {msg.attachments && msg.attachments !== "" && (() => {
@@ -701,7 +691,7 @@ function MessagesContent() {
                                 {atts.map((att: { url: string; name: string; size: number; isImage: boolean }, i: number) => (
                                   att.isImage ? (
                                     <a key={i} href={att.url} target="_blank" rel="noopener noreferrer" className="block">
-                                      <img src={att.url} alt={att.name} className="max-w-full rounded-lg max-h-48 object-cover" style={{ border: "1px solid rgba(0,0,0,0.1)" }} />
+                                      <img src={att.url} alt={att.name} className="max-w-full rounded-lg max-h-48 object-cover" style={{ border: "2px solid #C9B29F" }} />
                                     </a>
                                   ) : (
                                     <a key={i} href={att.url} target="_blank" rel="noopener noreferrer"
@@ -733,19 +723,19 @@ function MessagesContent() {
               </div>
 
               {/* Reply Input */}
-              <div className="px-4 py-3 flex-shrink-0" style={{ borderTop: "1px solid rgba(212,168,85,0.12)", background: "linear-gradient(0deg, rgba(212,168,85,0.04) 0%, transparent 100%)" }}>
+              <div className="px-4 py-3 flex-shrink-0" style={{ borderTop: "2px solid #C9B29F" }}>
                 {/* Pending attachments preview */}
                 {pendingAttachments.length > 0 && (
                   <div className="flex flex-wrap gap-2 mb-2">
                     {pendingAttachments.map((att, i) => (
                       <div key={i} className="flex items-center gap-1.5 px-2 py-1 rounded-lg text-[10px]"
-                        style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }}>
+                        style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}>
                         {att.isImage ? (
                           <img src={att.url} alt="" className="w-8 h-8 rounded object-cover" />
                         ) : (
                           <span>📎</span>
                         )}
-                        <span className="truncate max-w-[100px]" style={{ color: "var(--text-primary)", fontFamily: "var(--font-table)" }}>{att.name}</span>
+                        <span className="truncate max-w-[100px]" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{att.name}</span>
                         <button onClick={() => setPendingAttachments(prev => prev.filter((_, j) => j !== i))}
                           className="text-red-400 hover:text-red-300 ml-1">✕</button>
                       </div>
@@ -757,7 +747,7 @@ function MessagesContent() {
                     onClick={() => imageInputRef.current?.click()}
                     disabled={uploading}
                     className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center transition-all hover:scale-105"
-                    style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }}
+                    style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}
                     title="Attach photo"
                   >
                     <span className="text-lg">🖼️</span>
@@ -766,11 +756,11 @@ function MessagesContent() {
                     onClick={() => fileInputRef.current?.click()}
                     disabled={uploading}
                     className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center transition-all hover:scale-105"
-                    style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }}
+                    style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}
                     title="Attach file"
                   >
                     {uploading ? (
-                      <span className="w-4 h-4 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: "var(--accent-gold)", borderTopColor: "transparent" }} />
+                      <span className="w-4 h-4 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} />
                     ) : (
                       <span className="text-lg">📎</span>
                     )}
@@ -784,12 +774,12 @@ function MessagesContent() {
                     placeholder="Type a message..."
                     rows={1}
                     className="flex-1 rounded-lg px-3 py-2.5 text-sm outline-none resize-none"
-                    style={{ background: "rgba(20,20,25,0.8)", border: "1px solid rgba(212,168,85,0.15)", color: "var(--text-primary)", fontFamily: "var(--font-table)", minHeight: "42px", maxHeight: "120px", overflowY: "auto" }}
+                    style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)", minHeight: "42px", maxHeight: "120px", overflowY: "auto" }}
                     onInput={(e) => { const t = e.target as HTMLTextAreaElement; t.style.height = "42px"; t.style.height = Math.min(t.scrollHeight, 120) + "px"; }}
                   />
                   <button onClick={sendReply} disabled={sending || !replyText.trim()}
                     className="px-4 py-2.5 rounded-lg text-xs font-semibold uppercase transition-all hover:scale-[1.03] disabled:opacity-40"
-                    style={{ background: "linear-gradient(135deg, #e8c86e, #b8860b)", color: "#000", fontFamily: "var(--font-table)" }}>
+                    style={{ background: "#C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                     {sending ? "..." : "Send"}
                   </button>
                 </div>
@@ -798,10 +788,10 @@ function MessagesContent() {
           ) : (
             <div className="flex flex-col items-center justify-center h-full py-16">
               <span className="text-5xl mb-3">💬</span>
-              <p className="text-sm mb-1" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+              <p className="text-sm mb-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                 Select a conversation
               </p>
-              <p className="text-[10px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+              <p className="text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                 or start a new one
               </p>
             </div>
@@ -810,17 +800,17 @@ function MessagesContent() {
 
         {/* Who's Online - Right Panel */}
         <div className="hidden md:flex md:flex-col md:col-span-1 rounded-xl overflow-hidden glass-panel-green" style={GLASS_BOX}>
-          <div className="px-4 py-3 flex-shrink-0" style={{ borderBottom: "1px solid rgba(212,168,85,0.12)", background: "linear-gradient(180deg, rgba(34,197,94,0.04) 0%, transparent 100%)" }}>
+          <div className="px-4 py-3 flex-shrink-0" style={{ borderBottom: "2px solid #C9B29F" }}>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#22c55e", boxShadow: "0 0 6px #22c55e" }} />
+                <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#22c55e" }} />
                 <p className="text-[10px] uppercase tracking-widest font-semibold"
-                  style={{ color: "#d4a855", fontFamily: "var(--font-table)" }}>
+                  style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                   Online
                 </p>
               </div>
-              <p className="text-[9px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
-                <span style={{ color: "#22c55e", fontWeight: 700 }}>{onlineData.members_online}</span> member{onlineData.members_online !== 1 ? "s" : ""} : <span style={{ color: "#d4a855", fontWeight: 700 }}>{onlineData.guests_online}</span> guest{onlineData.guests_online !== 1 ? "s" : ""}
+              <p className="text-[9px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                <span style={{ color: "#22c55e", fontWeight: 700 }}>{onlineData.members_online}</span> member{onlineData.members_online !== 1 ? "s" : ""} : <span style={{ color: "#1C1C1C", fontWeight: 700 }}>{onlineData.guests_online}</span> guest{onlineData.guests_online !== 1 ? "s" : ""}
               </p>
             </div>
             <input
@@ -830,9 +820,9 @@ function MessagesContent() {
               placeholder="Search online..."
               className="w-full mt-2 rounded-lg px-2.5 py-1.5 text-[10px] outline-none"
               style={{
-                background: "rgba(20,20,25,0.8)",
-                border: "1px solid rgba(212,168,85,0.15)",
-                color: "var(--text-primary)",
+                background: "#FAFAFA",
+                border: "2px solid #C9B29F",
+                color: "#1C1C1C",
                 fontFamily: "var(--font-table)",
               }}
             />
@@ -848,40 +838,40 @@ function MessagesContent() {
                     <div key={m.id}
                       className="mx-2 my-1.5 rounded-lg p-2.5 hover:scale-[1.02] transition-all"
                       style={{
-                        background: `linear-gradient(135deg, #22c55e0a, #22c55e05, #0b1120)`,
-                        border: `1px solid #22c55e22`,
+                        background: "#FAFAFA",
+                        border: "2px solid #E5E7EB",
                       }}>
                       <div className="flex items-center gap-2.5">
                         <a href={`/profile/${m.username}`} className="relative flex-shrink-0 hover:opacity-80 transition-opacity">
                           {m.profile_picture ? (
                             <img src={m.profile_picture} alt="" className="w-10 h-8 rounded-md object-cover"
-                              style={{ border: "1.5px solid #22c55e55" }} />
+                              style={{ border: "2px solid #C9B29F" }} />
                           ) : (
                             <div className="w-10 h-10 rounded-md flex items-center justify-center text-sm font-bold"
                               style={{
-                                background: `linear-gradient(135deg, #22c55e30, #22c55e15)`,
-                                border: `1.5px solid #22c55e55`,
-                                color: "#22c55e",
+                                background: "#FAF7F2",
+                                border: "2px solid #C9B29F",
+                                color: "#1C1C1C",
                               }}>
                               {m.username[0].toUpperCase()}
                             </div>
                           )}
                           <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2"
-                            style={{ background: "#22c55e", borderColor: "#1e1e1e" }} />
+                            style={{ background: "#22c55e", borderColor: "#FAFAFA" }} />
                         </a>
                         <a href={`/profile/${m.username}`} className="flex-1 min-w-0 hover:opacity-80 transition-opacity">
                           <span className="text-xs font-bold truncate block"
-                            style={{ color: "#22c55e", fontFamily: "var(--font-table)" }}>
+                            style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                             {m.username}
                           </span>
-                          <span className="text-[9px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                          <span className="text-[9px]" style={{ color: "#22c55e", fontFamily: "var(--font-table)" }}>
                             Online now
                           </span>
                         </a>
                         <button
                           onClick={() => { setToUsername(m.username); setShowCompose(true); setSelectedThread(null); }}
                           className="flex-shrink-0 w-7 h-7 rounded-md flex items-center justify-center transition-all hover:scale-110"
-                          style={{ background: "rgba(212,168,85,0.12)", border: "1px solid rgba(212,168,85,0.25)" }}
+                          style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}
                           title={`Message ${m.username}`}
                         >
                           <span className="text-xs">💬</span>
@@ -892,7 +882,7 @@ function MessagesContent() {
                 </div>
               ) : (
                 <div className="p-4 text-center">
-                  <p className="text-[10px]" style={{ color: "var(--text-muted)", fontFamily: "var(--font-table)" }}>
+                  <p className="text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                     {onlineSearch ? "No matches" : "No members online"}
                   </p>
                 </div>
@@ -907,7 +897,7 @@ function MessagesContent() {
 
 export default function MessagesPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen" style={{ background: "var(--bg-primary, #080d18)" }} />}>
+    <Suspense fallback={<div className="min-h-screen" style={{ background: "#FAF7F2" }} />}>
       <MessagesContent />
     </Suspense>
   );
