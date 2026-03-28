@@ -4,7 +4,7 @@ import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-const LOGO = "https://i.imgur.com/yOXvfAY.png";
+const LOGO = "https://i.imgur.com/svXPGXg.png";
 
 function LoginForm() {
   const router = useRouter();
@@ -74,7 +74,7 @@ function LoginForm() {
           alt="Pedigree Platform"
           width={88}
           height={88}
-          className="rounded-full mb-3"
+          className="rounded-lg mb-3"
           style={{ background: "#C9B29F", padding: "4px" }}
         />
         <h1
@@ -197,7 +197,7 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center px-4" style={{ background: "#FAFAFA" }}>
+    <div className="min-h-screen flex items-center justify-center px-4" style={{ background: "#EDE4D5" }}>
       <Suspense fallback={<div className="text-center" style={{ color: "#6B7280" }}>Loading...</div>}>
         <LoginForm />
       </Suspense>

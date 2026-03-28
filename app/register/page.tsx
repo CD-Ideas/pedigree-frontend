@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-const LOGO = "https://i.imgur.com/yOXvfAY.png";
+const LOGO = "https://i.imgur.com/svXPGXg.png";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -54,7 +54,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4" style={{ background: "#FAFAFA" }}>
+    <div className="min-h-screen flex items-center justify-center px-4" style={{ background: "#EDE4D5" }}>
       <Link
         href="/"
         className="fixed top-6 left-6 flex items-center gap-2 px-4 py-2.5 rounded-lg transition-all z-10"
@@ -69,7 +69,7 @@ export default function RegisterPage() {
             alt="Pedigree Platform"
             width={88}
             height={88}
-            className="rounded-full mb-3"
+            className="rounded-lg mb-3"
             style={{ background: "#C9B29F", padding: "4px" }}
           />
           <h1

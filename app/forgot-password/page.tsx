@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 
-const LOGO = "https://i.imgur.com/yOXvfAY.png";
+const LOGO = "https://i.imgur.com/svXPGXg.png";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -15,7 +15,7 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4" style={{ background: "#FAFAFA" }}>
+    <div className="min-h-screen flex items-center justify-center px-4" style={{ background: "#EDE4D5" }}>
       <Link
         href="/login"
         className="fixed top-6 left-6 flex items-center gap-2 px-4 py-2.5 rounded-lg transition-all z-10"
@@ -26,7 +26,7 @@ export default function ForgotPasswordPage() {
 
       <div className="rounded-2xl p-6 w-full max-w-md" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "10px" }}>
         <div className="flex flex-col items-center mb-5">
-          <img src={LOGO} alt="Pedigree Platform" width={88} height={88} className="rounded-full mb-3" style={{ background: "#C9B29F", padding: "4px" }} />
+          <img src={LOGO} alt="Pedigree Platform" width={88} height={88} className="rounded-lg mb-3" style={{ background: "#C9B29F", padding: "4px" }} />
           <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "1.75rem", color: "#1C1C1C" }}>
             Forgot Password
           </h1>
@@ -69,7 +69,7 @@ export default function ForgotPasswordPage() {
           </form>
         ) : (
           <div className="text-center py-4">
-            <div className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center"
+            <div className="w-16 h-16 rounded-lg mx-auto mb-4 flex items-center justify-center"
               style={{ background: "rgba(34,197,94,0.1)", border: "2px solid rgba(34,197,94,0.3)" }}>
               <span className="text-3xl" style={{ color: "#22c55e" }}>&#10003;</span>
             </div>

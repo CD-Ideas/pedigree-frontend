@@ -39,7 +39,7 @@ interface Dog {
   genetic_contributions: Genetic[];
 }
 
-const LOGO = "https://i.imgur.com/yOXvfAY.png";
+const LOGO = "https://i.imgur.com/svXPGXg.png";
 
 /* ─── Page-scoped style constants ─── */
 const PG = {
@@ -262,9 +262,9 @@ function PedigreeSearch() {
                style={{ borderBottom: "1px solid #EDE4D5" }}>
               {d.photo_url ? (
                 <img src={d.photo_url.startsWith("http") ? d.photo_url : `https://www.apbt.online-pedigrees.com/${d.photo_url}`}
-                     alt="" className="w-8 h-8 rounded-full object-cover flex-shrink-0" style={{ border: "1px solid #EDE4D5" }} />
+                     alt="" className="w-8 h-8 rounded-lg object-cover flex-shrink-0" style={{ border: "1px solid #EDE4D5" }} />
               ) : (
-                <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm"
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 text-sm"
                      style={{ background: PG.bg, border: "2px solid #EDE4D5" }}>🐕</div>
               )}
               <span className="text-sm font-semibold truncate" style={{ color: getDogColorDark(d.registered_name), fontFamily: PG.font }}>
@@ -477,7 +477,7 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
                              cursor: hasLink ? "pointer" : "default",
                            }}>
                         {isChampion && (
-                          <span className="absolute -top-0.5 -right-0.5 flex items-center justify-center rounded-full"
+                          <span className="absolute -top-0.5 -right-0.5 flex items-center justify-center rounded-lg"
                                 style={{
                                   fontSize: maxGen >= 5 ? "7px" : "9px",
                                   color: "#8a6518",
@@ -586,7 +586,7 @@ function SiblingsTab({ siblings }: { siblings: Dog["siblings"] }) {
               borderRadius: PG.cardRadius,
             }}>
             {s.label}
-            <span className="text-[9px] px-1.5 rounded-full" style={{ background: PG.bg, fontFamily: PG.font }}>
+            <span className="text-[9px] px-1.5 rounded-lg" style={{ background: PG.bg, fontFamily: PG.font }}>
               {s.list.length}
             </span>
             <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" style={{ transform: openSib === s.key ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>
@@ -738,7 +738,7 @@ function PedStatsTab({ genetics }: { genetics: Genetic[] }) {
                  }}>
               <div style={{ width: "3px", alignSelf: "stretch", background: s.color, flexShrink: 0 }} />
               <div className="px-2.5 py-1 flex items-center gap-2 w-full" style={{ fontFamily: PG.font, fontSize: "10px", fontWeight: 600, lineHeight: 1.1 }}>
-                <div className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: s.color }} />
+                <div className="w-2.5 h-2.5 rounded-lg flex-shrink-0" style={{ background: s.color }} />
                 <div className="flex-1 min-w-0 truncate">
                   {s.ancestor_id ? <DogLink dogId={s.ancestor_id} name={s.ancestor_name} /> : <span style={{ color: PG.textMuted }}>{s.ancestor_name}</span>}
                 </div>
@@ -860,7 +860,7 @@ function TitlesTab({ offspring }: { offspring: Offspring[] }) {
               borderRadius: PG.cardRadius,
             }}>
             {LABELS[title] || title}
-            <span className="text-[9px] px-1.5 rounded-full" style={{ background: PG.bg, fontFamily: PG.font }}>
+            <span className="text-[9px] px-1.5 rounded-lg" style={{ background: PG.bg, fontFamily: PG.font }}>
               {groups[title].length}
             </span>
             <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" style={{ transform: openTitle === title ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>
@@ -918,9 +918,9 @@ export default function PublicPedigreePage() {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: PG.bg }}>
         <div className="flex flex-col items-center gap-4">
-          <img src={LOGO} alt="Logo" className="w-12 h-12 rounded-full animate-pulse" style={{ background: "#C9B29F", padding: "2px" }} />
+          <img src={LOGO} alt="Logo" className="w-12 h-12 rounded-lg animate-pulse" style={{ background: "#C9B29F", padding: "2px" }} />
           <div className="flex items-center gap-3" style={{ color: PG.textMuted, fontFamily: PG.font }}>
-            <div className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin"
+            <div className="w-5 h-5 rounded-lg border-2 border-t-transparent animate-spin"
                  style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} />
             Loading pedigree...
           </div>
@@ -1117,7 +1117,7 @@ export default function PublicPedigreePage() {
                 fontFamily: PG.font,
               }}>Pedigree</span>
               {(dog.pedigree?.length || 0) > 0 && (
-                <span className="text-[10px] px-2 py-0.5 rounded-full font-medium" style={{
+                <span className="text-[10px] px-2 py-0.5 rounded-lg font-medium" style={{
                   background: "rgba(201,178,159,0.3)",
                   color: PG.tabActive,
                   fontFamily: PG.font,
@@ -1170,7 +1170,7 @@ export default function PublicPedigreePage() {
                     <span className="text-sm">{tab.icon}</span>
                     <span className="text-sm font-semibold">{tab.label}</span>
                     {tab.count > 0 && (
-                      <span className="text-[10px] px-2 py-0.5 rounded-full font-medium"
+                      <span className="text-[10px] px-2 py-0.5 rounded-lg font-medium"
                             style={{
                               background: currentTab === tab.key ? "rgba(28,28,28,0.15)" : "rgba(201,178,159,0.3)",
                               color: currentTab === tab.key ? PG.tabActiveTxt : PG.tabActive,
@@ -1201,7 +1201,7 @@ export default function PublicPedigreePage() {
         {/* ─── Footer ─── */}
         <footer className="text-center py-8 mt-8" style={{ borderTop: "1px solid #D6CEBF" }}>
           <div className="flex items-center justify-center gap-2 mb-3">
-            <img src={LOGO} alt="Logo" className="w-6 h-6 rounded-full" style={{ background: "#C9B29F", padding: "1px" }} />
+            <img src={LOGO} alt="Logo" className="w-6 h-6 rounded-lg" style={{ background: "#C9B29F", padding: "1px" }} />
             <span style={{
               fontFamily: PG.font, fontWeight: 700, fontSize: "14px",
               color: PG.text,

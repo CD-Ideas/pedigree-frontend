@@ -29,7 +29,7 @@ interface MarketplaceResponse {
 }
 
 /* ─── Constants ─── */
-const LOGO = "https://i.imgur.com/yOXvfAY.png";
+const LOGO = "https://i.imgur.com/svXPGXg.png";
 
 const CATEGORIES = [
   { key: "dogs_for_sale", label: "Dogs for Sale", icon: "\uD83D\uDC15", color: "#ef4444", tag: "HOT" },
@@ -104,7 +104,7 @@ function AdCard({ ad, index }: { ad: MarketplaceAd; index: number }) {
         {/* Category badge */}
         {cat && (
           <div
-            className="absolute top-2.5 left-2.5 flex items-center gap-1 px-2 py-1 rounded-full"
+            className="absolute top-2.5 left-2.5 flex items-center gap-1 px-2 py-1 rounded-lg"
             style={{
               background: "#FAF7F2",
               border: "2px solid #C9B29F",
@@ -122,7 +122,7 @@ function AdCard({ ad, index }: { ad: MarketplaceAd; index: number }) {
 
         {/* Views badge */}
         <div
-          className="absolute top-2.5 right-2.5 flex items-center gap-1 px-2 py-0.5 rounded-full"
+          className="absolute top-2.5 right-2.5 flex items-center gap-1 px-2 py-0.5 rounded-lg"
           style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}
         >
           <span className="text-[9px]" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
@@ -133,7 +133,7 @@ function AdCard({ ad, index }: { ad: MarketplaceAd; index: number }) {
         {/* Verified */}
         {ad.is_verified && (
           <div
-            className="absolute bottom-2.5 right-2.5 flex items-center gap-1 px-2 py-0.5 rounded-full"
+            className="absolute bottom-2.5 right-2.5 flex items-center gap-1 px-2 py-0.5 rounded-lg"
             style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}
           >
             <span className="text-[9px] font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-body)" }}>
@@ -167,7 +167,7 @@ function AdCard({ ad, index }: { ad: MarketplaceAd; index: number }) {
         {ad.username && (
           <div className="flex items-center gap-1.5 mb-1.5">
             <div
-              className="w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-bold flex-shrink-0"
+              className="w-4 h-4 rounded-lg flex items-center justify-center text-[8px] font-bold flex-shrink-0"
               style={{ background: "#C9B29F", color: "#1C1C1C" }}
             >
               {ad.username.charAt(0).toUpperCase()}
@@ -628,7 +628,7 @@ export default function MarketplacePage() {
                 style={{ color: "#6B7280", fontFamily: "var(--font-body)" }}
               >
                 <div
-                  className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin"
+                  className="w-5 h-5 rounded-lg border-2 border-t-transparent animate-spin"
                   style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }}
                 />
                 Loading ads...
@@ -769,7 +769,7 @@ export default function MarketplacePage() {
       {/* ─── Footer ─── */}
       <footer className="text-center py-6" style={{ borderTop: "2px solid #C9B29F" }}>
         <div className="flex items-center justify-center gap-2 mb-2">
-          <img src={LOGO} alt="Logo" className="w-5 h-5 rounded-full" style={{ background: "#C9B29F", padding: "1px" }} />
+          <img src={LOGO} alt="Logo" className="w-5 h-5 rounded-lg" style={{ background: "#C9B29F", padding: "1px" }} />
           <span
             style={{
               fontFamily: "var(--font-body)",

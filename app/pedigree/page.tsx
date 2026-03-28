@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 
-const LOGO = "https://i.imgur.com/yOXvfAY.png";
+const LOGO = "https://i.imgur.com/svXPGXg.png";
 
 interface DogResult {
   id: number;
@@ -92,7 +92,7 @@ export default function PedigreeHub() {
       <nav className="sticky top-0 z-50 px-4 md:px-6 py-3 flex items-center justify-between"
            style={{ background: "#FAF7F2", borderBottom: "2px solid #C9B29F" }}>
         <Link href="/" className="flex items-center gap-3">
-          <img src={LOGO} alt="Logo" className="w-8 h-8 rounded-full" style={{ background: "#C9B29F", padding: "2px" }} />
+          <img src={LOGO} alt="Logo" className="w-8 h-8 rounded-lg" style={{ background: "#C9B29F", padding: "2px" }} />
           <span style={{
             fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "1.1rem",
             color: "#1C1C1C",
@@ -118,7 +118,7 @@ export default function PedigreeHub() {
       <section className="relative px-4 md:px-6 pt-12 pb-8">
         <div className="relative max-w-3xl mx-auto text-center">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <img src={LOGO} alt="Logo" className="w-14 h-14 rounded-full" style={{ background: "#C9B29F", padding: "3px" }} />
+            <img src={LOGO} alt="Logo" className="w-14 h-14 rounded-lg" style={{ background: "#C9B29F", padding: "3px" }} />
           </div>
           <h1 style={{
             fontFamily: "var(--font-table)", fontSize: "clamp(1.8rem, 5vw, 3rem)", fontWeight: 700,
@@ -170,7 +170,7 @@ export default function PedigreeHub() {
               { label: "Females", value: "FEMALE" },
             ].map((f) => (
               <button key={f.value} onClick={() => setSexFilter(f.value)}
-                className="px-4 py-1.5 rounded-full text-xs font-semibold transition-all"
+                className="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all"
                 style={{
                   fontFamily: "var(--font-table)",
                   background: sexFilter === f.value ? "#1C1C1C" : "#FAF7F2",
@@ -191,7 +191,7 @@ export default function PedigreeHub() {
             {loading ? (
               <div className="flex items-center justify-center py-16">
                 <div className="flex items-center gap-3" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
-                  <div className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin"
+                  <div className="w-5 h-5 rounded-lg border-2 border-t-transparent animate-spin"
                        style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} />
                   Searching...
                 </div>
@@ -254,7 +254,7 @@ export default function PedigreeHub() {
                           </h3>
                           <div className="flex items-center gap-2 mt-1.5">
                             {dog.color && (
-                              <span className="text-[10px] px-2 py-0.5 rounded-full"
+                              <span className="text-[10px] px-2 py-0.5 rounded-lg"
                                 style={{ background: "#FAFAFA", color: "#6B7280", fontFamily: "var(--font-table)", border: "1px solid #C9B29F" }}>
                                 {dog.color}
                               </span>
@@ -339,7 +339,7 @@ export default function PedigreeHub() {
                       border: "2px solid #C9B29F",
                       borderRadius: "10px",
                     }}>
-                    <div className="w-16 h-16 rounded-full mx-auto mb-3 flex items-center justify-center text-2xl"
+                    <div className="w-16 h-16 rounded-lg mx-auto mb-3 flex items-center justify-center text-2xl"
                       style={{
                         background: isMale ? "rgba(29,91,191,0.08)" : "rgba(159,18,57,0.08)",
                         border: `2px solid ${isMale ? "#1d5bbf" : "#9f1239"}`,
@@ -423,7 +423,7 @@ export default function PedigreeHub() {
       {/* Footer */}
       <footer className="text-center py-8 mt-4" style={{ borderTop: "2px solid #C9B29F" }}>
         <div className="flex items-center justify-center gap-2 mb-3">
-          <img src={LOGO} alt="Logo" className="w-6 h-6 rounded-full" style={{ background: "#C9B29F", padding: "1px" }} />
+          <img src={LOGO} alt="Logo" className="w-6 h-6 rounded-lg" style={{ background: "#C9B29F", padding: "1px" }} />
           <span style={{
             fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "14px",
             color: "#1C1C1C",

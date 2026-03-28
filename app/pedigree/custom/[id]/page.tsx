@@ -42,7 +42,7 @@ interface TreeRow {
   sex: string | null;
 }
 
-const LOGO = "https://i.imgur.com/yOXvfAY.png";
+const LOGO = "https://i.imgur.com/svXPGXg.png";
 
 /* ─── Helpers ─── */
 
@@ -51,10 +51,10 @@ function getXWColor(name: string): string | null {
   const match = nameUpper.match(/\b(\d+)X[WL]\b/);
   if (!match) return null;
   const num = parseInt(match[1]);
-  if (num === 1) return "#2dd4bf";
-  if (num === 2) return "#fb923c";
-  if (num === 4) return "#f472b6";
-  if (num >= 5) return "#c084fc";
+  if (num === 1) return "#0d7468";
+  if (num === 2) return "#b45a0a";
+  if (num === 4) return "#b03878";
+  if (num >= 5) return "#6d30b0";
   return null;
 }
 
@@ -198,9 +198,9 @@ function PedigreeSearch() {
                style={{ borderBottom: "1px solid #C9B29F" }}>
               {d.photo_url ? (
                 <img src={d.photo_url.startsWith("http") ? d.photo_url : `https://www.apbt.online-pedigrees.com/${d.photo_url}`}
-                     alt="" className="w-8 h-8 rounded-full object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} />
+                     alt="" className="w-8 h-8 rounded-lg object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} />
               ) : (
-                <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm"
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 text-sm"
                      style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}>🐕</div>
               )}
               <span className="text-sm font-semibold truncate" style={{ color: getDogColor(d.registered_name), fontFamily: "var(--font-table)" }}>
@@ -369,7 +369,7 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
                         }}
                       >
                         {isChampion && (
-                          <span className="absolute -top-0.5 -right-0.5 flex items-center justify-center rounded-full" style={{
+                          <span className="absolute -top-0.5 -right-0.5 flex items-center justify-center rounded-lg" style={{
                             fontSize: "9px", color: "#C9B29F",
                             background: "rgba(201,178,159,0.2)",
                             width: "15px", height: "15px",
@@ -503,9 +503,9 @@ export default function PublishedPedigreePage() {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: "#FAFAFA" }}>
         <div className="flex flex-col items-center gap-4">
-          <img src={LOGO} alt="Logo" className="w-12 h-12 rounded-full animate-pulse" style={{ background: "#C9B29F", padding: "2px" }} />
+          <img src={LOGO} alt="Logo" className="w-12 h-12 rounded-lg animate-pulse" style={{ background: "#C9B29F", padding: "2px" }} />
           <div className="flex items-center gap-3" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
-            <div className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} />
+            <div className="w-5 h-5 rounded-lg border-2 border-t-transparent animate-spin" style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} />
             Loading pedigree...
           </div>
         </div>
@@ -551,9 +551,9 @@ export default function PublishedPedigreePage() {
         .glow-gold { transition: border-color 0.3s ease; }
         .glow-gold:hover { border-color: #C9B29F !important; }
         .glow-blue { transition: border-color 0.3s ease; }
-        .glow-blue:hover { border-color: #60a5fa !important; }
+        .glow-blue:hover { border-color: #C9B29F !important; }
         .glow-pink { transition: border-color 0.3s ease; }
-        .glow-pink:hover { border-color: #f472b6 !important; }
+        .glow-pink:hover { border-color: #C9B29F !important; }
         .glow-teal { transition: border-color 0.3s ease; }
         .glow-teal:hover { border-color: #2dd4bf !important; }
       `}</style>
@@ -581,15 +581,15 @@ export default function PublishedPedigreePage() {
               {displayName}
             </h1>
             <div className="flex items-center justify-center gap-2 mt-1">
-              <span className="text-[10px] px-2 py-0.5 rounded-full" style={{
+              <span className="text-[10px] px-2 py-0.5 rounded-lg" style={{
                 background: "rgba(201,178,159,0.15)", color: "#1C1C1C",
                 fontFamily: "var(--font-mono)", border: "2px solid #C9B29F",
               }}>
                 Community Pedigree
               </span>
               {ped.creator_username && (
-                <span className="text-[10px] px-2 py-0.5 rounded-full" style={{
-                  background: "rgba(96,165,250,0.12)", color: "#60a5fa",
+                <span className="text-[10px] px-2 py-0.5 rounded-lg" style={{
+                  background: "rgba(201,178,159,0.12)", color: "#1C1C1C",
                   fontFamily: "var(--font-table)", border: "1px solid rgba(96,165,250,0.3)",
                 }}>
                   by {ped.creator_username}
@@ -598,7 +598,7 @@ export default function PublishedPedigreePage() {
               {isOwner && (
                 <>
                   <Link href={`/pedigree-lab?edit=${ped.id}`}
-                    className="text-[10px] px-2 py-0.5 rounded-full font-semibold transition-all hover:scale-105"
+                    className="text-[10px] px-2 py-0.5 rounded-lg font-semibold transition-all hover:scale-105"
                     style={{
                       background: "rgba(34,197,94,0.12)", color: "#22c55e",
                       fontFamily: "var(--font-table)", border: "1px solid rgba(34,197,94,0.3)",
@@ -607,7 +607,7 @@ export default function PublishedPedigreePage() {
                   </Link>
                   <button
                     onClick={() => setShowDeleteConfirm(true)}
-                    className="text-[10px] px-2 py-0.5 rounded-full font-semibold transition-all hover:scale-105"
+                    className="text-[10px] px-2 py-0.5 rounded-lg font-semibold transition-all hover:scale-105"
                     style={{
                       background: "rgba(239,68,68,0.12)", color: "#ef4444",
                       fontFamily: "var(--font-table)", border: "1px solid rgba(239,68,68,0.3)",
@@ -730,7 +730,7 @@ export default function PublishedPedigreePage() {
               </div>
               <span className="text-sm font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Pedigree</span>
               {tree.length > 0 && (
-                <span className="text-[10px] px-2 py-0.5 rounded-full font-medium" style={{
+                <span className="text-[10px] px-2 py-0.5 rounded-lg font-medium" style={{
                   background: "rgba(201,178,159,0.15)",
                   color: "#1C1C1C",
                   fontFamily: "var(--font-mono)",
@@ -785,7 +785,7 @@ export default function PublishedPedigreePage() {
                     Journal
                   </span>
                 </div>
-                <span className="text-[9px] px-2 py-0.5 rounded-full" style={{
+                <span className="text-[9px] px-2 py-0.5 rounded-lg" style={{
                   background: "rgba(220,38,38,0.12)", color: "#ef4444",
                   fontFamily: "var(--font-table)", border: "1px solid rgba(220,38,38,0.3)",
                 }}>
@@ -876,7 +876,7 @@ export default function PublishedPedigreePage() {
         {/* ─── Footer ─── */}
         <footer className="text-center py-8 mt-8" style={{ borderTop: "2px solid #C9B29F" }}>
           <div className="flex items-center justify-center gap-2 mb-3">
-            <img src={LOGO} alt="Logo" className="w-6 h-6 rounded-full" style={{ background: "#C9B29F", padding: "1px" }} />
+            <img src={LOGO} alt="Logo" className="w-6 h-6 rounded-lg" style={{ background: "#C9B29F", padding: "1px" }} />
             <span style={{
               fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "14px",
               background: "#1C1C1C", 

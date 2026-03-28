@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { getDogColor } from "@/app/utils/colors";
 
-const LOGO = "https://i.imgur.com/yOXvfAY.png";
+const LOGO = "https://i.imgur.com/svXPGXg.png";
 
 
 interface FamousDog { id: number; name: string; photo_url: string | null; view_count: number; }

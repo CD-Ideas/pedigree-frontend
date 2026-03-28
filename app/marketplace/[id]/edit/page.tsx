@@ -36,7 +36,7 @@ interface MarketplaceAd {
 }
 
 /* ─── Constants ─── */
-const LOGO = "https://i.imgur.com/yOXvfAY.png";
+const LOGO = "https://i.imgur.com/svXPGXg.png";
 
 const CATEGORIES = [
   { key: "dogs_for_sale", label: "Dogs for Sale", icon: "\uD83D\uDC15", color: "#ef4444" },
@@ -318,7 +318,7 @@ export default function EditAdPage() {
       <div className="min-h-screen flex items-center justify-center" style={{ background: "#FAFAFA" }}>
         <div className="flex items-center gap-3" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
           <div
-            className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin"
+            className="w-5 h-5 rounded-lg border-2 border-t-transparent animate-spin"
             style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }}
           />
           Loading ad...
@@ -846,7 +846,7 @@ export default function EditAdPage() {
                     <button
                       type="button"
                       onClick={() => removePhoto(i)}
-                      className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold transition-all opacity-0 group-hover:opacity-100 hover:scale-110"
+                      className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-lg flex items-center justify-center text-[10px] font-bold transition-all opacity-0 group-hover:opacity-100 hover:scale-110"
                       style={{
                         background: "rgba(239,68,68,0.9)",
                         color: "#fff",
@@ -882,7 +882,7 @@ export default function EditAdPage() {
                 {uploading ? (
                   <div className="flex flex-col items-center gap-2">
                     <span
-                      className="w-6 h-6 rounded-full border-2 border-t-transparent animate-spin"
+                      className="w-6 h-6 rounded-lg border-2 border-t-transparent animate-spin"
                       style={{ borderColor: "rgba(201,178,159,0.5)", borderTopColor: "transparent" }}
                     />
                     <span className="text-xs" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
@@ -1108,7 +1108,7 @@ export default function EditAdPage() {
             {submitting ? (
               <span className="flex items-center justify-center gap-2">
                 <span
-                  className="w-4 h-4 rounded-full border-2 border-t-transparent animate-spin"
+                  className="w-4 h-4 rounded-lg border-2 border-t-transparent animate-spin"
                   style={{ borderColor: "#000", borderTopColor: "transparent" }}
                 />
                 Saving...
@@ -1123,7 +1123,7 @@ export default function EditAdPage() {
       {/* ─── Footer ─── */}
       <footer className="text-center py-6 mt-4" style={{ borderTop: "2px solid #C9B29F" }}>
         <div className="flex items-center justify-center gap-2 mb-2">
-          <img src={LOGO} alt="Logo" className="w-5 h-5 rounded-full" style={{ background: "#C9B29F", padding: "1px" }} />
+          <img src={LOGO} alt="Logo" className="w-5 h-5 rounded-lg" style={{ background: "#C9B29F", padding: "1px" }} />
           <span
             style={{
               fontFamily: "var(--font-table)",

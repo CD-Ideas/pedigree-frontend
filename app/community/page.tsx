@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getDogColor } from "@/app/utils/colors";
 
-const LOGO = "https://i.imgur.com/yOXvfAY.png";
+const LOGO = "https://i.imgur.com/svXPGXg.png";
 
 interface CommunityPedigree {
   id: number;
@@ -147,7 +147,7 @@ export default function CommunityPedigreesPage() {
               className="text-[10px] px-3 py-1 rounded-full"
               style={{
                 background: "rgba(96,165,250,0.1)",
-                color: "#60a5fa",
+                color: "#1d5bbf",
                 border: "1px solid rgba(96,165,250,0.2)",
                 fontFamily: "var(--font-mono)",
               }}
@@ -255,7 +255,7 @@ export default function CommunityPedigreesPage() {
                         <span
                           className="text-[9px] font-bold"
                           style={{
-                            color: "#60a5fa",
+                            color: "#1d5bbf",
                             fontFamily: "var(--font-table)",
                           }}
                         >
@@ -276,7 +276,7 @@ export default function CommunityPedigreesPage() {
                       </p>
                       <p className="text-[10px]" style={{ color: "#6B7280" }}>
                         <span
-                          style={{ color: isMale ? "#60a5fa" : "#f472b6" }}
+                          style={{ color: isMale ? "#1d5bbf" : "#9f1239" }}
                         >
                           {isMale ? "♂" : "♀"}
                         </span>

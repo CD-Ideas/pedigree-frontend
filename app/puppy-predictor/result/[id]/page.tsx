@@ -128,9 +128,9 @@ export default function PredictionResultPage() {
             LITTER COLOR PREDICTION
           </h1>
           <div className="flex items-center justify-center gap-3 text-sm" style={{ fontFamily: "var(--font-table)" }}>
-            <span style={{ color: "#60a5fa" }}>♂ {data.sire_name || "Sire"}</span>
+            <span style={{ color: "#1d5bbf" }}>♂ {data.sire_name || "Sire"}</span>
             <span style={{ color: "#64748b" }}>×</span>
-            <span style={{ color: "#f472b6" }}>♀ {data.dam_name || "Dam"}</span>
+            <span style={{ color: "#9f1239" }}>♀ {data.dam_name || "Dam"}</span>
           </div>
           <p className="text-[10px]" style={{ color: "#64748b", fontFamily: "var(--font-mono)" }}>
             Created {new Date(data.created_at).toLocaleDateString()}
@@ -140,8 +140,8 @@ export default function PredictionResultPage() {
         {/* Genotypes */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {[
-            { label: "Sire Genotype", geno: data.sire_genotype, color: "#60a5fa", icon: "♂" },
-            { label: "Dam Genotype", geno: data.dam_genotype, color: "#f472b6", icon: "♀" },
+            { label: "Sire Genotype", geno: data.sire_genotype, color: "#1d5bbf", icon: "♂" },
+            { label: "Dam Genotype", geno: data.dam_genotype, color: "#9f1239", icon: "♀" },
           ].map(g => (
             <div key={g.label} className="rounded-lg p-3 space-y-1" style={{
               background: "#FAF7F2",

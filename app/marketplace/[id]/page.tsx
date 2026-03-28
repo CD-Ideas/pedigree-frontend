@@ -29,7 +29,7 @@ interface MarketplaceAd {
 }
 
 /* ─── Constants ─── */
-const LOGO = "https://i.imgur.com/yOXvfAY.png";
+const LOGO = "https://i.imgur.com/svXPGXg.png";
 
 const CATEGORIES: Record<string, { label: string; icon: string; color: string }> = {
   dogs_for_sale: { label: "Dogs for Sale", icon: "\uD83D\uDC15", color: "#ef4444" },
@@ -155,7 +155,7 @@ export default function MarketplaceAdPage() {
       <div className="min-h-screen flex items-center justify-center" style={{ background: "#FAFAFA" }}>
         <div className="flex items-center gap-3" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
           <div
-            className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin"
+            className="w-5 h-5 rounded-lg border-2 border-t-transparent animate-spin"
             style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }}
           />
           Loading ad...
@@ -244,7 +244,7 @@ export default function MarketplaceAdPage() {
                 className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg "
                 style={{ background: "rgba(250,247,242,0.9)", border: "2px solid #C9B29F" }}
               >
-                <img src={LOGO} alt="" className="w-4 h-4 rounded-full" style={{ background: "#C9B29F", padding: "1px" }} />
+                <img src={LOGO} alt="" className="w-4 h-4 rounded-lg" style={{ background: "#C9B29F", padding: "1px" }} />
                 <span
                   className="text-[9px] font-bold"
                   style={{
@@ -419,7 +419,7 @@ export default function MarketplaceAdPage() {
               {/* Category badge */}
               {cat && (
                 <div
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full mb-3"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg mb-3"
                   style={{ background: `${cat.color}18`, border: `1px solid ${cat.color}33` }}
                 >
                   <span className="text-xs">{cat.icon}</span>
@@ -448,7 +448,7 @@ export default function MarketplaceAdPage() {
               {/* Verified badge */}
               {!!ad.is_verified && (
                 <div
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full mb-3"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg mb-3"
                   style={{ background: "rgba(34,197,94,0.12)", border: "1px solid rgba(34,197,94,0.3)" }}
                 >
                   <span className="text-xs">{"\u2713"}</span>
@@ -930,7 +930,7 @@ export default function MarketplaceAdPage() {
       {/* ─── Footer ─── */}
       <footer className="text-center py-6 mt-8" style={{ borderTop: "2px solid #C9B29F" }}>
         <div className="flex items-center justify-center gap-2 mb-2">
-          <img src={LOGO} alt="Logo" className="w-5 h-5 rounded-full" style={{ background: "#C9B29F", padding: "1px" }} />
+          <img src={LOGO} alt="Logo" className="w-5 h-5 rounded-lg" style={{ background: "#C9B29F", padding: "1px" }} />
           <span
             style={{
               fontFamily: "var(--font-table)",

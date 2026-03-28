@@ -18,7 +18,7 @@ interface Dog {
   dam_name: string | null;
 }
 
-const LOGO = "https://i.imgur.com/yOXvfAY.png";
+const LOGO = "https://i.imgur.com/svXPGXg.png";
 
 const TC: Record<string, string> = {
   "GR CH": "#1d5bbf", CH: "#c02828", ROM: "#0d7468", POR: "#6d30b0",
@@ -89,7 +89,7 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
 
         {/* Sex badge */}
         <div className="absolute top-1.5 right-1.5">
-          <span className="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold"
+          <span className="w-6 h-6 rounded-lg flex items-center justify-center text-[10px] font-bold"
             style={{
               background: isMale ? "#1d5bbf" : "#9f1239",
               color: "#fff",
@@ -135,13 +135,13 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
         <div className="space-y-0.5">
           {dog.sire_name && (
             <div className="flex items-center gap-1 text-[9px]" style={{ fontFamily: "var(--font-table)" }}>
-              <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: "#1d5bbf" }} />
+              <span className="w-1 h-1 rounded-lg flex-shrink-0" style={{ background: "#1d5bbf" }} />
               <span className="truncate" style={{ color: "#1d5bbf" }}>{dog.sire_name}</span>
             </div>
           )}
           {dog.dam_name && (
             <div className="flex items-center gap-1 text-[9px]" style={{ fontFamily: "var(--font-table)" }}>
-              <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: "#9f1239" }} />
+              <span className="w-1 h-1 rounded-lg flex-shrink-0" style={{ background: "#9f1239" }} />
               <span className="truncate" style={{ color: "#9f1239" }}>{dog.dam_name}</span>
             </div>
           )}
@@ -262,7 +262,7 @@ export default function PublicDogsPage() {
       <nav className="sticky top-0 z-50 px-4 md:px-6 py-2.5 flex items-center justify-between"
         style={{ background: "#FAF7F2", borderBottom: "2px solid #C9B29F" }}>
         <Link href="/" className="flex items-center gap-2.5">
-          <img src={LOGO} alt="Logo" className="w-7 h-7 rounded-full" style={{ background: "#C9B29F", padding: "1px" }} />
+          <img src={LOGO} alt="Logo" className="w-7 h-7 rounded-lg" style={{ background: "#C9B29F", padding: "1px" }} />
           <span style={{
             fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "1rem",
             color: "#1C1C1C",
@@ -442,7 +442,7 @@ export default function PublicDogsPage() {
               }}>
               ⚙ Sort
               {activeFilters > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-bold"
+                <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-lg flex items-center justify-center text-[8px] font-bold"
                   style={{ background: "#1d5bbf", color: "#fff" }}>
                   {activeFilters}
                 </span>
@@ -530,7 +530,7 @@ export default function PublicDogsPage() {
               </div>
             ) : (
               <div className="flex items-center justify-center gap-3" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
-                <div className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin"
+                <div className="w-5 h-5 rounded-lg border-2 border-t-transparent animate-spin"
                   style={{ borderColor: "#1d5bbf", borderTopColor: "transparent" }} />
                 Loading dogs...
               </div>
@@ -651,7 +651,7 @@ export default function PublicDogsPage() {
       {/* ─── Footer ─── */}
       <footer className="text-center py-6" style={{ borderTop: "2px solid #C9B29F" }}>
         <div className="flex items-center justify-center gap-2 mb-2">
-          <img src={LOGO} alt="Logo" className="w-5 h-5 rounded-full" style={{ background: "#C9B29F", padding: "1px" }} />
+          <img src={LOGO} alt="Logo" className="w-5 h-5 rounded-lg" style={{ background: "#C9B29F", padding: "1px" }} />
           <span style={{
             fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "12px",
             color: "#1C1C1C",

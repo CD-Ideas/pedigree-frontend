@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { getDogColor } from "@/app/utils/colors";
 import { playNotifChime, playMessagePop } from "@/app/sounds";
 
-const LOGO = "https://i.imgur.com/yOXvfAY.png";
+const LOGO = "https://i.imgur.com/svXPGXg.png";
 
 
 function NavSearch() {
@@ -91,9 +91,9 @@ function NavSearch() {
                 style={{ borderBottom: "1px solid #C9B29F" }}
               >
                 {photoSrc ? (
-                  <img src={photoSrc} alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "1px solid #C9B29F" }} />
+                  <img src={photoSrc} alt="" className="w-6 h-6 rounded-lg object-cover flex-shrink-0" style={{ border: "1px solid #C9B29F" }} />
                 ) : (
-                  <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-[10px]"
+                  <div className="w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0 text-[10px]"
                        style={{ background: "#FAFAFA", border: "1px solid #C9B29F" }}>🐕</div>
                 )}
                 <span className="font-semibold truncate" style={{ color: getDogColor(r.registered_name), fontFamily: "var(--font-table)" }}>
@@ -120,9 +120,9 @@ function NavSearch() {
                     style={{ borderBottom: "1px solid #C9B29F" }}
                   >
                     {photoSrc ? (
-                      <img src={photoSrc} alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "1px solid #C9B29F" }} />
+                      <img src={photoSrc} alt="" className="w-6 h-6 rounded-lg object-cover flex-shrink-0" style={{ border: "1px solid #C9B29F" }} />
                     ) : (
-                      <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-[10px]"
+                      <div className="w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0 text-[10px]"
                            style={{ background: "#FAFAFA", border: "1px solid #C9B29F" }}>🐕</div>
                     )}
                     <span className="font-semibold truncate" style={{ color: getDogColor(r.registered_name), fontFamily: "var(--font-table)" }}>
@@ -349,7 +349,7 @@ export default function NavBar() {
     >
       <div className="max-w-[1600px] mx-auto px-6 flex items-center justify-between h-14 overflow-visible">
         <Link href="/" className="flex items-center gap-3">
-          <img src={LOGO} alt="Logo" className="w-8 h-8 rounded-full" style={{ background: "#C9B29F", padding: "2px" }} />
+          <img src={LOGO} alt="Logo" className="w-8 h-8 rounded-lg" style={{ background: "#C9B29F", padding: "2px" }} />
           <span
             style={{
               fontFamily: "var(--font-display)",
@@ -457,7 +457,7 @@ export default function NavBar() {
                   <path d="M13.73 21a2 2 0 0 1-3.46 0" />
                 </svg>
                 {unreadCount > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-1 rounded-full flex items-center justify-center text-[9px] font-bold"
+                  <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-1 rounded-lg flex items-center justify-center text-[9px] font-bold"
                     style={{
                       background: "#ef4444",
                       color: "#fff",
@@ -593,8 +593,8 @@ export default function NavBar() {
                             </div>
                             {group.hasUnread && (
                               <div className="flex items-center gap-1 flex-shrink-0 mt-1.5">
-                                {group.count > 1 && <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full" style={{ background: "rgba(201,178,159,0.2)", color: "#1C1C1C" }}>{group.count}</span>}
-                                <div className="w-2 h-2 rounded-full" style={{ background: "#C9B29F" }} />
+                                {group.count > 1 && <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-lg" style={{ background: "rgba(201,178,159,0.2)", color: "#1C1C1C" }}>{group.count}</span>}
+                                <div className="w-2 h-2 rounded-lg" style={{ background: "#C9B29F" }} />
                               </div>
                             )}
                             <button
@@ -634,7 +634,7 @@ export default function NavBar() {
                 }}
               >
                 <span
-                  className={`flex items-center justify-center text-xs font-bold relative cursor-pointer overflow-hidden flex-shrink-0 ${userPicture && !userPicture.startsWith("emoji:") ? "rounded-lg" : "rounded-full w-7 h-7"}`}
+                  className={`flex items-center justify-center text-xs font-bold relative cursor-pointer overflow-hidden flex-shrink-0 ${userPicture && !userPicture.startsWith("emoji:") ? "rounded-lg" : "rounded-lg w-7 h-7"}`}
                   style={{ background: userPicture?.startsWith("emoji:") ? "#1C1C1C" : userPicture ? "transparent" : "#C9B29F", color: "#FAF7F2", border: "2px solid #C9B29F", ...(userPicture && !userPicture.startsWith("emoji:") ? { width: "32px", height: "24px" } : {}) }}
                   onClick={(e) => { e.stopPropagation(); setShowAvatarPicker(!showAvatarPicker); }}
                   title="Click to change profile picture"
@@ -647,8 +647,8 @@ export default function NavBar() {
                     (userName || "U")[0].toUpperCase()
                   )}
                   {avatarUploading && (
-                    <span className="absolute inset-0 flex items-center justify-center rounded-full" style={{ background: "rgba(0,0,0,0.6)" }}>
-                      <span className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin" />
+                    <span className="absolute inset-0 flex items-center justify-center rounded-lg" style={{ background: "rgba(0,0,0,0.6)" }}>
+                      <span className="w-3 h-3 border border-white border-t-transparent rounded-lg animate-spin" />
                     </span>
                   )}
                 </span>
@@ -673,7 +673,7 @@ export default function NavBar() {
                         onClick={() => { setShowAvatarPicker(false); avatarInputRef.current?.click(); }}
                         className="w-full flex items-center gap-3 px-4 py-3 transition-colors hover:bg-[#C9B29F]/10"
                         style={{ borderBottom: "1px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)", fontSize: "0.8rem" }}>
-                        <span className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: "rgba(201,178,159,0.15)", border: "1px solid #C9B29F" }}>📷</span>
+                        <span className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "rgba(201,178,159,0.15)", border: "1px solid #C9B29F" }}>📷</span>
                         Upload Photo
                       </button>
                       {/* Avatar Grid */}
@@ -683,7 +683,7 @@ export default function NavBar() {
                             key={av.id}
                             onClick={() => handleAvatarSelect(av.emoji)}
                             title={av.label}
-                            className="w-9 h-9 rounded-full flex items-center justify-center text-lg transition-all hover:scale-110 hover:bg-[#C9B29F]/10"
+                            className="w-9 h-9 rounded-lg flex items-center justify-center text-lg transition-all hover:scale-110 hover:bg-[#C9B29F]/10"
                             style={{
                               background: userPicture === `emoji:${av.emoji}` ? "rgba(201,178,159,0.25)" : "#FAFAFA",
                               border: userPicture === `emoji:${av.emoji}` ? "2px solid #C9B29F" : "1px solid #C9B29F",

@@ -21,7 +21,7 @@ interface MarketplaceAd {
 }
 
 /* ─── Constants ─── */
-const LOGO = "https://i.imgur.com/yOXvfAY.png";
+const LOGO = "https://i.imgur.com/svXPGXg.png";
 
 const CATEGORIES: Record<string, { label: string; icon: string; color: string }> = {
   dogs_for_sale: { label: "Dogs for Sale", icon: "\uD83D\uDC15", color: "#ef4444" },
@@ -114,7 +114,7 @@ export default function MyAdsPage() {
         }}
       >
         <Link href="/" className="flex items-center gap-2.5">
-          <img src={LOGO} alt="Logo" className="w-7 h-7 rounded-full" style={{ background: "#C9B29F", padding: "1px" }} />
+          <img src={LOGO} alt="Logo" className="w-7 h-7 rounded-lg" style={{ background: "#C9B29F", padding: "1px" }} />
           <span
             style={{
               fontFamily: "var(--font-table)",
@@ -173,7 +173,7 @@ export default function MyAdsPage() {
           {/* Stats */}
           <div className="flex items-center gap-3">
             <span
-              className="text-[10px] px-3 py-1 rounded-full"
+              className="text-[10px] px-3 py-1 rounded-lg"
               style={{
                 background: "rgba(201,178,159,0.1)",
                 color: "#1C1C1C",
@@ -204,7 +204,7 @@ export default function MyAdsPage() {
           <div className="flex items-center justify-center py-16">
             <div className="flex items-center gap-3" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
               <div
-                className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin"
+                className="w-5 h-5 rounded-lg border-2 border-t-transparent animate-spin"
                 style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }}
               />
               Loading your ads...
@@ -279,7 +279,7 @@ export default function MyAdsPage() {
                             {/* Category badge */}
                             {cat && (
                               <span
-                                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold"
+                                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[9px] font-bold"
                                 style={{
                                   background: `${cat.color}18`,
                                   color: cat.color,
@@ -293,7 +293,7 @@ export default function MyAdsPage() {
 
                             {/* Status badge */}
                             <span
-                              className="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider"
+                              className="inline-flex items-center px-2 py-0.5 rounded-lg text-[9px] font-bold uppercase tracking-wider"
                               style={{
                                 background: statusStyle.bg,
                                 color: statusStyle.color,
@@ -392,7 +392,7 @@ export default function MyAdsPage() {
       {/* ─── Footer ─── */}
       <footer className="text-center py-6 mt-4" style={{ borderTop: "2px solid #C9B29F" }}>
         <div className="flex items-center justify-center gap-2 mb-2">
-          <img src={LOGO} alt="Logo" className="w-5 h-5 rounded-full" style={{ background: "#C9B29F", padding: "1px" }} />
+          <img src={LOGO} alt="Logo" className="w-5 h-5 rounded-lg" style={{ background: "#C9B29F", padding: "1px" }} />
           <span
             style={{
               fontFamily: "var(--font-table)",

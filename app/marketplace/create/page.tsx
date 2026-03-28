@@ -14,7 +14,7 @@ interface DogSearchResult {
 }
 
 /* ─── Constants ─── */
-const LOGO = "https://i.imgur.com/yOXvfAY.png";
+const LOGO = "https://i.imgur.com/svXPGXg.png";
 
 const GLASS_BOX = {
   background: "#FAF7F2",
@@ -392,7 +392,7 @@ function CreateAdContent() {
               }}
             >
               <div
-                className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
+                className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold"
                 style={{
                   background: "#1C1C1C",
                   color: "#fff", 
@@ -595,7 +595,7 @@ function CreateAdContent() {
                       >
                         {dog.photo_url && (
                           <img src={dog.photo_url.startsWith("http") ? dog.photo_url : `https://www.apbt.online-pedigrees.com/${dog.photo_url}`}
-                            alt="" className="w-6 h-6 rounded-full object-cover" />
+                            alt="" className="w-6 h-6 rounded-lg object-cover" />
                         )}
                         <span style={{ color: getDogColor(dog.registered_name), fontFamily: "var(--font-table)", fontWeight: 600 }}>
                           {dog.registered_name}
@@ -794,7 +794,7 @@ function CreateAdContent() {
                         <button
                           type="button"
                           onClick={() => removePhoto(i)}
-                          className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold transition-all opacity-0 group-hover:opacity-100 hover:scale-110"
+                          className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-lg flex items-center justify-center text-[10px] font-bold transition-all opacity-0 group-hover:opacity-100 hover:scale-110"
                           style={{
                             background: "rgba(239,68,68,0.9)",
                             color: "#fff",
@@ -839,7 +839,7 @@ function CreateAdContent() {
                 {uploading ? (
                   <div className="flex flex-col items-center gap-2">
                     <span
-                      className="w-6 h-6 rounded-full border-2 border-t-transparent animate-spin"
+                      className="w-6 h-6 rounded-lg border-2 border-t-transparent animate-spin"
                       style={{ borderColor: "rgba(201,178,159,0.5)", borderTopColor: "transparent" }}
                     />
                     <span className="text-xs" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
@@ -1067,7 +1067,7 @@ function CreateAdContent() {
             {submitting ? (
               <span className="flex items-center justify-center gap-2">
                 <span
-                  className="w-4 h-4 rounded-full border-2 border-t-transparent animate-spin"
+                  className="w-4 h-4 rounded-lg border-2 border-t-transparent animate-spin"
                   style={{ borderColor: "#000", borderTopColor: "transparent" }}
                 />
                 Posting...
@@ -1082,7 +1082,7 @@ function CreateAdContent() {
       {/* ─── Footer ─── */}
       <footer className="text-center py-6 mt-4" style={{ borderTop: "2px solid #C9B29F" }}>
         <div className="flex items-center justify-center gap-2 mb-2">
-          <img src={LOGO} alt="Logo" className="w-5 h-5 rounded-full" style={{ background: "#C9B29F", padding: "1px" }} />
+          <img src={LOGO} alt="Logo" className="w-5 h-5 rounded-lg" style={{ background: "#C9B29F", padding: "1px" }} />
           <span
             style={{
               fontFamily: "var(--font-table)",

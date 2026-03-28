@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-const LOGO = "https://i.imgur.com/yOXvfAY.png";
+const LOGO = "https://i.imgur.com/svXPGXg.png";
 
 /* removed unused dynamic component */
 function _REMOVED() { return null; }
@@ -25,7 +25,7 @@ function _BreedingCalcPreview_UNUSED() {
     } catch (_e) {}
   }, []);
 
-  const PIE_COLORS = ["#fc8181", "#C9B29F", "#fb923c", "#6B7280", "#22c55e", "#f97316", "#ec4899", "#14b8a6"];
+  const PIE_COLORS = ["#c02828", "#3a3a3a", "#b45a0a", "#8a6518", "#0d7468", "#b03878", "#6d30b0", "#0d7468"];
 
   /* Use stored data or fallback to static example */
   const isLive = !!data;
@@ -179,7 +179,7 @@ function _BreedingCalcPreview_UNUSED() {
                   { step: "3", text: "Results light up" },
                 ].map((s, i) => (
                   <div key={i} className="flex-1 flex items-center gap-1.5">
-                    <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0"
+                    <div className="w-5 h-5 rounded-lg flex items-center justify-center flex-shrink-0"
                       style={{ background: "#1C1C1C", fontSize: "9px", fontWeight: 700, fontFamily: "var(--font-body)", color: "#FAF7F2" }}>
                       {s.step}
                     </div>
@@ -345,7 +345,7 @@ export default function Home() {
         {/* ── Hero ── */}
         <section className="relative flex items-center justify-center px-4" style={{ minHeight: "26vh", paddingTop: "45px" }}>
           <div className="relative max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-4 md:gap-8 animate-reveal">
-            <img src={LOGO} alt="Pedigree Platform" width={200} height={200} className="rounded-full flex-shrink-0 w-[110px] h-[110px] md:w-[180px] md:h-[180px]" style={{ background: "#C9B29F", padding: "8px" }} />
+            <img src={LOGO} alt="Pedigree Platform" width={200} height={200} className="rounded-lg flex-shrink-0 w-[110px] h-[110px] md:w-[180px] md:h-[180px]" style={{ background: "#C9B29F", padding: "8px" }} />
             <div className="text-center md:text-left">
               <h1 style={{ fontFamily: "var(--font-body)", fontSize: "clamp(1.2rem, 3.5vw, 2.2rem)", fontWeight: 500, lineHeight: 1.1, color: "#1C1C1C" }} className="mb-1.5">
                 The Ultimate <span style={{ color: "#C9B29F" }}>Pedigree Hub</span>
@@ -484,34 +484,34 @@ export default function Home() {
                 </div>
                 <div className="flex justify-center">
                   <svg width="180" height="180" viewBox="0 0 220 220">
-                    <circle cx="110" cy="110" r="85" fill="none" stroke="#fc8181" strokeWidth="45"
+                    <circle cx="110" cy="110" r="85" fill="none" stroke="#c02828" strokeWidth="45"
                       strokeDasharray={`${31 * 5.34} ${100 * 5.34}`} strokeDashoffset="0"
                       transform="rotate(-90 110 110)" />
-                    <circle cx="110" cy="110" r="85" fill="none" stroke="#C9B29F" strokeWidth="45"
+                    <circle cx="110" cy="110" r="85" fill="none" stroke="#3a3a3a" strokeWidth="45"
                       strokeDasharray={`${22 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(31) * 5.34}`}
                       transform="rotate(-90 110 110)" />
-                    <circle cx="110" cy="110" r="85" fill="none" stroke="#fb923c" strokeWidth="45"
+                    <circle cx="110" cy="110" r="85" fill="none" stroke="#3a3a3a" strokeWidth="45"
                       strokeDasharray={`${15 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(31 + 22) * 5.34}`}
                       transform="rotate(-90 110 110)" />
-                    <circle cx="110" cy="110" r="85" fill="none" stroke="#6B7280" strokeWidth="45"
+                    <circle cx="110" cy="110" r="85" fill="none" stroke="#3a3a3a" strokeWidth="45"
                       strokeDasharray={`${12 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(31 + 22 + 15) * 5.34}`}
                       transform="rotate(-90 110 110)" />
-                    <circle cx="110" cy="110" r="85" fill="none" stroke="rgba(120,120,140,0.5)" strokeWidth="45"
+                    <circle cx="110" cy="110" r="85" fill="none" stroke="rgba(58,58,58,0.5)" strokeWidth="45"
                       strokeDasharray={`${20 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(31 + 22 + 15 + 12) * 5.34}`}
                       transform="rotate(-90 110 110)" />
                     <circle cx="110" cy="110" r="62" fill="#FAFAFA" />
                     <text x="110" y="100" textAnchor="middle" fill="#1C1C1C" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "22px" }}>31%</text>
-                    <text x="110" y="118" textAnchor="middle" fill="#fc8181" style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "10px", letterSpacing: "0.05em" }}>JEEP DOMINANT</text>
+                    <text x="110" y="118" textAnchor="middle" fill="#c02828" style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "10px", letterSpacing: "0.05em" }}>JEEP DOMINANT</text>
                     <text x="110" y="134" textAnchor="middle" fill="#6B7280" style={{ fontFamily: "var(--font-body)", fontWeight: 400, fontSize: "9px" }}>4-gen analysis</text>
                   </svg>
                 </div>
                 <div className="grid grid-cols-2 gap-x-3 gap-y-1 mt-2">
                   {[
-                    { name: "CH Jeep", pct: "31%", color: "#fc8181" },
-                    { name: "Red Boy", pct: "22%", color: "#C9B29F" },
-                    { name: "Eli Jr", pct: "15%", color: "#fb923c" },
-                    { name: "Carver", pct: "12%", color: "#6B7280" },
-                    { name: "Other", pct: "20%", color: "rgba(120,120,140,0.7)" },
+                    { name: "CH Jeep", pct: "31%", color: "#c02828" },
+                    { name: "Red Boy", pct: "22%", color: "#3a3a3a" },
+                    { name: "Eli Jr", pct: "15%", color: "#3a3a3a" },
+                    { name: "Carver", pct: "12%", color: "#3a3a3a" },
+                    { name: "Other", pct: "20%", color: "rgba(58,58,58,0.5)" },
                   ].map((b, i) => (
                     <div key={i} className="flex items-center gap-2">
                       <div className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ background: b.color }} />
@@ -581,7 +581,7 @@ export default function Home() {
                       { step: "3", text: "Results light up" },
                     ].map((s, i) => (
                       <div key={i} className="flex-1 flex items-center gap-1.5">
-                        <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0"
+                        <div className="w-5 h-5 rounded-lg flex items-center justify-center flex-shrink-0"
                           style={{ background: "#1C1C1C", fontSize: "9px", fontWeight: 700, fontFamily: "var(--font-body)", color: "#FAF7F2" }}>
                           {s.step}
                         </div>
@@ -705,7 +705,7 @@ export default function Home() {
               {/* Brand */}
               <div className="flex flex-col items-center md:items-start gap-1.5">
                 <div className="flex items-center gap-2">
-                  <img src={LOGO} alt="" width={24} height={24} className="rounded-full" style={{ background: "#C9B29F", padding: "1px" }} />
+                  <img src={LOGO} alt="" width={24} height={24} className="rounded-lg" style={{ background: "#C9B29F", padding: "1px" }} />
                   <span style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "11px", color: "#1C1C1C", textTransform: "uppercase", letterSpacing: "0.1em" }}>Pedigree Platform</span>
                 </div>
                 <p style={{ fontFamily: "var(--font-body)", fontSize: "10px", color: "#6B7280", maxWidth: "240px", lineHeight: 1.5 }} className="text-center md:text-left">
@@ -783,7 +783,7 @@ export default function Home() {
             onClick={e => e.stopPropagation()}>
             {/* Close button */}
             <button onClick={() => setAuthModal(false)}
-              className="absolute top-3 right-3 w-7 h-7 flex items-center justify-center rounded-full"
+              className="absolute top-3 right-3 w-7 h-7 flex items-center justify-center rounded-lg"
               style={{ background: "#EDE4D5", border: "2px solid #C9B29F", color: "#6B7280", fontSize: "14px", cursor: "pointer", transition: "all 0.2s" }}
               onMouseEnter={e => { e.currentTarget.style.color = "#1C1C1C"; e.currentTarget.style.borderColor = "#1C1C1C"; }}
               onMouseLeave={e => { e.currentTarget.style.color = "#6B7280"; e.currentTarget.style.borderColor = "#C9B29F"; }}>
@@ -791,7 +791,7 @@ export default function Home() {
             </button>
             {/* Logo */}
             <div className="text-center mb-5">
-              <img src={LOGO} alt="Pedigree Platform" width={64} height={64} className="rounded-full mx-auto mb-3" style={{ background: "#C9B29F", padding: "4px" }} />
+              <img src={LOGO} alt="Pedigree Platform" width={64} height={64} className="rounded-lg mx-auto mb-3" style={{ background: "#C9B29F", padding: "4px" }} />
               <h3 style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "18px", color: "#1C1C1C", letterSpacing: "0.02em" }}>
                 Sign in to continue
               </h3>

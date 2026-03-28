@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { getDogColor } from "@/app/utils/colors";
 
-const LOGO = "https://i.imgur.com/yOXvfAY.png";
+const LOGO = "https://i.imgur.com/svXPGXg.png";
 
 interface PedigreeItem {
   id: number;
@@ -277,7 +277,7 @@ export default function MyPedigreesPage() {
                         {displayName}
                       </p>
                       <p className="text-[10px]" style={{ color: "#6B7280" }}>
-                        <span style={{ color: isMale ? "#60a5fa" : "#f472b6" }}>{isMale ? "♂" : "♀"}</span>
+                        <span style={{ color: isMale ? "#1d5bbf" : "#9f1239" }}>{isMale ? "♂" : "♀"}</span>
                         {p.color && <span> · {p.color}</span>}
                         {p.country && <span> · {p.country}</span>}
                       </p>
@@ -306,7 +306,7 @@ export default function MyPedigreesPage() {
                         ))}
                         {journal.worming?.length > 0 && (
                           <span className="text-[9px] px-1.5 py-0.5 rounded-full"
-                            style={{ background: "rgba(96,165,250,0.1)", color: "#60a5fa", border: "1px solid rgba(96,165,250,0.2)", fontFamily: "var(--font-table)" }}>
+                            style={{ background: "rgba(96,165,250,0.1)", color: "#1d5bbf", border: "1px solid rgba(96,165,250,0.2)", fontFamily: "var(--font-table)" }}>
                             💊 {journal.worming.length} worming
                           </span>
                         )}

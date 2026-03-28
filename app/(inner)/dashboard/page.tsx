@@ -182,7 +182,12 @@ export default function Dashboard() {
       );
     }
     if (pp) {
-      return <img src={pp} alt="" className="rounded-2xl object-cover" style={{ border: "3px solid #C9B29F", width: "120px", height: "90px" }} onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />;
+      return (
+        <div className={`${size} rounded-full flex items-center justify-center overflow-hidden`}
+          style={{ background: "#FAF7F2", border: "3px solid #C9B29F" }}>
+          <img src={pp} alt="" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; const parent = e.currentTarget.parentElement; if (parent) parent.innerHTML = `<span class="${textSize}" style="color:#C9B29F">📷</span>`; }} />
+        </div>
+      );
     }
     return (
       <div className={`${size} rounded-full flex items-center justify-center font-bold`}
