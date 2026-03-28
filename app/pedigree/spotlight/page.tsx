@@ -30,7 +30,7 @@ const SORT_OPTIONS = [
 const TITLE_COLORS: Record<string, string> = {
   "GR CH": "#60a5fa", "CH": "#fc8181", "ROM": "#22d3ee", "POR": "#a78bfa",
   "7XW": "#c084fc", "6XW": "#c084fc", "5XW": "#c084fc", "4XW": "#f472b6",
-  "3XW": "#d4a855", "2XW": "#fb923c", "1XW": "#2dd4bf",
+  "3XW": "#8a6518", "2XW": "#fb923c", "1XW": "#2dd4bf",
   "3XL": "#2dd4bf", "2XL": "#fb923c", "1XL": "#2dd4bf",
 };
 

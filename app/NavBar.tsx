@@ -355,7 +355,7 @@ export default function NavBar() {
               fontFamily: "var(--font-display)",
               fontWeight: 700,
               fontSize: "1.25rem",
-              color: "#FAF7F2",
+              color: "#C9B29F",
               letterSpacing: "0.02em",
             }}
           >
@@ -385,7 +385,7 @@ export default function NavBar() {
             style={{
               color: "#1C1C1C",
               fontFamily: "var(--font-table, system-ui, sans-serif)",
-              background: "rgba(201,178,159,0.15)",
+              background: "transparent",
               border: "1px solid #C9B29F",
             }}
           >
@@ -447,8 +447,8 @@ export default function NavBar() {
                 onClick={() => { setShowNotifications(!showNotifications); setDropdownOpen(false); }}
                 className="relative px-2.5 py-1.5 rounded-lg transition-all"
                 style={{
-                  background: "#C9B29F",
-                  border: "1px solid #C9B29F",
+                  background: "#FAFAFA",
+                  border: "2px solid #C9B29F",
                 }}
                 title="Notifications"
               >

@@ -319,7 +319,7 @@ export default function EditAdPage() {
         <div className="flex items-center gap-3" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
           <div
             className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin"
-            style={{ borderColor: "#e8c86e", borderTopColor: "transparent" }}
+            style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }}
           />
           Loading ad...
         </div>

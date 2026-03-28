@@ -969,7 +969,7 @@ function PedigreeLabInner() {
                                 className="absolute -top-0.5 -right-0.5 flex items-center justify-center rounded-full"
                                 style={{
                                   fontSize: 9,
-                                  color: "#b8860b",
+                                  color: "#C9B29F",
                                   background: "#fef3c7",
                                   width: 15,
                                   height: 15,

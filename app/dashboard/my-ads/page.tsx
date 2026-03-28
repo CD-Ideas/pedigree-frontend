@@ -108,9 +108,9 @@ export default function MyAdsPage() {
       <nav
         className="sticky top-0 z-50 px-4 md:px-6 py-2.5 flex items-center justify-between"
         style={{
-          background: "rgba(11,17,32,0.95)",
+          background: "#FAF7F2",
           
-          borderBottom: "1px solid var(--border, rgba(30,64,120,0.3))",
+          borderBottom: "1px solid #C9B29F",
         }}
       >
         <Link href="/" className="flex items-center gap-2.5">
@@ -205,7 +205,7 @@ export default function MyAdsPage() {
             <div className="flex items-center gap-3" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
               <div
                 className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin"
-                style={{ borderColor: "#e8c86e", borderTopColor: "transparent" }}
+                style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }}
               />
               Loading your ads...
             </div>
@@ -234,7 +234,6 @@ export default function MyAdsPage() {
                 fontFamily: "var(--font-table)",
                 letterSpacing: "0.04em",
                 textTransform: "uppercase",
-                boxShadow: "0 4px 20px rgba(212,168,85,0.2)",
               }}
             >
               + Create Your First Ad

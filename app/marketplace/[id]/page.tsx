@@ -156,7 +156,7 @@ export default function MarketplaceAdPage() {
         <div className="flex items-center gap-3" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
           <div
             className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin"
-            style={{ borderColor: "#e8c86e", borderTopColor: "transparent" }}
+            style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }}
           />
           Loading ad...
         </div>
@@ -270,7 +270,7 @@ export default function MarketplaceAdPage() {
                     style={{
                       border:
                         selectedPhoto === i
-                          ? "2px solid #e8c86e"
+                          ? "2px solid #C9B29F"
                           : "2px solid rgba(30,64,120,0.3)",
                       opacity: selectedPhoto === i ? 1 : 0.6,
                     }}
@@ -465,7 +465,7 @@ export default function MarketplaceAdPage() {
               <div
                 className="text-2xl font-black mb-4"
                 style={{
-                  color: ad.price !== null && ad.price !== undefined ? "#e8c86e" : "#5a6a82",
+                  color: ad.price !== null && ad.price !== undefined ? "#C9B29F" : "#5a6a82",
                   fontFamily: "var(--font-mono)",
                 }}
               >

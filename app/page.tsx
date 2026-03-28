@@ -390,7 +390,7 @@ export default function Home() {
                 { icon: "🌳", title: "Pedigree Trees", desc: "Multi-generation interactive lineage visualization", color: "#22c55e", glow: "0,200,80", redirect: "/pedigree/3" },
                 { icon: "📋", title: "Dog Registry", desc: "Detailed profiles with titles, weights & records", color: "#3b82f6", glow: "59,130,246", redirect: "/dogs" },
                 { icon: "🔗", title: "Easy Sharing", desc: "Share via WhatsApp, Telegram with rich previews", color: "#a855f7", glow: "168,85,247" },
-                { icon: "🏆", title: "Title Tracking", desc: "CH, GR CH, ROM tracking across generations", color: "#d4a855", glow: "212,168,85" },
+                { icon: "🏆", title: "Title Tracking", desc: "CH, GR CH, ROM tracking across generations", color: "#C9B29F", glow: "201,178,159" },
                 { icon: "🧬", title: "Puppy Predictor", desc: "Input sire + dam genotypes, predict litter coat colors & probabilities", color: "#ef4444", glow: "239,68,68", redirect: "/puppy-predictor" },
                 { icon: "👑", title: "Dog of the Month", desc: "Monthly photo contest with community voting & prizes", color: "#f97316", glow: "249,115,22", redirect: "/dog-of-the-month" },
                 { icon: "🔦", title: "Lineage Spotlight", desc: "Search any legendary dog, trace descendants and find the tightest bloodlines ranked by blood %", color: "#1d8cf8", glow: "29,140,248", redirect: "/pedigree/spotlight" },
@@ -414,7 +414,7 @@ export default function Home() {
                     overflow: "hidden",
                   }}
                   onMouseEnter={e => {
-                    e.currentTarget.style.borderColor = f.color;
+                    e.currentTarget.style.borderColor = "#B8A08D";
                     e.currentTarget.style.transform = "translateY(-5px) scale(1.02)";
                   }}
                   onMouseLeave={e => {
@@ -624,7 +624,7 @@ export default function Home() {
                 { icon: "🍼", title: "Litters for Sale", desc: "Reserve puppies from planned breedings", color: "#f472b6", glow: "244,114,182", tag: "NEW", category: "litters_for_sale" },
                 { icon: "🎒", title: "Supplies & Gear", desc: "Premium products from trusted vendors", color: "#22c55e", glow: "34,197,94", tag: null, category: "supplies_gear" },
                 { icon: "🚚", title: "Courier Services", desc: "Licensed pet transport & delivery", color: "#60a5fa", glow: "96,165,250", tag: null, category: "courier_services" },
-                { icon: "📢", title: "Puppies Wanted", desc: "Post what you're looking for", color: "#e8c86e", glow: "212,168,85", tag: null, category: "puppies_wanted" },
+                { icon: "📢", title: "Puppies Wanted", desc: "Post what you're looking for", color: "#C9B29F", glow: "201,178,159", tag: null, category: "puppies_wanted" },
               ].map((m, i) => (
                 <div key={i} onClick={() => {
                   openAuth(`/marketplace?category=${m.category}`);
@@ -638,7 +638,7 @@ export default function Home() {
                     overflow: "hidden",
                   }}
                   onMouseEnter={e => {
-                    e.currentTarget.style.borderColor = m.color;
+                    e.currentTarget.style.borderColor = "#B8A08D";
                     e.currentTarget.style.transform = "translateY(-4px) scale(1.01)";
                   }}
                   onMouseLeave={e => {

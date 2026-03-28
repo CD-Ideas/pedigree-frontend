@@ -21,10 +21,10 @@ interface Dog {
 const LOGO = "https://i.imgur.com/cAvQemZ.png";
 
 const TC: Record<string, string> = {
-  "GR CH": "#b8860b", CH: "#1d5bbf", ROM: "#16a34a", POR: "#7c3aed",
-  "1XW": "#ea580c", "2XW": "#ea580c", "3XW": "#ea580c",
-  "4XW": "#dc2626", "5XW": "#dc2626", "6XW": "#dc2626",
-  "1XL": "#9f1239", "2XL": "#9f1239",
+  "GR CH": "#1d5bbf", CH: "#c02828", ROM: "#0d7468", POR: "#6d30b0",
+  "1XW": "#0d7468", "2XW": "#b45a0a", "3XW": "#8a6518",
+  "4XW": "#b03878", "5XW": "#6d30b0", "6XW": "#6d30b0",
+  "1XL": "#0d7468", "2XL": "#b45a0a",
 };
 
 const TITLE_PATTERNS = ["GR CH", "CH", "ROM", "POR", "1XW", "2XW", "3XW", "4XW", "5XW", "6XW", "1XL", "2XL", "3XL"];

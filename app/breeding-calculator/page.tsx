@@ -705,7 +705,7 @@ export default function BreedingCalculatorPage() {
                   <SectionHeader color="#6B7280">Bloodline Radar</SectionHeader>
                   <div className="space-y-2.5">
                     {bloodlines.slice(0, 8).map((bl, i) => {
-                      const colors = ["#d4a855", "#60a5fa", "#fc8181", "#4ade80", "#f472b6", "#fb923c", "#c084fc", "#22d3ee"];
+                      const colors = ["#8a6518", "#60a5fa", "#fc8181", "#4ade80", "#f472b6", "#fb923c", "#c084fc", "#22d3ee"];
                       const col = colors[i % colors.length];
                       return (
                         <div key={bl.name}>

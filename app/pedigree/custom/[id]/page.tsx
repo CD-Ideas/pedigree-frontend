@@ -370,7 +370,7 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
                       >
                         {isChampion && (
                           <span className="absolute -top-0.5 -right-0.5 flex items-center justify-center rounded-full" style={{
-                            fontSize: "9px", color: "#b8860b",
+                            fontSize: "9px", color: "#C9B29F",
                             background: "rgba(201,178,159,0.2)",
                             width: "15px", height: "15px",
                             border: "1px solid rgba(184,134,11,0.3)",
@@ -549,7 +549,7 @@ export default function PublishedPedigreePage() {
     <div className="min-h-screen" style={{ background: "#FAFAFA" }}>
       <style>{`
         .glow-gold { transition: border-color 0.3s ease; }
-        .glow-gold:hover { border-color: #d4a855 !important; }
+        .glow-gold:hover { border-color: #C9B29F !important; }
         .glow-blue { transition: border-color 0.3s ease; }
         .glow-blue:hover { border-color: #60a5fa !important; }
         .glow-pink { transition: border-color 0.3s ease; }
@@ -576,7 +576,7 @@ export default function PublishedPedigreePage() {
             <h1 style={{
               fontFamily: "var(--font-display)", fontWeight: 700,
               fontSize: "clamp(1rem, 2.5vw, 1.5rem)", letterSpacing: "0.02em",
-              color: hasTitles ? "var(--accent-gold, #d4a855)" : "var(--text-primary, #e2e8f0)",
+              color: hasTitles ? "#C9B29F" : "#1C1C1C",
             }}>
               {displayName}
             </h1>

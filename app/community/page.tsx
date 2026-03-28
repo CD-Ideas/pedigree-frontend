@@ -90,8 +90,7 @@ export default function CommunityPedigreesPage() {
               className="text-2xl font-black uppercase tracking-widest"
               style={{
                 fontFamily: "var(--font-display, Oswald, sans-serif)",
-                background:
-                  "linear-gradient(135deg, #d4a855 0%, #f5d994 50%, #d4a855 100%)",
+                background: "#C9B29F",
                 
                 
               }}
@@ -223,7 +222,7 @@ export default function CommunityPedigreesPage() {
                       className="absolute inset-0"
                       style={{
                         background:
-                          "linear-gradient(to top, rgba(11,17,32,0.95), transparent 70%)",
+                          "linear-gradient(to top, rgba(201,178,159,0.3), transparent 70%)",
                       }}
                     />
                     {/* View count */}

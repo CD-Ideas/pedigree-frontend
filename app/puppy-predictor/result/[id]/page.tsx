@@ -144,7 +144,7 @@ export default function PredictionResultPage() {
             { label: "Dam Genotype", geno: data.dam_genotype, color: "#f472b6", icon: "♀" },
           ].map(g => (
             <div key={g.label} className="rounded-lg p-3 space-y-1" style={{
-              background: "linear-gradient(180deg, rgba(30,30,30,0.85), rgba(22,22,22,0.9))",
+              background: "#FAF7F2",
               border: `1px solid ${g.color}30`,
             }}>
               <h3 className="text-xs font-bold" style={{ color: g.color, fontFamily: "var(--font-table)" }}>
@@ -163,7 +163,7 @@ export default function PredictionResultPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {results.map((r, i) => (
             <div key={i} className="rounded-xl p-4 transition-all hover:scale-[1.02]" style={{
-              background: "linear-gradient(180deg, rgba(30,30,30,0.85), rgba(22,22,22,0.9))",
+              background: "#FAF7F2",
               border: "2px solid #C9B29F", 
             }}>
               <div className="flex items-center gap-3 mb-3">
@@ -171,7 +171,6 @@ export default function PredictionResultPage() {
                 <div className="flex-1">
                   <div className="w-full h-10 rounded-lg relative overflow-hidden" style={{
                     background: getSwatchGradient(r.phenotype),
-                    boxShadow: "inset 0 2px 4px rgba(0,0,0,0.3)",
                   }}>
                     {r.phenotype.toLowerCase().includes("brindle") && (
                       <div className="absolute inset-0" style={{
@@ -187,7 +186,7 @@ export default function PredictionResultPage() {
               </div>
               <h3 className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-display)" }}>{r.phenotype}</h3>
               <div className="mt-2 w-full h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.05)" }}>
-                <div className="h-full rounded-full" style={{ width: `${r.percentage}%`, background: "linear-gradient(90deg, #e8c86e, #d4a855)" }} />
+                <div className="h-full rounded-full" style={{ width: `${r.percentage}%`, background: "#C9B29F" }} />
               </div>
               {r.carriers.length > 0 && (
                 <div className="mt-2 space-y-0.5">

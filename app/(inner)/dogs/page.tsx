@@ -23,10 +23,10 @@ interface Dog {
 }
 
 const TITLE_COLORS: Record<string, string> = {
-  "GR CH": "#1d5bbf", CH: "#c02828", ROM: "#0d7468", POR: "#a78bfa",
-  "1XW": "#2dd4bf", "2XW": "#fb923c", "3XW": "#d4a855",
-  "4XW": "#f472b6", "5XW": "#c084fc", "6XW": "#c084fc", "7XW": "#c084fc",
-  "1XL": "#2dd4bf", "2XL": "#fb923c", "3XL": "#d4a855",
+  "GR CH": "#1d5bbf", CH: "#c02828", ROM: "#0d7468", POR: "#6d30b0",
+  "1XW": "#0d7468", "2XW": "#b45a0a", "3XW": "#8a6518",
+  "4XW": "#b03878", "5XW": "#6d30b0", "6XW": "#6d30b0", "7XW": "#6d30b0",
+  "1XL": "#0d7468", "2XL": "#b45a0a", "3XL": "#8a6518",
 };
 
 const MALE_COLOR = "#1d5bbf";
