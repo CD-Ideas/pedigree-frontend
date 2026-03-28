@@ -9,7 +9,7 @@ const DB_PATH = "/home/ubuntu/apbt-scraper/apbt_v2.db";
 
 async function queryDb(script: string): Promise<any> {
   const { stdout } = await execFileAsync("python3", ["-c", script], {
-    timeout: 60000,
+    timeout: 120000,
     maxBuffer: 10 * 1024 * 1024,
   });
   return JSON.parse(stdout);
@@ -31,6 +31,7 @@ export async function GET(req: NextRequest) {
 
     const data = await queryDb(`
 import sqlite3, json, math, re
+from collections import defaultdict
 
 DB = "${DB_PATH}"
 TARGET_ID = ${dogId}
@@ -39,8 +40,7 @@ TO_YEAR = ${toYear}
 SORT = "${sort}"
 LIMIT = ${limit}
 
-conn = sqlite3.connect(DB, timeout=10)
-conn.row_factory = sqlite3.Row
+conn = sqlite3.connect(DB, timeout=15)
 cur = conn.cursor()
 
 # Get target dog info
@@ -51,48 +51,78 @@ if not target_row:
     conn.close()
     raise SystemExit(0)
 
-target = {"id": target_row["dog_id"], "name": target_row["registered_name"], "photo_url": target_row["photo_url"]}
+target = {"id": target_row[0], "name": target_row[1], "photo_url": target_row[2]}
 
-# Single optimized query: join pedigree_tree with dogs, filter by year in SQL
-cur.execute("""
-    SELECT d.dog_id, d.registered_name, d.photo_url, d.sex, d.birthdate,
-           d.owner, d.breeder, d.registration_number, d.css_class,
-           d.view_count, d.offspring_count, d.posted_date,
-           pt.generation, pt.position
-    FROM pedigree_tree pt
-    JOIN dogs d ON d.dog_id = pt.dog_id
-    WHERE pt.ancestor_id = ?
-      AND (d.birthdate IS NULL OR d.birthdate = ''
-           OR (CAST(SUBSTR(d.birthdate, 1, 4) AS INTEGER) >= ?
-               AND CAST(SUBSTR(d.birthdate, 1, 4) AS INTEGER) <= ?))
-""", (TARGET_ID, FROM_YEAR, TO_YEAR))
+# Step 1: Get all pedigree entries for this ancestor (fast with index)
+cur.execute("SELECT dog_id, generation, position FROM pedigree_tree WHERE ancestor_id = ?", (TARGET_ID,))
+entries = cur.fetchall()
 
-# Build desc_map and dog details in one pass
-desc_map = {}
-dog_details = {}
-for r in cur.fetchall():
-    did = r["dog_id"]
-    if did not in desc_map:
-        desc_map[did] = []
-        dog_details[did] = dict(r)
-    desc_map[did].append({"gen": r["generation"], "pos": r["position"]})
+if not entries:
+    print(json.dumps({"target": target, "results": [], "total": 0}))
+    conn.close()
+    raise SystemExit(0)
+
+# Step 2: Group by dog_id, calculate scores in Python (no JOIN needed)
+dog_entries = defaultdict(list)
+for dog_id, gen, pos in entries:
+    dog_entries[dog_id].append((gen, pos))
+
+scored_raw = []
+pow_cache = {g: 0.5 ** (g + 1) for g in range(1, 20)}
+bld_cache = {g: (0.5 ** g) * 100 for g in range(1, 20)}
+for did, appearances in dog_entries.items():
+    coi = sum(pow_cache.get(g, 0.5 ** (g + 1)) for g, p in appearances)
+    min_gen = min(g for g, p in appearances)
+    num_paths = len(appearances)
+    blood_pct = sum(bld_cache.get(g, (0.5 ** g) * 100) for g, p in appearances)
+    scored_raw.append((did, coi, min_gen, num_paths, blood_pct, appearances))
+
+# Sort
+if SORT == "closest":
+    scored_raw.sort(key=lambda x: (-x[1], x[2], -x[3]))
+elif SORT == "titles":
+    scored_raw.sort(key=lambda x: (-x[1],))  # pre-sort by COI, re-sort after fetching details
+elif SORT == "views":
+    scored_raw.sort(key=lambda x: (-x[1],))
+elif SORT == "recent":
+    scored_raw.sort(key=lambda x: (-x[1],))
+
+total = len(scored_raw)
+
+# For title/views/recent sort, we need more candidates to re-sort after fetching details
+fetch_limit = min(LIMIT * 5, total) if SORT in ("titles", "views", "recent") else LIMIT
+top_candidates = scored_raw[:fetch_limit]
+top_ids = [s[0] for s in top_candidates]
+
+# Step 3: Fetch dog details only for top candidates
+if top_ids:
+    placeholders = ",".join("?" * len(top_ids))
+    cur.execute(f"SELECT dog_id, registered_name, photo_url, sex, birthdate, owner, breeder, registration_number, css_class, view_count, offspring_count, posted_date FROM dogs WHERE dog_id IN ({placeholders})", top_ids)
+    details = {r[0]: r for r in cur.fetchall()}
+else:
+    details = {}
 
 conn.close()
 
-if not desc_map:
-    print(json.dumps({"target": target, "results": [], "total": 0}))
-    raise SystemExit(0)
-
-# Calculate scores
+# Step 4: Build results with details
 scored = []
-for did, appearances in desc_map.items():
-    d = dog_details[did]
-    num_paths = len(appearances)
-    min_gen = min(a["gen"] for a in appearances)
-    coi = sum(math.pow(0.5, a["gen"] + 1) for a in appearances)
-    blood_pct = sum(math.pow(0.5, a["gen"]) * 100 for a in appearances)
+for did, coi, min_gen, num_paths, blood_pct, appearances in top_candidates:
+    if did not in details:
+        continue
+    d = details[did]
+    # d = (dog_id, registered_name, photo_url, sex, birthdate, owner, breeder, registration_number, css_class, view_count, offspring_count, posted_date)
 
-    name = (d.get("registered_name") or "").upper()
+    # Year filter
+    bd = d[4] or ""
+    if bd and len(bd) >= 4:
+        try:
+            yr = int(bd[:4])
+            if yr < FROM_YEAR or yr > TO_YEAR:
+                continue
+        except:
+            pass
+
+    name = (d[1] or "").upper()
     titles = []
     if re.search(r'\\bGR\\s*CH\\b', name): titles.append("GR CH")
     if re.search(r'(?:^|\\s|\\()CH\\b', name): titles.append("CH")
@@ -104,9 +134,7 @@ for did, appearances in desc_map.items():
     if xl: titles.append(f"{xl.group(1)}XL")
 
     path_desc = []
-    for a in sorted(appearances, key=lambda x: x["gen"])[:5]:
-        g = a["gen"]
-        pos = a["pos"]
+    for g, pos in sorted(appearances, key=lambda x: x[0])[:5]:
         parts = pos.replace(f"G{g}_", "").split("_")
         readable = []
         for p in parts:
@@ -120,23 +148,23 @@ for did, appearances in desc_map.items():
     elif min_gen == 3: gen_label = "Great-grandchild"
     else: gen_label = f"{min_gen-2}x great-grandchild"
 
-    photo = d.get("photo_url")
+    photo = d[2]
     if photo and not photo.startswith("http"):
         photo = "https://www.apbt.online-pedigrees.com/" + photo
 
     scored.append({
         "id": did,
-        "name": d["registered_name"],
+        "name": d[1],
         "photo_url": photo,
-        "sex": d.get("sex"),
-        "birthdate": d.get("birthdate"),
-        "owner": d.get("owner"),
-        "breeder": d.get("breeder"),
-        "registration_number": d.get("registration_number"),
-        "css_class": d.get("css_class"),
-        "view_count": d.get("view_count") or 0,
-        "offspring_count": d.get("offspring_count") or 0,
-        "posted_date": d.get("posted_date"),
+        "sex": d[3],
+        "birthdate": d[4],
+        "owner": d[5],
+        "breeder": d[6],
+        "registration_number": d[7],
+        "css_class": d[8],
+        "view_count": d[9] or 0,
+        "offspring_count": d[10] or 0,
+        "posted_date": d[11],
         "num_paths": num_paths,
         "min_gen": min_gen,
         "coi": round(coi * 100, 4),
@@ -146,16 +174,14 @@ for did, appearances in desc_map.items():
         "lineage_paths": path_desc,
     })
 
-if SORT == "closest":
-    scored.sort(key=lambda x: (-x["coi"], x["min_gen"], -x["num_paths"]))
-elif SORT == "titles":
+# Re-sort if needed
+if SORT == "titles":
     scored.sort(key=lambda x: (-len(x["titles"]), -x["coi"]))
 elif SORT == "views":
     scored.sort(key=lambda x: (-x["view_count"], -x["coi"]))
 elif SORT == "recent":
     scored.sort(key=lambda x: (x.get("posted_date") or "", -x["coi"]), reverse=True)
 
-total = len(scored)
 scored = scored[:LIMIT]
 
 print(json.dumps({"target": target, "results": scored, "total": total}, default=str))
