@@ -11,7 +11,7 @@
 
   /* Text */
   --text-primary: #1C1C1C;
-  --text-secondary: #6B6B6B;
+  --text-secondary: #6B7280;
   --text-muted: #9CA3AF;
 
   /* Accent — sandy brown */
@@ -59,8 +59,8 @@ body {
 /* ---- CARDS ---- */
 .glass-card {
   background: var(--bg-surface);
-  border: 2px solid #EDE4D5;
-  border-radius: 8px;
+  border: 2px solid #C9B29F;
+  border-radius: 10px;
   transition: all 0.25s ease;
 }
 
@@ -70,8 +70,8 @@ body {
 
 .glass-card-elevated {
   background: var(--bg-elevated);
-  border: 2px solid #EDE4D5;
-  border-radius: 8px;
+  border: 2px solid #C9B29F;
+  border-radius: 10px;
   transition: all 0.25s ease;
 }
 

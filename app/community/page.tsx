@@ -99,7 +99,7 @@ export default function CommunityPedigreesPage() {
             </h1>
             <p
               className="text-xs mt-1"
-              style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
+              style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
             >
               Browse pedigrees created by the community
             </p>
@@ -122,7 +122,7 @@ export default function CommunityPedigreesPage() {
             />
             <span
               className="absolute right-3 top-1/2 -translate-y-1/2 text-sm"
-              style={{ color: "#6B6B6B" }}
+              style={{ color: "#6B7280" }}
             >
               🔍
             </span>
@@ -136,7 +136,7 @@ export default function CommunityPedigreesPage() {
             style={{
               background: "rgba(201,178,159,0.1)",
               color: "#1C1C1C",
-              border: "2px solid #EDE4D5",
+              border: "2px solid #C9B29F",
               fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
             }}
           >
@@ -163,7 +163,7 @@ export default function CommunityPedigreesPage() {
             <div
               className="flex items-center gap-3"
               style={{
-                color: "#6B6B6B",
+                color: "#6B7280",
                 fontFamily: "var(--font-table)",
               }}
             >
@@ -182,7 +182,7 @@ export default function CommunityPedigreesPage() {
             <div className="text-5xl mb-4 opacity-30">🐕</div>
             <p
               className="text-sm"
-              style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
+              style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
             >
               {search.trim()
                 ? "No pedigrees match your search"
@@ -204,8 +204,8 @@ export default function CommunityPedigreesPage() {
                   className="rounded-xl overflow-hidden transition-all hover:scale-[1.02] group"
                   style={{
                     background: "#FAF7F2",
-                    border: "2px solid #EDE4D5",
-                    borderRadius: "8px",
+                    border: "2px solid #C9B29F",
+                    borderRadius: "10px",
                   }}
                 >
                   {/* Photo header */}
@@ -229,7 +229,7 @@ export default function CommunityPedigreesPage() {
                       className="absolute top-2 right-2 flex items-center gap-1 px-2 py-0.5 rounded-full"
                       style={{
                         background: "rgba(250,247,242,0.9)",
-                        border: "1px solid #EDE4D5",
+                        border: "1px solid #C9B29F",
                       }}
                     >
                       <span
@@ -248,7 +248,7 @@ export default function CommunityPedigreesPage() {
                         className="absolute top-2 left-2 flex items-center gap-1 px-2 py-0.5 rounded-full"
                         style={{
                           background: "rgba(201,178,159,0.15)",
-                          border: "1px solid #EDE4D5",
+                          border: "1px solid #C9B29F",
                         }}
                       >
                         <span
@@ -273,7 +273,7 @@ export default function CommunityPedigreesPage() {
                       >
                         {displayName}
                       </p>
-                      <p className="text-[10px]" style={{ color: "#6B6B6B" }}>
+                      <p className="text-[10px]" style={{ color: "#6B7280" }}>
                         <span
                           style={{ color: isMale ? "#1d5bbf" : "#9f1239" }}
                         >
@@ -291,7 +291,7 @@ export default function CommunityPedigreesPage() {
                       <span
                         className="text-[10px]"
                         style={{
-                          color: "#6B6B6B",
+                          color: "#6B7280",
                           fontFamily: "var(--font-table)",
                         }}
                       >
@@ -300,7 +300,7 @@ export default function CommunityPedigreesPage() {
                       <span
                         className="text-[10px]"
                         style={{
-                          color: "#6B6B6B",
+                          color: "#6B7280",
                           fontFamily: "var(--font-mono)",
                         }}
                       >
@@ -317,7 +317,7 @@ export default function CommunityPedigreesPage() {
                           style={{
                             background: "rgba(201,178,159,0.1)",
                             color: "#1C1C1C",
-                            border: "2px solid #EDE4D5",
+                            border: "2px solid #C9B29F",
                             fontFamily: "var(--font-table)",
                           }}
                         >
@@ -346,7 +346,7 @@ export default function CommunityPedigreesPage() {
                         style={{
                           background: "rgba(201,178,159,0.1)",
                           color: "#1C1C1C",
-                          border: "2px solid #EDE4D5",
+                          border: "2px solid #C9B29F",
                           fontFamily: "var(--font-table)",
                         }}
                       >

@@ -159,7 +159,7 @@ export default function MyPedigreesPage() {
             }}>
             My Pedigrees
           </h1>
-          <p className="text-xs mt-1" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+          <p className="text-xs mt-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
             Manage your published pedigrees and journals
           </p>
         </div>
@@ -185,7 +185,7 @@ export default function MyPedigreesPage() {
                       style={{ color: getDogColor(r.dogName), fontFamily: "var(--font-table)" }}>
                       {r.dogName}
                     </Link>
-                    <span className="text-[10px]" style={{ color: "#6B6B6B" }}>—</span>
+                    <span className="text-[10px]" style={{ color: "#6B7280" }}>—</span>
                     <span className="text-xs" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{r.label}</span>
                   </div>
                   <div className="flex items-center gap-2">
@@ -211,7 +211,7 @@ export default function MyPedigreesPage() {
         {/* Pedigree Cards */}
         {loading ? (
           <div className="flex items-center justify-center py-16">
-            <div className="flex items-center gap-3" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+            <div className="flex items-center gap-3" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
               <div className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} />
               Loading your pedigrees...
             </div>
@@ -219,7 +219,7 @@ export default function MyPedigreesPage() {
         ) : pedigrees.length === 0 ? (
           <div className="text-center py-16">
             <div className="text-5xl mb-4 opacity-30">🐕</div>
-            <p className="text-sm mb-2" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+            <p className="text-sm mb-2" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
               No pedigrees published yet
             </p>
             <Link href="/pedigree-lab" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold transition-all hover:scale-105 mt-4"
@@ -257,7 +257,7 @@ export default function MyPedigreesPage() {
                     <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(201,178,159,0.3), transparent)" }} />
                     {/* View count */}
                     <div className="absolute top-2 right-2 flex items-center gap-1 px-2 py-0.5 rounded-full"
-                      style={{ background: "rgba(250,247,242,0.9)", border: "1px solid #EDE4D5" }}>
+                      style={{ background: "rgba(250,247,242,0.9)", border: "1px solid #C9B29F" }}>
                       <span className="text-[9px]" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
                         👁 {(p.view_count || 0).toLocaleString()}
                       </span>
@@ -276,7 +276,7 @@ export default function MyPedigreesPage() {
                       <p className="text-sm font-bold truncate" style={{ color: titleColor, fontFamily: "var(--font-table)" }}>
                         {displayName}
                       </p>
-                      <p className="text-[10px]" style={{ color: "#6B6B6B" }}>
+                      <p className="text-[10px]" style={{ color: "#6B7280" }}>
                         <span style={{ color: isMale ? "#1d5bbf" : "#9f1239" }}>{isMale ? "♂" : "♀"}</span>
                         {p.color && <span> · {p.color}</span>}
                         {p.country && <span> · {p.country}</span>}
@@ -287,10 +287,10 @@ export default function MyPedigreesPage() {
                   {/* Details */}
                   <div className="p-3 space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+                      <span className="text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                         Posted {formatDate(p.date_posted)}
                       </span>
-                      <span className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-mono)" }}>
+                      <span className="text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-mono)" }}>
                         ID: <span style={{ color: "#1C1C1C" }}>{p.id}</span>
                       </span>
                     </div>
@@ -316,7 +316,7 @@ export default function MyPedigreesPage() {
                     {/* Actions */}
                     <div className="flex items-center gap-2 pt-1">
                       <span className="text-[10px] px-2 py-1 rounded-lg font-semibold transition-all group-hover:scale-105"
-                        style={{ background: "rgba(201,178,159,0.1)", color: "#1C1C1C", border: "2px solid #EDE4D5", fontFamily: "var(--font-table)" }}>
+                        style={{ background: "rgba(201,178,159,0.1)", color: "#1C1C1C", border: "2px solid #C9B29F", fontFamily: "var(--font-table)" }}>
                         View
                       </span>
                       <span className="text-[10px] px-2 py-1 rounded-lg font-semibold"

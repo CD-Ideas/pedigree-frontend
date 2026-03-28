@@ -5,9 +5,9 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 
 const pgCard = {
-  border: "2px solid #EDE4D5",
+  border: "2px solid #C9B29F",
   background: "#FAF7F2",
-  borderRadius: "8px",
+  borderRadius: "10px",
 };
 
 interface ProfileUser {
@@ -196,7 +196,7 @@ export default function ProfilePage() {
           <span
             className="text-xs"
             style={{
-              color: "#6B6B6B",
+              color: "#6B7280",
               fontFamily: "var(--font-table)",
             }}
           >
@@ -225,7 +225,7 @@ export default function ProfilePage() {
           <p
             className="text-xs mb-4"
             style={{
-              color: "#6B6B6B",
+              color: "#6B7280",
               fontFamily: "var(--font-table)",
             }}
           >
@@ -237,8 +237,8 @@ export default function ProfilePage() {
             style={{
               background: "#FAF7F2",
               color: "#1C1C1C",
-              border: "2px solid #EDE4D5",
-              borderRadius: "8px",
+              border: "2px solid #C9B29F",
+              borderRadius: "10px",
               fontFamily: "var(--font-table)",
             }}
           >
@@ -276,7 +276,7 @@ export default function ProfilePage() {
                 style={{
                   background: "#FAF7F2",
                   color: "#1C1C1C",
-                  border: "2px solid #EDE4D5",
+                  border: "2px solid #C9B29F",
                   fontFamily: "var(--font-table)",
                 }}
               >
@@ -289,8 +289,8 @@ export default function ProfilePage() {
                     className="flex items-center gap-1.5 px-3 py-1 rounded-lg text-[11px] font-semibold transition-all hover:scale-105"
                     style={{
                       background: "#FAF7F2",
-                      border: "2px solid #EDE4D5",
-                      borderRadius: "8px",
+                      border: "2px solid #C9B29F",
+                      borderRadius: "10px",
                       color: "#1C1C1C",
                       fontFamily: "var(--font-table)",
                     }}
@@ -305,8 +305,8 @@ export default function ProfilePage() {
                     style={{
                       background: isBlocked ? "#FEF2F2" : "#FAF7F2",
                       border: `2px solid ${isBlocked ? "#ef4444" : "#C9B29F"}`,
-                      borderRadius: "8px",
-                      color: isBlocked ? "#ef4444" : "#6B6B6B",
+                      borderRadius: "10px",
+                      color: isBlocked ? "#ef4444" : "#6B7280",
                       fontFamily: "var(--font-table)",
                       opacity: blockLoading ? 0.5 : 1,
                     }}
@@ -323,13 +323,13 @@ export default function ProfilePage() {
               <span
                 className="w-2 h-2 rounded-full"
                 style={{
-                  background: online ? "#22c55e" : "#6B6B6B",
+                  background: online ? "#22c55e" : "#6B7280",
                 }}
               />
               <span
                 className="text-xs"
                 style={{
-                  color: online ? "#22c55e" : "#6B6B6B",
+                  color: online ? "#22c55e" : "#6B7280",
                   fontFamily: "var(--font-table)",
                 }}
               >
@@ -346,7 +346,7 @@ export default function ProfilePage() {
               <p
                 className="text-[11px] mt-2"
                 style={{
-                  color: "#6B6B6B",
+                  color: "#6B7280",
                   fontFamily: "var(--font-table)",
                 }}
               >
@@ -383,7 +383,7 @@ export default function ProfilePage() {
             <p
               className="text-xs"
               style={{
-                color: "#6B6B6B",
+                color: "#6B7280",
                 fontFamily: "var(--font-table)",
               }}
             >
@@ -397,7 +397,7 @@ export default function ProfilePage() {
                 key={ped.id}
                 href={`/pedigree/custom/${ped.id}`}
                 className="flex items-center justify-between px-3 py-2.5 rounded-lg transition-all group"
-                style={{ fontFamily: "var(--font-table)", borderRadius: "8px" }}
+                style={{ fontFamily: "var(--font-table)", borderRadius: "10px" }}
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <span className="text-base w-6 text-center">🧬</span>
@@ -410,7 +410,7 @@ export default function ProfilePage() {
                 </div>
                 <span
                   className="text-[10px] flex-shrink-0 ml-3"
-                  style={{ color: "#6B6B6B" }}
+                  style={{ color: "#6B7280" }}
                 >
                   {formatDate(ped.created_at)}
                 </span>
@@ -446,7 +446,7 @@ export default function ProfilePage() {
             <p
               className="text-xs"
               style={{
-                color: "#6B6B6B",
+                color: "#6B7280",
                 fontFamily: "var(--font-table)",
               }}
             >
@@ -460,7 +460,7 @@ export default function ProfilePage() {
                 key={ad.id}
                 href={`/marketplace/${ad.id}`}
                 className="flex items-center justify-between px-3 py-2.5 rounded-lg transition-all group"
-                style={{ fontFamily: "var(--font-table)", borderRadius: "8px" }}
+                style={{ fontFamily: "var(--font-table)", borderRadius: "10px" }}
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <span className="text-base w-6 text-center">🏷️</span>
@@ -483,7 +483,7 @@ export default function ProfilePage() {
                 </div>
                 <span
                   className="text-[10px] flex-shrink-0 ml-3"
-                  style={{ color: "#6B6B6B" }}
+                  style={{ color: "#6B7280" }}
                 >
                   {formatDate(ad.created_at)}
                 </span>
@@ -508,8 +508,8 @@ export default function ProfilePage() {
                 maxWidth: "90vw",
                 maxHeight: "85vh",
                 objectFit: "contain",
-                border: "2px solid #EDE4D5",
-                borderRadius: "8px",
+                border: "2px solid #C9B29F",
+                borderRadius: "10px",
               }}
             />
             <button
@@ -518,7 +518,7 @@ export default function ProfilePage() {
               style={{
                 background: "#FAF7F2",
                 color: "#1C1C1C",
-                border: "2px solid #EDE4D5",
+                border: "2px solid #C9B29F",
               }}
             >
               ✕

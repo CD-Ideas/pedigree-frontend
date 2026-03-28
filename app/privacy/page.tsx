@@ -3,7 +3,7 @@ export default function PrivacyPage() {
     <div className="min-h-screen px-4 py-20" style={{ background: "#EDE4D5" }}>
       <div className="max-w-3xl mx-auto">
         <h1 style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "2rem", color: "#1C1C1C" }} className="mb-6">Privacy Policy</h1>
-        <div style={{ fontFamily: "var(--font-table)", fontSize: "14px", color: "#6B6B6B", lineHeight: 1.8 }} className="space-y-5">
+        <div style={{ fontFamily: "var(--font-table)", fontSize: "14px", color: "#6B7280", lineHeight: 1.8 }} className="space-y-5">
           <p><strong style={{ color: "#1C1C1C" }}>Last updated:</strong> March 14, 2026</p>
 
           <h2 style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "1.1rem", color: "#1C1C1C" }}>1. Information We Collect</h2>
