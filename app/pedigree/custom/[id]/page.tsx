@@ -250,26 +250,27 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
     <div className="relative">
       {/* Controls bar */}
       <div className="absolute top-1 right-2 z-10 flex items-center gap-2">
-        <div className="flex items-center gap-1 rounded-lg p-1" style={{ background: "#1C1C1C" }}>
+        <div className="flex items-center gap-1 rounded-lg p-1" style={{ background: "#1C1C1C", borderRadius: "8px" }}>
           {[3, 4, 5].map((g) => (
             <button key={g} onClick={() => { setDisplayGens(g); setZoom(1); if (containerRef.current) containerRef.current.scrollLeft = 0; }}
-              className="px-3 py-1 rounded-md flex items-center justify-center text-xs font-bold transition-all hover:scale-105"
+              className="px-3 py-1 rounded-md flex items-center justify-center text-xs font-bold transition-all"
               style={{
                 background: displayGens === g ? "#C9B29F" : "transparent",
                 color: displayGens === g ? "#1C1C1C" : "#FAF7F2",
-                border: displayGens === g ? "2px solid #C9B29F" : "1px solid transparent",
+                border: "1px solid transparent",
                 fontFamily: "var(--font-table)",
                 letterSpacing: "0.03em",
+                borderRadius: "6px",
               }}>
               {g}G
             </button>
           ))}
         </div>
-        <div className="flex items-center gap-1 rounded-lg p-1" style={{ background: "#1C1C1C" }}>
-          <button onClick={() => setZoom((z) => Math.max(0.5, z - 0.1))} className="w-7 h-7 rounded-md flex items-center justify-center text-sm font-bold transition-all hover:scale-110 hover:bg-white/10" style={{ color: "#FAF7F2" }}>−</button>
-          <span className="text-xs px-1.5 font-bold" style={{ color: "#FAF7F2", fontFamily: "var(--font-mono)", minWidth: "36px", textAlign: "center" }}>{Math.round(zoom * 100)}%</span>
-          <button onClick={() => setZoom((z) => Math.min(1.5, z + 0.1))} className="w-7 h-7 rounded-md flex items-center justify-center text-sm font-bold transition-all hover:scale-110 hover:bg-white/10" style={{ color: "#FAF7F2" }}>+</button>
-          <button onClick={() => setZoom(1)} className="ml-0.5 px-2.5 py-1 rounded-md flex items-center justify-center text-[11px] font-bold transition-all hover:scale-105 hover:bg-white/10" style={{ color: "#FAF7F2", opacity: 0.7, fontFamily: "var(--font-table)" }}>Reset</button>
+        <div className="flex items-center gap-1 rounded-lg p-1" style={{ background: "#1C1C1C", borderRadius: "8px" }}>
+          <button onClick={() => setZoom((z) => Math.max(0.5, z - 0.1))} className="w-7 h-7 rounded-md flex items-center justify-center text-sm font-bold transition-all" style={{ color: "#FAF7F2" }}>−</button>
+          <span className="text-xs px-1.5 font-bold" style={{ color: "#C9B29F", fontFamily: "var(--font-table)", minWidth: "36px", textAlign: "center" }}>{Math.round(zoom * 100)}%</span>
+          <button onClick={() => setZoom((z) => Math.min(1.5, z + 0.1))} className="w-7 h-7 rounded-md flex items-center justify-center text-sm font-bold transition-all" style={{ color: "#FAF7F2" }}>+</button>
+          <button onClick={() => setZoom(1)} className="ml-0.5 px-2.5 py-1 rounded-md flex items-center justify-center text-[11px] font-bold transition-all" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)", opacity: 0.7 }}>Reset</button>
         </div>
       </div>
 
@@ -325,47 +326,59 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
                     const xwMatch = nameUpper.match(/\b(\d+)X[WL]\b/);
                     const xwNum = xwMatch ? parseInt(xwMatch[1]) : 0;
 
-                    const cellBg = isGrCh
+                    const isRom = /\bROM\b/.test(nameUpper);
+                    const isPor = /\bPOR\b/.test(nameUpper);
+                    const cellTint = isGrCh
                       ? "rgba(96,165,250,0.15)"
                       : isCh
                         ? "rgba(252,129,129,0.15)"
-                        : xwNum === 3
-                          ? "rgba(212,168,85,0.15)"
-                          : xwNum === 1
-                            ? "rgba(45,212,191,0.15)"
-                            : xwNum === 2
-                              ? "rgba(251,146,60,0.15)"
-                              : xwNum === 4
-                                ? "rgba(244,114,182,0.15)"
-                                : xwNum >= 5
-                                  ? "rgba(192,132,252,0.15)"
-                                  : "rgba(58,58,58,0.15)";
+                        : isRom
+                          ? "rgba(34,211,238,0.15)"
+                          : isPor
+                            ? "rgba(167,139,250,0.15)"
+                            : xwNum === 1
+                              ? "rgba(45,212,191,0.15)"
+                              : xwNum === 2
+                                ? "rgba(251,146,60,0.15)"
+                                : xwNum === 3
+                                  ? "rgba(212,168,85,0.15)"
+                                  : xwNum === 4
+                                    ? "rgba(244,114,182,0.15)"
+                                    : xwNum >= 5
+                                      ? "rgba(192,132,252,0.15)"
+                                      : "rgba(58,58,58,0.15)";
 
-                    const cellBorder = isGrCh ? "#1d5bbf"
+                    const cellBorderColor = isGrCh ? "#1d5bbf"
                       : isCh ? "#c02828"
-                        : xwNum === 3 ? "#8a6518"
-                          : xwNum === 1 ? "#0d7468"
-                            : xwNum === 2 ? "#b45a0a"
-                              : xwNum === 4 ? "#b03878"
-                                : xwNum >= 5 ? "#6d30b0"
-                                  : "#3a3a3a";
+                        : isRom ? "#0d7468"
+                          : isPor ? "#6d30b0"
+                            : xwNum === 1 ? "#0d7468"
+                              : xwNum === 2 ? "#b45a0a"
+                                : xwNum === 3 ? "#8a6518"
+                                  : xwNum === 4 ? "#b03878"
+                                    : xwNum >= 5 ? "#6d30b0"
+                                      : "#3a3a3a";
 
                     const cellTextColor = isGrCh ? "#1d5bbf"
                       : isCh ? "#c02828"
-                        : xwNum === 1 ? "#0d7468" : xwNum === 2 ? "#b45a0a" : xwNum === 3 ? "#8a6518"
-                          : xwNum === 4 ? "#b03878" : xwNum >= 5 ? "#6d30b0" : "#3a3a3a";
+                        : isRom ? "#0d7468"
+                          : isPor ? "#6d30b0"
+                            : xwNum === 1 ? "#0d7468" : xwNum === 2 ? "#b45a0a" : xwNum === 3 ? "#8a6518"
+                              : xwNum === 4 ? "#b03878" : xwNum >= 5 ? "#6d30b0" : "#3a3a3a";
 
                     const hasLink = !!a.dog_id;
 
                     return (
                       <div key={`${gen}-${i}`}
-                        className="flex-1 rounded-lg px-2.5 py-1.5 flex items-center group relative transition-all duration-200 hover:-translate-y-[1px]"
+                        className="flex-1 rounded-lg px-2.5 py-1.5 flex items-center group relative transition-all duration-200"
                         style={{
-                          background: cellBg,
-                          borderLeft: `4px solid ${cellBorder}`,
+                          background: `linear-gradient(135deg, ${cellTint}, #FAF7F2)`,
+                          border: "2px solid #EDE4D5",
+                          borderLeftColor: cellBorderColor,
+                          borderLeftWidth: "4px",
+                          borderRadius: "8px",
                           minHeight: cellMinH,
                           cursor: hasLink ? "pointer" : "default",
-                          borderTop: "1px solid #C9B29F",
                         }}
                       >
                         {isChampion && (
@@ -727,16 +740,15 @@ export default function PublishedPedigreePage() {
               <span className="text-sm font-semibold" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Pedigree</span>
               {tree.length > 0 && (
                 <span className="text-[10px] px-2 py-0.5 rounded-lg font-medium" style={{
-                  background: "#C9B29F",
-                  color: "#1C1C1C",
-                  fontFamily: "var(--font-mono)",
-                  border: "2px solid #C9B29F"
+                  background: "rgba(201,178,159,0.3)",
+                  color: "#C9B29F",
+                  fontFamily: "var(--font-table)",
                 }}>
                   {tree.length}
                 </span>
               )}
             </div>
-            <div className="flex items-center gap-3" style={{ fontFamily: "var(--font-mono)", fontSize: "10px", color: "#FAF7F2" }}>
+            <div className="flex items-center gap-3" style={{ fontFamily: "var(--font-table)", fontSize: "10px", color: "#C9B29F" }}>
               <span>👁 {((ped.view_count || 0) + 1).toLocaleString()} views</span>
             </div>
           </div>
