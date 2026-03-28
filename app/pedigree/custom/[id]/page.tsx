@@ -250,13 +250,13 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
     <div className="relative">
       {/* Controls bar */}
       <div className="absolute top-1 right-2 z-10 flex items-center gap-2">
-        <div className="flex items-center gap-1 rounded-lg p-1" style={{ background: "#FAF7F2", border: "2px solid #C9B29F",  }}>
+        <div className="flex items-center gap-1 rounded-lg p-1" style={{ background: "#1C1C1C" }}>
           {[3, 4, 5].map((g) => (
             <button key={g} onClick={() => { setDisplayGens(g); setZoom(1); if (containerRef.current) containerRef.current.scrollLeft = 0; }}
               className="px-3 py-1 rounded-md flex items-center justify-center text-xs font-bold transition-all hover:scale-105"
               style={{
-                background: displayGens === g ? "#1C1C1C" : "transparent",
-                color: displayGens === g ? "#FAF7F2" : "#6B7280",
+                background: displayGens === g ? "#C9B29F" : "transparent",
+                color: displayGens === g ? "#1C1C1C" : "#FAF7F2",
                 border: displayGens === g ? "2px solid #C9B29F" : "1px solid transparent",
                 fontFamily: "var(--font-table)",
                 letterSpacing: "0.03em",
@@ -265,11 +265,11 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
             </button>
           ))}
         </div>
-        <div className="flex items-center gap-1 rounded-lg p-1" style={{ background: "#FAF7F2", border: "2px solid #C9B29F",  }}>
-          <button onClick={() => setZoom((z) => Math.max(0.5, z - 0.1))} className="w-7 h-7 rounded-md flex items-center justify-center text-sm font-bold transition-all hover:scale-110 hover:bg-white/10" style={{ color: "#1C1C1C" }}>−</button>
-          <span className="text-xs px-1.5 font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)", minWidth: "36px", textAlign: "center" }}>{Math.round(zoom * 100)}%</span>
-          <button onClick={() => setZoom((z) => Math.min(1.5, z + 0.1))} className="w-7 h-7 rounded-md flex items-center justify-center text-sm font-bold transition-all hover:scale-110 hover:bg-white/10" style={{ color: "#1C1C1C" }}>+</button>
-          <button onClick={() => setZoom(1)} className="ml-0.5 px-2.5 py-1 rounded-md flex items-center justify-center text-[11px] font-bold transition-all hover:scale-105 hover:bg-white/10" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>Reset</button>
+        <div className="flex items-center gap-1 rounded-lg p-1" style={{ background: "#1C1C1C" }}>
+          <button onClick={() => setZoom((z) => Math.max(0.5, z - 0.1))} className="w-7 h-7 rounded-md flex items-center justify-center text-sm font-bold transition-all hover:scale-110 hover:bg-white/10" style={{ color: "#FAF7F2" }}>−</button>
+          <span className="text-xs px-1.5 font-bold" style={{ color: "#FAF7F2", fontFamily: "var(--font-mono)", minWidth: "36px", textAlign: "center" }}>{Math.round(zoom * 100)}%</span>
+          <button onClick={() => setZoom((z) => Math.min(1.5, z + 0.1))} className="w-7 h-7 rounded-md flex items-center justify-center text-sm font-bold transition-all hover:scale-110 hover:bg-white/10" style={{ color: "#FAF7F2" }}>+</button>
+          <button onClick={() => setZoom(1)} className="ml-0.5 px-2.5 py-1 rounded-md flex items-center justify-center text-[11px] font-bold transition-all hover:scale-105 hover:bg-white/10" style={{ color: "#FAF7F2", opacity: 0.7, fontFamily: "var(--font-table)" }}>Reset</button>
         </div>
       </div>
 
@@ -296,9 +296,9 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
             {/* Root dog */}
             <div className="flex items-center" style={{ minWidth: 0, overflow: "hidden" }}>
               <div className="w-full rounded-lg px-2 py-1.5 font-bold" style={{
-                background: "#FAF7F2",
-                border: "2px solid rgba(161,120,40,0.5)",
-                color: "#7a5c10",
+                background: `linear-gradient(135deg, ${getDogColor(dogName)}10, #FAF7F2)`,
+                border: `2px solid ${getDogColor(dogName)}`,
+                color: getDogColor(dogName),
                 fontFamily: "var(--font-table)",
                 fontSize: "12px",
               }}>
@@ -326,29 +326,29 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
                     const xwNum = xwMatch ? parseInt(xwMatch[1]) : 0;
 
                     const cellBg = isGrCh
-                      ? "linear-gradient(135deg, rgba(29,91,191,0.18), rgba(29,91,191,0.06), #ffffff)"
+                      ? "rgba(96,165,250,0.15)"
                       : isCh
-                        ? "linear-gradient(135deg, rgba(192,40,40,0.15), rgba(192,40,40,0.05), #ffffff)"
+                        ? "rgba(252,129,129,0.15)"
                         : xwNum === 3
-                          ? "linear-gradient(135deg, rgba(180,130,20,0.16), rgba(180,130,20,0.05), #ffffff)"
+                          ? "rgba(212,168,85,0.15)"
                           : xwNum === 1
-                            ? "linear-gradient(135deg, rgba(13,116,104,0.14), rgba(13,116,104,0.04), #ffffff)"
+                            ? "rgba(45,212,191,0.15)"
                             : xwNum === 2
-                              ? "linear-gradient(135deg, rgba(234,88,12,0.14), rgba(234,88,12,0.04), #ffffff)"
+                              ? "rgba(251,146,60,0.15)"
                               : xwNum === 4
-                                ? "linear-gradient(135deg, rgba(219,39,119,0.14), rgba(219,39,119,0.04), #ffffff)"
+                                ? "rgba(244,114,182,0.15)"
                                 : xwNum >= 5
-                                  ? "linear-gradient(135deg, rgba(109,48,176,0.14), rgba(109,48,176,0.04), #ffffff)"
-                                  : "linear-gradient(135deg, #ffffff, #f7f8fa)";
+                                  ? "rgba(192,132,252,0.15)"
+                                  : "rgba(58,58,58,0.15)";
 
-                    const cellBorder = isGrCh ? "rgba(29,91,191,0.75)"
-                      : isCh ? "rgba(192,40,40,0.7)"
-                        : xwNum === 3 ? "rgba(160,115,15,0.7)"
-                          : xwNum === 1 ? "rgba(13,116,104,0.65)"
-                            : xwNum === 2 ? "rgba(200,75,8,0.65)"
-                              : xwNum === 4 ? "rgba(176,56,120,0.65)"
-                                : xwNum >= 5 ? "rgba(109,48,176,0.65)"
-                                  : "rgba(180,185,195,0.4)";
+                    const cellBorder = isGrCh ? "#1d5bbf"
+                      : isCh ? "#c02828"
+                        : xwNum === 3 ? "#8a6518"
+                          : xwNum === 1 ? "#0d7468"
+                            : xwNum === 2 ? "#b45a0a"
+                              : xwNum === 4 ? "#b03878"
+                                : xwNum >= 5 ? "#6d30b0"
+                                  : "#3a3a3a";
 
                     const cellTextColor = isGrCh ? "#1d5bbf"
                       : isCh ? "#c02828"
@@ -365,15 +365,15 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
                           borderLeft: `4px solid ${cellBorder}`,
                           minHeight: cellMinH,
                           cursor: hasLink ? "pointer" : "default",
-                          borderTop: "1px solid #C9B29F",
+                          borderTop: "1px solid #EDE4D5",
                         }}
                       >
                         {isChampion && (
                           <span className="absolute -top-0.5 -right-0.5 flex items-center justify-center rounded-lg" style={{
-                            fontSize: "9px", color: "#C9B29F",
-                            background: "rgba(201,178,159,0.2)",
+                            fontSize: "9px", color: "#8a6518",
+                            background: "#F5EDE0",
                             width: "15px", height: "15px",
-                            border: "1px solid rgba(184,134,11,0.3)",
+                            border: "1px solid #C9B29F",
                           }}>★</span>
                         )}
                         {hasLink ? (
@@ -694,7 +694,7 @@ export default function PublishedPedigreePage() {
         {/* ─── Sire / Dam links ─── */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           <div className="glow-blue rounded-xl p-2.5"
-            style={{ border: "2px solid #C9B29F",  background: "#FAF7F2",  }}>
+            style={{ border: "2px solid #C9B29F",  background: "#FAFAFA",  }}>
             <div className="text-[9px] uppercase tracking-wider mb-0.5 font-semibold" style={{ color: "#1d5bbf", letterSpacing: "0.1em" }}>♂ Sire (Father)</div>
             {sire ? (
               <Link href={`/pedigree/${sire.dog_id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColor(sire.registered_name) }}>
@@ -703,7 +703,7 @@ export default function PublishedPedigreePage() {
             ) : <span className="text-sm" style={{ color: "#6B7280" }}>Unknown</span>}
           </div>
           <div className="glow-pink rounded-xl p-2.5"
-            style={{ border: "2px solid #C9B29F",  background: "#FAF7F2",  }}>
+            style={{ border: "2px solid #C9B29F",  background: "#FAFAFA",  }}>
             <div className="text-[9px] uppercase tracking-wider mb-0.5 font-semibold" style={{ color: "#9f1239", letterSpacing: "0.1em" }}>♀ Dam (Mother)</div>
             {dam ? (
               <Link href={`/pedigree/${dam.dog_id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColor(dam.registered_name) }}>
@@ -714,24 +714,20 @@ export default function PublishedPedigreePage() {
         </div>
 
         {/* ─── Pedigree Tree ─── */}
-        <div className="glow-teal rounded-xl overflow-hidden" style={{
-          border: "1.5px solid rgba(50,50,55,0.9)",
-          
+        <div className="rounded-xl overflow-hidden" style={{
+          border: "2px solid #C9B29F",
+          borderRadius: "10px",
         }}>
           <div className="flex items-center justify-between px-4 py-2.5" style={{
-            background: "#FAF7F2",
+            background: "#1C1C1C",
             borderBottom: "2px solid #C9B29F",
           }}>
             <div className="flex items-center gap-2.5">
-              <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{
-                background: "rgba(45,212,191,0.15)", border: "1px solid rgba(45,212,191,0.3)",
-              }}>
-                <span className="text-sm">🌳</span>
-              </div>
-              <span className="text-sm font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Pedigree</span>
+              <span className="text-sm">🌳</span>
+              <span className="text-sm font-semibold" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Pedigree</span>
               {tree.length > 0 && (
                 <span className="text-[10px] px-2 py-0.5 rounded-lg font-medium" style={{
-                  background: "rgba(201,178,159,0.15)",
+                  background: "#C9B29F",
                   color: "#1C1C1C",
                   fontFamily: "var(--font-mono)",
                   border: "2px solid #C9B29F"
@@ -740,7 +736,7 @@ export default function PublishedPedigreePage() {
                 </span>
               )}
             </div>
-            <div className="flex items-center gap-3" style={{ fontFamily: "var(--font-mono)", fontSize: "10px", color: "#9a7020" }}>
+            <div className="flex items-center gap-3" style={{ fontFamily: "var(--font-mono)", fontSize: "10px", color: "#FAF7F2" }}>
               <span>👁 {((ped.view_count || 0) + 1).toLocaleString()} views</span>
             </div>
           </div>
@@ -770,16 +766,14 @@ export default function PublishedPedigreePage() {
             }}>
               {/* Header */}
               <div className="flex items-center justify-between px-4 py-2.5" style={{
-                background: "#FAF7F2",
+                background: "#1C1C1C",
                 borderBottom: "2px solid #C9B29F",
               }}>
                 <div className="flex items-center gap-2.5">
-                  <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: "rgba(201,178,159,0.15)", border: "2px solid #C9B29F" }}>
-                    <span className="text-sm">📋</span>
-                  </div>
+                  <span className="text-sm">📋</span>
                   <span className="text-sm font-bold uppercase tracking-widest" style={{
                     fontFamily: "var(--font-display)",
-                    color: "#1C1C1C",
+                    color: "#FAF7F2",
                     
                   }}>
                     Journal
@@ -874,12 +868,12 @@ export default function PublishedPedigreePage() {
         })()}
 
         {/* ─── Footer ─── */}
-        <footer className="text-center py-8 mt-8" style={{ borderTop: "2px solid #C9B29F" }}>
+        <footer className="text-center py-8 mt-8" style={{ borderTop: "1px solid #D6CEBF" }}>
           <div className="flex items-center justify-center gap-2 mb-3">
             <img src={LOGO} alt="Logo" className="w-6 h-6 rounded-lg" style={{ background: "#C9B29F", padding: "1px" }} />
             <span style={{
               fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "14px",
-              background: "#1C1C1C", 
+              color: "#1C1C1C",
             }}>Pedigree Platform</span>
           </div>
           <p className="text-xs" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
