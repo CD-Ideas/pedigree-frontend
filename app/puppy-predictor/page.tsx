@@ -607,7 +607,7 @@ export default function PuppyPredictorPage() {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: "#FAFAFA" }}>
+    <div className="min-h-screen" style={{ background: "#EDE4D5" }}>
       <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-8 space-y-6">
 
         {/* --- Header --- */}

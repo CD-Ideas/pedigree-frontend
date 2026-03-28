@@ -103,7 +103,7 @@ export default function MyAdsPage() {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: "#FAFAFA" }}>
+    <div className="min-h-screen" style={{ background: "#EDE4D5" }}>
       {/* ─── Nav ─── */}
       <nav
         className="sticky top-0 z-50 px-4 md:px-6 py-2.5 flex items-center justify-between"

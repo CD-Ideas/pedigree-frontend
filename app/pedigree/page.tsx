@@ -87,7 +87,7 @@ export default function PedigreeHub() {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: "#FAFAFA" }}>
+    <div className="min-h-screen" style={{ background: "#EDE4D5" }}>
       {/* Nav */}
       <nav className="sticky top-0 z-50 px-4 md:px-6 py-3 flex items-center justify-between"
            style={{ background: "#FAF7F2", borderBottom: "2px solid #C9B29F" }}>

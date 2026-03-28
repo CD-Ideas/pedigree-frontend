@@ -81,7 +81,7 @@ export default function CommunityPedigreesPage() {
     : pedigrees;
 
   return (
-    <div className="min-h-screen" style={{ background: "#FAFAFA" }}>
+    <div className="min-h-screen" style={{ background: "#EDE4D5" }}>
       <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-6 space-y-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">

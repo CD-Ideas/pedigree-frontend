@@ -152,7 +152,7 @@ export default function MarketplaceAdPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: "#FAFAFA" }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "#EDE4D5" }}>
         <div className="flex items-center gap-3" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
           <div
             className="w-5 h-5 rounded-lg border-2 border-t-transparent animate-spin"
@@ -166,7 +166,7 @@ export default function MarketplaceAdPage() {
 
   if (error || !ad) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: "#FAFAFA" }}>
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: "#EDE4D5" }}>
         <div className="text-5xl opacity-30">{"\uD83D\uDEAB"}</div>
         <h2
           className="text-lg font-bold"
@@ -190,7 +190,7 @@ export default function MarketplaceAdPage() {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: "#FAFAFA" }}>
+    <div className="min-h-screen" style={{ background: "#EDE4D5" }}>
       <div className="max-w-[1000px] mx-auto px-4 md:px-6 py-6">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 mb-4">

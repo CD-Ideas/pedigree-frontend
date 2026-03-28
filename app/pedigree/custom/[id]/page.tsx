@@ -501,7 +501,7 @@ export default function PublishedPedigreePage() {
 
   if (loading)
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: "#FAFAFA" }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "#EDE4D5" }}>
         <div className="flex flex-col items-center gap-4">
           <img src={LOGO} alt="Logo" className="w-12 h-12 rounded-lg animate-pulse" style={{ background: "#C9B29F", padding: "2px" }} />
           <div className="flex items-center gap-3" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
@@ -514,7 +514,7 @@ export default function PublishedPedigreePage() {
 
   if (!ped)
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: "#FAFAFA" }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "#EDE4D5" }}>
         <div className="text-center">
           <div className="text-6xl mb-4">🐕</div>
           <h2 className="text-xl font-bold mb-2" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Pedigree Not Found</h2>
@@ -546,7 +546,7 @@ export default function PublishedPedigreePage() {
   const photoUrl = ped.photo_path || null;
 
   return (
-    <div className="min-h-screen" style={{ background: "#FAFAFA" }}>
+    <div className="min-h-screen" style={{ background: "#EDE4D5" }}>
       <style>{`
         .glow-gold { transition: border-color 0.3s ease; }
         .glow-gold:hover { border-color: #C9B29F !important; }

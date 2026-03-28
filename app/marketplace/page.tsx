@@ -298,7 +298,7 @@ export default function MarketplacePage() {
   }, []);
 
   return (
-    <div className="min-h-screen" style={{ background: "#FAFAFA" }}>
+    <div className="min-h-screen" style={{ background: "#EDE4D5" }}>
       {/* Keyframe animations */}
       <style>{`
         @keyframes cardReveal {

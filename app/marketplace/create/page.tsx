@@ -51,7 +51,7 @@ const COUNTRY_MAP: Record<string, string[]> = {
 /* ─── Main Create Ad Page ─── */
 export default function CreateAdPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen" style={{ background: "#FAFAFA" }} />}>
+    <Suspense fallback={<div className="min-h-screen" style={{ background: "#EDE4D5" }} />}>
       <CreateAdContent />
     </Suspense>
   );
@@ -273,7 +273,7 @@ function CreateAdContent() {
   // Not logged in state
   if (notLoggedIn) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-6" style={{ background: "#FAFAFA" }}>
+      <div className="min-h-screen flex flex-col items-center justify-center gap-6" style={{ background: "#EDE4D5" }}>
         <div className="text-5xl opacity-30">{"\uD83D\uDD12"}</div>
         <h2
           className="text-xl font-black uppercase tracking-widest"
@@ -346,7 +346,7 @@ function CreateAdContent() {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: "#FAFAFA" }}>
+    <div className="min-h-screen" style={{ background: "#EDE4D5" }}>
       <div className="max-w-[700px] mx-auto px-4 md:px-6 py-6">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 mb-4">

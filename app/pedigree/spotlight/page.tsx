@@ -380,7 +380,7 @@ export default function SpotlightPage() {
   const yearOptions = Array.from({ length: currentYear - 1970 + 1 }, (_, i) => 1970 + i);
 
   return (
-    <div className="min-h-screen" style={{ background: "#FAFAFA" }}>
+    <div className="min-h-screen" style={{ background: "#EDE4D5" }}>
       <main className="max-w-7xl mx-auto px-4 md:px-5 py-5">
 
         {/* -- Hero Header -- */}

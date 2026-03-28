@@ -2788,7 +2788,7 @@ function ModalInput({
 /* ================================================================== */
 export default function PedigreeLabPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center" style={{ background: "#FAFAFA", color: "#6B7280" }}>Loading...</div>}>
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center" style={{ background: "#EDE4D5", color: "#6B7280" }}>Loading...</div>}>
       <PedigreeLabInner />
     </Suspense>
   );

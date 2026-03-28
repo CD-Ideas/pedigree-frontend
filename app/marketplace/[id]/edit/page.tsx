@@ -315,7 +315,7 @@ export default function EditAdPage() {
   // Loading state
   if (loadingAd) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: "#FAFAFA" }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "#EDE4D5" }}>
         <div className="flex items-center gap-3" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
           <div
             className="w-5 h-5 rounded-lg border-2 border-t-transparent animate-spin"
@@ -330,7 +330,7 @@ export default function EditAdPage() {
   // Not logged in state
   if (notLoggedIn) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-6" style={{ background: "#FAFAFA" }}>
+      <div className="min-h-screen flex flex-col items-center justify-center gap-6" style={{ background: "#EDE4D5" }}>
         <div className="text-5xl opacity-30">{"\uD83D\uDD12"}</div>
         <h2
           className="text-xl font-black uppercase tracking-widest"
@@ -381,7 +381,7 @@ export default function EditAdPage() {
   // Not owner state
   if (notOwner) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-6" style={{ background: "#FAFAFA" }}>
+      <div className="min-h-screen flex flex-col items-center justify-center gap-6" style={{ background: "#EDE4D5" }}>
         <div className="text-5xl opacity-30">{"\uD83D\uDEAB"}</div>
         <h2
           className="text-xl font-black uppercase tracking-widest"
@@ -417,7 +417,7 @@ export default function EditAdPage() {
   // Load error state
   if (loadError) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: "#FAFAFA" }}>
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: "#EDE4D5" }}>
         <div className="text-5xl opacity-30">{"\uD83D\uDEAB"}</div>
         <h2
           className="text-lg font-bold"
@@ -464,7 +464,7 @@ export default function EditAdPage() {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: "#FAFAFA" }}>
+    <div className="min-h-screen" style={{ background: "#EDE4D5" }}>
       <div className="max-w-[700px] mx-auto px-4 md:px-6 py-6">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 mb-4">

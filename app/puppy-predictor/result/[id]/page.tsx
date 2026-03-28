@@ -102,13 +102,13 @@ export default function PredictionResultPage() {
   }, [params.id]);
 
   if (loading) return (
-    <div className="min-h-screen flex items-center justify-center" style={{ background: "#080c14" }}>
+    <div className="min-h-screen flex items-center justify-center" style={{ background: "#EDE4D5" }}>
       <p className="text-sm animate-pulse" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Loading prediction...</p>
     </div>
   );
 
   if (error || !data) return (
-    <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: "#080c14" }}>
+    <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: "#EDE4D5" }}>
       <p className="text-sm" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>{error || "Not found"}</p>
     </div>
   );
@@ -116,7 +116,7 @@ export default function PredictionResultPage() {
   const results = data.results_json;
 
   return (
-    <div className="min-h-screen" style={{ background: "#080c14" }}>
+    <div className="min-h-screen" style={{ background: "#EDE4D5" }}>
       <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-8 space-y-6">
         {/* Header */}
         <div className="text-center space-y-2">

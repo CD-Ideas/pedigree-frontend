@@ -897,7 +897,7 @@ function MessagesContent() {
 
 export default function MessagesPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen" style={{ background: "#FAF7F2" }} />}>
+    <Suspense fallback={<div className="min-h-screen" style={{ background: "#EDE4D5" }} />}>
       <MessagesContent />
     </Suspense>
   );

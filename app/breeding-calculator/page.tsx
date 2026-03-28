@@ -526,7 +526,7 @@ export default function BreedingCalculatorPage() {
   const bothReady = sire && dam;
 
   return (
-    <div className="min-h-screen" style={{ background: "#FAFAFA" }}>
+    <div className="min-h-screen" style={{ background: "#EDE4D5" }}>
       <style>{`
         @keyframes slide-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .animate-slide-up { animation: slide-up 0.5s ease-out forwards; }
@@ -705,7 +705,7 @@ export default function BreedingCalculatorPage() {
                   <SectionHeader color="#6B7280">Bloodline Radar</SectionHeader>
                   <div className="space-y-2.5">
                     {bloodlines.slice(0, 8).map((bl, i) => {
-                      const colors = ["#8a6518", "#60a5fa", "#fc8181", "#4ade80", "#f472b6", "#fb923c", "#c084fc", "#22d3ee"];
+                      const colors = ["#8a6518", "#1d5bbf", "#c02828", "#0d7468", "#b03878", "#b45a0a", "#6d30b0", "#0d7468"];
                       const col = colors[i % colors.length];
                       return (
                         <div key={bl.name}>
