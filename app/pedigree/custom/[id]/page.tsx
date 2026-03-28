@@ -568,7 +568,7 @@ export default function PublishedPedigreePage() {
 
         {/* ─── Dog Name Header ─── */}
         <div className="rounded-lg px-4 py-2 relative"
-          style={{ border: "2px solid #EDE4D5",  background: "#FAF7F2",  }}>
+          style={{ border: "2px solid #C9B29F",  background: "#FAF7F2",  }}>
           {titles.length > 0 && (
             <div className="h-0.5 -mx-4 -mt-2 mb-2 rounded-t-lg" style={{ background: "#C9B29F" }} />
           )}
@@ -621,7 +621,7 @@ export default function PublishedPedigreePage() {
         </div>
 
         {/* ─── Photo + Details ─── */}
-        <div className="glow-gold rounded-xl overflow-hidden" style={{ border: "2px solid #EDE4D5",  background: "#FAF7F2",  minHeight: "220px" }}>
+        <div className="glow-gold rounded-xl overflow-hidden" style={{ border: "2px solid #C9B29F",  background: "#FAF7F2",  minHeight: "220px" }}>
           <div className="flex flex-col sm:flex-row sm:items-stretch h-full">
             {/* Photo */}
             <div className="flex-shrink-0 relative m-2 w-full sm:w-[200px] h-[200px]">
@@ -694,7 +694,7 @@ export default function PublishedPedigreePage() {
         {/* ─── Sire / Dam links ─── */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           <div className="glow-blue rounded-xl p-2.5"
-            style={{ border: "2px solid #EDE4D5",  background: "#FAFAFA",  }}>
+            style={{ border: "2px solid #C9B29F",  background: "#FAFAFA",  }}>
             <div className="text-[9px] uppercase tracking-wider mb-0.5 font-semibold" style={{ color: "#1d5bbf", letterSpacing: "0.1em" }}>♂ Sire (Father)</div>
             {sire ? (
               <Link href={`/pedigree/${sire.dog_id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColor(sire.registered_name) }}>
@@ -703,7 +703,7 @@ export default function PublishedPedigreePage() {
             ) : <span className="text-sm" style={{ color: "#6B6B6B" }}>Unknown</span>}
           </div>
           <div className="glow-pink rounded-xl p-2.5"
-            style={{ border: "2px solid #EDE4D5",  background: "#FAFAFA",  }}>
+            style={{ border: "2px solid #C9B29F",  background: "#FAFAFA",  }}>
             <div className="text-[9px] uppercase tracking-wider mb-0.5 font-semibold" style={{ color: "#9f1239", letterSpacing: "0.1em" }}>♀ Dam (Mother)</div>
             {dam ? (
               <Link href={`/pedigree/${dam.dog_id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColor(dam.registered_name) }}>
@@ -715,12 +715,12 @@ export default function PublishedPedigreePage() {
 
         {/* ─── Pedigree Tree ─── */}
         <div className="rounded-xl overflow-hidden" style={{
-          border: "2px solid #EDE4D5",
+          border: "2px solid #C9B29F",
           borderRadius: "8px",
         }}>
           <div className="flex items-center justify-between px-4 py-2.5" style={{
             background: "#1C1C1C",
-            borderBottom: "2px solid #EDE4D5",
+            borderBottom: "2px solid #C9B29F",
           }}>
             <div className="flex items-center gap-2.5">
               <span className="text-sm">🌳</span>
@@ -759,15 +759,15 @@ export default function PublishedPedigreePage() {
 
           return (
             <div className="glow-gold rounded-xl overflow-hidden" style={{
-              border: "2px solid #EDE4D5",
-              
+              border: "2px solid #C9B29F",
+
               background: "#FAF7F2",
-              
+
             }}>
               {/* Header */}
               <div className="flex items-center justify-between px-4 py-2.5" style={{
                 background: "#1C1C1C",
-                borderBottom: "2px solid #EDE4D5",
+                borderBottom: "2px solid #C9B29F",
               }}>
                 <div className="flex items-center gap-2.5">
                   <span className="text-sm">📋</span>

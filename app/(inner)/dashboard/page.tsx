@@ -381,7 +381,7 @@ export default function Dashboard() {
                 <div className="fixed inset-0 z-[60]" onClick={() => setShowAvatarPicker(false)} />
                 <div className="absolute top-20 left-1/2 -translate-x-1/2 w-48 sm:w-56 overflow-hidden z-[70]"
                   onClick={(e) => e.stopPropagation()}
-                  style={{ background: "#FAFAFA", border: "2px solid #EDE4D5", borderRadius: "8px" }}>
+                  style={{ background: "#FAFAFA", border: "2px solid #C9B29F", borderRadius: "8px" }}>
                   <div className="px-3 py-2" style={{ borderBottom: "2px solid #EDE4D5" }}>
                     <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Choose Avatar</p>
                   </div>

@@ -248,7 +248,7 @@ export default function Home() {
         className="fixed top-0 left-0 right-0 z-50 px-4 md:px-6 py-2.5 flex items-center justify-end transition-all duration-300"
         style={{
           background: scrolled ? "#1C1C1C" : "transparent",
-          borderBottom: scrolled ? "2px solid #EDE4D5" : "2px solid transparent",
+          borderBottom: scrolled ? "2px solid #C9B29F" : "2px solid transparent",
         }}
       >
         {/* Mobile hamburger */}
@@ -698,7 +698,7 @@ export default function Home() {
         </section>
 
         {/* ── Footer ── */}
-        <footer className="py-4 px-4" style={{ borderTop: "2px solid #EDE4D5" }}>
+        <footer className="py-4 px-4" style={{ borderTop: "2px solid #C9B29F" }}>
           <div className="max-w-5xl mx-auto">
             {/* Top row */}
             <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-4 mb-4">

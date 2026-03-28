@@ -147,7 +147,7 @@ export default function ProfilePage() {
           className="w-24 h-24 rounded-full flex items-center justify-center"
           style={{
             background: "#FAF7F2",
-            border: "2px solid #EDE4D5",
+            border: "2px solid #C9B29F",
           }}
         >
           <span className="text-3xl">{pp.replace("emoji:", "")}</span>
@@ -161,7 +161,7 @@ export default function ProfilePage() {
           alt={user?.username || ""}
           className="rounded-2xl object-cover"
           style={{
-            border: "2px solid #EDE4D5",
+            border: "2px solid #C9B29F",
             width: "120px",
             height: "90px",
           }}
@@ -177,7 +177,7 @@ export default function ProfilePage() {
         style={{
           background: "#C9B29F",
           color: "#1C1C1C",
-          border: "2px solid #EDE4D5",
+          border: "2px solid #C9B29F",
         }}
       >
         <span className="text-3xl">

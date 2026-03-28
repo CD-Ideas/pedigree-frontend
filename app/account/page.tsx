@@ -271,7 +271,7 @@ export default function AccountPage() {
                 className="w-24 h-24 rounded-full flex items-center justify-center text-4xl"
                 style={{
                   background: "#FAF7F2",
-                  border: "2px solid #EDE4D5",
+                  border: "2px solid #C9B29F",
                 }}
               >
                 {avatarPreview.replace("emoji:", "")}
@@ -281,7 +281,7 @@ export default function AccountPage() {
                 src={avatarPreview}
                 alt="Avatar"
                 className="rounded-2xl object-cover"
-                style={{ border: "2px solid #EDE4D5", width: "120px", height: "90px" }}
+                style={{ border: "2px solid #C9B29F", width: "120px", height: "90px" }}
               />
             ) : (
               <div
@@ -289,7 +289,7 @@ export default function AccountPage() {
                 style={{
                   background: "#C9B29F",
                   color: "#fff",
-                  border: "2px solid #EDE4D5",
+                  border: "2px solid #C9B29F",
                 }}
               >
                 {(user.username || "U")[0].toUpperCase()}

@@ -1121,7 +1121,7 @@ export default function EditAdPage() {
       </div>
 
       {/* ─── Footer ─── */}
-      <footer className="text-center py-6 mt-4" style={{ borderTop: "2px solid #EDE4D5" }}>
+      <footer className="text-center py-6 mt-4" style={{ borderTop: "2px solid #C9B29F" }}>
         <div className="flex items-center justify-center gap-2 mb-2">
           <img src={LOGO} alt="Logo" className="w-5 h-5 rounded-lg" style={{ background: "#C9B29F", padding: "1px" }} />
           <span

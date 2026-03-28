@@ -343,7 +343,7 @@ export default function NavBar() {
     <nav
       style={{
         background: "#1C1C1C",
-        borderBottom: "2px solid #EDE4D5",
+        borderBottom: "2px solid #C9B29F",
       }}
       className="sticky top-0 z-50 overflow-visible"
     >
@@ -448,7 +448,7 @@ export default function NavBar() {
                 className="relative px-2.5 py-1.5 rounded-lg transition-all"
                 style={{
                   background: "#FAFAFA",
-                  border: "2px solid #EDE4D5",
+                  border: "2px solid #C9B29F",
                 }}
                 title="Notifications"
               >
@@ -474,7 +474,7 @@ export default function NavBar() {
                   <div className="absolute right-0 top-full mt-2 w-80 sm:w-96 max-w-[calc(100vw-16px)] rounded-xl overflow-hidden z-50"
                     style={{
                       background: "#FAFAFA",
-                      border: "2px solid #EDE4D5",
+                      border: "2px solid #C9B29F",
                     }}>
                     {/* Header */}
                     <div className="px-4 py-3 flex items-center justify-between" style={{ borderBottom: "1px solid #EDE4D5" }}>
@@ -635,7 +635,7 @@ export default function NavBar() {
               >
                 <span
                   className={`flex items-center justify-center text-xs font-bold relative cursor-pointer overflow-hidden flex-shrink-0 ${userPicture && !userPicture.startsWith("emoji:") ? "rounded-lg" : "rounded-lg w-7 h-7"}`}
-                  style={{ background: userPicture?.startsWith("emoji:") ? "#1C1C1C" : userPicture ? "transparent" : "#C9B29F", color: "#FAF7F2", border: "2px solid #EDE4D5", ...(userPicture && !userPicture.startsWith("emoji:") ? { width: "32px", height: "24px" } : {}) }}
+                  style={{ background: userPicture?.startsWith("emoji:") ? "#1C1C1C" : userPicture ? "transparent" : "#C9B29F", color: "#FAF7F2", border: "2px solid #C9B29F", ...(userPicture && !userPicture.startsWith("emoji:") ? { width: "32px", height: "24px" } : {}) }}
                   onClick={(e) => { e.stopPropagation(); setShowAvatarPicker(!showAvatarPicker); }}
                   title="Click to change profile picture"
                 >
@@ -661,7 +661,7 @@ export default function NavBar() {
                       onClick={(e) => e.stopPropagation()}
                       style={{
                         background: "#FAFAFA",
-                        border: "2px solid #EDE4D5",
+                        border: "2px solid #C9B29F",
                       }}>
                       <div className="px-4 py-3" style={{ borderBottom: "1px solid #EDE4D5" }}>
                         <p className="text-xs font-bold uppercase tracking-wider" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
@@ -718,7 +718,7 @@ export default function NavBar() {
                   <div className="absolute right-0 top-full mt-2 w-56 rounded-xl overflow-hidden z-50"
                     style={{
                       background: "#FAFAFA",
-                      border: "2px solid #EDE4D5",
+                      border: "2px solid #C9B29F",
                     }}>
                     {/* User info */}
                     <div className="px-4 py-3" style={{ borderBottom: "1px solid #EDE4D5" }}>

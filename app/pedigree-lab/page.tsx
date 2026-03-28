@@ -114,7 +114,7 @@ const SLOT_LABELS: Record<SlotKey, string> = {
 };
 
 const STEEL_FRAME: React.CSSProperties = {
-  border: "2px solid #EDE4D5",
+  border: "2px solid #C9B29F",
 };
 
 const PANEL_BG = "#FAF7F2";
@@ -1062,8 +1062,8 @@ function PedigreeLabInner() {
 
                 {/* Lines: Subject -> Parents */}
                 <div className="flex flex-col justify-center" style={{ width: 40 }}>
-                  <div style={{ borderTop: "2px solid #EDE4D5", width: "100%", marginBottom: 80 }} />
-                  <div style={{ borderTop: "2px solid #EDE4D5", width: "100%", marginTop: 80 }} />
+                  <div style={{ borderTop: "2px solid #C9B29F", width: "100%", marginBottom: 80 }} />
+                  <div style={{ borderTop: "2px solid #C9B29F", width: "100%", marginTop: 80 }} />
                   {/* Vertical connector */}
                   <div
                     className="absolute"
@@ -1113,7 +1113,7 @@ function PedigreeLabInner() {
 
                 {/* Lines: Parents -> Grandparents */}
                 <div className="flex flex-col justify-center" style={{ width: 40 }}>
-                  <div style={{ borderTop: "2px solid #EDE4D5", width: "100%" }} />
+                  <div style={{ borderTop: "2px solid #C9B29F", width: "100%" }} />
                 </div>
 
                 {/* Grandparents (right) */}

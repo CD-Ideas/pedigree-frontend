@@ -90,7 +90,7 @@ export default function PedigreeHub() {
     <div className="min-h-screen" style={{ background: "#EDE4D5" }}>
       {/* Nav */}
       <nav className="sticky top-0 z-50 px-4 md:px-6 py-3 flex items-center justify-between"
-           style={{ background: "#FAF7F2", borderBottom: "2px solid #EDE4D5" }}>
+           style={{ background: "#FAF7F2", borderBottom: "2px solid #C9B29F" }}>
         <Link href="/" className="flex items-center gap-3">
           <img src={LOGO} alt="Logo" className="w-8 h-8 rounded-lg" style={{ background: "#C9B29F", padding: "2px" }} />
           <span style={{
@@ -421,7 +421,7 @@ export default function PedigreeHub() {
       </div>
 
       {/* Footer */}
-      <footer className="text-center py-8 mt-4" style={{ borderTop: "2px solid #EDE4D5" }}>
+      <footer className="text-center py-8 mt-4" style={{ borderTop: "2px solid #C9B29F" }}>
         <div className="flex items-center justify-center gap-2 mb-3">
           <img src={LOGO} alt="Logo" className="w-6 h-6 rounded-lg" style={{ background: "#C9B29F", padding: "1px" }} />
           <span style={{
