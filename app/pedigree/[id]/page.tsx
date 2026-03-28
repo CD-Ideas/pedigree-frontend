@@ -1184,7 +1184,7 @@ export default function PublicPedigreePage() {
               </div>
               {/* Tab content */}
               {currentTab && (
-                <div className="px-4 pb-4" style={{ background: PG.cardBg }}>
+                <div className="px-4 pb-4" style={{ background: PG.wrapperBg }}>
                   <div className="pt-3">
                     {currentTab === "offspring" && <OffspringTab offspring={dog.offspring || []} />}
                     {currentTab === "photos" && <PhotosTab offspring={dog.offspring || []} />}
