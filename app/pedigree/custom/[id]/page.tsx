@@ -359,13 +359,13 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
 
                     return (
                       <div key={`${gen}-${i}`}
-                        className="flex-1 rounded-lg px-2.5 py-1.5 flex items-center group relative transition-all duration-200 hover:shadow-lg hover:-translate-y-[1px]"
+                        className="flex-1 rounded-lg px-2.5 py-1.5 flex items-center group relative transition-all duration-200 hover:-translate-y-[1px]"
                         style={{
                           background: cellBg,
                           borderLeft: `4px solid ${cellBorder}`,
                           minHeight: cellMinH,
                           cursor: hasLink ? "pointer" : "default",
-                          borderTop: "1px solid rgba(255,255,255,0.8)",
+                          borderTop: "1px solid #C9B29F",
                         }}
                       >
                         {isChampion && (
@@ -386,7 +386,7 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
                             {a.name}
                           </Link>
                         ) : (
-                          <span className="truncate" style={{ color: "#888", fontSize, fontFamily: "var(--font-table)", lineHeight: 1.2 }}>
+                          <span className="truncate" style={{ color: "#6B7280", fontSize, fontFamily: "var(--font-table)", lineHeight: 1.2 }}>
                             {a.name || "Unknown"}
                           </span>
                         )}
@@ -555,7 +555,7 @@ export default function PublishedPedigreePage() {
         .glow-pink { transition: border-color 0.3s ease; }
         .glow-pink:hover { border-color: #C9B29F !important; }
         .glow-teal { transition: border-color 0.3s ease; }
-        .glow-teal:hover { border-color: #2dd4bf !important; }
+        .glow-teal:hover { border-color: #C9B29F !important; }
       `}</style>
 
       <div className="max-w-[1600px] mx-auto px-4 md:px-6 py-4 space-y-3">
