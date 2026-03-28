@@ -29,7 +29,7 @@ interface MarketplaceResponse {
 }
 
 /* ─── Constants ─── */
-const LOGO = "https://i.imgur.com/cAvQemZ.png";
+const LOGO = "https://i.imgur.com/yOXvfAY.png";
 
 const CATEGORIES = [
   { key: "dogs_for_sale", label: "Dogs for Sale", icon: "\uD83D\uDC15", color: "#ef4444", tag: "HOT" },
@@ -769,7 +769,7 @@ export default function MarketplacePage() {
       {/* ─── Footer ─── */}
       <footer className="text-center py-6" style={{ borderTop: "2px solid #C9B29F" }}>
         <div className="flex items-center justify-center gap-2 mb-2">
-          <img src={LOGO} alt="Logo" className="w-5 h-5 rounded" />
+          <img src={LOGO} alt="Logo" className="w-5 h-5 rounded-full" style={{ background: "#C9B29F", padding: "1px" }} />
           <span
             style={{
               fontFamily: "var(--font-body)",

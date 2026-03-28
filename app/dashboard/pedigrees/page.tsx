@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { getDogColor } from "@/app/utils/colors";
 
-const LOGO = "https://i.imgur.com/cAvQemZ.png";
+const LOGO = "https://i.imgur.com/yOXvfAY.png";
 
 interface PedigreeItem {
   id: number;

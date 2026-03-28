@@ -42,7 +42,7 @@ interface TreeRow {
   sex: string | null;
 }
 
-const LOGO = "https://i.imgur.com/cAvQemZ.png";
+const LOGO = "https://i.imgur.com/yOXvfAY.png";
 
 /* ─── Helpers ─── */
 
@@ -503,7 +503,7 @@ export default function PublishedPedigreePage() {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: "#FAFAFA" }}>
         <div className="flex flex-col items-center gap-4">
-          <img src={LOGO} alt="Logo" className="w-12 h-12 rounded-xl animate-pulse" />
+          <img src={LOGO} alt="Logo" className="w-12 h-12 rounded-full animate-pulse" style={{ background: "#C9B29F", padding: "2px" }} />
           <div className="flex items-center gap-3" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
             <div className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} />
             Loading pedigree...
@@ -876,7 +876,7 @@ export default function PublishedPedigreePage() {
         {/* ─── Footer ─── */}
         <footer className="text-center py-8 mt-8" style={{ borderTop: "2px solid #C9B29F" }}>
           <div className="flex items-center justify-center gap-2 mb-3">
-            <img src={LOGO} alt="Logo" className="w-6 h-6 rounded" />
+            <img src={LOGO} alt="Logo" className="w-6 h-6 rounded-full" style={{ background: "#C9B29F", padding: "1px" }} />
             <span style={{
               fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "14px",
               background: "#1C1C1C", 

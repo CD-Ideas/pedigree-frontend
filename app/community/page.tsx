@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getDogColor } from "@/app/utils/colors";
 
-const LOGO = "https://i.imgur.com/cAvQemZ.png";
+const LOGO = "https://i.imgur.com/yOXvfAY.png";
 
 interface CommunityPedigree {
   id: number;

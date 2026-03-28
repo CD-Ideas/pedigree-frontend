@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 
-const LOGO = "https://i.imgur.com/cAvQemZ.png";
+const LOGO = "https://i.imgur.com/yOXvfAY.png";
 
 interface DogResult {
   id: number;
@@ -92,7 +92,7 @@ export default function PedigreeHub() {
       <nav className="sticky top-0 z-50 px-4 md:px-6 py-3 flex items-center justify-between"
            style={{ background: "#FAF7F2", borderBottom: "2px solid #C9B29F" }}>
         <Link href="/" className="flex items-center gap-3">
-          <img src={LOGO} alt="Logo" className="w-8 h-8 rounded-lg" />
+          <img src={LOGO} alt="Logo" className="w-8 h-8 rounded-full" style={{ background: "#C9B29F", padding: "2px" }} />
           <span style={{
             fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "1.1rem",
             color: "#1C1C1C",
@@ -118,7 +118,7 @@ export default function PedigreeHub() {
       <section className="relative px-4 md:px-6 pt-12 pb-8">
         <div className="relative max-w-3xl mx-auto text-center">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <img src={LOGO} alt="Logo" className="w-14 h-14 rounded-xl" />
+            <img src={LOGO} alt="Logo" className="w-14 h-14 rounded-full" style={{ background: "#C9B29F", padding: "3px" }} />
           </div>
           <h1 style={{
             fontFamily: "var(--font-table)", fontSize: "clamp(1.8rem, 5vw, 3rem)", fontWeight: 700,
@@ -423,7 +423,7 @@ export default function PedigreeHub() {
       {/* Footer */}
       <footer className="text-center py-8 mt-4" style={{ borderTop: "2px solid #C9B29F" }}>
         <div className="flex items-center justify-center gap-2 mb-3">
-          <img src={LOGO} alt="Logo" className="w-6 h-6 rounded" />
+          <img src={LOGO} alt="Logo" className="w-6 h-6 rounded-full" style={{ background: "#C9B29F", padding: "1px" }} />
           <span style={{
             fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "14px",
             color: "#1C1C1C",

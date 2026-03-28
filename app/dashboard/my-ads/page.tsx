@@ -21,7 +21,7 @@ interface MarketplaceAd {
 }
 
 /* ─── Constants ─── */
-const LOGO = "https://i.imgur.com/cAvQemZ.png";
+const LOGO = "https://i.imgur.com/yOXvfAY.png";
 
 const CATEGORIES: Record<string, { label: string; icon: string; color: string }> = {
   dogs_for_sale: { label: "Dogs for Sale", icon: "\uD83D\uDC15", color: "#ef4444" },
@@ -114,7 +114,7 @@ export default function MyAdsPage() {
         }}
       >
         <Link href="/" className="flex items-center gap-2.5">
-          <img src={LOGO} alt="Logo" className="w-7 h-7 rounded-lg" />
+          <img src={LOGO} alt="Logo" className="w-7 h-7 rounded-full" style={{ background: "#C9B29F", padding: "1px" }} />
           <span
             style={{
               fontFamily: "var(--font-table)",
@@ -392,7 +392,7 @@ export default function MyAdsPage() {
       {/* ─── Footer ─── */}
       <footer className="text-center py-6 mt-4" style={{ borderTop: "2px solid #C9B29F" }}>
         <div className="flex items-center justify-center gap-2 mb-2">
-          <img src={LOGO} alt="Logo" className="w-5 h-5 rounded" />
+          <img src={LOGO} alt="Logo" className="w-5 h-5 rounded-full" style={{ background: "#C9B29F", padding: "1px" }} />
           <span
             style={{
               fontFamily: "var(--font-table)",

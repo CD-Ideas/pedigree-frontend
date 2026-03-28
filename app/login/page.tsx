@@ -4,7 +4,7 @@ import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-const LOGO = "https://i.imgur.com/cAvQemZ.png";
+const LOGO = "https://i.imgur.com/yOXvfAY.png";
 
 function LoginForm() {
   const router = useRouter();
@@ -74,7 +74,8 @@ function LoginForm() {
           alt="Pedigree Platform"
           width={88}
           height={88}
-          className="rounded-xl mb-3"
+          className="rounded-full mb-3"
+          style={{ background: "#C9B29F", padding: "4px" }}
         />
         <h1
           style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "1.75rem", color: "#1C1C1C" }}
