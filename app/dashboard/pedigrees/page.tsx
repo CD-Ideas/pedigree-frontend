@@ -241,7 +241,7 @@ export default function MyPedigreesPage() {
 
               return (
                 <Link key={p.id} href={`/pedigree/custom/${p.id}`}
-                  className="rounded-xl overflow-hidden transition-all hover:scale-[1.02] hover:shadow-lg group"
+                  className="rounded-xl overflow-hidden transition-all hover:scale-[1.02] group"
                   style={{
                     background: `linear-gradient(135deg, ${titleColor}10, ${titleColor}05, #FAFAFA)`,
                     border: `1.5px solid ${titleColor}33`,

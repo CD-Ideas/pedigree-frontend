@@ -191,7 +191,7 @@ export default function Dashboard() {
     }
     return (
       <div className={`${size} rounded-full flex items-center justify-center font-bold`}
-        style={{ background: "#C9B29F", color: "#fff", border: "3px solid #C9B29F" }}>
+        style={{ background: "#C9B29F", color: "#1C1C1C", border: "3px solid #C9B29F" }}>
         <span className={textSize}>{(user?.username || "U")[0].toUpperCase()}</span>
       </div>
     );

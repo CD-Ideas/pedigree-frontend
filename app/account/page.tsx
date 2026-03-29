@@ -288,7 +288,7 @@ export default function AccountPage() {
                 className="w-24 h-24 rounded-full flex items-center justify-center text-3xl font-bold"
                 style={{
                   background: "#C9B29F",
-                  color: "#fff",
+                  color: "#1C1C1C",
                   border: "2px solid #C9B29F",
                 }}
               >
@@ -484,7 +484,7 @@ export default function AccountPage() {
           }}>
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-lg flex items-center justify-center text-lg"
-                style={{ background: "#C9B29F", color: "#fff", borderRadius: "10px" }}>
+                style={{ background: "#C9B29F", color: "#1C1C1C", borderRadius: "10px" }}>
                 ★
               </div>
               <div>

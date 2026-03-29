@@ -608,7 +608,7 @@ export default function SpotlightPage() {
                   <div className="absolute top-2 left-2 z-10 w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold"
                        style={{
                          background: idx === 0 ? "#C9B29F" : idx === 1 ? "#9ca3af" : idx === 2 ? "#d97706" : "#FAFAFA",
-                         color: idx < 3 ? "#fff" : "#1C1C1C",
+                         color: idx === 0 ? "#1C1C1C" : idx < 3 ? "#fff" : "#1C1C1C",
                          border: idx >= 3 ? "2px solid #C9B29F" : "2px solid transparent",
                          fontFamily: "var(--font-mono)",
                        }}>
