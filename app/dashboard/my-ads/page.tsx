@@ -114,7 +114,7 @@ export default function MyAdsPage() {
         }}
       >
         <Link href="/" className="flex items-center gap-2.5">
-          <img src={LOGO} alt="Logo" className="w-10 h-10 rounded-lg" />
+          <img src={LOGO} alt="Logo" className="w-12 h-12 rounded-lg" />
           <span
             style={{
               fontFamily: "var(--font-table)",
@@ -392,7 +392,7 @@ export default function MyAdsPage() {
       {/* ─── Footer ─── */}
       <footer className="text-center py-6 mt-4" style={{ borderTop: "2px solid #C9B29F" }}>
         <div className="flex items-center justify-center gap-2 mb-2">
-          <img src={LOGO} alt="Logo" className="w-8 h-8 rounded-lg" />
+          <img src={LOGO} alt="Logo" className="w-10 h-10 rounded-lg" />
           <span
             style={{
               fontFamily: "var(--font-table)",

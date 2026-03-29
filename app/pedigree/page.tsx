@@ -92,7 +92,7 @@ export default function PedigreeHub() {
       <nav className="sticky top-0 z-50 px-4 md:px-6 py-3 flex items-center justify-between"
            style={{ background: "#FAF7F2", borderBottom: "2px solid #C9B29F" }}>
         <Link href="/" className="flex items-center gap-3">
-          <img src={LOGO} alt="Logo" className="w-8 h-8 rounded-lg" />
+          <img src={LOGO} alt="Logo" className="w-10 h-10 rounded-lg" />
           <span style={{
             fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "1.1rem",
             color: "#1C1C1C",
@@ -118,7 +118,7 @@ export default function PedigreeHub() {
       <section className="relative px-4 md:px-6 pt-12 pb-8">
         <div className="relative max-w-3xl mx-auto text-center">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <img src={LOGO} alt="Logo" className="w-20 h-20 rounded-lg" />
+            <img src={LOGO} alt="Logo" className="w-24 h-24 rounded-lg" />
           </div>
           <h1 style={{
             fontFamily: "var(--font-table)", fontSize: "clamp(1.8rem, 5vw, 3rem)", fontWeight: 700,
@@ -423,7 +423,7 @@ export default function PedigreeHub() {
       {/* Footer */}
       <footer className="text-center py-8 mt-4" style={{ borderTop: "2px solid #C9B29F" }}>
         <div className="flex items-center justify-center gap-2 mb-3">
-          <img src={LOGO} alt="Logo" className="w-8 h-8 rounded-lg" />
+          <img src={LOGO} alt="Logo" className="w-10 h-10 rounded-lg" />
           <span style={{
             fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "14px",
             color: "#1C1C1C",

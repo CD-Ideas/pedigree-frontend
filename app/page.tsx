@@ -344,8 +344,8 @@ export default function Home() {
       <main>
         {/* ── Hero ── */}
         <section className="relative flex items-center justify-center px-4" style={{ minHeight: "26vh", paddingTop: "45px" }}>
-          <div className="relative max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-4 md:gap-8 animate-reveal">
-            <img src={LOGO} alt="Pedigree Platform" width={200} height={200} className="rounded-lg flex-shrink-0 w-[140px] h-[140px] md:w-[220px] md:h-[220px]" />
+          <div className="relative max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-3 md:gap-5 animate-reveal">
+            <img src={LOGO} alt="Pedigree Platform" className="flex-shrink-0 w-[160px] md:w-[240px]" style={{ height: "auto" }} />
             <div className="text-center md:text-left">
               <h1 style={{ fontFamily: "var(--font-body)", fontSize: "clamp(1.2rem, 3.5vw, 2.2rem)", fontWeight: 500, lineHeight: 1.1, color: "#1C1C1C" }} className="mb-1.5">
                 The Ultimate <span style={{ color: "#C9B29F" }}>Pedigree Hub</span>
@@ -705,7 +705,7 @@ export default function Home() {
               {/* Brand */}
               <div className="flex flex-col items-center md:items-start gap-1.5">
                 <div className="flex items-center gap-2">
-                  <img src={LOGO} alt="" width={32} height={32} className="rounded-lg" />
+                  <img src={LOGO} alt="" width={40} height={40} className="rounded-lg" />
                   <span style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "11px", color: "#1C1C1C", textTransform: "uppercase", letterSpacing: "0.1em" }}>Pedigree Platform</span>
                 </div>
                 <p style={{ fontFamily: "var(--font-body)", fontSize: "10px", color: "#6B7280", maxWidth: "240px", lineHeight: 1.5 }} className="text-center md:text-left">

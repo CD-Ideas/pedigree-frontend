@@ -515,7 +515,7 @@ export default function PublishedPedigreePage() {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: "#EDE4D5" }}>
         <div className="flex flex-col items-center gap-4">
-          <img src={LOGO} alt="Logo" className="w-16 h-16 rounded-lg animate-pulse" />
+          <img src={LOGO} alt="Logo" className="w-20 h-20 rounded-lg animate-pulse" />
           <div className="flex items-center gap-3" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
             <div className="w-5 h-5 rounded-lg border-2 border-t-transparent animate-spin" style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} />
             Loading pedigree...
@@ -882,7 +882,7 @@ export default function PublishedPedigreePage() {
         {/* ─── Footer ─── */}
         <footer className="text-center py-8 mt-8" style={{ borderTop: "1px solid #D6CEBF" }}>
           <div className="flex items-center justify-center gap-2 mb-3">
-            <img src={LOGO} alt="Logo" className="w-8 h-8 rounded-lg" />
+            <img src={LOGO} alt="Logo" className="w-10 h-10 rounded-lg" />
             <span style={{
               fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "14px",
               color: "#1C1C1C",
