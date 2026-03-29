@@ -147,6 +147,10 @@ function MessagesContent() {
   const [onlineUserIds, setOnlineUserIds] = useState<Set<number>>(new Set());
   const [mobileShowChat, setMobileShowChat] = useState(false);
   const [typingUserId, setTypingUserId] = useState<number | null>(null);
+  const [showGroupCreate, setShowGroupCreate] = useState(false);
+  const [groupName, setGroupName] = useState("");
+  const [groupMembers, setGroupMembers] = useState<string[]>([]);
+  const [groupMemberInput, setGroupMemberInput] = useState("");
   const socketRef = useRef<Socket | null>(null);
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -555,11 +559,20 @@ function MessagesContent() {
         <div className="px-4 py-3 flex items-center justify-between flex-shrink-0"
           style={{ background: "#1C1C1C" }}>
           <span className="text-sm font-bold" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Messages</span>
-          <button onClick={() => { setShowCompose(!showCompose); setSelectedThread(null); setMobileShowChat(false); }}
-            className="w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-110"
-            style={{ background: "#C9B29F", color: "#1C1C1C", fontSize: "16px" }}>
-            ✏️
-          </button>
+          <div className="flex items-center gap-2">
+            <button onClick={() => { setShowCompose(!showCompose); setSelectedThread(null); setMobileShowChat(false); }}
+              className="w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-110"
+              style={{ background: "#C9B29F", color: "#1C1C1C", fontSize: "16px" }}
+              title="New Message">
+              ✏️
+            </button>
+            <button onClick={() => { setShowGroupCreate(true); setMobileShowChat(true); setSelectedThread(null); setShowCompose(false); }}
+              className="w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-110"
+              style={{ background: "#C9B29F", color: "#1C1C1C", fontSize: "16px" }}
+              title="Create Group">
+              👥
+            </button>
+          </div>
         </div>
 
         {/* Search */}
@@ -635,8 +648,89 @@ function MessagesContent() {
       <div className={`${mobileShowChat ? "flex" : "hidden md:flex"} flex-col flex-1`}
         style={{ background: "#FAFAFA" }}>
 
+        {/* Create Group Chat */}
+        {showGroupCreate ? (
+          <div className="flex flex-col h-full">
+            <div className="px-4 py-3 flex items-center gap-3 flex-shrink-0"
+              style={{ background: "#1C1C1C" }}>
+              <button onClick={() => { setShowGroupCreate(false); setMobileShowChat(false); }}
+                className="text-lg" style={{ color: "#FAF7F2" }}>←</button>
+              <span className="text-sm font-bold" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Create Group Chat</span>
+            </div>
+            <div className="flex-1 flex flex-col items-center justify-center px-6 gap-4">
+              <span className="text-5xl">👥</span>
+              <div className="w-full max-w-sm space-y-3">
+                <input value={groupName} onChange={e => setGroupName(e.target.value)}
+                  placeholder="Group name..."
+                  className="w-full rounded-lg px-4 py-3 text-sm outline-none"
+                  style={{ background: "#FAF7F2", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
+                <div>
+                  <div className="flex gap-2">
+                    <input value={groupMemberInput} onChange={e => setGroupMemberInput(e.target.value)}
+                      onKeyDown={e => {
+                        if (e.key === "Enter" && groupMemberInput.trim()) {
+                          e.preventDefault();
+                          if (!groupMembers.includes(groupMemberInput.trim())) {
+                            setGroupMembers(prev => [...prev, groupMemberInput.trim()]);
+                          }
+                          setGroupMemberInput("");
+                        }
+                      }}
+                      placeholder="Add member username..."
+                      className="flex-1 rounded-lg px-4 py-3 text-sm outline-none"
+                      style={{ background: "#FAF7F2", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
+                    <button onClick={() => {
+                      if (groupMemberInput.trim() && !groupMembers.includes(groupMemberInput.trim())) {
+                        setGroupMembers(prev => [...prev, groupMemberInput.trim()]);
+                        setGroupMemberInput("");
+                      }
+                    }}
+                      className="px-4 py-2 rounded-lg text-sm font-bold"
+                      style={{ background: "#C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+                      Add
+                    </button>
+                  </div>
+                  {groupMembers.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {groupMembers.map((m, i) => (
+                        <span key={i} className="flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium"
+                          style={{ background: "#FAF7F2", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+                          {m}
+                          <button onClick={() => setGroupMembers(prev => prev.filter((_, j) => j !== i))}
+                            className="ml-1 text-red-400 hover:text-red-600">✕</button>
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <button onClick={() => {
+                  if (!groupName.trim() || groupMembers.length === 0 || !user || !socketRef.current) return;
+                  // Resolve usernames to IDs via a quick search
+                  const memberNames = groupMembers;
+                  // For now, emit with usernames — server can resolve
+                  socketRef.current.emit("group:create", {
+                    name: groupName.trim(),
+                    createdBy: user.id,
+                    memberUsernames: memberNames,
+                    memberIds: [], // Server will resolve from usernames
+                  });
+                  setGroupName("");
+                  setGroupMembers([]);
+                  setShowGroupCreate(false);
+                  setMobileShowChat(false);
+                }}
+                  disabled={!groupName.trim() || groupMembers.length === 0}
+                  className="w-full py-3 rounded-lg text-sm font-bold uppercase tracking-wider transition-all disabled:opacity-40"
+                  style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)" }}>
+                  Create Group ({groupMembers.length} member{groupMembers.length !== 1 ? "s" : ""})
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : null}
+
         {/* Compose New Message */}
-        {showCompose ? (
+        {!showGroupCreate && showCompose ? (
           <div className="flex flex-col h-full">
             <div className="px-4 py-3 flex items-center gap-3 flex-shrink-0"
               style={{ background: "#1C1C1C" }}>
@@ -669,7 +763,7 @@ function MessagesContent() {
               </div>
             </div>
           </div>
-        ) : selectedThread && selectedThreadData ? (
+        ) : !showGroupCreate && selectedThread && selectedThreadData ? (
           <div className="flex flex-col h-full">
             {/* Chat Header */}
             <div className="px-4 py-3 flex items-center justify-between flex-shrink-0"
@@ -787,20 +881,20 @@ function MessagesContent() {
                         </div>
                         {/* Reaction picker on hover */}
                         {hoveredMsgId === msg.id && (
-                          <div className="flex items-center gap-0.5 absolute"
+                          <div className="flex items-center gap-1 absolute"
                             style={{
-                              [isMine ? "left" : "right"]: 0,
-                              top: "-28px",
+                              [isMine ? "right" : "left"]: 0,
+                              bottom: "-36px",
                               background: "#FAFAFA",
-                              border: "1px solid #C9B29F",
-                              borderRadius: "16px",
-                              padding: "2px 4px",
-                              zIndex: 10,
+                              border: "2px solid #C9B29F",
+                              borderRadius: "20px",
+                              padding: "4px 8px",
+                              zIndex: 20,
                             }}>
                             {["👍", "❤️", "😂", "😮", "😢", "🔥"].map(emoji => (
-                              <button key={emoji} onClick={() => toggleReaction(msg.id, emoji)}
-                                className="hover:scale-125 transition-transform"
-                                style={{ fontSize: "14px", padding: "2px 3px", lineHeight: 1, background: "none", border: "none", cursor: "pointer" }}>
+                              <button key={emoji} onClick={(e) => { e.stopPropagation(); toggleReaction(msg.id, emoji); }}
+                                className="hover:scale-130 transition-transform"
+                                style={{ fontSize: "18px", padding: "2px 4px", lineHeight: 1, background: "none", border: "none", cursor: "pointer" }}>
                                 {emoji}
                               </button>
                             ))}
@@ -819,18 +913,18 @@ function MessagesContent() {
                                 const iReacted = user ? userIds.includes(user.id) : false;
                                 return (
                                   <button key={emoji} onClick={() => toggleReaction(msg.id, emoji)}
-                                    className="flex items-center gap-0.5 px-1.5 py-0.5 transition-all"
+                                    className="flex items-center gap-1 px-2 py-1 transition-all hover:scale-105"
                                     style={{
                                       background: iReacted ? "#EDE4D5" : "#FAF7F2",
-                                      border: iReacted ? "1.5px solid #C9B29F" : "1px solid #C9B29F",
-                                      borderRadius: "12px",
-                                      fontSize: "11px",
+                                      border: iReacted ? "2px solid #C9B29F" : "1px solid #C9B29F",
+                                      borderRadius: "14px",
+                                      fontSize: "14px",
                                       fontFamily: "var(--font-table)",
                                       color: "#1C1C1C",
                                       cursor: "pointer",
                                     }}>
                                     <span>{emoji}</span>
-                                    <span style={{ fontSize: "10px" }}>{userIds.length}</span>
+                                    <span style={{ fontSize: "11px", fontWeight: 600 }}>{userIds.length}</span>
                                   </button>
                                 );
                               })}
