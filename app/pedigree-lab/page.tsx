@@ -890,53 +890,44 @@ function PedigreeLabInner() {
                         const xwNum = xwMatch ? parseInt(xwMatch[1]) : 0;
                         const isChampion = isGrCh || isCh;
 
-                        const cellBg = isGrCh
-                          ? "#eef3fb"
+                        const cellTint = isGrCh
+                          ? "rgba(96,165,250,0.15)"
                           : isCh
-                            ? "#fdf2f2"
-                            : xwNum === 3
-                              ? "#fdf8ed"
-                              : xwNum === 1
-                                ? "#eef8f7"
-                                : xwNum === 2
-                                  ? "#fef4ec"
-                                  : xwNum === 4
-                                    ? "#fdf1f6"
-                                    : xwNum >= 5
-                                      ? "#f5f0fb"
-                                      : isRom
-                                        ? "#eefbfc"
-                                        : isPor
-                                          ? "#f3f0fe"
-                                          : "#FAFAFA";
+                            ? "rgba(252,129,129,0.15)"
+                            : isRom
+                              ? "rgba(34,211,238,0.15)"
+                              : isPor
+                                ? "rgba(167,139,250,0.15)"
+                                : xwNum === 1
+                                  ? "rgba(45,212,191,0.15)"
+                                  : xwNum === 2
+                                    ? "rgba(251,146,60,0.15)"
+                                    : xwNum === 3
+                                      ? "rgba(212,168,85,0.15)"
+                                      : xwNum === 4
+                                        ? "rgba(244,114,182,0.15)"
+                                        : xwNum >= 5
+                                          ? "rgba(192,132,252,0.15)"
+                                          : "rgba(58,58,58,0.15)";
+                        const cellBg = `linear-gradient(135deg, ${cellTint}, #FAF7F2)`;
 
-                        const cellBorder = isGrCh
-                          ? "rgba(29,91,191,0.75)"
-                          : isCh
-                            ? "rgba(192,40,40,0.7)"
-                            : xwNum === 3
-                              ? "rgba(160,115,15,0.7)"
-                              : xwNum === 1
-                                ? "rgba(13,116,104,0.65)"
-                                : xwNum === 2
-                                  ? "rgba(200,75,8,0.65)"
-                                  : xwNum === 4
-                                    ? "rgba(176,56,120,0.65)"
-                                    : xwNum >= 5
-                                      ? "rgba(109,48,176,0.65)"
-                                      : isRom
-                                        ? "rgba(34,211,238,0.65)"
-                                        : isPor
-                                          ? "rgba(167,139,250,0.65)"
-                                          : "rgba(180,185,195,0.4)";
+                        const cellBorder = isGrCh ? "#1d5bbf"
+                          : isCh ? "#c02828"
+                            : isRom ? "#0d7468"
+                              : isPor ? "#6d30b0"
+                                : xwNum === 1 ? "#0d7468"
+                                  : xwNum === 2 ? "#b45a0a"
+                                    : xwNum === 3 ? "#8a6518"
+                                      : xwNum === 4 ? "#b03878"
+                                        : xwNum >= 5 ? "#6d30b0"
+                                          : "#3a3a3a";
 
-                        const cellTextColor = isGrCh
-                          ? "#1d5bbf"
-                          : isCh
-                            ? "#c02828"
-                            : xwNum === 1 ? "#0d7468" : xwNum === 2 ? "#b45a0a" : xwNum === 3 ? "#8a6518" : xwNum === 4 ? "#b03878" : xwNum >= 5 ? "#6d30b0"
-                              : isRom ? "#0e7490" : isPor ? "#6d28d9"
-                                : "#1C1C1C";
+                        const cellTextColor = isGrCh ? "#1d5bbf"
+                          : isCh ? "#c02828"
+                            : isRom ? "#0d7468"
+                              : isPor ? "#6d30b0"
+                                : xwNum === 1 ? "#0d7468" : xwNum === 2 ? "#b45a0a" : xwNum === 3 ? "#8a6518" : xwNum === 4 ? "#b03878" : xwNum >= 5 ? "#6d30b0"
+                                  : "#3a3a3a";
 
                         return { cellBg, cellBorder, cellTextColor, isChampion };
                       }
@@ -952,8 +943,9 @@ function PedigreeLabInner() {
                             className="align-middle relative"
                             style={{
                               background: cellBg,
-                              borderLeft: `4px solid ${cellBorder}`,
-                              borderTop: "1px solid #C9B29F",
+                              border: "2px solid #EDE4D5",
+                              borderLeftColor: cellBorder,
+                              borderLeftWidth: "4px",
                               borderRadius: 6,
                               padding: "6px 10px",
                               minHeight: 40,

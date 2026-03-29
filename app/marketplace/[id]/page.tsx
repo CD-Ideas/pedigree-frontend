@@ -476,7 +476,7 @@ export default function MarketplaceAdPage() {
               <div className="flex items-center gap-2 mb-3">
                 <div
                   className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
-                  style={{ background: "rgba(96,165,250,0.1)" }}
+                  style={{ background: "rgba(29,91,191,0.1)" }}
                 >
                   <span className="text-sm">{"\uD83D\uDCCD"}</span>
                 </div>
@@ -782,7 +782,7 @@ export default function MarketplaceAdPage() {
                     <div className="flex items-center gap-3">
                       <div
                         className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
-                        style={{ background: "rgba(96,165,250,0.1)" }}
+                        style={{ background: "rgba(29,91,191,0.1)" }}
                       >
                         <span className="text-sm">{"\u2709\uFE0F"}</span>
                       </div>
@@ -793,7 +793,7 @@ export default function MarketplaceAdPage() {
                         <a
                           href={`mailto:${ad.contact_email}`}
                           className="text-xs font-bold hover:underline break-all"
-                          style={{ color: "#60a5fa", fontFamily: "var(--font-mono)" }}
+                          style={{ color: "#1d5bbf", fontFamily: "var(--font-mono)" }}
                         >
                           {ad.contact_email}
                         </a>
@@ -824,15 +824,15 @@ export default function MarketplaceAdPage() {
                     <div className="flex items-center gap-3">
                       <div
                         className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
-                        style={{ background: "rgba(96,165,250,0.1)" }}
+                        style={{ background: "rgba(29,91,191,0.1)" }}
                       >
-                        <span className="text-sm font-bold" style={{ color: "#60a5fa" }}>P</span>
+                        <span className="text-sm font-bold" style={{ color: "#1d5bbf" }}>P</span>
                       </div>
                       <div>
                         <div className="text-[9px] uppercase tracking-wider" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                           PayPal
                         </div>
-                        <div className="text-xs font-bold" style={{ color: "#60a5fa", fontFamily: "var(--font-mono)" }}>
+                        <div className="text-xs font-bold" style={{ color: "#1d5bbf", fontFamily: "var(--font-mono)" }}>
                           {ad.contact_paypal}
                         </div>
                       </div>
