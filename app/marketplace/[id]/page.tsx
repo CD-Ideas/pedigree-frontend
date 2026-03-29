@@ -248,9 +248,9 @@ export default function MarketplaceAdPage() {
                 <span
                   className="text-[9px] font-bold"
                   style={{
-                    background: "#1C1C1C",
-                    
-                    
+                    color: "#1C1C1C",
+
+
                     fontFamily: "var(--font-table)",
                   }}
                 >
@@ -359,9 +359,9 @@ export default function MarketplaceAdPage() {
                   }}
                   className="flex-1 flex items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-xs font-bold transition-all hover:scale-[1.02]"
                   style={{
-                    background: copied ? "rgba(34,197,94,0.1)" : "#FAFAFA",
-                    border: copied ? "1px solid rgba(34,197,94,0.3)" : "1px solid #C9B29F",
-                    color: copied ? "#22c55e" : "#94a3b8",
+                    background: "#FAF7F2",
+                    border: "2px solid #C9B29F",
+                    color: "#1C1C1C",
                     fontFamily: "var(--font-table)",
                   }}
                 >
@@ -375,13 +375,13 @@ export default function MarketplaceAdPage() {
                   rel="noopener noreferrer"
                   className="flex-1 flex items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-xs font-bold transition-all hover:scale-[1.02]"
                   style={{
-                    background: "rgba(37,211,102,0.08)",
-                    border: "1px solid rgba(37,211,102,0.2)",
-                    color: "#25d366",
+                    background: "#FAF7F2",
+                    border: "2px solid #C9B29F",
+                    color: "#1C1C1C",
                     fontFamily: "var(--font-table)",
                   }}
                 >
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="#25d366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.611.611l4.458-1.495A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.3 0-4.438-.766-6.149-2.056l-.432-.336-3.2 1.073 1.073-3.2-.336-.432A9.953 9.953 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="#1C1C1C"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.611.611l4.458-1.495A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.3 0-4.438-.766-6.149-2.056l-.432-.336-3.2 1.073 1.073-3.2-.336-.432A9.953 9.953 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
                   WhatsApp
                 </a>
 
@@ -392,13 +392,13 @@ export default function MarketplaceAdPage() {
                   rel="noopener noreferrer"
                   className="flex-1 flex items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-xs font-bold transition-all hover:scale-[1.02]"
                   style={{
-                    background: "rgba(0,136,204,0.08)",
-                    border: "1px solid rgba(0,136,204,0.2)",
-                    color: "#0088cc",
+                    background: "#FAF7F2",
+                    border: "2px solid #C9B29F",
+                    color: "#1C1C1C",
                     fontFamily: "var(--font-table)",
                   }}
                 >
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="#0088cc"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="#1C1C1C"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
                   Telegram
                 </a>
               </div>
@@ -437,7 +437,7 @@ export default function MarketplaceAdPage() {
                 className="text-xl font-black leading-tight mb-3"
                 style={{
                   fontFamily: "var(--font-display)",
-                  background: "#1C1C1C",
+                  color: "#1C1C1C",
                   
                   
                 }}
@@ -449,12 +449,12 @@ export default function MarketplaceAdPage() {
               {!!ad.is_verified && (
                 <div
                   className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg mb-3"
-                  style={{ background: "rgba(34,197,94,0.12)", border: "1px solid rgba(34,197,94,0.3)" }}
+                  style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}
                 >
                   <span className="text-xs">{"\u2713"}</span>
                   <span
                     className="text-[10px] font-bold"
-                    style={{ color: "#22c55e", fontFamily: "var(--font-table)" }}
+                    style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}
                   >
                     Verified Listing
                   </span>
@@ -724,9 +724,9 @@ export default function MarketplaceAdPage() {
                       disabled={verifyRequesting}
                       className="w-full rounded-lg px-4 py-2.5 text-xs font-bold uppercase tracking-wider transition-all hover:scale-[1.02] disabled:opacity-50"
                       style={{
-                        background: "rgba(34,197,94,0.12)",
-                        color: "#22c55e",
-                        border: "1.5px solid rgba(34,197,94,0.3)",
+                        background: "#C9B29F",
+                        color: "#1C1C1C",
+                        border: "2px solid #C9B29F",
                         fontFamily: "var(--font-table)",
                       }}
                     >
@@ -771,7 +771,7 @@ export default function MarketplaceAdPage() {
                         <div className="text-[9px] uppercase tracking-wider" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                           Phone
                         </div>
-                        <div className="text-xs font-bold" style={{ color: "#22c55e", fontFamily: "var(--font-mono)" }}>
+                        <div className="text-xs font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
                           {ad.contact_phone}
                         </div>
                       </div>
@@ -849,9 +849,9 @@ export default function MarketplaceAdPage() {
                   onClick={() => setShowReport(true)}
                   className="w-full rounded-xl px-4 py-2.5 text-xs font-medium transition-all hover:scale-[1.02]"
                   style={{
-                    background: "rgba(239,68,68,0.06)",
-                    border: "1.5px solid rgba(239,68,68,0.2)",
-                    color: "#ef4444",
+                    background: "#FAF7F2",
+                    border: "2px solid #C9B29F",
+                    color: "#1C1C1C",
                     fontFamily: "var(--font-table)",
                   }}
                 >
@@ -862,7 +862,7 @@ export default function MarketplaceAdPage() {
                   className="rounded-xl p-4"
                   style={{
                     background: "#FAF7F2",
-                    border: "1.5px solid rgba(239,68,68,0.3)",
+                    border: "2px solid #C9B29F",
                   }}
                 >
                   {reportSent ? (
@@ -936,7 +936,7 @@ export default function MarketplaceAdPage() {
               fontFamily: "var(--font-table)",
               fontWeight: 700,
               fontSize: "12px",
-              background: "#1C1C1C",
+              color: "#1C1C1C",
               
               
             }}
@@ -945,7 +945,6 @@ export default function MarketplaceAdPage() {
           </span>
         </div>
         <div className="flex items-center justify-center gap-2 sm:gap-4 flex-wrap">
-          <Link href="/" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Home</Link>
           <Link href="/marketplace" className="text-[10px] hover:underline" style={{ color: "#1C1C1C" }}>Marketplace</Link>
           <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Privacy</Link>
           <Link href="/terms" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Terms</Link>

@@ -1088,7 +1088,7 @@ function CreateAdContent() {
               fontFamily: "var(--font-table)",
               fontWeight: 700,
               fontSize: "12px",
-              background: "#1C1C1C",
+              color: "#1C1C1C",
               
               
             }}
