@@ -35,6 +35,8 @@ interface Message {
   attachments?: string;
 }
 
+interface Reaction { emoji: string; user_id: number; }
+
 interface UserData { id: number; username: string; }
 
 /* ─── Helpers ─── */
@@ -136,7 +138,7 @@ function MessagesContent() {
   const [replyText, setReplyText] = useState("");
   const [sending, setSending] = useState(false);
   const [composeMsg, setComposeMsg] = useState("");
-  const [pendingAttachments, setPendingAttachments] = useState<{ url: string; name: string; size: number; isImage: boolean }[]>([]);
+  const [pendingAttachments, setPendingAttachments] = useState<{ url: string; name: string; size: number; isImage: boolean; isVoice?: boolean }[]>([]);
   const [otherUserStatus, setOtherUserStatus] = useState<{ online: boolean; last_active: string | null; seconds_ago: number | null } | null>(null);
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -147,6 +149,17 @@ function MessagesContent() {
   const [typingUserId, setTypingUserId] = useState<number | null>(null);
   const socketRef = useRef<Socket | null>(null);
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Reactions state
+  const [reactions, setReactions] = useState<Record<number, Reaction[]>>({});
+  const [hoveredMsgId, setHoveredMsgId] = useState<number | null>(null);
+
+  // Voice recording state
+  const [isRecording, setIsRecording] = useState(false);
+  const [recordingTime, setRecordingTime] = useState(0);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
+  const recordingIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Init user
   useEffect(() => {
@@ -230,6 +243,11 @@ function MessagesContent() {
     // Real-time: typing indicator
     socket.on("typing:update", ({ userId, typing }: { userId: number; typing: boolean }) => {
       setTypingUserId(typing ? userId : null);
+    });
+
+    // Real-time: reaction updates
+    socket.on("reaction:update", ({ messageId, reactions: msgReactions }: { messageId: number; reactions: Reaction[] }) => {
+      setReactions(prev => ({ ...prev, [messageId]: msgReactions }));
     });
 
     // Real-time: online users list
@@ -335,10 +353,13 @@ function MessagesContent() {
     fetch(`/api/messages?userId=${user.id}&threadId=${threadId}`)
       .then(r => r.json())
       .then(data => {
-        setThreadMessages(data.messages || []);
+        const msgs = data.messages || [];
+        setThreadMessages(msgs);
         setThreadLoading(false);
         setThreads(prev => prev.map(t => t.thread_id === threadId ? { ...t, unread_count: 0 } : t));
         setTimeout(() => { chatContainerRef.current && (chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight); }, 50);
+        // Fetch reactions for loaded messages
+        fetchReactions(msgs);
         // Emit thread:read via socket for real-time read receipts
         if (socketRef.current) {
           socketRef.current.emit("thread:read", { threadId, readerId: user.id });
@@ -353,6 +374,98 @@ function MessagesContent() {
           }).then(() => window.dispatchEvent(new Event("refreshNotifications"))).catch(() => {});
         }
       }).catch(() => setThreadLoading(false));
+  };
+
+  // Fetch reactions for a set of messages
+  const fetchReactions = useCallback((messages: Message[]) => {
+    if (messages.length === 0) return;
+    const ids = messages.map(m => m.id).join(",");
+    fetch(`/api/messages/reactions?messageIds=${ids}`)
+      .then(r => r.json())
+      .then(data => {
+        if (data.reactions) setReactions(data.reactions);
+      })
+      .catch(() => {});
+  }, []);
+
+  // Toggle a reaction on a message
+  const toggleReaction = (messageId: number, emoji: string) => {
+    if (!user || !socketRef.current) return;
+    const existing = reactions[messageId] || [];
+    const alreadyReacted = existing.some(r => r.emoji === emoji && r.user_id === user.id);
+    if (alreadyReacted) {
+      socketRef.current.emit("reaction:remove", { messageId, emoji, userId: user.id });
+      setReactions(prev => ({
+        ...prev,
+        [messageId]: (prev[messageId] || []).filter(r => !(r.emoji === emoji && r.user_id === user.id)),
+      }));
+    } else {
+      socketRef.current.emit("reaction:add", { messageId, emoji, userId: user.id });
+      setReactions(prev => ({
+        ...prev,
+        [messageId]: [...(prev[messageId] || []), { emoji, user_id: user.id }],
+      }));
+    }
+  };
+
+  // Voice recording helpers
+  const startRecording = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const mediaRecorder = new MediaRecorder(stream);
+      mediaRecorderRef.current = mediaRecorder;
+      audioChunksRef.current = [];
+
+      mediaRecorder.ondataavailable = (e) => {
+        if (e.data.size > 0) audioChunksRef.current.push(e.data);
+      };
+
+      mediaRecorder.onstop = async () => {
+        stream.getTracks().forEach(t => t.stop());
+        const audioBlob = new Blob(audioChunksRef.current, { type: "audio/webm" });
+        if (audioBlob.size === 0) return;
+        // Upload voice note
+        if (!user) return;
+        setUploading(true);
+        try {
+          const fd = new FormData();
+          fd.append("userId", String(user.id));
+          fd.append("file", audioBlob, `voice_${Date.now()}.webm`);
+          const res = await fetch("/api/messages/upload", { method: "POST", body: fd });
+          const data = await res.json();
+          if (data.success) {
+            setPendingAttachments(prev => [...prev, { url: data.url, name: "Voice Note", size: data.size, isImage: false, isVoice: true }]);
+          }
+        } catch {}
+        setUploading(false);
+      };
+
+      mediaRecorder.start();
+      setIsRecording(true);
+      setRecordingTime(0);
+      recordingIntervalRef.current = setInterval(() => {
+        setRecordingTime(prev => prev + 1);
+      }, 1000);
+    } catch {
+      alert("Could not access microphone. Please check permissions.");
+    }
+  };
+
+  const stopRecording = () => {
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
+      mediaRecorderRef.current.stop();
+    }
+    setIsRecording(false);
+    if (recordingIntervalRef.current) {
+      clearInterval(recordingIntervalRef.current);
+      recordingIntervalRef.current = null;
+    }
+  };
+
+  const formatRecordingTime = (seconds: number) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}:${s.toString().padStart(2, "0")}`;
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -620,7 +733,10 @@ function MessagesContent() {
                       </div>
                     )}
                     <div className={`flex ${isMine ? "justify-end" : "justify-start"} mb-1`}>
-                      <div className="max-w-[75%]">
+                      <div className="max-w-[75%]"
+                        onMouseEnter={() => setHoveredMsgId(msg.id)}
+                        onMouseLeave={() => setHoveredMsgId(null)}
+                        style={{ position: "relative" }}>
                         <div className="rounded-2xl px-3.5 py-2"
                           style={{
                             background: isMine ? "#C9B29F" : "#FAFAFA",
@@ -635,25 +751,92 @@ function MessagesContent() {
                               const atts = JSON.parse(msg.attachments);
                               return (
                                 <div className="mt-1.5 space-y-1">
-                                  {atts.map((att: { url: string; name: string; size: number; isImage: boolean }, i: number) => (
-                                    att.isImage ? (
-                                      <a key={i} href={att.url} target="_blank" rel="noopener noreferrer" className="block">
-                                        <img src={att.url} alt={att.name} className="max-w-full rounded-lg max-h-52 object-cover" />
-                                      </a>
-                                    ) : (
+                                  {atts.map((att: { url: string; name: string; size: number; isImage: boolean; isVoice?: boolean }, i: number) => {
+                                    const isVoice = att.isVoice || (att.name && att.name.toLowerCase().includes("voice")) || (att.url && (att.url.endsWith(".webm") || att.url.endsWith(".ogg")));
+                                    if (att.isImage) {
+                                      return (
+                                        <a key={i} href={att.url} target="_blank" rel="noopener noreferrer" className="block">
+                                          <img src={att.url} alt={att.name} className="max-w-full rounded-lg max-h-52 object-cover" />
+                                        </a>
+                                      );
+                                    }
+                                    if (isVoice) {
+                                      return (
+                                        <div key={i} className="flex items-center gap-2 px-2.5 py-2 rounded-lg"
+                                          style={{ background: isMine ? "rgba(0,0,0,0.08)" : "#FAF7F2", minWidth: "180px" }}>
+                                          <audio controls preload="metadata" style={{ height: "32px", width: "100%" }}>
+                                            <source src={att.url} type="audio/webm" />
+                                            <source src={att.url} type="audio/ogg" />
+                                          </audio>
+                                        </div>
+                                      );
+                                    }
+                                    return (
                                       <a key={i} href={att.url} target="_blank" rel="noopener noreferrer"
                                         className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs hover:opacity-80"
                                         style={{ background: isMine ? "rgba(0,0,0,0.08)" : "#FAF7F2", color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                                         📎 <span className="truncate">{att.name}</span>
                                         <span className="text-[9px] flex-shrink-0" style={{ color: "#6B7280" }}>{formatFileSize(att.size)}</span>
                                       </a>
-                                    )
-                                  ))}
+                                    );
+                                  })}
                                 </div>
                               );
                             } catch { return null; }
                           })()}
                         </div>
+                        {/* Reaction picker on hover */}
+                        {hoveredMsgId === msg.id && (
+                          <div className="flex items-center gap-0.5 absolute"
+                            style={{
+                              [isMine ? "left" : "right"]: 0,
+                              top: "-28px",
+                              background: "#FAFAFA",
+                              border: "1px solid #C9B29F",
+                              borderRadius: "16px",
+                              padding: "2px 4px",
+                              zIndex: 10,
+                            }}>
+                            {["👍", "❤️", "😂", "😮", "😢", "🔥"].map(emoji => (
+                              <button key={emoji} onClick={() => toggleReaction(msg.id, emoji)}
+                                className="hover:scale-125 transition-transform"
+                                style={{ fontSize: "14px", padding: "2px 3px", lineHeight: 1, background: "none", border: "none", cursor: "pointer" }}>
+                                {emoji}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                        {/* Reactions display */}
+                        {reactions[msg.id] && reactions[msg.id].length > 0 && (() => {
+                          const grouped: Record<string, number[]> = {};
+                          for (const r of reactions[msg.id]) {
+                            if (!grouped[r.emoji]) grouped[r.emoji] = [];
+                            grouped[r.emoji].push(r.user_id);
+                          }
+                          return (
+                            <div className={`flex flex-wrap gap-1 mt-0.5 ${isMine ? "justify-end" : "justify-start"}`}>
+                              {Object.entries(grouped).map(([emoji, userIds]) => {
+                                const iReacted = user ? userIds.includes(user.id) : false;
+                                return (
+                                  <button key={emoji} onClick={() => toggleReaction(msg.id, emoji)}
+                                    className="flex items-center gap-0.5 px-1.5 py-0.5 transition-all"
+                                    style={{
+                                      background: iReacted ? "#EDE4D5" : "#FAF7F2",
+                                      border: iReacted ? "1.5px solid #C9B29F" : "1px solid #C9B29F",
+                                      borderRadius: "12px",
+                                      fontSize: "11px",
+                                      fontFamily: "var(--font-table)",
+                                      color: "#1C1C1C",
+                                      cursor: "pointer",
+                                    }}>
+                                    <span>{emoji}</span>
+                                    <span style={{ fontSize: "10px" }}>{userIds.length}</span>
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          );
+                        })()}
                         {/* Time + Read receipt */}
                         <div className={`flex items-center gap-1 mt-0.5 px-1 ${isMine ? "justify-end" : ""}`}>
                           <span className="text-[10px]" style={{ color: "#6B7280" }}>{formatFullTime(msg.created_at)}</span>
@@ -691,7 +874,7 @@ function MessagesContent() {
                   {pendingAttachments.map((att, i) => (
                     <div key={i} className="flex items-center gap-1.5 px-2 py-1 rounded-lg text-[10px]"
                       style={{ background: "#FAF7F2", border: "1px solid #C9B29F" }}>
-                      {att.isImage ? <img src={att.url} alt="" className="w-8 h-8 rounded object-cover" /> : <span>📎</span>}
+                      {att.isImage ? <img src={att.url} alt="" className="w-8 h-8 rounded object-cover" /> : (att as { isVoice?: boolean }).isVoice ? <span>🎤</span> : <span>📎</span>}
                       <span className="truncate max-w-[80px]" style={{ color: "#1C1C1C" }}>{att.name}</span>
                       <button onClick={() => setPendingAttachments(prev => prev.filter((_, j) => j !== i))} className="text-red-400">✕</button>
                     </div>
@@ -706,6 +889,16 @@ function MessagesContent() {
                 </button>
                 <input ref={imageInputRef} type="file" className="hidden" accept="image/*,.pdf,.doc,.docx,.txt,.zip" onChange={handleFileUpload} />
                 <input ref={fileInputRef} type="file" className="hidden" accept=".pdf,.doc,.docx,.txt,.zip" onChange={handleFileUpload} />
+                {/* Microphone / Voice Note button */}
+                <button onClick={isRecording ? stopRecording : startRecording} disabled={uploading}
+                  className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center transition-all hover:scale-110"
+                  style={{
+                    background: isRecording ? "#ef4444" : "#FAF7F2",
+                    border: isRecording ? "2px solid #ef4444" : "2px solid #C9B29F",
+                    color: isRecording ? "#FAFAFA" : "#1C1C1C",
+                  }}>
+                  {isRecording ? <span className="text-xs font-bold" style={{ fontFamily: "var(--font-table)" }}>{formatRecordingTime(recordingTime)}</span> : <span className="text-base">🎤</span>}
+                </button>
                 <textarea
                   value={replyText}
                   onChange={e => {
