@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 
-const LOGO = "https://i.imgur.com/svXPGXg.png";
+const LOGO = "https://i.imgur.com/9RJG2QN.png";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -26,7 +26,7 @@ export default function ForgotPasswordPage() {
 
       <div className="rounded-2xl p-6 w-full max-w-md" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "10px" }}>
         <div className="flex flex-col items-center mb-5">
-          <img src={LOGO} alt="Pedigree Platform" width={88} height={88} className="rounded-lg mb-3" style={{ background: "#C9B29F", padding: "4px" }} />
+          <img src={LOGO} alt="Pedigree Platform" width={112} height={112} className="rounded-lg mb-3" />
           <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "1.75rem", color: "#1C1C1C" }}>
             Forgot Password
           </h1>

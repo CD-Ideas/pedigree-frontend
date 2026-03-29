@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { getDogColor } from "@/app/utils/colors";
 import { playNotifChime, playMessagePop } from "@/app/sounds";
 
-const LOGO = "https://i.imgur.com/svXPGXg.png";
+const LOGO = "https://i.imgur.com/9RJG2QN.png";
 
 
 function NavSearch() {
@@ -349,7 +349,7 @@ export default function NavBar() {
     >
       <div className="max-w-[1600px] mx-auto px-6 flex items-center justify-between h-14 overflow-visible">
         <Link href="/" className="flex items-center gap-3">
-          <img src={LOGO} alt="Logo" className="w-8 h-8 rounded-lg" style={{ background: "#C9B29F", padding: "2px" }} />
+          <img src={LOGO} alt="Logo" className="w-10 h-10 rounded-lg" />
           <span
             style={{
               fontFamily: "var(--font-display)",

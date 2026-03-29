@@ -18,7 +18,7 @@ interface Dog {
   dam_name: string | null;
 }
 
-const LOGO = "https://i.imgur.com/svXPGXg.png";
+const LOGO = "https://i.imgur.com/9RJG2QN.png";
 
 const TC: Record<string, string> = {
   "GR CH": "#1d5bbf", CH: "#c02828", ROM: "#0d7468", POR: "#6d30b0",
@@ -262,7 +262,7 @@ export default function PublicDogsPage() {
       <nav className="sticky top-0 z-50 px-4 md:px-6 py-2.5 flex items-center justify-between"
         style={{ background: "#FAF7F2", borderBottom: "2px solid #C9B29F" }}>
         <Link href="/" className="flex items-center gap-2.5">
-          <img src={LOGO} alt="Logo" className="w-7 h-7 rounded-lg" style={{ background: "#C9B29F", padding: "1px" }} />
+          <img src={LOGO} alt="Logo" className="w-10 h-10 rounded-lg" />
           <span style={{
             fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "1rem",
             color: "#1C1C1C",
@@ -651,14 +651,13 @@ export default function PublicDogsPage() {
       {/* ─── Footer ─── */}
       <footer className="text-center py-6" style={{ borderTop: "2px solid #C9B29F" }}>
         <div className="flex items-center justify-center gap-2 mb-2">
-          <img src={LOGO} alt="Logo" className="w-5 h-5 rounded-lg" style={{ background: "#C9B29F", padding: "1px" }} />
+          <img src={LOGO} alt="Logo" className="w-8 h-8 rounded-lg" />
           <span style={{
             fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "12px",
             color: "#1C1C1C",
           }}>Pedigree Platform</span>
         </div>
         <div className="flex items-center justify-center gap-4">
-          <Link href="/" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Home</Link>
           <Link href="/pedigree" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Search</Link>
           <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Privacy</Link>
           <Link href="/terms" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Terms</Link>

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: "Pedigree Platform",
     description:
       "Track, manage, and share dog pedigrees with the most comprehensive lineage platform.",
-    images: [{ url: "https://i.imgur.com/svXPGXg.png" }],
+    images: [{ url: "https://i.imgur.com/9RJG2QN.png" }],
   },
 };
 

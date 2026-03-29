@@ -39,7 +39,7 @@ interface Dog {
   genetic_contributions: Genetic[];
 }
 
-const LOGO = "https://i.imgur.com/svXPGXg.png";
+const LOGO = "https://i.imgur.com/9RJG2QN.png";
 
 /* ─── Page-scoped style constants ─── */
 const PG = {
@@ -918,7 +918,7 @@ export default function PublicPedigreePage() {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: PG.bg }}>
         <div className="flex flex-col items-center gap-4">
-          <img src={LOGO} alt="Logo" className="w-12 h-12 rounded-lg animate-pulse" style={{ background: "#C9B29F", padding: "2px" }} />
+          <img src={LOGO} alt="Logo" className="w-16 h-16 rounded-lg animate-pulse" />
           <div className="flex items-center gap-3" style={{ color: PG.textMuted, fontFamily: PG.font }}>
             <div className="w-5 h-5 rounded-lg border-2 border-t-transparent animate-spin"
                  style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} />
@@ -1201,7 +1201,7 @@ export default function PublicPedigreePage() {
         {/* ─── Footer ─── */}
         <footer className="text-center py-8 mt-8" style={{ borderTop: "1px solid #D6CEBF" }}>
           <div className="flex items-center justify-center gap-2 mb-3">
-            <img src={LOGO} alt="Logo" className="w-6 h-6 rounded-lg" style={{ background: "#C9B29F", padding: "1px" }} />
+            <img src={LOGO} alt="Logo" className="w-8 h-8 rounded-lg" />
             <span style={{
               fontFamily: PG.font, fontWeight: 700, fontSize: "14px",
               color: PG.text,

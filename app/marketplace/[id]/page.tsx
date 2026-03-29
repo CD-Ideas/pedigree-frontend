@@ -29,7 +29,7 @@ interface MarketplaceAd {
 }
 
 /* ─── Constants ─── */
-const LOGO = "https://i.imgur.com/svXPGXg.png";
+const LOGO = "https://i.imgur.com/9RJG2QN.png";
 
 const CATEGORIES: Record<string, { label: string; icon: string; color: string }> = {
   dogs_for_sale: { label: "Dogs for Sale", icon: "\uD83D\uDC15", color: "#ef4444" },
@@ -194,14 +194,7 @@ export default function MarketplaceAdPage() {
       <div className="max-w-[1000px] mx-auto px-4 md:px-6 py-6">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 mb-4">
-          <Link
-            href="/"
-            className="text-[10px] font-medium hover:underline"
-            style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}
-          >
-            Home
-          </Link>
-          <span style={{ color: "#6B7280", fontSize: "10px" }}>/</span>
+          
           <Link
             href="/marketplace"
             className="text-[10px] font-medium hover:underline"
@@ -244,7 +237,7 @@ export default function MarketplaceAdPage() {
                 className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg "
                 style={{ background: "rgba(250,247,242,0.9)", border: "2px solid #C9B29F" }}
               >
-                <img src={LOGO} alt="" className="w-4 h-4 rounded-lg" style={{ background: "#C9B29F", padding: "1px" }} />
+                <img src={LOGO} alt="" className="w-6 h-6 rounded-lg" />
                 <span
                   className="text-[9px] font-bold"
                   style={{
@@ -930,7 +923,7 @@ export default function MarketplaceAdPage() {
       {/* ─── Footer ─── */}
       <footer className="text-center py-6 mt-8" style={{ borderTop: "2px solid #C9B29F" }}>
         <div className="flex items-center justify-center gap-2 mb-2">
-          <img src={LOGO} alt="Logo" className="w-5 h-5 rounded-lg" style={{ background: "#C9B29F", padding: "1px" }} />
+          <img src={LOGO} alt="Logo" className="w-8 h-8 rounded-lg" />
           <span
             style={{
               fontFamily: "var(--font-table)",

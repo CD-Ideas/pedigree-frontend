@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-const LOGO = "https://i.imgur.com/svXPGXg.png";
+const LOGO = "https://i.imgur.com/9RJG2QN.png";
 
 /* removed unused dynamic component */
 function _REMOVED() { return null; }
@@ -345,7 +345,7 @@ export default function Home() {
         {/* ── Hero ── */}
         <section className="relative flex items-center justify-center px-4" style={{ minHeight: "26vh", paddingTop: "45px" }}>
           <div className="relative max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-4 md:gap-8 animate-reveal">
-            <img src={LOGO} alt="Pedigree Platform" width={200} height={200} className="rounded-lg flex-shrink-0 w-[110px] h-[110px] md:w-[180px] md:h-[180px]" style={{ background: "#C9B29F", padding: "8px" }} />
+            <img src={LOGO} alt="Pedigree Platform" width={200} height={200} className="rounded-lg flex-shrink-0 w-[140px] h-[140px] md:w-[220px] md:h-[220px]" />
             <div className="text-center md:text-left">
               <h1 style={{ fontFamily: "var(--font-body)", fontSize: "clamp(1.2rem, 3.5vw, 2.2rem)", fontWeight: 500, lineHeight: 1.1, color: "#1C1C1C" }} className="mb-1.5">
                 The Ultimate <span style={{ color: "#C9B29F" }}>Pedigree Hub</span>
@@ -705,7 +705,7 @@ export default function Home() {
               {/* Brand */}
               <div className="flex flex-col items-center md:items-start gap-1.5">
                 <div className="flex items-center gap-2">
-                  <img src={LOGO} alt="" width={24} height={24} className="rounded-lg" style={{ background: "#C9B29F", padding: "1px" }} />
+                  <img src={LOGO} alt="" width={32} height={32} className="rounded-lg" />
                   <span style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "11px", color: "#1C1C1C", textTransform: "uppercase", letterSpacing: "0.1em" }}>Pedigree Platform</span>
                 </div>
                 <p style={{ fontFamily: "var(--font-body)", fontSize: "10px", color: "#6B7280", maxWidth: "240px", lineHeight: 1.5 }} className="text-center md:text-left">
@@ -791,7 +791,7 @@ export default function Home() {
             </button>
             {/* Logo */}
             <div className="text-center mb-5">
-              <img src={LOGO} alt="Pedigree Platform" width={64} height={64} className="rounded-lg mx-auto mb-3" style={{ background: "#C9B29F", padding: "4px" }} />
+              <img src={LOGO} alt="Pedigree Platform" width={64} height={64} className="rounded-lg mx-auto mb-3" />
               <h3 style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "18px", color: "#1C1C1C", letterSpacing: "0.02em" }}>
                 Sign in to continue
               </h3>
