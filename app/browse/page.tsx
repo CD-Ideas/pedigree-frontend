@@ -262,7 +262,7 @@ export default function PublicDogsPage() {
       <nav className="sticky top-0 z-50 px-4 md:px-6 py-2.5 flex items-center justify-between"
         style={{ background: "#FAF7F2", borderBottom: "2px solid #C9B29F" }}>
         <Link href="/" className="flex items-center gap-2.5">
-          <img src={LOGO} alt="Logo" className="w-12 h-12 rounded-lg" />
+          <img src={LOGO} alt="Logo" className="w-14" style={{ height: "auto" }} />
           <span style={{
             fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "1rem",
             color: "#1C1C1C",
@@ -651,7 +651,7 @@ export default function PublicDogsPage() {
       {/* ─── Footer ─── */}
       <footer className="text-center py-6" style={{ borderTop: "2px solid #C9B29F" }}>
         <div className="flex items-center justify-center gap-2 mb-2">
-          <img src={LOGO} alt="Logo" className="w-10 h-10 rounded-lg" />
+          <img src={LOGO} alt="Logo" className="w-12" style={{ height: "auto" }} />
           <span style={{
             fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "12px",
             color: "#1C1C1C",

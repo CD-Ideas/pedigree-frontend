@@ -705,7 +705,7 @@ export default function Home() {
               {/* Brand */}
               <div className="flex flex-col items-center md:items-start gap-1.5">
                 <div className="flex items-center gap-2">
-                  <img src={LOGO} alt="" width={40} height={40} className="rounded-lg" />
+                  <img src={LOGO} alt="" width={40} height={40} style={{ height: "auto" }} />
                   <span style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "11px", color: "#1C1C1C", textTransform: "uppercase", letterSpacing: "0.1em" }}>Pedigree Platform</span>
                 </div>
                 <p style={{ fontFamily: "var(--font-body)", fontSize: "10px", color: "#6B7280", maxWidth: "240px", lineHeight: 1.5 }} className="text-center md:text-left">
@@ -791,7 +791,7 @@ export default function Home() {
             </button>
             {/* Logo */}
             <div className="text-center mb-5">
-              <img src={LOGO} alt="Pedigree Platform" width={64} height={64} className="rounded-lg mx-auto mb-3" />
+              <img src={LOGO} alt="Pedigree Platform" width={80} height={80} className="mx-auto mb-3" style={{ height: "auto" }} />
               <h3 style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "18px", color: "#1C1C1C", letterSpacing: "0.02em" }}>
                 Sign in to continue
               </h3>

@@ -237,7 +237,7 @@ export default function MarketplaceAdPage() {
                 className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg "
                 style={{ background: "rgba(250,247,242,0.9)", border: "2px solid #C9B29F" }}
               >
-                <img src={LOGO} alt="" className="w-8 h-8 rounded-lg" />
+                <img src={LOGO} alt="" className="w-10" style={{ height: "auto" }} />
                 <span
                   className="text-[9px] font-bold"
                   style={{
@@ -923,7 +923,7 @@ export default function MarketplaceAdPage() {
       {/* ─── Footer ─── */}
       <footer className="text-center py-6 mt-8" style={{ borderTop: "2px solid #C9B29F" }}>
         <div className="flex items-center justify-center gap-2 mb-2">
-          <img src={LOGO} alt="Logo" className="w-10 h-10 rounded-lg" />
+          <img src={LOGO} alt="Logo" className="w-12" style={{ height: "auto" }} />
           <span
             style={{
               fontFamily: "var(--font-table)",

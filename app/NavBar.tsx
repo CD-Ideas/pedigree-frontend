@@ -348,7 +348,7 @@ export default function NavBar() {
       className="sticky top-0 z-50 overflow-visible"
     >
       <div className="max-w-[1600px] mx-auto px-6 flex items-center justify-between h-14 overflow-visible">
-        <Link href="/" className="flex items-center gap-3">
+        <Link href="/" className="flex items-center gap-2">
           <img src={LOGO} alt="Logo" className="w-12" style={{ height: "auto" }} />
           <span
             style={{
