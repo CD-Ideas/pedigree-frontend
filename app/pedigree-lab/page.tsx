@@ -640,7 +640,7 @@ function PedigreeLabInner() {
     <div
       className="min-h-screen flex flex-col"
       style={{
-        background: "#FAFAFA",
+        background: "#EDE4D5",
         color: "#1C1C1C",
       }}
     >

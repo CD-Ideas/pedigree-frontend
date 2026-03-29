@@ -630,7 +630,7 @@ export default function PuppyPredictorPage() {
               className="px-4 py-2 text-xs font-semibold transition-colors"
               style={{
                 background: mode === "simple" ? "#C9B29F" : "#FAFAFA",
-                color: mode === "simple" ? "#fff" : "#1C1C1C",
+                color: mode === "simple" ? "#1C1C1C" : "#1C1C1C",
                 fontFamily: "var(--font-table)",
               }}>
               I Don&apos;t Know Genotype
@@ -639,7 +639,7 @@ export default function PuppyPredictorPage() {
               className="px-4 py-2 text-xs font-semibold transition-colors"
               style={{
                 background: mode === "advanced" ? "#C9B29F" : "#FAFAFA",
-                color: mode === "advanced" ? "#fff" : "#1C1C1C",
+                color: mode === "advanced" ? "#1C1C1C" : "#1C1C1C",
                 fontFamily: "var(--font-table)",
               }}>
               Advanced (DNA Tested)
@@ -881,7 +881,7 @@ export default function PuppyPredictorPage() {
           <button onClick={handlePredict}
             className="px-8 py-3 rounded-lg font-semibold transition-all hover:scale-105 active:scale-95"
             style={{
-              background: "#C9B29F", color: "#fff",
+              background: "#C9B29F", color: "#1C1C1C",
               fontFamily: "var(--font-table)", letterSpacing: "0.05em", fontSize: "1rem",
             }}>
             PREDICT LITTER
@@ -906,7 +906,7 @@ export default function PuppyPredictorPage() {
                     className="px-4 py-2 text-xs font-semibold transition-colors capitalize"
                     style={{
                       background: tab === t ? "#C9B29F" : "#FAFAFA",
-                      color: tab === t ? "#fff" : "#1C1C1C",
+                      color: tab === t ? "#1C1C1C" : "#1C1C1C",
                       fontFamily: "var(--font-table)",
                     }}>
                     {t === "results" ? "Predicted Colors" : "Simulate Litter"}
