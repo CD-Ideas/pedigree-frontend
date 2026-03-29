@@ -339,21 +339,33 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Recent Activity Placeholder */}
+          {/* Tools & Features */}
           <div className="dash-box-hover rounded-xl p-5" style={steelFrame}>
             <h2 className="text-[10px] uppercase tracking-widest font-bold mb-4 flex items-center gap-2"
               style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               <span style={{ width: 16, height: 2, background: "#C9B29F", borderRadius: 1 }} />
-              📊 Recent Activity
+              🛠️ Tools
             </h2>
-            <div className="flex flex-col items-center justify-center py-8 text-center">
-              <span className="text-3xl mb-3">📊</span>
-              <p className="text-sm font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-                Activity Feed
-              </p>
-              <p className="text-[10px] mt-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
-                Your recent pedigree activity will appear here
-              </p>
+            <div className="space-y-2">
+              {[
+                { label: "New Titles", href: "/dashboard/titles", icon: "🏆", color: "#f59e0b" },
+                { label: "Marketplace", href: "/marketplace", icon: "🛒", color: "#3b82f6" },
+                { label: "My Affiliates", href: "/dashboard/affiliates", icon: "🤝", color: "#10b981" },
+              ].map((tool) => (
+                <Link key={tool.href} href={tool.href}
+                  className="dash-nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg group"
+                  style={{ "--item-color": tool.color.replace("#", "").match(/.{2}/g)!.map(h => parseInt(h, 16)).join(",") } as React.CSSProperties}>
+                  <span className="w-8 h-8 rounded-lg flex items-center justify-center text-sm transition-transform group-hover:scale-110"
+                    style={{ background: `${tool.color}15`, border: `1px solid ${tool.color}30` }}>
+                    {tool.icon}
+                  </span>
+                  <span className="dash-nav-label text-sm font-medium transition-colors"
+                    style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+                    {tool.label}
+                  </span>
+                  <span className="dash-arrow ml-auto text-xs transition-all" style={{ color: "#6B7280" }}>→</span>
+                </Link>
+              ))}
             </div>
           </div>
 
