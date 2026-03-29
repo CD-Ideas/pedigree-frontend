@@ -4,6 +4,7 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { playChatBubble } from "@/app/sounds";
+import { io, Socket } from "socket.io-client";
 
 /* ─── Types ─── */
 interface Thread {
@@ -143,6 +144,9 @@ function MessagesContent() {
   const [convSearch, setConvSearch] = useState("");
   const [onlineUserIds, setOnlineUserIds] = useState<Set<number>>(new Set());
   const [mobileShowChat, setMobileShowChat] = useState(false);
+  const [typingUserId, setTypingUserId] = useState<number | null>(null);
+  const socketRef = useRef<Socket | null>(null);
+  const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Init user
   useEffect(() => {
@@ -158,6 +162,90 @@ function MessagesContent() {
       setShowCompose(true);
     }
   }, [searchParams]);
+
+  // ─── Socket.io Connection ───
+  useEffect(() => {
+    if (!user) return;
+    const socket = io(window.location.origin, {
+      path: "/socket.io/",
+      transports: ["websocket", "polling"],
+    });
+    socketRef.current = socket;
+
+    socket.on("connect", () => {
+      console.log("[Socket] Connected:", socket.id);
+      socket.emit("auth", { userId: user.id, username: user.username });
+    });
+
+    // Real-time: new message from someone
+    socket.on("message:new", (msg: Message) => {
+      // If this thread is open, append message
+      setThreadMessages(prev => {
+        if (prev.length > 0 && prev[0].thread_id === msg.thread_id) {
+          if (prev.some(m => m.id === msg.id)) return prev; // dedupe
+          playChatBubble();
+          setTimeout(() => { chatContainerRef.current && (chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight); }, 50);
+          return [...prev, msg];
+        }
+        return prev;
+      });
+      // Update thread list
+      setThreads(prev => {
+        const existing = prev.find(t => t.thread_id === msg.thread_id);
+        if (existing) {
+          return prev.map(t => t.thread_id === msg.thread_id
+            ? { ...t, last_body: msg.body, last_time: msg.created_at, unread_count: t.unread_count + 1 }
+            : t);
+        }
+        // New thread — refresh
+        fetchThreads();
+        return prev;
+      });
+    });
+
+    // Real-time: message confirmed sent
+    socket.on("message:sent", (msg: Message) => {
+      setThreadMessages(prev => {
+        // Replace optimistic message with confirmed one
+        const lastOptimistic = prev.findIndex(m => m.id === msg.id || (m.from_user_id === msg.from_user_id && m.body === msg.body && !m.thread_id));
+        if (lastOptimistic >= 0) {
+          const updated = [...prev];
+          updated[lastOptimistic] = msg;
+          return updated;
+        }
+        return prev;
+      });
+    });
+
+    // Real-time: message read by recipient
+    socket.on("message:read", ({ messageId }: { messageId: number }) => {
+      setThreadMessages(prev => prev.map(m => m.id === messageId ? { ...m, is_read: 1 } : m));
+    });
+
+    // Real-time: entire thread read
+    socket.on("thread:read", ({ threadId }: { threadId: string }) => {
+      setThreadMessages(prev => prev.map(m => m.thread_id === threadId ? { ...m, is_read: 1 } : m));
+    });
+
+    // Real-time: typing indicator
+    socket.on("typing:update", ({ userId, typing }: { userId: number; typing: boolean }) => {
+      setTypingUserId(typing ? userId : null);
+    });
+
+    // Real-time: online users list
+    socket.on("users:online", (ids: number[]) => {
+      setOnlineUserIds(new Set(ids));
+    });
+
+    socket.on("disconnect", () => {
+      console.log("[Socket] Disconnected");
+    });
+
+    return () => {
+      socket.disconnect();
+      socketRef.current = null;
+    };
+  }, [user]);
 
   // Fetch threads
   const fetchThreads = useCallback(() => {
@@ -251,6 +339,10 @@ function MessagesContent() {
         setThreadLoading(false);
         setThreads(prev => prev.map(t => t.thread_id === threadId ? { ...t, unread_count: 0 } : t));
         setTimeout(() => { chatContainerRef.current && (chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight); }, 50);
+        // Emit thread:read via socket for real-time read receipts
+        if (socketRef.current) {
+          socketRef.current.emit("thread:read", { threadId, readerId: user.id });
+        }
         // Mark notifications read
         const thread = threads.find(t => t.thread_id === threadId);
         if (thread) {
@@ -342,13 +434,13 @@ function MessagesContent() {
   const filteredThreads = threads.filter(t => t.other_username.toLowerCase().includes(convSearch.toLowerCase()));
 
   return (
-    <div className="flex" style={{ height: "calc(100vh - 90px)", maxWidth: "1200px", margin: "0 auto" }}>
+    <div className="flex overflow-hidden" style={{ height: "calc(100vh - 90px)", maxWidth: "1200px", margin: "0 auto", border: "2px solid #C9B29F", borderRadius: "10px", background: "#FAFAFA" }}>
       {/* ─── Left: Thread List ─── */}
       <div className={`${mobileShowChat ? "hidden md:flex" : "flex"} flex-col w-full md:w-[340px] flex-shrink-0`}
-        style={{ background: "#FAFAFA", borderRight: "2px solid #C9B29F", borderRadius: "10px 0 0 10px" }}>
+        style={{ background: "#FAFAFA", borderRight: "2px solid #C9B29F" }}>
         {/* Header */}
         <div className="px-4 py-3 flex items-center justify-between flex-shrink-0"
-          style={{ background: "#1C1C1C", borderRadius: "10px 0 0 0" }}>
+          style={{ background: "#1C1C1C" }}>
           <span className="text-sm font-bold" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Messages</span>
           <button onClick={() => { setShowCompose(!showCompose); setSelectedThread(null); setMobileShowChat(false); }}
             className="w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-110"
@@ -358,7 +450,7 @@ function MessagesContent() {
         </div>
 
         {/* Search */}
-        <div className="px-3 py-2" style={{ borderBottom: "1px solid #EDE4D5" }}>
+        <div className="px-3 py-2" style={{ borderBottom: "1px solid #C9B29F" }}>
           <div className="flex items-center gap-2 px-3 py-2 rounded-lg" style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}>
             <span style={{ color: "#6B7280", fontSize: "14px" }}>🔍</span>
             <input value={convSearch} onChange={e => setConvSearch(e.target.value)}
@@ -388,7 +480,7 @@ function MessagesContent() {
                 className="w-full text-left px-3 py-3 flex items-center gap-3 transition-all"
                 style={{
                   background: isSelected ? "#FAF7F2" : "transparent",
-                  borderBottom: "1px solid #EDE4D5",
+                  borderBottom: "1px solid #C9B29F",
                 }}>
                 {/* Avatar with online dot */}
                 <div className="relative flex-shrink-0">
@@ -428,13 +520,13 @@ function MessagesContent() {
 
       {/* ─── Right: Chat Area ─── */}
       <div className={`${mobileShowChat ? "flex" : "hidden md:flex"} flex-col flex-1`}
-        style={{ background: "#EDE4D5", borderRadius: "0 10px 10px 0" }}>
+        style={{ background: "#FAFAFA" }}>
 
         {/* Compose New Message */}
         {showCompose ? (
           <div className="flex flex-col h-full">
             <div className="px-4 py-3 flex items-center gap-3 flex-shrink-0"
-              style={{ background: "#1C1C1C", borderRadius: "0 10px 0 0" }}>
+              style={{ background: "#1C1C1C" }}>
               <button onClick={() => { setShowCompose(false); setMobileShowChat(false); }}
                 className="text-lg" style={{ color: "#FAF7F2" }}>←</button>
               <span className="text-sm font-bold" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>New Message</span>
@@ -468,7 +560,7 @@ function MessagesContent() {
           <div className="flex flex-col h-full">
             {/* Chat Header */}
             <div className="px-4 py-3 flex items-center justify-between flex-shrink-0"
-              style={{ background: "#1C1C1C", borderRadius: "0 10px 0 0" }}>
+              style={{ background: "#1C1C1C" }}>
               <div className="flex items-center gap-3">
                 <button onClick={() => { setMobileShowChat(false); setSelectedThread(null); }}
                   className="md:hidden text-lg" style={{ color: "#FAF7F2" }}>←</button>
@@ -508,7 +600,7 @@ function MessagesContent() {
 
             {/* Messages */}
             <div ref={chatContainerRef} className="flex-1 overflow-y-auto px-4 py-4 space-y-1"
-              style={{ background: "#EDE4D5" }}>
+              style={{ background: "#FAF7F2" }}>
               {threadLoading ? (
                 <div className="flex justify-center py-16">
                   <div className="w-6 h-6 border-2 border-t-transparent rounded-full animate-spin"
@@ -576,11 +668,23 @@ function MessagesContent() {
                   </div>
                 );
               })}
+              {/* Typing indicator */}
+              {typingUserId && selectedThreadData && typingUserId === selectedThreadData.other_user_id && (
+                <div className="flex justify-start mb-1">
+                  <div className="rounded-2xl px-4 py-2" style={{ background: "#FAFAFA", borderRadius: "18px 18px 18px 4px" }}>
+                    <div className="flex items-center gap-1">
+                      <span className="w-2 h-2 rounded-full animate-bounce" style={{ background: "#C9B29F", animationDelay: "0ms" }} />
+                      <span className="w-2 h-2 rounded-full animate-bounce" style={{ background: "#C9B29F", animationDelay: "150ms" }} />
+                      <span className="w-2 h-2 rounded-full animate-bounce" style={{ background: "#C9B29F", animationDelay: "300ms" }} />
+                    </div>
+                  </div>
+                </div>
+              )}
               <div ref={chatEndRef} />
             </div>
 
             {/* Input Bar */}
-            <div className="px-3 py-2.5 flex-shrink-0" style={{ background: "#FAFAFA", borderTop: "1px solid #EDE4D5" }}>
+            <div className="px-3 py-2.5 flex-shrink-0" style={{ background: "#FAFAFA", borderTop: "2px solid #C9B29F" }}>
               {/* Pending attachments */}
               {pendingAttachments.length > 0 && (
                 <div className="flex flex-wrap gap-2 mb-2">
@@ -604,7 +708,17 @@ function MessagesContent() {
                 <input ref={fileInputRef} type="file" className="hidden" accept=".pdf,.doc,.docx,.txt,.zip" onChange={handleFileUpload} />
                 <textarea
                   value={replyText}
-                  onChange={e => setReplyText(e.target.value)}
+                  onChange={e => {
+                    setReplyText(e.target.value);
+                    // Emit typing indicator
+                    if (socketRef.current && selectedThreadData) {
+                      socketRef.current.emit("typing:start", { fromUserId: user.id, toUserId: selectedThreadData.other_user_id });
+                      if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
+                      typingTimeoutRef.current = setTimeout(() => {
+                        socketRef.current?.emit("typing:stop", { fromUserId: user.id, toUserId: selectedThreadData.other_user_id });
+                      }, 3000);
+                    }
+                  }}
                   onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendReply(); } }}
                   placeholder="Type a message..."
                   rows={1}
@@ -624,7 +738,7 @@ function MessagesContent() {
           </div>
         ) : (
           /* Empty State */
-          <div className="flex flex-col items-center justify-center h-full gap-3" style={{ borderRadius: "0 10px 10px 0" }}>
+          <div className="flex flex-col items-center justify-center h-full gap-3" >
             <span className="text-6xl opacity-30">💬</span>
             <p className="text-lg font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Pedigree Platform Messenger</p>
             <p className="text-xs" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>Select a conversation or start a new one</p>
