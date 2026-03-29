@@ -1,16 +1,11 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { playChatBubble } from "@/app/sounds";
 
-const GLASS_BOX = {
-  background: "#FAFAFA",
-  border: "2px solid #C9B29F",
-  borderRadius: "10px",
-};
-
+/* ─── Types ─── */
 interface Thread {
   thread_id: string;
   other_user_id: number;
@@ -39,11 +34,89 @@ interface Message {
   attachments?: string;
 }
 
-interface UserData {
-  id: number;
-  username: string;
+interface UserData { id: number; username: string; }
+
+/* ─── Helpers ─── */
+function formatTime(d: string) {
+  try {
+    const date = new Date(d + "Z");
+    const now = new Date();
+    const diff = now.getTime() - date.getTime();
+    if (diff < 60000) return "now";
+    if (diff < 3600000) return `${Math.floor(diff / 60000)}m`;
+    if (diff < 86400000) return date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
+    if (diff < 604800000) return date.toLocaleDateString("en-US", { weekday: "short" });
+    return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  } catch { return d; }
 }
 
+function formatFullTime(d: string) {
+  try {
+    const date = new Date(d + "Z");
+    return date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
+  } catch { return d; }
+}
+
+function formatDateSeparator(d: string) {
+  try {
+    const date = new Date(d + "Z");
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const msgDay = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    const diff = today.getTime() - msgDay.getTime();
+    if (diff === 0) return "Today";
+    if (diff === 86400000) return "Yesterday";
+    if (diff < 604800000) return date.toLocaleDateString("en-US", { weekday: "long" });
+    return date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+  } catch { return ""; }
+}
+
+function formatLastSeen(seconds: number | null) {
+  if (seconds === null) return "";
+  if (seconds < 60) return "last seen just now";
+  if (seconds < 3600) return `last seen ${Math.floor(seconds / 60)}m ago`;
+  if (seconds < 86400) return `last seen ${Math.floor(seconds / 3600)}h ago`;
+  return `last seen ${Math.floor(seconds / 86400)}d ago`;
+}
+
+function formatFileSize(bytes: number) {
+  if (bytes < 1024) return bytes + " B";
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+  return (bytes / (1024 * 1024)).toFixed(1) + " MB";
+}
+
+function shouldShowDate(msgs: Message[], idx: number) {
+  if (idx === 0) return true;
+  const prev = new Date(msgs[idx - 1].created_at + "Z");
+  const curr = new Date(msgs[idx].created_at + "Z");
+  return prev.toDateString() !== curr.toDateString();
+}
+
+/* ─── Avatar Component ─── */
+function Avatar({ src, username, size = "w-10 h-10", textSize = "text-sm" }: { src: string | null; username: string; size?: string; textSize?: string }) {
+  if (src && src.startsWith("emoji:")) {
+    return (
+      <span className={`${size} rounded-full flex items-center justify-center flex-shrink-0`}
+        style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}>
+        <span className={textSize}>{src.replace("emoji:", "")}</span>
+      </span>
+    );
+  }
+  if (src) {
+    return (
+      <img src={src} alt="" className={`${size} rounded-full object-cover flex-shrink-0`}
+        style={{ border: "2px solid #C9B29F" }} />
+    );
+  }
+  return (
+    <span className={`${size} rounded-full flex items-center justify-center font-bold flex-shrink-0`}
+      style={{ background: "#C9B29F", color: "#1C1C1C" }}>
+      <span className={textSize}>{(username || "?")[0].toUpperCase()}</span>
+    </span>
+  );
+}
+
+/* ─── Main Component ─── */
 function MessagesContent() {
   const searchParams = useSearchParams();
   const [user, setUser] = useState<UserData | null>(null);
@@ -67,20 +140,16 @@ function MessagesContent() {
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
-  const composeFileRef = useRef<HTMLInputElement>(null);
-  const composeImageRef = useRef<HTMLInputElement>(null);
-  const [composePendingAttachments, setComposePendingAttachments] = useState<{ url: string; name: string; size: number; isImage: boolean }[]>([]);
-  const [onlineData, setOnlineData] = useState<{ members_online: number; guests_online: number; online_members: { id: number; username: string; profile_picture: string | null }[] }>({ members_online: 0, guests_online: 0, online_members: [] });
-  const [showAllOnline, setShowAllOnline] = useState(false);
-  const [onlineSearch, setOnlineSearch] = useState("");
   const [convSearch, setConvSearch] = useState("");
+  const [onlineUserIds, setOnlineUserIds] = useState<Set<number>>(new Set());
+  const [mobileShowChat, setMobileShowChat] = useState(false);
 
+  // Init user
   useEffect(() => {
     try {
       const u = JSON.parse(localStorage.getItem("user") || "null");
       if (u) setUser(u);
-    } catch (_e) {}
-    // Check URL params for marketplace integration
+    } catch {}
     const to = searchParams.get("to");
     const subj = searchParams.get("subject");
     if (to) {
@@ -90,134 +159,111 @@ function MessagesContent() {
     }
   }, [searchParams]);
 
-  const fetchThreads = () => {
+  // Fetch threads
+  const fetchThreads = useCallback(() => {
     if (!user) return;
     fetch(`/api/messages?userId=${user.id}&folder=threads`)
       .then(r => r.json())
-      .then(data => {
-        setThreads(data.threads || []);
-        setLoading(false);
-      })
+      .then(data => { setThreads(data.threads || []); setLoading(false); })
       .catch(() => setLoading(false));
-  };
-
-  useEffect(() => {
-    if (!user) return;
-    setLoading(true);
-    fetchThreads();
   }, [user]);
 
-  // Auto-open thread when ?user= param is present (from notification click)
+  useEffect(() => { if (user) { setLoading(true); fetchThreads(); } }, [user, fetchThreads]);
+
+  // Auto-open thread from URL
   useEffect(() => {
     const targetUser = searchParams.get("user");
     if (targetUser && threads.length > 0 && !selectedThread) {
       const thread = threads.find(t => t.other_username.toLowerCase() === targetUser.toLowerCase());
-      if (thread) {
-        openThread(thread.thread_id);
-      }
+      if (thread) openThread(thread.thread_id);
     }
   }, [threads, searchParams]);
 
-  // Auto-poll threads every 15 seconds
+  // Poll threads every 15s
   useEffect(() => {
     if (!user) return;
-    const interval = setInterval(() => {
-      fetchThreads();
-    }, 15000);
-    return () => clearInterval(interval);
-  }, [user]);
+    const i = setInterval(fetchThreads, 15000);
+    return () => clearInterval(i);
+  }, [user, fetchThreads]);
 
-  // Fetch who's online
+  // Poll online users
   useEffect(() => {
     const fetchOnline = () => {
-      fetch("/api/heartbeat").then(r => r.json()).then(d => setOnlineData(d)).catch(() => {});
+      fetch("/api/heartbeat").then(r => r.json()).then(d => {
+        const ids = new Set<number>((d.online_members || []).map((m: { id: number }) => m.id));
+        setOnlineUserIds(ids);
+      }).catch(() => {});
     };
     fetchOnline();
-    const interval = setInterval(fetchOnline, 60000);
-    return () => clearInterval(interval);
+    const i = setInterval(fetchOnline, 30000);
+    return () => clearInterval(i);
   }, []);
 
-  // Poll other user's online status
+  // Poll other user status
   useEffect(() => {
     if (!selectedThread) { setOtherUserStatus(null); return; }
     const thread = threads.find(t => t.thread_id === selectedThread);
     if (!thread) return;
-    const checkStatus = () => {
+    const check = () => {
       fetch(`/api/users/status?username=${encodeURIComponent(thread.other_username)}`)
-        .then(r => r.json())
-        .then(data => setOtherUserStatus(data))
-        .catch(() => {});
+        .then(r => r.json()).then(setOtherUserStatus).catch(() => {});
     };
-    checkStatus();
-    const interval = setInterval(checkStatus, 15000);
-    return () => clearInterval(interval);
+    check();
+    const i = setInterval(check, 15000);
+    return () => clearInterval(i);
   }, [selectedThread, threads]);
 
-  // Auto-poll active conversation every 5 seconds
+  // Poll active conversation every 5s
   useEffect(() => {
     if (!user || !selectedThread) return;
-    const interval = setInterval(() => {
+    const i = setInterval(() => {
       fetch(`/api/messages?userId=${user.id}&threadId=${selectedThread}`)
         .then(r => r.json())
         .then(data => {
-          const newMsgs = data.messages || [];
+          const newMsgs: Message[] = data.messages || [];
           setThreadMessages(prev => {
             if (newMsgs.length !== prev.length || (newMsgs.length > 0 && prev.length > 0 && newMsgs[newMsgs.length - 1].id !== prev[prev.length - 1].id)) {
-              // New messages arrived — check if from other user and play sound
               if (newMsgs.length > prev.length) {
-                const latestMsg = newMsgs[newMsgs.length - 1];
-                if (latestMsg && latestMsg.from_user_id !== user.id) {
-                  playChatBubble();
-                }
+                const latest = newMsgs[newMsgs.length - 1];
+                if (latest && latest.from_user_id !== user.id) playChatBubble();
               }
-              // Scroll to bottom
-              setTimeout(() => { if (chatContainerRef.current) chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight; }, 50);
+              setTimeout(() => { chatContainerRef.current && (chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight); }, 50);
               return newMsgs;
             }
-            // Update read status without replacing (for Seen/Delivered updates)
-            if (JSON.stringify(newMsgs.map((m: Message) => m.is_read)) !== JSON.stringify(prev.map((m: Message) => m.is_read))) {
-              return newMsgs;
-            }
+            if (JSON.stringify(newMsgs.map(m => m.is_read)) !== JSON.stringify(prev.map(m => m.is_read))) return newMsgs;
             return prev;
           });
-        })
-        .catch(() => {});
+        }).catch(() => {});
     }, 5000);
-    return () => clearInterval(interval);
+    return () => clearInterval(i);
   }, [user, selectedThread]);
 
   const openThread = (threadId: string) => {
     if (!user) return;
     setSelectedThread(threadId);
     setThreadLoading(true);
+    setShowCompose(false);
+    setMobileShowChat(true);
     fetch(`/api/messages?userId=${user.id}&threadId=${threadId}`)
       .then(r => r.json())
       .then(data => {
         setThreadMessages(data.messages || []);
         setThreadLoading(false);
-        // Update thread unread count locally
         setThreads(prev => prev.map(t => t.thread_id === threadId ? { ...t, unread_count: 0 } : t));
-        setTimeout(() => { if (chatContainerRef.current) chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight; }, 50);
-        // Mark message notifications from this sender as read
-        setThreads(prev => {
-          const thread = prev.find(t => t.thread_id === threadId);
-          if (thread) {
-            fetch("/api/notifications", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ action: "mark_read_by_sender", userId: user.id, senderName: thread.other_username }),
-            }).then(() => {
-              // Tell NavBar to refresh notifications
-              window.dispatchEvent(new Event("refreshNotifications"));
-            }).catch(() => {});
-          }
-          return prev;
-        });
-      })
-      .catch(() => setThreadLoading(false));
+        setTimeout(() => { chatContainerRef.current && (chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight); }, 50);
+        // Mark notifications read
+        const thread = threads.find(t => t.thread_id === threadId);
+        if (thread) {
+          fetch("/api/notifications", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ action: "mark_read_by_sender", userId: user.id, senderName: thread.other_username }),
+          }).then(() => window.dispatchEvent(new Event("refreshNotifications"))).catch(() => {});
+        }
+      }).catch(() => setThreadLoading(false));
   };
 
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, target: "reply" | "compose") => {
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file || !user) return;
     if (file.size > 10 * 1024 * 1024) { alert("File too large (max 10MB)"); return; }
@@ -228,20 +274,10 @@ function MessagesContent() {
       fd.append("file", file);
       const res = await fetch("/api/messages/upload", { method: "POST", body: fd });
       const data = await res.json();
-      if (data.success) {
-        const att = { url: data.url, name: data.name, size: data.size, isImage: data.isImage };
-        if (target === "reply") setPendingAttachments(prev => [...prev, att]);
-        else setComposePendingAttachments(prev => [...prev, att]);
-      }
-    } catch (_e) {}
+      if (data.success) setPendingAttachments(prev => [...prev, { url: data.url, name: data.name, size: data.size, isImage: data.isImage }]);
+    } catch {}
     setUploading(false);
     e.target.value = "";
-  };
-
-  const formatFileSize = (bytes: number) => {
-    if (bytes < 1024) return bytes + " B";
-    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
-    return (bytes / (1024 * 1024)).toFixed(1) + " MB";
   };
 
   const sendReply = async () => {
@@ -255,641 +291,345 @@ function MessagesContent() {
       const res = await fetch("/api/messages", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          fromUserId: user.id,
-          toUsername: thread.other_username,
-          subject: thread.subject || "",
-          body: msgBody,
-          threadId: selectedThread,
-          attachments: attachmentsJson,
-        }),
+        body: JSON.stringify({ fromUserId: user.id, toUsername: thread.other_username, subject: thread.subject || "", body: msgBody, threadId: selectedThread, attachments: attachmentsJson }),
       });
       const data = await res.json();
       if (!data.error) {
-        const sentMsg = replyText.trim();
-        const sentAttachments = [...pendingAttachments];
         setReplyText("");
         setPendingAttachments([]);
-        // Append message locally instead of re-fetching
-        setThreadMessages(prev => [...prev, {
-          id: data.messageId || Date.now(),
-          from_user_id: user.id,
-          to_user_id: thread.other_user_id,
-          body: msgBody,
-          created_at: new Date().toISOString(),
-          is_read: 0,
-          attachments: attachmentsJson || null,
-          thread_id: selectedThread,
-        } as Message]);
-        // Update thread list preview
+        setThreadMessages(prev => [...prev, { id: data.messageId || Date.now(), from_user_id: user.id, to_user_id: thread.other_user_id, body: msgBody, created_at: new Date().toISOString(), is_read: 0, attachments: attachmentsJson || undefined, thread_id: selectedThread } as Message]);
         setThreads(prev => prev.map(t => t.thread_id === selectedThread ? { ...t, last_body: msgBody, last_time: new Date().toISOString() } : t));
-        // Scroll chat to bottom instantly
-        setTimeout(() => {
-          if (chatContainerRef.current) {
-            chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-          }
-        }, 50);
+        setTimeout(() => { chatContainerRef.current && (chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight); }, 50);
       }
-    } catch (_e) {}
+    } catch {}
     setSending(false);
   };
 
   const sendNewMessage = async () => {
-    if (!user || !toUsername.trim() || (!replyText.trim() && composePendingAttachments.length === 0)) return;
+    if (!user || !toUsername.trim() || !replyText.trim()) return;
     setSending(true);
     setComposeMsg("");
     try {
       const res = await fetch("/api/messages", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          fromUserId: user.id,
-          toUsername: toUsername.trim(),
-          subject: subject.trim(),
-          body: replyText.trim() || (composePendingAttachments.length > 0 ? `📎 ${composePendingAttachments.map(a => a.name).join(", ")}` : ""),
-          attachments: composePendingAttachments.length > 0 ? JSON.stringify(composePendingAttachments) : "",
-        }),
+        body: JSON.stringify({ fromUserId: user.id, toUsername: toUsername.trim(), subject: subject.trim(), body: replyText.trim() }),
       });
       const data = await res.json();
-      if (data.error) {
-        setComposeMsg(data.error);
-      } else {
-        setComposeMsg("Message sent!");
-        setToUsername("");
-        setSubject("");
-        setReplyText("");
-        setTimeout(() => {
-          setShowCompose(false);
-          setComposeMsg("");
-          fetchThreads();
-          if (data.thread_id) openThread(data.thread_id);
-        }, 1000);
+      if (data.error) { setComposeMsg(data.error); }
+      else {
+        setComposeMsg("Sent!");
+        setToUsername(""); setSubject(""); setReplyText("");
+        setTimeout(() => { setShowCompose(false); setComposeMsg(""); fetchThreads(); if (data.thread_id) openThread(data.thread_id); }, 800);
       }
-    } catch (_e) {
-      setComposeMsg("Failed to send");
-    }
+    } catch { setComposeMsg("Failed"); }
     setSending(false);
   };
 
   const deleteThread = async (threadId: string) => {
     if (!user || !confirm("Delete this entire conversation?")) return;
-    const msgs = threadMessages.length > 0 && selectedThread === threadId
-      ? threadMessages
-      : [];
-    // Delete all messages in thread
-    for (const msg of msgs) {
+    const res = await fetch(`/api/messages?userId=${user.id}&threadId=${threadId}`);
+    const data = await res.json();
+    for (const msg of (data.messages || [])) {
       await fetch(`/api/messages/${msg.id}?userId=${user.id}`, { method: "DELETE" });
     }
-    if (msgs.length === 0) {
-      // Fetch thread messages first then delete
-      const res = await fetch(`/api/messages?userId=${user.id}&threadId=${threadId}`);
-      const data = await res.json();
-      for (const msg of (data.messages || [])) {
-        await fetch(`/api/messages/${msg.id}?userId=${user.id}`, { method: "DELETE" });
-      }
-    }
     setThreads(prev => prev.filter(t => t.thread_id !== threadId));
-    if (selectedThread === threadId) {
-      setSelectedThread(null);
-      setThreadMessages([]);
-    }
-  };
-
-  const formatDate = (d: string) => {
-    try {
-      const date = new Date(d + "Z");
-      const now = new Date();
-      const diff = now.getTime() - date.getTime();
-      if (diff < 60000) return "Just now";
-      if (diff < 3600000) return `${Math.floor(diff / 60000)}m ago`;
-      if (diff < 86400000) return date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
-      return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-    } catch (_e) { return d; }
-  };
-
-  const formatFullDate = (d: string) => {
-    try {
-      const date = new Date(d + "Z");
-      return date.toLocaleDateString("en-US", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
-    } catch (_e) { return d; }
-  };
-
-  const formatLastSeen = (seconds: number | null) => {
-    if (seconds === null) return "Never";
-    if (seconds < 60) return "Just now";
-    if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
-    if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
-    return `${Math.floor(seconds / 86400)}d ago`;
+    if (selectedThread === threadId) { setSelectedThread(null); setThreadMessages([]); setMobileShowChat(false); }
   };
 
   if (!user) return null;
-
   const selectedThreadData = threads.find(t => t.thread_id === selectedThread);
+  const filteredThreads = threads.filter(t => t.other_username.toLowerCase().includes(convSearch.toLowerCase()));
 
   return (
-    <div className="max-w-5xl mx-auto space-y-4 px-2 sm:px-0">
-      {/* Header */}
-      <div className="flex items-center justify-between flex-wrap gap-3">
-        <div>
-          <h1 style={{
-            fontFamily: "var(--font-display)",
-            fontWeight: 700,
-            fontSize: "1.6rem",
-            color: "#1C1C1C",
-          }}>
-            Messages
-          </h1>
-          <p className="text-sm" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
-            Private conversations
-          </p>
+    <div className="flex" style={{ height: "calc(100vh - 90px)", maxWidth: "1200px", margin: "0 auto" }}>
+      {/* ─── Left: Thread List ─── */}
+      <div className={`${mobileShowChat ? "hidden md:flex" : "flex"} flex-col w-full md:w-[340px] flex-shrink-0`}
+        style={{ background: "#FAFAFA", borderRight: "2px solid #C9B29F", borderRadius: "10px 0 0 10px" }}>
+        {/* Header */}
+        <div className="px-4 py-3 flex items-center justify-between flex-shrink-0"
+          style={{ background: "#1C1C1C", borderRadius: "10px 0 0 0" }}>
+          <span className="text-sm font-bold" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Messages</span>
+          <button onClick={() => { setShowCompose(!showCompose); setSelectedThread(null); setMobileShowChat(false); }}
+            className="w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-110"
+            style={{ background: "#C9B29F", color: "#1C1C1C", fontSize: "16px" }}>
+            ✏️
+          </button>
         </div>
-        <button
-          onClick={() => { setShowCompose(!showCompose); setSelectedThread(null); setReplyText(""); setComposeMsg(""); }}
-          className="px-5 py-2.5 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all hover:scale-[1.03]"
-          style={{
-            background: "#C9B29F",
-            color: "#1C1C1C",
-            fontFamily: "var(--font-table)",
-          }}>
-          + New Message
-        </button>
-      </div>
 
-      {/* Compose Panel */}
-      {showCompose && (
-        <div className="rounded-xl p-5 space-y-3 glass-panel-purple" style={GLASS_BOX}>
-          <div className="flex items-center justify-between">
-            <h2 className="text-sm font-bold uppercase tracking-wider flex items-center gap-2"
-              style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-              <span>✉️</span>
-              New Conversation
-            </h2>
-            <button onClick={() => { setShowCompose(false); setComposeMsg(""); }}
-              className="text-sm" style={{ color: "#6B7280" }}>✕</button>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div>
-              <label className="block text-[10px] uppercase tracking-widest font-semibold mb-1"
-                style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>To (username)</label>
-              <input value={toUsername} onChange={e => setToUsername(e.target.value)}
-                placeholder="Enter username..."
-                className="w-full rounded-lg px-3 py-2 text-sm outline-none"
-                style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
-            </div>
-            <div>
-              <label className="block text-[10px] uppercase tracking-widest font-semibold mb-1"
-                style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>Subject (optional)</label>
-              <textarea value={subject} onChange={e => setSubject(e.target.value)}
-                placeholder="Subject..."
-                rows={1}
-                className="w-full rounded-lg px-3 py-2 text-sm outline-none resize-none"
-                style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)", minHeight: "38px", maxHeight: "80px", overflowY: "auto" }}
-                onInput={(e) => { const t = e.target as HTMLTextAreaElement; t.style.height = "38px"; t.style.height = Math.min(t.scrollHeight, 80) + "px"; }} />
-            </div>
-          </div>
-          <textarea value={replyText} onChange={e => setReplyText(e.target.value)}
-            placeholder="Write your message..."
-            rows={3}
-            className="w-full rounded-lg px-3 py-2 text-sm outline-none resize-none"
-            style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
-          {composeMsg && (
-            <p className="text-xs" style={{ color: composeMsg === "Message sent!" ? "#22c55e" : "#ef4444", fontFamily: "var(--font-table)" }}>
-              {composeMsg}
-            </p>
-          )}
-          <div className="flex justify-end gap-2">
-            <button onClick={() => { setShowCompose(false); setComposeMsg(""); }}
-              className="px-4 py-2 rounded-lg text-xs font-semibold uppercase"
-              style={{ background: "#E5E7EB", color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-              Cancel
-            </button>
-            <button onClick={sendNewMessage} disabled={sending || !toUsername.trim() || !replyText.trim()}
-              className="px-5 py-2 rounded-lg text-xs font-semibold uppercase transition-all hover:scale-[1.03] disabled:opacity-40"
-              style={{ background: "#C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-              {sending ? "Sending..." : "Send"}
-            </button>
+        {/* Search */}
+        <div className="px-3 py-2" style={{ borderBottom: "1px solid #EDE4D5" }}>
+          <div className="flex items-center gap-2 px-3 py-2 rounded-lg" style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}>
+            <span style={{ color: "#6B7280", fontSize: "14px" }}>🔍</span>
+            <input value={convSearch} onChange={e => setConvSearch(e.target.value)}
+              placeholder="Search or start new chat"
+              className="flex-1 bg-transparent text-xs outline-none"
+              style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
           </div>
         </div>
-      )}
 
-      {/* Main Layout: Thread List + Chat + Online */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4" style={{ minHeight: "min(500px, 70vh)" }}>
         {/* Thread List */}
-        <div className="md:col-span-1 rounded-xl overflow-hidden glass-panel-blue" style={GLASS_BOX}>
-          <div className="px-4 py-3 flex-shrink-0" style={{ borderBottom: "2px solid #C9B29F" }}>
-            <div className="flex items-center justify-between">
-              <p className="text-[10px] uppercase tracking-widest font-semibold"
-                style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-                Conversations
-              </p>
-              <p className="text-[9px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
-                <span style={{ color: "#1C1C1C", fontWeight: 700 }}>{threads.length}</span> total
-              </p>
+        <div className="flex-1 overflow-y-auto">
+          {loading ? (
+            <div className="flex justify-center py-12">
+              <div className="w-6 h-6 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} />
             </div>
-            <input
-              type="text"
-              placeholder="Search conversations..."
-              value={convSearch}
-              onChange={e => setConvSearch(e.target.value)}
-              className="w-full mt-2 rounded-lg px-2.5 py-1.5 text-[10px] outline-none"
-              style={{
-                background: "#FAFAFA",
-                border: "2px solid #C9B29F",
-                color: "#1C1C1C",
-                fontFamily: "var(--font-table)",
-              }}
-            />
-          </div>
-          <div className="overflow-y-auto" style={{ maxHeight: "290px" }}>
-            {loading ? (
-              <div className="p-6 text-center">
-                <div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin mx-auto mb-2"
-                  style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} />
-              </div>
-            ) : threads.length === 0 ? (
-              <div className="p-6 text-center">
-                <span className="text-3xl block mb-2">📭</span>
-                <p className="text-xs" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
-                  No conversations yet
-                </p>
-                <p className="text-[10px] mt-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
-                  Click &quot;+ New Message&quot; to start
-                </p>
-              </div>
-            ) : threads.filter(t => t.other_username.toLowerCase().includes(convSearch.toLowerCase())).length === 0 ? (
-              <div className="p-4 text-center">
-                <p className="text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
-                  No conversations found
-                </p>
-              </div>
-            ) : threads.filter(t => t.other_username.toLowerCase().includes(convSearch.toLowerCase())).map(t => {
-              return (
-              <button key={t.thread_id} onClick={() => { openThread(t.thread_id); setShowCompose(false); }}
-                className="w-full text-left mx-2 my-1.5 rounded-lg p-2.5 hover:scale-[1.02]"
+          ) : filteredThreads.length === 0 ? (
+            <div className="text-center py-12 px-4">
+              <span className="text-4xl block mb-3">💬</span>
+              <p className="text-sm font-medium" style={{ color: "#1C1C1C" }}>No conversations</p>
+              <p className="text-xs mt-1" style={{ color: "#6B7280" }}>Tap ✏️ to start a new chat</p>
+            </div>
+          ) : filteredThreads.map(t => {
+            const isOnline = onlineUserIds.has(t.other_user_id);
+            const isSelected = selectedThread === t.thread_id;
+            return (
+              <button key={t.thread_id} onClick={() => openThread(t.thread_id)}
+                className="w-full text-left px-3 py-3 flex items-center gap-3 transition-all"
                 style={{
-                  background: selectedThread === t.thread_id
-                    ? "#FAF7F2"
-                    : t.unread_count > 0
-                    ? "#FAF7F2"
-                    : "#FAFAFA",
-                  border: selectedThread === t.thread_id ? "2px solid #C9B29F" : "2px solid #E5E7EB",
-                  transition: "all 0.3s ease",
-                  width: "calc(100% - 16px)",
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.borderColor = "#C9B29F";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.borderColor = selectedThread === t.thread_id ? "#C9B29F" : "#E5E7EB";
-                }}
-              >
-                <div className="flex items-center gap-2.5">
-                  {/* Photo */}
-                  {t.other_profile_picture ? (
-                    <div
-                      className="w-10 h-10 rounded-md flex-shrink-0 bg-cover bg-center"
-                      style={{
-                        backgroundImage: `url(${t.other_profile_picture})`,
-                        border: "2px solid #C9B29F",
-                      }}
-                    />
-                  ) : (
-                    <div
-                      className="w-10 h-10 rounded-md flex-shrink-0 flex items-center justify-center text-sm font-bold"
-                      style={{
-                        background: "#FAF7F2",
-                        border: "2px solid #C9B29F",
-                        color: "#1C1C1C",
-                      }}
-                    >
-                      {(t.other_username || "?")[0].toUpperCase()}
-                    </div>
+                  background: isSelected ? "#FAF7F2" : "transparent",
+                  borderBottom: "1px solid #EDE4D5",
+                }}>
+                {/* Avatar with online dot */}
+                <div className="relative flex-shrink-0">
+                  <Avatar src={t.other_profile_picture} username={t.other_username} />
+                  {isOnline && (
+                    <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2"
+                      style={{ background: "#22c55e", borderColor: "#FAFAFA" }} />
                   )}
-                  {/* Info */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold truncate"
-                        style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-                        {t.other_username || "Unknown"}
-                      </span>
-                      <span className="text-[9px] flex-shrink-0 ml-1" style={{ color: "#6B7280" }}>
-                        {formatDate(t.last_time)}
-                      </span>
-                    </div>
-                    {t.subject && (
-                      <p className="text-[10px] font-semibold truncate"
-                        style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-                        {t.subject}
-                      </p>
-                    )}
-                    <p className="text-[10px] truncate"
-                      style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
-                      {t.last_body.substring(0, 60)}
+                </div>
+                {/* Info */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-semibold truncate" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+                      {t.other_username}
+                    </span>
+                    <span className="text-[10px] flex-shrink-0 ml-2" style={{ color: t.unread_count > 0 ? "#C9B29F" : "#6B7280", fontWeight: t.unread_count > 0 ? 700 : 400 }}>
+                      {formatTime(t.last_time)}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between mt-0.5">
+                    <p className="text-xs truncate" style={{ color: "#6B7280", fontFamily: "var(--font-table)", fontWeight: t.unread_count > 0 ? 600 : 400 }}>
+                      {t.last_body.substring(0, 50)}
                     </p>
-                    <div className="flex items-center gap-2 mt-0.5">
-                      {t.unread_count > 0 && (
-                        <span className="px-1.5 py-0.5 rounded-full text-[8px] font-bold"
-                          style={{ background: "#3b82f6", color: "#fff" }}>
-                          {t.unread_count} new
-                        </span>
-                      )}
-                      {t.marketplace_ad_id && (
-                        <span className="text-[8px] px-1.5 py-0.5 rounded-full"
-                          style={{ background: "#FAF7F2", color: "#1C1C1C", fontFamily: "var(--font-table)", border: "1px solid #C9B29F" }}>
-                          🏪 Ad
-                        </span>
-                      )}
-                      <span className="text-[8px]" style={{ color: "#6B7280" }}>
-                        {t.msg_count} msg{t.msg_count !== 1 ? "s" : ""}
+                    {t.unread_count > 0 && (
+                      <span className="flex-shrink-0 ml-2 w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold"
+                        style={{ background: "#C9B29F", color: "#1C1C1C" }}>
+                        {t.unread_count}
                       </span>
-                    </div>
+                    )}
                   </div>
                 </div>
               </button>
-              );
-            })}
-          </div>
+            );
+          })}
         </div>
+      </div>
 
-        {/* Chat View */}
-        <div className="md:col-span-2 rounded-xl flex flex-col glass-panel-gold" style={GLASS_BOX}>
-          {selectedThread && selectedThreadData ? (
-            <>
-              {/* Chat Header */}
-              <div className="px-4 py-3 flex items-center justify-between flex-shrink-0"
-                style={{ borderBottom: "2px solid #C9B29F" }}>
-                <div className="flex items-center gap-2">
-                  {selectedThreadData.other_profile_picture && !selectedThreadData.other_profile_picture.startsWith("emoji:") ? (
-                    <img src={selectedThreadData.other_profile_picture} alt="" className="w-9 h-7 rounded-md object-cover"
-                      style={{ border: "2px solid #C9B29F" }} />
-                  ) : selectedThreadData.other_profile_picture?.startsWith("emoji:") ? (
-                    <span className="w-8 h-8 rounded-full flex items-center justify-center"
-                      style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}>
-                      <span className="text-sm">{selectedThreadData.other_profile_picture.replace("emoji:", "")}</span>
-                    </span>
-                  ) : (
-                    <span className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
-                      style={{ background: "#C9B29F", color: "#1C1C1C" }}>
-                      {(selectedThreadData.other_username || "?")[0].toUpperCase()}
-                    </span>
-                  )}
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <p className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-                        {selectedThreadData.other_username}
-                      </p>
-                      {otherUserStatus && (
-                        <span className="flex items-center gap-1">
-                          <span className="w-2 h-2 rounded-full" style={{ background: otherUserStatus.online ? "#22c55e" : "#6b7280" }} />
-                          <span className="text-[9px] font-medium" style={{ color: otherUserStatus.online ? "#22c55e" : "#6b7280", fontFamily: "var(--font-table)" }}>
-                            {otherUserStatus.online ? "Online" : `Last seen ${formatLastSeen(otherUserStatus.seconds_ago)}`}
-                          </span>
-                        </span>
-                      )}
-                    </div>
-                    {selectedThreadData.subject && (
-                      <p className="text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
-                        {selectedThreadData.subject}
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <button onClick={() => deleteThread(selectedThread)}
-                  className="text-[10px] px-2 py-1 rounded transition-colors hover:bg-red-500/10"
-                  style={{ color: "#ef4444", fontFamily: "var(--font-table)", border: "2px solid #ef444433" }}>
-                  Delete
+      {/* ─── Right: Chat Area ─── */}
+      <div className={`${mobileShowChat ? "flex" : "hidden md:flex"} flex-col flex-1`}
+        style={{ background: "#EDE4D5", borderRadius: "0 10px 10px 0" }}>
+
+        {/* Compose New Message */}
+        {showCompose ? (
+          <div className="flex flex-col h-full">
+            <div className="px-4 py-3 flex items-center gap-3 flex-shrink-0"
+              style={{ background: "#1C1C1C", borderRadius: "0 10px 0 0" }}>
+              <button onClick={() => { setShowCompose(false); setMobileShowChat(false); }}
+                className="text-lg" style={{ color: "#FAF7F2" }}>←</button>
+              <span className="text-sm font-bold" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>New Message</span>
+            </div>
+            <div className="flex-1 flex flex-col items-center justify-center px-6 gap-4">
+              <span className="text-5xl">✉️</span>
+              <div className="w-full max-w-sm space-y-3">
+                <input value={toUsername} onChange={e => setToUsername(e.target.value)}
+                  placeholder="Username..."
+                  className="w-full rounded-lg px-4 py-3 text-sm outline-none"
+                  style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
+                <input value={subject} onChange={e => setSubject(e.target.value)}
+                  placeholder="Subject (optional)"
+                  className="w-full rounded-lg px-4 py-3 text-sm outline-none"
+                  style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
+                <textarea value={replyText} onChange={e => setReplyText(e.target.value)}
+                  placeholder="Write your message..."
+                  rows={4}
+                  className="w-full rounded-lg px-4 py-3 text-sm outline-none resize-none"
+                  style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
+                {composeMsg && <p className="text-xs text-center" style={{ color: composeMsg === "Sent!" ? "#22c55e" : "#ef4444" }}>{composeMsg}</p>}
+                <button onClick={sendNewMessage} disabled={sending || !toUsername.trim() || !replyText.trim()}
+                  className="w-full py-3 rounded-lg text-sm font-bold uppercase tracking-wider transition-all disabled:opacity-40"
+                  style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)" }}>
+                  {sending ? "Sending..." : "Send Message"}
                 </button>
               </div>
-
-              {/* Chat Messages */}
-              <div ref={chatContainerRef} className="flex-1 overflow-y-auto px-2 sm:px-4 py-3 space-y-3" style={{ maxHeight: "min(350px, 50vh)", background: "#FAF7F2" }}>
-                {threadLoading ? (
-                  <div className="flex justify-center py-8">
-                    <div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin"
-                      style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} />
+            </div>
+          </div>
+        ) : selectedThread && selectedThreadData ? (
+          <div className="flex flex-col h-full">
+            {/* Chat Header */}
+            <div className="px-4 py-3 flex items-center justify-between flex-shrink-0"
+              style={{ background: "#1C1C1C", borderRadius: "0 10px 0 0" }}>
+              <div className="flex items-center gap-3">
+                <button onClick={() => { setMobileShowChat(false); setSelectedThread(null); }}
+                  className="md:hidden text-lg" style={{ color: "#FAF7F2" }}>←</button>
+                <a href={`/profile/${selectedThreadData.other_username}`} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                  <div className="relative">
+                    <Avatar src={selectedThreadData.other_profile_picture} username={selectedThreadData.other_username} size="w-9 h-9" textSize="text-xs" />
+                    {onlineUserIds.has(selectedThreadData.other_user_id) && (
+                      <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2"
+                        style={{ background: "#22c55e", borderColor: "#1C1C1C" }} />
+                    )}
                   </div>
-                ) : threadMessages.map(msg => {
-                  const isMine = msg.from_user_id === user.id;
-                  return (
-                    <div key={msg.id} className={`flex ${isMine ? "justify-end" : "justify-start"}`}>
-                      <div className="max-w-[75%] rounded-xl px-3.5 py-2.5"
-                        style={{
-                          background: isMine
-                            ? "#C9B29F"
-                            : "#FAF7F2",
-                          border: "2px solid #C9B29F",
-                          borderRadius: isMine ? "16px 16px 4px 16px" : "16px 16px 16px 4px",
-                        }}>
-                        <p className="text-sm whitespace-pre-wrap" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", lineHeight: 1.6, wordBreak: "break-word", overflowWrap: "break-word" }}>
-                          {msg.body}
-                        </p>
-                        {msg.attachments && msg.attachments !== "" && (() => {
-                          try {
-                            const atts = JSON.parse(msg.attachments);
-                            return (
-                              <div className="mt-2 space-y-1.5">
-                                {atts.map((att: { url: string; name: string; size: number; isImage: boolean }, i: number) => (
-                                  att.isImage ? (
-                                    <a key={i} href={att.url} target="_blank" rel="noopener noreferrer" className="block">
-                                      <img src={att.url} alt={att.name} className="max-w-full rounded-lg max-h-48 object-cover" style={{ border: "2px solid #C9B29F" }} />
-                                    </a>
-                                  ) : (
-                                    <a key={i} href={att.url} target="_blank" rel="noopener noreferrer"
-                                      className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs transition-all hover:opacity-80"
-                                      style={{ background: "#FAF7F2", color: "#1C1C1C", fontFamily: "var(--font-table)", border: "1px solid #C9B29F" }}>
-                                      <span>📎</span>
-                                      <span className="truncate">{att.name}</span>
-                                      <span className="text-[9px] flex-shrink-0" style={{ color: "#6b7280" }}>{formatFileSize(att.size)}</span>
-                                    </a>
-                                  )
-                                ))}
-                              </div>
-                            );
-                          } catch { return null; }
-                        })()}
-                        <p className={`text-[9px] mt-1 flex items-center gap-1.5 ${isMine ? "justify-end" : ""}`} style={{ color: "#6b7280" }}>
-                          {formatFullDate(msg.created_at)}
+                  <div>
+                    <p className="text-sm font-bold" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>
+                      {selectedThreadData.other_username}
+                    </p>
+                    <p className="text-[10px]" style={{ color: "#C9B29F", fontFamily: "var(--font-table)" }}>
+                      {otherUserStatus?.online ? "online" : otherUserStatus ? formatLastSeen(otherUserStatus.seconds_ago) : ""}
+                    </p>
+                  </div>
+                </a>
+              </div>
+              <div className="flex items-center gap-2">
+                {selectedThreadData.marketplace_ad_id && (
+                  <a href={`/marketplace/${selectedThreadData.marketplace_ad_id}`}
+                    className="px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase"
+                    style={{ background: "#C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+                    View Listing
+                  </a>
+                )}
+                <button onClick={() => deleteThread(selectedThread)}
+                  className="w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-110"
+                  style={{ color: "#FAF7F2", fontSize: "14px" }}>
+                  🗑️
+                </button>
+              </div>
+            </div>
+
+            {/* Messages */}
+            <div ref={chatContainerRef} className="flex-1 overflow-y-auto px-4 py-4 space-y-1"
+              style={{ background: "#EDE4D5" }}>
+              {threadLoading ? (
+                <div className="flex justify-center py-16">
+                  <div className="w-6 h-6 border-2 border-t-transparent rounded-full animate-spin"
+                    style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} />
+                </div>
+              ) : threadMessages.map((msg, idx) => {
+                const isMine = msg.from_user_id === user.id;
+                const showDate = shouldShowDate(threadMessages, idx);
+                return (
+                  <div key={msg.id}>
+                    {showDate && (
+                      <div className="flex justify-center my-3">
+                        <span className="px-3 py-1 rounded-lg text-[10px] font-medium"
+                          style={{ background: "#FAF7F2", color: "#6B7280", border: "1px solid #EDE4D5", fontFamily: "var(--font-table)" }}>
+                          {formatDateSeparator(msg.created_at)}
+                        </span>
+                      </div>
+                    )}
+                    <div className={`flex ${isMine ? "justify-end" : "justify-start"} mb-1`}>
+                      <div className="max-w-[75%]">
+                        <div className="rounded-2xl px-3.5 py-2"
+                          style={{
+                            background: isMine ? "#C9B29F" : "#FAFAFA",
+                            borderRadius: isMine ? "18px 18px 4px 18px" : "18px 18px 18px 4px",
+                          }}>
+                          <p className="text-[13px] leading-relaxed" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", wordBreak: "break-word" }}>
+                            {msg.body}
+                          </p>
+                          {/* Attachments */}
+                          {msg.attachments && msg.attachments !== "" && (() => {
+                            try {
+                              const atts = JSON.parse(msg.attachments);
+                              return (
+                                <div className="mt-1.5 space-y-1">
+                                  {atts.map((att: { url: string; name: string; size: number; isImage: boolean }, i: number) => (
+                                    att.isImage ? (
+                                      <a key={i} href={att.url} target="_blank" rel="noopener noreferrer" className="block">
+                                        <img src={att.url} alt={att.name} className="max-w-full rounded-lg max-h-52 object-cover" />
+                                      </a>
+                                    ) : (
+                                      <a key={i} href={att.url} target="_blank" rel="noopener noreferrer"
+                                        className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs hover:opacity-80"
+                                        style={{ background: isMine ? "rgba(0,0,0,0.08)" : "#FAF7F2", color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+                                        📎 <span className="truncate">{att.name}</span>
+                                        <span className="text-[9px] flex-shrink-0" style={{ color: "#6B7280" }}>{formatFileSize(att.size)}</span>
+                                      </a>
+                                    )
+                                  ))}
+                                </div>
+                              );
+                            } catch { return null; }
+                          })()}
+                        </div>
+                        {/* Time + Read receipt */}
+                        <div className={`flex items-center gap-1 mt-0.5 px-1 ${isMine ? "justify-end" : ""}`}>
+                          <span className="text-[10px]" style={{ color: "#6B7280" }}>{formatFullTime(msg.created_at)}</span>
                           {isMine && (
-                            <span style={{ color: msg.is_read ? "#7c3aed" : "#2563eb", fontSize: "10px", fontWeight: 700 }}>
-                              {msg.is_read ? "✓✓ Seen" : "✓ Delivered"}
+                            <span style={{ color: msg.is_read ? "#1d5bbf" : "#6B7280", fontSize: "11px" }}>
+                              {msg.is_read ? "✓✓" : "✓"}
                             </span>
                           )}
-                        </p>
+                        </div>
                       </div>
                     </div>
-                  );
-                })}
-                <div ref={chatEndRef} />
-              </div>
-
-              {/* Reply Input */}
-              <div className="px-4 py-3 flex-shrink-0" style={{ borderTop: "2px solid #C9B29F" }}>
-                {/* Pending attachments preview */}
-                {pendingAttachments.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mb-2">
-                    {pendingAttachments.map((att, i) => (
-                      <div key={i} className="flex items-center gap-1.5 px-2 py-1 rounded-lg text-[10px]"
-                        style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}>
-                        {att.isImage ? (
-                          <img src={att.url} alt="" className="w-8 h-8 rounded object-cover" />
-                        ) : (
-                          <span>📎</span>
-                        )}
-                        <span className="truncate max-w-[100px]" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{att.name}</span>
-                        <button onClick={() => setPendingAttachments(prev => prev.filter((_, j) => j !== i))}
-                          className="text-red-400 hover:text-red-300 ml-1">✕</button>
-                      </div>
-                    ))}
                   </div>
-                )}
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => imageInputRef.current?.click()}
-                    disabled={uploading}
-                    className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center transition-all hover:scale-105"
-                    style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}
-                    title="Attach photo"
-                  >
-                    <span className="text-lg">🖼️</span>
-                  </button>
-                  <button
-                    onClick={() => fileInputRef.current?.click()}
-                    disabled={uploading}
-                    className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center transition-all hover:scale-105"
-                    style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}
-                    title="Attach file"
-                  >
-                    {uploading ? (
-                      <span className="w-4 h-4 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} />
-                    ) : (
-                      <span className="text-lg">📎</span>
-                    )}
-                  </button>
-                  <input ref={imageInputRef} type="file" className="hidden" accept="image/*" onChange={e => handleFileUpload(e, "reply")} />
-                  <input ref={fileInputRef} type="file" className="hidden" accept=".pdf,.doc,.docx,.txt,.zip,.xls,.xlsx,.csv" onChange={e => handleFileUpload(e, "reply")} />
-                  <textarea
-                    value={replyText}
-                    onChange={e => setReplyText(e.target.value)}
-                    onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendReply(); } }}
-                    placeholder="Type a message..."
-                    rows={1}
-                    className="flex-1 rounded-lg px-3 py-2.5 text-sm outline-none resize-none"
-                    style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)", minHeight: "42px", maxHeight: "120px", overflowY: "auto" }}
-                    onInput={(e) => { const t = e.target as HTMLTextAreaElement; t.style.height = "42px"; t.style.height = Math.min(t.scrollHeight, 120) + "px"; }}
-                  />
-                  <button onClick={sendReply} disabled={sending || !replyText.trim()}
-                    className="px-4 py-2.5 rounded-lg text-xs font-semibold uppercase transition-all hover:scale-[1.03] disabled:opacity-40"
-                    style={{ background: "#C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-                    {sending ? "..." : "Send"}
-                  </button>
-                </div>
-              </div>
-            </>
-          ) : (
-            <div className="flex flex-col items-center justify-center h-full py-16">
-              <span className="text-5xl mb-3">💬</span>
-              <p className="text-sm mb-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
-                Select a conversation
-              </p>
-              <p className="text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
-                or start a new one
-              </p>
+                );
+              })}
+              <div ref={chatEndRef} />
             </div>
-          )}
-        </div>
 
-        {/* Who's Online - Right Panel */}
-        <div className="hidden md:flex md:flex-col md:col-span-1 rounded-xl overflow-hidden glass-panel-green" style={GLASS_BOX}>
-          <div className="px-4 py-3 flex-shrink-0" style={{ borderBottom: "2px solid #C9B29F" }}>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#22c55e" }} />
-                <p className="text-[10px] uppercase tracking-widest font-semibold"
-                  style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-                  Online
-                </p>
-              </div>
-              <p className="text-[9px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
-                <span style={{ color: "#22c55e", fontWeight: 700 }}>{onlineData.members_online}</span> member{onlineData.members_online !== 1 ? "s" : ""} : <span style={{ color: "#1C1C1C", fontWeight: 700 }}>{onlineData.guests_online}</span> guest{onlineData.guests_online !== 1 ? "s" : ""}
-              </p>
-            </div>
-            <input
-              type="text"
-              value={onlineSearch}
-              onChange={e => setOnlineSearch(e.target.value)}
-              placeholder="Search online..."
-              className="w-full mt-2 rounded-lg px-2.5 py-1.5 text-[10px] outline-none"
-              style={{
-                background: "#FAFAFA",
-                border: "2px solid #C9B29F",
-                color: "#1C1C1C",
-                fontFamily: "var(--font-table)",
-              }}
-            />
-          </div>
-          <div className="overflow-y-auto" style={{ maxHeight: "290px" }}>
-            {(() => {
-              const filtered = onlineData.online_members.filter(m =>
-                m.id !== user?.id && m.username.toLowerCase().includes(onlineSearch.toLowerCase())
-              );
-              return filtered.length > 0 ? (
-                <div className="py-1">
-                  {filtered.map(m => (
-                    <div key={m.id}
-                      className="mx-2 my-1.5 rounded-lg p-2.5 hover:scale-[1.02] transition-all"
-                      style={{
-                        background: "#FAFAFA",
-                        border: "2px solid #E5E7EB",
-                      }}>
-                      <div className="flex items-center gap-2.5">
-                        <a href={`/profile/${m.username}`} className="relative flex-shrink-0 hover:opacity-80 transition-opacity">
-                          {m.profile_picture ? (
-                            <img src={m.profile_picture} alt="" className="w-10 h-8 rounded-md object-cover"
-                              style={{ border: "2px solid #C9B29F" }} />
-                          ) : (
-                            <div className="w-10 h-10 rounded-md flex items-center justify-center text-sm font-bold"
-                              style={{
-                                background: "#FAF7F2",
-                                border: "2px solid #C9B29F",
-                                color: "#1C1C1C",
-                              }}>
-                              {m.username[0].toUpperCase()}
-                            </div>
-                          )}
-                          <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2"
-                            style={{ background: "#22c55e", borderColor: "#FAFAFA" }} />
-                        </a>
-                        <a href={`/profile/${m.username}`} className="flex-1 min-w-0 hover:opacity-80 transition-opacity">
-                          <span className="text-xs font-bold truncate block"
-                            style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-                            {m.username}
-                          </span>
-                          <span className="text-[9px]" style={{ color: "#22c55e", fontFamily: "var(--font-table)" }}>
-                            Online now
-                          </span>
-                        </a>
-                        <button
-                          onClick={() => { setToUsername(m.username); setShowCompose(true); setSelectedThread(null); }}
-                          className="flex-shrink-0 w-7 h-7 rounded-md flex items-center justify-center transition-all hover:scale-110"
-                          style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}
-                          title={`Message ${m.username}`}
-                        >
-                          <span className="text-xs">💬</span>
-                        </button>
-                      </div>
+            {/* Input Bar */}
+            <div className="px-3 py-2.5 flex-shrink-0" style={{ background: "#FAFAFA", borderTop: "1px solid #EDE4D5" }}>
+              {/* Pending attachments */}
+              {pendingAttachments.length > 0 && (
+                <div className="flex flex-wrap gap-2 mb-2">
+                  {pendingAttachments.map((att, i) => (
+                    <div key={i} className="flex items-center gap-1.5 px-2 py-1 rounded-lg text-[10px]"
+                      style={{ background: "#FAF7F2", border: "1px solid #C9B29F" }}>
+                      {att.isImage ? <img src={att.url} alt="" className="w-8 h-8 rounded object-cover" /> : <span>📎</span>}
+                      <span className="truncate max-w-[80px]" style={{ color: "#1C1C1C" }}>{att.name}</span>
+                      <button onClick={() => setPendingAttachments(prev => prev.filter((_, j) => j !== i))} className="text-red-400">✕</button>
                     </div>
                   ))}
                 </div>
-              ) : (
-                <div className="p-4 text-center">
-                  <p className="text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
-                    {onlineSearch ? "No matches" : "No members online"}
-                  </p>
-                </div>
-              );
-            })()}
+              )}
+              <div className="flex items-end gap-2">
+                <button onClick={() => imageInputRef.current?.click()} disabled={uploading}
+                  className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center transition-all hover:scale-110"
+                  style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}>
+                  {uploading ? <span className="w-4 h-4 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} /> : <span className="text-base">📎</span>}
+                </button>
+                <input ref={imageInputRef} type="file" className="hidden" accept="image/*,.pdf,.doc,.docx,.txt,.zip" onChange={handleFileUpload} />
+                <input ref={fileInputRef} type="file" className="hidden" accept=".pdf,.doc,.docx,.txt,.zip" onChange={handleFileUpload} />
+                <textarea
+                  value={replyText}
+                  onChange={e => setReplyText(e.target.value)}
+                  onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendReply(); } }}
+                  placeholder="Type a message..."
+                  rows={1}
+                  className="flex-1 rounded-2xl px-4 py-2.5 text-sm outline-none resize-none"
+                  style={{ background: "#FAF7F2", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)", minHeight: "40px", maxHeight: "120px", overflowY: "auto" }}
+                  onInput={(e) => { const t = e.target as HTMLTextAreaElement; t.style.height = "40px"; t.style.height = Math.min(t.scrollHeight, 120) + "px"; }}
+                />
+                <button onClick={sendReply} disabled={sending || (!replyText.trim() && pendingAttachments.length === 0)}
+                  className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center transition-all hover:scale-110 disabled:opacity-40"
+                  style={{ background: "#C9B29F", color: "#1C1C1C" }}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" />
+                  </svg>
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
+        ) : (
+          /* Empty State */
+          <div className="flex flex-col items-center justify-center h-full gap-3" style={{ borderRadius: "0 10px 10px 0" }}>
+            <span className="text-6xl opacity-30">💬</span>
+            <p className="text-lg font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Pedigree Platform Messenger</p>
+            <p className="text-xs" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>Select a conversation or start a new one</p>
+          </div>
+        )}
       </div>
     </div>
   );
