@@ -62,7 +62,7 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
     : null;
 
   return (
-    <Link href={dog.id < 0 ? `/pedigree/custom/${Math.abs(dog.id)}` : `/pedigree/${dog.id}`}
+    <Link href={`/pedigree/${dog.id}`}
       className="group block overflow-hidden transition-all duration-300 hover:-translate-y-1"
       style={{
         background: "#FAF7F2",

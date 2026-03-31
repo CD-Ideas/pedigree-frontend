@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
     const offset = (page - 1) * limit;
     const sort = searchParams.get("sort") || "view_count";
     const order = searchParams.get("order") === "asc" ? "ASC" : "DESC";
-    const search = searchParams.get("search") || "";
+    const search = searchParams.get("search") || searchParams.get("q") || "";
     const sex = searchParams.get("sex") || "";
     const color = searchParams.get("color") || "";
     const title = searchParams.get("title") || "";
@@ -84,23 +84,7 @@ export async function GET(req: NextRequest) {
       `    for x in xw: d["titles"].append(x + "XW")`,
       `    dogs.append(d)`,
       `total_pages = (total + lim - 1) // lim`,
-      `# Also fetch published pedigrees matching the search`,
-      `pub_conditions = []`,
-      `pub_params = []`,
-      `if search:`,
-      `    pub_words = search.split()`,
-      `    for w in pub_words:`,
-      `        pub_conditions.append("name LIKE ?")`,
-      `        pub_params.append("%" + w + "%")`,
-      `pub_where = "WHERE " + " AND ".join(pub_conditions) if pub_conditions else ""`,
-      `try:`,
-      `    c.execute("SELECT -id as id, name, sex, color, dob, '' as reg_number, photo_path as profile_image_url, NULL as sire_id, NULL as dam_id, view_count FROM published_pedigrees " + pub_where + " ORDER BY date_posted DESC LIMIT 20", pub_params)`,
-      `    for r in c.fetchall():`,
-      `        d = dict(r)`,
-      `        d["titles"] = []`,
-      `        d["source"] = "published"`,
-      `        dogs.append(d)`,
-      `except: pass`,
+      
       `print(json.dumps({"dogs": dogs, "total": total, "totalPages": total_pages, "page": ${page}, "filters": {"colors": [], "titles": ["GR CH","CH","ROM","POR","1XW","2XW","3XW","4XW","5XW"]}}))`,
       `conn.close()`,
     ].join("\n");

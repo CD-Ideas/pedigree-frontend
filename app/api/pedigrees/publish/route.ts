@@ -129,8 +129,34 @@ db.close()
 
     const { stdout } = await execFileAsync("python3", ["-c", script], { timeout: 15000 });
     const result = JSON.parse(stdout.trim());
+    const ppId = result.id;
 
-    return NextResponse.json({ success: true, id: result.id });
+    // Also insert into main dogs table so it appears in search/browse
+    const dogId = 10000000 + ppId;
+    const dogScript = `
+import sqlite3, json, sys
+db = sqlite3.connect("${DB}")
+cur = db.cursor()
+cur.execute("""
+  INSERT OR REPLACE INTO dogs (dog_id, registered_name, sex, color, breeder, owner, birthdate,
+    conditioned_weight, description, posted_date, modified_date, view_count, source)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), datetime('now'), 0, 'user')
+""", (
+  ${dogId}, ${JSON.stringify(name)}, ${JSON.stringify(sex)}, ${JSON.stringify(color)},
+  ${JSON.stringify(breeder)}, ${JSON.stringify(owner)}, ${JSON.stringify(dob)},
+  ${JSON.stringify(conditionedWeight)}, ${JSON.stringify(pedigreeNotes)}
+))
+db.commit()
+print(json.dumps({"dog_id": ${dogId}}))
+db.close()
+`;
+    try {
+      await execFileAsync("python3", ["-c", dogScript], { timeout: 15000 });
+    } catch (e) {
+      console.error("Failed to insert into dogs table:", e);
+    }
+
+    return NextResponse.json({ success: true, id: ppId, dogId: dogId });
   } catch (err: unknown) {
     console.error("Publish error:", err);
     return NextResponse.json({ error: "Failed to publish" }, { status: 500 });

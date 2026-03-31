@@ -211,7 +211,7 @@ export default function PedigreeHub() {
                     const titlePatterns = ["GR CH", "CH", "ROM", "1XW", "2XW", "3XW", "4XW", "5XW"];
                     const titles = titlePatterns.filter(t => dog.name?.toUpperCase().includes(t));
                     return (
-                      <Link key={dog.id} href={dog.dog_id < 0 ? `/pedigree/custom/${Math.abs(dog.dog_id)}` : `/pedigree/${dog.dog_id || dog.id}`}
+                      <Link key={dog.id} href={`/pedigree/${dog.id}`}
                         className="group rounded-xl overflow-hidden transition-all hover:scale-[1.02]"
                         style={{ border: "2px solid #C9B29F", background: "#FAF7F2", borderRadius: "10px" }}>
                         {/* Photo or placeholder */}
@@ -332,7 +332,7 @@ export default function PedigreeHub() {
               {FAMOUS_DOGS.map((dog) => {
                 const isMale = dog.sex === "M";
                 return (
-                  <Link key={dog.id} href={dog.dog_id < 0 ? `/pedigree/custom/${Math.abs(dog.dog_id)}` : `/pedigree/${dog.dog_id || dog.id}`}
+                  <Link key={dog.id} href={`/pedigree/${dog.id}`}
                     className="group rounded-xl p-5 text-center transition-all hover:scale-[1.03]"
                     style={{
                       background: "#FAF7F2",
