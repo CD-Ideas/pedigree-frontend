@@ -541,7 +541,7 @@ function OffspringTab({ offspring }: { offspring: Offspring[] }) {
                  background: PG.cardBg,
                  border: PG.cardBorder,
                  borderRadius: PG.cardRadius,
-                 fontFamily: PG.font, fontSize: "10px", fontWeight: 600, lineHeight: 1.1,
+                 fontFamily: PG.font, fontSize: "12px", fontWeight: 600, lineHeight: 1.1,
                }}>
             <div style={{ width: "3px", alignSelf: "stretch", background: cc, flexShrink: 0 }} />
             <div className="px-2.5 py-1.5 truncate">
@@ -607,7 +607,7 @@ function SiblingsTab({ siblings }: { siblings: Dog["siblings"] }) {
                        background: PG.cardBg,
                        border: PG.cardBorder,
                        borderRadius: PG.cardRadius,
-                       fontFamily: PG.font, fontSize: "10px", fontWeight: 600, lineHeight: 1.1,
+                       fontFamily: PG.font, fontSize: "12px", fontWeight: 600, lineHeight: 1.1,
                      }}>
                   <div style={{ width: "3px", alignSelf: "stretch", background: cc, flexShrink: 0 }} />
                   <div className="px-2.5 py-1.5 truncate">
@@ -737,13 +737,13 @@ function PedStatsTab({ genetics }: { genetics: Genetic[] }) {
                    transition: "all 0.2s",
                  }}>
               <div style={{ width: "3px", alignSelf: "stretch", background: s.color, flexShrink: 0 }} />
-              <div className="px-2.5 py-1 flex items-center gap-2 w-full" style={{ fontFamily: PG.font, fontSize: "10px", fontWeight: 600, lineHeight: 1.1 }}>
+              <div className="px-2.5 py-1 flex items-center gap-2 w-full" style={{ fontFamily: PG.font, fontSize: "12px", fontWeight: 600, lineHeight: 1.1 }}>
                 <div className="w-2.5 h-2.5 rounded-lg flex-shrink-0" style={{ background: s.color }} />
                 <div className="flex-1 min-w-0 truncate">
                   {s.ancestor_id ? <DogLink dogId={s.ancestor_id} name={s.ancestor_name} /> : <span style={{ color: PG.textMuted }}>{s.ancestor_name}</span>}
                 </div>
                 <span className="font-bold flex-shrink-0"
-                      style={{ fontFamily: PG.font, fontSize: "9px", color: s.color }}>
+                      style={{ fontFamily: PG.font, fontSize: "11px", color: s.color }}>
                   {s.percentage.toFixed(1)}%
                 </span>
               </div>
@@ -773,11 +773,11 @@ function PhotosTab({ offspring }: { offspring: Offspring[] }) {
         return (
           <Link key={i} href={`/pedigree/${o.offspring_id}`} className="group relative rounded-md overflow-hidden transition-all"
                 style={{ background: PG.cardBg, border: PG.cardBorder, borderRadius: PG.cardRadius }}>
-            <div className="w-full h-[100px] sm:h-[120px] overflow-hidden">
+            <div className="w-full h-[130px] sm:h-[150px] overflow-hidden">
               <img src={src} alt={o.offspring_name} className="w-full h-full object-cover transition-transform group-hover:scale-105" />
             </div>
             <div className="px-1.5 py-1" style={{ borderTop: "1px solid #EDE4D5" }}>
-              <p className="font-semibold truncate" style={{ color: cc, fontFamily: PG.font, fontSize: "9px", lineHeight: 1.1 }}>
+              <p className="font-semibold truncate" style={{ color: cc, fontFamily: PG.font, fontSize: "11px", lineHeight: 1.1 }}>
                 {o.offspring_name}
               </p>
             </div>
@@ -879,7 +879,7 @@ function TitlesTab({ offspring }: { offspring: Offspring[] }) {
                      background: PG.cardBg,
                      border: PG.cardBorder,
                      borderRadius: PG.cardRadius,
-                     fontFamily: PG.font, fontSize: "10px", fontWeight: 600, lineHeight: 1.1,
+                     fontFamily: PG.font, fontSize: "12px", fontWeight: 600, lineHeight: 1.1,
                    }}>
                 <div style={{ width: "3px", alignSelf: "stretch", background: cc, flexShrink: 0 }} />
                 <div className="px-2.5 py-1.5 truncate">

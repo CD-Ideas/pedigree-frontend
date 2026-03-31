@@ -236,7 +236,7 @@ export default function AccountPage() {
   if (!user) return null;
 
   return (
-    <div className="max-w-2xl mx-auto px-6 py-12 space-y-6" style={{ background: "#FAFAFA" }}>
+    <div className="max-w-2xl mx-auto px-6 py-12 space-y-6" style={{ background: "#EDE4D5" }}>
       <div>
         <h1 style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", fontWeight: 700, color: "#1C1C1C" }}>
           Account Settings

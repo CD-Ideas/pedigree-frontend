@@ -115,7 +115,7 @@ export default function CommunityPedigreesPage() {
               className="w-full rounded-lg px-4 py-2 text-xs outline-none"
               style={{
                 background: "#FAFAFA",
-                border: "1.5px solid #C9B29F",
+                border: "2px solid #C9B29F",
                 color: "#1C1C1C",
                 fontFamily: "var(--font-table)",
               }}
