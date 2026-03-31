@@ -558,39 +558,6 @@ export default function AccountPage() {
             </select>
           </div>
 
-          {/* Theme */}
-          <div className="flex items-center justify-between py-2" style={{ borderBottom: "2px solid #C9B29F" }}>
-            <div>
-              <p className="text-sm font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Theme</p>
-              <p className="text-[10px] mt-0.5" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
-                Choose your display theme
-              </p>
-            </div>
-            <div className="flex gap-2">
-              {[
-                { value: "dark", label: "Dark", icon: "🌙" },
-                { value: "light", label: "Light", icon: "☀️", disabled: true },
-              ].map((t) => (
-                  <button
-                    key={t.value}
-                    disabled={t.disabled}
-                    className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold transition-all"
-                    style={{
-                      background: t.value === "dark" ? "#FAF7F2" : "#FAFAFA",
-                      border: "2px solid #C9B29F",
-                      borderRadius: "10px",
-                      color: t.value === "dark" ? "#1C1C1C" : "#6B7280",
-                      fontFamily: "var(--font-table)",
-                      opacity: t.disabled ? 0.4 : 1,
-                      cursor: t.disabled ? "not-allowed" : "pointer",
-                    }}
-                  >
-                    <span>{t.icon}</span> {t.label}
-                    {t.disabled && <span className="text-[8px] ml-1">(Soon)</span>}
-                  </button>
-              ))}
-            </div>
-          </div>
 
           {/* Notifications */}
           <div className="flex items-center justify-between py-2" style={{ borderBottom: "2px solid #C9B29F" }}>

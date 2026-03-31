@@ -1445,15 +1445,13 @@ function PedigreeLabInner() {
                   <span className="relative w-11 h-6 rounded-full flex-shrink-0 transition-all"
                     style={{
                       background: publishForm.showInTitleFeed
-                        ? "#C9B29F"
-                        : "#FAFAFA",
-                      border: "2px solid #C9B29F",
+                        ? "#22c55e"
+                        : "#D1D5DB",
+                      border: publishForm.showInTitleFeed ? "2px solid #22c55e" : "2px solid #D1D5DB",
                     }}>
                     <span className="absolute top-0.5 left-0.5 w-5 h-5 rounded-full transition-all"
                       style={{
-                        background: publishForm.showInTitleFeed
-                          ? "#1C1C1C"
-                          : "#C9B29F",
+                        background: "#FFFFFF",
                         transform: publishForm.showInTitleFeed ? "translateX(20px)" : "translateX(0)",
                       }} />
                   </span>
@@ -1641,7 +1639,11 @@ function PedigreeLabInner() {
                   </label>
                   <select
                     value={publishForm.country}
-                    onChange={(e) => setPublishForm((p) => ({ ...p, country: e.target.value }))}
+                    onChange={(e) => {
+                      const country = e.target.value;
+                      const autoContinent = Object.entries(COUNTRY_MAP).find(([, countries]) => countries.includes(country))?.[0] || "";
+                      setPublishForm((p) => ({ ...p, country, continent: autoContinent || p.continent }));
+                    }}
                     className="w-full rounded-2xl px-3 py-2 text-sm outline-none uppercase transition-all"
                     style={{
                       background: "#FAFAFA",
@@ -1652,7 +1654,10 @@ function PedigreeLabInner() {
                     }}
                   >
                     <option value="">Select</option>
-                    {(COUNTRY_MAP[publishForm.continent] || []).map((c) => (
+                    {(publishForm.continent
+                      ? (COUNTRY_MAP[publishForm.continent] || [])
+                      : Object.values(COUNTRY_MAP).flat().sort()
+                    ).map((c) => (
                       <option key={c} value={c}>{c.toUpperCase()}</option>
                     ))}
                   </select>
