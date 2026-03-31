@@ -55,7 +55,7 @@ export default function ForgotPasswordPage() {
                   background: "#FAFAFA",
                   border: "2px solid #C9B29F",
                   color: "#1C1C1C",
-                  fontFamily: "var(--font-body)",
+                  fontFamily: "var(--font-table)",
                   borderRadius: "10px",
                 }}
               />

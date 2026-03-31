@@ -336,9 +336,9 @@ export default function EditAdPage() {
           className="text-xl font-black uppercase tracking-widest"
           style={{
             fontFamily: "var(--font-display)",
-            background: "#1C1C1C",
-            
-            
+            color: "#1C1C1C",
+
+
           }}
         >
           Please Log In
@@ -387,7 +387,7 @@ export default function EditAdPage() {
           className="text-xl font-black uppercase tracking-widest"
           style={{
             fontFamily: "var(--font-display)",
-            background: "#ef4444",
+            color: "#ef4444",
             
             
           }}
@@ -490,9 +490,9 @@ export default function EditAdPage() {
           className="text-2xl font-black uppercase tracking-widest mb-1"
           style={{
             fontFamily: "var(--font-display)",
-            background: "#1C1C1C",
-            
-            
+            color: "#1C1C1C",
+
+
           }}
         >
           Edit Ad
@@ -507,7 +507,7 @@ export default function EditAdPage() {
             className="rounded-xl p-5"
             style={{
               background: "#FAF7F2",
-              border: errors.category ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid #C9B29F",
+              border: errors.category ? "2px solid rgba(239,68,68,0.5)" : "2px solid #C9B29F",
               
             }}
           >
@@ -526,14 +526,14 @@ export default function EditAdPage() {
                   className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-left transition-all duration-200 hover:scale-[1.02]"
                   style={{
                     background: category === cat.key ? `${cat.color}18` : "rgba(201,178,159,0.1)",
-                    border: category === cat.key ? `1.5px solid ${cat.color}55` : "1.5px solid rgba(201,178,159,0.3)",
+                    border: category === cat.key ? `2px solid ${cat.color}55` : "2px solid rgba(201,178,159,0.3)",
                   }}
                 >
                   <span className="text-base">{cat.icon}</span>
                   <span
                     className="text-[10px] font-bold"
                     style={{
-                      color: category === cat.key ? cat.color : "#94a3b8",
+                      color: category === cat.key ? cat.color : "#6B7280",
                       fontFamily: "var(--font-table)",
                     }}
                   >
@@ -554,7 +554,7 @@ export default function EditAdPage() {
             className="rounded-xl p-5 relative"
             style={{
               background: "#FAF7F2",
-              border: errors.dog ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid #C9B29F",
+              border: errors.dog ? "2px solid rgba(239,68,68,0.5)" : "2px solid #C9B29F",
               
               overflow: "visible",
               zIndex: 10,
@@ -674,7 +674,7 @@ export default function EditAdPage() {
             className="rounded-xl p-5"
             style={{
               background: "#FAF7F2",
-              border: errors.title ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid #C9B29F",
+              border: errors.title ? "2px solid rgba(239,68,68,0.5)" : "2px solid #C9B29F",
               
             }}
           >
@@ -706,7 +706,7 @@ export default function EditAdPage() {
               style={{
                 background: selectedDogName ? "rgba(201,178,159,0.1)" : "#FAFAFA",
                 border: selectedDogName ? "1px solid rgba(201,178,159,0.3)" : "1px solid #C9B29F",
-                color: selectedDogName ? getDogColor(selectedDogName) : "var(--text-primary, #e2e8f0)",
+                color: selectedDogName ? getDogColor(selectedDogName) : "var(--text-primary, #C9B29F)",
                 fontFamily: "var(--font-table)",
                 cursor: selectedDogName ? "not-allowed" : "text",
               }}
@@ -728,7 +728,7 @@ export default function EditAdPage() {
             className="rounded-xl p-5"
             style={{
               background: "#FAF7F2",
-              border: errors.description ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid #C9B29F",
+              border: errors.description ? "2px solid rgba(239,68,68,0.5)" : "2px solid #C9B29F",
               
             }}
           >
@@ -815,7 +815,7 @@ export default function EditAdPage() {
             className="rounded-xl p-5"
             style={{
               background: "#FAF7F2",
-              border: errors.photos ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid #C9B29F",
+              border: errors.photos ? "2px solid rgba(239,68,68,0.5)" : "2px solid #C9B29F",
               
             }}
           >
@@ -915,7 +915,7 @@ export default function EditAdPage() {
             className="rounded-xl p-5"
             style={{
               background: "#FAF7F2",
-              border: errors.location ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid #C9B29F",
+              border: errors.location ? "2px solid rgba(239,68,68,0.5)" : "2px solid #C9B29F",
               
             }}
           >
@@ -978,7 +978,7 @@ export default function EditAdPage() {
             className="rounded-xl p-5"
             style={{
               background: "#FAF7F2",
-              border: errors.contact ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid #C9B29F",
+              border: errors.contact ? "2px solid rgba(239,68,68,0.5)" : "2px solid #C9B29F",
               
             }}
           >
@@ -1085,7 +1085,7 @@ export default function EditAdPage() {
           {submitError && (
             <div
               className="rounded-xl p-4 text-center"
-              style={{ background: "rgba(239,68,68,0.08)", border: "1.5px solid rgba(239,68,68,0.3)" }}
+              style={{ background: "rgba(239,68,68,0.08)", border: "2px solid rgba(239,68,68,0.3)" }}
             >
               <p className="text-xs font-bold" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
                 {submitError}

@@ -374,6 +374,7 @@ export default function AccountPage() {
                 color: "#1C1C1C",
                 borderRadius: "10px",
                 fontFamily: "var(--font-table)",
+                border: "2px solid #C9B29F",
               }}
             >
               {profileSaving ? "Saving..." : "Save Changes"}
@@ -463,6 +464,7 @@ export default function AccountPage() {
                 color: "#1C1C1C",
                 borderRadius: "10px",
                 fontFamily: "var(--font-table)",
+                border: "2px solid #C9B29F",
               }}
             >
               {passwordSaving ? "Changing..." : "Change Password"}

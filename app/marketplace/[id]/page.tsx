@@ -304,7 +304,7 @@ export default function MarketplaceAdPage() {
                 className="flex items-center gap-3 rounded-xl p-4 transition-all duration-300 hover:scale-[1.02]"
                 style={{
                   background: "rgba(201,178,159,0.06)",
-                  border: "1.5px solid rgba(201,178,159,0.25)",
+                  border: "2px solid rgba(201,178,159,0.25)",
                 }}
               >
                 <div
@@ -458,7 +458,7 @@ export default function MarketplaceAdPage() {
               <div
                 className="text-2xl font-black mb-4"
                 style={{
-                  color: ad.price !== null && ad.price !== undefined ? "#C9B29F" : "#5a6a82",
+                  color: ad.price !== null && ad.price !== undefined ? "#C9B29F" : "#6B7280",
                   fontFamily: "var(--font-mono)",
                 }}
               >
@@ -582,7 +582,7 @@ export default function MarketplaceAdPage() {
                 className="rounded-xl p-4"
                 style={{
                   background: "#FAF7F2",
-                  border: "1.5px solid rgba(201,178,159,0.25)",
+                  border: "2px solid rgba(201,178,159,0.25)",
                   
                 }}
               >

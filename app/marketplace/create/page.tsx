@@ -279,9 +279,9 @@ function CreateAdContent() {
           className="text-xl font-black uppercase tracking-widest"
           style={{
             fontFamily: "var(--font-display)",
-            background: "#1C1C1C",
-            
-            
+            color: "#1C1C1C",
+
+
           }}
         >
           Please Log In
@@ -364,9 +364,9 @@ function CreateAdContent() {
           className="text-2xl font-black uppercase tracking-widest mb-1"
           style={{
             fontFamily: "var(--font-display)",
-            background: "#1C1C1C",
-            
-            
+            color: "#1C1C1C",
+
+
           }}
         >
           Create Ad
@@ -417,7 +417,7 @@ function CreateAdContent() {
               className="rounded-2xl p-4 flex items-center gap-3"
               style={{
                 ...GLASS_BOX,
-                border: `1.5px solid ${CATEGORIES.find(c => c.key === category)?.color || "#C9B29F"}55`,
+                border: `2px solid ${CATEGORIES.find(c => c.key === category)?.color || "#C9B29F"}55`,
               }}
             >
               <span className="text-lg">{CATEGORIES.find(c => c.key === category)?.icon}</span>
@@ -447,7 +447,7 @@ function CreateAdContent() {
               className="rounded-2xl p-5"
               style={{
                 ...GLASS_BOX,
-                border: errors.category ? "1.5px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
+                border: errors.category ? "2px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
               }}
             >
               <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
@@ -465,7 +465,7 @@ function CreateAdContent() {
                     className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-left transition-all duration-300 hover:scale-[1.03]"
                     style={{
                       background: category === cat.key ? `${cat.color}18` : "rgba(201,178,159,0.05)",
-                      border: category === cat.key ? `1.5px solid ${cat.color}55` : "1.5px solid #C9B29F",
+                      border: category === cat.key ? `2px solid ${cat.color}55` : "2px solid #C9B29F",
                     }}
                     
                     
@@ -474,7 +474,7 @@ function CreateAdContent() {
                     <span
                       className="text-[10px] font-bold"
                       style={{
-                        color: category === cat.key ? cat.color : "#94a3b8",
+                        color: category === cat.key ? cat.color : "#6B7280",
                         fontFamily: "var(--font-table)",
                       }}
                     >
@@ -496,7 +496,7 @@ function CreateAdContent() {
             className="rounded-2xl p-5 relative"
             style={{
               ...GLASS_BOX,
-              border: errors.dog ? "1.5px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
+              border: errors.dog ? "2px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
               overflow: "visible",
               zIndex: 10,
             }}
@@ -616,7 +616,7 @@ function CreateAdContent() {
             className="rounded-2xl p-5"
             style={{
               ...GLASS_BOX,
-              border: errors.title ? "1.5px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
+              border: errors.title ? "2px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
             }}
           >
             <div className="flex items-center justify-between mb-2">
@@ -670,7 +670,7 @@ function CreateAdContent() {
             className="rounded-2xl p-5"
             style={{
               ...GLASS_BOX,
-              border: errors.description ? "1.5px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
+              border: errors.description ? "2px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
             }}
           >
             <div className="flex items-center justify-between mb-2">
@@ -750,7 +750,7 @@ function CreateAdContent() {
             className="rounded-2xl p-5"
             style={{
               ...GLASS_BOX,
-              border: errors.photos ? "1.5px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
+              border: errors.photos ? "2px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
             }}
           >
             <div className="flex items-center justify-between mb-3">
@@ -777,7 +777,7 @@ function CreateAdContent() {
                         src={photo}
                         alt={`Photo ${i + 1}`}
                         className="w-full h-full object-cover rounded-lg"
-                        style={{ border: isAutoPhoto ? "1.5px solid rgba(201,178,159,0.3)" : "1.5px solid #C9B29F" }}
+                        style={{ border: isAutoPhoto ? "2px solid rgba(201,178,159,0.3)" : "2px solid #C9B29F" }}
                       />
                       {isAutoPhoto && (
                         <div
@@ -872,7 +872,7 @@ function CreateAdContent() {
             className="rounded-2xl p-5"
             style={{
               ...GLASS_BOX,
-              border: errors.location ? "1.5px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
+              border: errors.location ? "2px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
             }}
           >
             <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
@@ -934,7 +934,7 @@ function CreateAdContent() {
             className="rounded-2xl p-5"
             style={{
               ...GLASS_BOX,
-              border: errors.contact ? "1.5px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
+              border: errors.contact ? "2px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
             }}
           >
             <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
@@ -1044,7 +1044,7 @@ function CreateAdContent() {
           {submitError && (
             <div
               className="rounded-xl p-4 text-center"
-              style={{ background: "rgba(239,68,68,0.08)", border: "1.5px solid rgba(239,68,68,0.3)" }}
+              style={{ background: "rgba(239,68,68,0.08)", border: "2px solid rgba(239,68,68,0.3)" }}
             >
               <p className="text-xs font-bold" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
                 {submitError}

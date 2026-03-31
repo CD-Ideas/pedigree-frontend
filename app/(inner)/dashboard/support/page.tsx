@@ -236,14 +236,14 @@ export default function SupportPage() {
                 </div>
 
                 {/* Messages */}
-                <div className="flex-1 overflow-y-auto p-4 space-y-3" style={{ background: "rgba(245,245,245,0.95)", maxHeight: "350px" }}>
+                <div className="flex-1 overflow-y-auto p-4 space-y-3" style={{ background: "#FAF7F2", maxHeight: "350px" }}>
                   {/* Original message */}
                   <div className="flex justify-end">
                     <div className="max-w-[75%] rounded-xl px-3 py-2" style={{ background: "rgba(187,247,208,0.8)" }}>
                       <p className="text-xs" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", wordBreak: "break-word" }}>
                         {originalMessage.message}
                       </p>
-                      <p className="text-[9px] mt-1 text-right" style={{ color: "#666" }}>
+                      <p className="text-[9px] mt-1 text-right" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                         {formatDate(originalMessage.created_at)}
                       </p>
                     </div>
@@ -257,12 +257,12 @@ export default function SupportPage() {
                         border: r.sender_type === "admin" ? "2px solid #C9B29F" : "none",
                       }}>
                         {r.sender_type === "admin" && (
-                          <p className="text-[9px] font-bold mb-1" style={{ color: "#1C1C1C" }}>⚡ Support Team</p>
+                          <p className="text-[9px] font-bold mb-1" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>⚡ Support Team</p>
                         )}
                         <p className="text-xs" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", wordBreak: "break-word" }}>
                           {r.message}
                         </p>
-                        <p className="text-[9px] mt-1" style={{ color: "#666", textAlign: r.sender_type === "user" ? "right" : "left" }}>
+                        <p className="text-[9px] mt-1" style={{ color: "#6B7280", textAlign: r.sender_type === "user" ? "right" : "left", fontFamily: "var(--font-table)" }}>
                           {formatDate(r.created_at)}
                         </p>
                       </div>

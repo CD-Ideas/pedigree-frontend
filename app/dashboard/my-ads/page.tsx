@@ -110,7 +110,7 @@ export default function MyAdsPage() {
         style={{
           background: "#FAF7F2",
 
-          borderBottom: "1px solid #C9B29F",
+          borderBottom: "2px solid #C9B29F",
         }}
       >
         <Link href="/" className="flex items-center gap-2.5">
@@ -132,7 +132,7 @@ export default function MyAdsPage() {
           <Link
             href="/marketplace"
             className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all hover:scale-105"
-            style={{ color: "var(--text-secondary, #94a3b8)", fontFamily: "var(--font-table)" }}
+            style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
           >
             Marketplace
           </Link>
@@ -158,9 +158,9 @@ export default function MyAdsPage() {
               className="text-2xl font-black uppercase tracking-widest"
               style={{
                 fontFamily: "var(--font-display)",
-                background: "#1C1C1C",
-                
-                
+                color: "#1C1C1C",
+
+
               }}
             >
               MY ADS

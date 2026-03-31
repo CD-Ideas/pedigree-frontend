@@ -376,7 +376,7 @@ export default function NavBar() {
               color: "#FAF7F2",
               fontFamily: "var(--font-table, system-ui, sans-serif)",
               background: "transparent",
-              border: "1px solid #C9B29F",
+              border: "2px solid #C9B29F",
             }}
           >
             ← Back
@@ -406,7 +406,7 @@ export default function NavBar() {
                   fontSize: "0.75rem",
                   letterSpacing: "0.05em",
                   textTransform: "uppercase" as const,
-                  border: "1px solid #C9B29F",
+                  border: "2px solid #C9B29F",
                 } : link.label === "Dashboard" ? {
                   background: "#C9B29F",
                   color: "#1C1C1C",
@@ -415,7 +415,7 @@ export default function NavBar() {
                   fontSize: "0.75rem",
                   letterSpacing: "0.05em",
                   textTransform: "uppercase" as const,
-                  border: "1px solid #C9B29F",
+                  border: "2px solid #C9B29F",
                 } : {
                   color: isActive
                     ? "#1C1C1C"
@@ -467,7 +467,7 @@ export default function NavBar() {
                       border: "2px solid #C9B29F",
                     }}>
                     {/* Header */}
-                    <div className="px-4 py-3 flex items-center justify-between" style={{ borderBottom: "1px solid #C9B29F" }}>
+                    <div className="px-4 py-3 flex items-center justify-between" style={{ borderBottom: "2px solid #C9B29F" }}>
                       <p className="text-xs font-bold uppercase tracking-wider" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                         Notifications {unreadCount > 0 && <span className="ml-1 text-[10px]" style={{ color: "#ef4444" }}>({unreadCount} new)</span>}
                       </p>
@@ -555,7 +555,7 @@ export default function NavBar() {
                             <span className="text-sm mt-0.5 flex-shrink-0">{group.icon}</span>
                             <div className="flex-1 min-w-0">
                               <p className="text-xs font-semibold truncate" style={{
-                                color: group.hasUnread ? "#1C1C1C" : "#5a5a5a",
+                                color: group.hasUnread ? "#1C1C1C" : "#6B7280",
                                 fontFamily: "var(--font-table)",
                               }}>
                                 {group.count > 1 ? (
@@ -573,11 +573,11 @@ export default function NavBar() {
                                 )}
                               </p>
                               {group.body && (
-                                <p className="text-[10px] mt-0.5 truncate" style={{ color: "#5a5a5a", fontFamily: "var(--font-table)" }}>
+                                <p className="text-[10px] mt-0.5 truncate" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
                                   {group.body}
                                 </p>
                               )}
-                              <p className="text-[9px] mt-1" style={{ color: "#888", fontFamily: "var(--font-mono)" }}>
+                              <p className="text-[9px] mt-1" style={{ color: "#6B7280", fontFamily: "var(--font-mono)" }}>
                                 {new Date(group.latestTime + "Z").toLocaleString()}
                               </p>
                             </div>
@@ -713,7 +713,7 @@ export default function NavBar() {
                     {/* User info */}
                     <div className="px-4 py-3" style={{ borderBottom: "1px solid #C9B29F" }}>
                       <p className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{userName}</p>
-                      <p className="text-[10px] mt-0.5" style={{ color: "#888", fontFamily: "var(--font-mono)" }}>Admin</p>
+                      <p className="text-[10px] mt-0.5" style={{ color: "#6B7280", fontFamily: "var(--font-mono)" }}>Admin</p>
                     </div>
 
                     {/* Account Settings */}

@@ -1,8 +1,8 @@
 export default function TermsPage() {
   return (
     <div className="min-h-screen px-4 py-20" style={{ background: "#EDE4D5" }}>
-      <div className="max-w-3xl mx-auto">
-        <h1 style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "2rem", color: "#1C1C1C" }} className="mb-6">Terms of Service</h1>
+      <div className="max-w-3xl mx-auto" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "10px", padding: "2rem" }}>
+        <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "2rem", color: "#1C1C1C" }} className="mb-6">Terms of Service</h1>
         <div style={{ fontFamily: "var(--font-table)", fontSize: "14px", color: "#6B7280", lineHeight: 1.8 }} className="space-y-5">
           <p><strong style={{ color: "#1C1C1C" }}>Last updated:</strong> March 14, 2026</p>
 

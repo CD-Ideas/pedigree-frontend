@@ -159,7 +159,7 @@ export default function Dashboard() {
     if (pp?.startsWith("emoji:")) {
       return (
         <div className={`${size} rounded-full flex items-center justify-center`}
-          style={{ background: "#FAF7F2", border: "3px solid #C9B29F" }}>
+          style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}>
           <span className={textSize}>{pp.replace("emoji:", "")}</span>
         </div>
       );
@@ -167,14 +167,14 @@ export default function Dashboard() {
     if (pp) {
       return (
         <div className={`${size} rounded-full flex items-center justify-center overflow-hidden`}
-          style={{ background: "#FAF7F2", border: "3px solid #C9B29F" }}>
+          style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}>
           <img src={pp} alt="" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; const parent = e.currentTarget.parentElement; if (parent) parent.innerHTML = `<span class="${textSize}" style="color:#C9B29F">📷</span>`; }} />
         </div>
       );
     }
     return (
       <div className={`${size} rounded-full flex items-center justify-center font-bold`}
-        style={{ background: "#C9B29F", color: "#1C1C1C", border: "3px solid #C9B29F" }}>
+        style={{ background: "#C9B29F", color: "#1C1C1C", border: "2px solid #C9B29F" }}>
         <span className={textSize}>{(user?.username || "U")[0].toUpperCase()}</span>
       </div>
     );

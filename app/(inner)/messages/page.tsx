@@ -569,10 +569,10 @@ function MessagesContent() {
   const filteredThreads = threads.filter(t => t.other_username.toLowerCase().includes(convSearch.toLowerCase()));
 
   return (
-    <div className="flex overflow-hidden" style={{ height: "calc(100vh - 90px)", maxWidth: "1200px", margin: "0 auto", border: "2px solid #C9B29F", borderRadius: "10px", background: "#FAFAFA" }}>
+    <div className="flex overflow-hidden" style={{ height: "calc(100vh - 90px)", maxWidth: "1200px", margin: "0 auto", border: "2px solid #C9B29F", borderRadius: "10px", background: "#FAF7F2" }}>
       {/* ─── Left: Thread List ─── */}
       <div className={`${mobileShowChat ? "hidden md:flex" : "flex"} flex-col w-full md:w-[340px] flex-shrink-0`}
-        style={{ background: "#FAFAFA", borderRight: "2px solid #C9B29F" }}>
+        style={{ background: "#FAF7F2", borderRight: "2px solid #C9B29F" }}>
         {/* Header */}
         <div className="px-4 py-3 flex items-center justify-between flex-shrink-0"
           style={{ background: "#1C1C1C" }}>
@@ -594,7 +594,7 @@ function MessagesContent() {
         </div>
 
         {/* Search */}
-        <div className="px-3 py-2" style={{ borderBottom: "1px solid #C9B29F" }}>
+        <div className="px-3 py-2" style={{ borderBottom: "2px solid #C9B29F" }}>
           <div className="flex items-center gap-2 px-3 py-2 rounded-lg" style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}>
             <span style={{ color: "#6B7280", fontSize: "14px" }}>🔍</span>
             <input value={convSearch} onChange={e => setConvSearch(e.target.value)}
@@ -664,7 +664,7 @@ function MessagesContent() {
 
       {/* ─── Right: Chat Area ─── */}
       <div className={`${mobileShowChat ? "flex" : "hidden md:flex"} flex-col flex-1`}
-        style={{ background: "#FAFAFA" }}>
+        style={{ background: "#FAF7F2" }}>
 
         {/* Create Group Chat */}
         {showGroupCreate ? (
@@ -762,16 +762,16 @@ function MessagesContent() {
                 <input value={toUsername} onChange={e => setToUsername(e.target.value)}
                   placeholder="Username..."
                   className="w-full rounded-lg px-4 py-3 text-sm outline-none"
-                  style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
+                  style={{ background: "#FAF7F2", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
                 <input value={subject} onChange={e => setSubject(e.target.value)}
                   placeholder="Subject (optional)"
                   className="w-full rounded-lg px-4 py-3 text-sm outline-none"
-                  style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
+                  style={{ background: "#FAF7F2", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
                 <textarea value={replyText} onChange={e => setReplyText(e.target.value)}
                   placeholder="Write your message..."
                   rows={4}
                   className="w-full rounded-lg px-4 py-3 text-sm outline-none resize-none"
-                  style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
+                  style={{ background: "#FAF7F2", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
                 {composeMsg && <p className="text-xs text-center" style={{ color: composeMsg === "Sent!" ? "#22c55e" : "#ef4444" }}>{composeMsg}</p>}
                 <button onClick={sendNewMessage} disabled={sending || !toUsername.trim() || !replyText.trim()}
                   className="w-full py-3 rounded-lg text-sm font-bold uppercase tracking-wider transition-all disabled:opacity-40"
@@ -1022,7 +1022,7 @@ function MessagesContent() {
             </div>
 
             {/* Input Bar */}
-            <div className="px-3 py-2.5 flex-shrink-0" style={{ background: "#FAFAFA", borderTop: "2px solid #C9B29F" }}>
+            <div className="px-3 py-2.5 flex-shrink-0" style={{ background: "#FAF7F2", borderTop: "2px solid #C9B29F" }}>
               {/* Pending attachments */}
               {pendingAttachments.length > 0 && (
                 <div className="flex flex-wrap gap-2 mb-2">
