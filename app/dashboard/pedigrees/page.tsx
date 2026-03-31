@@ -456,7 +456,7 @@ export default function MyPedigreesPage() {
                   style={{
                     background: "#FAF7F2",
                     border: "2px solid #C9B29F",
-                    borderRadius: "8px",
+                    borderRadius: "10px",
                   }}>
                   {/* Photo area */}
                   <div

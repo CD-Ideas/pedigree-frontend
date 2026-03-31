@@ -952,7 +952,7 @@ function PedigreeLabInner() {
                               fontSize,
                               fontWeight: isChampion ? 700 : 600,
                               color: cellTextColor,
-                              fontFamily: "var(--font-table)",
+                              fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
                               lineHeight: 1.1,
                             }}
                           >
