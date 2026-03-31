@@ -6,6 +6,17 @@ import Link from "next/link";
 import { getDogColor } from "@/app/utils/colors";
 
 const LOGO = "/logo.png";
+const PER_PAGE = 24;
+
+type SortOption = "newest" | "oldest" | "most_viewed" | "az" | "za";
+
+const SORT_OPTIONS: { value: SortOption; label: string }[] = [
+  { value: "newest", label: "Newest First" },
+  { value: "oldest", label: "Oldest First" },
+  { value: "most_viewed", label: "Most Viewed" },
+  { value: "az", label: "A → Z" },
+  { value: "za", label: "Z → A" },
+];
 
 interface PedigreeItem {
   id: number;
@@ -107,6 +118,9 @@ export default function MyPedigreesPage() {
   const [pedigrees, setPedigrees] = useState<PedigreeItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<{ id: number; username: string } | null>(null);
+  const [search, setSearch] = useState("");
+  const [sort, setSort] = useState<SortOption>("newest");
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     try {
@@ -136,6 +150,37 @@ export default function MyPedigreesPage() {
     catch { return { rabiesDate: "", rabiesNextDue: "", avidChip: "", vaccines: [], worming: [], notes: "" }; }
   };
 
+  // Reset page when filters change
+  useEffect(() => { setPage(1); }, [search, sort]);
+
+  // Filter and sort
+  const filtered = pedigrees
+    .filter((p) => {
+      if (search.trim()) {
+        const q = search.toUpperCase();
+        const display = buildDisplayName(p).toUpperCase();
+        if (
+          !display.includes(q) &&
+          !(p.country || "").toUpperCase().includes(q) &&
+          !(p.breeder || "").toUpperCase().includes(q)
+        ) return false;
+      }
+      return true;
+    })
+    .sort((a, b) => {
+      switch (sort) {
+        case "newest": return new Date(b.date_posted).getTime() - new Date(a.date_posted).getTime();
+        case "oldest": return new Date(a.date_posted).getTime() - new Date(b.date_posted).getTime();
+        case "most_viewed": return (b.view_count || 0) - (a.view_count || 0);
+        case "az": return buildDisplayName(a).localeCompare(buildDisplayName(b));
+        case "za": return buildDisplayName(b).localeCompare(buildDisplayName(a));
+        default: return 0;
+      }
+    });
+
+  const totalPages = Math.ceil(filtered.length / PER_PAGE);
+  const paginated = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
+
   // Gather all reminders across all pedigrees
   const allReminders: { dogName: string; pedId: number; label: string; dueDate: string; daysLeft: number }[] = [];
   for (const p of pedigrees) {
@@ -150,25 +195,96 @@ export default function MyPedigreesPage() {
     <div className="min-h-screen" style={{ background: "#EDE4D5" }}>
       <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-6 space-y-6">
         {/* Header */}
-        <div>
-          <h1 className="text-2xl font-black uppercase tracking-widest"
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-2xl font-black uppercase tracking-widest"
+              style={{
+                fontFamily: "var(--font-display)",
+                color: "#1C1C1C",
+              }}>
+              My Pedigrees
+            </h1>
+            <p className="text-xs mt-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+              Manage your published pedigrees and journals
+            </p>
+          </div>
+
+          {/* Search */}
+          <div className="relative w-full sm:w-72">
+            <input
+              type="text"
+              placeholder="Search by name, country, breeder..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full rounded-lg px-4 py-2 text-xs outline-none"
+              style={{
+                background: "#FAFAFA",
+                border: "2px solid #C9B29F",
+                color: "#1C1C1C",
+                fontFamily: "var(--font-table)",
+              }}
+            />
+            <span
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-sm"
+              style={{ color: "#6B7280" }}
+            >
+              🔍
+            </span>
+          </div>
+        </div>
+
+        {/* Stats bar */}
+        <div className="flex items-center gap-4">
+          <span
+            className="text-[10px] px-3 py-1 rounded-full"
             style={{
-              fontFamily: "var(--font-display)",
+              background: "rgba(201,178,159,0.1)",
               color: "#1C1C1C",
-              
-            }}>
-            My Pedigrees
-          </h1>
-          <p className="text-xs mt-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
-            Manage your published pedigrees and journals
-          </p>
+              border: "2px solid #C9B29F",
+              fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
+            }}
+          >
+            {pedigrees.length} Published
+          </span>
+          {search.trim() && (
+            <span
+              className="text-[10px] px-3 py-1 rounded-full"
+              style={{
+                background: "rgba(96,165,250,0.1)",
+                color: "#1d5bbf",
+                border: "1px solid rgba(96,165,250,0.2)",
+                fontFamily: "var(--font-mono)",
+              }}
+            >
+              {filtered.length} Found
+            </span>
+          )}
+        </div>
+
+        {/* Sort */}
+        <div className="flex flex-wrap items-center gap-2">
+          <select
+            value={sort}
+            onChange={(e) => setSort(e.target.value as SortOption)}
+            className="rounded-lg px-3 py-1.5 text-[11px] outline-none cursor-pointer"
+            style={{
+              background: "#FAF7F2",
+              border: "2px solid #C9B29F",
+              color: "#1C1C1C",
+              fontFamily: "var(--font-table)",
+            }}
+          >
+            {SORT_OPTIONS.map((o) => (
+              <option key={o.value} value={o.value}>{o.label}</option>
+            ))}
+          </select>
         </div>
 
         {/* Reminders Banner */}
         {allReminders.length > 0 && (
           <div className="rounded-xl p-4" style={{
             background: "linear-gradient(135deg, rgba(234,179,8,0.08), rgba(234,179,8,0.03), #FAFAFA)",
-            border: "1.5px solid rgba(234,179,8,0.3)",
+            border: "2px solid rgba(234,179,8,0.3)",
           }}>
             <div className="flex items-center gap-2 mb-3">
               <span className="text-sm">🔔</span>
@@ -179,7 +295,7 @@ export default function MyPedigreesPage() {
             <div className="space-y-2">
               {allReminders.map((r, i) => (
                 <div key={i} className="flex items-center justify-between rounded-lg px-3 py-2"
-                  style={{ background: "rgba(0,0,0,0.2)", border: "1px solid rgba(234,179,8,0.15)" }}>
+                  style={{ background: "rgba(201,178,159,0.15)", border: "1px solid rgba(234,179,8,0.15)" }}>
                   <div className="flex items-center gap-2">
                     <Link href={`/pedigree/custom/${r.pedId}`} className="text-xs font-bold hover:underline"
                       style={{ color: getDogColor(r.dogName), fontFamily: "var(--font-table)" }}>
@@ -216,23 +332,28 @@ export default function MyPedigreesPage() {
               Loading your pedigrees...
             </div>
           </div>
-        ) : pedigrees.length === 0 ? (
+        ) : filtered.length === 0 ? (
           <div className="text-center py-16">
             <div className="text-5xl mb-4 opacity-30">🐕</div>
             <p className="text-sm mb-2" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
-              No pedigrees published yet
+              {search.trim()
+                ? "No pedigrees match your search"
+                : "No pedigrees published yet"}
             </p>
-            <Link href="/pedigree-lab" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold transition-all hover:scale-105 mt-4"
-              style={{
-                background: "#1C1C1C",
-                color: "#FAFAFA", fontFamily: "var(--font-table)",
-              }}>
-              + Create Your First Pedigree
-            </Link>
+            {!search.trim() && (
+              <Link href="/pedigree-lab" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold transition-all hover:scale-105 mt-4"
+                style={{
+                  background: "#1C1C1C",
+                  color: "#FAFAFA", fontFamily: "var(--font-table)",
+                }}>
+                + Create Your First Pedigree
+              </Link>
+            )}
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-            {pedigrees.map((p) => {
+          <>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
+            {paginated.map((p) => {
               const displayName = buildDisplayName(p);
               const titleColor = getDogColor(displayName);
               const isMale = p.sex === "Male" || p.sex === "MALE" || p.sex === "M";
@@ -241,86 +362,132 @@ export default function MyPedigreesPage() {
 
               return (
                 <Link key={p.id} href={`/pedigree/custom/${p.id}`}
-                  className="rounded-xl overflow-hidden transition-all hover:scale-[1.02] group"
+                  className="rounded-lg overflow-hidden transition-all hover:scale-[1.03] group"
                   style={{
-                    background: `linear-gradient(135deg, ${titleColor}10, ${titleColor}05, #FAFAFA)`,
-                    border: `1.5px solid ${titleColor}33`,
+                    background: "#FAF7F2",
+                    border: "2px solid #C9B29F",
+                    borderRadius: "8px",
                   }}>
-                  {/* Photo header */}
-                  <div className="h-32 relative" style={{
-                    background: p.photo_path
-                      ? `url(${p.photo_path}) center/cover`
-                      : isMale
-                        ? "#1d5bbf"
-                        : "#9f1239",
-                  }}>
-                    <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(201,178,159,0.3), transparent)" }} />
+                  {/* Photo area */}
+                  <div
+                    className="h-20 relative"
+                    style={{
+                      background: p.photo_path
+                        ? `url(${p.photo_path}) center/cover`
+                        : `linear-gradient(135deg, ${titleColor}15, #FAF7F2)`,
+                    }}
+                  >
                     {/* View count */}
-                    <div className="absolute top-2 right-2 flex items-center gap-1 px-2 py-0.5 rounded-full"
-                      style={{ background: "rgba(250,247,242,0.9)", border: "1px solid #C9B29F" }}>
-                      <span className="text-[9px]" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
+                    <div
+                      className="absolute top-1.5 right-1.5 flex items-center gap-0.5 px-1.5 py-0.5 rounded-full"
+                      style={{
+                        background: "rgba(250,247,242,0.9)",
+                        border: "1px solid #C9B29F",
+                      }}
+                    >
+                      <span
+                        className="text-[8px]"
+                        style={{
+                          color: "#1C1C1C",
+                          fontFamily: "var(--font-mono)",
+                        }}
+                      >
                         👁 {(p.view_count || 0).toLocaleString()}
                       </span>
                     </div>
                     {/* Reminders badge */}
                     {reminders.length > 0 && (
-                      <div className="absolute top-2 left-2 flex items-center gap-1 px-2 py-0.5 rounded-full"
-                        style={{ background: "rgba(234,179,8,0.2)", border: "1px solid rgba(234,179,8,0.4)" }}>
-                        <span className="text-[9px] font-bold" style={{ color: "#eab308", fontFamily: "var(--font-table)" }}>
+                      <div
+                        className="absolute top-1.5 left-1.5 flex items-center px-1.5 py-0.5 rounded-full"
+                        style={{
+                          background: "rgba(234,179,8,0.2)",
+                          border: "1px solid rgba(234,179,8,0.4)",
+                        }}
+                      >
+                        <span
+                          className="text-[8px] font-bold"
+                          style={{
+                            color: "#eab308",
+                            fontFamily: "var(--font-table)",
+                          }}
+                        >
                           🔔 {reminders.length}
                         </span>
                       </div>
                     )}
-                    {/* Name overlay */}
-                    <div className="absolute bottom-2 left-3 right-3">
-                      <p className="text-sm font-bold truncate" style={{ color: titleColor, fontFamily: "var(--font-table)" }}>
-                        {displayName}
-                      </p>
-                      <p className="text-[10px]" style={{ color: "#6B7280" }}>
-                        <span style={{ color: isMale ? "#1d5bbf" : "#9f1239" }}>{isMale ? "♂" : "♀"}</span>
-                        {p.color && <span> · {p.color}</span>}
-                        {p.country && <span> · {p.country}</span>}
-                      </p>
-                    </div>
                   </div>
 
                   {/* Details */}
-                  <div className="p-3 space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
-                        Posted {formatDate(p.date_posted)}
+                  <div className="px-2 py-1.5">
+                    <p
+                      className="text-[11px] font-bold truncate"
+                      style={{
+                        color: titleColor,
+                        fontFamily: "var(--font-table)",
+                      }}
+                    >
+                      {displayName}
+                    </p>
+                    <div className="flex items-center gap-1 mt-0.5">
+                      <span
+                        className="text-[9px]"
+                        style={{ color: isMale ? "#1d5bbf" : "#9f1239" }}
+                      >
+                        {isMale ? "♂" : "♀"}
                       </span>
-                      <span className="text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-mono)" }}>
+                      {p.country && (
+                        <span className="text-[9px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                          · {p.country}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex items-center justify-between mt-1">
+                      <span className="text-[8px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                        {formatDate(p.date_posted)}
+                      </span>
+                      <span className="text-[8px]" style={{ color: "#6B7280", fontFamily: "var(--font-mono)" }}>
                         ID: <span style={{ color: "#1C1C1C" }}>{p.id}</span>
                       </span>
                     </div>
-
-                    {/* Quick journal stats */}
+                    {/* Journal badges */}
                     {(journal.worming?.length > 0 || journal.vaccines?.some(v => v.checked)) && (
-                      <div className="flex items-center gap-2 flex-wrap">
+                      <div className="flex items-center gap-1 flex-wrap mt-1">
                         {journal.vaccines?.filter(v => v.checked).map(v => (
-                          <span key={v.name} className="text-[9px] px-1.5 py-0.5 rounded-full"
+                          <span key={v.name} className="text-[8px] px-1 py-0.5 rounded-full"
                             style={{ background: "rgba(34,197,94,0.1)", color: "#22c55e", border: "1px solid rgba(34,197,94,0.2)", fontFamily: "var(--font-table)" }}>
                             ✓ {v.name}
                           </span>
                         ))}
                         {journal.worming?.length > 0 && (
-                          <span className="text-[9px] px-1.5 py-0.5 rounded-full"
+                          <span className="text-[8px] px-1 py-0.5 rounded-full"
                             style={{ background: "rgba(96,165,250,0.1)", color: "#1d5bbf", border: "1px solid rgba(96,165,250,0.2)", fontFamily: "var(--font-table)" }}>
                             💊 {journal.worming.length} worming
                           </span>
                         )}
                       </div>
                     )}
-
                     {/* Actions */}
-                    <div className="flex items-center gap-2 pt-1">
-                      <span className="text-[10px] px-2 py-1 rounded-lg font-semibold transition-all group-hover:scale-105"
-                        style={{ background: "rgba(201,178,159,0.1)", color: "#1C1C1C", border: "2px solid #C9B29F", fontFamily: "var(--font-table)" }}>
+                    <div className="flex items-center gap-1 mt-1.5">
+                      <span
+                        className="text-[9px] px-2 py-0.5 rounded-md font-semibold transition-all group-hover:scale-105 inline-block"
+                        style={{
+                          background: "rgba(201,178,159,0.1)",
+                          color: "#1C1C1C",
+                          border: "2px solid #C9B29F",
+                          fontFamily: "var(--font-table)",
+                        }}
+                      >
                         View
                       </span>
-                      <span className="text-[10px] px-2 py-1 rounded-lg font-semibold"
-                        style={{ background: "rgba(34,197,94,0.1)", color: "#22c55e", border: "1px solid rgba(34,197,94,0.2)", fontFamily: "var(--font-table)" }}>
+                      <span
+                        className="text-[9px] px-2 py-0.5 rounded-md font-semibold inline-block"
+                        style={{
+                          background: "rgba(34,197,94,0.1)",
+                          color: "#22c55e",
+                          border: "1px solid rgba(34,197,94,0.2)",
+                          fontFamily: "var(--font-table)",
+                        }}
+                      >
                         ✎ Edit
                       </span>
                     </div>
@@ -329,6 +496,64 @@ export default function MyPedigreesPage() {
               );
             })}
           </div>
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center gap-2 pt-4">
+              <button
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                disabled={page === 1}
+                className="px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-all"
+                style={{
+                  background: page === 1 ? "#EDE4D5" : "#FAF7F2",
+                  border: "2px solid #C9B29F",
+                  color: page === 1 ? "#6B7280" : "#1C1C1C",
+                  fontFamily: "var(--font-table)",
+                  cursor: page === 1 ? "not-allowed" : "pointer",
+                  opacity: page === 1 ? 0.5 : 1,
+                }}
+              >
+                ← Prev
+              </button>
+              {Array.from({ length: totalPages }, (_, i) => i + 1)
+                .filter((p) => p === 1 || p === totalPages || Math.abs(p - page) <= 2)
+                .map((p, idx, arr) => (
+                  <span key={p}>
+                    {idx > 0 && arr[idx - 1] !== p - 1 && (
+                      <span className="text-[10px] px-1" style={{ color: "#6B7280" }}>…</span>
+                    )}
+                    <button
+                      onClick={() => setPage(p)}
+                      className="w-8 h-8 rounded-lg text-[11px] font-semibold transition-all"
+                      style={{
+                        background: page === p ? "#1C1C1C" : "#FAF7F2",
+                        border: "2px solid #C9B29F",
+                        color: page === p ? "#FAF7F2" : "#1C1C1C",
+                        fontFamily: "var(--font-table)",
+                      }}
+                    >
+                      {p}
+                    </button>
+                  </span>
+                ))}
+              <button
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                disabled={page === totalPages}
+                className="px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-all"
+                style={{
+                  background: page === totalPages ? "#EDE4D5" : "#FAF7F2",
+                  border: "2px solid #C9B29F",
+                  color: page === totalPages ? "#6B7280" : "#1C1C1C",
+                  fontFamily: "var(--font-table)",
+                  cursor: page === totalPages ? "not-allowed" : "pointer",
+                  opacity: page === totalPages ? 0.5 : 1,
+                }}
+              >
+                Next →
+              </button>
+            </div>
+          )}
+          </>
         )}
       </div>
     </div>
