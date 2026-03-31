@@ -7,6 +7,28 @@ import { getDogColor } from "@/app/utils/colors";
 const LOGO = "/logo.png";
 const PER_PAGE = 24;
 
+type SortOption = "newest" | "oldest" | "most_viewed" | "az" | "za";
+
+const SORT_OPTIONS: { value: SortOption; label: string }[] = [
+  { value: "newest", label: "Newest First" },
+  { value: "oldest", label: "Oldest First" },
+  { value: "most_viewed", label: "Most Viewed" },
+  { value: "az", label: "A → Z" },
+  { value: "za", label: "Z → A" },
+];
+
+const COUNTRY_MAP: Record<string, string[]> = {
+  "North America": ["United States", "Canada", "Mexico", "Antigua and Barbuda", "Bahamas", "Barbados", "Belize", "Cuba", "Dominica", "Dominican Republic", "Grenada", "Guatemala", "Haiti", "Honduras", "Jamaica", "El Salvador", "Costa Rica", "Nicaragua", "Panama", "Puerto Rico", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Trinidad and Tobago"],
+  "South America": ["Brazil", "Argentina", "Colombia", "Chile", "Peru", "Venezuela", "Ecuador", "Uruguay", "Paraguay", "Bolivia"],
+  "Europe": ["United Kingdom", "Ireland", "Spain", "Portugal", "France", "Germany", "Italy", "Netherlands", "Belgium", "Sweden", "Denmark", "Norway", "Finland", "Poland", "Romania", "Hungary", "Czech Republic", "Greece", "Croatia", "Serbia", "Bulgaria", "Albania", "Russia", "Ukraine", "Turkey"],
+  "Asia": ["Philippines", "Japan", "South Korea", "China", "Thailand", "Indonesia", "Vietnam", "India", "Pakistan", "Iran", "Iraq", "Israel", "Saudi Arabia", "UAE", "Malaysia", "Singapore", "Taiwan"],
+  "Africa": ["South Africa", "Nigeria", "Kenya", "Egypt", "Morocco", "Ghana", "Tanzania", "Ethiopia", "Cameroon", "Algeria"],
+  "Oceania": ["Australia", "New Zealand", "Fiji", "Papua New Guinea"],
+};
+
+const ALL_CONTINENTS = Object.keys(COUNTRY_MAP);
+const ALL_COUNTRIES = Object.values(COUNTRY_MAP).flat().sort();
+
 interface CommunityPedigree {
   id: number;
   name: string;
@@ -58,6 +80,9 @@ export default function CommunityPedigreesPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
+  const [sort, setSort] = useState<SortOption>("newest");
+  const [filterContinent, setFilterContinent] = useState("");
+  const [filterCountry, setFilterCountry] = useState("");
 
   useEffect(() => {
     fetch("/api/pedigrees/community")
@@ -69,21 +94,43 @@ export default function CommunityPedigreesPage() {
       .catch(() => setLoading(false));
   }, []);
 
-  // Reset page when search changes
-  useEffect(() => { setPage(1); }, [search]);
+  // Reset page when filters change
+  useEffect(() => { setPage(1); }, [search, sort, filterContinent, filterCountry]);
 
-  const filtered = search.trim()
-    ? pedigrees.filter((p) => {
+  // Get available countries based on continent selection
+  const availableCountries = filterContinent
+    ? COUNTRY_MAP[filterContinent] || []
+    : ALL_COUNTRIES;
+
+  const filtered = pedigrees
+    .filter((p) => {
+      // Search filter
+      if (search.trim()) {
         const q = search.toUpperCase();
         const display = buildDisplayName(p).toUpperCase();
-        return (
-          display.includes(q) ||
-          (p.creator || "").toUpperCase().includes(q) ||
-          (p.country || "").toUpperCase().includes(q) ||
-          (p.breeder || "").toUpperCase().includes(q)
-        );
-      })
-    : pedigrees;
+        if (
+          !display.includes(q) &&
+          !(p.creator || "").toUpperCase().includes(q) &&
+          !(p.country || "").toUpperCase().includes(q) &&
+          !(p.breeder || "").toUpperCase().includes(q)
+        ) return false;
+      }
+      // Continent filter
+      if (filterContinent && p.continent !== filterContinent) return false;
+      // Country filter
+      if (filterCountry && p.country !== filterCountry) return false;
+      return true;
+    })
+    .sort((a, b) => {
+      switch (sort) {
+        case "newest": return new Date(b.date_posted).getTime() - new Date(a.date_posted).getTime();
+        case "oldest": return new Date(a.date_posted).getTime() - new Date(b.date_posted).getTime();
+        case "most_viewed": return (b.view_count || 0) - (a.view_count || 0);
+        case "az": return buildDisplayName(a).localeCompare(buildDisplayName(b));
+        case "za": return buildDisplayName(b).localeCompare(buildDisplayName(a));
+        default: return 0;
+      }
+    });
 
   const totalPages = Math.ceil(filtered.length / PER_PAGE);
   const paginated = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
@@ -148,7 +195,7 @@ export default function CommunityPedigreesPage() {
           >
             {pedigrees.length} Published
           </span>
-          {search.trim() && (
+          {(search.trim() || filterContinent || filterCountry) && (
             <span
               className="text-[10px] px-3 py-1 rounded-full"
               style={{
@@ -160,6 +207,94 @@ export default function CommunityPedigreesPage() {
             >
               {filtered.length} Found
             </span>
+          )}
+        </div>
+
+        {/* Sort & Filters */}
+        <div className="flex flex-wrap items-center gap-2">
+          {/* Sort */}
+          <select
+            value={sort}
+            onChange={(e) => setSort(e.target.value as SortOption)}
+            className="rounded-lg px-3 py-1.5 text-[11px] outline-none cursor-pointer"
+            style={{
+              background: "#FAF7F2",
+              border: "2px solid #C9B29F",
+              color: "#1C1C1C",
+              fontFamily: "var(--font-table)",
+            }}
+          >
+            {SORT_OPTIONS.map((o) => (
+              <option key={o.value} value={o.value}>{o.label}</option>
+            ))}
+          </select>
+
+          {/* Continent */}
+          <select
+            value={filterContinent}
+            onChange={(e) => {
+              setFilterContinent(e.target.value);
+              setFilterCountry("");
+            }}
+            className="rounded-lg px-3 py-1.5 text-[11px] outline-none cursor-pointer"
+            style={{
+              background: "#FAF7F2",
+              border: "2px solid #C9B29F",
+              color: filterContinent ? "#1C1C1C" : "#6B7280",
+              fontFamily: "var(--font-table)",
+            }}
+          >
+            <option value="">All Continents</option>
+            {ALL_CONTINENTS.map((c) => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
+
+          {/* Country */}
+          <select
+            value={filterCountry}
+            onChange={(e) => {
+              const country = e.target.value;
+              setFilterCountry(country);
+              // Auto-fill continent if country is selected
+              if (country && !filterContinent) {
+                for (const [cont, countries] of Object.entries(COUNTRY_MAP)) {
+                  if (countries.includes(country)) {
+                    setFilterContinent(cont);
+                    break;
+                  }
+                }
+              }
+            }}
+            className="rounded-lg px-3 py-1.5 text-[11px] outline-none cursor-pointer"
+            style={{
+              background: "#FAF7F2",
+              border: "2px solid #C9B29F",
+              color: filterCountry ? "#1C1C1C" : "#6B7280",
+              fontFamily: "var(--font-table)",
+            }}
+          >
+            <option value="">All Countries</option>
+            {availableCountries.map((c) => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
+
+          {/* Clear filters */}
+          {(filterContinent || filterCountry) && (
+            <button
+              onClick={() => { setFilterContinent(""); setFilterCountry(""); }}
+              className="rounded-lg px-3 py-1.5 text-[11px] font-semibold transition-all"
+              style={{
+                background: "rgba(239,68,68,0.1)",
+                border: "2px solid rgba(239,68,68,0.3)",
+                color: "#ef4444",
+                fontFamily: "var(--font-table)",
+                cursor: "pointer",
+              }}
+            >
+              ✕ Clear Filters
+            </button>
           )}
         </div>
 
