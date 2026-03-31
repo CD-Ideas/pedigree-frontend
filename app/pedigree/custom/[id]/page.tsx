@@ -276,7 +276,7 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
       </div>
 
       <div ref={containerRef} className="overflow-x-auto overflow-y-hidden pb-1 pt-7" style={{ cursor: zoom !== 1 ? "grab" : "default" }}>
-        <div style={{ transform: `scale(${zoom})`, transformOrigin: "top left", transition: "transform 0.2s", minWidth: "900px" }}>
+        <div style={{ transform: `scale(${zoom})`, transformOrigin: "top left", transition: "transform 0.2s", minWidth: maxGen >= 5 ? "1100px" : "900px" }}>
           <div className="text-center mb-2">
             <h3 style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "15px", letterSpacing: "0.08em", textTransform: "uppercase", color: "#1C1C1C" }}>
               {maxGen} Generation Pedigree
@@ -284,7 +284,7 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
           </div>
 
           {/* Column headers */}
-          <div className="mb-1" style={{ display: "grid", gridTemplateColumns: `170px repeat(${maxGen}, 1fr)`, gap: "4px" }}>
+          <div className="mb-1" style={{ display: "grid", gridTemplateColumns: `${maxGen >= 5 ? "130px" : "170px"} repeat(${maxGen}, 1fr)`, gap: "4px" }}>
             <div className="px-1.5 py-1 text-center" style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "11px", color: "#1C1C1C", textTransform: "uppercase", letterSpacing: "0.1em" }}>Dog</div>
             {gens.filter((g) => g <= maxGen).map((g) => (
               <div key={g} className="px-1.5 py-1 text-center" style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "11px", color: "#1C1C1C", textTransform: "uppercase", letterSpacing: "0.1em" }}>
@@ -294,7 +294,7 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
           </div>
 
           {/* Tree grid */}
-          <div style={{ display: "grid", gridTemplateColumns: `170px repeat(${maxGen}, 1fr)`, gap: "4px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: `${maxGen >= 5 ? "130px" : "170px"} repeat(${maxGen}, 1fr)`, gap: "4px" }}>
             {/* Root dog */}
             <div className="flex items-center" style={{ minWidth: 0, overflow: "hidden" }}>
               <div className="w-full rounded-lg px-2 py-1.5 font-bold" style={{
@@ -312,8 +312,12 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
             {/* Generation columns */}
             {gens.filter((g) => g <= maxGen).map((gen) => {
               const ancestors = byGen[gen] || [];
-              const cellMinH = gen <= 1 ? "40px" : gen === 2 ? "34px" : gen === 3 ? "28px" : "24px";
-              const fontSize = gen <= 1 ? "13px" : gen === 2 ? "12px" : "11px";
+              const cellMinH = maxGen >= 5
+                ? (gen <= 1 ? "30px" : gen === 2 ? "24px" : gen === 3 ? "20px" : "16px")
+                : (gen <= 1 ? "40px" : gen === 2 ? "34px" : gen === 3 ? "28px" : "24px");
+              const fontSize = maxGen >= 5
+                ? (gen <= 1 ? "11px" : gen === 2 ? "10px" : "9.5px")
+                : (gen <= 1 ? "13px" : gen === 2 ? "12px" : "11px");
 
               return (
                 <div key={gen} className="flex flex-col gap-1" style={{ minWidth: 0, overflow: "hidden" }}>
@@ -369,12 +373,12 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
 
                     return (
                       <div key={`${gen}-${i}`}
-                        className="flex-1 rounded-lg px-2.5 py-1.5 flex items-center group relative transition-all duration-200"
+                        className={`flex-1 rounded-lg ${maxGen >= 5 ? "px-1.5 py-1" : "px-2.5 py-1.5"} flex items-center group relative transition-all duration-200`}
                         style={{
                           background: `linear-gradient(135deg, ${cellTint}, #FAF7F2)`,
                           border: "2px solid #EDE4D5",
                           borderLeftColor: cellBorderColor,
-                          borderLeftWidth: "4px",
+                          borderLeftWidth: maxGen >= 5 ? "3px" : "4px",
                           borderRadius: "8px",
                           minHeight: cellMinH,
                           cursor: hasLink ? "pointer" : "default",
@@ -382,9 +386,9 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
                       >
                         {isChampion && (
                           <span className="absolute -top-0.5 -right-0.5 flex items-center justify-center rounded-lg" style={{
-                            fontSize: "9px", color: "#8a6518",
+                            fontSize: maxGen >= 5 ? "7px" : "9px", color: "#8a6518",
                             background: "#F5EDE0",
-                            width: "15px", height: "15px",
+                            width: maxGen >= 5 ? "12px" : "15px", height: maxGen >= 5 ? "12px" : "15px",
                             border: "1px solid #C9B29F",
                           }}>★</span>
                         )}
