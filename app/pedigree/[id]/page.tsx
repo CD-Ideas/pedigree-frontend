@@ -39,7 +39,7 @@ interface Dog {
   genetic_contributions: Genetic[];
 }
 
-const LOGO = "https://i.imgur.com/9RJG2QN.png";
+const LOGO = "/logo.png";
 
 /* ─── Page-scoped style constants ─── */
 const PG = {

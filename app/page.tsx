@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-const LOGO = "https://i.imgur.com/9RJG2QN.png";
+const LOGO = "/logo.png";
 
 /* removed unused dynamic component */
 function _REMOVED() { return null; }

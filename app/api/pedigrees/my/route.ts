@@ -5,7 +5,7 @@ import { promisify } from "util";
 import { execFile } from "child_process";
 
 const execFileAsync = promisify(execFile);
-const DB = "/home/ubuntu/apbt-scraper/apbt_v2.db";
+const DB = process.env.SQLITE_DB_PATH || "/home/ubuntu/apbt-scraper/apbt_v2.db";
 
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);

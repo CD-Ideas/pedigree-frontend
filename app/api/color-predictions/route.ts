@@ -6,7 +6,7 @@ import { promisify } from "util";
 import crypto from "crypto";
 
 const execFileAsync = promisify(execFile);
-const DB_PATH = "/home/ubuntu/apbt-scraper/apbt_v2.db";
+const DB_PATH = process.env.SQLITE_DB_PATH || "/home/ubuntu/apbt-scraper/apbt_v2.db";
 
 // POST — save a prediction
 export async function POST(req: NextRequest) {

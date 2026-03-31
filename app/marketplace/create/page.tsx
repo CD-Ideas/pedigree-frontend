@@ -14,7 +14,7 @@ interface DogSearchResult {
 }
 
 /* ─── Constants ─── */
-const LOGO = "https://i.imgur.com/9RJG2QN.png";
+const LOGO = "/logo.png";
 
 const GLASS_BOX = {
   background: "#FAF7F2",

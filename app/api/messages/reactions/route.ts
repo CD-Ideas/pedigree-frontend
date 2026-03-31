@@ -5,7 +5,7 @@ import { execFile } from "child_process";
 import { promisify } from "util";
 
 const execFileAsync = promisify(execFile);
-const DB_PATH = "/home/ubuntu/apbt-scraper/apbt_v2.db";
+const DB_PATH = process.env.SQLITE_DB_PATH || "/home/ubuntu/apbt-scraper/apbt_v2.db";
 
 // GET /api/messages/reactions?messageIds=1,2,3
 export async function GET(req: NextRequest) {

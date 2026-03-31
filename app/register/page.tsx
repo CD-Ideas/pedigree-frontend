@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-const LOGO = "https://i.imgur.com/9RJG2QN.png";
+const LOGO = "/logo.png";
 
 export default function RegisterPage() {
   const router = useRouter();

@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { getDogColor } from "@/app/utils/colors";
 import { playNotifChime, playMessagePop } from "@/app/sounds";
 
-const LOGO = "https://i.imgur.com/9RJG2QN.png";
+const LOGO = "/logo.png";
 
 
 function NavSearch() {

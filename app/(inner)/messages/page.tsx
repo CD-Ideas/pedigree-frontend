@@ -156,7 +156,18 @@ function MessagesContent() {
 
   // Reactions state
   const [reactions, setReactions] = useState<Record<number, Reaction[]>>({});
-  const [hoveredMsgId, setHoveredMsgId] = useState<number | null>(null);
+  const [reactionPickerMsgId, setReactionPickerMsgId] = useState<number | null>(null);
+  const [emojiPanelOpen, setEmojiPanelOpen] = useState(false);
+  const longPressTimer = useRef<NodeJS.Timeout | null>(null);
+
+  const EMOJI_CATEGORIES: { name: string; emojis: string[] }[] = [
+    { name: "Smileys", emojis: ["😀","😁","😂","🤣","😃","😄","😅","😆","😉","😊","😋","😎","😍","🥰","😘","😗","😙","😚","🙂","🤗","🤩","🤔","🤨","😐","😑","😶","🙄","😏","😣","😥","😮","🤐","😯","😪","😫","😴","😌","😛","😜","😝","🤤","😒","😓","😔","😕","🙃","🤑","😲","🤯","😬","🥴","😵","🤮","🤢","🤧","😷","🤒","🤕"] },
+    { name: "Gestures", emojis: ["👍","👎","👊","✊","🤛","🤜","🤞","✌️","🤟","🤘","👌","🤌","👈","👉","👆","👇","☝️","👋","🤚","🖐️","✋","🖖","👏","🙌","🤲","🤝","🙏","💪","🦾"] },
+    { name: "Hearts", emojis: ["❤️","🧡","💛","💚","💙","💜","🖤","🤍","🤎","💔","❤️‍🔥","💕","💞","💓","💗","💖","💘","💝"] },
+    { name: "Animals", emojis: ["🐶","🐱","🐭","🐹","🐰","🦊","🐻","🐼","🐨","🐯","🦁","🐮","🐷","🐸","🐵","🐔","🐧","🐦","🐤","🦄","🐴","🐺","🦇","🐝","🐛","🦋","🐌","🐞"] },
+    { name: "Food", emojis: ["🍎","🍐","🍊","🍋","🍌","🍉","🍇","🍓","🫐","🍈","🍒","🍑","🥭","🍍","🥥","🥝","🍅","🥑","🍕","🍔","🍟","🌭","🍿","🧁","🍰","🍩","🍪"] },
+    { name: "Objects", emojis: ["⚽","🏀","🏈","⚾","🎾","🏐","🎱","🏆","🥇","🥈","🥉","🎯","🎮","🎲","🎭","🎨","🎬","🎤","🎧","🎵","🎶","🔥","⭐","🌟","💫","✨","⚡","💥","💯","💢","🎉","🎊"] },
+  ];
 
   // Voice recording state
   const [isRecording, setIsRecording] = useState(false);
@@ -164,6 +175,13 @@ function MessagesContent() {
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const recordingIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Close reaction picker on click outside
+  useEffect(() => {
+    const handler = () => { setReactionPickerMsgId(null); setEmojiPanelOpen(false); };
+    window.addEventListener("click", handler);
+    return () => window.removeEventListener("click", handler);
+  }, []);
 
   // Init user
   useEffect(() => {
@@ -828,8 +846,10 @@ function MessagesContent() {
                     )}
                     <div className={`flex ${isMine ? "justify-end" : "justify-start"} mb-1`}>
                       <div className="max-w-[75%]"
-                        onMouseEnter={() => setHoveredMsgId(msg.id)}
-                        onMouseLeave={() => setHoveredMsgId(null)}
+                        onContextMenu={(e) => { e.preventDefault(); setReactionPickerMsgId(msg.id); }}
+                        onTouchStart={() => { longPressTimer.current = setTimeout(() => setReactionPickerMsgId(msg.id), 500); }}
+                        onTouchEnd={() => { if (longPressTimer.current) clearTimeout(longPressTimer.current); }}
+                        onTouchMove={() => { if (longPressTimer.current) clearTimeout(longPressTimer.current); }}
                         style={{ position: "relative" }}>
                         <div className="rounded-2xl px-3.5 py-2"
                           style={{
@@ -880,24 +900,65 @@ function MessagesContent() {
                           })()}
                         </div>
                         {/* Reaction picker on hover */}
-                        {hoveredMsgId === msg.id && (
-                          <div className="flex items-center gap-1 absolute"
+                        {reactionPickerMsgId === msg.id && (
+                          <div className="absolute" onClick={(e) => e.stopPropagation()}
                             style={{
                               [isMine ? "right" : "left"]: 0,
                               bottom: "-36px",
-                              background: "#FAFAFA",
-                              border: "2px solid #C9B29F",
-                              borderRadius: "20px",
-                              padding: "4px 8px",
                               zIndex: 20,
                             }}>
-                            {["👍", "❤️", "😂", "😮", "😢", "🔥"].map(emoji => (
-                              <button key={emoji} onClick={(e) => { e.stopPropagation(); toggleReaction(msg.id, emoji); }}
-                                className="hover:scale-130 transition-transform"
-                                style={{ fontSize: "18px", padding: "2px 4px", lineHeight: 1, background: "none", border: "none", cursor: "pointer" }}>
-                                {emoji}
+                            {/* Quick reaction bar */}
+                            <div className="flex items-center gap-1"
+                              style={{
+                                background: "#FAFAFA",
+                                border: "2px solid #C9B29F",
+                                borderRadius: "20px",
+                                padding: "4px 8px",
+                              }}>
+                              {["👍", "❤️", "😂", "😮", "😢", "🔥"].map(em => (
+                                <button key={em} onClick={() => { toggleReaction(msg.id, em); setReactionPickerMsgId(null); setEmojiPanelOpen(false); }}
+                                  className="hover:scale-130 transition-transform"
+                                  style={{ fontSize: "18px", padding: "2px 4px", lineHeight: 1, background: "none", border: "none", cursor: "pointer" }}>
+                                  {em}
+                                </button>
+                              ))}
+                              <button onClick={() => setEmojiPanelOpen(prev => !prev)}
+                                className="hover:scale-110 transition-transform"
+                                style={{ fontSize: "16px", padding: "2px 6px", lineHeight: 1, background: "none", border: "2px solid #C9B29F", borderRadius: "50%", cursor: "pointer", color: "#6B7280", width: "28px", height: "28px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                +
                               </button>
-                            ))}
+                            </div>
+                            {/* Full emoji panel */}
+                            {emojiPanelOpen && (
+                              <div style={{
+                                position: "absolute",
+                                [isMine ? "right" : "left"]: 0,
+                                top: "40px",
+                                width: "280px",
+                                maxHeight: "300px",
+                                overflowY: "auto",
+                                background: "#FAFAFA",
+                                border: "2px solid #C9B29F",
+                                borderRadius: "12px",
+                                padding: "8px",
+                                boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
+                              }}>
+                                {EMOJI_CATEGORIES.map(cat => (
+                                  <div key={cat.name} className="mb-2">
+                                    <div style={{ fontSize: "10px", fontWeight: 600, color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.05em", padding: "4px 2px", fontFamily: "var(--font-body)" }}>{cat.name}</div>
+                                    <div className="flex flex-wrap">
+                                      {cat.emojis.map(em => (
+                                        <button key={em} onClick={() => { toggleReaction(msg.id, em); setReactionPickerMsgId(null); setEmojiPanelOpen(false); }}
+                                          className="hover:bg-[#EDE4D5] transition-colors"
+                                          style={{ fontSize: "20px", padding: "3px", lineHeight: 1, background: "none", border: "none", cursor: "pointer", borderRadius: "6px" }}>
+                                          {em}
+                                        </button>
+                                      ))}
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
                           </div>
                         )}
                         {/* Reactions display */}

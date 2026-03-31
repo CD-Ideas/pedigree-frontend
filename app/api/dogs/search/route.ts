@@ -3,7 +3,7 @@ export const dynamic = "force-dynamic";
 import { NextRequest, NextResponse } from "next/server";
 import Database from "better-sqlite3";
 
-const DB_PATH = "/home/ubuntu/apbt-scraper/apbt_v2.db";
+const DB_PATH = process.env.SQLITE_DB_PATH || "/home/ubuntu/apbt-scraper/apbt_v2.db";
 
 let db: ReturnType<typeof Database> | null = null;
 
@@ -97,6 +97,25 @@ export async function GET(req: NextRequest) {
           }
         }
       }
+    }
+
+    // 4. Also search published_pedigrees (user-created dogs)
+    try {
+      const pubResults = conn.prepare(
+        `SELECT -pp.id as dog_id, pp.name as registered_name, pp.photo_path as photo_url, pp.sex,
+                'published' as source
+         FROM published_pedigrees pp
+         WHERE pp.name LIKE ?
+         ORDER BY pp.date_posted DESC
+         LIMIT ?`
+      ).all('%' + q + '%', limit) as any[];
+
+      // Prepend published dogs (marked with negative IDs to distinguish)
+      for (const p of pubResults) {
+        dogs.push({ ...p, dog_id: p.dog_id, registered_name: p.registered_name, photo_url: p.photo_url, sex: p.sex });
+      }
+    } catch (_pubErr) {
+      // published_pedigrees table might not exist in some environments
     }
 
     return NextResponse.json({ dogs, suggestions });

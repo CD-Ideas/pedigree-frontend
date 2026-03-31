@@ -29,7 +29,7 @@ interface MarketplaceResponse {
 }
 
 /* ─── Constants ─── */
-const LOGO = "https://i.imgur.com/9RJG2QN.png";
+const LOGO = "/logo.png";
 
 const CATEGORIES = [
   { key: "dogs_for_sale", label: "Dogs for Sale", icon: "\uD83D\uDC15", color: "#ef4444", tag: "HOT" },

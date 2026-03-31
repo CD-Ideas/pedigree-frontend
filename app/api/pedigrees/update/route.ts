@@ -5,7 +5,7 @@ import { writeFile, mkdir } from "fs/promises";
 import path from "path";
 
 const execFileAsync = promisify(execFile);
-const DB = "/home/ubuntu/apbt-scraper/apbt_v2.db";
+const DB = process.env.SQLITE_DB_PATH || "/home/ubuntu/apbt-scraper/apbt_v2.db";
 
 export async function POST(req: NextRequest) {
   try {

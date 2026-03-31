@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 
-const LOGO = "https://i.imgur.com/9RJG2QN.png";
+const LOGO = "/logo.png";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");

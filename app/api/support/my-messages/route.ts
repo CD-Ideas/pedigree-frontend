@@ -5,7 +5,7 @@ import { execFile } from "child_process";
 import { promisify } from "util";
 
 const execFileAsync = promisify(execFile);
-const DB_PATH = "/home/ubuntu/apbt-scraper/apbt_v2.db";
+const DB_PATH = process.env.SQLITE_DB_PATH || "/home/ubuntu/apbt-scraper/apbt_v2.db";
 
 // GET — fetch support messages for a specific user (by username)
 export async function GET(req: NextRequest) {

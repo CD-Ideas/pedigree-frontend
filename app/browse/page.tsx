@@ -18,7 +18,7 @@ interface Dog {
   dam_name: string | null;
 }
 
-const LOGO = "https://i.imgur.com/9RJG2QN.png";
+const LOGO = "/logo.png";
 
 const TC: Record<string, string> = {
   "GR CH": "#1d5bbf", CH: "#c02828", ROM: "#0d7468", POR: "#6d30b0",
@@ -62,7 +62,7 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
     : null;
 
   return (
-    <Link href={`/pedigree/${dog.id}`}
+    <Link href={dog.id < 0 ? `/pedigree/custom/${Math.abs(dog.id)}` : `/pedigree/${dog.id}`}
       className="group block overflow-hidden transition-all duration-300 hover:-translate-y-1"
       style={{
         background: "#FAF7F2",

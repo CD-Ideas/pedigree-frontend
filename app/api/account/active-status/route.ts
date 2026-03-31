@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import Database from "better-sqlite3";
 
-const DB_PATH = "/home/ubuntu/apbt-scraper/apbt_v2.db";
+const DB_PATH = process.env.SQLITE_DB_PATH || "/home/ubuntu/apbt-scraper/apbt_v2.db";
 let db: ReturnType<typeof Database> | null = null;
 function getDb() {
   if (!db) { db = new Database(DB_PATH); db.pragma("journal_mode = WAL"); }

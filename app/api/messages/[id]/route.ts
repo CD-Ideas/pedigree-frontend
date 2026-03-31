@@ -5,7 +5,7 @@ import { execFile } from "child_process";
 import { promisify } from "util";
 
 const execFileAsync = promisify(execFile);
-const DB_PATH = "/home/ubuntu/apbt-scraper/apbt_v2.db";
+const DB_PATH = process.env.SQLITE_DB_PATH || "/home/ubuntu/apbt-scraper/apbt_v2.db";
 
 // PUT /api/messages/[id] — mark as read
 export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {

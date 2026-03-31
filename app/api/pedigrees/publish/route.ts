@@ -5,7 +5,7 @@ import { writeFile, mkdir } from "fs/promises";
 import path from "path";
 
 const execFileAsync = promisify(execFile);
-const DB = "/home/ubuntu/apbt-scraper/apbt_v2.db";
+const DB = process.env.SQLITE_DB_PATH || "/home/ubuntu/apbt-scraper/apbt_v2.db";
 
 export async function POST(req: NextRequest) {
   try {
@@ -66,6 +66,8 @@ else:
     const slotsJson = (formData.get("slotsJson") as string) || "{}";
     const treeJson = (formData.get("treeJson") as string) || "[]";
     const showInTitleFeed = (formData.get("showInTitleFeed") as string) === "1" ? 1 : 0;
+    const scrapedMatchId = parseInt((formData.get("scrapedMatchId") as string) || "0", 10) || null;
+    const duplicateStatus = scrapedMatchId ? "linked" : "none";
 
     // Handle photo upload
     let photoPath = "";
@@ -106,8 +108,8 @@ cur.execute("""
   INSERT INTO published_pedigrees
     (name, prefix, suffix_wins, suffix_losses, suffix_draws, suffix_honors,
      dob, sex, color, continent, country, breeder, owner, conditioned_weight,
-     pedigree_notes, journal_json, slots_json, tree_json, photo_path, user_id, show_in_title_feed)
-  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+     pedigree_notes, journal_json, slots_json, tree_json, photo_path, user_id, show_in_title_feed, scraped_match_id, duplicate_status)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 """, (
   ${JSON.stringify(name)}, ${JSON.stringify(prefix)},
   ${JSON.stringify(suffixWins)}, ${JSON.stringify(suffixLosses)},
@@ -118,7 +120,7 @@ cur.execute("""
   ${JSON.stringify(conditionedWeight)}, ${JSON.stringify(pedigreeNotes)},
   ${JSON.stringify(journalJson)}, ${JSON.stringify(slotsJson)},
   ${JSON.stringify(treeJson)}, ${JSON.stringify(photoPath)},
-  ${userIdSql}, ${showInTitleFeed}
+  ${userIdSql}, ${showInTitleFeed}, ${scrapedMatchId || "None"}, ${JSON.stringify(duplicateStatus)}
 ))
 db.commit()
 print(json.dumps({"id": cur.lastrowid}))

@@ -2426,6 +2426,19 @@ function PedigreeLabInner() {
                       setPublishing(false);
                       return;
                     }
+                    // Check for scraped dog matches
+                    let selectedScrapedMatchId = 0;
+                    if (dupData.scrapedMatches && dupData.scrapedMatches.length > 0 && !editingId) {
+                      const matchList = dupData.scrapedMatches
+                        .map((m: any) => `#${m.dog_id} - ${m.registered_name}${m.breeder ? ` (Breeder: ${m.breeder})` : ""}${m.sire_name ? ` | Sire: ${m.sire_name}` : ""}${m.dam_name ? ` | Dam: ${m.dam_name}` : ""}`)
+                        .join("\n");
+                      const userChoice = confirm(
+                        `Similar dogs found in our scraped database:\n\n${matchList}\n\nIs your dog the SAME as one of these? Click OK to link to the first match, or Cancel to create as a new unique dog.`
+                      );
+                      if (userChoice) {
+                        selectedScrapedMatchId = dupData.scrapedMatches[0].dog_id;
+                      }
+                    }
                     // Auto-fetch tree if preview wasn't clicked but sire/dam exist
                     let treeData = previewTree;
                     if (treeData.length === 0) {
@@ -2469,6 +2482,7 @@ function PedigreeLabInner() {
                     fd.append("conditionedWeight", publishForm.conditionedWeight);
                     fd.append("pedigreeNotes", publishForm.notes);
                     fd.append("showInTitleFeed", publishForm.showInTitleFeed ? "1" : "0");
+                    if (selectedScrapedMatchId) fd.append("scrapedMatchId", String(selectedScrapedMatchId));
                     fd.append("journalJson", JSON.stringify(publishForm.journal));
                     fd.append("slotsJson", JSON.stringify(slots));
                     fd.append("treeJson", JSON.stringify(treeData));

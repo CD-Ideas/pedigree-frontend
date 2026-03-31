@@ -42,7 +42,7 @@ interface TreeRow {
   sex: string | null;
 }
 
-const LOGO = "https://i.imgur.com/9RJG2QN.png";
+const LOGO = "/logo.png";
 
 /* ─── Helpers ─── */
 
