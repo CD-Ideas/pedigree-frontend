@@ -920,14 +920,14 @@ function PedigreeLabInner() {
                                     : xwNum === 3 ? "#8a6518"
                                       : xwNum === 4 ? "#b03878"
                                         : xwNum >= 5 ? "#6d30b0"
-                                          : "#3a3a3a";
+                                          : "#C9B29F";
 
                         const cellTextColor = isGrCh ? "#1d5bbf"
                           : isCh ? "#c02828"
                             : isRom ? "#0d7468"
                               : isPor ? "#6d30b0"
                                 : xwNum === 1 ? "#0d7468" : xwNum === 2 ? "#b45a0a" : xwNum === 3 ? "#8a6518" : xwNum === 4 ? "#b03878" : xwNum >= 5 ? "#6d30b0"
-                                  : "#3a3a3a";
+                                  : "#1C1C1C";
 
                         return { cellBg, cellBorder, cellTextColor, isChampion };
                       }
@@ -965,7 +965,7 @@ function PedigreeLabInner() {
                                   background: "#fef3c7",
                                   width: 15,
                                   height: 15,
-                                  border: "1px solid #C9B29F",
+                                  border: "2px solid #C9B29F",
                                 }}
                               >
                                 ★
@@ -2305,13 +2305,13 @@ function PedigreeLabInner() {
                         onClick={() => updateHeatCycle({ reminderEnabled: !hc.reminderEnabled })}
                         className="relative w-9 h-5 rounded-full transition-all flex-shrink-0"
                         style={{
-                          background: hc.reminderEnabled ? "#9f1239" : "#FAFAFA",
+                          background: hc.reminderEnabled ? "#22c55e" : "#D1D5DB",
                           border: "2px solid #C9B29F",
                         }}
                       >
                         <span className="absolute top-0.5 left-0.5 w-4 h-4 rounded-full transition-all"
                           style={{
-                            background: hc.reminderEnabled ? "#FAF7F2" : "#C9B29F",
+                            background: "#FFFFFF",
                             transform: hc.reminderEnabled ? "translateX(16px)" : "translateX(0)",
                           }} />
                       </button>

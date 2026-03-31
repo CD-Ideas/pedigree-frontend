@@ -731,7 +731,7 @@ function PedStatsTab({ genetics }: { genetics: Genetic[] }) {
                  onMouseEnter={() => setHovered(i)} onMouseLeave={() => setHovered(null)}
                  style={{
                    background: hovered === i ? PG.subjectBg : PG.cardBg,
-                   border: PG.cardBorder,
+                   border: hovered === i ? `2px solid ${s.color}` : PG.cardBorder,
                    borderRadius: PG.cardRadius,
                    transform: hovered === i ? "translateX(4px)" : "none",
                    transition: "all 0.2s",
