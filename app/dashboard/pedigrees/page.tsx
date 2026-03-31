@@ -232,28 +232,6 @@ export default function MyPedigreesPage() {
             </p>
           </div>
 
-          {/* Search */}
-          <div className="relative w-full sm:w-72">
-            <input
-              type="text"
-              placeholder="Search by name, country, breeder..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-lg px-4 py-2 text-xs outline-none"
-              style={{
-                background: "#FAFAFA",
-                border: "2px solid #C9B29F",
-                color: "#1C1C1C",
-                fontFamily: "var(--font-table)",
-              }}
-            />
-            <span
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-sm"
-              style={{ color: "#6B7280" }}
-            >
-              🔍
-            </span>
-          </div>
         </div>
 
         {/* Stats bar */}
@@ -269,6 +247,19 @@ export default function MyPedigreesPage() {
           >
             {pedigrees.length} Published
           </span>
+          <Link
+            href="/pedigree-lab"
+            className="text-[10px] px-3 py-1 rounded-full transition-all hover:scale-105"
+            style={{
+              background: "rgba(34,197,94,0.1)",
+              color: "#22c55e",
+              border: "2px solid rgba(34,197,94,0.3)",
+              fontFamily: "var(--font-table)",
+              fontWeight: 600,
+            }}
+          >
+            🧪 Pedigree Lab →
+          </Link>
           {(search.trim() || filterContinent || filterCountry) && (
             <span
               className="text-[10px] px-3 py-1 rounded-full"
@@ -302,55 +293,28 @@ export default function MyPedigreesPage() {
             ))}
           </select>
 
-          {/* Continent */}
-          <select
-            value={filterContinent}
-            onChange={(e) => {
-              setFilterContinent(e.target.value);
-              setFilterCountry("");
-            }}
-            className="rounded-lg px-3 py-1.5 text-[11px] outline-none cursor-pointer"
-            style={{
-              background: "#FAF7F2",
-              border: "2px solid #C9B29F",
-              color: filterContinent ? "#1C1C1C" : "#6B7280",
-              fontFamily: "var(--font-table)",
-            }}
-          >
-            <option value="">All Continents</option>
-            {ALL_CONTINENTS.map((c) => (
-              <option key={c} value={c}>{c}</option>
-            ))}
-          </select>
-
-          {/* Country */}
-          <select
-            value={filterCountry}
-            onChange={(e) => {
-              const country = e.target.value;
-              setFilterCountry(country);
-              if (country && !filterContinent) {
-                for (const [cont, countries] of Object.entries(COUNTRY_MAP)) {
-                  if (countries.includes(country)) {
-                    setFilterContinent(cont);
-                    break;
-                  }
-                }
-              }
-            }}
-            className="rounded-lg px-3 py-1.5 text-[11px] outline-none cursor-pointer"
-            style={{
-              background: "#FAF7F2",
-              border: "2px solid #C9B29F",
-              color: filterCountry ? "#1C1C1C" : "#6B7280",
-              fontFamily: "var(--font-table)",
-            }}
-          >
-            <option value="">All Countries</option>
-            {availableCountries.map((c) => (
-              <option key={c} value={c}>{c}</option>
-            ))}
-          </select>
+          {/* Search */}
+          <div className="relative flex-1 max-w-xs">
+            <input
+              type="text"
+              placeholder="Search by name, country, breeder..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full rounded-lg px-3 py-1.5 text-[11px] outline-none"
+              style={{
+                background: "#FAF7F2",
+                border: "2px solid #C9B29F",
+                color: "#1C1C1C",
+                fontFamily: "var(--font-table)",
+              }}
+            />
+            <span
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs"
+              style={{ color: "#6B7280" }}
+            >
+              🔍
+            </span>
+          </div>
 
           {/* Clear filters */}
           {(filterContinent || filterCountry) && (
