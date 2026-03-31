@@ -37,10 +37,10 @@ const NAV_ITEMS = [
   { icon: "🧬", label: "Bloodline Calculator", href: "/breeding-calculator", desc: "COI & linebreeding analysis", color: "#a78bfa" },
   { icon: "🔦", label: "Lineage Spotlight", href: "/pedigree/spotlight", desc: "Explore lineage trees", color: "#f59e0b" },
   { icon: "🌍", label: "Community Pedigrees", href: "/community", desc: "Browse all pedigrees", color: "#34d399" },
-  { icon: "👑", label: "Dog of the Month", href: "/dog-of-the-month", desc: "Monthly photo contest", color: "#f97316" },
   { icon: "🐕", label: "Dogs", href: "/dogs", desc: "Browse dog database", color: "#f472b6" },
-  { icon: "🏪", label: "Marketplace", href: "/marketplace", desc: "Buy, sell & advertise", color: "#ef4444" },
+  { icon: "👑", label: "Dog of the Month", href: "/dog-of-the-month", desc: "Monthly photo contest", color: "#f97316" },
   { icon: "🎨", label: "Puppy Color Predictor", href: "/puppy-predictor", desc: "Predict coat colors", color: "#fb923c" },
+  { icon: "🏪", label: "Marketplace", href: "/marketplace", desc: "Buy, sell & advertise", color: "#ef4444" },
 ];
 
 const ALERT_COLORS = {
