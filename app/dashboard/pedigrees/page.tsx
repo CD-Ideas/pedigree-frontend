@@ -251,9 +251,9 @@ export default function MyPedigreesPage() {
             href="/pedigree-lab"
             className="text-[10px] px-3 py-1 rounded-full transition-all hover:scale-105"
             style={{
-              background: "rgba(34,197,94,0.1)",
-              color: "#22c55e",
-              border: "2px solid rgba(34,197,94,0.3)",
+              background: "rgba(184,134,11,0.15)",
+              color: "#B8860B",
+              border: "2px solid rgba(184,134,11,0.5)",
               fontFamily: "var(--font-table)",
               fontWeight: 600,
             }}
@@ -280,12 +280,13 @@ export default function MyPedigreesPage() {
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value as SortOption)}
-            className="rounded-lg px-3 py-1.5 text-[11px] outline-none cursor-pointer"
+            className="rounded-lg px-3 text-[11px] outline-none cursor-pointer"
             style={{
               background: "#FAF7F2",
               border: "2px solid #C9B29F",
               color: "#1C1C1C",
               fontFamily: "var(--font-table)",
+              height: "34px",
             }}
           >
             {SORT_OPTIONS.map((o) => (
@@ -294,18 +295,19 @@ export default function MyPedigreesPage() {
           </select>
 
           {/* Search */}
-          <div className="relative flex-1 max-w-xs">
+          <div className="relative" style={{ width: "360px" }}>
             <input
               type="text"
               placeholder="Search by name, country, breeder..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-lg px-3 py-1.5 text-[11px] outline-none"
+              className="w-full rounded-lg px-3 text-[11px] outline-none"
               style={{
                 background: "#FAF7F2",
                 border: "2px solid #C9B29F",
                 color: "#1C1C1C",
                 fontFamily: "var(--font-table)",
+                height: "34px",
               }}
             />
             <span
