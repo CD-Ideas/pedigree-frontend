@@ -365,17 +365,7 @@ export default function NavBar() {
         {mounted && loggedIn && pathname !== "/dashboard" && !pathname.startsWith("/marketplace") && pathname !== "/dog-of-the-month" && (
           <button
             onClick={() => {
-              if (pathname === "/dashboard/pedigrees") {
-                router.push("/pedigree-lab");
-              } else if (pathname === "/pedigree-lab") {
-                router.push("/dashboard/pedigrees");
-              } else if (pathname.startsWith("/pedigree/") && pathname !== "/pedigree/spotlight") {
-                if (window.history.length > 2) {
-                  router.back();
-                } else {
-                  router.push("/dogs");
-                }
-              } else if (window.history.length > 2) {
+              if (window.history.length > 2) {
                 router.back();
               } else {
                 router.push("/dashboard");

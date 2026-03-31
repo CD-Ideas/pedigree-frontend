@@ -18,6 +18,18 @@ const SORT_OPTIONS: { value: SortOption; label: string }[] = [
   { value: "za", label: "Z → A" },
 ];
 
+const COUNTRY_MAP: Record<string, string[]> = {
+  "North America": ["United States", "Canada", "Mexico", "Antigua and Barbuda", "Bahamas", "Barbados", "Belize", "Cuba", "Dominica", "Dominican Republic", "Grenada", "Guatemala", "Haiti", "Honduras", "Jamaica", "El Salvador", "Costa Rica", "Nicaragua", "Panama", "Puerto Rico", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Trinidad and Tobago"],
+  "South America": ["Brazil", "Argentina", "Colombia", "Chile", "Peru", "Venezuela", "Ecuador", "Uruguay", "Paraguay", "Bolivia"],
+  "Europe": ["United Kingdom", "Ireland", "Spain", "Portugal", "France", "Germany", "Italy", "Netherlands", "Belgium", "Sweden", "Denmark", "Norway", "Finland", "Poland", "Romania", "Hungary", "Czech Republic", "Greece", "Croatia", "Serbia", "Bulgaria", "Albania", "Russia", "Ukraine", "Turkey"],
+  "Asia": ["Philippines", "Japan", "South Korea", "China", "Thailand", "Indonesia", "Vietnam", "India", "Pakistan", "Iran", "Iraq", "Israel", "Saudi Arabia", "UAE", "Malaysia", "Singapore", "Taiwan"],
+  "Africa": ["South Africa", "Nigeria", "Kenya", "Egypt", "Morocco", "Ghana", "Tanzania", "Ethiopia", "Cameroon", "Algeria"],
+  "Oceania": ["Australia", "New Zealand", "Fiji", "Papua New Guinea"],
+};
+
+const ALL_CONTINENTS = Object.keys(COUNTRY_MAP);
+const ALL_COUNTRIES = Object.values(COUNTRY_MAP).flat().sort();
+
 interface PedigreeItem {
   id: number;
   name: string;
@@ -121,6 +133,8 @@ export default function MyPedigreesPage() {
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState<SortOption>("newest");
   const [page, setPage] = useState(1);
+  const [filterContinent, setFilterContinent] = useState("");
+  const [filterCountry, setFilterCountry] = useState("");
 
   useEffect(() => {
     try {
@@ -151,7 +165,12 @@ export default function MyPedigreesPage() {
   };
 
   // Reset page when filters change
-  useEffect(() => { setPage(1); }, [search, sort]);
+  useEffect(() => { setPage(1); }, [search, sort, filterContinent, filterCountry]);
+
+  // Get available countries based on continent selection
+  const availableCountries = filterContinent
+    ? COUNTRY_MAP[filterContinent] || []
+    : ALL_COUNTRIES;
 
   // Filter and sort
   const filtered = pedigrees
@@ -165,6 +184,10 @@ export default function MyPedigreesPage() {
           !(p.breeder || "").toUpperCase().includes(q)
         ) return false;
       }
+      // Continent filter
+      if (filterContinent && p.continent !== filterContinent) return false;
+      // Country filter
+      if (filterCountry && p.country !== filterCountry) return false;
       return true;
     })
     .sort((a, b) => {
@@ -246,7 +269,7 @@ export default function MyPedigreesPage() {
           >
             {pedigrees.length} Published
           </span>
-          {search.trim() && (
+          {(search.trim() || filterContinent || filterCountry) && (
             <span
               className="text-[10px] px-3 py-1 rounded-full"
               style={{
@@ -278,6 +301,73 @@ export default function MyPedigreesPage() {
               <option key={o.value} value={o.value}>{o.label}</option>
             ))}
           </select>
+
+          {/* Continent */}
+          <select
+            value={filterContinent}
+            onChange={(e) => {
+              setFilterContinent(e.target.value);
+              setFilterCountry("");
+            }}
+            className="rounded-lg px-3 py-1.5 text-[11px] outline-none cursor-pointer"
+            style={{
+              background: "#FAF7F2",
+              border: "2px solid #C9B29F",
+              color: filterContinent ? "#1C1C1C" : "#6B7280",
+              fontFamily: "var(--font-table)",
+            }}
+          >
+            <option value="">All Continents</option>
+            {ALL_CONTINENTS.map((c) => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
+
+          {/* Country */}
+          <select
+            value={filterCountry}
+            onChange={(e) => {
+              const country = e.target.value;
+              setFilterCountry(country);
+              if (country && !filterContinent) {
+                for (const [cont, countries] of Object.entries(COUNTRY_MAP)) {
+                  if (countries.includes(country)) {
+                    setFilterContinent(cont);
+                    break;
+                  }
+                }
+              }
+            }}
+            className="rounded-lg px-3 py-1.5 text-[11px] outline-none cursor-pointer"
+            style={{
+              background: "#FAF7F2",
+              border: "2px solid #C9B29F",
+              color: filterCountry ? "#1C1C1C" : "#6B7280",
+              fontFamily: "var(--font-table)",
+            }}
+          >
+            <option value="">All Countries</option>
+            {availableCountries.map((c) => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
+
+          {/* Clear filters */}
+          {(filterContinent || filterCountry) && (
+            <button
+              onClick={() => { setFilterContinent(""); setFilterCountry(""); }}
+              className="rounded-lg px-3 py-1.5 text-[11px] font-semibold transition-all"
+              style={{
+                background: "rgba(239,68,68,0.1)",
+                border: "2px solid rgba(239,68,68,0.3)",
+                color: "#ef4444",
+                fontFamily: "var(--font-table)",
+                cursor: "pointer",
+              }}
+            >
+              ✕ Clear Filters
+            </button>
+          )}
         </div>
 
         {/* Reminders Banner */}
