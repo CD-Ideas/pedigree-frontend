@@ -5,6 +5,7 @@ import Link from "next/link";
 import { getDogColor } from "@/app/utils/colors";
 
 const LOGO = "/logo.png";
+const PER_PAGE = 24;
 
 interface CommunityPedigree {
   id: number;
@@ -56,6 +57,7 @@ export default function CommunityPedigreesPage() {
   const [pedigrees, setPedigrees] = useState<CommunityPedigree[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     fetch("/api/pedigrees/community")
@@ -66,6 +68,9 @@ export default function CommunityPedigreesPage() {
       })
       .catch(() => setLoading(false));
   }, []);
+
+  // Reset page when search changes
+  useEffect(() => { setPage(1); }, [search]);
 
   const filtered = search.trim()
     ? pedigrees.filter((p) => {
@@ -80,6 +85,9 @@ export default function CommunityPedigreesPage() {
       })
     : pedigrees;
 
+  const totalPages = Math.ceil(filtered.length / PER_PAGE);
+  const paginated = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
+
   return (
     <div className="min-h-screen" style={{ background: "#EDE4D5" }}>
       <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-6 space-y-6">
@@ -91,8 +99,6 @@ export default function CommunityPedigreesPage() {
               style={{
                 fontFamily: "var(--font-display)",
                 background: "#C9B29F",
-                
-                
               }}
             >
               Community Pedigrees
@@ -190,82 +196,78 @@ export default function CommunityPedigreesPage() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-            {filtered.map((p) => {
-              const displayName = buildDisplayName(p);
-              const titleColor = getDogColor(displayName);
-              const isMale =
-                p.sex === "Male" || p.sex === "MALE" || p.sex === "M";
+          <>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
+              {paginated.map((p) => {
+                const displayName = buildDisplayName(p);
+                const titleColor = getDogColor(displayName);
+                const isMale =
+                  p.sex === "Male" || p.sex === "MALE" || p.sex === "M";
 
-              return (
-                <Link
-                  key={p.id}
-                  href={`/pedigree/custom/${p.id}`}
-                  className="rounded-xl overflow-hidden transition-all hover:scale-[1.02] group"
-                  style={{
-                    background: "#FAF7F2",
-                    border: "2px solid #C9B29F",
-                    borderRadius: "10px",
-                  }}
-                >
-                  {/* Photo header */}
-                  <div
-                    className="h-36 relative"
+                return (
+                  <Link
+                    key={p.id}
+                    href={`/pedigree/custom/${p.id}`}
+                    className="rounded-lg overflow-hidden transition-all hover:scale-[1.03] group"
                     style={{
-                      background: p.photo_path
-                        ? `url(${p.photo_path}) center/cover`
-                        : `${titleColor}15`,
+                      background: "#FAF7F2",
+                      border: "2px solid #C9B29F",
+                      borderRadius: "8px",
                     }}
                   >
+                    {/* Photo area */}
                     <div
-                      className="absolute inset-0"
+                      className="h-20 relative"
                       style={{
-                        background:
-                          "linear-gradient(to top, rgba(201,178,159,0.3), transparent 70%)",
-                      }}
-                    />
-                    {/* View count */}
-                    <div
-                      className="absolute top-2 right-2 flex items-center gap-1 px-2 py-0.5 rounded-full"
-                      style={{
-                        background: "rgba(250,247,242,0.9)",
-                        border: "1px solid #C9B29F",
+                        background: p.photo_path
+                          ? `url(${p.photo_path}) center/cover`
+                          : `linear-gradient(135deg, ${titleColor}15, #FAF7F2)`,
                       }}
                     >
-                      <span
-                        className="text-[9px]"
-                        style={{
-                          color: "#1C1C1C",
-                          fontFamily: "var(--font-mono)",
-                        }}
-                      >
-                        👁 {(p.view_count || 0).toLocaleString()}
-                      </span>
-                    </div>
-                    {/* Creator badge */}
-                    {p.creator && (
+                      {/* View count */}
                       <div
-                        className="absolute top-2 left-2 flex items-center gap-1 px-2 py-0.5 rounded-full"
+                        className="absolute top-1.5 right-1.5 flex items-center gap-0.5 px-1.5 py-0.5 rounded-full"
                         style={{
-                          background: "rgba(201,178,159,0.15)",
+                          background: "rgba(250,247,242,0.9)",
                           border: "1px solid #C9B29F",
                         }}
                       >
                         <span
-                          className="text-[9px] font-bold"
+                          className="text-[8px]"
                           style={{
-                            color: "#1d5bbf",
-                            fontFamily: "var(--font-table)",
+                            color: "#1C1C1C",
+                            fontFamily: "var(--font-mono)",
                           }}
                         >
-                          by {p.creator}
+                          👁 {(p.view_count || 0).toLocaleString()}
                         </span>
                       </div>
-                    )}
-                    {/* Name overlay */}
-                    <div className="absolute bottom-2 left-3 right-3">
+                      {/* Creator badge */}
+                      {p.creator && (
+                        <div
+                          className="absolute top-1.5 left-1.5 flex items-center px-1.5 py-0.5 rounded-full"
+                          style={{
+                            background: "rgba(250,247,242,0.9)",
+                            border: "1px solid #C9B29F",
+                          }}
+                        >
+                          <span
+                            className="text-[8px] font-bold"
+                            style={{
+                              color: "#1d5bbf",
+                              fontFamily: "var(--font-table)",
+                            }}
+                          >
+                            by {p.creator}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Details */}
+                    <div className="px-2 py-1.5">
                       <p
-                        className="text-sm font-bold truncate"
+                        className="text-[11px] font-bold truncate"
                         style={{
                           color: titleColor,
                           fontFamily: "var(--font-table)",
@@ -273,47 +275,56 @@ export default function CommunityPedigreesPage() {
                       >
                         {displayName}
                       </p>
-                      <p className="text-[10px]" style={{ color: "#6B7280" }}>
+                      <div className="flex items-center gap-1 mt-0.5">
                         <span
+                          className="text-[9px]"
                           style={{ color: isMale ? "#1d5bbf" : "#9f1239" }}
                         >
                           {isMale ? "♂" : "♀"}
                         </span>
-                        {p.color && <span> · {p.color}</span>}
-                        {p.country && <span> · {p.country}</span>}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Details */}
-                  <div className="p-3 space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span
-                        className="text-[10px]"
-                        style={{
-                          color: "#6B7280",
-                          fontFamily: "var(--font-table)",
-                        }}
-                      >
-                        Posted {formatDate(p.date_posted)}
-                      </span>
-                      <span
-                        className="text-[10px]"
-                        style={{
-                          color: "#6B7280",
-                          fontFamily: "var(--font-mono)",
-                        }}
-                      >
-                        ID:{" "}
-                        <span style={{ color: "#1C1C1C" }}>{p.id}</span>
-                      </span>
-                    </div>
-
-                    {/* Info badges */}
-                    <div className="flex items-center gap-2 flex-wrap">
-                      {p.breeder && (
+                        {p.country && (
+                          <span className="text-[9px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                            · {p.country}
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex items-center justify-between mt-1">
+                        <span className="text-[8px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                          {formatDate(p.date_posted)}
+                        </span>
+                        <span className="text-[8px]" style={{ color: "#6B7280", fontFamily: "var(--font-mono)" }}>
+                          ID: <span style={{ color: "#1C1C1C" }}>{p.id}</span>
+                        </span>
+                      </div>
+                      {/* Breeder/Owner badges */}
+                      {(p.breeder || p.owner) && (
+                        <div className="flex items-center gap-1 flex-wrap mt-1">
+                          {p.breeder && (
+                            <span className="text-[8px] px-1 py-0.5 rounded-full" style={{
+                              background: "rgba(201,178,159,0.1)",
+                              color: "#1C1C1C",
+                              border: "1px solid #C9B29F",
+                              fontFamily: "var(--font-table)",
+                            }}>
+                              B: {p.breeder}
+                            </span>
+                          )}
+                          {p.owner && (
+                            <span className="text-[8px] px-1 py-0.5 rounded-full" style={{
+                              background: "rgba(34,197,94,0.1)",
+                              color: "#22c55e",
+                              border: "1px solid rgba(34,197,94,0.2)",
+                              fontFamily: "var(--font-table)",
+                            }}>
+                              O: {p.owner}
+                            </span>
+                          )}
+                        </div>
+                      )}
+                      {/* View Pedigree button */}
+                      <div className="mt-1.5">
                         <span
-                          className="text-[9px] px-1.5 py-0.5 rounded-full"
+                          className="text-[9px] px-2 py-0.5 rounded-md font-semibold transition-all group-hover:scale-105 inline-block"
                           style={{
                             background: "rgba(201,178,159,0.1)",
                             color: "#1C1C1C",
@@ -321,43 +332,72 @@ export default function CommunityPedigreesPage() {
                             fontFamily: "var(--font-table)",
                           }}
                         >
-                          Breeder: {p.breeder}
+                          View Pedigree
                         </span>
-                      )}
-                      {p.owner && (
-                        <span
-                          className="text-[9px] px-1.5 py-0.5 rounded-full"
-                          style={{
-                            background: "rgba(34,197,94,0.1)",
-                            color: "#22c55e",
-                            border: "1px solid rgba(34,197,94,0.2)",
-                            fontFamily: "var(--font-table)",
-                          }}
-                        >
-                          Owner: {p.owner}
-                        </span>
-                      )}
+                      </div>
                     </div>
+                  </Link>
+                );
+              })}
+            </div>
 
-                    {/* View button */}
-                    <div className="flex items-center gap-2 pt-1">
-                      <span
-                        className="text-[10px] px-2 py-1 rounded-lg font-semibold transition-all group-hover:scale-105"
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="flex items-center justify-center gap-2 pt-4">
+                <button
+                  onClick={() => setPage((p) => Math.max(1, p - 1))}
+                  disabled={page === 1}
+                  className="px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-all"
+                  style={{
+                    background: page === 1 ? "#EDE4D5" : "#FAF7F2",
+                    border: "2px solid #C9B29F",
+                    color: page === 1 ? "#6B7280" : "#1C1C1C",
+                    fontFamily: "var(--font-table)",
+                    cursor: page === 1 ? "not-allowed" : "pointer",
+                    opacity: page === 1 ? 0.5 : 1,
+                  }}
+                >
+                  ← Prev
+                </button>
+                {Array.from({ length: totalPages }, (_, i) => i + 1)
+                  .filter((p) => p === 1 || p === totalPages || Math.abs(p - page) <= 2)
+                  .map((p, idx, arr) => (
+                    <span key={p}>
+                      {idx > 0 && arr[idx - 1] !== p - 1 && (
+                        <span className="text-[10px] px-1" style={{ color: "#6B7280" }}>…</span>
+                      )}
+                      <button
+                        onClick={() => setPage(p)}
+                        className="w-8 h-8 rounded-lg text-[11px] font-semibold transition-all"
                         style={{
-                          background: "rgba(201,178,159,0.1)",
-                          color: "#1C1C1C",
+                          background: page === p ? "#1C1C1C" : "#FAF7F2",
                           border: "2px solid #C9B29F",
+                          color: page === p ? "#FAF7F2" : "#1C1C1C",
                           fontFamily: "var(--font-table)",
                         }}
                       >
-                        View Pedigree
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
+                        {p}
+                      </button>
+                    </span>
+                  ))}
+                <button
+                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                  disabled={page === totalPages}
+                  className="px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-all"
+                  style={{
+                    background: page === totalPages ? "#EDE4D5" : "#FAF7F2",
+                    border: "2px solid #C9B29F",
+                    color: page === totalPages ? "#6B7280" : "#1C1C1C",
+                    fontFamily: "var(--font-table)",
+                    cursor: page === totalPages ? "not-allowed" : "pointer",
+                    opacity: page === totalPages ? 0.5 : 1,
+                  }}
+                >
+                  Next →
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
