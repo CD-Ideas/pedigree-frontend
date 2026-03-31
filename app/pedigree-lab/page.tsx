@@ -920,14 +920,14 @@ function PedigreeLabInner() {
                                     : xwNum === 3 ? "#8a6518"
                                       : xwNum === 4 ? "#b03878"
                                         : xwNum >= 5 ? "#6d30b0"
-                                          : "#C9B29F";
+                                          : "#3a3a3a";
 
                         const cellTextColor = isGrCh ? "#1d5bbf"
                           : isCh ? "#c02828"
                             : isRom ? "#0d7468"
                               : isPor ? "#6d30b0"
                                 : xwNum === 1 ? "#0d7468" : xwNum === 2 ? "#b45a0a" : xwNum === 3 ? "#8a6518" : xwNum === 4 ? "#b03878" : xwNum >= 5 ? "#6d30b0"
-                                  : "#1C1C1C";
+                                  : "#3a3a3a";
 
                         return { cellBg, cellBorder, cellTextColor, isChampion };
                       }
@@ -946,7 +946,7 @@ function PedigreeLabInner() {
                               border: "2px solid #EDE4D5",
                               borderLeftColor: cellBorder,
                               borderLeftWidth: "4px",
-                              borderRadius: 6,
+                              borderRadius: 8,
                               padding: "6px 10px",
                               minHeight: 40,
                               fontSize,
@@ -958,14 +958,14 @@ function PedigreeLabInner() {
                           >
                             {isChampion && (
                               <span
-                                className="absolute -top-0.5 -right-0.5 flex items-center justify-center rounded-full"
+                                className="absolute -top-0.5 -right-0.5 flex items-center justify-center rounded-lg"
                                 style={{
                                   fontSize: 9,
-                                  color: "#C9B29F",
-                                  background: "#fef3c7",
+                                  color: "#8a6518",
+                                  background: "#F5EDE0",
                                   width: 15,
                                   height: 15,
-                                  border: "2px solid #C9B29F",
+                                  border: "1px solid #C9B29F",
                                 }}
                               >
                                 ★
