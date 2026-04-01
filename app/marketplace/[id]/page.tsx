@@ -235,7 +235,7 @@ export default function MarketplaceAdPage() {
 
               {/* Watermark */}
               <div
-                className="absolute top-2.5 left-2.5 flex items-center gap-1.5 px-2 py-1 rounded-lg"
+                className="absolute top-2.5 left-2.5 flex items-center gap-1.5 px-2 py-1 rounded-lg z-10"
                 style={{ background: "rgba(250,247,242,0.85)", border: "1.5px solid #C9B29F" }}
               >
                 <img src={LOGO} alt="" className="w-6" style={{ height: "auto" }} />
@@ -249,27 +249,67 @@ export default function MarketplaceAdPage() {
                   PedigreePlatform.com
                 </span>
               </div>
-            </div>
 
-            {/* Thumbnails */}
-            {photos.length > 1 && (
-              <div className="flex gap-2 overflow-x-auto pb-1">
-                {photos.map((photo, i) => (
+              {/* Thumbnail carousel — overlapping bottom of main photo */}
+              {photos.length > 1 && (
+                <div className="absolute bottom-3 left-0 right-0 z-10 flex items-center justify-center px-3">
+                  {/* Left arrow */}
                   <button
-                    key={i}
-                    onClick={() => setSelectedPhoto(i)}
-                    className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden transition-all duration-200 hover:scale-105"
+                    onClick={() => setSelectedPhoto((prev) => (prev === 0 ? photos.length - 1 : prev - 1))}
+                    className="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-all hover:scale-110 mr-2"
                     style={{
-                      border:
-                        selectedPhoto === i
-                          ? "2px solid #C9B29F"
-                          : "2px solid #C9B29F",
-                      opacity: selectedPhoto === i ? 1 : 0.6,
+                      background: "rgba(250,247,242,0.9)",
+                      border: "2px solid #C9B29F",
+                      color: "#1C1C1C",
+                      fontSize: "14px",
+                      fontWeight: 700,
+                      boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
                     }}
                   >
-                    <img src={photo} alt={`Photo ${i + 1}`} className="w-full h-full object-cover" />
+                    ‹
                   </button>
-                ))}
+
+                  {/* Thumbnails */}
+                  <div className="flex items-center justify-center gap-1.5">
+                    {photos.map((photo, i) => {
+                      const isSelected = selectedPhoto === i;
+                      const size = isSelected ? 72 : 56;
+                      return (
+                        <button
+                          key={i}
+                          onClick={() => setSelectedPhoto(i)}
+                          className="flex-shrink-0 rounded-lg overflow-hidden transition-all duration-300"
+                          style={{
+                            width: size,
+                            height: size,
+                            border: isSelected ? "3px solid #B8860B" : "2px solid rgba(255,255,255,0.6)",
+                            opacity: isSelected ? 1 : 0.8,
+                            boxShadow: isSelected ? "0 4px 12px rgba(0,0,0,0.25)" : "0 2px 6px rgba(0,0,0,0.15)",
+                          }}
+                        >
+                          <img src={photo} alt={`Photo ${i + 1}`} className="w-full h-full object-cover" />
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Right arrow */}
+                  <button
+                    onClick={() => setSelectedPhoto((prev) => (prev === photos.length - 1 ? 0 : prev + 1))}
+                    className="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-all hover:scale-110 ml-2"
+                    style={{
+                      background: "rgba(250,247,242,0.9)",
+                      border: "2px solid #C9B29F",
+                      color: "#1C1C1C",
+                      fontSize: "14px",
+                      fontWeight: 700,
+                      boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+                    }}
+                  >
+                    ›
+                  </button>
+                </div>
+              )}
               </div>
             )}
 
