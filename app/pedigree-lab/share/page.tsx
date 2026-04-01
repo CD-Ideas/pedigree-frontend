@@ -291,10 +291,11 @@ function SharePreviewInner() {
       {/* Pedigree Card */}
       <div className="max-w-6xl mx-auto px-4 py-8">
         <div
-          className="rounded-xl overflow-hidden"
+          className="overflow-hidden"
           style={{
             background: "#FAF7F2",
             border: "2px solid #C9B29F",
+            borderRadius: "8px",
           }}
         >
           {/* Header — Logo watermark + COI */}
@@ -305,15 +306,23 @@ function SharePreviewInner() {
               borderBottom: "2px solid #C9B29F",
             }}
           >
-            <a href="/" className="flex items-center gap-2" style={{ textDecoration: "none" }}>
-              <img src="/logo.png" alt="Pedigree Platform" style={{ height: 24 }} />
+            <div className="flex items-center gap-3">
               <span
-                className="text-xs font-semibold uppercase tracking-widest"
-                style={{ color: "#B8860B", fontFamily: "var(--font-display)" }}
+                className="text-sm font-bold uppercase tracking-widest"
+                style={{ fontFamily: "var(--font-display)", color: "#1C1C1C" }}
               >
-                Generated in Pedigree Platform
+                Pedigree Preview
               </span>
-            </a>
+              <a href="/" className="flex items-center gap-2" style={{ textDecoration: "none" }} title="Visit PedigreePlatform.com">
+                <img src="/logo.png" alt="Pedigree Platform" style={{ height: 20 }} />
+                <span
+                  className="text-[11px] tracking-wide italic"
+                  style={{ color: "#B8860B", fontFamily: "var(--font-table)", fontWeight: 500, textDecoration: "underline" }}
+                >
+                  Generated in PedigreePlatform.com
+                </span>
+              </a>
+            </div>
             <div className="flex items-center gap-2">
               <span
                 className="text-[10px] uppercase tracking-widest font-bold"
@@ -365,17 +374,6 @@ function SharePreviewInner() {
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="text-center mt-4">
-          <a
-            href="/"
-            className="text-[10px]"
-            style={{ color: "#6B7280", fontFamily: "var(--font-table)", textDecoration: "none" }}
-          >
-            Generated in{" "}
-            <span style={{ color: "#B8860B" }}>PedigreePlatform.com</span>
-          </a>
-        </div>
       </div>
     </div>
   );
