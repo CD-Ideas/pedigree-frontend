@@ -235,20 +235,18 @@ export default function MarketplaceAdPage() {
 
               {/* Watermark */}
               <div
-                className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg "
-                style={{ background: "rgba(250,247,242,0.9)", border: "2px solid #C9B29F" }}
+                className="absolute top-2.5 left-2.5 flex items-center gap-1.5 px-2 py-1 rounded-lg"
+                style={{ background: "rgba(250,247,242,0.85)", border: "1.5px solid #C9B29F" }}
               >
-                <img src={LOGO} alt="" className="w-10" style={{ height: "auto" }} />
+                <img src={LOGO} alt="" className="w-6" style={{ height: "auto" }} />
                 <span
-                  className="text-[9px] font-bold"
+                  className="text-[8px] font-bold"
                   style={{
                     color: "#1C1C1C",
-
-
                     fontFamily: "var(--font-table)",
                   }}
                 >
-                  Pedigree Platform
+                  PedigreePlatform.com
                 </span>
               </div>
             </div>
@@ -304,99 +302,30 @@ export default function MarketplaceAdPage() {
                 href={`/pedigree/${ad.dog_id}`}
                 className="flex items-center gap-3 rounded-lg p-4 transition-all duration-300 hover:scale-[1.02]"
                 style={{
-                  background: "rgba(201,178,159,0.06)",
-                  border: "2px solid rgba(201,178,159,0.25)",
+                  background: "rgba(184,134,11,0.08)",
+                  border: "2px solid #B8860B",
                 }}
               >
                 <div
                   className="w-10 h-10 rounded-lg flex items-center justify-center"
-                  style={{ background: "rgba(201,178,159,0.15)" }}
+                  style={{ background: "rgba(184,134,11,0.15)" }}
                 >
                   <span className="text-lg">{"\uD83D\uDCDC"}</span>
                 </div>
                 <div>
-                  <div className="text-xs font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+                  <div className="text-xs font-bold" style={{ color: "#8a6518", fontFamily: "var(--font-table)" }}>
                     View Pedigree
                   </div>
                   <div className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                     This ad is linked to a registered pedigree
                   </div>
                 </div>
-                <span className="ml-auto text-sm" style={{ color: "#1C1C1C" }}>
+                <span className="ml-auto text-sm font-bold" style={{ color: "#B8860B" }}>
                   {"\u2192"}
                 </span>
               </Link>
             )}
 
-            {/* Share Toolbar */}
-            <div
-              className="rounded-lg p-5 mt-4"
-              style={{
-                background: "#FAF7F2",
-                border: "2px solid #C9B29F",
-                
-              }}
-            >
-              <h3
-                className="text-xs font-bold uppercase tracking-widest mb-3"
-                style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
-              >
-                Share This Listing
-              </h3>
-              <div className="flex gap-2">
-                {/* Copy Link */}
-                <button
-                  onClick={() => {
-                    navigator.clipboard.writeText(`https://pedigreeplatform.com/marketplace/${ad.id}`);
-                    setCopied(true);
-                    setTimeout(() => setCopied(false), 2000);
-                  }}
-                  className="flex-1 flex items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-xs font-bold transition-all hover:scale-[1.02]"
-                  style={{
-                    background: "#FAF7F2",
-                    border: "2px solid #C9B29F",
-                    color: "#1C1C1C",
-                    fontFamily: "var(--font-table)",
-                  }}
-                >
-                  {copied ? "\u2714" : "\uD83D\uDD17"} {copied ? "Copied!" : "Copy Link"}
-                </button>
-
-                {/* WhatsApp */}
-                <a
-                  href={`https://wa.me/?text=${encodeURIComponent(`${ad.title}${ad.price ? ` - $${ad.price}` : ""} | Pedigree Platform\nhttps://pedigreeplatform.com/marketplace/${ad.id}`)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 flex items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-xs font-bold transition-all hover:scale-[1.02]"
-                  style={{
-                    background: "#FAF7F2",
-                    border: "2px solid #C9B29F",
-                    color: "#1C1C1C",
-                    fontFamily: "var(--font-table)",
-                  }}
-                >
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="#1C1C1C"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.611.611l4.458-1.495A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.3 0-4.438-.766-6.149-2.056l-.432-.336-3.2 1.073 1.073-3.2-.336-.432A9.953 9.953 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
-                  WhatsApp
-                </a>
-
-                {/* Telegram */}
-                <a
-                  href={`https://t.me/share/url?url=${encodeURIComponent(`https://pedigreeplatform.com/marketplace/${ad.id}`)}&text=${encodeURIComponent(`${ad.title}${ad.price ? ` - $${ad.price}` : ""} | Pedigree Platform`)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 flex items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-xs font-bold transition-all hover:scale-[1.02]"
-                  style={{
-                    background: "#FAF7F2",
-                    border: "2px solid #C9B29F",
-                    color: "#1C1C1C",
-                    fontFamily: "var(--font-table)",
-                  }}
-                >
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="#1C1C1C"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-                  Telegram
-                </a>
-              </div>
-            </div>
           </div>
 
           {/* ─── Right Column: Details ─── */}
@@ -410,21 +339,69 @@ export default function MarketplaceAdPage() {
                 
               }}
             >
-              {/* Category badge */}
-              {cat && (
-                <div
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg mb-3"
-                  style={{ background: `${cat.color}18`, border: `1px solid ${cat.color}33` }}
-                >
-                  <span className="text-xs">{cat.icon}</span>
-                  <span
-                    className="text-[10px] font-bold uppercase tracking-wide"
-                    style={{ color: cat.color, fontFamily: "var(--font-table)" }}
+              {/* Category badge + Share buttons */}
+              <div className="flex items-center justify-between mb-3">
+                {cat && (
+                  <div
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg"
+                    style={{ background: `${cat.color}18`, border: `1px solid ${cat.color}33` }}
                   >
-                    {cat.label}
-                  </span>
+                    <span className="text-xs">{cat.icon}</span>
+                    <span
+                      className="text-[10px] font-bold uppercase tracking-wide"
+                      style={{ color: cat.color, fontFamily: "var(--font-table)" }}
+                    >
+                      {cat.label}
+                    </span>
+                  </div>
+                )}
+                <div className="flex items-center gap-1.5">
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(`https://pedigreeplatform.com/marketplace/${ad.id}`);
+                      setCopied(true);
+                      setTimeout(() => setCopied(false), 2000);
+                    }}
+                    className="flex items-center gap-1 px-2 py-1 rounded-lg text-[9px] font-bold transition-all hover:scale-105"
+                    style={{
+                      background: "#FAF7F2",
+                      border: "1.5px solid #C9B29F",
+                      color: "#1C1C1C",
+                      fontFamily: "var(--font-table)",
+                    }}
+                  >
+                    {copied ? "✔" : "🔗"} {copied ? "Copied!" : "Copy"}
+                  </button>
+                  <a
+                    href={`https://wa.me/?text=${encodeURIComponent(`${ad.title}${ad.price ? ` - $${ad.price}` : ""} | Pedigree Platform\nhttps://pedigreeplatform.com/marketplace/${ad.id}`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1 px-2 py-1 rounded-lg text-[9px] font-bold transition-all hover:scale-105"
+                    style={{
+                      background: "#FAF7F2",
+                      border: "1.5px solid #C9B29F",
+                      color: "#1C1C1C",
+                      fontFamily: "var(--font-table)",
+                    }}
+                  >
+                    <svg viewBox="0 0 24 24" width="11" height="11" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.611.611l4.458-1.495A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.3 0-4.438-.766-6.149-2.056l-.432-.336-3.2 1.073 1.073-3.2-.336-.432A9.953 9.953 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+                  </a>
+                  <a
+                    href={`https://t.me/share/url?url=${encodeURIComponent(`https://pedigreeplatform.com/marketplace/${ad.id}`)}&text=${encodeURIComponent(`${ad.title}${ad.price ? ` - $${ad.price}` : ""} | Pedigree Platform`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1 px-2 py-1 rounded-lg text-[9px] font-bold transition-all hover:scale-105"
+                    style={{
+                      background: "#FAF7F2",
+                      border: "1.5px solid #C9B29F",
+                      color: "#1C1C1C",
+                      fontFamily: "var(--font-table)",
+                    }}
+                  >
+                    <svg viewBox="0 0 24 24" width="11" height="11" fill="#0088cc"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                  </a>
                 </div>
-              )}
+              </div>
 
               {/* Title */}
               <h1
