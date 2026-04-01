@@ -224,9 +224,9 @@ export default function EditAdPage() {
 
   const handleFiles = useCallback((files: FileList | null) => {
     if (!files) return;
-    const remaining = 10 - photos.length;
+    const remaining = 5 - photos.length;
     if (remaining <= 0) {
-      setErrors((prev) => ({ ...prev, photos: "Maximum 10 photos allowed" }));
+      setErrors((prev) => ({ ...prev, photos: "Maximum 5 photos allowed" }));
       return;
     }
     const toUpload = Array.from(files).slice(0, remaining);
@@ -446,7 +446,7 @@ export default function EditAdPage() {
     borderRadius: "8px",
     padding: "28px 16px",
     textAlign: "center",
-    cursor: photos.length >= 10 ? "not-allowed" : "pointer",
+    cursor: photos.length >= 5 ? "not-allowed" : "pointer",
     transition: "all 0.2s ease",
     
   };
@@ -824,7 +824,7 @@ export default function EditAdPage() {
                 Photos <span style={{ color: "#ef4444" }}>*</span>
               </label>
               <span className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-mono)" }}>
-                {photos.length}/10
+                {photos.length}/5
               </span>
             </div>
 
@@ -860,7 +860,7 @@ export default function EditAdPage() {
             )}
 
             {/* Drag and drop zone */}
-            {photos.length < 10 && (
+            {photos.length < 5 && (
               <div
                 style={dropzoneStyle}
                 onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
@@ -896,7 +896,7 @@ export default function EditAdPage() {
                       Drag photos here or click to browse
                     </span>
                     <span className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
-                      JPG, PNG, WebP — Max 5MB each — Up to {10 - photos.length} more
+                      JPG, PNG, WebP — Max 5MB each — Up to {5 - photos.length} more
                     </span>
                   </div>
                 )}

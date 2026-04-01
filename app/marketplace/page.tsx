@@ -135,9 +135,9 @@ function AdCard({ ad, index }: { ad: MarketplaceAd; index: number }) {
         {ad.is_verified && (
           <div
             className="absolute bottom-2 right-2 flex items-center gap-1 px-1.5 py-0.5 rounded-lg"
-            style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}
+            style={{ background: "rgba(34,197,94,0.15)", border: "1px solid rgba(34,197,94,0.3)" }}
           >
-            <span className="text-[8px] font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+            <span className="text-[8px] font-bold" style={{ color: "#16a34a", fontFamily: "var(--font-table)" }}>
               {"\u2713"} Verified
             </span>
           </div>

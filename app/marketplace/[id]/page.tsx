@@ -219,6 +219,7 @@ export default function MarketplaceAdPage() {
                 background: "#FAF7F2",
                 border: "2px solid #C9B29F",
                 aspectRatio: "4/3",
+                marginBottom: "40px",
               }}
             >
               {photos.length > 0 ? (
@@ -252,7 +253,7 @@ export default function MarketplaceAdPage() {
 
               {/* Thumbnail carousel — overlapping bottom of main photo */}
               {photos.length > 1 && (
-                <div className="absolute bottom-3 left-0 right-0 z-10 flex items-center justify-center px-3">
+                <div className="absolute -bottom-8 left-0 right-0 z-10 flex items-center justify-center px-3">
                   {/* Left arrow */}
                   <button
                     onClick={() => setSelectedPhoto((prev) => (prev === 0 ? photos.length - 1 : prev - 1))}
@@ -541,12 +542,12 @@ export default function MarketplaceAdPage() {
               {!!ad.is_verified && (
                 <div
                   className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg mb-3"
-                  style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}
+                  style={{ background: "rgba(34,197,94,0.1)", border: "1px solid rgba(34,197,94,0.3)" }}
                 >
-                  <span className="text-xs">{"\u2713"}</span>
+                  <span className="text-xs" style={{ color: "#16a34a" }}>{"\u2713"}</span>
                   <span
                     className="text-[10px] font-bold"
-                    style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}
+                    style={{ color: "#16a34a", fontFamily: "var(--font-table)" }}
                   >
                     Verified Listing
                   </span>

@@ -173,9 +173,9 @@ function CreateAdContent() {
 
   const handleFiles = useCallback((files: FileList | null) => {
     if (!files) return;
-    const remaining = 10 - photos.length;
+    const remaining = 5 - photos.length;
     if (remaining <= 0) {
-      setErrors((prev) => ({ ...prev, photos: "Maximum 10 photos allowed" }));
+      setErrors((prev) => ({ ...prev, photos: "Maximum 5 photos allowed" }));
       return;
     }
     const toUpload = Array.from(files).slice(0, remaining);
@@ -327,7 +327,7 @@ function CreateAdContent() {
     borderRadius: "8px",
     padding: "28px 16px",
     textAlign: "center",
-    cursor: photos.length >= 10 ? "not-allowed" : "pointer",
+    cursor: photos.length >= 5 ? "not-allowed" : "pointer",
     transition: "all 0.2s ease",
     
   };
@@ -758,7 +758,7 @@ function CreateAdContent() {
                 📸 Photos <span style={{ color: "#ef4444" }}>*</span>
               </label>
               <span className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-mono)" }}>
-                {photos.length}/10
+                {photos.length}/5
               </span>
             </div>
 
@@ -812,12 +812,12 @@ function CreateAdContent() {
             {/* Auto-loaded note */}
             {selectedDogName && photos.length > 0 && (photos[0].includes("online-pedigrees.com") || photos[0].includes("apbt")) && (
               <p className="text-[10px] mb-3" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-                First photo auto-loaded from database — you can add up to {10 - photos.length} more below
+                First photo auto-loaded from database — you can add up to {5 - photos.length} more below
               </p>
             )}
 
             {/* Drag and drop zone — always show if under 10 photos */}
-            {photos.length < 10 && (
+            {photos.length < 5 && (
               <div
                 style={dropzoneStyle}
                 onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
@@ -853,7 +853,7 @@ function CreateAdContent() {
                       {selectedDogName ? "Add more photos" : "Drag photos here or click to browse"}
                     </span>
                     <span className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
-                      JPG, PNG, WebP — Max 5MB each — Up to {10 - photos.length} more
+                      JPG, PNG, WebP — Max 5MB each — Up to {5 - photos.length} more
                     </span>
                   </div>
                 )}
