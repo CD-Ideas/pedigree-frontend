@@ -302,9 +302,8 @@ export default function MarketplaceAdPage() {
                 href={`/pedigree/${ad.dog_id}`}
                 className="flex items-center gap-3 rounded-lg p-4 transition-all duration-300 hover:scale-[1.02]"
                 style={{
-                  background: "rgba(184,134,11,0.15)",
+                  background: "rgba(184,134,11,0.25)",
                   border: "2px solid #B8860B",
-                  borderLeft: "4px solid #B8860B",
                 }}
               >
                 <div
