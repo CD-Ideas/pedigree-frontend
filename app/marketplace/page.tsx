@@ -397,7 +397,7 @@ export default function MarketplacePage() {
                 <div className="flex items-start gap-2">
                   {/* Icon */}
                   <div
-                    className="flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-md"
+                    className="flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-lg"
                     style={{
                       background: "#FAF7F2",
                       border: "2px solid #C9B29F",
@@ -539,7 +539,7 @@ export default function MarketplacePage() {
           <div className="mb-4 flex items-center gap-2 flex-wrap">
             {search && (
               <span
-                className="text-xs font-bold px-2.5 py-1 rounded-md"
+                className="text-xs font-bold px-2.5 py-1 rounded-lg"
                 style={{
                   background: "#FAF7F2",
                   color: "#1C1C1C",
@@ -552,7 +552,7 @@ export default function MarketplacePage() {
             )}
             {category && CATEGORY_MAP[category] && (
               <span
-                className="text-xs font-bold px-2.5 py-1 rounded-md flex items-center gap-1"
+                className="text-xs font-bold px-2.5 py-1 rounded-lg flex items-center gap-1"
                 style={{
                   background: "#FAF7F2",
                   color: "#1C1C1C",

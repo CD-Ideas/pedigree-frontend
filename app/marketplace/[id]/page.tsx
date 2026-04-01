@@ -213,7 +213,7 @@ export default function MarketplaceAdPage() {
           <div className="md:col-span-3 space-y-3">
             {/* Main Photo */}
             <div
-              className="relative rounded-xl overflow-hidden"
+              className="relative rounded-lg overflow-hidden"
               style={{
                 background: "#FAF7F2",
                 border: "2px solid #C9B29F",
@@ -276,7 +276,7 @@ export default function MarketplaceAdPage() {
 
             {/* Description */}
             <div
-              className="rounded-xl p-5"
+              className="rounded-lg p-5"
               style={{
                 background: "#FAF7F2",
                 border: "2px solid #C9B29F",
@@ -301,7 +301,7 @@ export default function MarketplaceAdPage() {
             {ad.dog_id && (
               <Link
                 href={`/pedigree/${ad.dog_id}`}
-                className="flex items-center gap-3 rounded-xl p-4 transition-all duration-300 hover:scale-[1.02]"
+                className="flex items-center gap-3 rounded-lg p-4 transition-all duration-300 hover:scale-[1.02]"
                 style={{
                   background: "rgba(201,178,159,0.06)",
                   border: "2px solid rgba(201,178,159,0.25)",
@@ -329,7 +329,7 @@ export default function MarketplaceAdPage() {
 
             {/* Share Toolbar */}
             <div
-              className="rounded-xl p-5 mt-4"
+              className="rounded-lg p-5 mt-4"
               style={{
                 background: "#FAF7F2",
                 border: "2px solid #C9B29F",
@@ -402,7 +402,7 @@ export default function MarketplaceAdPage() {
           <div className="md:col-span-2 space-y-4">
             {/* Title & Price Card */}
             <div
-              className="rounded-xl p-5"
+              className="rounded-lg p-5"
               style={{
                 background: "#FAF7F2",
                 border: "2px solid #C9B29F",
@@ -579,7 +579,7 @@ export default function MarketplaceAdPage() {
             {/* ─── Owner Actions (Edit / Delete) ─── */}
             {isOwner && (
               <div
-                className="rounded-xl p-4"
+                className="rounded-lg p-4"
                 style={{
                   background: "#FAF7F2",
                   border: "2px solid rgba(201,178,159,0.25)",
@@ -660,7 +660,7 @@ export default function MarketplaceAdPage() {
             {/* Verification Section */}
             {isOwner && !ad.is_verified && (
               <div
-                className="rounded-xl p-5"
+                className="rounded-lg p-5"
                 style={{
                   background: "#FAF7F2",
                   border: ad.verification_requested
@@ -738,7 +738,7 @@ export default function MarketplaceAdPage() {
             {/* Contact Info Card */}
             {(ad.contact_phone || ad.contact_email || ad.contact_venmo || ad.contact_paypal) && (
               <div
-                className="rounded-xl p-5"
+                className="rounded-lg p-5"
                 style={{
                   background: "#FAF7F2",
                   border: "2px solid #C9B29F",
@@ -840,7 +840,7 @@ export default function MarketplaceAdPage() {
               {!showReport ? (
                 <button
                   onClick={() => setShowReport(true)}
-                  className="w-full rounded-xl px-4 py-2.5 text-xs font-medium transition-all hover:scale-[1.02]"
+                  className="w-full rounded-lg px-4 py-2.5 text-xs font-medium transition-all hover:scale-[1.02]"
                   style={{
                     background: "#FAF7F2",
                     border: "2px solid #C9B29F",
@@ -852,7 +852,7 @@ export default function MarketplaceAdPage() {
                 </button>
               ) : (
                 <div
-                  className="rounded-xl p-4"
+                  className="rounded-lg p-4"
                   style={{
                     background: "#FAF7F2",
                     border: "2px solid #C9B29F",

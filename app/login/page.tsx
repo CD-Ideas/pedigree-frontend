@@ -67,7 +67,7 @@ function LoginForm() {
     >
       <span style={{ fontSize: "1.3rem" }}>&larr;</span> BACK
     </Link>
-    <div className="rounded-2xl p-6 w-full max-w-md" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px" }}>
+    <div className="rounded-lg p-6 w-full max-w-md" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px" }}>
       <div className="flex flex-col items-center mb-5">
         <img
           src={LOGO}

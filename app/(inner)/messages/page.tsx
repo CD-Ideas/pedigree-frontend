@@ -912,7 +912,7 @@ function MessagesContent() {
                               style={{
                                 background: "#FAFAFA",
                                 border: "2px solid #C9B29F",
-                                borderRadius: "20px",
+                                borderRadius: "8px",
                                 padding: "4px 8px",
                               }}>
                               {["👍", "❤️", "😂", "😮", "😢", "🔥"].map(em => (
@@ -941,7 +941,6 @@ function MessagesContent() {
                                 border: "2px solid #C9B29F",
                                 borderRadius: "8px",
                                 padding: "8px",
-                                boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
                               }}>
                                 {EMOJI_CATEGORIES.map(cat => (
                                   <div key={cat.name} className="mb-2">
@@ -950,7 +949,7 @@ function MessagesContent() {
                                       {cat.emojis.map(em => (
                                         <button key={em} onClick={() => { toggleReaction(msg.id, em); setReactionPickerMsgId(null); setEmojiPanelOpen(false); }}
                                           className="hover:bg-[#EDE4D5] transition-colors"
-                                          style={{ fontSize: "20px", padding: "3px", lineHeight: 1, background: "none", border: "none", cursor: "pointer", borderRadius: "6px" }}>
+                                          style={{ fontSize: "20px", padding: "3px", lineHeight: 1, background: "none", border: "none", cursor: "pointer", borderRadius: "8px" }}>
                                           {em}
                                         </button>
                                       ))}
@@ -978,7 +977,7 @@ function MessagesContent() {
                                     style={{
                                       background: iReacted ? "#EDE4D5" : "#FAF7F2",
                                       border: iReacted ? "2px solid #C9B29F" : "1px solid #C9B29F",
-                                      borderRadius: "14px",
+                                      borderRadius: "8px",
                                       fontSize: "14px",
                                       fontFamily: "var(--font-table)",
                                       color: "#1C1C1C",
@@ -1070,7 +1069,7 @@ function MessagesContent() {
                   onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendReply(); } }}
                   placeholder="Type a message..."
                   rows={1}
-                  className="flex-1 rounded-2xl px-4 py-2.5 text-sm outline-none resize-none"
+                  className="flex-1 rounded-lg px-4 py-2.5 text-sm outline-none resize-none"
                   style={{ background: "#FAF7F2", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)", minHeight: "40px", maxHeight: "120px", overflowY: "auto" }}
                   onInput={(e) => { const t = e.target as HTMLTextAreaElement; t.style.height = "40px"; t.style.height = Math.min(t.scrollHeight, 120) + "px"; }}
                 />

@@ -131,7 +131,7 @@ function _BreedingCalcPreview_UNUSED() {
               border: `2px solid ${coiColor}`,
             }}>
               <div className="flex items-center gap-2 mb-1.5">
-                <div className="w-6 h-6 rounded-md flex items-center justify-center" style={{ background: `${coiColor}20`, border: `1px solid ${coiColor}40` }}>
+                <div className="w-6 h-6 rounded-lg flex items-center justify-center" style={{ background: `${coiColor}20`, border: `1px solid ${coiColor}40` }}>
                   <span style={{ fontSize: "12px" }}>⚠️</span>
                 </div>
                 <span style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "10px", color: coiColor, textTransform: "uppercase", letterSpacing: "0.06em" }}>
@@ -282,7 +282,7 @@ export default function Home() {
               </svg>
             </button>
             {pricingOpen && (
-              <div className="absolute top-full right-0 mt-3 rounded-xl overflow-hidden"
+              <div className="absolute top-full right-0 mt-3 rounded-lg overflow-hidden"
                 style={{ width: "min(320px, 90vw)", background: "#FAFAFA", border: "2px solid #C9B29F" }}
                 onClick={(e) => e.stopPropagation()}>
                   {/* Free tier */}
@@ -308,13 +308,13 @@ export default function Home() {
               </div>
             )}
           </div>
-          <Link href="/login" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: scrolled ? "#FAF7F2" : "#1C1C1C", padding: "0.4rem 1.2rem", border: "2px solid #C9B29F", borderRadius: "0.5rem", transition: "all 0.2s" }}>Login</Link>
-          <Link href="/register" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#FAF7F2", padding: "0.4rem 1.2rem", background: scrolled ? "#C9B29F" : "#1C1C1C", borderRadius: "0.5rem", transition: "all 0.2s" }}>Sign Up</Link>
+          <Link href="/login" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: scrolled ? "#FAF7F2" : "#1C1C1C", padding: "0.4rem 1.2rem", border: "2px solid #C9B29F", borderRadius: "8px", transition: "all 0.2s" }}>Login</Link>
+          <Link href="/register" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#FAF7F2", padding: "0.4rem 1.2rem", background: scrolled ? "#C9B29F" : "#1C1C1C", borderRadius: "8px", transition: "all 0.2s" }}>Sign Up</Link>
         </div>
         {/* Mobile: Login + Sign Up always visible */}
         <div className="flex md:hidden items-center gap-3">
-          <Link href="/login" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.08em", color: scrolled ? "#FAF7F2" : "#1C1C1C", padding: "0.35rem 0.8rem", border: "2px solid #C9B29F", borderRadius: "0.4rem" }}>Login</Link>
-          <Link href="/register" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#FAF7F2", padding: "0.35rem 0.8rem", background: scrolled ? "#C9B29F" : "#1C1C1C", borderRadius: "0.4rem" }}>Sign Up</Link>
+          <Link href="/login" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.08em", color: scrolled ? "#FAF7F2" : "#1C1C1C", padding: "0.35rem 0.8rem", border: "2px solid #C9B29F", borderRadius: "8px" }}>Login</Link>
+          <Link href="/register" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.08em", color: "#FAF7F2", padding: "0.35rem 0.8rem", background: scrolled ? "#C9B29F" : "#1C1C1C", borderRadius: "8px" }}>Sign Up</Link>
         </div>
       </nav>
 
@@ -334,7 +334,7 @@ export default function Home() {
             ))}
             <div className="w-12 h-[1px] my-2" style={{ background: "#C9B29F" }} />
             <button onClick={() => { setMobileMenu(false); setPricingOpen(false); setAuthModal(true); }}
-              style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "14px", textTransform: "uppercase", letterSpacing: "0.1em", color: "#FAF7F2", background: "#1C1C1C", padding: "0.6rem 2rem", borderRadius: "0.5rem", border: "none", cursor: "pointer" }}>
+              style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "14px", textTransform: "uppercase", letterSpacing: "0.1em", color: "#FAF7F2", background: "#1C1C1C", padding: "0.6rem 2rem", borderRadius: "8px", border: "none", cursor: "pointer" }}>
               View Pricing
             </button>
           </div>
@@ -432,7 +432,7 @@ export default function Home() {
                       }
                     }} />
                   {/* Icon container */}
-                  <div className="relative mx-auto mb-1.5 w-7 h-7 flex items-center justify-center rounded-md transition-all duration-300"
+                  <div className="relative mx-auto mb-1.5 w-7 h-7 flex items-center justify-center rounded-lg transition-all duration-300"
                     style={{
                       background: `rgba(${f.glow},0.1)`,
                       border: `1px solid rgba(${f.glow},0.2)`,
@@ -531,7 +531,7 @@ export default function Home() {
                     borderRadius: "8px",
                   }}>
                   <div className="flex items-center gap-2 mb-1.5">
-                    <div className="w-6 h-6 rounded-md flex items-center justify-center" style={{ background: "rgba(239,68,68,0.15)", border: "1px solid rgba(239,68,68,0.3)" }}>
+                    <div className="w-6 h-6 rounded-lg flex items-center justify-center" style={{ background: "rgba(239,68,68,0.15)", border: "1px solid rgba(239,68,68,0.3)" }}>
                       <span style={{ fontSize: "12px" }}>⚠️</span>
                     </div>
                     <span style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "10px", color: "#ef4444", textTransform: "uppercase", letterSpacing: "0.06em" }}>Inbreeding Alert — 4.5% COI</span>
@@ -657,7 +657,7 @@ export default function Home() {
                     }} />
                   <div className="flex items-start gap-2">
                     {/* Icon */}
-                    <div className="flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-md"
+                    <div className="flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-lg"
                       style={{ background: `rgba(${m.glow},0.1)`, border: `1px solid rgba(${m.glow},0.2)` }}>
                       <span className="text-sm">{m.icon}</span>
                     </div>
@@ -774,7 +774,7 @@ export default function Home() {
         <div className="fixed inset-0 z-[100] flex items-center justify-center"
           style={{ background: "rgba(0,0,0,0.5)" }}
           onClick={() => setAuthModal(false)}>
-          <div className="relative rounded-2xl p-8 max-w-sm w-full mx-4 animate-scale-reveal"
+          <div className="relative rounded-lg p-8 max-w-sm w-full mx-4 animate-scale-reveal"
             style={{
               background: "#FAFAFA",
               border: "2px solid #C9B29F",
@@ -804,7 +804,7 @@ export default function Home() {
             {/* Buttons */}
             <div className="flex flex-col gap-3">
               <Link href="/register" onClick={() => setAuthModal(false)}
-                className="w-full py-3 rounded-xl text-center block"
+                className="w-full py-3 rounded-lg text-center block"
                 style={{
                   fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "13px", textTransform: "uppercase", letterSpacing: "0.08em",
                   background: "#1C1C1C", color: "#FAF7F2",
@@ -813,7 +813,7 @@ export default function Home() {
                 Create Free Account
               </Link>
               <Link href="/login" onClick={() => setAuthModal(false)}
-                className="w-full py-3 rounded-xl text-center block"
+                className="w-full py-3 rounded-lg text-center block"
                 style={{
                   fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "13px", textTransform: "uppercase", letterSpacing: "0.08em",
                   color: "#1C1C1C", border: "2px solid #C9B29F",

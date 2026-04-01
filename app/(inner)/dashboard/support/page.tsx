@@ -157,7 +157,7 @@ export default function SupportPage() {
           <span className="w-6 h-6 border-2 border-current border-t-transparent rounded-full animate-spin" style={{ color: "#1C1C1C" }} />
         </div>
       ) : messages.length === 0 ? (
-        <div className="rounded-xl p-12 text-center" style={steelFrame}>
+        <div className="rounded-lg p-12 text-center" style={steelFrame}>
           <span className="text-4xl block mb-3">📭</span>
           <p className="text-sm font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>No support messages yet</p>
           <p className="text-xs mt-1" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Contact support to get help</p>
@@ -165,7 +165,7 @@ export default function SupportPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4" style={{ minHeight: "500px" }}>
           {/* Message List */}
-          <div className="md:col-span-1 rounded-xl overflow-hidden" style={steelFrame}>
+          <div className="md:col-span-1 rounded-lg overflow-hidden" style={steelFrame}>
             <div className="px-4 py-3" style={{ borderBottom: "2px solid #C9B29F" }}>
               <p className="text-[10px] uppercase tracking-widest font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                 Tickets ({messages.length})
@@ -208,7 +208,7 @@ export default function SupportPage() {
           </div>
 
           {/* Conversation Thread */}
-          <div className="md:col-span-2 rounded-xl flex flex-col overflow-hidden" style={steelFrame}>
+          <div className="md:col-span-2 rounded-lg flex flex-col overflow-hidden" style={steelFrame}>
             {selected && originalMessage ? (
               <>
                 {/* Thread Header */}
@@ -239,7 +239,7 @@ export default function SupportPage() {
                 <div className="flex-1 overflow-y-auto p-4 space-y-3" style={{ background: "#FAF7F2", maxHeight: "350px" }}>
                   {/* Original message */}
                   <div className="flex justify-end">
-                    <div className="max-w-[75%] rounded-xl px-3 py-2" style={{ background: "rgba(187,247,208,0.8)" }}>
+                    <div className="max-w-[75%] rounded-lg px-3 py-2" style={{ background: "rgba(187,247,208,0.8)" }}>
                       <p className="text-xs" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", wordBreak: "break-word" }}>
                         {originalMessage.message}
                       </p>
@@ -252,7 +252,7 @@ export default function SupportPage() {
                   {/* Replies */}
                   {replies.map(r => (
                     <div key={r.id} className={`flex ${r.sender_type === "user" ? "justify-end" : "justify-start"}`}>
-                      <div className="max-w-[75%] rounded-xl px-3 py-2" style={{
+                      <div className="max-w-[75%] rounded-lg px-3 py-2" style={{
                         background: r.sender_type === "user" ? "rgba(187,247,208,0.8)" : "rgba(255,255,255,0.9)",
                         border: r.sender_type === "admin" ? "2px solid #C9B29F" : "none",
                       }}>

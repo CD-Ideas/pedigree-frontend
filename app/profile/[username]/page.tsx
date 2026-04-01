@@ -159,7 +159,7 @@ export default function ProfilePage() {
         <img
           src={pp}
           alt={user?.username || ""}
-          className="rounded-2xl object-cover"
+          className="rounded-lg object-cover"
           style={{
             border: "2px solid #C9B29F",
             width: "120px",

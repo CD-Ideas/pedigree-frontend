@@ -267,7 +267,7 @@ function Card({
       style={{
         ...STEEL_FRAME,
         background: "#FAF7F2",
-        borderRadius: 10,
+        borderRadius: 8,
         ...style,
       }}
     >
@@ -701,7 +701,7 @@ function PedigreeLabInner() {
                     color: searchTerm && getDogColor(searchTerm) !== "#3a3a3a" ? getDogColor(searchTerm) : "#1C1C1C",
                     fontFamily: "var(--font-table)",
                     outline: "none",
-                    borderRadius: 10,
+                    borderRadius: 8,
                     transition: "all 0.3s ease",
                   }}
                   onFocus={(e) => {
@@ -737,7 +737,7 @@ function PedigreeLabInner() {
                     style={{
                       background: "#FAF7F2",
                       border: "2px solid #C9B29F",
-                      borderRadius: 10,
+                      borderRadius: 8,
                       transition: "all 0.3s ease",
                     }}
                     onMouseEnter={(e) => {
@@ -750,7 +750,7 @@ function PedigreeLabInner() {
                     <div className="flex items-center gap-2.5">
                       {/* Photo */}
                       <div
-                        className="w-10 h-10 rounded-md flex-shrink-0 bg-cover bg-center"
+                        className="w-10 h-10 rounded-lg flex-shrink-0 bg-cover bg-center"
                         style={{
                           backgroundImage: dog.photo_url
                             ? `url(${PHOTO_BASE}${dog.photo_url})`
@@ -829,14 +829,14 @@ function PedigreeLabInner() {
                       <button
                         key={g}
                         onClick={() => setPreviewDisplayGens(g)}
-                        className="px-3 py-1 rounded-md flex items-center justify-center text-xs font-bold transition-all cursor-pointer"
+                        className="px-3 py-1 rounded-lg flex items-center justify-center text-xs font-bold transition-all cursor-pointer"
                         style={{
                           background: previewDisplayGens === g ? "#C9B29F" : "transparent",
                           color: previewDisplayGens === g ? "#1C1C1C" : "#FAF7F2",
                           border: "1px solid transparent",
                           fontFamily: "var(--font-table)",
                           letterSpacing: "0.03em",
-                          borderRadius: "6px",
+                          borderRadius: "8px",
                         }}
                       >
                         {g}G
@@ -951,7 +951,7 @@ function PedigreeLabInner() {
                             background: "#1C1C1C",
                             color: "#FAF7F2",
                             fontFamily: "var(--font-display)",
-                            borderRadius: 4,
+                            borderRadius: 8,
                           }}
                         >
                           {label}
@@ -1294,7 +1294,7 @@ function PedigreeLabInner() {
                 <div className="space-y-3">
                   <div
                     className="overflow-hidden"
-                    style={{ border: `2px solid #C9B29F`, borderRadius: 10 }}
+                    style={{ border: `2px solid #C9B29F`, borderRadius: 8 }}
                   >
                     {selectedDog.photo_url ? (
                       <img
@@ -1365,7 +1365,7 @@ function PedigreeLabInner() {
                   background: previewMode ? "#C9B29F" : "#1C1C1C",
                   color: previewMode ? "#1C1C1C" : "#FAF7F2",
                   border: "2px solid #C9B29F",
-                  borderRadius: 10,
+                  borderRadius: 8,
                   transition: "all 0.3s ease",
                 }}
               >
@@ -1384,7 +1384,7 @@ function PedigreeLabInner() {
                   background: "#C9B29F",
                   color: "#1C1C1C",
                   border: "2px solid #C9B29F",
-                  borderRadius: 10,
+                  borderRadius: 8,
                   transition: "all 0.3s ease",
                 }}
               >
@@ -1455,7 +1455,7 @@ function PedigreeLabInner() {
               padding: 0,
               background: "#FAF7F2",
               border: "2px solid #C9B29F",
-              borderRadius: 10,
+              borderRadius: 8,
             }}
           >
             <div
@@ -1480,7 +1480,7 @@ function PedigreeLabInner() {
                     color: "#6B6B6B",
                     background: "#FAFAFA",
                     border: "2px solid #C9B29F",
-                    borderRadius: 10,
+                    borderRadius: 8,
                     width: 32,
                     height: 32,
                     display: "flex",
@@ -1528,7 +1528,7 @@ function PedigreeLabInner() {
                       ? "#C9B29F"
                       : "#FAFAFA",
                     border: "2px solid #C9B29F",
-                    borderRadius: 10,
+                    borderRadius: 8,
                   }}
                   title="Show in Dashboard Title Feed"
                 >
@@ -1546,8 +1546,8 @@ function PedigreeLabInner() {
                     style={{
                       background: publishForm.showInTitleFeed
                         ? "#22c55e"
-                        : "#D1D5DB",
-                      border: publishForm.showInTitleFeed ? "2px solid #22c55e" : "2px solid #D1D5DB",
+                        : "#C9B29F",
+                      border: publishForm.showInTitleFeed ? "2px solid #22c55e" : "2px solid #C9B29F",
                     }}>
                     <span className="absolute top-0.5 left-0.5 w-5 h-5 rounded-full transition-all"
                       style={{
@@ -2168,7 +2168,7 @@ function PedigreeLabInner() {
                       background: "#1C1C1C",
                       color: "#FAF7F2",
                       border: "2px solid #C9B29F",
-                      borderRadius: 10,
+                      borderRadius: 8,
                     }}
                   >
                     + Add Worming Entry
@@ -2258,7 +2258,7 @@ function PedigreeLabInner() {
                   <div className="rounded-lg p-4" style={{
                     background: "#FAF7F2",
                     border: isUpcoming ? "2px solid #fb923c" : isOverdue ? "2px solid #ef4444" : "2px solid #C9B29F",
-                    borderRadius: 10,
+                    borderRadius: 8,
                   }}>
                     <div className="flex items-center gap-2 mb-3">
                       <span className="text-base">🌸</span>
@@ -2405,7 +2405,7 @@ function PedigreeLabInner() {
                         onClick={() => updateHeatCycle({ reminderEnabled: !hc.reminderEnabled })}
                         className="relative w-9 h-5 rounded-full transition-all flex-shrink-0"
                         style={{
-                          background: hc.reminderEnabled ? "#22c55e" : "#D1D5DB",
+                          background: hc.reminderEnabled ? "#22c55e" : "#C9B29F",
                           border: "2px solid #C9B29F",
                         }}
                       >
@@ -2567,7 +2567,7 @@ function PedigreeLabInner() {
                   background: "#1C1C1C",
                   color: "#FAF7F2",
                   border: "2px solid #1C1C1C",
-                  borderRadius: 10,
+                  borderRadius: 8,
                 }}
               >
                 {publishing ? (editingId ? "Saving..." : "Publishing...") : (editingId ? "Save Changes" : "Submit & Publish")}
@@ -2626,7 +2626,7 @@ function DropZone({
           padding: isSm ? 8 : 12,
           background: "#FAF7F2",
           border: `2px solid ${dragOver ? "#1C1C1C" : "#C9B29F"}`,
-          borderRadius: 10,
+          borderRadius: 8,
           outline: "none",
           transition: "all 0.3s ease",
         }}
@@ -2714,7 +2714,7 @@ function DropZone({
               color: "#1C1C1C",
               background: "#FAF7F2",
               border: "2px solid #C9B29F",
-              borderRadius: "5px",
+              borderRadius: "8px",
               lineHeight: 1,
               fontFamily: "var(--font-mono, monospace)",
               zIndex: 10,
@@ -2738,7 +2738,7 @@ function DropZone({
           height: isSm ? 70 : 90,
           background: "#FAFAFA",
           border: "2px solid #C9B29F",
-          borderRadius: 10,
+          borderRadius: 8,
         }}
       />
     );
@@ -2756,7 +2756,7 @@ function DropZone({
         border: dragOver
           ? "2px dashed #1C1C1C"
           : `2px dashed #C9B29F`,
-        borderRadius: 10,
+        borderRadius: 8,
       }}
       onDragOver={(e) => {
         onDragOver(e);

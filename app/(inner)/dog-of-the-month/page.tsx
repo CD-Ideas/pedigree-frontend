@@ -55,7 +55,7 @@ export default function DogOfTheMonthPage() {
       </div>
 
       {/* Coming Soon Badge */}
-      <div className="rounded-xl p-4 sm:p-8 text-center" style={{
+      <div className="rounded-lg p-4 sm:p-8 text-center" style={{
         ...PG_CARD,
       }}>
         <span className="block animate-pulse"
@@ -72,7 +72,7 @@ export default function DogOfTheMonthPage() {
       </div>
 
       {/* Teaser Description */}
-      <div className="rounded-xl p-6" style={PG_CARD}>
+      <div className="rounded-lg p-6" style={PG_CARD}>
         <h2 className="text-sm font-bold uppercase tracking-wider mb-4 flex items-center gap-2"
           style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
           What&apos;s Coming
@@ -98,7 +98,7 @@ export default function DogOfTheMonthPage() {
           { icon: "🗳️", title: "Community Votes", desc: "The community picks the champion every month", color: "#a855f7" },
           { icon: "🏆", title: "Win Prizes", desc: "Permanent crown badge, spotlight, and exclusive rewards", color: "#1C1C1C" },
         ].map((item, i) => (
-          <div key={i} className="rounded-xl p-3 sm:p-5 text-center transition-all hover:scale-[1.03]"
+          <div key={i} className="rounded-lg p-3 sm:p-5 text-center transition-all hover:scale-[1.03]"
             style={{
               ...PG_CARD,
             }}>
@@ -118,7 +118,7 @@ export default function DogOfTheMonthPage() {
       </div>
 
       {/* Email Notification */}
-      <div className="rounded-xl p-6" style={PG_CARD}>
+      <div className="rounded-lg p-6" style={PG_CARD}>
         <h2 className="text-sm font-bold uppercase tracking-wider mb-4 flex items-center gap-2"
           style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
           Get Notified on Launch

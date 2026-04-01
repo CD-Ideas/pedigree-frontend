@@ -213,7 +213,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
 
   return (
     <div ref={ref} className="relative mb-5">
-      <div className="rounded-xl overflow-hidden" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px" }}>
+      <div className="rounded-lg overflow-hidden" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px" }}>
         <div className="px-4 py-3 flex items-center gap-3">
           <span className="text-lg">🔍</span>
           <input
@@ -281,7 +281,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
 
       {/* Search dropdown */}
       {open && results.length > 0 && (
-        <div className="absolute left-0 right-0 top-full mt-1 rounded-xl overflow-hidden z-50 max-h-80 overflow-y-auto"
+        <div className="absolute left-0 right-0 top-full mt-1 rounded-lg overflow-hidden z-50 max-h-80 overflow-y-auto"
              style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px" }}>
           {results.map((d) => {
             const color = getDogColor(d.registered_name);
@@ -307,7 +307,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
         </div>
       )}
       {open && query.length >= 2 && results.length === 0 && (
-        <div className="absolute left-0 right-0 top-full mt-1 rounded-xl px-4 py-3 text-center text-xs z-50"
+        <div className="absolute left-0 right-0 top-full mt-1 rounded-lg px-4 py-3 text-center text-xs z-50"
              style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px", color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
           No dogs found for &quot;{query}&quot;
         </div>
@@ -398,7 +398,7 @@ export default function SpotlightPage() {
         </div>
 
         {/* -- Search Controls -- */}
-        <div ref={dropdownRef} className="rounded-xl p-3 md:p-4 mb-5"
+        <div ref={dropdownRef} className="rounded-lg p-3 md:p-4 mb-5"
              style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px" }}>
 
           <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-end">
@@ -473,7 +473,7 @@ export default function SpotlightPage() {
                 <input
                   type="text" placeholder="Search dogs..." value={searchText}
                   onChange={(e) => setSearchText(e.target.value)}
-                  className="w-full px-2.5 py-1.5 rounded-md text-xs outline-none"
+                  className="w-full px-2.5 py-1.5 rounded-lg text-xs outline-none"
                   style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)", borderRadius: "8px" }}
                   autoFocus
                 />
@@ -516,7 +516,7 @@ export default function SpotlightPage() {
               {SORT_OPTIONS.map((s) => (
                 <button key={s.key}
                         onClick={() => { setSort(s.key); }}
-                        className="text-[10px] px-2 py-1 rounded-md font-semibold transition-all"
+                        className="text-[10px] px-2 py-1 rounded-lg font-semibold transition-all"
                         style={{
                           background: sort === s.key ? "#C9B29F" : "#FAFAFA",
                           color: sort === s.key ? "#1C1C1C" : "#6B6B6B",
@@ -598,7 +598,7 @@ export default function SpotlightPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2.5">
               {results.map((r, idx) => (
                 <Link key={r.id} href={`/pedigree/${r.id}`}
-                      className="group rounded-xl overflow-hidden transition-all hover:scale-[1.02] relative"
+                      className="group rounded-lg overflow-hidden transition-all hover:scale-[1.02] relative"
                       style={{
                         background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px",
                         animationDelay: `${idx * 50}ms`,
@@ -607,7 +607,7 @@ export default function SpotlightPage() {
                   {/* Rank Badge */}
                   <div className="absolute top-2 left-2 z-10 w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold"
                        style={{
-                         background: idx === 0 ? "#C9B29F" : idx === 1 ? "#9ca3af" : idx === 2 ? "#d97706" : "#FAFAFA",
+                         background: idx === 0 ? "#C9B29F" : idx === 1 ? "#6B6B6B" : idx === 2 ? "#8a6518" : "#FAFAFA",
                          color: idx === 0 ? "#1C1C1C" : idx < 3 ? "#fff" : "#1C1C1C",
                          border: idx >= 3 ? "2px solid #C9B29F" : "2px solid transparent",
                          fontFamily: "var(--font-mono)",

@@ -249,7 +249,7 @@ export default function MyAdsPage() {
               return (
                 <div
                   key={ad.id}
-                  className="rounded-xl overflow-hidden transition-all duration-300 hover:scale-[1.01]"
+                  className="rounded-lg overflow-hidden transition-all duration-300 hover:scale-[1.01]"
                   style={{
                     background: "#FAF7F2",
                     border: "2px solid #C9B29F",

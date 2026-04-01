@@ -53,7 +53,7 @@ function NavSearch() {
 
   return (
     <div ref={containerRef} className="relative">
-      <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl transition-all duration-300 focus-within:scale-[1.02]" style={{
+      <div className="flex items-center gap-2 px-3.5 py-2 rounded-lg transition-all duration-300 focus-within:scale-[1.02]" style={{
         background: "#FAFAFA",
         border: "2px solid #C9B29F",
       }}>
@@ -461,7 +461,7 @@ export default function NavBar() {
               {showNotifications && (
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setShowNotifications(false)} />
-                  <div className="absolute right-0 top-full mt-2 w-80 sm:w-96 max-w-[calc(100vw-16px)] rounded-xl overflow-hidden z-50"
+                  <div className="absolute right-0 top-full mt-2 w-80 sm:w-96 max-w-[calc(100vw-16px)] rounded-lg overflow-hidden z-50"
                     style={{
                       background: "#FAFAFA",
                       border: "2px solid #C9B29F",
@@ -647,7 +647,7 @@ export default function NavBar() {
                 {showAvatarPicker && (
                   <>
                     <div className="fixed inset-0 z-[60]" onClick={(e) => { e.stopPropagation(); setShowAvatarPicker(false); }} />
-                    <div className="fixed right-2 sm:absolute sm:right-0 top-14 sm:top-full mt-0 sm:mt-2 w-[calc(100vw-16px)] sm:w-64 max-w-64 rounded-xl overflow-hidden z-[70]"
+                    <div className="fixed right-2 sm:absolute sm:right-0 top-14 sm:top-full mt-0 sm:mt-2 w-[calc(100vw-16px)] sm:w-64 max-w-64 rounded-lg overflow-hidden z-[70]"
                       onClick={(e) => e.stopPropagation()}
                       style={{
                         background: "#FAFAFA",
@@ -705,7 +705,7 @@ export default function NavBar() {
               {dropdownOpen && (
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setDropdownOpen(false)} />
-                  <div className="absolute right-0 top-full mt-2 w-56 rounded-xl overflow-hidden z-50"
+                  <div className="absolute right-0 top-full mt-2 w-56 rounded-lg overflow-hidden z-50"
                     style={{
                       background: "#FAFAFA",
                       border: "2px solid #C9B29F",

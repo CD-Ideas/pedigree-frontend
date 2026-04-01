@@ -280,7 +280,7 @@ export default function AccountPage() {
               <img
                 src={avatarPreview}
                 alt="Avatar"
-                className="rounded-2xl object-cover"
+                className="rounded-lg object-cover"
                 style={{ border: "2px solid #C9B29F", width: "120px", height: "90px" }}
               />
             ) : (
@@ -574,7 +574,7 @@ export default function AccountPage() {
                 const btn = e.currentTarget;
                 const isOn = btn.dataset.on === "true";
                 btn.dataset.on = isOn ? "false" : "true";
-                btn.style.background = isOn ? "#E5E7EB" : "rgba(34,197,94,0.3)";
+                btn.style.background = isOn ? "#EDE4D5" : "rgba(34,197,94,0.3)";
                 btn.querySelector("span")!.style.transform = isOn ? "translateX(0)" : "translateX(20px)";
                 btn.querySelector("span")!.style.background = isOn ? "#6B6B6B" : "#22c55e";
                 localStorage.setItem("pref_email_notifs", isOn ? "off" : "on");
@@ -582,7 +582,7 @@ export default function AccountPage() {
               }}
               data-on="false"
               className="relative w-11 h-6 rounded-full transition-all flex-shrink-0"
-              style={{ background: "#E5E7EB", border: "2px solid #C9B29F" }}
+              style={{ background: "#EDE4D5", border: "2px solid #C9B29F" }}
             >
               <span className="absolute top-0.5 left-0.5 w-5 h-5 rounded-full transition-all" style={{ background: "#6B6B6B" }} />
             </button>
@@ -609,7 +609,7 @@ export default function AccountPage() {
               }}
               className="relative w-11 h-6 rounded-full transition-all flex-shrink-0"
               style={{
-                background: soundMuted ? "#E5E7EB" : "rgba(34,197,94,0.3)",
+                background: soundMuted ? "#EDE4D5" : "rgba(34,197,94,0.3)",
                 border: "2px solid #C9B29F",
               }}
             >
@@ -649,7 +649,7 @@ export default function AccountPage() {
               }}
               className="relative w-11 h-6 rounded-full transition-all flex-shrink-0"
               style={{
-                background: activeStatus ? "rgba(34,197,94,0.3)" : "#E5E7EB",
+                background: activeStatus ? "rgba(34,197,94,0.3)" : "#EDE4D5",
                 border: "2px solid #C9B29F",
               }}
             >

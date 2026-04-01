@@ -252,7 +252,7 @@ function DogSlot({
           <span className="text-sm" style={{ color }}>{icon}</span>
           <span className="text-[10px] font-semibold uppercase tracking-widest" style={{ color, fontFamily: "var(--font-table)" }}>{label}</span>
           {selected && (
-            <button onClick={clear} className="ml-auto text-[10px] px-2 py-0.5 rounded-md transition-all hover:bg-red-500/10" style={{ color: "#ef4444", background: "#FAFAFA", border: "2px solid #C9B29F" }}>
+            <button onClick={clear} className="ml-auto text-[10px] px-2 py-0.5 rounded-lg transition-all hover:bg-red-500/10" style={{ color: "#ef4444", background: "#FAFAFA", border: "2px solid #C9B29F" }}>
               Clear
             </button>
           )}
@@ -600,7 +600,7 @@ export default function BreedingCalculatorPage() {
 
             {/* Half-sib toggle */}
             <label className="flex items-center gap-2 cursor-pointer">
-              <div className="relative inline-block w-8 h-[18px] rounded-full transition-colors" style={{ background: includeHalf ? "#C9B29F" : "#E5E7EB" }}
+              <div className="relative inline-block w-8 h-[18px] rounded-full transition-colors" style={{ background: includeHalf ? "#C9B29F" : "#EDE4D5" }}
                 onClick={() => setIncludeHalf(!includeHalf)}>
                 <span className="absolute top-[2px] left-[2px] w-[14px] h-[14px] rounded-full transition-transform" style={{ transform: includeHalf ? "translateX(14px)" : "translateX(0)", background: includeHalf ? "#1C1C1C" : "#6B6B6B" }} />
               </div>
@@ -693,7 +693,7 @@ export default function BreedingCalculatorPage() {
                       {avk > 80 ? "High diversity -- wide gene pool" : avk > 60 ? "Moderate -- some repeat ancestors" : "Low diversity -- heavy linebreeding"}
                     </span>
                   </div>
-                  <div className="mt-3 h-2 rounded-full overflow-hidden" style={{ background: "#E5E7EB" }}>
+                  <div className="mt-3 h-2 rounded-full overflow-hidden" style={{ background: "#EDE4D5" }}>
                     <div className="h-full rounded-full transition-all duration-1000" style={{ width: `${Math.min(avk, 100)}%`, background: avk > 80 ? "#22c55e" : avk > 60 ? "#eab308" : "#ef4444" }} />
                   </div>
                 </Card>
@@ -713,7 +713,7 @@ export default function BreedingCalculatorPage() {
                             <span className="text-xs font-bold" style={{ color: col, fontFamily: "var(--font-table)" }}>{bl.name}</span>
                             <span className="text-xs font-bold" style={{ color: col, fontFamily: "var(--font-mono)" }}>{bl.pct}%</span>
                           </div>
-                          <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "#E5E7EB" }}>
+                          <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "#EDE4D5" }}>
                             <div className="h-full rounded-full transition-all duration-1000" style={{ width: `${bl.pct}%`, background: col, opacity: 0.8 }} />
                           </div>
                         </div>

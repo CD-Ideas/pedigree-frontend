@@ -380,7 +380,7 @@ export default function PublicDogsPage() {
                 { label: "Females", value: "FEMALE", icon: "\u2640" },
               ].map((f) => (
                 <button key={f.value} onClick={() => { setSexFilter(f.value); setPage(1); }}
-                  className="px-3 py-1.5 rounded-md text-[11px] font-semibold transition-all"
+                  className="px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-all"
                   style={{
                     fontFamily: "var(--font-table)",
                     background: sexFilter === f.value
@@ -477,7 +477,7 @@ export default function PublicDogsPage() {
                     else { setSort(s.key); setOrder("asc"); }
                     setPage(1);
                   }}
-                  className="px-3 py-1.5 rounded-md text-[11px] font-semibold transition-all flex items-center gap-1.5"
+                  className="px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-all flex items-center gap-1.5"
                   style={{
                     background: sort === s.key ? "rgba(29,91,191,0.08)" : "transparent",
                     color: sort === s.key ? "#1d5bbf" : "#6B6B6B",
@@ -501,7 +501,7 @@ export default function PublicDogsPage() {
             <span className="text-xs" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
               Showing results for
             </span>
-            <span className="text-xs font-bold px-2 py-0.5 rounded-md"
+            <span className="text-xs font-bold px-2 py-0.5 rounded-lg"
               style={{ background: "rgba(29,91,191,0.06)", color: "#1d5bbf", fontFamily: "var(--font-table)" }}>
               &ldquo;{search}&rdquo;
             </span>

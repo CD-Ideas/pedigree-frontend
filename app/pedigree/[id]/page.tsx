@@ -336,14 +336,14 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
         <div className="flex items-center gap-1 rounded-lg p-1" style={{ background: PG.tabBg, borderRadius: PG.cardRadius }}>
           {[3, 4, 5].map((g) => (
             <button key={g} onClick={() => { setDisplayGens(g); setZoom(1); if (containerRef.current) containerRef.current.scrollLeft = 0; }}
-              className="px-3 py-1 rounded-md flex items-center justify-center text-xs font-bold transition-all"
+              className="px-3 py-1 rounded-lg flex items-center justify-center text-xs font-bold transition-all"
               style={{
                 background: displayGens === g ? PG.tabActive : "transparent",
                 color: displayGens === g ? PG.tabActiveTxt : PG.tabText,
                 border: "1px solid transparent",
                 fontFamily: PG.font,
                 letterSpacing: "0.03em",
-                borderRadius: "6px",
+                borderRadius: "8px",
               }}>
               {g}G
             </button>
@@ -353,14 +353,14 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
         {/* Zoom controls */}
         <div className="flex items-center gap-1 rounded-lg p-1" style={{ background: PG.tabBg, borderRadius: PG.cardRadius }}>
           <button onClick={() => setZoom(z => Math.max(0.5, z - 0.1))}
-            className="w-7 h-7 rounded-md flex items-center justify-center text-sm font-bold transition-all"
+            className="w-7 h-7 rounded-lg flex items-center justify-center text-sm font-bold transition-all"
             style={{ color: PG.tabText }}>−</button>
           <span className="text-xs px-1.5 font-bold" style={{ color: PG.tabActive, fontFamily: PG.font, minWidth: "36px", textAlign: "center" }}>{Math.round(zoom * 100)}%</span>
           <button onClick={() => setZoom(z => Math.min(1.5, z + 0.1))}
-            className="w-7 h-7 rounded-md flex items-center justify-center text-sm font-bold transition-all"
+            className="w-7 h-7 rounded-lg flex items-center justify-center text-sm font-bold transition-all"
             style={{ color: PG.tabText }}>+</button>
           <button onClick={() => setZoom(1)}
-            className="ml-0.5 px-2.5 py-1 rounded-md flex items-center justify-center text-[11px] font-bold transition-all"
+            className="ml-0.5 px-2.5 py-1 rounded-lg flex items-center justify-center text-[11px] font-bold transition-all"
             style={{ color: PG.tabText, fontFamily: PG.font, opacity: 0.7 }}>Reset</button>
         </div>
       </div>
@@ -536,7 +536,7 @@ function OffspringTab({ offspring }: { offspring: Offspring[] }) {
       {offspring.map((o, i) => {
         const cc = getDogColorDark(o.offspring_name);
         return (
-          <div key={i} className="rounded-md flex items-center overflow-hidden transition-all"
+          <div key={i} className="rounded-lg flex items-center overflow-hidden transition-all"
                style={{
                  background: PG.cardBg,
                  border: PG.cardBorder,
@@ -602,7 +602,7 @@ function SiblingsTab({ siblings }: { siblings: Dog["siblings"] }) {
             {sec.list.map((s, i) => {
               const cc = getDogColorDark(s.sibling_name);
               return (
-                <div key={i} className="rounded-md flex items-center overflow-hidden transition-all"
+                <div key={i} className="rounded-lg flex items-center overflow-hidden transition-all"
                      style={{
                        background: PG.cardBg,
                        border: PG.cardBorder,
@@ -727,7 +727,7 @@ function PedStatsTab({ genetics }: { genetics: Genetic[] }) {
         <div ref={legendRef} className="flex-1 space-y-0.5 w-full max-h-[300px] overflow-y-auto">
           {slices.map((s, i) => (
             <div key={i} id={`pedstat-${i}`}
-                 className="rounded-md flex items-center overflow-hidden transition-all cursor-pointer"
+                 className="rounded-lg flex items-center overflow-hidden transition-all cursor-pointer"
                  onMouseEnter={() => setHovered(i)} onMouseLeave={() => setHovered(null)}
                  style={{
                    background: hovered === i ? PG.subjectBg : PG.cardBg,
@@ -771,7 +771,7 @@ function PhotosTab({ offspring }: { offspring: Offspring[] }) {
         const src = o.photo_url!.startsWith("http") ? o.photo_url! : `https://www.apbt.online-pedigrees.com/${o.photo_url}`;
         const cc = getDogColorDark(o.offspring_name);
         return (
-          <Link key={i} href={`/pedigree/${o.offspring_id}`} className="group relative rounded-md overflow-hidden transition-all"
+          <Link key={i} href={`/pedigree/${o.offspring_id}`} className="group relative rounded-lg overflow-hidden transition-all"
                 style={{ background: PG.cardBg, border: PG.cardBorder, borderRadius: PG.cardRadius }}>
             <div className="w-full h-[130px] sm:h-[150px] overflow-hidden">
               <img src={src} alt={o.offspring_name} className="w-full h-full object-cover transition-transform group-hover:scale-105" />
@@ -874,7 +874,7 @@ function TitlesTab({ offspring }: { offspring: Offspring[] }) {
           {groups[openTitle].map((o, i) => {
             const cc = getDogColorDark(o.offspring_name);
             return (
-              <div key={i} className="rounded-md flex items-center overflow-hidden transition-all"
+              <div key={i} className="rounded-lg flex items-center overflow-hidden transition-all"
                    style={{
                      background: PG.cardBg,
                      border: PG.cardBorder,
@@ -1010,22 +1010,22 @@ export default function PublicPedigreePage() {
         })()}
 
         {/* ─── Photo + Details ─── */}
-        <div className="rounded-xl overflow-hidden" style={{ border: "2px solid #C9B29F", background: "#FAFAFA", borderRadius: PG.cardRadius, minHeight: "220px" }}>
+        <div className="rounded-lg overflow-hidden" style={{ border: "2px solid #C9B29F", background: "#FAFAFA", borderRadius: PG.cardRadius, minHeight: "220px" }}>
           <div className="flex flex-col sm:flex-row sm:items-stretch h-full">
             {/* Photo */}
             <div className="flex-shrink-0 relative m-2 w-full sm:w-[200px] h-[200px]">
               {photoUrl ? (
                 <img src={photoUrl} alt={dog.registered_name}
-                     className="rounded-md w-full sm:w-[200px] h-[200px]"
+                     className="rounded-lg w-full sm:w-[200px] h-[200px]"
                      style={{ objectFit: "fill", borderRadius: PG.cardRadius }} />
               ) : (
-                <div className="rounded-md flex items-center justify-center w-full sm:w-[200px] h-[200px]"
+                <div className="rounded-lg flex items-center justify-center w-full sm:w-[200px] h-[200px]"
                      style={{ background: PG.bg, borderRadius: PG.cardRadius }}>
                   <span className="text-2xl" style={{ color: sexColor, opacity: 0.3 }}>{isMale ? "♂" : "♀"}</span>
                 </div>
               )}
               {hoverPhoto && (
-                <div className="absolute inset-0 z-10 transition-opacity duration-200 rounded-md overflow-hidden">
+                <div className="absolute inset-0 z-10 transition-opacity duration-200 rounded-lg overflow-hidden">
                   <img src={hoverPhoto} alt="Parent" className="w-full h-full object-cover" />
                 </div>
               )}
@@ -1075,7 +1075,7 @@ export default function PublicPedigreePage() {
 
         {/* ─── Sire / Dam links ─── */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <div className="rounded-xl p-2.5"
+          <div className="rounded-lg p-2.5"
                style={{ border: "2px solid #C9B29F", background: "#FAFAFA", borderRadius: PG.cardRadius }}
                onMouseEnter={() => { if (dog.sire?.photo_url) { const u = dog.sire.photo_url; setHoverPhoto(u.startsWith("http") ? u : `https://www.apbt.online-pedigrees.com/${u}`); } }}
                onMouseLeave={() => setHoverPhoto(null)}>
@@ -1087,7 +1087,7 @@ export default function PublicPedigreePage() {
               </Link>
             ) : <span className="text-sm" style={{ color: PG.textMuted }}>Unknown</span>}
           </div>
-          <div className="rounded-xl p-2.5"
+          <div className="rounded-lg p-2.5"
                style={{ border: "2px solid #C9B29F", background: "#FAFAFA", borderRadius: PG.cardRadius }}
                onMouseEnter={() => { if (dog.dam?.photo_url) { const u = dog.dam.photo_url; setHoverPhoto(u.startsWith("http") ? u : `https://www.apbt.online-pedigrees.com/${u}`); } }}
                onMouseLeave={() => setHoverPhoto(null)}>
@@ -1102,7 +1102,7 @@ export default function PublicPedigreePage() {
         </div>
 
         {/* ─── Pedigree Tree ─── */}
-        <div className="rounded-xl overflow-hidden" style={{
+        <div className="rounded-lg overflow-hidden" style={{
           border: "2px solid #C9B29F",
           borderRadius: PG.cardRadius,
         }}>
@@ -1150,7 +1150,7 @@ export default function PublicPedigreePage() {
           ];
           const currentTab = activeTab;
           return (
-            <div className="rounded-xl overflow-hidden" style={{ border: `2px solid ${PG.sandyBrown}`, background: PG.wrapperBg, borderRadius: PG.cardRadius }}>
+            <div className="rounded-lg overflow-hidden" style={{ border: `2px solid ${PG.sandyBrown}`, background: PG.wrapperBg, borderRadius: PG.cardRadius }}>
               {/* Tab headers */}
               <div className="flex" style={{
                 background: PG.tabBg,
@@ -1165,7 +1165,7 @@ export default function PublicPedigreePage() {
                       background: currentTab === tab.key ? PG.tabActive : "transparent",
                       color: currentTab === tab.key ? PG.tabActiveTxt : PG.tabText,
                       border: "1px solid transparent",
-                      borderRadius: "6px",
+                      borderRadius: "8px",
                     }}>
                     <span className="text-sm">{tab.icon}</span>
                     <span className="text-sm font-semibold">{tab.label}</span>

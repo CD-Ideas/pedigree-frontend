@@ -338,7 +338,7 @@ export default function MyPedigreesPage() {
 
         {/* Reminders Banner */}
         {allReminders.length > 0 && (
-          <div className="rounded-xl p-4" style={{
+          <div className="rounded-lg p-4" style={{
             background: "linear-gradient(135deg, rgba(234,179,8,0.08), rgba(234,179,8,0.03), #FAFAFA)",
             border: "2px solid rgba(234,179,8,0.3)",
           }}>
@@ -525,7 +525,7 @@ export default function MyPedigreesPage() {
                     {/* Actions */}
                     <div className="flex items-center gap-1 mt-1.5">
                       <span
-                        className="text-[9px] px-2 py-0.5 rounded-md font-semibold transition-all group-hover:scale-105 inline-block"
+                        className="text-[9px] px-2 py-0.5 rounded-lg font-semibold transition-all group-hover:scale-105 inline-block"
                         style={{
                           background: "rgba(201,178,159,0.1)",
                           color: "#1C1C1C",
@@ -536,7 +536,7 @@ export default function MyPedigreesPage() {
                         View
                       </span>
                       <span
-                        className="text-[9px] px-2 py-0.5 rounded-md font-semibold inline-block"
+                        className="text-[9px] px-2 py-0.5 rounded-lg font-semibold inline-block"
                         style={{
                           background: "rgba(34,197,94,0.1)",
                           color: "#22c55e",

@@ -133,7 +133,7 @@ export default function PedigreeHub() {
 
           {/* Search Box */}
           <form onSubmit={handleSearch} className="relative max-w-2xl mx-auto">
-            <div className="rounded-xl overflow-hidden transition-all duration-300"
+            <div className="rounded-lg overflow-hidden transition-all duration-300"
               style={{
                 background: "#FAF7F2",
                 border: "2px solid #C9B29F",
@@ -150,7 +150,7 @@ export default function PedigreeHub() {
                   style={{ fontFamily: "var(--font-table)", fontSize: "16px", color: "#1C1C1C", fontWeight: 500 }}
                 />
                 <button type="submit"
-                  className="px-6 py-2.5 rounded-xl text-sm font-bold transition-all flex-shrink-0"
+                  className="px-6 py-2.5 rounded-lg text-sm font-bold transition-all flex-shrink-0"
                   style={{
                     background: "#1C1C1C", color: "#FAF7F2",
                     fontFamily: "var(--font-table)", letterSpacing: "0.04em", textTransform: "uppercase",
@@ -212,7 +212,7 @@ export default function PedigreeHub() {
                     const titles = titlePatterns.filter(t => dog.name?.toUpperCase().includes(t));
                     return (
                       <Link key={dog.id} href={`/pedigree/${dog.id}`}
-                        className="group rounded-xl overflow-hidden transition-all hover:scale-[1.02]"
+                        className="group rounded-lg overflow-hidden transition-all hover:scale-[1.02]"
                         style={{ border: "2px solid #C9B29F", background: "#FAF7F2", borderRadius: "8px" }}>
                         {/* Photo or placeholder */}
                         <div className="h-36 relative overflow-hidden">
@@ -333,7 +333,7 @@ export default function PedigreeHub() {
                 const isMale = dog.sex === "M";
                 return (
                   <Link key={dog.id} href={`/pedigree/${dog.id}`}
-                    className="group rounded-xl p-5 text-center transition-all hover:scale-[1.03]"
+                    className="group rounded-lg p-5 text-center transition-all hover:scale-[1.03]"
                     style={{
                       background: "#FAF7F2",
                       border: "2px solid #C9B29F",
@@ -379,7 +379,7 @@ export default function PedigreeHub() {
                 { title: "Genetic Stats", desc: "See bloodline percentages and coefficient of inbreeding" },
                 { title: "Share Anywhere", desc: "Share pedigree links via WhatsApp, Telegram, or social media" },
               ].map((f, i) => (
-                <div key={i} className="rounded-xl p-5 text-center"
+                <div key={i} className="rounded-lg p-5 text-center"
                   style={{
                     background: "#FAF7F2",
                     border: "2px solid #C9B29F",
@@ -395,7 +395,7 @@ export default function PedigreeHub() {
 
         {/* CTA */}
         {!searched && (
-          <section className="mt-12 text-center rounded-2xl p-8"
+          <section className="mt-12 text-center rounded-lg p-8"
             style={{
               background: "#FAF7F2",
               border: "2px solid #C9B29F",
@@ -408,7 +408,7 @@ export default function PedigreeHub() {
               Create an account to register dogs, build pedigree trees, track litters, and more.
             </p>
             <Link href="/register"
-              className="inline-flex items-center gap-2 px-8 py-3 rounded-xl text-sm font-bold transition-all"
+              className="inline-flex items-center gap-2 px-8 py-3 rounded-lg text-sm font-bold transition-all"
               style={{
                 background: "#1C1C1C", color: "#FAF7F2",
                 fontFamily: "var(--font-table)", letterSpacing: "0.04em", textTransform: "uppercase",

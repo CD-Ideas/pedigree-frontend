@@ -378,7 +378,7 @@ function CreateAdContent() {
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* ─── Listed By ─── */}
           <div
-            className="rounded-2xl p-5"
+            className="rounded-lg p-5"
             style={{ ...GLASS_BOX }}
           >
             <label className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
@@ -414,7 +414,7 @@ function CreateAdContent() {
           {preselectedCategory ? (
             /* Category was preselected from marketplace page — show compact label */
             <div
-              className="rounded-2xl p-4 flex items-center gap-3"
+              className="rounded-lg p-4 flex items-center gap-3"
               style={{
                 ...GLASS_BOX,
                 border: `2px solid ${CATEGORIES.find(c => c.key === category)?.color || "#C9B29F"}55`,
@@ -444,7 +444,7 @@ function CreateAdContent() {
           ) : (
             /* No preselected category — show full picker */
             <div
-              className="rounded-2xl p-5"
+              className="rounded-lg p-5"
               style={{
                 ...GLASS_BOX,
                 border: errors.category ? "2px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
@@ -493,7 +493,7 @@ function CreateAdContent() {
 
           {/* ─── Link to Dog ─── */}
           <div
-            className="rounded-2xl p-5 relative"
+            className="rounded-lg p-5 relative"
             style={{
               ...GLASS_BOX,
               border: errors.dog ? "2px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
@@ -613,7 +613,7 @@ function CreateAdContent() {
 
           {/* ─── Heading ─── */}
           <div
-            className="rounded-2xl p-5"
+            className="rounded-lg p-5"
             style={{
               ...GLASS_BOX,
               border: errors.title ? "2px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
@@ -667,7 +667,7 @@ function CreateAdContent() {
 
           {/* ─── Description ─── */}
           <div
-            className="rounded-2xl p-5"
+            className="rounded-lg p-5"
             style={{
               ...GLASS_BOX,
               border: errors.description ? "2px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
@@ -710,7 +710,7 @@ function CreateAdContent() {
 
           {/* ─── Price ─── */}
           <div
-            className="rounded-2xl p-5"
+            className="rounded-lg p-5"
             style={{ ...GLASS_BOX }}
           >
             <label className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
@@ -747,7 +747,7 @@ function CreateAdContent() {
 
           {/* ─── Photos ─── */}
           <div
-            className="rounded-2xl p-5"
+            className="rounded-lg p-5"
             style={{
               ...GLASS_BOX,
               border: errors.photos ? "2px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
@@ -869,7 +869,7 @@ function CreateAdContent() {
 
           {/* ─── Location ─── */}
           <div
-            className="rounded-2xl p-5"
+            className="rounded-lg p-5"
             style={{
               ...GLASS_BOX,
               border: errors.location ? "2px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
@@ -931,7 +931,7 @@ function CreateAdContent() {
 
           {/* ─── Contact Info ─── */}
           <div
-            className="rounded-2xl p-5"
+            className="rounded-lg p-5"
             style={{
               ...GLASS_BOX,
               border: errors.contact ? "2px solid rgba(239,68,68,0.5)" : GLASS_BOX.border,
@@ -1043,7 +1043,7 @@ function CreateAdContent() {
           {/* ─── Submit Error ─── */}
           {submitError && (
             <div
-              className="rounded-xl p-4 text-center"
+              className="rounded-lg p-4 text-center"
               style={{ background: "rgba(239,68,68,0.08)", border: "2px solid rgba(239,68,68,0.3)" }}
             >
               <p className="text-xs font-bold" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
@@ -1056,7 +1056,7 @@ function CreateAdContent() {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full rounded-xl py-3.5 text-sm font-bold uppercase tracking-widest transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100"
+            className="w-full rounded-lg py-3.5 text-sm font-bold uppercase tracking-widest transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100"
             style={{
               background: "#1C1C1C",
               color: "#FAF7F2",

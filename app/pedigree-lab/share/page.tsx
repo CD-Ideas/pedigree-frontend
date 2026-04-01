@@ -361,7 +361,7 @@ function SharePreviewInner() {
                         background: "#1C1C1C",
                         color: "#FAF7F2",
                         fontFamily: "var(--font-display)",
-                        borderRadius: 4,
+                        borderRadius: 8,
                       }}
                     >
                       {label}

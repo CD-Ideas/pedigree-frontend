@@ -179,7 +179,7 @@ function PedigreeSearch() {
 
   return (
     <div ref={ref} className="relative">
-      <div className="rounded-xl overflow-hidden" style={{ border: "2px solid #C9B29F",  background: "#FAF7F2",  }}>
+      <div className="rounded-lg overflow-hidden" style={{ border: "2px solid #C9B29F",  background: "#FAF7F2",  }}>
         <div className="px-4 py-2.5 flex items-center gap-3">
           <span className="text-base">🔍</span>
           <input type="text" placeholder="Search by dog name or paste a pedigree URL..."
@@ -191,7 +191,7 @@ function PedigreeSearch() {
         </div>
       </div>
       {open && results.length > 0 && (
-        <div className="absolute left-0 right-0 top-full mt-1 rounded-xl overflow-hidden z-50 max-h-80 overflow-y-auto"
+        <div className="absolute left-0 right-0 top-full mt-1 rounded-lg overflow-hidden z-50 max-h-80 overflow-y-auto"
              style={{ background: "#FAF7F2", border: "2px solid #C9B29F",  }}>
           {results.map((d) => (
             <a key={d.dog_id} href={`/pedigree/${d.dog_id}`}
@@ -212,7 +212,7 @@ function PedigreeSearch() {
         </div>
       )}
       {open && query.length >= 2 && results.length === 0 && (
-        <div className="absolute left-0 right-0 top-full mt-1 rounded-xl px-4 py-3 text-center text-xs z-50"
+        <div className="absolute left-0 right-0 top-full mt-1 rounded-lg px-4 py-3 text-center text-xs z-50"
              style={{ background: "#FAF7F2", border: "2px solid #C9B29F", color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
           No dogs found for &quot;{query}&quot;
         </div>
@@ -254,24 +254,24 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
         <div className="flex items-center gap-1 rounded-lg p-1" style={{ background: "#1C1C1C", borderRadius: "8px" }}>
           {[3, 4, 5].map((g) => (
             <button key={g} onClick={() => { setDisplayGens(g); setZoom(1); if (containerRef.current) containerRef.current.scrollLeft = 0; }}
-              className="px-3 py-1 rounded-md flex items-center justify-center text-xs font-bold transition-all"
+              className="px-3 py-1 rounded-lg flex items-center justify-center text-xs font-bold transition-all"
               style={{
                 background: displayGens === g ? "#C9B29F" : "transparent",
                 color: displayGens === g ? "#1C1C1C" : "#FAF7F2",
                 border: "1px solid transparent",
                 fontFamily: "var(--font-table)",
                 letterSpacing: "0.03em",
-                borderRadius: "6px",
+                borderRadius: "8px",
               }}>
               {g}G
             </button>
           ))}
         </div>
         <div className="flex items-center gap-1 rounded-lg p-1" style={{ background: "#1C1C1C", borderRadius: "8px" }}>
-          <button onClick={() => setZoom((z) => Math.max(0.5, z - 0.1))} className="w-7 h-7 rounded-md flex items-center justify-center text-sm font-bold transition-all" style={{ color: "#FAF7F2" }}>−</button>
+          <button onClick={() => setZoom((z) => Math.max(0.5, z - 0.1))} className="w-7 h-7 rounded-lg flex items-center justify-center text-sm font-bold transition-all" style={{ color: "#FAF7F2" }}>−</button>
           <span className="text-xs px-1.5 font-bold" style={{ color: "#C9B29F", fontFamily: "var(--font-table)", minWidth: "36px", textAlign: "center" }}>{Math.round(zoom * 100)}%</span>
-          <button onClick={() => setZoom((z) => Math.min(1.5, z + 0.1))} className="w-7 h-7 rounded-md flex items-center justify-center text-sm font-bold transition-all" style={{ color: "#FAF7F2" }}>+</button>
-          <button onClick={() => setZoom(1)} className="ml-0.5 px-2.5 py-1 rounded-md flex items-center justify-center text-[11px] font-bold transition-all" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)", opacity: 0.7 }}>Reset</button>
+          <button onClick={() => setZoom((z) => Math.min(1.5, z + 0.1))} className="w-7 h-7 rounded-lg flex items-center justify-center text-sm font-bold transition-all" style={{ color: "#FAF7F2" }}>+</button>
+          <button onClick={() => setZoom(1)} className="ml-0.5 px-2.5 py-1 rounded-lg flex items-center justify-center text-[11px] font-bold transition-all" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)", opacity: 0.7 }}>Reset</button>
         </div>
       </div>
 
@@ -632,14 +632,14 @@ export default function PublishedPedigreePage() {
         </div>
 
         {/* ─── Photo + Details ─── */}
-        <div className="rounded-xl overflow-hidden" style={{ border: "2px solid #C9B29F",  background: "#FAFAFA",  minHeight: "220px" }}>
+        <div className="rounded-lg overflow-hidden" style={{ border: "2px solid #C9B29F",  background: "#FAFAFA",  minHeight: "220px" }}>
           <div className="flex flex-col sm:flex-row sm:items-stretch h-full">
             {/* Photo */}
             <div className="flex-shrink-0 relative m-2 w-full sm:w-[200px] h-[200px]">
               {photoUrl ? (
-                <img src={photoUrl} alt={displayName} className="rounded-md w-full sm:w-[200px] h-[200px]" style={{ objectFit: "fill" }} />
+                <img src={photoUrl} alt={displayName} className="rounded-lg w-full sm:w-[200px] h-[200px]" style={{ objectFit: "fill" }} />
               ) : (
-                <div className="rounded-md flex items-center justify-center w-full sm:w-[200px] h-[200px]"
+                <div className="rounded-lg flex items-center justify-center w-full sm:w-[200px] h-[200px]"
                   style={{ background: isMale ? "rgba(29,91,191,0.08)" : "rgba(159,18,57,0.08)" }}>
                   <span className="text-2xl opacity-10" style={{ color: sexColor }}>{isMale ? "♂" : "♀"}</span>
                 </div>
@@ -684,7 +684,7 @@ export default function PublishedPedigreePage() {
 
         {/* ─── Pedigree Notes ─── */}
         {ped.pedigree_notes && (
-          <div className="rounded-xl px-3 py-2" style={{
+          <div className="rounded-lg px-3 py-2" style={{
             border: "2px solid #C9B29F",
 
             background: "#FAFAFA",
@@ -704,7 +704,7 @@ export default function PublishedPedigreePage() {
 
         {/* ─── Sire / Dam links ─── */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <div className="rounded-xl p-2.5"
+          <div className="rounded-lg p-2.5"
             style={{ border: "2px solid #C9B29F",  background: "#FAFAFA",  }}>
             <div className="text-[9px] uppercase tracking-wider mb-0.5 font-semibold" style={{ color: "#1d5bbf", letterSpacing: "0.1em" }}>♂ Sire (Father)</div>
             {sire ? (
@@ -713,7 +713,7 @@ export default function PublishedPedigreePage() {
               </Link>
             ) : <span className="text-sm" style={{ color: "#6B6B6B" }}>Unknown</span>}
           </div>
-          <div className="rounded-xl p-2.5"
+          <div className="rounded-lg p-2.5"
             style={{ border: "2px solid #C9B29F",  background: "#FAFAFA",  }}>
             <div className="text-[9px] uppercase tracking-wider mb-0.5 font-semibold" style={{ color: "#9f1239", letterSpacing: "0.1em" }}>♀ Dam (Mother)</div>
             {dam ? (
@@ -725,7 +725,7 @@ export default function PublishedPedigreePage() {
         </div>
 
         {/* ─── Pedigree Tree ─── */}
-        <div className="rounded-xl overflow-hidden" style={{
+        <div className="rounded-lg overflow-hidden" style={{
           border: "2px solid #C9B29F",
           borderRadius: "8px",
         }}>
@@ -768,7 +768,7 @@ export default function PublishedPedigreePage() {
           };
 
           return (
-            <div className="rounded-xl overflow-hidden" style={{
+            <div className="rounded-lg overflow-hidden" style={{
               border: "2px solid #C9B29F",
               background: "#FAFAFA",
             }}>
@@ -898,7 +898,7 @@ export default function PublishedPedigreePage() {
       {/* Delete Confirmation Modal */}
       {showDeleteConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4" style={{ background: "rgba(0,0,0,0.4)",  }}>
-          <div className="rounded-xl p-6 max-w-sm w-full" style={{
+          <div className="rounded-lg p-6 max-w-sm w-full" style={{
             background: "#FAF7F2",
             border: "1px solid rgba(239,68,68,0.3)",
             
@@ -922,7 +922,7 @@ export default function PublishedPedigreePage() {
               <button
                 onClick={() => setShowDeleteConfirm(false)}
                 disabled={deleting}
-                className="flex-1 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all hover:scale-105"
+                className="flex-1 px-4 py-2.5 rounded-lg text-xs font-semibold transition-all hover:scale-105"
                 style={{
                   background: "#C9B29F",
                   color: "#FAF7F2",
@@ -934,7 +934,7 @@ export default function PublishedPedigreePage() {
               <button
                 onClick={handleDelete}
                 disabled={deleting}
-                className="flex-1 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all hover:scale-105"
+                className="flex-1 px-4 py-2.5 rounded-lg text-xs font-semibold transition-all hover:scale-105"
                 style={{
                   background: "#ef4444",
                   color: "#fff",

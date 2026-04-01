@@ -155,7 +155,7 @@ export default function Dashboard() {
   const renderAvatar = (size: string, textSize: string) => {
     const pp = user?.profile_picture;
     const isPhoto = pp && !pp.startsWith("emoji:");
-    const roundStyle = isPhoto ? "rounded-2xl" : "rounded-full";
+    const roundStyle = isPhoto ? "rounded-lg" : "rounded-full";
     if (pp?.startsWith("emoji:")) {
       return (
         <div className={`${size} rounded-full flex items-center justify-center`}
@@ -184,7 +184,7 @@ export default function Dashboard() {
     <div className="flex gap-6 min-h-[calc(100vh-120px)]">
       {/* ─── Left Sidebar ─── */}
       <aside className="w-64 flex-shrink-0 hidden lg:block">
-        <div className="rounded-xl p-4 sticky top-20" style={steelFrame}>
+        <div className="rounded-lg p-4 sticky top-20" style={steelFrame}>
           <h2 className="text-[10px] uppercase tracking-widest font-bold mb-4 px-2"
             style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
             📋 Menu
@@ -239,7 +239,7 @@ export default function Dashboard() {
         {/* Feature Cards Grid */}
         <div className="grid md:grid-cols-2 gap-4">
           {/* Quick Actions */}
-          <div className="dash-box-hover rounded-xl p-5" style={steelFrame}>
+          <div className="dash-box-hover rounded-lg p-5" style={steelFrame}>
             <h2 className="text-[10px] uppercase tracking-widest font-bold mb-4 flex items-center gap-2"
               style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               <span style={{ width: 16, height: 2, background: "#C9B29F", borderRadius: 1 }} />
@@ -270,7 +270,7 @@ export default function Dashboard() {
           </div>
 
           {/* Tools & Features */}
-          <div className="dash-box-hover rounded-xl p-5" style={steelFrame}>
+          <div className="dash-box-hover rounded-lg p-5" style={steelFrame}>
             <h2 className="text-[10px] uppercase tracking-widest font-bold mb-4 flex items-center gap-2"
               style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               <span style={{ width: 16, height: 2, background: "#C9B29F", borderRadius: 1 }} />
@@ -304,7 +304,7 @@ export default function Dashboard() {
 
       {/* ─── Right Panel ─── */}
       <aside className="w-56 flex-shrink-0 hidden xl:block">
-        <div className="rounded-xl p-4 sticky top-20 space-y-4" style={steelFrame}>
+        <div className="rounded-lg p-4 sticky top-20 space-y-4" style={steelFrame}>
           {/* Profile */}
           <div className="flex flex-col items-center text-center pb-4 relative" style={{ borderBottom: "2px solid #C9B29F" }}>
             <div className="relative group cursor-pointer" onClick={() => setShowAvatarPicker(!showAvatarPicker)}>

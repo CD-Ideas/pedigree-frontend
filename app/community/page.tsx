@@ -459,7 +459,7 @@ export default function CommunityPedigreesPage() {
                       {/* View Pedigree button */}
                       <div className="mt-1.5">
                         <span
-                          className="text-[9px] px-2 py-0.5 rounded-md font-semibold transition-all group-hover:scale-105 inline-block"
+                          className="text-[9px] px-2 py-0.5 rounded-lg font-semibold transition-all group-hover:scale-105 inline-block"
                           style={{
                             background: "rgba(201,178,159,0.1)",
                             color: "#1C1C1C",

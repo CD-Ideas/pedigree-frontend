@@ -480,7 +480,7 @@ export default function DogsPage() {
               }
               setPage(1);
             }}
-            className={`sort-btn px-2.5 py-1 rounded-md text-xs font-medium ${sort === s.key ? "sort-btn-active" : ""}`}
+            className={`sort-btn px-2.5 py-1 rounded-lg text-xs font-medium ${sort === s.key ? "sort-btn-active" : ""}`}
             style={{
               background: sort === s.key ? "rgba(201,178,159,0.2)" : "transparent",
               color: sort === s.key ? "#1C1C1C" : "#6B6B6B",
