@@ -174,7 +174,7 @@ export default function SupportPage() {
             <div className="overflow-y-auto" style={{ maxHeight: "450px" }}>
               {messages.map(m => (
                 <button key={m.id} onClick={() => setSelected(m.id)}
-                  className="w-full text-left px-4 py-3 transition-all hover:bg-gray-100"
+                  className="w-full text-left px-4 py-3 transition-all"
                   style={{
                     borderBottom: "1px solid #C9B29F",
                     background: selected === m.id ? "rgba(201,178,159,0.15)" : "transparent",
@@ -190,7 +190,7 @@ export default function SupportPage() {
                     </div>
                     <span className="text-[9px] px-1.5 py-0.5 rounded-full ml-2 flex-shrink-0" style={{
                       background: m.status === "new" ? "rgba(234,179,8,0.15)" : m.status === "replied" ? "rgba(34,197,94,0.15)" : "rgba(107,114,128,0.15)",
-                      color: m.status === "new" ? "#eab308" : m.status === "replied" ? "#22c55e" : "#6b7280",
+                      color: m.status === "new" ? "#eab308" : m.status === "replied" ? "#22c55e" : "#6B6B6B",
                       fontFamily: "var(--font-table)",
                     }}>
                       {m.status}

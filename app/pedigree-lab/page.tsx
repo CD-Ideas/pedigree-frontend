@@ -318,6 +318,10 @@ function PedigreeLabInner() {
   const [previewTree, setPreviewTree] = useState<TreeRow[]>([]);
   const [previewLoading, setPreviewLoading] = useState(false);
 
+  /* ---------- Hovered dog (for Details panel) ---------- */
+  interface HoveredDogInfo { dog_id: number; name: string; photo_url: string | null; sex: string | null; }
+  const [hoveredDog, setHoveredDog] = useState<HoveredDogInfo | null>(null);
+
   /* ---------- COI ---------- */
   const [coi, setCoi] = useState(0);
   const [coiLoading, setCoiLoading] = useState(false);
@@ -965,11 +969,11 @@ function PedigreeLabInner() {
                       const isCompact = dg >= 5;
                       const TOTAL_ROWS = Math.pow(2, dg);
                       const genKeys = Array.from({ length: dg }, (_, i) => i + 1);
-                      const genData: Record<number, { pos: number; name: string; dog_id: number | null; sex: string | null }[]> = {};
+                      const genData: Record<number, { pos: number; name: string; dog_id: number | null; sex: string | null; photo_url: string | null }[]> = {};
                       for (const g of genKeys) genData[g] = [];
                       for (const row of previewTree) {
                         if (genData[row.gen]) {
-                          genData[row.gen].push({ pos: row.pos, name: row.name, dog_id: row.dog_id, sex: row.sex });
+                          genData[row.gen].push({ pos: row.pos, name: row.name, dog_id: row.dog_id, sex: row.sex, photo_url: row.photo_url });
                         }
                       }
                       for (const g of genKeys) {
@@ -1028,7 +1032,7 @@ function PedigreeLabInner() {
                         return { cellBg, cellBorder, cellTextColor, isChampion };
                       }
 
-                      function renderCell(dog: { name: string; dog_id: number | null } | undefined, gen: number, rSpan: number, key: string) {
+                      function renderCell(dog: { name: string; dog_id: number | null; photo_url?: string | null; sex?: string | null } | undefined, gen: number, rSpan: number, key: string) {
                         const name = dog?.name || "Unknown";
                         const { cellBg, cellBorder, cellTextColor, isChampion } = getCellStyle(name);
                         const fontSize = isCompact
@@ -1052,7 +1056,14 @@ function PedigreeLabInner() {
                               color: cellTextColor,
                               fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
                               lineHeight: 1.1,
+                              cursor: dog?.dog_id ? "pointer" : undefined,
                             }}
+                            onMouseEnter={() => {
+                              if (dog?.dog_id) {
+                                setHoveredDog({ dog_id: dog.dog_id, name: dog.name, photo_url: dog.photo_url || null, sex: dog.sex || null });
+                              }
+                            }}
+                            onMouseLeave={() => setHoveredDog(null)}
                           >
                             {isChampion && (
                               <span
@@ -1289,48 +1300,64 @@ function PedigreeLabInner() {
                 Details &amp; Actions
               </p>
 
-              {/* Selected dog details */}
-              {selectedDog ? (
-                <div className="space-y-3">
-                  <div
-                    className="overflow-hidden"
-                    style={{ border: `2px solid #C9B29F`, borderRadius: 8 }}
-                  >
-                    {selectedDog.photo_url ? (
-                      <img
-                        src={`${PHOTO_BASE}${selectedDog.photo_url}`}
-                        alt={selectedDog.registered_name}
-                        className="w-full h-36 object-cover"
-                      />
-                    ) : (
+              {/* Dog details — hovered dog takes priority, then selected dog */}
+              {(() => {
+                const isHovered = !!hoveredDog;
+                const hasDog = isHovered || !!selectedDog;
+                const dogName = isHovered ? hoveredDog!.name : selectedDog?.registered_name || "";
+                const dogPhoto = isHovered ? hoveredDog!.photo_url : selectedDog?.photo_url || null;
+                const dogSex = isHovered ? hoveredDog!.sex : selectedDog?.sex;
+                const dogId = isHovered ? hoveredDog!.dog_id : selectedDog?.dog_id;
+                if (hasDog) {
+                  return (
+                    <div className="space-y-3">
+                      {isHovered && (
+                        <p className="text-[9px] uppercase tracking-widest font-semibold" style={{ color: "#C9B29F", fontFamily: "var(--font-table)" }}>
+                          Hovering
+                        </p>
+                      )}
                       <div
-                        className="w-full h-36 flex items-center justify-center text-3xl"
-                        style={{ background: "#FAFAFA", color: "#6B6B6B" }}
+                        className="overflow-hidden"
+                        style={{ border: `2px solid ${isHovered ? getDogColor(dogName) : "#C9B29F"}`, borderRadius: 8, transition: "border-color 0.2s ease" }}
                       >
-                        {"\uD83D\uDC36"}
+                        {dogPhoto ? (
+                          <img
+                            src={`${PHOTO_BASE}${dogPhoto}`}
+                            alt={dogName}
+                            className="w-full h-36 object-cover"
+                          />
+                        ) : (
+                          <div
+                            className="w-full h-36 flex items-center justify-center text-3xl"
+                            style={{ background: "#FAFAFA", color: "#6B6B6B" }}
+                          >
+                            {"\uD83D\uDC36"}
+                          </div>
+                        )}
                       </div>
-                    )}
+                      <p
+                        className="text-sm font-bold"
+                        style={{
+                          color: getDogColor(dogName),
+                          fontFamily: "var(--font-table)",
+                        }}
+                      >
+                        {sexIcon(dogSex || undefined)} {dogName}
+                      </p>
+                      <p className="text-[10px]" style={{ color: "#6B6B6B" }}>
+                        {isHovered ? "" : `Slot: ${selectedSlot ? SLOT_LABELS[selectedSlot] : "--"} | `}ID: <span style={{ color: "#1C1C1C", fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}>{dogId}</span>
+                      </p>
+                    </div>
+                  );
+                }
+                return (
+                  <div className="py-8 text-center">
+                    <p className="text-xs" style={{ color: "#6B6B6B" }}>
+                      Hover a dog on the table or select one on the canvas
+                    </p>
                   </div>
-                  <p
-                    className="text-sm font-bold"
-                    style={{
-                      color: getDogColor(selectedDog.registered_name),
-                      fontFamily: "var(--font-table)",
-                    }}
-                  >
-                    {sexIcon(selectedDog.sex)} {selectedDog.registered_name}
-                  </p>
-                  <p className="text-[10px]" style={{ color: "#6B6B6B" }}>
-                    Slot: {selectedSlot ? SLOT_LABELS[selectedSlot] : "--"} | ID: <span style={{ color: "#1C1C1C", fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}>{selectedDog.dog_id}</span>
-                  </p>
-                </div>
-              ) : (
-                <div className="py-8 text-center">
-                  <p className="text-xs" style={{ color: "#6B6B6B" }}>
-                    Select a dog on the canvas to view details
-                  </p>
-                </div>
-              )}
+                );
+              })()}
 
               {/* Divider */}
               <div style={{ borderTop: "2px solid #C9B29F" }} />
@@ -1390,6 +1417,23 @@ function PedigreeLabInner() {
               >
                 {editingId ? "Edit & Save" : "+ Create & Publish"}
               </button>
+
+              {/* My Pedigrees */}
+              <Link
+                href="/dashboard/pedigrees"
+                className="w-full py-2.5 text-xs font-bold uppercase tracking-widest hover:scale-[1.02] flex items-center justify-center gap-2"
+                style={{
+                  fontFamily: "var(--font-table)",
+                  background: "transparent",
+                  color: "#1C1C1C",
+                  border: "2px solid #C9B29F",
+                  borderRadius: 8,
+                  transition: "all 0.3s ease",
+                  textDecoration: "none",
+                }}
+              >
+                My Pedigrees
+              </Link>
 
             </div>
           </Card>
