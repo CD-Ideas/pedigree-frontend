@@ -123,6 +123,10 @@ export default function CommunityPedigreesPage() {
       if (filterContinent && p.continent !== filterContinent) return false;
       // Country filter
       if (filterCountry && p.country !== filterCountry) return false;
+      // Sex filter
+      if (sexFilter && (p.sex || "").toUpperCase() !== sexFilter) return false;
+      // Has photo filter
+      if (hasPhotoFilter && !p.photo_path) return false;
       return true;
     })
     .sort((a, b) => {
@@ -135,6 +139,15 @@ export default function CommunityPedigreesPage() {
         default: return 0;
       }
     });
+
+  const activeFilters = [filterContinent, filterCountry, sexFilter, hasPhotoFilter].filter(Boolean).length;
+
+  const clearFilters = () => {
+    setFilterContinent("");
+    setFilterCountry("");
+    setSexFilter("");
+    setHasPhotoFilter(false);
+  };
 
   const totalPages = Math.ceil(filtered.length / PER_PAGE);
   const paginated = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
@@ -168,27 +181,58 @@ export default function CommunityPedigreesPage() {
             </p>
           </div>
 
-          {/* Search */}
-          <div className="relative w-full sm:w-72">
-            <input
-              type="text"
-              placeholder="Search by name, creator, country..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-lg px-4 py-2 text-xs outline-none"
-              style={{
-                background: "#FAFAFA",
-                border: "2px solid #C9B29F",
-                color: "#1C1C1C",
-                fontFamily: "var(--font-table)",
-              }}
-            />
-            <span
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-sm"
-              style={{ color: "#6B6B6B" }}
+          <div className="flex items-center gap-2 w-full sm:w-auto">
+            {/* View toggle */}
+            <div
+              className="flex rounded-lg overflow-hidden"
+              style={{ border: "2px solid #C9B29F", background: "#FAF7F2" }}
             >
-              🔍
-            </span>
+              <button
+                onClick={() => { setViewMode("grid"); setPage(1); }}
+                className="px-3 py-1.5 text-xs font-medium transition-all"
+                style={{
+                  background: viewMode === "grid" ? "rgba(201,178,159,0.25)" : "transparent",
+                  color: viewMode === "grid" ? "#1C1C1C" : "#6B6B6B",
+                  fontFamily: "var(--font-table)",
+                }}
+              >
+                Grid
+              </button>
+              <button
+                onClick={() => { setViewMode("table"); setPage(1); }}
+                className="px-3 py-1.5 text-xs font-medium transition-all"
+                style={{
+                  background: viewMode === "table" ? "rgba(201,178,159,0.25)" : "transparent",
+                  color: viewMode === "table" ? "#1C1C1C" : "#6B6B6B",
+                  fontFamily: "var(--font-table)",
+                }}
+              >
+                Table
+              </button>
+            </div>
+
+            {/* Search */}
+            <div className="relative flex-1 sm:w-72">
+              <input
+                type="text"
+                placeholder="Search by name, creator, country..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="w-full rounded-lg px-4 py-2 text-xs outline-none"
+                style={{
+                  background: "#FAFAFA",
+                  border: "2px solid #C9B29F",
+                  color: "#1C1C1C",
+                  fontFamily: "var(--font-table)",
+                }}
+              />
+              <span
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-sm"
+                style={{ color: "#6B6B6B" }}
+              >
+                🔍
+              </span>
+            </div>
           </div>
         </div>
 
@@ -205,7 +249,7 @@ export default function CommunityPedigreesPage() {
           >
             {pedigrees.length} Published
           </span>
-          {(search.trim() || filterContinent || filterCountry) && (
+          {(search.trim() || activeFilters > 0) && (
             <span
               className="text-[10px] px-3 py-1 rounded-full"
               style={{
@@ -220,7 +264,7 @@ export default function CommunityPedigreesPage() {
           )}
         </div>
 
-        {/* Sort & Filters */}
+        {/* Sort & Filters Toggle */}
         <div className="flex flex-wrap items-center gap-2">
           {/* Sort */}
           <select
@@ -239,74 +283,148 @@ export default function CommunityPedigreesPage() {
             ))}
           </select>
 
-          {/* Continent */}
-          <select
-            value={filterContinent}
-            onChange={(e) => {
-              setFilterContinent(e.target.value);
-              setFilterCountry("");
-            }}
-            className="rounded-lg px-3 py-1.5 text-[11px] outline-none cursor-pointer"
+          {/* Filters toggle button */}
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            className="px-3 py-1.5 rounded-lg text-[11px] font-medium relative transition-colors"
             style={{
-              background: "#FAF7F2",
+              background: showFilters ? "rgba(201,178,159,0.2)" : "#FAFAFA",
               border: "2px solid #C9B29F",
-              color: filterContinent ? "#1C1C1C" : "#6B6B6B",
+              color: "#1C1C1C",
               fontFamily: "var(--font-table)",
             }}
           >
-            <option value="">All Continents</option>
-            {ALL_CONTINENTS.map((c) => (
-              <option key={c} value={c}>{c}</option>
-            ))}
-          </select>
-
-          {/* Country */}
-          <select
-            value={filterCountry}
-            onChange={(e) => {
-              const country = e.target.value;
-              setFilterCountry(country);
-              // Auto-fill continent if country is selected
-              if (country && !filterContinent) {
-                for (const [cont, countries] of Object.entries(COUNTRY_MAP)) {
-                  if (countries.includes(country)) {
-                    setFilterContinent(cont);
-                    break;
-                  }
-                }
-              }
-            }}
-            className="rounded-lg px-3 py-1.5 text-[11px] outline-none cursor-pointer"
-            style={{
-              background: "#FAF7F2",
-              border: "2px solid #C9B29F",
-              color: filterCountry ? "#1C1C1C" : "#6B6B6B",
-              fontFamily: "var(--font-table)",
-            }}
-          >
-            <option value="">All Countries</option>
-            {availableCountries.map((c) => (
-              <option key={c} value={c}>{c}</option>
-            ))}
-          </select>
-
-          {/* Clear filters */}
-          {(filterContinent || filterCountry) && (
-            <button
-              onClick={() => { setFilterContinent(""); setFilterCountry(""); }}
-              className="rounded-lg px-3 py-1.5 text-[11px] font-semibold transition-all"
-              style={{
-                background: "rgba(239,68,68,0.1)",
-                border: "2px solid rgba(239,68,68,0.3)",
-                color: "#ef4444",
-                fontFamily: "var(--font-table)",
-                cursor: "pointer",
-              }}
-            >
-              ✕ Clear Filters
-            </button>
-          )}
+            Filters
+            {activeFilters > 0 && (
+              <span
+                className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold"
+                style={{ background: "#C9B29F", color: "#1C1C1C" }}
+              >
+                {activeFilters}
+              </span>
+            )}
+          </button>
         </div>
+
+        {/* Collapsible Filters Panel */}
+        {showFilters && (
+          <div
+            style={{
+              background: "#FAF7F2",
+              border: "2px solid #C9B29F",
+              borderRadius: "8px",
+            }}
+            className="p-3"
+          >
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2.5">
+              {/* Continent */}
+              <div>
+                <label className="text-[10px] uppercase tracking-wider mb-1.5 block" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+                  Continent
+                </label>
+                <select
+                  value={filterContinent}
+                  onChange={(e) => {
+                    setFilterContinent(e.target.value);
+                    setFilterCountry("");
+                  }}
+                  className="w-full rounded-lg px-3 py-1.5 text-xs outline-none cursor-pointer"
+                  style={{
+                    background: "#FAFAFA",
+                    border: "2px solid #C9B29F",
+                    color: filterContinent ? "#1C1C1C" : "#6B6B6B",
+                  }}
+                >
+                  <option value="">All Continents</option>
+                  {ALL_CONTINENTS.map((c) => (
+                    <option key={c} value={c}>{c}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Country */}
+              <div>
+                <label className="text-[10px] uppercase tracking-wider mb-1.5 block" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+                  Country
+                </label>
+                <select
+                  value={filterCountry}
+                  onChange={(e) => {
+                    const country = e.target.value;
+                    setFilterCountry(country);
+                    if (country && !filterContinent) {
+                      for (const [cont, countries] of Object.entries(COUNTRY_MAP)) {
+                        if (countries.includes(country)) {
+                          setFilterContinent(cont);
+                          break;
+                        }
+                      }
+                    }
+                  }}
+                  className="w-full rounded-lg px-3 py-1.5 text-xs outline-none cursor-pointer"
+                  style={{
+                    background: "#FAFAFA",
+                    border: "2px solid #C9B29F",
+                    color: filterCountry ? "#1C1C1C" : "#6B6B6B",
+                  }}
+                >
+                  <option value="">All Countries</option>
+                  {availableCountries.map((c) => (
+                    <option key={c} value={c}>{c}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Sex */}
+              <div>
+                <label className="text-[10px] uppercase tracking-wider mb-1.5 block" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+                  Sex
+                </label>
+                <select
+                  value={sexFilter}
+                  onChange={(e) => { setSexFilter(e.target.value); setPage(1); }}
+                  className="w-full rounded-lg px-3 py-1.5 text-xs outline-none cursor-pointer"
+                  style={{
+                    background: "#FAFAFA",
+                    border: "2px solid #C9B29F",
+                    color: sexFilter ? "#1C1C1C" : "#6B6B6B",
+                  }}
+                >
+                  <option value="">All</option>
+                  <option value="MALE">Male</option>
+                  <option value="FEMALE">Female</option>
+                </select>
+              </div>
+
+              {/* Has Photo */}
+              <div className="flex items-end">
+                <label
+                  className="flex items-center gap-2 text-xs cursor-pointer select-none"
+                  style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}
+                >
+                  <input
+                    type="checkbox"
+                    checked={hasPhotoFilter}
+                    onChange={(e) => { setHasPhotoFilter(e.target.checked); setPage(1); }}
+                    className="accent-[#C9B29F]"
+                  />
+                  Has photo
+                </label>
+              </div>
+
+              {/* Clear All */}
+              <div className="flex items-end">
+                <button
+                  onClick={clearFilters}
+                  className="text-xs px-3 py-1.5 rounded-lg transition-colors"
+                  style={{ color: "#c02828", background: "rgba(192,40,40,0.08)", border: "2px solid rgba(192,40,40,0.2)", fontFamily: "var(--font-table)" }}
+                >
+                  Clear all
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Pedigree Cards */}
         {loading ? (
@@ -342,6 +460,76 @@ export default function CommunityPedigreesPage() {
           </div>
         ) : (
           <>
+            {viewMode === "table" ? (
+              /* Table View */
+              <div
+                style={{ border: "2px solid #C9B29F", background: "#FAF7F2", borderRadius: "8px" }}
+                className="overflow-hidden"
+              >
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr style={{ borderBottom: "2px solid #C9B29F" }}>
+                      <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Dog Name</th>
+                      <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Sex</th>
+                      <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden md:table-cell" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Creator</th>
+                      <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden md:table-cell" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Country</th>
+                      <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden lg:table-cell" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Breeder</th>
+                      <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden lg:table-cell" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Date Posted</th>
+                      <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Views</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {paginated.map((p) => {
+                      const displayName = buildDisplayName(p);
+                      const titleColor = getDogColor(displayName);
+                      const isMale = p.sex === "Male" || p.sex === "MALE" || p.sex === "M";
+                      return (
+                        <tr
+                          key={p.id}
+                          className="transition-colors"
+                          style={{ borderBottom: "1px solid #C9B29F" }}
+                        >
+                          <td className="px-3 py-2">
+                            <Link href={`/pedigree/custom/${p.id}`} className="font-medium hover:underline text-xs" style={{ color: titleColor, fontFamily: "var(--font-table)" }}>
+                              {displayName}
+                            </Link>
+                            <div className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-mono)" }}>
+                              ID: {p.id}
+                            </div>
+                          </td>
+                          <td className="px-3 py-2">
+                            <span
+                              className="inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold"
+                              style={{
+                                background: isMale ? "rgba(29,91,191,0.1)" : "rgba(159,18,57,0.1)",
+                                color: isMale ? "#1d5bbf" : "#9f1239",
+                              }}
+                            >
+                              {isMale ? "\u2642" : "\u2640"}
+                            </span>
+                          </td>
+                          <td className="px-3 py-2 hidden md:table-cell text-xs" style={{ color: "#1d5bbf", fontFamily: "var(--font-table)" }}>
+                            {p.creator || "\u2014"}
+                          </td>
+                          <td className="px-3 py-2 hidden md:table-cell text-xs" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+                            {p.country || "\u2014"}
+                          </td>
+                          <td className="px-3 py-2 hidden lg:table-cell text-xs" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+                            {p.breeder || "\u2014"}
+                          </td>
+                          <td className="px-3 py-2 hidden lg:table-cell text-xs" style={{ color: "#6B6B6B", fontFamily: "var(--font-mono)" }}>
+                            {formatDate(p.date_posted)}
+                          </td>
+                          <td className="px-3 py-2 text-xs" style={{ color: "#6B6B6B", fontFamily: "var(--font-mono)" }}>
+                            {(p.view_count || 0).toLocaleString()}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
               {paginated.map((p, index) => {
                 const displayName = buildDisplayName(p);
@@ -487,6 +675,7 @@ export default function CommunityPedigreesPage() {
                 );
               })}
             </div>
+            )}
 
             {/* Pagination */}
             {totalPages > 1 && (
