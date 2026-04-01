@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import { getDogColor } from "@/app/utils/colors";
 
 const LOGO = "/logo.png";
 
@@ -88,6 +89,12 @@ export default function PedigreeHub() {
 
   return (
     <div className="min-h-screen" style={{ background: "#EDE4D5" }}>
+      <style>{`
+        @keyframes cardReveal {
+          from { opacity: 0; transform: translateY(12px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
       {/* Nav */}
       <nav className="sticky top-0 z-50 px-4 md:px-6 py-3 flex items-center justify-between"
            style={{ background: "#FAF7F2", borderBottom: "2px solid #C9B29F" }}>
@@ -205,7 +212,7 @@ export default function PedigreeHub() {
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                  {results.map((dog) => {
+                  {results.map((dog, index) => {
                     const isMale = dog.sex === "MALE" || dog.sex === "M";
                     const photo = photoUrl(dog);
                     const titlePatterns = ["GR CH", "CH", "ROM", "1XW", "2XW", "3XW", "4XW", "5XW"];
@@ -213,7 +220,7 @@ export default function PedigreeHub() {
                     return (
                       <Link key={dog.id} href={`/pedigree/${dog.id}`}
                         className="group rounded-lg overflow-hidden transition-all hover:scale-[1.02]"
-                        style={{ border: "2px solid #C9B29F", background: "#FAF7F2", borderRadius: "8px" }}>
+                        style={{ border: "2px solid #C9B29F", background: "#FAF7F2", borderRadius: "8px", animation: "cardReveal 0.4s ease both", animationDelay: `${index * 30}ms` }}>
                         {/* Photo or placeholder */}
                         <div className="h-36 relative overflow-hidden">
                           {photo ? (
@@ -249,7 +256,7 @@ export default function PedigreeHub() {
                         {/* Info */}
                         <div className="p-3.5">
                           <h3 className="text-sm font-bold truncate transition-colors"
-                              style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+                              style={{ color: getDogColor(dog.name), fontFamily: "var(--font-table)" }}>
                             {dog.name}
                           </h3>
                           <div className="flex items-center gap-2 mt-1.5">
@@ -329,15 +336,17 @@ export default function PedigreeHub() {
               </p>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-              {FAMOUS_DOGS.map((dog) => {
+              {FAMOUS_DOGS.map((dog, index) => {
                 const isMale = dog.sex === "M";
                 return (
                   <Link key={dog.id} href={`/pedigree/${dog.id}`}
-                    className="group rounded-lg p-5 text-center transition-all hover:scale-[1.03]"
+                    className="group rounded-lg p-5 text-center transition-all hover:scale-[1.02]"
                     style={{
                       background: "#FAF7F2",
                       border: "2px solid #C9B29F",
                       borderRadius: "8px",
+                      animation: "cardReveal 0.4s ease both",
+                      animationDelay: `${index * 30}ms`,
                     }}>
                     <div className="w-16 h-16 rounded-lg mx-auto mb-3 flex items-center justify-center text-2xl"
                       style={{
@@ -348,7 +357,7 @@ export default function PedigreeHub() {
                       {isMale ? "M" : "F"}
                     </div>
                     <h3 className="text-sm font-bold truncate transition-colors"
-                        style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+                        style={{ color: getDogColor(dog.name), fontFamily: "var(--font-table)" }}>
                       {dog.name}
                     </h3>
                     <div className="flex items-center justify-center gap-2 mt-1.5">

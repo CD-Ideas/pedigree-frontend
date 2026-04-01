@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback, useRef } from "react";
 import Link from "next/link";
+import { getDogColor } from "@/app/utils/colors";
 
 /* ─── Types ─── */
 interface MarketplaceAd {
@@ -147,7 +148,7 @@ function AdCard({ ad, index }: { ad: MarketplaceAd; index: number }) {
       <div className="px-3.5 pb-3.5 pt-2.5 relative">
         <h3
           className="text-sm font-bold leading-tight mb-1.5 line-clamp-2"
-          style={{ color: "#1C1C1C", fontFamily: "var(--font-body)" }}
+          style={{ color: getDogColor(ad.title), fontFamily: "var(--font-table)" }}
         >
           {ad.title}
         </h3>

@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback, useRef } from "react";
 import Link from "next/link";
+import { getDogColor } from "@/app/utils/colors";
 
 /* ─── Types ─── */
 interface Dog {
@@ -63,7 +64,7 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
 
   return (
     <Link href={`/pedigree/${dog.id}`}
-      className="group block overflow-hidden transition-all duration-300 hover:-translate-y-1"
+      className="group block overflow-hidden transition-all duration-300 hover:scale-[1.02]"
       style={{
         background: "#FAF7F2",
         border: "2px solid #C9B29F",
@@ -120,7 +121,7 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
       {/* Info */}
       <div className="px-2.5 pb-2.5 pt-2 relative">
         <h3 className="text-xs font-bold leading-tight mb-1 line-clamp-2 transition-colors duration-200"
-          style={{ color: hasTitle ? "#1d5bbf" : "#1C1C1C", fontFamily: "var(--font-table)" }}>
+          style={{ color: getDogColor(dog.name), fontFamily: "var(--font-table)" }}>
           {dog.name}
         </h3>
 

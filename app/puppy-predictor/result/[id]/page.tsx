@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import { getDogColor } from "@/app/utils/colors";
 
 interface PredictionResult { phenotype: string; percentage: number; carriers: string[]; }
 interface PredictionData {
@@ -128,9 +129,9 @@ export default function PredictionResultPage() {
             LITTER COLOR PREDICTION
           </h1>
           <div className="flex items-center justify-center gap-3 text-sm" style={{ fontFamily: "var(--font-table)" }}>
-            <span style={{ color: "#1d5bbf" }}>♂ {data.sire_name || "Sire"}</span>
+            <span style={{ color: getDogColor(data.sire_name || "") }}>♂ {data.sire_name || "Sire"}</span>
             <span style={{ color: "#64748b" }}>×</span>
-            <span style={{ color: "#9f1239" }}>♀ {data.dam_name || "Dam"}</span>
+            <span style={{ color: getDogColor(data.dam_name || "") }}>♀ {data.dam_name || "Dam"}</span>
           </div>
           <p className="text-[10px]" style={{ color: "#64748b", fontFamily: "var(--font-mono)" }}>
             Created {new Date(data.created_at).toLocaleDateString()}
