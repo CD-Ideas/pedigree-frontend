@@ -104,6 +104,12 @@ export default function MyAdsPage() {
 
   return (
     <div className="min-h-screen" style={{ background: "#EDE4D5" }}>
+      <style>{`
+        @keyframes cardReveal {
+          from { opacity: 0; transform: translateY(12px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
       {/* ─── Nav ─── */}
       <nav
         className="sticky top-0 z-50 px-4 md:px-6 py-2.5 flex items-center justify-between"
@@ -241,7 +247,7 @@ export default function MyAdsPage() {
           </div>
         ) : (
           <div className="space-y-3">
-            {ads.map((ad) => {
+            {ads.map((ad, index) => {
               const cat = CATEGORIES[ad.category];
               const statusStyle = STATUS_STYLES[ad.status] || STATUS_STYLES.active;
               const photo = ad.photos && ad.photos.length > 0 ? ad.photos[0] : null;
@@ -249,11 +255,12 @@ export default function MyAdsPage() {
               return (
                 <div
                   key={ad.id}
-                  className="rounded-lg overflow-hidden transition-all duration-300 hover:scale-[1.01]"
+                  className="rounded-lg overflow-hidden transition-all duration-300 hover:scale-[1.02]"
                   style={{
                     background: "#FAF7F2",
                     border: "2px solid #C9B29F",
-                    
+                    animation: "cardReveal 0.4s ease both",
+                    animationDelay: `${index * 30}ms`,
                   }}
                 >
                   <div className="flex flex-col sm:flex-row">

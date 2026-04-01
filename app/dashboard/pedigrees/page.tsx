@@ -216,6 +216,12 @@ export default function MyPedigreesPage() {
 
   return (
     <div className="min-h-screen" style={{ background: "#EDE4D5" }}>
+      <style>{`
+        @keyframes cardReveal {
+          from { opacity: 0; transform: translateY(12px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
       <div className="max-w-[1200px] mx-auto px-4 md:px-6 py-6 space-y-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -409,7 +415,7 @@ export default function MyPedigreesPage() {
         ) : (
           <>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
-            {paginated.map((p) => {
+            {paginated.map((p, index) => {
               const displayName = buildDisplayName(p);
               const titleColor = getDogColor(displayName);
               const isMale = p.sex === "Male" || p.sex === "MALE" || p.sex === "M";
@@ -418,11 +424,13 @@ export default function MyPedigreesPage() {
 
               return (
                 <Link key={p.id} href={`/pedigree/custom/${p.id}`}
-                  className="rounded-lg overflow-hidden transition-all hover:scale-[1.03] group"
+                  className="rounded-lg overflow-hidden transition-all hover:scale-[1.02] group"
                   style={{
                     background: "#FAF7F2",
                     border: "2px solid #C9B29F",
                     borderRadius: "8px",
+                    animation: "cardReveal 0.4s ease both",
+                    animationDelay: `${index * 30}ms`,
                   }}>
                   {/* Photo area */}
                   <div
