@@ -302,29 +302,112 @@ export default function MarketplaceAdPage() {
                 href={`/pedigree/${ad.dog_id}`}
                 className="flex items-center gap-3 rounded-lg p-4 transition-all duration-300 hover:scale-[1.02]"
                 style={{
-                  background: "rgba(184,134,11,0.08)",
+                  background: "rgba(184,134,11,0.15)",
                   border: "2px solid #B8860B",
+                  borderLeft: "4px solid #B8860B",
                 }}
               >
                 <div
                   className="w-10 h-10 rounded-lg flex items-center justify-center"
-                  style={{ background: "rgba(184,134,11,0.15)" }}
+                  style={{ background: "rgba(184,134,11,0.25)" }}
                 >
                   <span className="text-lg">{"\uD83D\uDCDC"}</span>
                 </div>
                 <div>
-                  <div className="text-xs font-bold" style={{ color: "#8a6518", fontFamily: "var(--font-table)" }}>
+                  <div className="text-sm font-bold" style={{ color: "#8a6518", fontFamily: "var(--font-table)" }}>
                     View Pedigree
                   </div>
-                  <div className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+                  <div className="text-[10px] font-medium" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                     This ad is linked to a registered pedigree
                   </div>
                 </div>
-                <span className="ml-auto text-sm font-bold" style={{ color: "#B8860B" }}>
+                <span className="ml-auto text-base font-bold" style={{ color: "#B8860B" }}>
                   {"\u2192"}
                 </span>
               </Link>
             )}
+
+            {/* Report Button */}
+            <div>
+              {!showReport ? (
+                <button
+                  onClick={() => setShowReport(true)}
+                  className="w-full rounded-lg px-4 py-2.5 text-xs font-medium transition-all hover:scale-[1.02]"
+                  style={{
+                    background: "#FAF7F2",
+                    border: "2px solid #C9B29F",
+                    color: "#1C1C1C",
+                    fontFamily: "var(--font-table)",
+                  }}
+                >
+                  {"\u26A0"} Report / Flag this Listing
+                </button>
+              ) : (
+                <div
+                  className="rounded-lg p-4"
+                  style={{
+                    background: "#FAF7F2",
+                    border: "2px solid #C9B29F",
+                  }}
+                >
+                  {reportSent ? (
+                    <div className="text-center py-2">
+                      <span className="text-xs font-bold" style={{ color: "#22c55e", fontFamily: "var(--font-table)" }}>
+                        Report submitted. Thank you.
+                      </span>
+                    </div>
+                  ) : (
+                    <>
+                      <h4 className="text-xs font-bold mb-2" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+                        Report this listing
+                      </h4>
+                      <textarea
+                        value={reportReason}
+                        onChange={(e) => setReportReason(e.target.value)}
+                        placeholder="Describe the issue..."
+                        rows={3}
+                        className="w-full rounded-lg px-3 py-2 text-xs outline-none resize-none mb-2"
+                        style={{
+                          background: "#FAFAFA",
+                          border: "2px solid #C9B29F",
+                          color: "#1C1C1C",
+                          fontFamily: "var(--font-table)",
+                        }}
+                      />
+                      <div className="flex gap-2 flex-wrap">
+                        <button
+                          onClick={handleReport}
+                          className="px-4 py-1.5 rounded-lg text-[11px] font-bold transition-all hover:scale-105"
+                          style={{
+                            background: "rgba(239,68,68,0.15)",
+                            color: "#ef4444",
+                            border: "1px solid rgba(239,68,68,0.3)",
+                            fontFamily: "var(--font-table)",
+                          }}
+                        >
+                          Submit Report
+                        </button>
+                        <button
+                          onClick={() => {
+                            setShowReport(false);
+                            setReportReason("");
+                          }}
+                          className="px-4 py-1.5 rounded-lg text-[11px] font-bold transition-all hover:scale-105"
+                          style={{
+                            background: "rgba(148,163,184,0.15)",
+                            color: "#6B6B6B",
+                            border: "1px solid rgba(148,163,184,0.3)",
+                            fontFamily: "var(--font-table)",
+                          }}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
 
           </div>
 
@@ -813,87 +896,6 @@ export default function MarketplaceAdPage() {
               </div>
             )}
 
-            {/* Report Button */}
-            <div>
-              {!showReport ? (
-                <button
-                  onClick={() => setShowReport(true)}
-                  className="w-full rounded-lg px-4 py-2.5 text-xs font-medium transition-all hover:scale-[1.02]"
-                  style={{
-                    background: "#FAF7F2",
-                    border: "2px solid #C9B29F",
-                    color: "#1C1C1C",
-                    fontFamily: "var(--font-table)",
-                  }}
-                >
-                  {"\u26A0"} Report / Flag this Listing
-                </button>
-              ) : (
-                <div
-                  className="rounded-lg p-4"
-                  style={{
-                    background: "#FAF7F2",
-                    border: "2px solid #C9B29F",
-                  }}
-                >
-                  {reportSent ? (
-                    <div className="text-center py-2">
-                      <span className="text-xs font-bold" style={{ color: "#22c55e", fontFamily: "var(--font-table)" }}>
-                        Report submitted. Thank you.
-                      </span>
-                    </div>
-                  ) : (
-                    <>
-                      <h4 className="text-xs font-bold mb-2" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
-                        Report this listing
-                      </h4>
-                      <textarea
-                        value={reportReason}
-                        onChange={(e) => setReportReason(e.target.value)}
-                        placeholder="Describe the issue..."
-                        rows={3}
-                        className="w-full rounded-lg px-3 py-2 text-xs outline-none resize-none mb-2"
-                        style={{
-                          background: "#FAFAFA",
-                          border: "2px solid #C9B29F",
-                          color: "#1C1C1C",
-                          fontFamily: "var(--font-table)",
-                        }}
-                      />
-                      <div className="flex gap-2 flex-wrap">
-                        <button
-                          onClick={handleReport}
-                          className="px-4 py-1.5 rounded-lg text-[11px] font-bold transition-all hover:scale-105"
-                          style={{
-                            background: "rgba(239,68,68,0.15)",
-                            color: "#ef4444",
-                            border: "1px solid rgba(239,68,68,0.3)",
-                            fontFamily: "var(--font-table)",
-                          }}
-                        >
-                          Submit Report
-                        </button>
-                        <button
-                          onClick={() => {
-                            setShowReport(false);
-                            setReportReason("");
-                          }}
-                          className="px-4 py-1.5 rounded-lg text-[11px] font-bold transition-all hover:scale-105"
-                          style={{
-                            background: "rgba(148,163,184,0.15)",
-                            color: "#6B6B6B",
-                            border: "1px solid rgba(148,163,184,0.3)",
-                            fontFamily: "var(--font-table)",
-                          }}
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    </>
-                  )}
-                </div>
-              )}
-            </div>
           </div>
         </div>
       </div>
