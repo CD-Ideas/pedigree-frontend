@@ -214,7 +214,7 @@ export default function Dashboard() {
       <main className="flex-1 min-w-0">
         {/* Welcome */}
         <div className="mb-6">
-          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", fontWeight: 700, color: "#1C1C1C" }}>
+          <h1 style={{ fontFamily: "var(--font-table)", fontSize: "1.6rem", fontWeight: 700, color: "#1C1C1C" }}>
             Welcome back, <span style={{ color: "#C9B29F" }}>{user?.username || "User"}</span>
           </h1>
           <p className="text-xs mt-1" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
@@ -374,7 +374,7 @@ export default function Dashboard() {
               style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px" }}>
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-sm">★</span>
-                <span className="text-xs font-bold" style={{ color: "#C9B29F", fontFamily: "var(--font-display)" }}>
+                <span className="text-xs font-bold" style={{ color: "#C9B29F", fontFamily: "var(--font-table)" }}>
                   FREE PLAN
                 </span>
               </div>

@@ -122,7 +122,7 @@ export default function PredictionResultPage() {
         {/* Header */}
         <div className="text-center space-y-2">
           <h1 style={{
-            fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "2rem",
+            fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "2rem",
             color: "#1C1C1C",
             
           }}>
@@ -185,7 +185,7 @@ export default function PredictionResultPage() {
                   </div>
                 </div>
               </div>
-              <h3 className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-display)" }}>{r.phenotype}</h3>
+              <h3 className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{r.phenotype}</h3>
               <div className="mt-2 w-full h-1.5 rounded-full overflow-hidden" style={{ background: "#EDE4D5" }}>
                 <div className="h-full rounded-full" style={{ width: `${r.percentage}%`, background: "#C9B29F" }} />
               </div>

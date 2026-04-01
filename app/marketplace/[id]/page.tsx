@@ -430,7 +430,7 @@ export default function MarketplaceAdPage() {
               <h1
                 className="text-xl font-black leading-tight mb-3"
                 style={{
-                  fontFamily: "var(--font-display)",
+                  fontFamily: "var(--font-table)",
                   color: getDogColor(ad.title),
                   
                   
@@ -506,7 +506,7 @@ export default function MarketplaceAdPage() {
                     style={{
                       background: "#1C1C1C",
                       color: "#FAF7F2",
-                      fontFamily: "var(--font-display)",
+                      fontFamily: "var(--font-table)",
                       
                     }}>
                     Message Seller

@@ -352,7 +352,7 @@ export default function NavBar() {
           <img src={LOGO} alt="Logo" className="w-12" style={{ height: "auto" }} />
           <span
             style={{
-              fontFamily: "var(--font-display)",
+              fontFamily: "var(--font-table)",
               fontWeight: 700,
               fontSize: "1.25rem",
               color: "#C9B29F",

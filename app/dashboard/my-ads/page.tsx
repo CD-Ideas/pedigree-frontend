@@ -163,7 +163,7 @@ export default function MyAdsPage() {
             <h1
               className="text-2xl font-black uppercase tracking-widest"
               style={{
-                fontFamily: "var(--font-display)",
+                fontFamily: "var(--font-table)",
                 color: "#1C1C1C",
 
 

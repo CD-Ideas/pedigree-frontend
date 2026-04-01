@@ -41,7 +41,7 @@ export default function DogOfTheMonthPage() {
           </span>
         </div>
         <h1 style={{
-          fontFamily: "var(--font-display)",
+          fontFamily: "var(--font-table)",
           fontWeight: 700,
           fontSize: "1.6rem",
           color: "#1C1C1C",
@@ -60,7 +60,7 @@ export default function DogOfTheMonthPage() {
       }}>
         <span className="block animate-pulse"
           style={{
-            fontFamily: "var(--font-display)",
+            fontFamily: "var(--font-table)",
             fontWeight: 700,
             fontSize: "2rem",
             color: "#1C1C1C",

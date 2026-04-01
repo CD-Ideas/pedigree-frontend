@@ -78,7 +78,7 @@ function LoginForm() {
          
         />
         <h1
-          style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "1.75rem", color: "#1C1C1C" }}
+          style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "1.75rem", color: "#1C1C1C" }}
         >
           Welcome Back
         </h1>

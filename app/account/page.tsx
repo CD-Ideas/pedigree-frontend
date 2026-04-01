@@ -238,7 +238,7 @@ export default function AccountPage() {
   return (
     <div className="max-w-2xl mx-auto px-6 py-12 space-y-6" style={{ background: "#EDE4D5" }}>
       <div>
-        <h1 style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", fontWeight: 700, color: "#1C1C1C" }}>
+        <h1 style={{ fontFamily: "var(--font-table)", fontSize: "1.6rem", fontWeight: 700, color: "#1C1C1C" }}>
           Account Settings
         </h1>
         <p className="mt-1 text-sm" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
@@ -490,7 +490,7 @@ export default function AccountPage() {
                 ★
               </div>
               <div>
-                <p className="text-sm font-bold" style={{ fontFamily: "var(--font-display)" }}>
+                <p className="text-sm font-bold" style={{ fontFamily: "var(--font-table)" }}>
                   <span style={{ color: "#1C1C1C" }}>FREE PLAN</span>
                   <span className="text-xs font-normal ml-1" style={{ color: "#6B6B6B" }}>/ 3 MONTHS</span>
                 </p>

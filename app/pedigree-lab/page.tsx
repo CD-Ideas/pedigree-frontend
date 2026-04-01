@@ -657,7 +657,7 @@ function PedigreeLabInner() {
         <h1
           className="text-2xl md:text-3xl font-black uppercase tracking-[0.15em]"
           style={{
-            fontFamily: "var(--font-display)",
+            fontFamily: "var(--font-table)",
             color: "#1C1C1C",
           }}
         >
@@ -816,7 +816,7 @@ function PedigreeLabInner() {
                 <div className="flex items-center gap-3">
                   <span
                     className="text-sm font-bold uppercase tracking-widest"
-                    style={{ fontFamily: "var(--font-display)", color: "#1C1C1C" }}
+                    style={{ fontFamily: "var(--font-table)", color: "#1C1C1C" }}
                   >
                     Pedigree Preview
                   </span>
@@ -954,7 +954,7 @@ function PedigreeLabInner() {
                           style={{
                             background: "#1C1C1C",
                             color: "#FAF7F2",
-                            fontFamily: "var(--font-display)",
+                            fontFamily: "var(--font-table)",
                             borderRadius: 8,
                           }}
                         >
@@ -1511,7 +1511,7 @@ function PedigreeLabInner() {
                 <h2
                   className="text-lg font-black uppercase tracking-widest"
                   style={{
-                    fontFamily: "var(--font-display)",
+                    fontFamily: "var(--font-table)",
                     color: "#1C1C1C",
                   }}
                 >
@@ -1931,7 +1931,7 @@ function PedigreeLabInner() {
               <p
                 className="text-lg font-black uppercase tracking-widest"
                 style={{
-                  fontFamily: "var(--font-display)",
+                  fontFamily: "var(--font-table)",
                   color: "#1C1C1C",
                 }}
               >
@@ -2412,7 +2412,7 @@ function PedigreeLabInner() {
                         <div className="text-right">
                           <p className="text-lg font-bold" style={{
                             color: isOverdue ? "#ef4444" : isUpcoming ? "#fb923c" : "#9f1239",
-                            fontFamily: "var(--font-display)",
+                            fontFamily: "var(--font-table)",
                           }}>
                             {isOverdue ? `${Math.abs(daysUntilNext!)}d ago` : `${daysUntilNext}d`}
                           </p>

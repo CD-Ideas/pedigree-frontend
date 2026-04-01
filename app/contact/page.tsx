@@ -74,7 +74,7 @@ export default function ContactPage() {
         <h1
           className="text-2xl font-bold mb-2"
           style={{
-            fontFamily: "var(--font-display)",
+            fontFamily: "var(--font-table)",
             color: "#1C1C1C",
           }}
         >

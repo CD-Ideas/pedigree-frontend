@@ -538,7 +538,7 @@ export default function BreedingCalculatorPage() {
         <div className="text-center mb-6">
           <div className="flex items-center justify-center gap-2 mb-2">
             <span className="text-2xl">&#x1f9ec;</span>
-            <h1 className="font-bold" style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", fontWeight: 700, letterSpacing: "0.02em", color: "#1C1C1C" }}>
+            <h1 className="font-bold" style={{ fontFamily: "var(--font-table)", fontSize: "1.6rem", fontWeight: 700, letterSpacing: "0.02em", color: "#1C1C1C" }}>
               BLOODLINE{" "}
               <span style={{ color: "#1C1C1C" }}>CALCULATOR</span>
             </h1>
@@ -553,7 +553,7 @@ export default function BreedingCalculatorPage() {
           <div className="flex flex-col md:flex-row gap-3 mb-3">
             <DogSlot label="Sire" color="#1d5bbf" icon="&#x2642;" selected={sire} onSelect={setSire} />
             <div className="hidden md:flex items-center justify-center px-2">
-              <span className="text-xl font-bold" style={{ color: bothReady ? "#1C1C1C" : "#6B6B6B", fontFamily: "var(--font-display)", opacity: bothReady ? 1 : 0.2 }}>&#xd7;</span>
+              <span className="text-xl font-bold" style={{ color: bothReady ? "#1C1C1C" : "#6B6B6B", fontFamily: "var(--font-table)", opacity: bothReady ? 1 : 0.2 }}>&#xd7;</span>
             </div>
             <DogSlot label="Dam" color="#9f1239" icon="&#x2640;" selected={dam} onSelect={setDam} />
           </div>

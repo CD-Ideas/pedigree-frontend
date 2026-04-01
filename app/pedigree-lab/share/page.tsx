@@ -182,7 +182,7 @@ function SharePreviewInner() {
         style={{ background: "#EDE4D5" }}
       >
         <div className="text-center">
-          <div className="text-lg font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-display)" }}>
+          <div className="text-lg font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
             Loading Pedigree...
           </div>
         </div>
@@ -197,7 +197,7 @@ function SharePreviewInner() {
         style={{ background: "#EDE4D5" }}
       >
         <div className="text-center">
-          <div className="text-lg font-bold mb-4" style={{ color: "#1C1C1C", fontFamily: "var(--font-display)" }}>
+          <div className="text-lg font-bold mb-4" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
             Pedigree not found
           </div>
           <Link
@@ -255,7 +255,7 @@ function SharePreviewInner() {
           <img src="/logo.png" alt="Pedigree Platform" style={{ height: 36 }} />
           <span
             className="text-lg font-bold tracking-wide"
-            style={{ color: "#C9B29F", fontFamily: "var(--font-display)" }}
+            style={{ color: "#C9B29F", fontFamily: "var(--font-table)" }}
           >
             Pedigree Platform
           </span>
@@ -309,7 +309,7 @@ function SharePreviewInner() {
             <div className="flex items-center gap-3">
               <span
                 className="text-sm font-bold uppercase tracking-widest"
-                style={{ fontFamily: "var(--font-display)", color: "#1C1C1C" }}
+                style={{ fontFamily: "var(--font-table)", color: "#1C1C1C" }}
               >
                 Pedigree Preview
               </span>
@@ -360,7 +360,7 @@ function SharePreviewInner() {
                       style={{
                         background: "#1C1C1C",
                         color: "#FAF7F2",
-                        fontFamily: "var(--font-display)",
+                        fontFamily: "var(--font-table)",
                         borderRadius: 8,
                       }}
                     >
@@ -387,7 +387,7 @@ export default function SharePreviewPage() {
     <Suspense
       fallback={
         <div className="min-h-screen flex items-center justify-center" style={{ background: "#EDE4D5" }}>
-          <div className="text-lg font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-display)" }}>
+          <div className="text-lg font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
             Loading...
           </div>
         </div>

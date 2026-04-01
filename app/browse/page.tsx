@@ -302,7 +302,7 @@ export default function PublicDogsPage() {
                 </span>
               </div>
               <h1 style={{
-                fontFamily: "var(--font-display)", fontWeight: 700,
+                fontFamily: "var(--font-table)", fontWeight: 700,
                 fontSize: "clamp(1.6rem, 4vw, 2.4rem)", lineHeight: 1.1,
                 color: "#1C1C1C",
               }}>

@@ -335,7 +335,7 @@ export default function EditAdPage() {
         <h2
           className="text-xl font-black uppercase tracking-widest"
           style={{
-            fontFamily: "var(--font-display)",
+            fontFamily: "var(--font-table)",
             color: "#1C1C1C",
 
 
@@ -386,7 +386,7 @@ export default function EditAdPage() {
         <h2
           className="text-xl font-black uppercase tracking-widest"
           style={{
-            fontFamily: "var(--font-display)",
+            fontFamily: "var(--font-table)",
             color: "#ef4444",
             
             
@@ -489,7 +489,7 @@ export default function EditAdPage() {
         <h1
           className="text-2xl font-black uppercase tracking-widest mb-1"
           style={{
-            fontFamily: "var(--font-display)",
+            fontFamily: "var(--font-table)",
             color: "#1C1C1C",
 
 

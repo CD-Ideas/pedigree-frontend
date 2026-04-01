@@ -613,7 +613,7 @@ export default function PuppyPredictorPage() {
         {/* --- Header --- */}
         <div className="text-center space-y-2">
           <h1 style={{
-            fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "2.5rem",
+            fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "2.5rem",
             color: "#1C1C1C", letterSpacing: "0.03em",
           }}>
             PUPPY COLOR PREDICTOR
@@ -666,7 +666,7 @@ export default function PuppyPredictorPage() {
             border: "2px solid #C9B29F",
           }}>
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-display)", letterSpacing: "0.05em" }}>
+              <h3 className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", letterSpacing: "0.05em" }}>
                 DNA COLOR TEST GUIDE
               </h3>
               <button onClick={() => setShowGuide(false)} className="text-xs text-[#6B6B6B] hover:text-[#1C1C1C]">✕</button>
@@ -700,7 +700,7 @@ export default function PuppyPredictorPage() {
             border: "2px solid #C9B29F",
           }}>
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-display)", letterSpacing: "0.05em" }}>
+              <h3 className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", letterSpacing: "0.05em" }}>
                 PREDICTION HISTORY
               </h3>
               <div className="flex items-center gap-2">
@@ -769,7 +769,7 @@ export default function PuppyPredictorPage() {
           }}>
             <div className="flex items-center gap-2">
               <span className="text-lg" style={{ color: "#1C1C1C" }}>♂</span>
-              <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1.3rem", color: "#1C1C1C", letterSpacing: "0.02em" }}>
+              <h2 style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "1.3rem", color: "#1C1C1C", letterSpacing: "0.02em" }}>
                 SIRE
               </h2>
             </div>
@@ -827,7 +827,7 @@ export default function PuppyPredictorPage() {
           }}>
             <div className="flex items-center gap-2">
               <span className="text-lg" style={{ color: "#1C1C1C" }}>♀</span>
-              <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1.3rem", color: "#1C1C1C", letterSpacing: "0.02em" }}>
+              <h2 style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "1.3rem", color: "#1C1C1C", letterSpacing: "0.02em" }}>
                 DAM
               </h2>
             </div>
@@ -947,7 +947,7 @@ export default function PuppyPredictorPage() {
               <div className="space-y-4">
                 <div className="text-center">
                   <h2 style={{
-                    fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1.4rem",
+                    fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "1.4rem",
                     color: "#1C1C1C",
                   }}>
                     PREDICTED LITTER COLORS
@@ -985,7 +985,7 @@ export default function PuppyPredictorPage() {
                       </div>
 
                       {/* Phenotype name */}
-                      <h3 className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-display)", letterSpacing: "0.02em" }}>
+                      <h3 className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", letterSpacing: "0.02em" }}>
                         {r.phenotype}
                       </h3>
 
@@ -1033,7 +1033,7 @@ export default function PuppyPredictorPage() {
                 <div className="flex items-center justify-between flex-wrap gap-3">
                   <div>
                     <h2 style={{
-                      fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1.4rem",
+                      fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "1.4rem",
                       color: "#1C1C1C",
                     }}>
                       SIMULATED LITTER

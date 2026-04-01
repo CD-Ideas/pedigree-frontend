@@ -150,7 +150,7 @@ export default function CommunityPedigreesPage() {
             <h1
               className="text-2xl font-black uppercase tracking-widest"
               style={{
-                fontFamily: "var(--font-display)",
+                fontFamily: "var(--font-table)",
                 background: "#C9B29F",
               }}
             >

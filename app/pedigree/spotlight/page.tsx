@@ -387,7 +387,7 @@ export default function SpotlightPage() {
         <div className="text-center mb-6">
           <div className="flex items-center justify-center gap-2 mb-2">
             <span className="text-2xl">🔬</span>
-            <h1 className="font-bold" style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", fontWeight: 700, letterSpacing: "0.02em", color: "#1C1C1C" }}>
+            <h1 className="font-bold" style={{ fontFamily: "var(--font-table)", fontSize: "1.6rem", fontWeight: 700, letterSpacing: "0.02em", color: "#1C1C1C" }}>
               LINEAGE{" "}
               <span style={{ color: "#C9B29F" }}>SPOTLIGHT</span>
             </h1>

@@ -339,7 +339,7 @@ export default function MarketplacePage() {
               <h1
                 className="text-3xl md:text-4xl font-black uppercase tracking-widest"
                 style={{
-                  fontFamily: "var(--font-display)",
+                  fontFamily: "var(--font-table)",
                   color: "#1C1C1C",
                 }}
               >

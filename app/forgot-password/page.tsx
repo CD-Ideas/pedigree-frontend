@@ -27,7 +27,7 @@ export default function ForgotPasswordPage() {
       <div className="rounded-lg p-6 w-full max-w-md" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px" }}>
         <div className="flex flex-col items-center mb-5">
           <img src={LOGO} alt="Pedigree Platform" width={140} height={140} className="rounded-lg mb-3" />
-          <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "1.75rem", color: "#1C1C1C" }}>
+          <h1 style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "1.75rem", color: "#1C1C1C" }}>
             Forgot Password
           </h1>
           <p style={{ color: "#6B6B6B", fontSize: "0.9rem" }}>

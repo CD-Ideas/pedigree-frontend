@@ -133,7 +133,7 @@ export default function SupportPage() {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 style={{
-            fontFamily: "var(--font-display)",
+            fontFamily: "var(--font-table)",
             fontWeight: 700,
             fontSize: "1.6rem",
             color: "#1C1C1C",

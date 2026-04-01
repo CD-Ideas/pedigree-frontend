@@ -780,7 +780,7 @@ export default function PublishedPedigreePage() {
                 <div className="flex items-center gap-2.5">
                   <span className="text-sm">📋</span>
                   <span className="text-sm font-bold uppercase tracking-widest" style={{
-                    fontFamily: "var(--font-display)",
+                    fontFamily: "var(--font-table)",
                     color: "#FAF7F2",
                     
                   }}>
@@ -880,7 +880,7 @@ export default function PublishedPedigreePage() {
           <div className="flex items-center justify-center gap-2 mb-3">
             <img src={LOGO} alt="Logo" className="w-12" style={{ height: "auto" }} />
             <span style={{
-              fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "14px",
+              fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "14px",
               color: "#1C1C1C",
             }}>Pedigree Platform</span>
           </div>
@@ -906,7 +906,7 @@ export default function PublishedPedigreePage() {
             <div className="text-center mb-4">
               <span className="text-3xl">⚠️</span>
             </div>
-            <h3 className="text-sm font-bold text-center mb-2" style={{ color: "#ef4444", fontFamily: "var(--font-display)", letterSpacing: "0.03em" }}>
+            <h3 className="text-sm font-bold text-center mb-2" style={{ color: "#ef4444", fontFamily: "var(--font-table)", letterSpacing: "0.03em" }}>
               Delete Pedigree
             </h3>
             <p className="text-xs text-center mb-1" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
