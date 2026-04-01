@@ -1290,8 +1290,9 @@ function PedigreeLabInner() {
           className="flex-shrink-0 flex flex-col overflow-hidden"
           style={{ width: 300 }}
         >
-          <Card className="m-3 flex flex-col flex-1 overflow-y-auto" style={{ padding: 0 }}>
-            <div className="p-4 space-y-4">
+          <Card className="m-3 flex flex-col flex-1 overflow-hidden" style={{ padding: 0 }}>
+            {/* Top: scrollable dog details */}
+            <div className="p-4 space-y-4 flex-1 overflow-y-auto">
               {/* Panel header */}
               <p
                 className="text-[10px] uppercase tracking-widest font-semibold"
@@ -1358,10 +1359,10 @@ function PedigreeLabInner() {
                   </div>
                 );
               })()}
+            </div>
 
-              {/* Divider */}
-              <div style={{ borderTop: "2px solid #C9B29F" }} />
-
+            {/* Bottom: fixed action buttons */}
+            <div className="p-4 space-y-4 flex-shrink-0" style={{ borderTop: "2px solid #C9B29F" }}>
               {/* Preview toggle */}
               <button
                 onClick={async () => {

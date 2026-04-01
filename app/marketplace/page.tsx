@@ -131,27 +131,26 @@ function AdCard({ ad, index }: { ad: MarketplaceAd; index: number }) {
           </span>
         </div>
 
-        {/* Verified */}
-        {ad.is_verified && (
-          <div
-            className="absolute bottom-2 right-2 flex items-center gap-1 px-1.5 py-0.5 rounded-lg"
-            style={{ background: "rgba(34,197,94,0.15)", border: "1px solid rgba(34,197,94,0.3)" }}
-          >
-            <span className="text-[8px] font-bold" style={{ color: "#16a34a", fontFamily: "var(--font-table)" }}>
-              {"\u2713"} Verified
-            </span>
-          </div>
-        )}
       </div>
 
       {/* Info */}
       <div className="px-2.5 pb-2.5 pt-2 relative">
-        <h3
-          className="text-xs font-bold leading-tight mb-1 line-clamp-1"
-          style={{ color: getDogColor(ad.title), fontFamily: "var(--font-table)" }}
-        >
-          {ad.title}
-        </h3>
+        <div className="flex items-center gap-1.5 mb-1">
+          <h3
+            className="text-xs font-bold leading-tight line-clamp-1"
+            style={{ color: getDogColor(ad.title), fontFamily: "var(--font-table)" }}
+          >
+            {ad.title}
+          </h3>
+          {ad.is_verified && (
+            <span
+              className="flex-shrink-0 text-[7px] font-bold px-1.5 py-0.5 rounded"
+              style={{ background: "rgba(34,197,94,0.15)", color: "#16a34a", border: "1px solid rgba(34,197,94,0.3)", fontFamily: "var(--font-table)" }}
+            >
+              ✓
+            </span>
+          )}
+        </div>
 
         {/* Price */}
         <div
@@ -783,9 +782,6 @@ export default function MarketplacePage() {
           </span>
         </div>
         <div className="flex items-center justify-center gap-4">
-          <Link href="/" className="text-[10px] hover:underline" style={{ color: "#6B6B6B" }}>
-            Home
-          </Link>
           <Link href="/browse" className="text-[10px] hover:underline" style={{ color: "#6B6B6B" }}>
             Dogs
           </Link>

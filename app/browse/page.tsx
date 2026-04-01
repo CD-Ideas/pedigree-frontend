@@ -291,11 +291,6 @@ export default function PublicDogsPage() {
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <Link href="/" className="text-[10px] font-medium hover:underline transition-colors"
-                  style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
-                  Home
-                </Link>
-                <span style={{ color: "#6B6B6B", fontSize: "10px" }}>/</span>
                 <span className="text-[10px] font-medium"
                   style={{ color: "#1d5bbf", fontFamily: "var(--font-table)" }}>
                   Dogs
