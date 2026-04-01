@@ -214,7 +214,7 @@ export default function MarketplaceAdPage() {
           <div className="md:col-span-3 space-y-3">
             {/* Main Photo */}
             <div
-              className="relative rounded-lg overflow-hidden"
+              className="relative rounded-lg"
               style={{
                 background: "#FAF7F2",
                 border: "2px solid #C9B29F",
@@ -225,7 +225,7 @@ export default function MarketplaceAdPage() {
                 <img
                   src={photos[selectedPhoto]}
                   alt={ad.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover rounded-lg"
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
@@ -310,8 +310,7 @@ export default function MarketplaceAdPage() {
                   </button>
                 </div>
               )}
-              </div>
-            )}
+            </div>
 
             {/* Description */}
             <div
