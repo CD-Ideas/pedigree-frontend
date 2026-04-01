@@ -386,14 +386,6 @@ export default function MarketplacePage() {
                   overflow: "hidden",
                 }}
               >
-                {/* Top accent line */}
-                <div
-                  className="absolute top-0 left-0 right-0 h-[2px] transition-all duration-400"
-                  style={{
-                    background: cat.color,
-                    opacity: isActive ? 1 : 0.3,
-                  }}
-                />
                 <div className="flex items-start gap-2">
                   {/* Icon */}
                   <div
@@ -506,7 +498,7 @@ export default function MarketplacePage() {
           </form>
 
           {/* Sort dropdown */}
-          <div className="relative" style={{ minWidth: "120px" }}>
+          <div className="relative" style={{ minWidth: "160px" }}>
             <select
               value={sort}
               onChange={(e) => {

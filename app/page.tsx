@@ -421,16 +421,6 @@ export default function Home() {
                     e.currentTarget.style.borderColor = "#C9B29F";
                     e.currentTarget.style.transform = "translateY(0) scale(1)";
                   }}>
-                  {/* Top accent line */}
-                  <div className="absolute top-0 left-0 right-0 h-[2px] transition-all duration-400"
-                    style={{ background: f.color, opacity: 0.3 }}
-                    ref={el => {
-                      if (el) {
-                        const parent = el.parentElement;
-                        parent?.addEventListener("mouseenter", () => { el.style.opacity = "1"; el.style.height = "3px"; });
-                        parent?.addEventListener("mouseleave", () => { el.style.opacity = "0.3"; el.style.height = "2px"; });
-                      }
-                    }} />
                   {/* Icon container */}
                   <div className="relative mx-auto mb-1.5 w-7 h-7 flex items-center justify-center rounded-lg transition-all duration-300"
                     style={{
@@ -645,16 +635,6 @@ export default function Home() {
                     e.currentTarget.style.borderColor = "#C9B29F";
                     e.currentTarget.style.transform = "translateY(0) scale(1)";
                   }}>
-                  {/* Top accent line */}
-                  <div className="absolute top-0 left-0 right-0 h-[2px] transition-all duration-400"
-                    style={{ background: m.color, opacity: 0.3 }}
-                    ref={el => {
-                      if (el) {
-                        const parent = el.parentElement;
-                        parent?.addEventListener("mouseenter", () => { el.style.opacity = "1"; });
-                        parent?.addEventListener("mouseleave", () => { el.style.opacity = "0.3"; });
-                      }
-                    }} />
                   <div className="flex items-start gap-2">
                     {/* Icon */}
                     <div className="flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-lg"
