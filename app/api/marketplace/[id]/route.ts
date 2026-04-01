@@ -211,7 +211,7 @@ export async function DELETE(
       `    print(json.dumps({"error": "forbidden"}))`,
       `    conn.close()`,
       `    raise SystemExit(0)`,
-      `c.execute("DELETE FROM marketplace_ads WHERE id = ?", (${adId},))`,
+      `c.execute("UPDATE marketplace_ads SET status = ? WHERE id = ?", ("deleted", ${adId}))`,
       `conn.commit()`,
       `print(json.dumps({"success": True}))`,
       `conn.close()`,

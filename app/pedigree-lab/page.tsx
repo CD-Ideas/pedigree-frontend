@@ -1290,9 +1290,8 @@ function PedigreeLabInner() {
           className="flex-shrink-0 flex flex-col overflow-hidden"
           style={{ width: 300 }}
         >
-          <Card className="m-3 flex flex-col flex-1 overflow-hidden" style={{ padding: 0 }}>
-            {/* Top: scrollable dog details */}
-            <div className="p-4 space-y-4 flex-1 overflow-y-auto">
+          <Card className="m-3 flex flex-col flex-1 overflow-y-auto" style={{ padding: 0 }}>
+            <div className="p-4 space-y-4">
               {/* Panel header */}
               <p
                 className="text-[10px] uppercase tracking-widest font-semibold"
@@ -1312,11 +1311,9 @@ function PedigreeLabInner() {
                 if (hasDog) {
                   return (
                     <div className="space-y-3">
-                      {isHovered && (
-                        <p className="text-[9px] uppercase tracking-widest font-semibold" style={{ color: "#C9B29F", fontFamily: "var(--font-table)" }}>
-                          Hovering
-                        </p>
-                      )}
+                      <p className="text-[9px] uppercase tracking-widest font-semibold" style={{ color: "#C9B29F", fontFamily: "var(--font-table)", visibility: isHovered ? "visible" : "hidden" }}>
+                        Hovering
+                      </p>
                       <div
                         className="overflow-hidden"
                         style={{ border: `2px solid ${isHovered ? getDogColor(dogName) : "#C9B29F"}`, borderRadius: 8, transition: "border-color 0.2s ease" }}
@@ -1337,10 +1334,11 @@ function PedigreeLabInner() {
                         )}
                       </div>
                       <p
-                        className="text-sm font-bold"
+                        className="text-sm font-bold leading-tight"
                         style={{
                           color: getDogColor(dogName),
                           fontFamily: "var(--font-table)",
+                          minHeight: "2.5em",
                         }}
                       >
                         {sexIcon(dogSex || undefined)} {dogName}
@@ -1352,17 +1350,34 @@ function PedigreeLabInner() {
                   );
                 }
                 return (
-                  <div className="py-8 text-center">
-                    <p className="text-xs" style={{ color: "#6B6B6B" }}>
+                  <div className="space-y-3">
+                    <p className="text-[9px] uppercase tracking-widest font-semibold" style={{ color: "#C9B29F", fontFamily: "var(--font-table)", visibility: "hidden" }}>
+                      Hovering
+                    </p>
+                    <div
+                      className="overflow-hidden"
+                      style={{ border: "2px solid #C9B29F", borderRadius: 8 }}
+                    >
+                      <div
+                        className="w-full h-36 flex items-center justify-center text-3xl"
+                        style={{ background: "#FAFAFA", color: "#6B6B6B" }}
+                      >
+                        {"\uD83D\uDC36"}
+                      </div>
+                    </div>
+                    <p className="text-sm font-bold leading-tight" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)", minHeight: "2.5em" }}>
+                      No dog selected
+                    </p>
+                    <p className="text-[10px]" style={{ color: "#6B6B6B" }}>
                       Hover a dog on the table or select one on the canvas
                     </p>
                   </div>
                 );
               })()}
-            </div>
 
-            {/* Bottom: fixed action buttons */}
-            <div className="p-4 space-y-4 flex-shrink-0" style={{ borderTop: "2px solid #C9B29F" }}>
+              {/* Divider */}
+              <div style={{ borderTop: "2px solid #C9B29F" }} />
+
               {/* Preview toggle */}
               <button
                 onClick={async () => {
