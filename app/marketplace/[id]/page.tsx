@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import { getDogColor } from "@/app/utils/colors";
 
 /* ─── Types ─── */
 interface MarketplaceAd {
@@ -198,12 +199,12 @@ export default function MarketplaceAdPage() {
           <Link
             href="/marketplace"
             className="text-[10px] font-medium hover:underline"
-            style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}
+            style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
           >
             Marketplace
           </Link>
           <span style={{ color: "#6B6B6B", fontSize: "10px" }}>/</span>
-          <span className="text-[10px] font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+          <span className="text-[10px] font-medium" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
             {ad.title}
           </span>
         </div>
@@ -430,7 +431,7 @@ export default function MarketplaceAdPage() {
                 className="text-xl font-black leading-tight mb-3"
                 style={{
                   fontFamily: "var(--font-display)",
-                  color: "#1C1C1C",
+                  color: getDogColor(ad.title),
                   
                   
                 }}
