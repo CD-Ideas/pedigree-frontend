@@ -270,7 +270,7 @@ export default function DogsPage() {
   ];
 
   return (
-    <div>
+    <div style={{ background: "#EDE4D5", minHeight: "100vh" }}>
       <style>{`
         .dogs-search:focus { border-color: #C9B29F !important; }
         .sort-btn { transition: all 0.2s ease; }

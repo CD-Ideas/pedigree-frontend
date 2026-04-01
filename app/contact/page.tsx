@@ -68,7 +68,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto py-10 px-4">
+    <div className="max-w-2xl mx-auto py-10 px-4" style={{ background: "#EDE4D5", minHeight: "100vh" }}>
       {/* Header */}
       <div className="text-center mb-8">
         <h1

@@ -181,7 +181,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="flex gap-6 min-h-[calc(100vh-120px)]">
+    <div className="flex gap-6 min-h-[calc(100vh-120px)]" style={{ background: "#EDE4D5", minHeight: "100vh" }}>
       {/* ─── Left Sidebar ─── */}
       <aside className="w-64 flex-shrink-0 hidden lg:block">
         <div className="rounded-lg p-4 sticky top-20" style={steelFrame}>
