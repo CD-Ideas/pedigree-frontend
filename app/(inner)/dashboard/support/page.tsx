@@ -146,7 +146,7 @@ export default function SupportPage() {
             Your conversations with support
           </p>
         </div>
-        <Link href="/contact" className="px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all hover:scale-[1.03]"
+        <Link href="/contact" className="px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all hover:scale-[1.02]"
           style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)" }}>
           + New Message
         </Link>
@@ -285,7 +285,7 @@ export default function SupportPage() {
                       onInput={(e) => { const t = e.target as HTMLTextAreaElement; t.style.height = "42px"; t.style.height = Math.min(t.scrollHeight, 100) + "px"; }}
                     />
                     <button onClick={sendReply} disabled={sending || !replyText.trim()}
-                      className="px-4 py-2.5 rounded-lg text-xs font-semibold uppercase transition-all hover:scale-[1.03] disabled:opacity-40"
+                      className="px-4 py-2.5 rounded-lg text-xs font-semibold uppercase transition-all hover:scale-[1.02] disabled:opacity-40"
                       style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)" }}>
                       {sending ? "..." : "Send"}
                     </button>

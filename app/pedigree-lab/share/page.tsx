@@ -147,7 +147,7 @@ function SharePreviewInner() {
           fontSize,
           fontWeight: isChampion ? 700 : 600,
           color: cellTextColor,
-          fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+          fontFamily: "var(--font-body)",
           lineHeight: 1.1,
         }}
       >

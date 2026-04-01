@@ -1059,7 +1059,7 @@ export default function PuppyPredictorPage() {
                 {litter && (
                   <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                     {litter.map(pup => (
-                      <div key={pup.id} className="rounded-lg p-4 text-center space-y-2 transition-all hover:scale-[1.03] hover:-translate-y-1" style={{
+                      <div key={pup.id} className="rounded-lg p-4 text-center space-y-2 transition-all hover:scale-[1.02]" style={{
                         background: "#FAF7F2",
                         border: "2px solid #C9B29F",
                       }}>

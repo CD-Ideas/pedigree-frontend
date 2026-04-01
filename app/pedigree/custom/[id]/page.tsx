@@ -585,7 +585,7 @@ export default function PublishedPedigreePage() {
           }}>
           <div className="text-center">
             <h1 style={{
-              fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', fontWeight: 700,
+              fontFamily: "var(--font-body)", fontWeight: 700,
               fontSize: "clamp(1rem, 2.5vw, 1.5rem)", letterSpacing: "0.02em",
               color: titleColor,
             }}>

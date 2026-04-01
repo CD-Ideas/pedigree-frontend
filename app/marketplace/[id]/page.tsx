@@ -502,7 +502,7 @@ export default function MarketplaceAdPage() {
                     </div>
                   </div>
                   <a href={`/messages?to=${encodeURIComponent(ad.username)}&subject=${encodeURIComponent(`Re: ${ad.title}`)}&adId=${ad.id}`}
-                    className="px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all hover:scale-[1.03]"
+                    className="px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all hover:scale-[1.02]"
                     style={{
                       background: "#1C1C1C",
                       color: "#FAF7F2",

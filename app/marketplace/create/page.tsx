@@ -462,7 +462,7 @@ function CreateAdContent() {
                       setCategory(cat.key);
                       setErrors((prev) => ({ ...prev, category: "" }));
                     }}
-                    className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-left transition-all duration-300 hover:scale-[1.03]"
+                    className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-left transition-all duration-300 hover:scale-[1.02]"
                     style={{
                       background: category === cat.key ? `${cat.color}18` : "rgba(201,178,159,0.05)",
                       border: category === cat.key ? `2px solid ${cat.color}55` : "2px solid #C9B29F",

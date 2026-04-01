@@ -339,7 +339,7 @@ export default function DogsPage() {
           />
           <button
             type="submit"
-            className="px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all hover:scale-[1.03]"
+            className="px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all hover:scale-[1.02]"
             style={{ background: "#C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)", border: "2px solid #C9B29F" }}
           >
             Search

@@ -98,7 +98,7 @@ export default function DogOfTheMonthPage() {
           { icon: "🗳️", title: "Community Votes", desc: "The community picks the champion every month", color: "#a855f7" },
           { icon: "🏆", title: "Win Prizes", desc: "Permanent crown badge, spotlight, and exclusive rewards", color: "#1C1C1C" },
         ].map((item, i) => (
-          <div key={i} className="rounded-lg p-3 sm:p-5 text-center transition-all hover:scale-[1.03]"
+          <div key={i} className="rounded-lg p-3 sm:p-5 text-center transition-all hover:scale-[1.02]"
             style={{
               ...PG_CARD,
             }}>
@@ -135,7 +135,7 @@ export default function DogOfTheMonthPage() {
           />
           <button
             type="submit"
-            className="px-6 py-3 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all hover:scale-[1.03]"
+            className="px-6 py-3 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all hover:scale-[1.02]"
             style={{
               background: submitted ? "#22c55e" : "#1C1C1C",
               color: "#FAF7F2",
@@ -150,7 +150,7 @@ export default function DogOfTheMonthPage() {
       {/* CTA */}
       <div className="flex justify-center">
         <Link href="/dogs"
-          className="px-8 py-3 rounded-lg text-sm font-semibold uppercase tracking-wider transition-all hover:scale-[1.03]"
+          className="px-8 py-3 rounded-lg text-sm font-semibold uppercase tracking-wider transition-all hover:scale-[1.02]"
           style={{
             background: "#1C1C1C",
             color: "#FAF7F2",

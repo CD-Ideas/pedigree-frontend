@@ -83,6 +83,10 @@ export default function CommunityPedigreesPage() {
   const [sort, setSort] = useState<SortOption>("newest");
   const [filterContinent, setFilterContinent] = useState("");
   const [filterCountry, setFilterCountry] = useState("");
+  const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
+  const [showFilters, setShowFilters] = useState(false);
+  const [sexFilter, setSexFilter] = useState("");
+  const [hasPhotoFilter, setHasPhotoFilter] = useState(false);
 
   useEffect(() => {
     fetch("/api/pedigrees/community")
@@ -95,7 +99,7 @@ export default function CommunityPedigreesPage() {
   }, []);
 
   // Reset page when filters change
-  useEffect(() => { setPage(1); }, [search, sort, filterContinent, filterCountry]);
+  useEffect(() => { setPage(1); }, [search, sort, filterContinent, filterCountry, sexFilter, hasPhotoFilter]);
 
   // Get available countries based on continent selection
   const availableCountries = filterContinent

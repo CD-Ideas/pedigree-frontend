@@ -51,7 +51,7 @@ const PG = {
   subjectBorder: "2px solid #C9B29F",
   text: "#1C1C1C",
   textMuted: "#6B6B6B",
-  font: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+  font: "var(--font-body)",
   tabBg: "#1C1C1C",
   tabText: "#FAF7F2",
   tabActive: "#C9B29F",

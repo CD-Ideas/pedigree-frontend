@@ -135,6 +135,10 @@ export default function MyPedigreesPage() {
   const [page, setPage] = useState(1);
   const [filterContinent, setFilterContinent] = useState("");
   const [filterCountry, setFilterCountry] = useState("");
+  const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
+  const [showFilters, setShowFilters] = useState(false);
+  const [sexFilter, setSexFilter] = useState("");
+  const [hasPhotoFilter, setHasPhotoFilter] = useState(false);
 
   useEffect(() => {
     try {
@@ -165,7 +169,7 @@ export default function MyPedigreesPage() {
   };
 
   // Reset page when filters change
-  useEffect(() => { setPage(1); }, [search, sort, filterContinent, filterCountry]);
+  useEffect(() => { setPage(1); }, [search, sort, filterContinent, filterCountry, sexFilter, hasPhotoFilter]);
 
   // Get available countries based on continent selection
   const availableCountries = filterContinent
@@ -188,6 +192,10 @@ export default function MyPedigreesPage() {
       if (filterContinent && p.continent !== filterContinent) return false;
       // Country filter
       if (filterCountry && p.country !== filterCountry) return false;
+      // Sex filter
+      if (sexFilter && (p.sex || "").toUpperCase() !== sexFilter) return false;
+      // Has photo filter
+      if (hasPhotoFilter && !p.photo_path) return false;
       return true;
     })
     .sort((a, b) => {
