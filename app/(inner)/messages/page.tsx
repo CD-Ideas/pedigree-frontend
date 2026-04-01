@@ -596,7 +596,7 @@ function MessagesContent() {
         {/* Search */}
         <div className="px-3 py-2" style={{ borderBottom: "2px solid #C9B29F" }}>
           <div className="flex items-center gap-2 px-3 py-2 rounded-lg" style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}>
-            <span style={{ color: "#6B6B6B", fontSize: "14px" }}>🔍</span>
+            <span style={{ color: "#4A4A4A", fontSize: "14px" }}>🔍</span>
             <input value={convSearch} onChange={e => setConvSearch(e.target.value)}
               placeholder="Search or start new chat"
               className="flex-1 bg-transparent text-xs outline-none"
@@ -614,7 +614,7 @@ function MessagesContent() {
             <div className="text-center py-12 px-4">
               <span className="text-4xl block mb-3">💬</span>
               <p className="text-sm font-medium" style={{ color: "#1C1C1C" }}>No conversations</p>
-              <p className="text-xs mt-1" style={{ color: "#6B6B6B" }}>Tap ✏️ to start a new chat</p>
+              <p className="text-xs mt-1" style={{ color: "#4A4A4A" }}>Tap ✏️ to start a new chat</p>
             </div>
           ) : filteredThreads.map(t => {
             const isOnline = onlineUserIds.has(t.other_user_id);
@@ -645,11 +645,11 @@ function MessagesContent() {
                     </span>
                   </div>
                   <div className="flex items-center justify-between mt-0.5">
-                    <p className="text-xs truncate" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)", fontWeight: t.unread_count > 0 ? 600 : 400 }}>
+                    <p className="text-xs truncate" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)", fontWeight: t.unread_count > 0 ? 600 : 400 }}>
                       {t.last_body.substring(0, 50)}
                     </p>
                     {t.unread_count > 0 && (
-                      <span className="flex-shrink-0 ml-2 w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold"
+                      <span className="flex-shrink-0 ml-2 w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-bold"
                         style={{ background: "#C9B29F", color: "#1C1C1C" }}>
                         {t.unread_count}
                       </span>
@@ -839,7 +839,7 @@ function MessagesContent() {
                     {showDate && (
                       <div className="flex justify-center my-3">
                         <span className="px-3 py-1 rounded-lg text-[10px] font-medium"
-                          style={{ background: "#FAF7F2", color: "#6B6B6B", border: "1px solid #EDE4D5", fontFamily: "var(--font-table)" }}>
+                          style={{ background: "#FAF7F2", color: "#4A4A4A", border: "1px solid #EDE4D5", fontFamily: "var(--font-table)" }}>
                           {formatDateSeparator(msg.created_at)}
                         </span>
                       </div>
@@ -890,7 +890,7 @@ function MessagesContent() {
                                         className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs hover:opacity-80"
                                         style={{ background: isMine ? "rgba(0,0,0,0.08)" : "#FAF7F2", color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                                         📎 <span className="truncate">{att.name}</span>
-                                        <span className="text-[9px] flex-shrink-0" style={{ color: "#6B6B6B" }}>{formatFileSize(att.size)}</span>
+                                        <span className="text-[11px] flex-shrink-0" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>{formatFileSize(att.size)}</span>
                                       </a>
                                     );
                                   })}
@@ -924,7 +924,7 @@ function MessagesContent() {
                               ))}
                               <button onClick={() => setEmojiPanelOpen(prev => !prev)}
                                 className="hover:scale-110 transition-transform"
-                                style={{ fontSize: "16px", padding: "2px 6px", lineHeight: 1, background: "none", border: "2px solid #C9B29F", borderRadius: "50%", cursor: "pointer", color: "#6B6B6B", width: "28px", height: "28px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                style={{ fontSize: "16px", padding: "2px 6px", lineHeight: 1, background: "none", border: "2px solid #C9B29F", borderRadius: "50%", cursor: "pointer", color: "#4A4A4A", width: "28px", height: "28px", display: "flex", alignItems: "center", justifyContent: "center" }}>
                                 +
                               </button>
                             </div>
@@ -944,7 +944,7 @@ function MessagesContent() {
                               }}>
                                 {EMOJI_CATEGORIES.map(cat => (
                                   <div key={cat.name} className="mb-2">
-                                    <div style={{ fontSize: "10px", fontWeight: 600, color: "#6B6B6B", textTransform: "uppercase", letterSpacing: "0.05em", padding: "4px 2px", fontFamily: "var(--font-body)" }}>{cat.name}</div>
+                                    <div style={{ fontSize: "10px", fontWeight: 600, color: "#4A4A4A", textTransform: "uppercase", letterSpacing: "0.05em", padding: "4px 2px", fontFamily: "var(--font-body)" }}>{cat.name}</div>
                                     <div className="flex flex-wrap">
                                       {cat.emojis.map(em => (
                                         <button key={em} onClick={() => { toggleReaction(msg.id, em); setReactionPickerMsgId(null); setEmojiPanelOpen(false); }}
@@ -993,7 +993,7 @@ function MessagesContent() {
                         })()}
                         {/* Time + Read receipt */}
                         <div className={`flex items-center gap-1 mt-0.5 px-1 ${isMine ? "justify-end" : ""}`}>
-                          <span className="text-[10px]" style={{ color: "#6B6B6B" }}>{formatFullTime(msg.created_at)}</span>
+                          <span className="text-[10px]" style={{ color: "#4A4A4A" }}>{formatFullTime(msg.created_at)}</span>
                           {isMine && (
                             <span style={{ color: msg.is_read ? "#1d5bbf" : "#6B6B6B", fontSize: "11px" }}>
                               {msg.is_read ? "✓✓" : "✓"}
@@ -1088,7 +1088,7 @@ function MessagesContent() {
           <div className="flex flex-col items-center justify-center h-full gap-3" >
             <span className="text-6xl opacity-30">💬</span>
             <p className="text-lg font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Pedigree Platform Messenger</p>
-            <p className="text-xs" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Select a conversation or start a new one</p>
+            <p className="text-xs" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Select a conversation or start a new one</p>
           </div>
         )}
       </div>

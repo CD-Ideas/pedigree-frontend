@@ -77,7 +77,7 @@ export default function RegisterPage() {
           >
             Create Account
           </h1>
-          <p style={{ color: "#6B6B6B", fontSize: "0.9rem" }}>
+          <p style={{ color: "#4A4A4A", fontSize: "0.9rem" }}>
             Join the ultimate pedigree platform
           </p>
         </div>
@@ -200,7 +200,7 @@ export default function RegisterPage() {
           )}
         </form>
 
-        <p className="text-center mt-6" style={{ color: "#6B6B6B", fontSize: "0.9rem" }}>
+        <p className="text-center mt-6" style={{ color: "#4A4A4A", fontSize: "0.9rem" }}>
           Already have an account?{" "}
           <Link href="/login" className="hover:underline" style={{ color: "#1C1C1C", fontWeight: 600 }}>
             Sign in

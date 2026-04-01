@@ -35,7 +35,7 @@ const CATEGORIES: Record<string, { label: string; icon: string; color: string }>
 const STATUS_STYLES: Record<string, { bg: string; color: string; border: string; label: string }> = {
   active: { bg: "rgba(34,197,94,0.12)", color: "#22c55e", border: "rgba(34,197,94,0.3)", label: "Active" },
   pending: { bg: "rgba(234,179,8,0.12)", color: "#eab308", border: "rgba(234,179,8,0.3)", label: "Pending" },
-  expired: { bg: "rgba(148,163,184,0.12)", color: "#6B6B6B", border: "rgba(148,163,184,0.3)", label: "Expired" },
+  expired: { bg: "rgba(148,163,184,0.12)", color: "#4A4A4A", border: "rgba(148,163,184,0.3)", label: "Expired" },
   removed: { bg: "rgba(239,68,68,0.12)", color: "#ef4444", border: "rgba(239,68,68,0.3)", label: "Removed" },
 };
 
@@ -138,7 +138,7 @@ export default function MyAdsPage() {
           <Link
             href="/marketplace"
             className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all hover:scale-105"
-            style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
+            style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}
           >
             Marketplace
           </Link>
@@ -171,7 +171,7 @@ export default function MyAdsPage() {
             >
               MY ADS
             </h1>
-            <p className="text-xs mt-1" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+            <p className="text-xs mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Manage your marketplace listings
             </p>
           </div>
@@ -208,7 +208,7 @@ export default function MyAdsPage() {
         {/* Ads List */}
         {loading ? (
           <div className="flex items-center justify-center py-16">
-            <div className="flex items-center gap-3" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+            <div className="flex items-center gap-3" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               <div
                 className="w-5 h-5 rounded-lg border-2 border-t-transparent animate-spin"
                 style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }}
@@ -227,7 +227,7 @@ export default function MyAdsPage() {
             </h3>
             <p
               className="text-sm mb-6"
-              style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
+              style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}
             >
               Create your first marketplace listing to start selling or advertising.
             </p>
@@ -286,7 +286,7 @@ export default function MyAdsPage() {
                             {/* Category badge */}
                             {cat && (
                               <span
-                                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[9px] font-bold"
+                                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[11px] font-bold"
                                 style={{
                                   background: `${cat.color}18`,
                                   color: cat.color,
@@ -300,7 +300,7 @@ export default function MyAdsPage() {
 
                             {/* Status badge */}
                             <span
-                              className="inline-flex items-center px-2 py-0.5 rounded-lg text-[9px] font-bold uppercase tracking-wider"
+                              className="inline-flex items-center px-2 py-0.5 rounded-lg text-[11px] font-bold uppercase tracking-wider"
                               style={{
                                 background: statusStyle.bg,
                                 color: statusStyle.color,
@@ -315,7 +315,7 @@ export default function MyAdsPage() {
                           {/* Views */}
                           <span
                             className="text-[10px] flex items-center gap-1 flex-shrink-0"
-                            style={{ color: "#6B6B6B", fontFamily: "var(--font-mono)" }}
+                            style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}
                           >
                             {"\uD83D\uDC41"} {(ad.views || 0).toLocaleString()}
                           </span>
@@ -343,7 +343,7 @@ export default function MyAdsPage() {
 
                       {/* Footer */}
                       <div className="flex items-center justify-between mt-3 pt-3" style={{ borderTop: "1px solid #C9B29F" }}>
-                        <span className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-mono)" }}>
+                        <span className="text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
                           Created {formatDate(ad.created_at)}
                         </span>
 
@@ -416,8 +416,8 @@ export default function MyAdsPage() {
         <div className="flex items-center justify-center gap-4">
           <Link href="/marketplace" className="text-[10px] hover:underline" style={{ color: "#1C1C1C" }}>Marketplace</Link>
           <Link href="/dashboard/my-ads" className="text-[10px] hover:underline" style={{ color: "#1C1C1C" }}>My Ads</Link>
-          <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "#6B6B6B" }}>Privacy</Link>
-          <Link href="/terms" className="text-[10px] hover:underline" style={{ color: "#6B6B6B" }}>Terms</Link>
+          <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "#4A4A4A" }}>Privacy</Link>
+          <Link href="/terms" className="text-[10px] hover:underline" style={{ color: "#4A4A4A" }}>Terms</Link>
         </div>
       </footer>
     </div>

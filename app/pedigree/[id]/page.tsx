@@ -586,7 +586,7 @@ function SiblingsTab({ siblings }: { siblings: Dog["siblings"] }) {
               borderRadius: PG.cardRadius,
             }}>
             {s.label}
-            <span className="text-[9px] px-1.5 rounded-lg" style={{ background: PG.bg, fontFamily: PG.font }}>
+            <span className="text-[11px] px-1.5 rounded-lg" style={{ background: PG.bg, fontFamily: PG.font }}>
               {s.list.length}
             </span>
             <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" style={{ transform: openSib === s.key ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>
@@ -860,7 +860,7 @@ function TitlesTab({ offspring }: { offspring: Offspring[] }) {
               borderRadius: PG.cardRadius,
             }}>
             {LABELS[title] || title}
-            <span className="text-[9px] px-1.5 rounded-lg" style={{ background: PG.bg, fontFamily: PG.font }}>
+            <span className="text-[11px] px-1.5 rounded-lg" style={{ background: PG.bg, fontFamily: PG.font }}>
               {groups[title].length}
             </span>
             <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" style={{ transform: openTitle === title ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>
@@ -1079,7 +1079,7 @@ export default function PublicPedigreePage() {
                style={{ border: "2px solid #C9B29F", background: "#FAFAFA", borderRadius: PG.cardRadius }}
                onMouseEnter={() => { if (dog.sire?.photo_url) { const u = dog.sire.photo_url; setHoverPhoto(u.startsWith("http") ? u : `https://www.apbt.online-pedigrees.com/${u}`); } }}
                onMouseLeave={() => setHoverPhoto(null)}>
-            <div className="text-[9px] uppercase tracking-wider mb-0.5 font-semibold"
+            <div className="text-[11px] uppercase tracking-wider mb-0.5 font-semibold"
                  style={{ color: "#1d5bbf", letterSpacing: "0.1em" }}>♂ Sire (Father)</div>
             {dog.sire ? (
               <Link href={`/pedigree/${dog.sire.id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColorDark(dog.sire.name) }}>
@@ -1091,7 +1091,7 @@ export default function PublicPedigreePage() {
                style={{ border: "2px solid #C9B29F", background: "#FAFAFA", borderRadius: PG.cardRadius }}
                onMouseEnter={() => { if (dog.dam?.photo_url) { const u = dog.dam.photo_url; setHoverPhoto(u.startsWith("http") ? u : `https://www.apbt.online-pedigrees.com/${u}`); } }}
                onMouseLeave={() => setHoverPhoto(null)}>
-            <div className="text-[9px] uppercase tracking-wider mb-0.5 font-semibold"
+            <div className="text-[11px] uppercase tracking-wider mb-0.5 font-semibold"
                  style={{ color: "#9f1239", letterSpacing: "0.1em" }}>♀ Dam (Mother)</div>
             {dog.dam ? (
               <Link href={`/pedigree/${dog.dam.id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColorDark(dog.dam.name) }}>

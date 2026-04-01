@@ -133,7 +133,7 @@ export default function PedigreeHub() {
           }}>
             Pedigree <span style={{ color: "#C9B29F" }}>Hub</span>
           </h1>
-          <p className="mt-3 mb-8 max-w-lg mx-auto" style={{ fontFamily: "var(--font-table)", fontSize: "15px", color: "#6B6B6B", lineHeight: 1.6 }}>
+          <p className="mt-3 mb-8 max-w-lg mx-auto" style={{ fontFamily: "var(--font-table)", fontSize: "15px", color: "#4A4A4A", lineHeight: 1.6 }}>
             Search over <span style={{ color: "#1C1C1C", fontWeight: 700 }}>500,000+</span> dogs.
             View pedigrees, bloodlines, offspring, siblings &amp; genetic stats — all free.
           </p>
@@ -197,7 +197,7 @@ export default function PedigreeHub() {
           <section className="mb-12">
             {loading ? (
               <div className="flex items-center justify-center py-16">
-                <div className="flex items-center gap-3" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+                <div className="flex items-center gap-3" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                   <div className="w-5 h-5 rounded-lg border-2 border-t-transparent animate-spin"
                        style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} />
                   Searching...
@@ -206,7 +206,7 @@ export default function PedigreeHub() {
             ) : results.length > 0 ? (
               <>
                 <div className="flex items-center justify-between mb-4">
-                  <p style={{ fontFamily: "var(--font-table)", fontSize: "14px", color: "#6B6B6B" }}>
+                  <p style={{ fontFamily: "var(--font-table)", fontSize: "14px", color: "#4A4A4A" }}>
                     Found <span style={{ color: "#1C1C1C", fontWeight: 700 }}>{total.toLocaleString()}</span> results for &ldquo;{query}&rdquo;
                   </p>
                 </div>
@@ -245,7 +245,7 @@ export default function PedigreeHub() {
                           {titles.length > 0 && (
                             <div className="absolute top-2 right-2 flex gap-1">
                               {titles.slice(0, 2).map((t) => (
-                                <span key={t} className="text-[9px] font-bold px-1.5 py-0.5 rounded"
+                                <span key={t} className="text-[11px] font-bold px-1.5 py-0.5 rounded"
                                   style={{ background: "#FAF7F2", color: TC[t] || "#1C1C1C", fontFamily: "var(--font-table)", border: "1px solid #C9B29F" }}>
                                   {t}
                                 </span>
@@ -262,11 +262,11 @@ export default function PedigreeHub() {
                           <div className="flex items-center gap-2 mt-1.5">
                             {dog.color && (
                               <span className="text-[10px] px-2 py-0.5 rounded-lg"
-                                style={{ background: "#FAFAFA", color: "#6B6B6B", fontFamily: "var(--font-table)", border: "1px solid #C9B29F" }}>
+                                style={{ background: "#FAFAFA", color: "#4A4A4A", fontFamily: "var(--font-table)", border: "1px solid #C9B29F" }}>
                                 {dog.color}
                               </span>
                             )}
-                            <span className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-mono)" }}>
+                            <span className="text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
                               {dog.reg_number}
                             </span>
                           </div>
@@ -275,13 +275,13 @@ export default function PedigreeHub() {
                               {dog.sire_name && (
                                 <div className="text-[10px] truncate" style={{ fontFamily: "var(--font-table)" }}>
                                   <span style={{ color: "#1d5bbf" }}>Sire:</span>{" "}
-                                  <span style={{ color: "#6B6B6B" }}>{dog.sire_name}</span>
+                                  <span style={{ color: "#4A4A4A" }}>{dog.sire_name}</span>
                                 </div>
                               )}
                               {dog.dam_name && (
                                 <div className="text-[10px] truncate" style={{ fontFamily: "var(--font-table)" }}>
                                   <span style={{ color: "#9f1239" }}>Dam:</span>{" "}
-                                  <span style={{ color: "#6B6B6B" }}>{dog.dam_name}</span>
+                                  <span style={{ color: "#4A4A4A" }}>{dog.dam_name}</span>
                                 </div>
                               )}
                             </div>
@@ -300,7 +300,7 @@ export default function PedigreeHub() {
                       style={{ background: "#FAF7F2", color: "#1C1C1C", border: "2px solid #C9B29F", fontFamily: "var(--font-table)", borderRadius: "8px" }}>
                       Prev
                     </button>
-                    <span style={{ fontFamily: "var(--font-mono)", fontSize: "13px", color: "#6B6B6B" }}>
+                    <span style={{ fontFamily: "var(--font-mono)", fontSize: "13px", color: "#4A4A4A" }}>
                       Page {page} of {totalPages}
                     </span>
                     <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages}
@@ -313,10 +313,10 @@ export default function PedigreeHub() {
               </>
             ) : (
               <div className="text-center py-16">
-                <p style={{ color: "#6B6B6B", fontFamily: "var(--font-table)", fontSize: "15px" }}>
+                <p style={{ color: "#4A4A4A", fontFamily: "var(--font-table)", fontSize: "15px" }}>
                   No dogs found for &ldquo;{query}&rdquo;
                 </p>
-                <p className="mt-2" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)", fontSize: "12px" }}>
+                <p className="mt-2" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)", fontSize: "12px" }}>
                   Try a different name or check the spelling
                 </p>
               </div>
@@ -331,7 +331,7 @@ export default function PedigreeHub() {
               <h2 style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "1.3rem", color: "#1C1C1C" }}>
                 Legendary Bloodlines
               </h2>
-              <p style={{ fontFamily: "var(--font-table)", fontSize: "13px", color: "#6B6B6B", marginTop: "4px" }}>
+              <p style={{ fontFamily: "var(--font-table)", fontSize: "13px", color: "#4A4A4A", marginTop: "4px" }}>
                 Start exploring with the most iconic dogs in APBT history
               </p>
             </div>
@@ -362,7 +362,7 @@ export default function PedigreeHub() {
                     </h3>
                     <div className="flex items-center justify-center gap-2 mt-1.5">
                       {dog.color && (
-                        <span className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>{dog.color}</span>
+                        <span className="text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>{dog.color}</span>
                       )}
                     </div>
                     <div className="mt-3 text-xs font-semibold px-3 py-1.5 rounded-lg inline-block transition-all group-hover:scale-105"
@@ -395,7 +395,7 @@ export default function PedigreeHub() {
                     borderRadius: "8px",
                   }}>
                   <h3 style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "14px", color: "#1C1C1C" }}>{f.title}</h3>
-                  <p className="mt-1" style={{ fontFamily: "var(--font-table)", fontSize: "12px", color: "#6B6B6B" }}>{f.desc}</p>
+                  <p className="mt-1" style={{ fontFamily: "var(--font-table)", fontSize: "12px", color: "#4A4A4A" }}>{f.desc}</p>
                 </div>
               ))}
             </div>
@@ -413,7 +413,7 @@ export default function PedigreeHub() {
             <h2 style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "1.3rem", color: "#1C1C1C" }}>
               Want to build your own pedigrees?
             </h2>
-            <p className="mt-2 mb-5" style={{ fontFamily: "var(--font-table)", fontSize: "14px", color: "#6B6B6B" }}>
+            <p className="mt-2 mb-5" style={{ fontFamily: "var(--font-table)", fontSize: "14px", color: "#4A4A4A" }}>
               Create an account to register dogs, build pedigree trees, track litters, and more.
             </p>
             <Link href="/register"
@@ -438,13 +438,13 @@ export default function PedigreeHub() {
             color: "#1C1C1C",
           }}>Pedigree Platform</span>
         </div>
-        <p className="text-xs" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+        <p className="text-xs" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
           The modern pedigree hub for breeders, owners, and enthusiasts.
         </p>
         <div className="flex items-center justify-center gap-4 mt-3">
-          <Link href="/privacy" className="text-xs hover:underline" style={{ color: "#6B6B6B" }}>Privacy</Link>
-          <Link href="/terms" className="text-xs hover:underline" style={{ color: "#6B6B6B" }}>Terms</Link>
-          <Link href="/contact" className="text-xs hover:underline" style={{ color: "#6B6B6B" }}>Contact</Link>
+          <Link href="/privacy" className="text-xs hover:underline" style={{ color: "#4A4A4A" }}>Privacy</Link>
+          <Link href="/terms" className="text-xs hover:underline" style={{ color: "#4A4A4A" }}>Terms</Link>
+          <Link href="/contact" className="text-xs hover:underline" style={{ color: "#4A4A4A" }}>Contact</Link>
         </div>
       </footer>
     </div>

@@ -241,7 +241,7 @@ export default function AccountPage() {
         <h1 style={{ fontFamily: "var(--font-table)", fontSize: "1.6rem", fontWeight: 700, color: "#1C1C1C" }}>
           Account Settings
         </h1>
-        <p className="mt-1 text-sm" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+        <p className="mt-1 text-sm" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
           Manage your profile, password, and account
         </p>
       </div>
@@ -310,10 +310,10 @@ export default function AccountPage() {
             <p className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               {user.username}
             </p>
-            <p className="text-xs mt-0.5" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+            <p className="text-xs mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Click on the picture to upload a new one
             </p>
-            <p className="text-[10px] mt-1" style={{ color: "#6B6B6B", fontFamily: "var(--font-mono)" }}>
+            <p className="text-[10px] mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
               JPG, PNG or GIF. Max 5MB.
             </p>
           </div>
@@ -328,7 +328,7 @@ export default function AccountPage() {
         <div className="space-y-4">
           <div>
             <label className="block text-[10px] uppercase tracking-widest font-semibold mb-1.5"
-              style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+              style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Username
             </label>
             <input
@@ -341,7 +341,7 @@ export default function AccountPage() {
           </div>
           <div>
             <label className="block text-[10px] uppercase tracking-widest font-semibold mb-1.5"
-              style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+              style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Email
             </label>
             <input
@@ -356,10 +356,10 @@ export default function AccountPage() {
           <div className="flex items-center justify-between pt-2" style={{ borderTop: "2px solid #C9B29F" }}>
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2">
-                <span className="text-[10px] uppercase tracking-wider" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Role</span>
+                <span className="text-[10px] uppercase tracking-wider" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Role</span>
                 <span className="text-xs font-bold uppercase" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{user.role}</span>
               </div>
-              <span className="text-[10px]" style={{ color: "#6B6B6B" }}>|</span>
+              <span className="text-[10px]" style={{ color: "#4A4A4A" }}>|</span>
               <div className="flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full" style={{ background: "#22c55e" }} />
                 <span className="text-xs font-bold" style={{ color: "#22c55e", fontFamily: "var(--font-table)" }}>Active</span>
@@ -391,7 +391,7 @@ export default function AccountPage() {
         <div className="space-y-4">
           <div>
             <label className="block text-[10px] uppercase tracking-widest font-semibold mb-1.5"
-              style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+              style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Current Password
             </label>
             <div className="relative">
@@ -406,7 +406,7 @@ export default function AccountPage() {
                 type="button"
                 onClick={() => setShowCurrentPw(!showCurrentPw)}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-xs"
-                style={{ color: "#6B6B6B" }}
+                style={{ color: "#4A4A4A" }}
               >
                 {showCurrentPw ? "Hide" : "Show"}
               </button>
@@ -414,7 +414,7 @@ export default function AccountPage() {
           </div>
           <div>
             <label className="block text-[10px] uppercase tracking-widest font-semibold mb-1.5"
-              style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+              style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               New Password
             </label>
             <div className="relative">
@@ -430,7 +430,7 @@ export default function AccountPage() {
                 type="button"
                 onClick={() => setShowNewPw(!showNewPw)}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-xs"
-                style={{ color: "#6B6B6B" }}
+                style={{ color: "#4A4A4A" }}
               >
                 {showNewPw ? "Hide" : "Show"}
               </button>
@@ -438,7 +438,7 @@ export default function AccountPage() {
           </div>
           <div>
             <label className="block text-[10px] uppercase tracking-widest font-semibold mb-1.5"
-              style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+              style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Confirm New Password
             </label>
             <input
@@ -492,9 +492,9 @@ export default function AccountPage() {
               <div>
                 <p className="text-sm font-bold" style={{ fontFamily: "var(--font-table)" }}>
                   <span style={{ color: "#1C1C1C" }}>FREE PLAN</span>
-                  <span className="text-xs font-normal ml-1" style={{ color: "#6B6B6B" }}>/ 3 MONTHS</span>
+                  <span className="text-xs font-normal ml-1" style={{ color: "#4A4A4A" }}>/ 3 MONTHS</span>
                 </p>
-                <p className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+                <p className="text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                   Basic access to all features
                 </p>
               </div>
@@ -516,7 +516,7 @@ export default function AccountPage() {
                 style={{ background: "#FAFAFA", border: "2px solid #C9B29F", borderRadius: "8px" }}>
                 <span className="text-sm">{item.icon}</span>
                 <div>
-                  <p className="text-[10px] uppercase tracking-wider" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>{item.label}</p>
+                  <p className="text-[10px] uppercase tracking-wider" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>{item.label}</p>
                   <p className="text-xs font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{item.value}</p>
                 </div>
               </div>
@@ -524,7 +524,7 @@ export default function AccountPage() {
           </div>
 
           <div className="pt-2 text-center" style={{ borderTop: "2px solid #C9B29F" }}>
-            <p className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+            <p className="text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Premium plans coming soon with advanced features
             </p>
           </div>
@@ -541,7 +541,7 @@ export default function AccountPage() {
           <div className="flex items-center justify-between py-2" style={{ borderBottom: "2px solid #C9B29F" }}>
             <div>
               <p className="text-sm font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Default Pedigree Generations</p>
-              <p className="text-[10px] mt-0.5" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+              <p className="text-[10px] mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                 How many generations to show by default
               </p>
             </div>
@@ -565,7 +565,7 @@ export default function AccountPage() {
           <div className="flex items-center justify-between py-2" style={{ borderBottom: "2px solid #C9B29F" }}>
             <div>
               <p className="text-sm font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Email Notifications</p>
-              <p className="text-[10px] mt-0.5" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+              <p className="text-[10px] mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                 Receive updates about your pedigrees and community activity
               </p>
             </div>
@@ -592,7 +592,7 @@ export default function AccountPage() {
           <div className="flex items-center justify-between py-2">
             <div>
               <p className="text-sm font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Notification Sounds</p>
-              <p className="text-[10px] mt-0.5" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+              <p className="text-[10px] mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                 Play sounds for new notifications and messages
               </p>
             </div>
@@ -627,7 +627,7 @@ export default function AccountPage() {
           <div className="flex items-center justify-between py-2">
             <div>
               <p className="text-sm font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Active Status</p>
-              <p className="text-[10px] mt-0.5" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+              <p className="text-[10px] mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                 Show when you&apos;re online to other users
               </p>
             </div>
@@ -677,7 +677,7 @@ export default function AccountPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Deactivate Account</p>
-              <p className="text-xs mt-0.5" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+              <p className="text-xs mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                 Temporarily disable your account. You can reactivate by logging in again.
               </p>
             </div>
@@ -698,7 +698,7 @@ export default function AccountPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Delete Account Permanently</p>
-                <p className="text-xs mt-0.5" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+                <p className="text-xs mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                   This action is irreversible. All your data will be permanently removed.
                 </p>
               </div>

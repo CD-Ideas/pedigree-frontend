@@ -14,7 +14,7 @@ export default function DogRedirect() {
 
   return (
     <div className="flex items-center justify-center py-32">
-      <div className="flex items-center gap-3" style={{ color: "#6B6B6B" }}>
+      <div className="flex items-center gap-3" style={{ color: "#4A4A4A" }}>
         <div className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} />
         Redirecting...
       </div>

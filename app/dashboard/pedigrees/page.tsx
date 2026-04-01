@@ -250,7 +250,7 @@ export default function MyPedigreesPage() {
               }}>
               My Pedigrees
             </h1>
-            <p className="text-xs mt-1" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+            <p className="text-xs mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Manage your published pedigrees and journals
             </p>
           </div>
@@ -314,7 +314,7 @@ export default function MyPedigreesPage() {
                 fontFamily: "var(--font-table)",
               }}
             />
-            <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs" style={{ color: "#6B6B6B" }}>🔍</span>
+            <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs" style={{ color: "#4A4A4A" }}>🔍</span>
           </div>
           <select
             value={sort}
@@ -369,7 +369,7 @@ export default function MyPedigreesPage() {
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2.5">
               <div>
-                <label className="text-[10px] uppercase tracking-wider mb-1.5 block" style={{ color: "#6B6B6B" }}>Continent</label>
+                <label className="text-[10px] uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A" }}>Continent</label>
                 <select
                   value={filterContinent}
                   onChange={(e) => { setFilterContinent(e.target.value); setFilterCountry(""); setPage(1); }}
@@ -383,7 +383,7 @@ export default function MyPedigreesPage() {
                 </select>
               </div>
               <div>
-                <label className="text-[10px] uppercase tracking-wider mb-1.5 block" style={{ color: "#6B6B6B" }}>Country</label>
+                <label className="text-[10px] uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A" }}>Country</label>
                 <select
                   value={filterCountry}
                   onChange={(e) => { setFilterCountry(e.target.value); setPage(1); }}
@@ -397,7 +397,7 @@ export default function MyPedigreesPage() {
                 </select>
               </div>
               <div>
-                <label className="text-[10px] uppercase tracking-wider mb-1.5 block" style={{ color: "#6B6B6B" }}>Sex</label>
+                <label className="text-[10px] uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A" }}>Sex</label>
                 <select
                   value={sexFilter}
                   onChange={(e) => { setSexFilter(e.target.value); setPage(1); }}
@@ -454,7 +454,7 @@ export default function MyPedigreesPage() {
                       style={{ color: getDogColor(r.dogName), fontFamily: "var(--font-table)" }}>
                       {r.dogName}
                     </Link>
-                    <span className="text-[10px]" style={{ color: "#6B6B6B" }}>—</span>
+                    <span className="text-[10px]" style={{ color: "#4A4A4A" }}>—</span>
                     <span className="text-xs" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{r.label}</span>
                   </div>
                   <div className="flex items-center gap-2">
@@ -480,7 +480,7 @@ export default function MyPedigreesPage() {
         {/* Pedigree Cards */}
         {loading ? (
           <div className="flex items-center justify-center py-16">
-            <div className="flex items-center gap-3" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+            <div className="flex items-center gap-3" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               <div className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} />
               Loading your pedigrees...
             </div>
@@ -488,7 +488,7 @@ export default function MyPedigreesPage() {
         ) : filtered.length === 0 ? (
           <div className="text-center py-16">
             <div className="text-5xl mb-4 opacity-30">🐕</div>
-            <p className="text-sm mb-2" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+            <p className="text-sm mb-2" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               {search.trim()
                 ? "No pedigrees match your search"
                 : "No pedigrees published yet"}
@@ -586,22 +586,22 @@ export default function MyPedigreesPage() {
                     </p>
                     <div className="flex items-center gap-1 mt-0.5">
                       <span
-                        className="text-[9px]"
+                        className="text-[11px]"
                         style={{ color: isMale ? "#1d5bbf" : "#9f1239" }}
                       >
                         {isMale ? "♂" : "♀"}
                       </span>
                       {p.country && (
-                        <span className="text-[9px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+                        <span className="text-[11px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                           · {p.country}
                         </span>
                       )}
                     </div>
                     <div className="flex items-center justify-between mt-1">
-                      <span className="text-[8px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+                      <span className="text-[8px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                         {formatDate(p.date_posted)}
                       </span>
-                      <span className="text-[8px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-mono)" }}>
+                      <span className="text-[8px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
                         ID: <span style={{ color: "#1C1C1C" }}>{p.id}</span>
                       </span>
                     </div>
@@ -625,7 +625,7 @@ export default function MyPedigreesPage() {
                     {/* Actions */}
                     <div className="flex items-center gap-1 mt-1.5">
                       <span
-                        className="text-[9px] px-2 py-0.5 rounded-lg font-semibold transition-all group-hover:scale-105 inline-block"
+                        className="text-[11px] px-2 py-0.5 rounded-lg font-semibold transition-all group-hover:scale-105 inline-block"
                         style={{
                           background: "rgba(201,178,159,0.1)",
                           color: "#1C1C1C",
@@ -636,7 +636,7 @@ export default function MyPedigreesPage() {
                         View
                       </span>
                       <span
-                        className="text-[9px] px-2 py-0.5 rounded-lg font-semibold inline-block"
+                        className="text-[11px] px-2 py-0.5 rounded-lg font-semibold inline-block"
                         style={{
                           background: "rgba(34,197,94,0.1)",
                           color: "#22c55e",
@@ -661,13 +661,13 @@ export default function MyPedigreesPage() {
             <table className="w-full text-sm">
               <thead>
                 <tr style={{ borderBottom: "2px solid #C9B29F" }}>
-                  <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Dog Name</th>
-                  <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Sex</th>
-                  <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden md:table-cell" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Country</th>
-                  <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden md:table-cell" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Breeder</th>
-                  <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden lg:table-cell" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Owner</th>
-                  <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden lg:table-cell" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Date Posted</th>
-                  <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden md:table-cell" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Views</th>
+                  <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Dog Name</th>
+                  <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Sex</th>
+                  <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden md:table-cell" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Country</th>
+                  <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden md:table-cell" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Breeder</th>
+                  <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden lg:table-cell" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Owner</th>
+                  <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden lg:table-cell" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Date Posted</th>
+                  <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden md:table-cell" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Views</th>
                 </tr>
               </thead>
               <tbody>
@@ -680,7 +680,7 @@ export default function MyPedigreesPage() {
                         <Link href={`/pedigree/custom/${p.id}`} className="font-medium hover:underline text-xs" style={{ color: getDogColor(displayName), fontFamily: "var(--font-table)" }}>
                           {displayName}
                         </Link>
-                        <div className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-mono)" }}>
+                        <div className="text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
                           ID: {p.id}
                         </div>
                       </td>
@@ -695,19 +695,19 @@ export default function MyPedigreesPage() {
                           {isMale ? "♂" : "♀"}
                         </span>
                       </td>
-                      <td className="px-3 py-2 hidden md:table-cell text-xs" style={{ color: "#6B6B6B" }}>
+                      <td className="px-3 py-2 hidden md:table-cell text-xs" style={{ color: "#4A4A4A" }}>
                         {p.country || "—"}
                       </td>
-                      <td className="px-3 py-2 hidden md:table-cell text-xs" style={{ color: "#6B6B6B" }}>
+                      <td className="px-3 py-2 hidden md:table-cell text-xs" style={{ color: "#4A4A4A" }}>
                         {p.breeder || "—"}
                       </td>
-                      <td className="px-3 py-2 hidden lg:table-cell text-xs" style={{ color: "#6B6B6B" }}>
+                      <td className="px-3 py-2 hidden lg:table-cell text-xs" style={{ color: "#4A4A4A" }}>
                         {p.owner || "—"}
                       </td>
-                      <td className="px-3 py-2 hidden lg:table-cell text-xs" style={{ color: "#6B6B6B", fontFamily: "var(--font-mono)" }}>
+                      <td className="px-3 py-2 hidden lg:table-cell text-xs" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
                         {formatDate(p.date_posted)}
                       </td>
-                      <td className="px-3 py-2 hidden md:table-cell text-xs" style={{ color: "#6B6B6B", fontFamily: "var(--font-mono)" }}>
+                      <td className="px-3 py-2 hidden md:table-cell text-xs" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
                         {(p.view_count || 0).toLocaleString()}
                       </td>
                     </tr>
@@ -741,7 +741,7 @@ export default function MyPedigreesPage() {
                 .map((p, idx, arr) => (
                   <span key={p}>
                     {idx > 0 && arr[idx - 1] !== p - 1 && (
-                      <span className="text-[10px] px-1" style={{ color: "#6B6B6B" }}>…</span>
+                      <span className="text-[10px] px-1" style={{ color: "#4A4A4A" }}>…</span>
                     )}
                     <button
                       onClick={() => setPage(p)}

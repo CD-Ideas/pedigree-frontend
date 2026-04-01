@@ -316,7 +316,7 @@ export default function EditAdPage() {
   if (loadingAd) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: "#EDE4D5" }}>
-        <div className="flex items-center gap-3" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+        <div className="flex items-center gap-3" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
           <div
             className="w-5 h-5 rounded-lg border-2 border-t-transparent animate-spin"
             style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }}
@@ -343,7 +343,7 @@ export default function EditAdPage() {
         >
           Please Log In
         </h2>
-        <p className="text-sm" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+        <p className="text-sm" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
           You need to be logged in to edit a marketplace ad.
         </p>
         <div className="flex gap-3">
@@ -394,7 +394,7 @@ export default function EditAdPage() {
         >
           Access Denied
         </h2>
-        <p className="text-sm" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+        <p className="text-sm" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
           You can only edit your own ads.
         </p>
         <Link
@@ -471,11 +471,11 @@ export default function EditAdPage() {
           <Link href="/marketplace" className="text-[10px] font-medium hover:underline" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
             Marketplace
           </Link>
-          <span style={{ color: "#6B6B6B", fontSize: "10px" }}>/</span>
+          <span style={{ color: "#4A4A4A", fontSize: "10px" }}>/</span>
           <Link href={`/marketplace/${adId}`} className="text-[10px] font-medium hover:underline" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
             Ad #{adId}
           </Link>
-          <span style={{ color: "#6B6B6B", fontSize: "10px" }}>/</span>
+          <span style={{ color: "#4A4A4A", fontSize: "10px" }}>/</span>
           <span className="text-[10px] font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
             Edit
           </span>
@@ -493,7 +493,7 @@ export default function EditAdPage() {
         >
           Edit Ad
         </h1>
-        <p className="text-xs mb-6" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+        <p className="text-xs mb-6" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
           Update your marketplace listing details below
         </p>
 
@@ -507,7 +507,7 @@ export default function EditAdPage() {
               
             }}
           >
-            <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+            <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Category <span style={{ color: "#ef4444" }}>*</span>
             </label>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -556,12 +556,12 @@ export default function EditAdPage() {
               zIndex: 10,
             }}
           >
-            <label className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+            <label className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Link to Dog {["dogs_for_sale", "stud_service", "litters_for_sale"].includes(category)
-                ? <span className="text-[9px] normal-case tracking-normal font-normal" style={{ color: "#ef4444" }}>(required)</span>
-                : <span className="text-[9px] normal-case tracking-normal font-normal">(optional)</span>}
+                ? <span className="text-[11px] normal-case tracking-normal font-normal" style={{ color: "#ef4444" }}>(required)</span>
+                : <span className="text-[11px] normal-case tracking-normal font-normal">(optional)</span>}
             </label>
-            <p className="text-[10px] mb-3" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+            <p className="text-[10px] mb-3" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Link this ad to a registered pedigree on the platform — the heading will be auto-filled
             </p>
             {errors.dog && (
@@ -580,7 +580,7 @@ export default function EditAdPage() {
                   <span className="text-xs font-bold" style={{ color: getDogColor(selectedDogName), fontFamily: "var(--font-table)" }}>
                     {selectedDogName}
                   </span>
-                  <span className="text-[9px]" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
+                  <span className="text-[11px]" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
                     ID: {dogId}
                   </span>
                 </div>
@@ -654,7 +654,7 @@ export default function EditAdPage() {
                         <span style={{ color: getDogColor(dog.name), fontFamily: "var(--font-table)", fontWeight: 600 }}>
                           {dog.name}
                         </span>
-                        <span className="text-[9px] ml-auto" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
+                        <span className="text-[11px] ml-auto" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
                           {dog.reg_number}
                         </span>
                       </button>
@@ -675,7 +675,7 @@ export default function EditAdPage() {
             }}
           >
             <div className="flex items-center justify-between mb-2">
-              <label className="text-xs font-bold uppercase tracking-widest" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+              <label className="text-xs font-bold uppercase tracking-widest" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                 Heading <span style={{ color: "#ef4444" }}>*</span>
               </label>
               <span
@@ -729,7 +729,7 @@ export default function EditAdPage() {
             }}
           >
             <div className="flex items-center justify-between mb-2">
-              <label className="text-xs font-bold uppercase tracking-widest" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+              <label className="text-xs font-bold uppercase tracking-widest" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                 Description <span style={{ color: "#ef4444" }}>*</span>
               </label>
               <span
@@ -775,8 +775,8 @@ export default function EditAdPage() {
               
             }}
           >
-            <label className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
-              Price <span className="text-[9px] normal-case tracking-normal font-normal">(optional)</span>
+            <label className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+              Price <span className="text-[11px] normal-case tracking-normal font-normal">(optional)</span>
             </label>
             <div className="relative">
               <span
@@ -801,7 +801,7 @@ export default function EditAdPage() {
                 }}
               />
             </div>
-            <p className="text-[9px] mt-1.5" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+            <p className="text-[11px] mt-1.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Leave blank to show &ldquo;Contact for Price&rdquo;
             </p>
           </div>
@@ -816,10 +816,10 @@ export default function EditAdPage() {
             }}
           >
             <div className="flex items-center justify-between mb-3">
-              <label className="text-xs font-bold uppercase tracking-widest" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+              <label className="text-xs font-bold uppercase tracking-widest" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                 Photos <span style={{ color: "#ef4444" }}>*</span>
               </label>
-              <span className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-mono)" }}>
+              <span className="text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
                 {photos.length}/5
               </span>
             </div>
@@ -891,7 +891,7 @@ export default function EditAdPage() {
                     <span className="text-xs font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                       Drag photos here or click to browse
                     </span>
-                    <span className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+                    <span className="text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                       JPG, PNG, WebP — Max 5MB each — Up to {5 - photos.length} more
                     </span>
                   </div>
@@ -915,13 +915,13 @@ export default function EditAdPage() {
               
             }}
           >
-            <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+            <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Location <span style={{ color: "#ef4444" }}>*</span>
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {/* Continent */}
               <div>
-                <label className="text-[10px] font-medium uppercase tracking-wider mb-1.5 block" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+                <label className="text-[10px] font-medium uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                   Continent
                 </label>
                 <select
@@ -942,7 +942,7 @@ export default function EditAdPage() {
               </div>
               {/* Country */}
               <div>
-                <label className="text-[10px] font-medium uppercase tracking-wider mb-1.5 block" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+                <label className="text-[10px] font-medium uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                   Country
                 </label>
                 <select
@@ -978,10 +978,10 @@ export default function EditAdPage() {
               
             }}
           >
-            <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+            <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Contact Information <span style={{ color: "#ef4444" }}>*</span>
             </label>
-            <p className="text-[10px] mb-3" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+            <p className="text-[10px] mb-3" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Provide at least one contact method
             </p>
             <div className="space-y-3">
@@ -1135,8 +1135,8 @@ export default function EditAdPage() {
         </div>
         <div className="flex items-center justify-center gap-4">
           <Link href="/marketplace" className="text-[10px] hover:underline" style={{ color: "#1C1C1C" }}>Marketplace</Link>
-          <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "#6B6B6B" }}>Privacy</Link>
-          <Link href="/terms" className="text-[10px] hover:underline" style={{ color: "#6B6B6B" }}>Terms</Link>
+          <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "#4A4A4A" }}>Privacy</Link>
+          <Link href="/terms" className="text-[10px] hover:underline" style={{ color: "#4A4A4A" }}>Terms</Link>
         </div>
       </footer>
 

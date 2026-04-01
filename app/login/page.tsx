@@ -82,7 +82,7 @@ function LoginForm() {
         >
           Welcome Back
         </h1>
-        <p style={{ color: "#6B6B6B", fontSize: "0.9rem" }}>
+        <p style={{ color: "#4A4A4A", fontSize: "0.9rem" }}>
           Sign in to your account
         </p>
       </div>
@@ -139,7 +139,7 @@ function LoginForm() {
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded transition-colors"
-              style={{ color: "#6B6B6B" }}
+              style={{ color: "#4A4A4A" }}
             >
               {showPassword ? (
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -184,7 +184,7 @@ function LoginForm() {
         )}
       </form>
 
-      <p className="text-center mt-6" style={{ color: "#6B6B6B", fontSize: "0.9rem" }}>
+      <p className="text-center mt-6" style={{ color: "#4A4A4A", fontSize: "0.9rem" }}>
         Don&apos;t have an account?{" "}
         <Link href="/register" className="hover:underline" style={{ color: "#1C1C1C", fontWeight: 600 }}>
           Sign up
@@ -198,7 +198,7 @@ function LoginForm() {
 export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center px-4" style={{ background: "#EDE4D5" }}>
-      <Suspense fallback={<div className="text-center" style={{ color: "#6B6B6B" }}>Loading...</div>}>
+      <Suspense fallback={<div className="text-center" style={{ color: "#4A4A4A" }}>Loading...</div>}>
         <LoginForm />
       </Suspense>
     </div>

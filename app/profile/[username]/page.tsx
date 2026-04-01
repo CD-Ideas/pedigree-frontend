@@ -196,7 +196,7 @@ export default function ProfilePage() {
           <span
             className="text-xs"
             style={{
-              color: "#6B6B6B",
+              color: "#4A4A4A",
               fontFamily: "var(--font-table)",
             }}
           >
@@ -225,7 +225,7 @@ export default function ProfilePage() {
           <p
             className="text-xs mb-4"
             style={{
-              color: "#6B6B6B",
+              color: "#4A4A4A",
               fontFamily: "var(--font-table)",
             }}
           >
@@ -346,7 +346,7 @@ export default function ProfilePage() {
               <p
                 className="text-[11px] mt-2"
                 style={{
-                  color: "#6B6B6B",
+                  color: "#4A4A4A",
                   fontFamily: "var(--font-table)",
                 }}
               >
@@ -383,7 +383,7 @@ export default function ProfilePage() {
             <p
               className="text-xs"
               style={{
-                color: "#6B6B6B",
+                color: "#4A4A4A",
                 fontFamily: "var(--font-table)",
               }}
             >
@@ -410,7 +410,7 @@ export default function ProfilePage() {
                 </div>
                 <span
                   className="text-[10px] flex-shrink-0 ml-3"
-                  style={{ color: "#6B6B6B" }}
+                  style={{ color: "#4A4A4A" }}
                 >
                   {formatDate(ped.created_at)}
                 </span>
@@ -446,7 +446,7 @@ export default function ProfilePage() {
             <p
               className="text-xs"
               style={{
-                color: "#6B6B6B",
+                color: "#4A4A4A",
                 fontFamily: "var(--font-table)",
               }}
             >
@@ -483,7 +483,7 @@ export default function ProfilePage() {
                 </div>
                 <span
                   className="text-[10px] flex-shrink-0 ml-3"
-                  style={{ color: "#6B6B6B" }}
+                  style={{ color: "#4A4A4A" }}
                 >
                   {formatDate(ad.created_at)}
                 </span>

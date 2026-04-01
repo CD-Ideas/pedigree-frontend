@@ -273,7 +273,7 @@ function DogSlot({
                   {selected.registered_name}
                 </p>
                 <p className="text-[10px] mt-0.5" style={{ fontFamily: "var(--font-mono)" }}>
-                  <span style={{ color: "#6B6B6B" }}>ID </span><span style={{ color: "#6B6B6B" }}>{selected.dog_id}</span>
+                  <span style={{ color: "#4A4A4A" }}>ID </span><span style={{ color: "#4A4A4A" }}>{selected.dog_id}</span>
                 </p>
               </div>
             </div>
@@ -304,7 +304,7 @@ function DogSlot({
                     return (
                       <button key={dog.dog_id} onClick={() => pick(dog)} className="w-full flex items-center gap-2.5 px-3 py-2 text-left transition-all hover:bg-[#F0EBE3]" style={{ borderBottom: "1px solid #C9B29F" }}>
                         <div className="w-6 h-6 rounded-full overflow-hidden flex-shrink-0" style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}>
-                          {src ? <img src={src} alt="" className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-[9px] opacity-20">&#x1f415;</div>}
+                          {src ? <img src={src} alt="" className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-[11px] opacity-20">&#x1f415;</div>}
                         </div>
                         <span className="text-xs font-semibold truncate" style={{ color: getDogColor(dog.registered_name), fontFamily: "var(--font-table)" }}>{dog.registered_name}</span>
                       </button>
@@ -313,7 +313,7 @@ function DogSlot({
                 </div>
               )}
               {showDrop && results.length === 0 && query.length >= 2 && !loading && (
-                <div className="absolute top-full left-0 right-0 mt-1 rounded-lg px-3 py-2.5 text-center text-xs z-50" style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+                <div className="absolute top-full left-0 right-0 mt-1 rounded-lg px-3 py-2.5 text-center text-xs z-50" style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                   No dogs found for &ldquo;{query}&rdquo;
                 </div>
               )}
@@ -374,7 +374,7 @@ function DonutChart({ ancestors, hoveredIdx, onHover }: { ancestors: SharedAnces
       {hovered !== null && ancestors[hovered] && (
         <div className="text-center px-3 py-1.5 rounded-lg" style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}>
           <span className="text-xs font-bold" style={{ color: getDogColor(ancestors[hovered].name), fontFamily: "var(--font-table)" }}>{ancestors[hovered].name}</span>
-          <span className="text-[10px] ml-2" style={{ color: "#6B6B6B", fontFamily: "var(--font-mono)" }}>{ancestors[hovered].count}x ({((ancestors[hovered].count / total) * 100).toFixed(1)}%)</span>
+          <span className="text-[10px] ml-2" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>{ancestors[hovered].count}x ({((ancestors[hovered].count / total) * 100).toFixed(1)}%)</span>
         </div>
       )}
     </div>
@@ -543,7 +543,7 @@ export default function BreedingCalculatorPage() {
               <span style={{ color: "#1C1C1C" }}>CALCULATOR</span>
             </h1>
           </div>
-          <p className="text-xs max-w-xl mx-auto" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+          <p className="text-xs max-w-xl mx-auto" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
             Know your cross before you make it. Select sire and dam, calculate COI, and analyze shared bloodlines across generations.
           </p>
         </div>
@@ -620,7 +620,7 @@ export default function BreedingCalculatorPage() {
               </div>
               <div>
                 <p className="text-sm font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Analyzing Pedigrees...</p>
-                <p className="text-xs mt-1" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Computing COI across {genDepth} generations</p>
+                <p className="text-xs mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Computing COI across {genDepth} generations</p>
               </div>
             </div>
           </div>
@@ -633,7 +633,7 @@ export default function BreedingCalculatorPage() {
             <h3 className="text-sm font-semibold mb-1.5" style={{ fontFamily: "var(--font-table)", color: "#1C1C1C" }}>
               Select a sire and dam, then hit &quot;Calculate Bloodline&quot;
             </h3>
-            <p className="text-[10px] max-w-md mx-auto" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+            <p className="text-[10px] max-w-md mx-auto" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               The system will cross-reference both pedigrees, compute the Wright coefficient of inbreeding (COI), detect shared ancestors, and map bloodline composition.
             </p>
           </div>
@@ -656,16 +656,16 @@ export default function BreedingCalculatorPage() {
                 <SectionHeader color={riskColor(coi)}>Risk Assessment</SectionHeader>
                 <div className="space-y-3">
                   <div className="flex justify-between items-center py-2" style={{ borderBottom: "2px solid #C9B29F" }}>
-                    <span className="text-xs" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Coefficient of Inbreeding (COI)</span>
+                    <span className="text-xs" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Coefficient of Inbreeding (COI)</span>
                     <span className="text-sm font-bold" style={{ color: riskColor(coi), fontFamily: "var(--font-mono)" }}>{coi.toFixed(2)}%</span>
                   </div>
                   <div className="flex justify-between items-center py-2" style={{ borderBottom: "2px solid #C9B29F" }}>
-                    <span className="text-xs" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Shared Ancestors</span>
+                    <span className="text-xs" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Shared Ancestors</span>
                     <span className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{directShared.length}</span>
                   </div>
                   {topAncestor && topAncestor.sireGens.length > 0 && topAncestor.damGens.length > 0 && (
                     <div className="flex justify-between items-center py-2" style={{ borderBottom: "2px solid #C9B29F" }}>
-                      <span className="text-xs" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Most Repeated</span>
+                      <span className="text-xs" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Most Repeated</span>
                       <span className="text-xs font-bold truncate max-w-[120px] sm:max-w-[200px] text-right" style={{ color: getDogColor(topAncestor.name), fontFamily: "var(--font-table)" }}>
                         {topAncestor.name} ({topAncestor.count}x)
                       </span>
@@ -689,7 +689,7 @@ export default function BreedingCalculatorPage() {
                   <SectionHeader color={avk > 80 ? "#22c55e" : avk > 60 ? "#eab308" : "#ef4444"}>Ancestor Loss Coefficient (AVK)</SectionHeader>
                   <div className="flex items-end gap-3">
                     <span className="text-3xl font-bold" style={{ color: avk > 80 ? "#22c55e" : avk > 60 ? "#eab308" : "#ef4444", fontFamily: "var(--font-mono)" }}>{avk.toFixed(1)}%</span>
-                    <span className="text-[10px] mb-1.5" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+                    <span className="text-[10px] mb-1.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                       {avk > 80 ? "High diversity -- wide gene pool" : avk > 60 ? "Moderate -- some repeat ancestors" : "Low diversity -- heavy linebreeding"}
                     </span>
                   </div>
@@ -737,7 +737,7 @@ export default function BreedingCalculatorPage() {
                   }
                 }} /> : (
                   <div className="flex-1 flex items-center justify-center py-8">
-                    <p className="text-xs" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>No shared blood</p>
+                    <p className="text-xs" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>No shared blood</p>
                   </div>
                 )}
               </Card>
@@ -762,18 +762,18 @@ export default function BreedingCalculatorPage() {
                         <div className="w-2.5 h-7 rounded-full flex-shrink-0" style={{ background: getDogColor(a.name) }} />
                         <div className="w-7 h-7 rounded-full overflow-hidden flex-shrink-0" style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}>
                           {photoSrc ? <img src={photoSrc} alt="" className="w-full h-full object-cover" /> : (
-                            <div className="w-full h-full flex items-center justify-center text-[9px] font-bold" style={{ color: getDogColor(a.name) }}>{i + 1}</div>
+                            <div className="w-full h-full flex items-center justify-center text-[11px] font-bold" style={{ color: getDogColor(a.name) }}>{i + 1}</div>
                           )}
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-xs font-semibold truncate" style={{ color: getDogColor(a.name), fontFamily: "var(--font-table)" }}>{a.name}</p>
-                          <p className="text-[9px] mt-0.5" style={{ color: "#6B6B6B", fontFamily: "var(--font-mono)" }}>
+                          <p className="text-[11px] mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
                             Sire: Gen {a.sireGens.join(",")} &middot; Dam: Gen {a.damGens.join(",")}
                           </p>
                         </div>
                         <div className="flex items-center gap-1.5 flex-shrink-0">
                           <span className="text-sm font-bold" style={{ color: getDogColor(a.name), fontFamily: "var(--font-mono)" }}>{a.count}x</span>
-                          <span className="text-[10px] font-bold" style={{ color: "#6B6B6B", fontFamily: "var(--font-mono)" }}>
+                          <span className="text-[10px] font-bold" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
                             ({((a.count / directShared.reduce((s, x) => s + x.count, 0)) * 100).toFixed(1)}%)
                           </span>
                         </div>
@@ -782,7 +782,7 @@ export default function BreedingCalculatorPage() {
                   })}
                   {directShared.length === 0 && (
                     <div className="text-center py-8">
-                      <p className="text-xs" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>No shared ancestors in {genDepth} generations. Clean slate.</p>
+                      <p className="text-xs" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>No shared ancestors in {genDepth} generations. Clean slate.</p>
                     </div>
                   )}
                 </div>

@@ -201,7 +201,7 @@ export default function Dashboard() {
                     style={{ color: "#1C1C1C" }}>
                     {item.label}
                   </span>
-                  <p className="text-[9px] mt-0.5" style={{ color: "#6B6B6B" }}>{item.desc}</p>
+                  <p className="text-[11px] mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>{item.desc}</p>
                 </div>
               </Link>
             ))}
@@ -217,7 +217,7 @@ export default function Dashboard() {
           <h1 style={{ fontFamily: "var(--font-table)", fontSize: "1.6rem", fontWeight: 700, color: "#1C1C1C" }}>
             Welcome back, <span style={{ color: "#C9B29F" }}>{user?.username || "User"}</span>
           </h1>
-          <p className="text-xs mt-1" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+          <p className="text-xs mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
             APBT Pedigree Platform Dashboard
           </p>
         </div>
@@ -263,7 +263,7 @@ export default function Dashboard() {
                     style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                     {action.label}
                   </span>
-                  <span className="dash-arrow ml-auto text-xs transition-all" style={{ color: "#6B6B6B" }}>→</span>
+                  <span className="dash-arrow ml-auto text-xs transition-all" style={{ color: "#4A4A4A" }}>→</span>
                 </Link>
               ))}
             </div>
@@ -293,7 +293,7 @@ export default function Dashboard() {
                     style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                     {tool.label}
                   </span>
-                  <span className="dash-arrow ml-auto text-xs transition-all" style={{ color: "#6B6B6B" }}>→</span>
+                  <span className="dash-arrow ml-auto text-xs transition-all" style={{ color: "#4A4A4A" }}>→</span>
                 </Link>
               ))}
             </div>
@@ -378,7 +378,7 @@ export default function Dashboard() {
                   FREE PLAN
                 </span>
               </div>
-              <p className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+              <p className="text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                 Basic access to all features
               </p>
               <div className="mt-2 flex items-center gap-1.5">
@@ -403,7 +403,7 @@ export default function Dashboard() {
               </span>
               <div className="text-left">
                 <span className="text-xs font-medium" style={{ color: "#1C1C1C" }}>Messages</span>
-                <p className="text-[9px]" style={{ color: "#6B6B6B" }}>
+                <p className="text-[11px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                   {unreadMessages > 0 ? `${unreadMessages} unread` : "No new messages"}
                 </p>
               </div>
@@ -417,7 +417,7 @@ export default function Dashboard() {
               <span className="text-base">📩</span>
               <div className="text-left">
                 <span className="text-xs font-medium" style={{ color: "#1C1C1C" }}>Support Messages</span>
-                <p className="text-[9px]" style={{ color: "#6B6B6B" }}>
+                <p className="text-[11px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                   View replies from support
                 </p>
               </div>

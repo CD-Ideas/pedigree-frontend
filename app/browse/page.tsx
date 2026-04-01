@@ -126,8 +126,8 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
         </h3>
 
         {dog.color && (
-          <span className="inline-block text-[9px] px-1.5 py-0.5 rounded mb-1.5"
-            style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+          <span className="inline-block text-[11px] px-1.5 py-0.5 rounded mb-1.5"
+            style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
             {dog.color}
           </span>
         )}
@@ -135,13 +135,13 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
         {/* Parents */}
         <div className="space-y-0.5">
           {dog.sire_name && (
-            <div className="flex items-center gap-1 text-[9px]" style={{ fontFamily: "var(--font-table)" }}>
+            <div className="flex items-center gap-1 text-[11px]" style={{ fontFamily: "var(--font-table)" }}>
               <span className="w-1 h-1 rounded-lg flex-shrink-0" style={{ background: "#1d5bbf" }} />
               <span className="truncate" style={{ color: "#1d5bbf" }}>{dog.sire_name}</span>
             </div>
           )}
           {dog.dam_name && (
-            <div className="flex items-center gap-1 text-[9px]" style={{ fontFamily: "var(--font-table)" }}>
+            <div className="flex items-center gap-1 text-[11px]" style={{ fontFamily: "var(--font-table)" }}>
               <span className="w-1 h-1 rounded-lg flex-shrink-0" style={{ background: "#9f1239" }} />
               <span className="truncate" style={{ color: "#9f1239" }}>{dog.dam_name}</span>
             </div>
@@ -150,9 +150,9 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
 
         {/* Footer */}
         <div className="flex items-center justify-between mt-1.5 pt-1 text-[8px]"
-          style={{ borderTop: "2px solid #C9B29F", color: "#6B6B6B", fontFamily: "var(--font-mono)" }}>
+          style={{ borderTop: "2px solid #C9B29F", color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
           <span>{dog.reg_number}</span>
-          <span className="opacity-0 group-hover:opacity-100 transition-opacity text-[9px] font-semibold"
+          <span className="opacity-0 group-hover:opacity-100 transition-opacity text-[11px] font-semibold"
             style={{ color: "#1d5bbf", fontFamily: "var(--font-table)" }}>
             View →
           </span>
@@ -273,7 +273,7 @@ export default function PublicDogsPage() {
         </Link>
         <div className="flex items-center gap-2">
           <Link href="/pedigree" className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all hover:scale-105"
-            style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+            style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
             Search
           </Link>
           <Link href="/login"
@@ -304,7 +304,7 @@ export default function PublicDogsPage() {
                 Browse <span style={{ color: "#1d5bbf" }}>Dogs</span>
               </h1>
               <p className="mt-1.5" style={{
-                fontFamily: "var(--font-table)", fontSize: "13px", color: "#6B6B6B",
+                fontFamily: "var(--font-table)", fontSize: "13px", color: "#4A4A4A",
               }}>
                 Explore <span style={{ color: "#1d5bbf", fontWeight: 700, fontFamily: "var(--font-mono)" }}>
                   <AnimatedCount value={total} />
@@ -321,7 +321,7 @@ export default function PublicDogsPage() {
                   <div className="text-lg font-bold" style={{ color: s.color, fontFamily: "var(--font-mono)" }}>
                     {s.value.toLocaleString()}
                   </div>
-                  <div className="text-[9px] uppercase tracking-wider" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+                  <div className="text-[11px] uppercase tracking-wider" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                     {s.label}
                   </div>
                 </div>
@@ -351,7 +351,7 @@ export default function PublicDogsPage() {
                 />
                 {searchInput && (
                   <button type="button" onClick={() => { setSearchInput(""); setSearch(""); setPage(1); }}
-                    className="pr-3 text-xs" style={{ color: "#6B6B6B" }}>✕</button>
+                    className="pr-3 text-xs" style={{ color: "#4A4A4A" }}>✕</button>
                 )}
               </div>
               <button type="submit"
@@ -459,7 +459,7 @@ export default function PublicDogsPage() {
           {showFilters && (
             <div className="mt-2 p-3 flex flex-wrap items-center gap-2"
               style={{ border: "2px solid #C9B29F", borderRadius: "8px", background: "#FAF7F2", animation: "cardReveal 0.2s ease both" }}>
-              <span className="text-[10px] uppercase tracking-wider mr-1" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+              <span className="text-[10px] uppercase tracking-wider mr-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                 Sort by:
               </span>
               {[
@@ -494,7 +494,7 @@ export default function PublicDogsPage() {
         {/* Results info */}
         {search && !loading && (
           <div className="mb-3 flex items-center gap-2">
-            <span className="text-xs" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+            <span className="text-xs" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Showing results for
             </span>
             <span className="text-xs font-bold px-2 py-0.5 rounded-lg"
@@ -525,7 +525,7 @@ export default function PublicDogsPage() {
                 ))}
               </div>
             ) : (
-              <div className="flex items-center justify-center gap-3" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+              <div className="flex items-center justify-center gap-3" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                 <div className="w-5 h-5 rounded-lg border-2 border-t-transparent animate-spin"
                   style={{ borderColor: "#1d5bbf", borderTopColor: "transparent" }} />
                 Loading dogs...
@@ -539,7 +539,7 @@ export default function PublicDogsPage() {
             <h3 className="text-lg font-bold mb-2" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               No dogs found
             </h3>
-            <p className="text-sm mb-4" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+            <p className="text-sm mb-4" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Try adjusting your search or filters
             </p>
             <button onClick={clearFilters}
@@ -562,7 +562,7 @@ export default function PublicDogsPage() {
             {totalPages > 1 && (
               <div className="mt-8 flex flex-col items-center gap-3">
                 {/* Page info */}
-                <div className="text-[11px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+                <div className="text-[11px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                   Showing <span style={{ color: "#1d5bbf", fontWeight: 700 }}>{((page - 1) * LIMIT) + 1}–{Math.min(page * LIMIT, total)}</span> of{" "}
                   <span style={{ color: "#1C1C1C", fontWeight: 600 }}>{total.toLocaleString()}</span> dogs
                 </div>
@@ -572,7 +572,7 @@ export default function PublicDogsPage() {
                   {/* Prev */}
                   <button onClick={() => goToPage(page - 1)} disabled={page === 1}
                     className="px-3 py-1.5 text-xs font-medium disabled:opacity-20 transition-all hover:scale-105"
-                    style={{ background: "#FAF7F2", color: "#6B6B6B", border: "2px solid #C9B29F", fontFamily: "var(--font-table)", borderRadius: "8px" }}>
+                    style={{ background: "#FAF7F2", color: "#4A4A4A", border: "2px solid #C9B29F", fontFamily: "var(--font-table)", borderRadius: "8px" }}>
                     ←
                   </button>
 
@@ -590,7 +590,7 @@ export default function PublicDogsPage() {
                     }
                     return pages.map((p, i) =>
                       typeof p === "string" ? (
-                        <span key={`dots-${i}`} className="px-1 text-xs" style={{ color: "#6B6B6B" }}>…</span>
+                        <span key={`dots-${i}`} className="px-1 text-xs" style={{ color: "#4A4A4A" }}>…</span>
                       ) : (
                         <button key={p} onClick={() => goToPage(p)}
                           className="w-8 h-8 text-xs font-bold transition-all hover:scale-105"
@@ -610,7 +610,7 @@ export default function PublicDogsPage() {
                   {/* Next */}
                   <button onClick={() => goToPage(page + 1)} disabled={page === totalPages}
                     className="px-3 py-1.5 text-xs font-medium disabled:opacity-20 transition-all hover:scale-105"
-                    style={{ background: "#FAF7F2", color: "#6B6B6B", border: "2px solid #C9B29F", fontFamily: "var(--font-table)", borderRadius: "8px" }}>
+                    style={{ background: "#FAF7F2", color: "#4A4A4A", border: "2px solid #C9B29F", fontFamily: "var(--font-table)", borderRadius: "8px" }}>
                     →
                   </button>
                 </div>
@@ -629,7 +629,7 @@ export default function PublicDogsPage() {
           <h2 style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "1.1rem", color: "#1C1C1C" }}>
             Want to add your dogs?
           </h2>
-          <p className="mt-1.5 mb-4" style={{ fontFamily: "var(--font-table)", fontSize: "12px", color: "#6B6B6B" }}>
+          <p className="mt-1.5 mb-4" style={{ fontFamily: "var(--font-table)", fontSize: "12px", color: "#4A4A4A" }}>
             Create an account to register dogs, build pedigree trees, track litters, and more.
           </p>
           <Link href="/register"
@@ -654,10 +654,10 @@ export default function PublicDogsPage() {
           }}>Pedigree Platform</span>
         </div>
         <div className="flex items-center justify-center gap-4">
-          <Link href="/pedigree" className="text-[10px] hover:underline" style={{ color: "#6B6B6B" }}>Search</Link>
-          <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "#6B6B6B" }}>Privacy</Link>
-          <Link href="/terms" className="text-[10px] hover:underline" style={{ color: "#6B6B6B" }}>Terms</Link>
-          <Link href="/contact" className="text-[10px] hover:underline" style={{ color: "#6B6B6B" }}>Contact</Link>
+          <Link href="/pedigree" className="text-[10px] hover:underline" style={{ color: "#4A4A4A" }}>Search</Link>
+          <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "#4A4A4A" }}>Privacy</Link>
+          <Link href="/terms" className="text-[10px] hover:underline" style={{ color: "#4A4A4A" }}>Terms</Link>
+          <Link href="/contact" className="text-[10px] hover:underline" style={{ color: "#4A4A4A" }}>Contact</Link>
         </div>
       </footer>
     </div>

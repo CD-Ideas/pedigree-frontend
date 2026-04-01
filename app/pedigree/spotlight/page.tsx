@@ -191,13 +191,13 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
                 <img src={s.photo_url.startsWith("http") ? s.photo_url : `https://www.apbt.online-pedigrees.com/${s.photo_url}`}
                      alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} />
               ) : (
-                <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-[9px]"
+                <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-[11px]"
                      style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}>🐕</div>
               )}
               <div className="flex-1 min-w-0">
                 <span className="text-xs font-semibold truncate block" style={{ color: s.color, fontFamily: "var(--font-table)" }}>{s.name}</span>
                 {(s as any).gens && (s as any).gens.length > 0 && (
-                  <span className="text-[9px] block mt-0.5" style={{ color: "#6B6B6B", fontFamily: "var(--font-mono)" }}>
+                  <span className="text-[11px] block mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)", fontFamily: "var(--font-mono)" }}>
                     Gen: {(s as any).gens.join(",")}
                   </span>
                 )}
@@ -226,7 +226,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
             style={{ color: query && getDogColor(query) !== "#3a3a3a" ? getDogColor(query) : "#1C1C1C", fontFamily: "var(--font-table)" }}
           />
           {(query || lineage) && (
-            <button onClick={() => { setQuery(""); setResults([]); setOpen(false); setLineage(null); }} className="text-xs" style={{ color: "#6B6B6B" }}>✕</button>
+            <button onClick={() => { setQuery(""); setResults([]); setOpen(false); setLineage(null); }} className="text-xs" style={{ color: "#4A4A4A" }}>✕</button>
           )}
         </div>
 
@@ -235,7 +235,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
           <div className="px-4 py-6 text-center">
             <div className="inline-flex items-center gap-2">
               <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
-              <span className="text-xs font-semibold" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Tracing lineage back to legendary dogs...</span>
+              <span className="text-xs font-semibold" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Tracing lineage back to legendary dogs...</span>
             </div>
           </div>
         )}
@@ -265,13 +265,13 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
             </div>
             {lineage.legendaryMatches.length > 0 ? (
               <>
-                <p className="text-[10px] mb-1" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+                <p className="text-[10px] mb-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                   Found {lineage.legendaryMatches.length} legendary {lineage.legendaryMatches.length === 1 ? "dog" : "dogs"} in pedigree. Click to run Find Tightest.
                 </p>
                 {renderPie()}
               </>
             ) : (
-              <p className="text-xs py-4 text-center" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+              <p className="text-xs py-4 text-center" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                 No legendary dogs found in this dog&apos;s pedigree.
               </p>
             )}
@@ -308,7 +308,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
       )}
       {open && query.length >= 2 && results.length === 0 && (
         <div className="absolute left-0 right-0 top-full mt-1 rounded-lg px-4 py-3 text-center text-xs z-50"
-             style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px", color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+             style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px", color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
           No dogs found for &quot;{query}&quot;
         </div>
       )}
@@ -392,7 +392,7 @@ export default function SpotlightPage() {
               <span style={{ color: "#C9B29F" }}>SPOTLIGHT</span>
             </h1>
           </div>
-          <p className="text-xs max-w-xl mx-auto" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+          <p className="text-xs max-w-xl mx-auto" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
             Trace the tightest bloodlines. Pick a legendary dog, set a time range, and discover the closest descendants bred in that era.
           </p>
         </div>
@@ -496,7 +496,7 @@ export default function SpotlightPage() {
                       <span className="block text-xs font-semibold truncate" style={{ color: getDogColor(f.name), fontFamily: "var(--font-table)" }}>
                         {f.name}
                       </span>
-                      <span className="text-[9px]" style={{ color: "#6B6B6B" }}>
+                      <span className="text-[11px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                         {f.view_count?.toLocaleString()} views
                       </span>
                     </div>
@@ -510,7 +510,7 @@ export default function SpotlightPage() {
           {/* Sort Controls */}
           {searched && (
             <div className="flex items-center gap-1.5 mt-3 pt-3" style={{ borderTop: "2px solid #C9B29F" }}>
-              <span className="text-[9px] uppercase tracking-widest font-semibold mr-1.5" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+              <span className="text-[11px] uppercase tracking-widest font-semibold mr-1.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)", fontFamily: "var(--font-table)" }}>
                 Sort by:
               </span>
               {SORT_OPTIONS.map((s) => (
@@ -557,7 +557,7 @@ export default function SpotlightPage() {
               </div>
               <div>
                 <p className="text-sm font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Scanning Pedigrees...</p>
-                <p className="text-xs mt-1" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Tracing bloodlines across 434,000+ dogs</p>
+                <p className="text-xs mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Tracing bloodlines across 434,000+ dogs</p>
               </div>
             </div>
           </div>
@@ -566,7 +566,7 @@ export default function SpotlightPage() {
         {!loading && searched && results.length === 0 && (
           <div className="text-center py-12">
             <div className="text-2xl mb-2 opacity-30">🔍</div>
-            <p className="text-sm" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+            <p className="text-sm" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               No descendants found in that year range. Try expanding the date range.
             </p>
           </div>
@@ -583,7 +583,7 @@ export default function SpotlightPage() {
                 )}
                 <div>
                   <h2 className="text-sm font-bold" style={{ fontFamily: "var(--font-table)", color: getDogColor(target?.name || "") }}>{target?.name}</h2>
-                  <p className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+                  <p className="text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                     {total.toLocaleString()} descendants found · Top {results.length} shown
                   </p>
                 </div>
@@ -646,7 +646,7 @@ export default function SpotlightPage() {
                     {r.titles.length > 0 && (
                       <div className="flex flex-wrap gap-1 mb-2">
                         {r.titles.map((t) => (
-                          <span key={t} className="text-[9px] px-1.5 py-0.5 rounded font-bold"
+                          <span key={t} className="text-[11px] px-1.5 py-0.5 rounded font-bold"
                                 style={{ background: `${TITLE_COLORS[t] || "#888"}20`, color: TITLE_COLORS[t] || "#888", fontFamily: "var(--font-mono)" }}>
                             {t}
                           </span>
@@ -655,29 +655,29 @@ export default function SpotlightPage() {
                     )}
 
                     {/* Relation */}
-                    <div className="text-[10px] mb-1.5 flex items-center gap-1.5" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+                    <div className="text-[10px] mb-1.5 flex items-center gap-1.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                       <span>🧬</span>
                       <span>{r.gen_label}</span>
-                      <span style={{ color: "#6B6B6B" }}>·</span>
+                      <span style={{ color: "#4A4A4A" }}>·</span>
                       <span>{r.num_paths} path{r.num_paths > 1 ? "s" : ""}</span>
                     </div>
 
                     {/* Lineage Path Preview */}
                     {r.lineage_paths.length > 0 && (
-                      <div className="text-[9px] px-2 py-1.5 rounded-lg mb-2" style={{ background: "#FAFAFA", fontFamily: "var(--font-mono)", color: "#6B6B6B", border: "1px solid #C9B29F" }}>
+                      <div className="text-[11px] px-2 py-1.5 rounded-lg mb-2" style={{ background: "#FAFAFA", fontFamily: "var(--font-mono)", color: "#4A4A4A", fontFamily: "var(--font-table)", border: "1px solid #C9B29F" }}>
                         Gen {r.lineage_paths[0].gen}: {r.lineage_paths[0].path}
                         {r.lineage_paths.length > 1 && <span style={{ color: "#1C1C1C" }}> +{r.lineage_paths.length - 1} more</span>}
                       </div>
                     )}
 
                     {/* Meta */}
-                    <div className="flex items-center justify-between text-[9px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+                    <div className="flex items-center justify-between text-[11px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)", fontFamily: "var(--font-table)" }}>
                       <span>🎂 {r.birthdate?.slice(0, 4) || "—"}</span>
                       <span>{r.owner || r.breeder || "—"}</span>
                       <span>👁 {(r.view_count || 0).toLocaleString()}</span>
                     </div>
                     {r.posted_date && (
-                      <div className="text-[9px] mt-1" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+                      <div className="text-[11px] mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)", fontFamily: "var(--font-table)" }}>
                         📅 Posted: {r.posted_date}
                       </div>
                     )}
@@ -695,7 +695,7 @@ export default function SpotlightPage() {
             <h3 className="text-sm font-semibold mb-1.5" style={{ fontFamily: "var(--font-table)", color: "#1C1C1C" }}>
               Select a legendary dog and hit &quot;Find Tightest&quot;
             </h3>
-            <p className="text-[10px] max-w-md mx-auto" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+            <p className="text-[10px] max-w-md mx-auto" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               The system will scan all registered pedigrees to find the dogs most tightly bred to your selected foundation dog, ranked by coefficient of inbreeding (COI).
             </p>
 

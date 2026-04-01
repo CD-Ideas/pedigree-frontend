@@ -49,7 +49,7 @@ export default function DogOfTheMonthPage() {
         }}>
           Dog of the Month
         </h1>
-        <p className="mt-1 text-sm" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+        <p className="mt-1 text-sm" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
           Monthly photo contest &bull; Community voting &bull; Prizes &amp; crowns for winners
         </p>
       </div>
@@ -81,7 +81,7 @@ export default function DogOfTheMonthPage() {
           style={{
             fontFamily: "var(--font-table)",
             fontSize: "0.9rem",
-            color: "#6B6B6B",
+            color: "#4A4A4A",
             lineHeight: 1.8,
           }}>
           Get ready to crown the ultimate champion! Owners will submit standout photos of their
@@ -110,7 +110,7 @@ export default function DogOfTheMonthPage() {
               {item.title}
             </p>
             <p className="text-[11px]"
-              style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+              style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               {item.desc}
             </p>
           </div>

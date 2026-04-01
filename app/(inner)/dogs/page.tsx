@@ -128,7 +128,7 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
         </h3>
 
         {dog.color && (
-          <p className="text-[10px] mb-1.5" style={{ color: "#6B6B6B" }}>
+          <p className="text-[10px] mb-1.5" style={{ color: "#4A4A4A" }}>
             {dog.color}
           </p>
         )}
@@ -141,7 +141,7 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
                 className="w-1 h-1 rounded-full flex-shrink-0"
                 style={{ background: MALE_COLOR }}
               />
-              <span style={{ color: "#6B6B6B" }}>Sire:</span>
+              <span style={{ color: "#4A4A4A" }}>Sire:</span>
               <span
                 className="truncate"
                 style={{ color: MALE_COLOR }}
@@ -156,7 +156,7 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
                 className="w-1 h-1 rounded-full flex-shrink-0"
                 style={{ background: FEMALE_COLOR }}
               />
-              <span style={{ color: "#6B6B6B" }}>Dam:</span>
+              <span style={{ color: "#4A4A4A" }}>Dam:</span>
               <span
                 className="truncate"
                 style={{ color: FEMALE_COLOR }}
@@ -166,7 +166,7 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
             </div>
           )}
           {!dog.sire_name && !dog.dam_name && (
-            <div className="text-[10px]" style={{ color: "#6B6B6B" }}>
+            <div className="text-[10px]" style={{ color: "#4A4A4A" }}>
               No parents recorded
             </div>
           )}
@@ -174,10 +174,10 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
 
         {/* Footer */}
         <div
-          className="flex items-center justify-between mt-2 pt-1.5 text-[9px]"
+          className="flex items-center justify-between mt-2 pt-1.5 text-[11px]"
           style={{
             borderTop: "2px solid #C9B29F",
-            color: "#6B6B6B",
+            color: "#4A4A4A",
             fontFamily: "var(--font-mono)",
           }}
         >
@@ -285,7 +285,7 @@ export default function DogsPage() {
           <h1 style={{ fontFamily: "var(--font-table)", fontSize: "1.6rem", fontWeight: 700, color: "#1C1C1C" }}>
             Dogs
           </h1>
-          <p className="text-xs mt-0.5" style={{ color: "#6B6B6B" }}>
+          <p className="text-xs mt-0.5" style={{ color: "#4A4A4A" }}>
             <span style={{ fontFamily: "var(--font-mono)", color: "#1C1C1C", fontWeight: 600 }}>
               {total.toLocaleString()}
             </span>{" "}
@@ -378,7 +378,7 @@ export default function DogsPage() {
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2.5">
             <div>
-              <label className="text-[10px] uppercase tracking-wider mb-1.5 block" style={{ color: "#6B6B6B" }}>
+              <label className="text-[10px] uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A" }}>
                 Sex
               </label>
               <select
@@ -397,7 +397,7 @@ export default function DogsPage() {
               </select>
             </div>
             <div>
-              <label className="text-[10px] uppercase tracking-wider mb-1.5 block" style={{ color: "#6B6B6B" }}>
+              <label className="text-[10px] uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A" }}>
                 Color
               </label>
               <select
@@ -417,7 +417,7 @@ export default function DogsPage() {
               </select>
             </div>
             <div>
-              <label className="text-[10px] uppercase tracking-wider mb-1.5 block" style={{ color: "#6B6B6B" }}>
+              <label className="text-[10px] uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A" }}>
                 Title
               </label>
               <select
@@ -465,7 +465,7 @@ export default function DogsPage() {
 
       {/* Sort */}
       <div className="flex items-center gap-2 mb-5">
-        <span className="text-[10px] uppercase tracking-wider" style={{ color: "#6B6B6B" }}>
+        <span className="text-[10px] uppercase tracking-wider" style={{ color: "#4A4A4A" }}>
           Sort by:
         </span>
         {sortOptions.map((s) => (
@@ -496,7 +496,7 @@ export default function DogsPage() {
       {/* Loading */}
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <div className="flex items-center gap-3" style={{ color: "#6B6B6B" }}>
+          <div className="flex items-center gap-3" style={{ color: "#4A4A4A" }}>
             <div
               className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin"
               style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }}
@@ -505,7 +505,7 @@ export default function DogsPage() {
           </div>
         </div>
       ) : dogs.length === 0 ? (
-        <div className="text-center py-20" style={{ color: "#6B6B6B" }}>
+        <div className="text-center py-20" style={{ color: "#4A4A4A" }}>
           <p>No dogs found matching your filters</p>
           <button onClick={clearFilters} className="text-sm mt-2 underline" style={{ color: "#1C1C1C" }}>
             Clear filters
@@ -527,12 +527,12 @@ export default function DogsPage() {
           <table className="w-full text-sm">
             <thead>
               <tr style={{ borderBottom: "2px solid #C9B29F" }}>
-                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Dog</th>
-                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Sex</th>
-                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden md:table-cell" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Color</th>
-                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden lg:table-cell" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Sire</th>
-                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden lg:table-cell" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Dam</th>
-                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden md:table-cell" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Titles</th>
+                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Dog</th>
+                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Sex</th>
+                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden md:table-cell" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Color</th>
+                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden lg:table-cell" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Sire</th>
+                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden lg:table-cell" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Dam</th>
+                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden md:table-cell" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Titles</th>
               </tr>
             </thead>
             <tbody>
@@ -546,14 +546,14 @@ export default function DogsPage() {
                     <Link href={`/dogs/${dog.id}`} className="font-medium hover:underline" style={{ color: getDogColor(dog.name), fontFamily: "var(--font-table)" }}>
                       {dog.name}
                     </Link>
-                    <div className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-mono)" }}>
+                    <div className="text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
                       {dog.reg_number}
                     </div>
                   </td>
                   <td className="px-3 py-2">
                     <SexIcon sex={dog.sex} />
                   </td>
-                  <td className="px-3 py-2 hidden md:table-cell text-xs" style={{ color: "#6B6B6B" }}>
+                  <td className="px-3 py-2 hidden md:table-cell text-xs" style={{ color: "#4A4A4A" }}>
                     {dog.color || "—"}
                   </td>
                   <td className="px-3 py-2 hidden lg:table-cell">
@@ -562,7 +562,7 @@ export default function DogsPage() {
                         {dog.sire_name || "Unknown"}
                       </Link>
                     ) : (
-                      <span style={{ color: "#6B6B6B" }}>—</span>
+                      <span style={{ color: "#4A4A4A" }}>—</span>
                     )}
                   </td>
                   <td className="px-3 py-2 hidden lg:table-cell">
@@ -571,7 +571,7 @@ export default function DogsPage() {
                         {dog.dam_name || "Unknown"}
                       </Link>
                     ) : (
-                      <span style={{ color: "#6B6B6B" }}>—</span>
+                      <span style={{ color: "#4A4A4A" }}>—</span>
                     )}
                   </td>
                   <td className="px-3 py-2 hidden md:table-cell">
@@ -642,7 +642,7 @@ export default function DogsPage() {
                 </button>
               );
             })}
-            <span className="text-xs px-2" style={{ color: "#6B6B6B", fontFamily: "var(--font-mono)" }}>
+            <span className="text-xs px-2" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
               of {totalPages}
             </span>
           </div>

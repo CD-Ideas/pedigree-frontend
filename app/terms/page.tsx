@@ -3,7 +3,7 @@ export default function TermsPage() {
     <div className="min-h-screen px-4 py-20" style={{ background: "#EDE4D5" }}>
       <div className="max-w-3xl mx-auto" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px", padding: "2rem" }}>
         <h1 style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "2rem", color: "#1C1C1C" }} className="mb-6">Terms of Service</h1>
-        <div style={{ fontFamily: "var(--font-table)", fontSize: "14px", color: "#6B6B6B", lineHeight: 1.8 }} className="space-y-5">
+        <div style={{ fontFamily: "var(--font-table)", fontSize: "14px", color: "#4A4A4A", lineHeight: 1.8 }} className="space-y-5">
           <p><strong style={{ color: "#1C1C1C" }}>Last updated:</strong> March 14, 2026</p>
 
           <h2 style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "1.1rem", color: "#1C1C1C" }}>1. Acceptance of Terms</h2>

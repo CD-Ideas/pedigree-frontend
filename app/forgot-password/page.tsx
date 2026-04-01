@@ -30,7 +30,7 @@ export default function ForgotPasswordPage() {
           <h1 style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "1.75rem", color: "#1C1C1C" }}>
             Forgot Password
           </h1>
-          <p style={{ color: "#6B6B6B", fontSize: "0.9rem" }}>
+          <p style={{ color: "#4A4A4A", fontSize: "0.9rem" }}>
             Enter your email to reset your password
           </p>
         </div>
@@ -76,13 +76,13 @@ export default function ForgotPasswordPage() {
             <p style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", fontSize: "1rem", fontWeight: 600 }}>
               Check your email
             </p>
-            <p className="mt-2" style={{ color: "#6B6B6B", fontSize: "0.85rem" }}>
+            <p className="mt-2" style={{ color: "#4A4A4A", fontSize: "0.85rem" }}>
               If an account exists for <strong style={{ color: "#1C1C1C" }}>{email}</strong>, we&apos;ve sent a password reset link.
             </p>
           </div>
         )}
 
-        <p className="text-center mt-6" style={{ color: "#6B6B6B", fontSize: "0.9rem" }}>
+        <p className="text-center mt-6" style={{ color: "#4A4A4A", fontSize: "0.9rem" }}>
           Remember your password?{" "}
           <Link href="/login" className="hover:underline" style={{ color: "#1C1C1C", fontWeight: 600 }}>
             Sign in

@@ -80,7 +80,7 @@ export default function ContactPage() {
         >
           Contact Us
         </h1>
-        <p className="text-sm" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+        <p className="text-sm" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
           Have a question, feedback, or need help? Send us a message.
         </p>
       </div>
@@ -138,7 +138,7 @@ export default function ContactPage() {
               style={inputStyle}
               maxLength={5000}
             />
-            <p className="text-right text-[10px] mt-1" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
+            <p className="text-right text-[10px] mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               {message.length}/5000
             </p>
           </div>
@@ -179,7 +179,7 @@ export default function ContactPage() {
         <Link
           href="/"
           className="text-xs transition-colors hover:opacity-80"
-          style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
+          style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}
         >
           Back to Home
         </Link>
