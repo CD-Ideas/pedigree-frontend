@@ -939,7 +939,7 @@ function MessagesContent() {
                                 overflowY: "auto",
                                 background: "#FAFAFA",
                                 border: "2px solid #C9B29F",
-                                borderRadius: "12px",
+                                borderRadius: "8px",
                                 padding: "8px",
                                 boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
                               }}>

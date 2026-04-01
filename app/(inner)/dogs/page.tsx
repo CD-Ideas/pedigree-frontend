@@ -61,7 +61,7 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
       style={{
         background: "#FAF7F2",
         border: "2px solid #C9B29F",
-        borderRadius: "10px",
+        borderRadius: "8px",
         animationDelay: `${index * 30}ms`,
       }}
     >
@@ -372,7 +372,7 @@ export default function DogsPage() {
           style={{
             background: "#FAF7F2",
             border: "2px solid #C9B29F",
-            borderRadius: "10px",
+            borderRadius: "8px",
           }}
           className="p-3 mb-3 animate-reveal"
         >
@@ -521,7 +521,7 @@ export default function DogsPage() {
       ) : (
         /* Table View */
         <div
-          style={{ border: "2px solid #C9B29F", background: "#FAF7F2", borderRadius: "10px" }}
+          style={{ border: "2px solid #C9B29F", background: "#FAF7F2", borderRadius: "8px" }}
           className="overflow-hidden"
         >
           <table className="w-full text-sm">

@@ -86,7 +86,7 @@ export default function ContactPage() {
       </div>
 
       {/* Form */}
-      <div className="rounded-xl p-6" style={pgCard}>
+      <div className="rounded-lg p-6" style={pgCard}>
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Name */}
           <div>

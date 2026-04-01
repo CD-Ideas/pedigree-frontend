@@ -1504,7 +1504,7 @@ function PedigreeLabInner() {
                   <select
                     value={publishForm.prefix}
                     onChange={(e) => setPublishForm((p) => ({ ...p, prefix: e.target.value }))}
-                    className="rounded-2xl px-2 py-2 text-xs outline-none transition-all"
+                    className="rounded-lg px-2 py-2 text-xs outline-none transition-all"
                     style={{
                       background: "#FAFAFA",
                       border: "2px solid #C9B29F",
@@ -1522,7 +1522,7 @@ function PedigreeLabInner() {
                 <button
                   type="button"
                   onClick={() => setPublishForm((p) => ({ ...p, showInTitleFeed: !p.showInTitleFeed }))}
-                  className="flex-1 flex items-center gap-3 px-4 py-3 rounded-2xl transition-all"
+                  className="flex-1 flex items-center gap-3 px-4 py-3 rounded-lg transition-all"
                   style={{
                     background: publishForm.showInTitleFeed
                       ? "#C9B29F"
@@ -1576,7 +1576,7 @@ function PedigreeLabInner() {
                   <select
                     value={publishForm.suffixWins}
                     onChange={(e) => setPublishForm((p) => ({ ...p, suffixWins: e.target.value }))}
-                    className="rounded-2xl px-2 py-2 text-xs outline-none transition-all"
+                    className="rounded-lg px-2 py-2 text-xs outline-none transition-all"
                     style={{
                       background: "#FAFAFA",
                       border: "2px solid #C9B29F",
@@ -1593,7 +1593,7 @@ function PedigreeLabInner() {
                   <select
                     value={publishForm.suffixLosses}
                     onChange={(e) => setPublishForm((p) => ({ ...p, suffixLosses: e.target.value }))}
-                    className="rounded-2xl px-2 py-2 text-xs outline-none transition-all"
+                    className="rounded-lg px-2 py-2 text-xs outline-none transition-all"
                     style={{
                       background: "#FAFAFA",
                       border: "2px solid #C9B29F",
@@ -1610,7 +1610,7 @@ function PedigreeLabInner() {
                   <select
                     value={publishForm.suffixDraws}
                     onChange={(e) => setPublishForm((p) => ({ ...p, suffixDraws: e.target.value }))}
-                    className="rounded-2xl px-2 py-2 text-xs outline-none transition-all"
+                    className="rounded-lg px-2 py-2 text-xs outline-none transition-all"
                     style={{
                       background: "#FAFAFA",
                       border: "2px solid #C9B29F",
@@ -1627,7 +1627,7 @@ function PedigreeLabInner() {
                   <select
                     value={publishForm.suffixHonors}
                     onChange={(e) => setPublishForm((p) => ({ ...p, suffixHonors: e.target.value }))}
-                    className="rounded-2xl px-2 py-2 text-xs outline-none transition-all"
+                    className="rounded-lg px-2 py-2 text-xs outline-none transition-all"
                     style={{
                       background: "#FAFAFA",
                       border: "2px solid #C9B29F",
@@ -1672,7 +1672,7 @@ function PedigreeLabInner() {
                   <select
                     value={publishForm.sex}
                     onChange={(e) => setPublishForm((p) => ({ ...p, sex: e.target.value }))}
-                    className="w-full rounded-2xl px-3 py-2 text-sm outline-none uppercase transition-all"
+                    className="w-full rounded-lg px-3 py-2 text-sm outline-none uppercase transition-all"
                     style={{
                       background: "#FAFAFA",
                       border: "2px solid #C9B29F",
@@ -1712,7 +1712,7 @@ function PedigreeLabInner() {
                   <select
                     value={publishForm.continent}
                     onChange={(e) => setPublishForm((p) => ({ ...p, continent: e.target.value, country: "" }))}
-                    className="w-full rounded-2xl px-3 py-2 text-sm outline-none uppercase transition-all"
+                    className="w-full rounded-lg px-3 py-2 text-sm outline-none uppercase transition-all"
                     style={{
                       background: "#FAFAFA",
                       border: "2px solid #C9B29F",
@@ -1744,7 +1744,7 @@ function PedigreeLabInner() {
                       const autoContinent = Object.entries(COUNTRY_MAP).find(([, countries]) => countries.includes(country))?.[0] || "";
                       setPublishForm((p) => ({ ...p, country, continent: autoContinent || p.continent }));
                     }}
-                    className="w-full rounded-2xl px-3 py-2 text-sm outline-none uppercase transition-all"
+                    className="w-full rounded-lg px-3 py-2 text-sm outline-none uppercase transition-all"
                     style={{
                       background: "#FAFAFA",
                       border: "2px solid #C9B29F",
@@ -1775,7 +1775,7 @@ function PedigreeLabInner() {
                   </label>
                   <input
                     type="text"
-                    className="w-full rounded-2xl px-3 py-2 text-sm outline-none transition-all focus:ring-1"
+                    className="w-full rounded-lg px-3 py-2 text-sm outline-none transition-all focus:ring-1"
                     style={{
                       background: "#FAFAFA",
                       border: "2px solid #C9B29F",
@@ -1797,7 +1797,7 @@ function PedigreeLabInner() {
                   </label>
                   <input
                     type="text"
-                    className="w-full rounded-2xl px-3 py-2 text-sm outline-none transition-all focus:ring-1"
+                    className="w-full rounded-lg px-3 py-2 text-sm outline-none transition-all focus:ring-1"
                     style={{
                       background: "#FAFAFA",
                       border: "2px solid #C9B29F",
@@ -1823,7 +1823,7 @@ function PedigreeLabInner() {
                 </label>
                 <textarea
                   rows={3}
-                  className="w-full rounded-2xl px-3 py-2 text-sm outline-none transition-all focus:ring-1"
+                  className="w-full rounded-lg px-3 py-2 text-sm outline-none transition-all focus:ring-1"
                   style={{
                     background: "#FAFAFA",
                     border: "2px solid #C9B29F",
@@ -1846,7 +1846,7 @@ function PedigreeLabInner() {
                   📸 Photo
                 </label>
                 <div
-                  className="rounded-2xl p-4 flex flex-col items-center justify-center cursor-pointer transition-all hover:border-opacity-80"
+                  className="rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer transition-all hover:border-opacity-80"
                   style={{
                     background: "#FAFAFA",
                     border: "2px dashed #C9B29F",
@@ -1910,7 +1910,7 @@ function PedigreeLabInner() {
                     Rabies: Next Due
                   </label>
                   <div
-                    className="w-full rounded-2xl px-3 py-2 text-sm"
+                    className="w-full rounded-lg px-3 py-2 text-sm"
                     style={{
                       background: "#FAFAFA",
                       border: "2px solid #C9B29F",
@@ -1948,7 +1948,7 @@ function PedigreeLabInner() {
                   {publishForm.journal.vaccines.map((vax, idx) => (
                     <div
                       key={vax.name}
-                      className="flex items-center gap-3 rounded-2xl px-3 py-2"
+                      className="flex items-center gap-3 rounded-lg px-3 py-2"
                       style={{
                         background: "#FAFAFA",
                         border: "2px solid #C9B29F",
@@ -1975,7 +1975,7 @@ function PedigreeLabInner() {
                           type="date"
                           value={vax.date}
                           onChange={(e) => handleVaccineDate(idx, e.target.value)}
-                          className="rounded-xl px-2 py-1 text-[10px] outline-none transition-all"
+                          className="rounded-lg px-2 py-1 text-[10px] outline-none transition-all"
                           style={{
                             background: "#FAFAFA",
                             border: "2px solid #C9B29F",
@@ -2000,7 +2000,7 @@ function PedigreeLabInner() {
 
                 {/* Worming Draft Form */}
                 <div
-                  className="rounded-2xl p-3 space-y-3"
+                  className="rounded-lg p-3 space-y-3"
                   style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}
                 >
                   {/* Type */}
@@ -2012,7 +2012,7 @@ function PedigreeLabInner() {
                         journal: { ...p.journal, wormingDraft: { ...p.journal.wormingDraft, type: e.target.value, otherType: "" } },
                       }))
                     }
-                    className="w-full rounded-2xl px-3 py-2 text-xs outline-none transition-all"
+                    className="w-full rounded-lg px-3 py-2 text-xs outline-none transition-all"
                     style={{
                       background: "#FAFAFA",
                       border: "2px solid #C9B29F",
@@ -2039,7 +2039,7 @@ function PedigreeLabInner() {
                           journal: { ...p.journal, wormingDraft: { ...p.journal.wormingDraft, otherType: e.target.value } },
                         }))
                       }
-                      className="w-full rounded-2xl px-3 py-2 text-xs outline-none transition-all"
+                      className="w-full rounded-lg px-3 py-2 text-xs outline-none transition-all"
                       style={{
                         background: "#FAFAFA",
                         border: "2px solid #C9B29F",
@@ -2072,7 +2072,7 @@ function PedigreeLabInner() {
                           },
                         }));
                       }}
-                      className="w-full rounded-2xl px-3 py-2 text-xs outline-none mt-1 transition-all"
+                      className="w-full rounded-lg px-3 py-2 text-xs outline-none mt-1 transition-all"
                       style={{
                         background: "#FAFAFA",
                         border: "2px solid #C9B29F",
@@ -2106,7 +2106,7 @@ function PedigreeLabInner() {
                               },
                             }));
                           }}
-                          className="rounded-2xl px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest transition-all"
+                          className="rounded-lg px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest transition-all"
                           style={{
                             fontFamily: "var(--font-table)",
                             background: publishForm.journal.wormingDraft.intervalDays === days
@@ -2162,7 +2162,7 @@ function PedigreeLabInner() {
                         },
                       }));
                     }}
-                    className="w-full rounded-2xl py-2 text-[10px] font-bold uppercase tracking-widest transition-all hover:scale-[1.02]"
+                    className="w-full rounded-lg py-2 text-[10px] font-bold uppercase tracking-widest transition-all hover:scale-[1.02]"
                     style={{
                       fontFamily: "var(--font-table)",
                       background: "#1C1C1C",
@@ -2181,7 +2181,7 @@ function PedigreeLabInner() {
                     {publishForm.journal.worming.map((entry, idx) => (
                       <div
                         key={idx}
-                        className="flex items-center justify-between rounded-2xl px-3 py-2"
+                        className="flex items-center justify-between rounded-lg px-3 py-2"
                         style={{
                           background: "#FAFAFA",
                           border: "2px solid #C9B29F",
@@ -2255,7 +2255,7 @@ function PedigreeLabInner() {
                 };
 
                 return (
-                  <div className="rounded-2xl p-4" style={{
+                  <div className="rounded-lg p-4" style={{
                     background: "#FAF7F2",
                     border: isUpcoming ? "2px solid #fb923c" : isOverdue ? "2px solid #ef4444" : "2px solid #C9B29F",
                     borderRadius: 10,
@@ -2285,7 +2285,7 @@ function PedigreeLabInner() {
                           type="date"
                           value={hc.lastHeatDate}
                           onChange={(e) => updateHeatCycle({ lastHeatDate: e.target.value })}
-                          className="w-full rounded-xl px-3 py-2 text-xs outline-none transition-all"
+                          className="w-full rounded-lg px-3 py-2 text-xs outline-none transition-all"
                           style={{
                             background: "#FAFAFA",
                             border: "2px solid #C9B29F",
@@ -2305,7 +2305,7 @@ function PedigreeLabInner() {
                         <select
                           value={hc.interval}
                           onChange={(e) => updateHeatCycle({ interval: e.target.value })}
-                          className="w-full rounded-xl px-3 py-2 text-xs outline-none transition-all"
+                          className="w-full rounded-lg px-3 py-2 text-xs outline-none transition-all"
                           style={{
                             background: "#FAFAFA",
                             border: "2px solid #C9B29F",
@@ -2334,7 +2334,7 @@ function PedigreeLabInner() {
                           min="90"
                           value={hc.customDays}
                           onChange={(e) => updateHeatCycle({ customDays: e.target.value })}
-                          className="w-32 rounded-xl px-3 py-2 text-xs outline-none transition-all"
+                          className="w-32 rounded-lg px-3 py-2 text-xs outline-none transition-all"
                           style={{
                             background: "#FAFAFA",
                             border: "2px solid #C9B29F",
@@ -2347,7 +2347,7 @@ function PedigreeLabInner() {
 
                     {/* Next Heat Prediction */}
                     {hc.lastHeatDate && nextHeatDate && (
-                      <div className="mt-3 rounded-xl px-3 py-2.5 flex items-center justify-between" style={{
+                      <div className="mt-3 rounded-lg px-3 py-2.5 flex items-center justify-between" style={{
                         background: "#FAF7F2",
                         border: isOverdue ? "2px solid #ef4444" : isUpcoming ? "2px solid #fb923c" : "2px solid #C9B29F",
                       }}>
@@ -2381,7 +2381,7 @@ function PedigreeLabInner() {
 
                     {/* Nudge if no entry in 12+ months */}
                     {lastLoggedMonths !== null && lastLoggedMonths >= 12 && (
-                      <div className="mt-2 rounded-xl px-3 py-2 flex items-center gap-2" style={{
+                      <div className="mt-2 rounded-lg px-3 py-2 flex items-center gap-2" style={{
                         background: "#FAF7F2",
                         border: "2px solid #C9B29F",
                       }}>
@@ -2438,7 +2438,7 @@ function PedigreeLabInner() {
                   }
                   rows={3}
                   placeholder="Additional notes..."
-                  className="w-full rounded-2xl px-3 py-2 text-sm outline-none resize-none transition-all"
+                  className="w-full rounded-lg px-3 py-2 text-sm outline-none resize-none transition-all"
                   style={{
                     background: "#FAFAFA",
                     border: "2px solid #C9B29F",
@@ -2561,7 +2561,7 @@ function PedigreeLabInner() {
                     setPublishing(false);
                   }
                 }}
-                className="w-full rounded-2xl py-3 text-sm font-semibold uppercase tracking-widest transition-all hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full rounded-lg py-3 text-sm font-semibold uppercase tracking-widest transition-all hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{
                   fontFamily: "var(--font-table)",
                   background: "#1C1C1C",
@@ -2732,7 +2732,7 @@ function DropZone({
   if (preview) {
     return (
       <div
-        className="rounded-xl"
+        className="rounded-lg"
         style={{
           width: isSm ? 140 : 155,
           height: isSm ? 70 : 90,
@@ -2746,7 +2746,7 @@ function DropZone({
 
   return (
     <div
-      className={`rounded-xl flex flex-col items-center justify-center transition-all ${
+      className={`rounded-lg flex flex-col items-center justify-center transition-all ${
         dragOver ? "scale-105" : ""
       }`}
       style={{
@@ -2816,7 +2816,7 @@ function ModalInput({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full rounded-2xl px-3 py-2 text-sm outline-none transition-all focus:ring-1"
+        className="w-full rounded-lg px-3 py-2 text-sm outline-none transition-all focus:ring-1"
         style={{
           background: "#FAFAFA",
           border: "2px solid #C9B29F",

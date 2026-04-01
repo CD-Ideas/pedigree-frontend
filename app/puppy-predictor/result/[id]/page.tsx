@@ -162,7 +162,7 @@ export default function PredictionResultPage() {
         {/* Results */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {results.map((r, i) => (
-            <div key={i} className="rounded-xl p-4 transition-all hover:scale-[1.02]" style={{
+            <div key={i} className="rounded-lg p-4 transition-all hover:scale-[1.02]" style={{
               background: "#FAF7F2",
               border: "2px solid #C9B29F", 
             }}>
@@ -204,7 +204,7 @@ export default function PredictionResultPage() {
         {/* Back link */}
         <div className="text-center pt-4">
           <Link href="/puppy-predictor"
-            className="px-6 py-2.5 rounded-xl text-sm font-semibold transition-all hover:scale-105 inline-block"
+            className="px-6 py-2.5 rounded-lg text-sm font-semibold transition-all hover:scale-105 inline-block"
             style={{
               background: "#1C1C1C", color: "#FAF7F2",
               fontFamily: "var(--font-table)", letterSpacing: "0.03em",

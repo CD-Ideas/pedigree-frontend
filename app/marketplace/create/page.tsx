@@ -324,7 +324,7 @@ function CreateAdContent() {
   const dropzoneStyle: React.CSSProperties = {
     border: dragOver ? "2px dashed #C9B29F" : "2px dashed rgba(201,178,159,0.4)",
     background: dragOver ? "rgba(201,178,159,0.08)" : "rgba(201,178,159,0.04)",
-    borderRadius: "12px",
+    borderRadius: "8px",
     padding: "28px 16px",
     textAlign: "center",
     cursor: photos.length >= 5 ? "not-allowed" : "pointer",

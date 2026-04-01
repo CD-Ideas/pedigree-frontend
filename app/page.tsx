@@ -409,7 +409,7 @@ export default function Home() {
                     ...((f as Record<string, unknown>).gridCol ? { gridColumn: String((f as Record<string, unknown>).gridCol), ...((f as Record<string, unknown>).center ? { justifySelf: "center" as const, width: "100%", maxWidth: "calc(50% - 4px)" } : {}) } : {}),
                     background: "#FAF7F2",
                     border: "2px solid #C9B29F",
-                    borderRadius: "10px",
+                    borderRadius: "8px",
                     transition: "all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
                     overflow: "hidden",
                   }}
@@ -477,7 +477,7 @@ export default function Home() {
                 style={{
                   background: "#FAF7F2",
                   border: "2px solid #C9B29F",
-                  borderRadius: "10px",
+                  borderRadius: "8px",
                 }}>
                 <div className="text-center mb-2">
                   <span style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "11px", color: "#1d5bbf" }}>GR CH Razor&apos;s Edge Bloodfire</span>
@@ -528,7 +528,7 @@ export default function Home() {
                   style={{
                     background: "#FAF7F2",
                     border: "2px solid rgba(239,68,68,0.4)",
-                    borderRadius: "10px",
+                    borderRadius: "8px",
                   }}>
                   <div className="flex items-center gap-2 mb-1.5">
                     <div className="w-6 h-6 rounded-md flex items-center justify-center" style={{ background: "rgba(239,68,68,0.15)", border: "1px solid rgba(239,68,68,0.3)" }}>
@@ -545,7 +545,7 @@ export default function Home() {
                   style={{
                     background: "#FAF7F2",
                     border: "2px solid #C9B29F",
-                    borderRadius: "10px",
+                    borderRadius: "8px",
                   }}>
                   <h4 style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "10px", color: "#C9B29F", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "6px" }}>
                     Breeder Insights
@@ -569,7 +569,7 @@ export default function Home() {
                   style={{
                     background: "#FAF7F2",
                     border: "2px solid #C9B29F",
-                    borderRadius: "10px",
+                    borderRadius: "8px",
                   }}>
                   <h4 style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "10px", color: "#1C1C1C", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "6px" }}>
                     How It Works
@@ -633,7 +633,7 @@ export default function Home() {
                     animationDelay: `${i * 0.08}s`,
                     background: "#FAF7F2",
                     border: "2px solid #C9B29F",
-                    borderRadius: "10px",
+                    borderRadius: "8px",
                     transition: "all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
                     overflow: "hidden",
                   }}
@@ -778,7 +778,7 @@ export default function Home() {
             style={{
               background: "#FAFAFA",
               border: "2px solid #C9B29F",
-              borderRadius: "10px",
+              borderRadius: "8px",
             }}
             onClick={e => e.stopPropagation()}>
             {/* Close button */}
