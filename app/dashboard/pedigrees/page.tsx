@@ -255,11 +255,6 @@ export default function MyPedigreesPage() {
             </p>
           </div>
 
-          {/* View toggle */}
-          <div className="flex rounded-lg overflow-hidden" style={{ border: "2px solid #C9B29F", background: "#FAF7F2" }}>
-            <button onClick={() => { setViewMode("grid"); setPage(1); }} className="px-3 py-1.5 text-xs font-medium transition-all" style={{ background: viewMode === "grid" ? "rgba(201,178,159,0.25)" : "transparent", color: viewMode === "grid" ? "#1C1C1C" : "#6B6B6B", fontFamily: "var(--font-table)" }}>Grid</button>
-            <button onClick={() => { setViewMode("table"); setPage(1); }} className="px-3 py-1.5 text-xs font-medium transition-all" style={{ background: viewMode === "table" ? "rgba(201,178,159,0.25)" : "transparent", color: viewMode === "table" ? "#1C1C1C" : "#6B6B6B", fontFamily: "var(--font-table)" }}>Table</button>
-          </div>
         </div>
 
         {/* Stats bar */}
@@ -279,11 +274,11 @@ export default function MyPedigreesPage() {
             href="/pedigree-lab"
             className="text-[10px] px-3 py-1 rounded-full transition-all hover:scale-105"
             style={{
-              background: "rgba(184,134,11,0.15)",
-              color: "#B8860B",
-              border: "2px solid rgba(184,134,11,0.5)",
+              background: "rgba(184,134,11,0.25)",
+              color: "#8a6518",
+              border: "2px solid #B8860B",
               fontFamily: "var(--font-table)",
-              fontWeight: 600,
+              fontWeight: 700,
             }}
           >
             🧪 Pedigree Lab →
@@ -356,6 +351,10 @@ export default function MyPedigreesPage() {
               </span>
             )}
           </button>
+          <div className="flex rounded-lg overflow-hidden" style={{ border: "2px solid #C9B29F", background: "#FAF7F2" }}>
+            <button onClick={() => { setViewMode("grid"); setPage(1); }} className="px-3 py-1.5 text-xs font-medium transition-all" style={{ background: viewMode === "grid" ? "rgba(201,178,159,0.25)" : "transparent", color: viewMode === "grid" ? "#1C1C1C" : "#6B6B6B", fontFamily: "var(--font-table)" }}>Grid</button>
+            <button onClick={() => { setViewMode("table"); setPage(1); }} className="px-3 py-1.5 text-xs font-medium transition-all" style={{ background: viewMode === "table" ? "rgba(201,178,159,0.25)" : "transparent", color: viewMode === "table" ? "#1C1C1C" : "#6B6B6B", fontFamily: "var(--font-table)" }}>Table</button>
+          </div>
         </div>
 
         {/* Filter Panel */}
