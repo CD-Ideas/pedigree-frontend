@@ -150,7 +150,7 @@ export default function PredictionResultPage() {
               <h3 className="text-xs font-bold" style={{ color: g.color, fontFamily: "var(--font-table)" }}>
                 {g.icon} {g.label}
               </h3>
-              <div className="grid grid-cols-5 gap-1 text-[10px]" style={{ fontFamily: "var(--font-mono)", color: "#6B7280" }}>
+              <div className="grid grid-cols-5 gap-1 text-[10px]" style={{ fontFamily: "var(--font-mono)", color: "#6B6B6B" }}>
                 {Object.entries(g.geno).map(([k, v]) => (
                   <div key={k}><span style={{ color: "#1C1C1C" }}>{k}:</span> {v}</div>
                 ))}

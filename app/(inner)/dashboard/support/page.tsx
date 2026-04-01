@@ -6,7 +6,7 @@ import Link from "next/link";
 const steelFrame = {
   border: "2px solid #C9B29F",
   background: "#FAF7F2",
-  borderRadius: "10px",
+  borderRadius: "8px",
 };
 
 interface SupportMessage {
@@ -142,7 +142,7 @@ export default function SupportPage() {
           }}>
             My Support Messages
           </h1>
-          <p className="text-sm" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+          <p className="text-sm" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
             Your conversations with support
           </p>
         </div>
@@ -160,7 +160,7 @@ export default function SupportPage() {
         <div className="rounded-xl p-12 text-center" style={steelFrame}>
           <span className="text-4xl block mb-3">📭</span>
           <p className="text-sm font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>No support messages yet</p>
-          <p className="text-xs mt-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>Contact support to get help</p>
+          <p className="text-xs mt-1" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Contact support to get help</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4" style={{ minHeight: "500px" }}>
@@ -196,10 +196,10 @@ export default function SupportPage() {
                       {m.status}
                     </span>
                   </div>
-                  <p className="text-[10px] truncate mt-0.5" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                  <p className="text-[10px] truncate mt-0.5" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                     {m.message}
                   </p>
-                  <p className="text-[9px] mt-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                  <p className="text-[9px] mt-1" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                     {formatDate(m.created_at)}
                   </p>
                 </button>
@@ -217,7 +217,7 @@ export default function SupportPage() {
                     <p className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                       {originalMessage.subject}
                     </p>
-                    <p className="text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                    <p className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                       Opened {formatDate(originalMessage.created_at)}
                     </p>
                   </div>
@@ -243,7 +243,7 @@ export default function SupportPage() {
                       <p className="text-xs" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", wordBreak: "break-word" }}>
                         {originalMessage.message}
                       </p>
-                      <p className="text-[9px] mt-1 text-right" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                      <p className="text-[9px] mt-1 text-right" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                         {formatDate(originalMessage.created_at)}
                       </p>
                     </div>
@@ -262,7 +262,7 @@ export default function SupportPage() {
                         <p className="text-xs" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", wordBreak: "break-word" }}>
                           {r.message}
                         </p>
-                        <p className="text-[9px] mt-1" style={{ color: "#6B7280", textAlign: r.sender_type === "user" ? "right" : "left", fontFamily: "var(--font-table)" }}>
+                        <p className="text-[9px] mt-1" style={{ color: "#6B6B6B", textAlign: r.sender_type === "user" ? "right" : "left", fontFamily: "var(--font-table)" }}>
                           {formatDate(r.created_at)}
                         </p>
                       </div>
@@ -298,7 +298,7 @@ export default function SupportPage() {
                 <p className="text-sm font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                   Select a ticket to view
                 </p>
-                <p className="text-[10px] mt-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                <p className="text-[10px] mt-1" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                   Click a ticket on the left to see the conversation
                 </p>
               </div>

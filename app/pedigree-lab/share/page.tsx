@@ -316,8 +316,8 @@ function SharePreviewInner() {
               <a href="/" className="flex items-center gap-2" style={{ textDecoration: "none" }} title="Visit PedigreePlatform.com">
                 <img src="/logo.png" alt="Pedigree Platform" style={{ height: 20 }} />
                 <span
-                  className="text-[11px] tracking-wide italic"
-                  style={{ color: "#B8860B", fontFamily: "var(--font-table)", fontWeight: 500, textDecoration: "underline" }}
+                  className="text-[11px] tracking-wide italic hover:underline"
+                  style={{ color: "#B8860B", fontFamily: "var(--font-table)", fontWeight: 500 }}
                 >
                   Generated in PedigreePlatform.com
                 </span>

@@ -7,7 +7,7 @@ import { useParams, useRouter } from "next/navigation";
 const pgCard = {
   border: "2px solid #C9B29F",
   background: "#FAF7F2",
-  borderRadius: "10px",
+  borderRadius: "8px",
 };
 
 interface ProfileUser {
@@ -196,7 +196,7 @@ export default function ProfilePage() {
           <span
             className="text-xs"
             style={{
-              color: "#6B7280",
+              color: "#6B6B6B",
               fontFamily: "var(--font-table)",
             }}
           >
@@ -225,7 +225,7 @@ export default function ProfilePage() {
           <p
             className="text-xs mb-4"
             style={{
-              color: "#6B7280",
+              color: "#6B6B6B",
               fontFamily: "var(--font-table)",
             }}
           >
@@ -238,7 +238,7 @@ export default function ProfilePage() {
               background: "#FAF7F2",
               color: "#1C1C1C",
               border: "2px solid #C9B29F",
-              borderRadius: "10px",
+              borderRadius: "8px",
               fontFamily: "var(--font-table)",
             }}
           >
@@ -252,7 +252,7 @@ export default function ProfilePage() {
   const online = isOnline(user.last_active);
 
   return (
-    <div className="max-w-3xl mx-auto py-6 px-4 space-y-6" style={{ background: "#FAFAFA", minHeight: "100vh" }}>
+    <div className="max-w-3xl mx-auto py-6 px-4 space-y-6" style={{ background: "#EDE4D5", minHeight: "100vh" }}>
       {/* Profile Header */}
       <div className="p-6" style={pgCard}>
         <div className="flex items-start gap-5">
@@ -290,7 +290,7 @@ export default function ProfilePage() {
                     style={{
                       background: "#FAF7F2",
                       border: "2px solid #C9B29F",
-                      borderRadius: "10px",
+                      borderRadius: "8px",
                       color: "#1C1C1C",
                       fontFamily: "var(--font-table)",
                     }}
@@ -305,8 +305,8 @@ export default function ProfilePage() {
                     style={{
                       background: isBlocked ? "#FEF2F2" : "#FAF7F2",
                       border: `2px solid ${isBlocked ? "#ef4444" : "#C9B29F"}`,
-                      borderRadius: "10px",
-                      color: isBlocked ? "#ef4444" : "#6B7280",
+                      borderRadius: "8px",
+                      color: isBlocked ? "#ef4444" : "#6B6B6B",
                       fontFamily: "var(--font-table)",
                       opacity: blockLoading ? 0.5 : 1,
                     }}
@@ -323,13 +323,13 @@ export default function ProfilePage() {
               <span
                 className="w-2 h-2 rounded-full"
                 style={{
-                  background: online ? "#22c55e" : "#6B7280",
+                  background: online ? "#22c55e" : "#6B6B6B",
                 }}
               />
               <span
                 className="text-xs"
                 style={{
-                  color: online ? "#22c55e" : "#6B7280",
+                  color: online ? "#22c55e" : "#6B6B6B",
                   fontFamily: "var(--font-table)",
                 }}
               >
@@ -346,7 +346,7 @@ export default function ProfilePage() {
               <p
                 className="text-[11px] mt-2"
                 style={{
-                  color: "#6B7280",
+                  color: "#6B6B6B",
                   fontFamily: "var(--font-table)",
                 }}
               >
@@ -383,7 +383,7 @@ export default function ProfilePage() {
             <p
               className="text-xs"
               style={{
-                color: "#6B7280",
+                color: "#6B6B6B",
                 fontFamily: "var(--font-table)",
               }}
             >
@@ -397,7 +397,7 @@ export default function ProfilePage() {
                 key={ped.id}
                 href={`/pedigree/custom/${ped.id}`}
                 className="flex items-center justify-between px-3 py-2.5 rounded-lg transition-all group"
-                style={{ fontFamily: "var(--font-table)", borderRadius: "10px" }}
+                style={{ fontFamily: "var(--font-table)", borderRadius: "8px" }}
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <span className="text-base w-6 text-center">🧬</span>
@@ -410,7 +410,7 @@ export default function ProfilePage() {
                 </div>
                 <span
                   className="text-[10px] flex-shrink-0 ml-3"
-                  style={{ color: "#6B7280" }}
+                  style={{ color: "#6B6B6B" }}
                 >
                   {formatDate(ped.created_at)}
                 </span>
@@ -446,7 +446,7 @@ export default function ProfilePage() {
             <p
               className="text-xs"
               style={{
-                color: "#6B7280",
+                color: "#6B6B6B",
                 fontFamily: "var(--font-table)",
               }}
             >
@@ -460,7 +460,7 @@ export default function ProfilePage() {
                 key={ad.id}
                 href={`/marketplace/${ad.id}`}
                 className="flex items-center justify-between px-3 py-2.5 rounded-lg transition-all group"
-                style={{ fontFamily: "var(--font-table)", borderRadius: "10px" }}
+                style={{ fontFamily: "var(--font-table)", borderRadius: "8px" }}
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <span className="text-base w-6 text-center">🏷️</span>
@@ -483,7 +483,7 @@ export default function ProfilePage() {
                 </div>
                 <span
                   className="text-[10px] flex-shrink-0 ml-3"
-                  style={{ color: "#6B7280" }}
+                  style={{ color: "#6B6B6B" }}
                 >
                   {formatDate(ad.created_at)}
                 </span>
@@ -509,7 +509,7 @@ export default function ProfilePage() {
                 maxHeight: "85vh",
                 objectFit: "contain",
                 border: "2px solid #C9B29F",
-                borderRadius: "10px",
+                borderRadius: "8px",
               }}
             />
             <button

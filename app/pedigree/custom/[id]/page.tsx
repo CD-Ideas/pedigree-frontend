@@ -179,7 +179,7 @@ function PedigreeSearch() {
 
   return (
     <div ref={ref} className="relative">
-      <div className="glow-gold rounded-xl overflow-hidden" style={{ border: "2px solid #C9B29F",  background: "#FAF7F2",  }}>
+      <div className="rounded-xl overflow-hidden" style={{ border: "2px solid #C9B29F",  background: "#FAF7F2",  }}>
         <div className="px-4 py-2.5 flex items-center gap-3">
           <span className="text-base">🔍</span>
           <input type="text" placeholder="Search by dog name or paste a pedigree URL..."
@@ -213,7 +213,7 @@ function PedigreeSearch() {
       )}
       {open && query.length >= 2 && results.length === 0 && (
         <div className="absolute left-0 right-0 top-full mt-1 rounded-xl px-4 py-3 text-center text-xs z-50"
-             style={{ background: "#FAF7F2", border: "2px solid #C9B29F", color: "#6B7280", fontFamily: "var(--font-table)" }}>
+             style={{ background: "#FAF7F2", border: "2px solid #C9B29F", color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
           No dogs found for &quot;{query}&quot;
         </div>
       )}
@@ -239,7 +239,7 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
     return (
       <div className="text-center py-16">
         <div className="text-5xl mb-4 opacity-30">🌳</div>
-        <p style={{ color: "#6B7280", fontFamily: "var(--font-table)", fontSize: "15px" }}>No pedigree data available</p>
+        <p style={{ color: "#6B6B6B", fontFamily: "var(--font-table)", fontSize: "15px" }}>No pedigree data available</p>
       </div>
     );
 
@@ -402,7 +402,7 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
                             {a.name}
                           </Link>
                         ) : (
-                          <span className="truncate" style={{ color: "#6B7280", fontSize, fontFamily: "var(--font-table)", lineHeight: 1.2 }}>
+                          <span className="truncate" style={{ color: "#6B6B6B", fontSize, fontFamily: "var(--font-table)", lineHeight: 1.2 }}>
                             {a.name || "Unknown"}
                           </span>
                         )}
@@ -520,7 +520,7 @@ export default function PublishedPedigreePage() {
       <div className="min-h-screen flex items-center justify-center" style={{ background: "#EDE4D5" }}>
         <div className="flex flex-col items-center gap-4">
           <img src={LOGO} alt="Logo" className="w-24 animate-pulse" style={{ height: "auto" }} />
-          <div className="flex items-center gap-3" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+          <div className="flex items-center gap-3" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
             <div className="w-5 h-5 rounded-lg border-2 border-t-transparent animate-spin" style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} />
             Loading pedigree...
           </div>
@@ -534,7 +534,7 @@ export default function PublishedPedigreePage() {
         <div className="text-center">
           <div className="text-6xl mb-4">🐕</div>
           <h2 className="text-xl font-bold mb-2" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Pedigree Not Found</h2>
-          <p className="text-sm mb-6" style={{ color: "#6B7280" }}>This pedigree doesn&apos;t exist or has been removed.</p>
+          <p className="text-sm mb-6" style={{ color: "#6B6B6B" }}>This pedigree doesn&apos;t exist or has been removed.</p>
           <Link href="/" className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-semibold transition-all hover:scale-105"
             style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)" }}>
             ← Back to Home
@@ -564,14 +564,6 @@ export default function PublishedPedigreePage() {
   return (
     <div className="min-h-screen" style={{ background: "#EDE4D5" }}>
       <style>{`
-        .glow-gold { transition: border-color 0.3s ease; }
-        .glow-gold:hover { border-color: #C9B29F !important; }
-        .glow-blue { transition: border-color 0.3s ease; }
-        .glow-blue:hover { border-color: #C9B29F !important; }
-        .glow-pink { transition: border-color 0.3s ease; }
-        .glow-pink:hover { border-color: #C9B29F !important; }
-        .glow-teal { transition: border-color 0.3s ease; }
-        .glow-teal:hover { border-color: #C9B29F !important; }
       `}</style>
 
       <div className="max-w-[1600px] mx-auto px-4 md:px-6 py-4 space-y-3">
@@ -640,7 +632,7 @@ export default function PublishedPedigreePage() {
         </div>
 
         {/* ─── Photo + Details ─── */}
-        <div className="glow-gold rounded-xl overflow-hidden" style={{ border: "2px solid #C9B29F",  background: "#FAFAFA",  minHeight: "220px" }}>
+        <div className="rounded-xl overflow-hidden" style={{ border: "2px solid #C9B29F",  background: "#FAFAFA",  minHeight: "220px" }}>
           <div className="flex flex-col sm:flex-row sm:items-stretch h-full">
             {/* Photo */}
             <div className="flex-shrink-0 relative m-2 w-full sm:w-[200px] h-[200px]">
@@ -658,32 +650,32 @@ export default function PublishedPedigreePage() {
             <div className="flex-1 py-2 pr-2.5 pl-0.5 overflow-y-auto" style={{ fontFamily: "var(--font-table)" }}>
               <div className="space-y-0" style={{ fontSize: "13px", lineHeight: "1.6" }}>
                 {ped.breeder && (
-                  <div><span style={{ color: "#6B7280", fontWeight: 700 }}>BREEDER: </span><span style={{ color: "#1C1C1C" }}>{ped.breeder}</span></div>
+                  <div><span style={{ color: "#6B6B6B", fontWeight: 700 }}>BREEDER: </span><span style={{ color: "#1C1C1C" }}>{ped.breeder}</span></div>
                 )}
                 {ped.owner && (
-                  <div><span style={{ color: "#6B7280", fontWeight: 700 }}>OWNER: </span><span style={{ color: "#1C1C1C" }}>{ped.owner}</span></div>
+                  <div><span style={{ color: "#6B6B6B", fontWeight: 700 }}>OWNER: </span><span style={{ color: "#1C1C1C" }}>{ped.owner}</span></div>
                 )}
                 <div>
-                  <span style={{ color: "#6B7280", fontWeight: 700 }}>SEX: </span>
+                  <span style={{ color: "#6B6B6B", fontWeight: 700 }}>SEX: </span>
                   <span style={{ color: sexColor, fontWeight: 700 }}>{isMale ? "♂" : "♀"} {ped.sex?.toUpperCase()}</span>
                 </div>
                 {ped.color && (
-                  <div><span style={{ color: "#6B7280", fontWeight: 700 }}>COLOR: </span><span style={{ color: "#1C1C1C" }}>{ped.color}</span></div>
+                  <div><span style={{ color: "#6B6B6B", fontWeight: 700 }}>COLOR: </span><span style={{ color: "#1C1C1C" }}>{ped.color}</span></div>
                 )}
                 {ped.dob && (
-                  <div><span style={{ color: "#6B7280", fontWeight: 700 }}>DOB: </span><span style={{ color: "#1C1C1C" }}>{ped.dob}</span></div>
+                  <div><span style={{ color: "#6B6B6B", fontWeight: 700 }}>DOB: </span><span style={{ color: "#1C1C1C" }}>{ped.dob}</span></div>
                 )}
                 {ped.conditioned_weight && (
-                  <div><span style={{ color: "#6B7280", fontWeight: 700 }}>CONDITIONED WEIGHT: </span><span style={{ color: "#1C1C1C" }}>{ped.conditioned_weight}</span></div>
+                  <div><span style={{ color: "#6B6B6B", fontWeight: 700 }}>CONDITIONED WEIGHT: </span><span style={{ color: "#1C1C1C" }}>{ped.conditioned_weight}</span></div>
                 )}
                 {ped.continent && (
-                  <div><span style={{ color: "#6B7280", fontWeight: 700 }}>LOCATION: </span><span style={{ color: "#1C1C1C" }}>{ped.country ? `${ped.country}, ${ped.continent}` : ped.continent}</span></div>
+                  <div><span style={{ color: "#6B6B6B", fontWeight: 700 }}>LOCATION: </span><span style={{ color: "#1C1C1C" }}>{ped.country ? `${ped.country}, ${ped.continent}` : ped.continent}</span></div>
                 )}
                 {ped.date_posted && (
-                  <div><span style={{ color: "#6B7280", fontWeight: 700 }}>POSTED: </span><span style={{ color: "#1C1C1C" }}>{formatDate(ped.date_posted)}</span></div>
+                  <div><span style={{ color: "#6B6B6B", fontWeight: 700 }}>POSTED: </span><span style={{ color: "#1C1C1C" }}>{formatDate(ped.date_posted)}</span></div>
                 )}
                 {ped.last_modified && (
-                  <div><span style={{ color: "#6B7280", fontWeight: 700 }}>LAST MODIFIED: </span><span style={{ color: "#1C1C1C" }}>{formatDate(ped.last_modified)}</span></div>
+                  <div><span style={{ color: "#6B6B6B", fontWeight: 700 }}>LAST MODIFIED: </span><span style={{ color: "#1C1C1C" }}>{formatDate(ped.last_modified)}</span></div>
                 )}
               </div>
             </div>
@@ -692,7 +684,7 @@ export default function PublishedPedigreePage() {
 
         {/* ─── Pedigree Notes ─── */}
         {ped.pedigree_notes && (
-          <div className="glow-gold rounded-xl px-3 py-2" style={{
+          <div className="rounded-xl px-3 py-2" style={{
             border: "2px solid #C9B29F",
 
             background: "#FAFAFA",
@@ -712,30 +704,30 @@ export default function PublishedPedigreePage() {
 
         {/* ─── Sire / Dam links ─── */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <div className="glow-blue rounded-xl p-2.5"
+          <div className="rounded-xl p-2.5"
             style={{ border: "2px solid #C9B29F",  background: "#FAFAFA",  }}>
             <div className="text-[9px] uppercase tracking-wider mb-0.5 font-semibold" style={{ color: "#1d5bbf", letterSpacing: "0.1em" }}>♂ Sire (Father)</div>
             {sire ? (
               <Link href={`/pedigree/${sire.dog_id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColor(sire.registered_name) }}>
                 {sire.registered_name}
               </Link>
-            ) : <span className="text-sm" style={{ color: "#6B7280" }}>Unknown</span>}
+            ) : <span className="text-sm" style={{ color: "#6B6B6B" }}>Unknown</span>}
           </div>
-          <div className="glow-pink rounded-xl p-2.5"
+          <div className="rounded-xl p-2.5"
             style={{ border: "2px solid #C9B29F",  background: "#FAFAFA",  }}>
             <div className="text-[9px] uppercase tracking-wider mb-0.5 font-semibold" style={{ color: "#9f1239", letterSpacing: "0.1em" }}>♀ Dam (Mother)</div>
             {dam ? (
               <Link href={`/pedigree/${dam.dog_id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColor(dam.registered_name) }}>
                 {dam.registered_name}
               </Link>
-            ) : <span className="text-sm" style={{ color: "#6B7280" }}>Unknown</span>}
+            ) : <span className="text-sm" style={{ color: "#6B6B6B" }}>Unknown</span>}
           </div>
         </div>
 
         {/* ─── Pedigree Tree ─── */}
         <div className="rounded-xl overflow-hidden" style={{
           border: "2px solid #C9B29F",
-          borderRadius: "10px",
+          borderRadius: "8px",
         }}>
           <div className="flex items-center justify-between px-4 py-2.5" style={{
             background: "#1C1C1C",
@@ -808,11 +800,11 @@ export default function PublishedPedigreePage() {
                 {journal.rabiesDate && (
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <span className="text-[10px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>Rabies: Date Given</span>
+                      <span className="text-[10px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Rabies: Date Given</span>
                       <span className="text-sm" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{fmtDate(journal.rabiesDate)}</span>
                     </div>
                     <div>
-                      <span className="text-[10px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>Rabies: Next Due</span>
+                      <span className="text-[10px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Rabies: Next Due</span>
                       <span className="text-sm" style={{ color: "#22c55e", fontFamily: "var(--font-mono)" }}>{fmtDate(journal.rabiesNextDue || "")}</span>
                     </div>
                   </div>
@@ -821,7 +813,7 @@ export default function PublishedPedigreePage() {
                 {/* AVID Chip */}
                 {journal.avidChip && (
                   <div>
-                    <span className="text-[10px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>AVID Chip</span>
+                    <span className="text-[10px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>AVID Chip</span>
                     <span className="text-sm" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{journal.avidChip}</span>
                   </div>
                 )}
@@ -829,7 +821,7 @@ export default function PublishedPedigreePage() {
                 {/* Vaccines */}
                 {journal.vaccines && journal.vaccines.some(v => v.checked) && (
                   <div>
-                    <span className="text-[10px] uppercase tracking-widest font-semibold block mb-2" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>Vaccines</span>
+                    <span className="text-[10px] uppercase tracking-widest font-semibold block mb-2" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Vaccines</span>
                     <div className="space-y-1.5">
                       {journal.vaccines.filter(v => v.checked).map(v => (
                         <div key={v.name} className="flex items-center justify-between rounded-lg px-3 py-2"
@@ -845,7 +837,7 @@ export default function PublishedPedigreePage() {
                 {/* Worming History */}
                 {journal.worming && journal.worming.length > 0 && (
                   <div>
-                    <span className="text-[10px] uppercase tracking-widest font-semibold block mb-2" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>Worming History</span>
+                    <span className="text-[10px] uppercase tracking-widest font-semibold block mb-2" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Worming History</span>
                     <div className="space-y-1.5">
                       {journal.worming.map((w, i) => (
                         <div key={i} className="flex items-center justify-between rounded-lg px-3 py-2"
@@ -860,7 +852,7 @@ export default function PublishedPedigreePage() {
                             <span className="text-[10px]" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{fmtDate(w.dateWormed)}</span>
                             {w.nextDue && (
                               <>
-                                <span className="text-[9px]" style={{ color: "#6B7280" }}>→</span>
+                                <span className="text-[9px]" style={{ color: "#6B6B6B" }}>→</span>
                                 <span className="text-[10px]" style={{ color: "#22c55e", fontFamily: "var(--font-mono)" }}>Due: {fmtDate(w.nextDue)}</span>
                               </>
                             )}
@@ -874,7 +866,7 @@ export default function PublishedPedigreePage() {
                 {/* Journal Notes */}
                 {journal.notes && (
                   <div>
-                    <span className="text-[10px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>Journal Notes</span>
+                    <span className="text-[10px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Journal Notes</span>
                     <p className="text-sm leading-relaxed" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{journal.notes}</p>
                   </div>
                 )}
@@ -892,13 +884,13 @@ export default function PublishedPedigreePage() {
               color: "#1C1C1C",
             }}>Pedigree Platform</span>
           </div>
-          <p className="text-xs" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+          <p className="text-xs" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
             The modern pedigree hub for breeders, owners, and enthusiasts.
           </p>
           <div className="flex items-center justify-center gap-4 mt-3">
-            <Link href="/privacy" className="text-xs hover:underline" style={{ color: "#6B7280" }}>Privacy</Link>
-            <Link href="/terms" className="text-xs hover:underline" style={{ color: "#6B7280" }}>Terms</Link>
-            <Link href="/contact" className="text-xs hover:underline" style={{ color: "#6B7280" }}>Contact</Link>
+            <Link href="/privacy" className="text-xs hover:underline" style={{ color: "#6B6B6B" }}>Privacy</Link>
+            <Link href="/terms" className="text-xs hover:underline" style={{ color: "#6B6B6B" }}>Terms</Link>
+            <Link href="/contact" className="text-xs hover:underline" style={{ color: "#6B6B6B" }}>Contact</Link>
           </div>
         </footer>
       </div>

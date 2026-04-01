@@ -6,7 +6,7 @@ import Link from "next/link";
 const PG_CARD = {
   background: "#FAF7F2",
   border: "2px solid #C9B29F",
-  borderRadius: "10px",
+  borderRadius: "8px",
 };
 
 const INPUT_STYLE = {
@@ -14,7 +14,7 @@ const INPUT_STYLE = {
   border: "2px solid #C9B29F",
   color: "#1C1C1C",
   fontFamily: "var(--font-table)",
-  borderRadius: "10px",
+  borderRadius: "8px",
 };
 
 export default function DogOfTheMonthPage() {
@@ -49,7 +49,7 @@ export default function DogOfTheMonthPage() {
         }}>
           Dog of the Month
         </h1>
-        <p className="mt-1 text-sm" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+        <p className="mt-1 text-sm" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
           Monthly photo contest &bull; Community voting &bull; Prizes &amp; crowns for winners
         </p>
       </div>
@@ -81,7 +81,7 @@ export default function DogOfTheMonthPage() {
           style={{
             fontFamily: "var(--font-table)",
             fontSize: "0.9rem",
-            color: "#6B7280",
+            color: "#6B6B6B",
             lineHeight: 1.8,
           }}>
           Get ready to crown the ultimate champion! Owners will submit standout photos of their
@@ -110,7 +110,7 @@ export default function DogOfTheMonthPage() {
               {item.title}
             </p>
             <p className="text-[11px]"
-              style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+              style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
               {item.desc}
             </p>
           </div>
@@ -140,7 +140,7 @@ export default function DogOfTheMonthPage() {
               background: submitted ? "#22c55e" : "#1C1C1C",
               color: "#FAF7F2",
               fontFamily: "var(--font-table)",
-              borderRadius: "10px",
+              borderRadius: "8px",
             }}>
             {submitted ? "Subscribed!" : "Notify Me"}
           </button>
@@ -155,7 +155,7 @@ export default function DogOfTheMonthPage() {
             background: "#1C1C1C",
             color: "#FAF7F2",
             fontFamily: "var(--font-table)",
-            borderRadius: "10px",
+            borderRadius: "8px",
           }}>
           Explore Pedigree Dogs
         </Link>

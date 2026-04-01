@@ -431,7 +431,7 @@ function DogSearch({ label, onSelect }: { label: string; onSelect: (dog: SearchD
           placeholder={`Search ${label} from database...`}
           className="flex-1 bg-transparent text-xs outline-none"
           style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
-        {q && <button onClick={() => { setQ(""); setResults([]); setShow(false); }} className="text-[10px] text-[#6B7280] hover:text-[#1C1C1C]">✕</button>}
+        {q && <button onClick={() => { setQ(""); setResults([]); setShow(false); }} className="text-[10px] text-[#6B6B6B] hover:text-[#1C1C1C]">✕</button>}
       </div>
       {show && results.length > 0 && (
         <div className="absolute left-0 right-0 top-full mt-1 rounded-lg overflow-hidden z-50 max-h-48 overflow-y-auto"
@@ -448,7 +448,7 @@ function DogSearch({ label, onSelect }: { label: string; onSelect: (dog: SearchD
                   style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}>🐕</div>
               )}
               <span className="truncate font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{d.registered_name}</span>
-              {d.color && <span className="ml-auto text-[10px]" style={{ color: "#6B7280" }}>{d.color}</span>}
+              {d.color && <span className="ml-auto text-[10px]" style={{ color: "#6B6B6B" }}>{d.color}</span>}
             </button>
           ))}
         </div>
@@ -603,7 +603,7 @@ export default function PuppyPredictorPage() {
     color: "#1C1C1C",
     fontFamily: "var(--font-table)",
     fontSize: "0.85rem",
-    borderRadius: "10px",
+    borderRadius: "8px",
   };
 
   return (
@@ -618,7 +618,7 @@ export default function PuppyPredictorPage() {
           }}>
             PUPPY COLOR PREDICTOR
           </h1>
-          <p style={{ color: "#6B7280", fontFamily: "var(--font-table)", fontSize: "0.95rem" }}>
+          <p style={{ color: "#6B6B6B", fontFamily: "var(--font-table)", fontSize: "0.95rem" }}>
             Predict possible coat colors for your litter based on genetics
           </p>
         </div>
@@ -669,9 +669,9 @@ export default function PuppyPredictorPage() {
               <h3 className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-display)", letterSpacing: "0.05em" }}>
                 DNA COLOR TEST GUIDE
               </h3>
-              <button onClick={() => setShowGuide(false)} className="text-xs text-[#6B7280] hover:text-[#1C1C1C]">✕</button>
+              <button onClick={() => setShowGuide(false)} className="text-xs text-[#6B6B6B] hover:text-[#1C1C1C]">✕</button>
             </div>
-            <p className="text-xs leading-relaxed" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+            <p className="text-xs leading-relaxed" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
               To get accurate predictions, you need your dog&apos;s coat color genotype from a DNA test. Here are the most popular services:
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -682,12 +682,12 @@ export default function PuppyPredictorPage() {
               ].map(s => (
                 <div key={s.name} className="rounded-lg p-3 space-y-1" style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}>
                   <h4 className="text-xs font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{s.name}</h4>
-                  <p className="text-[11px] leading-tight" style={{ color: "#6B7280" }}>{s.desc}</p>
+                  <p className="text-[11px] leading-tight" style={{ color: "#6B6B6B" }}>{s.desc}</p>
                   <p className="text-[10px] font-bold" style={{ color: "#1C1C1C" }}>{s.price}</p>
                 </div>
               ))}
             </div>
-            <p className="text-[11px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+            <p className="text-[11px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
               Don&apos;t have DNA results? Use the &quot;I Don&apos;t Know Genotype&quot; mode — select your dog&apos;s visible coat color and we&apos;ll estimate the most likely genotype.
             </p>
           </div>
@@ -729,16 +729,16 @@ export default function PuppyPredictorPage() {
                     </button>
                     <button onClick={() => setConfirmClear(false)}
                       className="text-[10px] px-2 py-0.5 rounded-lg transition-all"
-                      style={{ background: "#FAFAFA", color: "#6B7280", border: "2px solid #C9B29F", fontFamily: "var(--font-table)" }}>
+                      style={{ background: "#FAFAFA", color: "#6B6B6B", border: "2px solid #C9B29F", fontFamily: "var(--font-table)" }}>
                       Cancel
                     </button>
                   </div>
                 )}
-                <button onClick={() => { setShowHistory(false); setConfirmClear(false); }} className="text-xs text-[#6B7280] hover:text-[#1C1C1C]">✕</button>
+                <button onClick={() => { setShowHistory(false); setConfirmClear(false); }} className="text-xs text-[#6B6B6B] hover:text-[#1C1C1C]">✕</button>
               </div>
             </div>
             {history.length === 0 ? (
-              <p className="text-xs text-center py-4" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>No prediction history yet.</p>
+              <p className="text-xs text-center py-4" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>No prediction history yet.</p>
             ) : (
             <div className="space-y-1">
               {history.map(h => (
@@ -747,10 +747,10 @@ export default function PuppyPredictorPage() {
                   style={{ border: "2px solid #C9B29F" }}>
                   <div className="flex items-center gap-3 text-xs" style={{ fontFamily: "var(--font-table)" }}>
                     <span style={{ color: "#1C1C1C" }}>♂ {h.sire_name || `Dog #${h.sire_dog_id || "?"}`}</span>
-                    <span style={{ color: "#6B7280" }}>×</span>
+                    <span style={{ color: "#6B6B6B" }}>×</span>
                     <span style={{ color: "#1C1C1C" }}>♀ {h.dam_name || `Dog #${h.dam_dog_id || "?"}`}</span>
                   </div>
-                  <span className="text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-mono)" }}>
+                  <span className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-mono)" }}>
                     {new Date(h.created_at).toLocaleDateString()}
                   </span>
                 </Link>
@@ -780,7 +780,7 @@ export default function PuppyPredictorPage() {
             {mode === "simple" ? (
               /* Simple mode (#1) */
               <div className="space-y-2">
-                <label className="text-xs font-semibold" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                <label className="text-xs font-semibold" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                   Select visible coat color:
                 </label>
                 <div className="grid grid-cols-3 gap-2">
@@ -790,7 +790,7 @@ export default function PuppyPredictorPage() {
                       style={{
                         background: sirePreset === key ? "#F0EBE3" : "#FAFAFA",
                         border: sirePreset === key ? "2px solid #1C1C1C" : "2px solid #C9B29F",
-                        color: sirePreset === key ? "#1C1C1C" : "#6B7280",
+                        color: sirePreset === key ? "#1C1C1C" : "#6B6B6B",
                         fontFamily: "var(--font-table)",
                       }}>
                       <div className="w-4 h-4 rounded-full flex-shrink-0" style={{ background: val.swatch, border: "2px solid #C9B29F" }} />
@@ -805,7 +805,7 @@ export default function PuppyPredictorPage() {
                 {loci.map(l => (
                   <div key={`sire-${l.key}`} className="space-y-1">
                     <div className="flex items-center gap-1.5">
-                      <label className="text-xs font-semibold" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>{l.label}</label>
+                      <label className="text-xs font-semibold" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>{l.label}</label>
                       <span className="cursor-help text-[10px] w-3.5 h-3.5 rounded-full flex items-center justify-center"
                         style={{ background: "#FAFAFA", color: "#1C1C1C", border: "2px solid #C9B29F" }}
                         title={LOCUS_INFO[l.key]}>?</span>
@@ -836,7 +836,7 @@ export default function PuppyPredictorPage() {
 
             {mode === "simple" ? (
               <div className="space-y-2">
-                <label className="text-xs font-semibold" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                <label className="text-xs font-semibold" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                   Select visible coat color:
                 </label>
                 <div className="grid grid-cols-3 gap-2">
@@ -846,7 +846,7 @@ export default function PuppyPredictorPage() {
                       style={{
                         background: damPreset === key ? "#F0EBE3" : "#FAFAFA",
                         border: damPreset === key ? "2px solid #1C1C1C" : "2px solid #C9B29F",
-                        color: damPreset === key ? "#1C1C1C" : "#6B7280",
+                        color: damPreset === key ? "#1C1C1C" : "#6B6B6B",
                         fontFamily: "var(--font-table)",
                       }}>
                       <div className="w-4 h-4 rounded-full flex-shrink-0" style={{ background: val.swatch, border: "2px solid #C9B29F" }} />
@@ -860,7 +860,7 @@ export default function PuppyPredictorPage() {
                 {loci.map(l => (
                   <div key={`dam-${l.key}`} className="space-y-1">
                     <div className="flex items-center gap-1.5">
-                      <label className="text-xs font-semibold" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>{l.label}</label>
+                      <label className="text-xs font-semibold" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>{l.label}</label>
                       <span className="cursor-help text-[10px] w-3.5 h-3.5 rounded-full flex items-center justify-center"
                         style={{ background: "#FAFAFA", color: "#1C1C1C", border: "2px solid #C9B29F" }}
                         title={LOCUS_INFO[l.key]}>?</span>
@@ -952,7 +952,7 @@ export default function PuppyPredictorPage() {
                   }}>
                     PREDICTED LITTER COLORS
                   </h2>
-                  <p className="text-xs mt-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                  <p className="text-xs mt-1" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                     {results.length} possible phenotype{results.length !== 1 ? "s" : ""}
                   </p>
                 </div>
@@ -994,11 +994,11 @@ export default function PuppyPredictorPage() {
                         const info = getNoseEyeInfo(r.phenotype);
                         return (
                           <div className="flex items-center gap-3 mt-1.5">
-                            <div className="flex items-center gap-1 text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                            <div className="flex items-center gap-1 text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                               <div className="w-2.5 h-2.5 rounded-full" style={{ background: info.noseColor, border: "2px solid #C9B29F" }} />
                               {info.nose}
                             </div>
-                            <div className="text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                            <div className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                               Eyes: {info.eyes}
                             </div>
                           </div>
@@ -1038,12 +1038,12 @@ export default function PuppyPredictorPage() {
                     }}>
                       SIMULATED LITTER
                     </h2>
-                    <p className="text-xs mt-0.5" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                    <p className="text-xs mt-0.5" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                       Random simulation based on probabilities — results vary each time
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <label className="text-xs" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>Litter size:</label>
+                    <label className="text-xs" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>Litter size:</label>
                     <select value={litterSize} onChange={e => setLitterSize(Number(e.target.value))}
                       className="px-2 py-1 text-xs outline-none cursor-pointer" style={inputStyle}>
                       {[3, 4, 5, 6, 7, 8, 9, 10].map(n => <option key={n} value={n}>{n}</option>)}
@@ -1113,7 +1113,7 @@ export default function PuppyPredictorPage() {
               }}>
                 GENETICS REFERENCE
               </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 text-[11px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 text-[11px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                 {Object.entries(LOCUS_INFO).map(([key, info]) => (
                   <div key={key} className="space-y-1">
                     <span className="font-bold" style={{ color: "#1C1C1C" }}>{key} Locus</span>

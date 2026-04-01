@@ -78,7 +78,7 @@ function AdCard({ ad, index }: { ad: MarketplaceAd; index: number }) {
       style={{
         background: "#FAF7F2",
         border: "2px solid #C9B29F",
-        borderRadius: "10px",
+        borderRadius: "8px",
         animation: "cardReveal 0.4s ease both",
         animationDelay: `${index * 40}ms`,
       }}
@@ -156,7 +156,7 @@ function AdCard({ ad, index }: { ad: MarketplaceAd; index: number }) {
         <div
           className="text-base font-black mb-2"
           style={{
-            color: ad.price !== null && ad.price !== undefined ? "#1C1C1C" : "#6B7280",
+            color: ad.price !== null && ad.price !== undefined ? "#1C1C1C" : "#6B6B6B",
             fontFamily: "var(--font-mono)",
           }}
         >
@@ -172,7 +172,7 @@ function AdCard({ ad, index }: { ad: MarketplaceAd; index: number }) {
             >
               {ad.username.charAt(0).toUpperCase()}
             </div>
-            <span className="text-[10px] font-medium" style={{ color: "#6B7280", fontFamily: "var(--font-body)" }}>
+            <span className="text-[10px] font-medium" style={{ color: "#6B6B6B", fontFamily: "var(--font-body)" }}>
               {ad.username}
             </span>
           </div>
@@ -180,7 +180,7 @@ function AdCard({ ad, index }: { ad: MarketplaceAd; index: number }) {
 
         {/* Location & time & share */}
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1 text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-body)" }}>
+          <div className="flex items-center gap-1 text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-body)" }}>
             <span>{"\uD83D\uDCCD"}</span>
             <span className="truncate max-w-[80px]">{ad.location || "Unknown"}</span>
             <span style={{ color: "#C9B29F" }}>{"\u00B7"}</span>
@@ -323,7 +323,7 @@ export default function MarketplacePage() {
             >
               Dashboard
             </Link>
-            <span style={{ color: "#6B7280", fontSize: "10px" }}>/</span>
+            <span style={{ color: "#6B6B6B", fontSize: "10px" }}>/</span>
             <span
               className="text-[10px] font-medium"
               style={{ color: "#1C1C1C", fontFamily: "var(--font-body)" }}
@@ -346,7 +346,7 @@ export default function MarketplacePage() {
               </h1>
               <p
                 className="mt-1.5 text-sm"
-                style={{ color: "#6B7280", fontFamily: "var(--font-body)" }}
+                style={{ color: "#6B6B6B", fontFamily: "var(--font-body)" }}
               >
                 Buy, sell, and connect with breeders worldwide
               </p>
@@ -382,7 +382,7 @@ export default function MarketplacePage() {
                   border: isActive
                     ? `2px solid ${cat.color}`
                     : "2px solid #C9B29F",
-                  borderRadius: "10px",
+                  borderRadius: "8px",
                   overflow: "hidden",
                 }}
               >
@@ -430,7 +430,7 @@ export default function MarketplacePage() {
                         }}>{"\u2713"} ACTIVE</span>
                       )}
                     </div>
-                    <p style={{ fontFamily: "var(--font-body)", fontSize: "9px", color: "#6B7280", marginTop: "2px", fontWeight: 400 }}>
+                    <p style={{ fontFamily: "var(--font-body)", fontSize: "9px", color: "#6B6B6B", marginTop: "2px", fontWeight: 400 }}>
                       {isActive ? "Click to clear filter" : "Browse listings"}
                     </p>
                   </div>
@@ -448,7 +448,7 @@ export default function MarketplacePage() {
               style={{
                 background: "#FAF7F2",
                 border: "2px solid #C9B29F",
-                borderRadius: "10px",
+                borderRadius: "8px",
               }}
             >
               <div className="pl-3.5 pr-2 flex-shrink-0">
@@ -457,7 +457,7 @@ export default function MarketplacePage() {
                   height="16"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#6B7280"
+                  stroke="#6B6B6B"
                   strokeWidth="2.5"
                   strokeLinecap="round"
                 >
@@ -483,7 +483,7 @@ export default function MarketplacePage() {
                     setPage(1);
                   }}
                   className="pr-3 text-xs"
-                  style={{ color: "#6B7280" }}
+                  style={{ color: "#6B6B6B" }}
                 >
                   {"\u2715"}
                 </button>
@@ -498,7 +498,7 @@ export default function MarketplacePage() {
                 fontFamily: "var(--font-body)",
                 letterSpacing: "0.04em",
                 textTransform: "uppercase",
-                borderRadius: "10px",
+                borderRadius: "8px",
               }}
             >
               Search
@@ -521,7 +521,7 @@ export default function MarketplacePage() {
                 letterSpacing: "0.05em",
                 paddingRight: "30px",
                 border: "2px solid #C9B29F",
-                borderRadius: "10px",
+                borderRadius: "8px",
                 transition: "all 0.3s ease",
               }}
             >
@@ -576,14 +576,14 @@ export default function MarketplacePage() {
                 background: "#FAF7F2",
                 fontFamily: "var(--font-body)",
                 border: "2px solid #C9B29F",
-                borderRadius: "10px",
+                borderRadius: "8px",
               }}
             >
               {"\u2715"} Clear
             </button>
             <span
               className="text-[11px] ml-auto"
-              style={{ color: "#6B7280", fontFamily: "var(--font-mono)" }}
+              style={{ color: "#6B6B6B", fontFamily: "var(--font-mono)" }}
             >
               {total} result{total !== 1 ? "s" : ""}
             </span>
@@ -602,7 +602,7 @@ export default function MarketplacePage() {
                     style={{
                       border: "2px solid #C9B29F",
                       background: "#FAF7F2",
-                      borderRadius: "10px",
+                      borderRadius: "8px",
                     }}
                   >
                     <div
@@ -625,7 +625,7 @@ export default function MarketplacePage() {
             ) : (
               <div
                 className="flex items-center justify-center gap-3"
-                style={{ color: "#6B7280", fontFamily: "var(--font-body)" }}
+                style={{ color: "#6B6B6B", fontFamily: "var(--font-body)" }}
               >
                 <div
                   className="w-5 h-5 rounded-lg border-2 border-t-transparent animate-spin"
@@ -646,7 +646,7 @@ export default function MarketplacePage() {
             </h3>
             <p
               className="text-sm mb-6"
-              style={{ color: "#6B7280", fontFamily: "var(--font-body)" }}
+              style={{ color: "#6B6B6B", fontFamily: "var(--font-body)" }}
             >
               Try adjusting your search or category filter
             </p>
@@ -659,7 +659,7 @@ export default function MarketplacePage() {
                 fontFamily: "var(--font-body)",
                 letterSpacing: "0.04em",
                 textTransform: "uppercase",
-                borderRadius: "10px",
+                borderRadius: "8px",
               }}
             >
               + Post the First Ad
@@ -679,7 +679,7 @@ export default function MarketplacePage() {
               <div className="mt-8 flex flex-col items-center gap-3">
                 <div
                   className="text-[11px]"
-                  style={{ color: "#6B7280", fontFamily: "var(--font-body)" }}
+                  style={{ color: "#6B6B6B", fontFamily: "var(--font-body)" }}
                 >
                   Showing{" "}
                   <span style={{ color: "#1C1C1C", fontWeight: 700, fontFamily: "var(--font-mono)" }}>
@@ -699,10 +699,10 @@ export default function MarketplacePage() {
                     className="px-3 py-1.5 text-xs font-medium disabled:opacity-20 transition-all hover:scale-105"
                     style={{
                       background: "#FAF7F2",
-                      color: "#6B7280",
+                      color: "#6B6B6B",
                       border: "2px solid #C9B29F",
                       fontFamily: "var(--font-body)",
-                      borderRadius: "10px",
+                      borderRadius: "8px",
                     }}
                   >
                     {"\u2190"}
@@ -722,7 +722,7 @@ export default function MarketplacePage() {
                     }
                     return pages.map((p, i) =>
                       typeof p === "string" ? (
-                        <span key={`dots-${i}`} className="px-1 text-xs" style={{ color: "#6B7280" }}>
+                        <span key={`dots-${i}`} className="px-1 text-xs" style={{ color: "#6B6B6B" }}>
                           {"\u2026"}
                         </span>
                       ) : (
@@ -732,10 +732,10 @@ export default function MarketplacePage() {
                           className="w-8 h-8 text-xs font-bold transition-all hover:scale-105"
                           style={{
                             background: page === p ? "#1C1C1C" : "#FAF7F2",
-                            color: page === p ? "#FAF7F2" : "#6B7280",
+                            color: page === p ? "#FAF7F2" : "#6B6B6B",
                             border: page === p ? "2px solid #1C1C1C" : "2px solid #C9B29F",
                             fontFamily: "var(--font-mono)",
-                            borderRadius: "10px",
+                            borderRadius: "8px",
                           }}
                         >
                           {p}
@@ -750,10 +750,10 @@ export default function MarketplacePage() {
                     className="px-3 py-1.5 text-xs font-medium disabled:opacity-20 transition-all hover:scale-105"
                     style={{
                       background: "#FAF7F2",
-                      color: "#6B7280",
+                      color: "#6B6B6B",
                       border: "2px solid #C9B29F",
                       fontFamily: "var(--font-body)",
-                      borderRadius: "10px",
+                      borderRadius: "8px",
                     }}
                   >
                     {"\u2192"}
@@ -782,19 +782,19 @@ export default function MarketplacePage() {
           </span>
         </div>
         <div className="flex items-center justify-center gap-4">
-          <Link href="/" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>
+          <Link href="/" className="text-[10px] hover:underline" style={{ color: "#6B6B6B" }}>
             Home
           </Link>
-          <Link href="/browse" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>
+          <Link href="/browse" className="text-[10px] hover:underline" style={{ color: "#6B6B6B" }}>
             Dogs
           </Link>
           <Link href="/marketplace" className="text-[10px] hover:underline" style={{ color: "#1C1C1C" }}>
             Marketplace
           </Link>
-          <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>
+          <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "#6B6B6B" }}>
             Privacy
           </Link>
-          <Link href="/terms" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>
+          <Link href="/terms" className="text-[10px] hover:underline" style={{ color: "#6B6B6B" }}>
             Terms
           </Link>
         </div>

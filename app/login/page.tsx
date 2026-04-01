@@ -63,11 +63,11 @@ function LoginForm() {
     <Link
       href="/"
       className="fixed top-6 left-6 flex items-center gap-2 px-4 py-2.5 rounded-lg transition-all z-10"
-      style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", fontSize: "1rem", fontWeight: 600, letterSpacing: "0.05em", border: "2px solid #C9B29F", borderRadius: "10px", background: "#FAF7F2" }}
+      style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", fontSize: "1rem", fontWeight: 600, letterSpacing: "0.05em", border: "2px solid #C9B29F", borderRadius: "8px", background: "#FAF7F2" }}
     >
       <span style={{ fontSize: "1.3rem" }}>&larr;</span> BACK
     </Link>
-    <div className="rounded-2xl p-6 w-full max-w-md" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "10px" }}>
+    <div className="rounded-2xl p-6 w-full max-w-md" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px" }}>
       <div className="flex flex-col items-center mb-5">
         <img
           src={LOGO}
@@ -82,7 +82,7 @@ function LoginForm() {
         >
           Welcome Back
         </h1>
-        <p style={{ color: "#6B7280", fontSize: "0.9rem" }}>
+        <p style={{ color: "#6B6B6B", fontSize: "0.9rem" }}>
           Sign in to your account
         </p>
       </div>
@@ -107,7 +107,7 @@ function LoginForm() {
               border: "2px solid #C9B29F",
               color: "#1C1C1C",
               fontFamily: "var(--font-body)",
-              borderRadius: "10px",
+              borderRadius: "8px",
             }}
           />
         </div>
@@ -132,14 +132,14 @@ function LoginForm() {
                 border: "2px solid #C9B29F",
                 color: "#1C1C1C",
                 fontFamily: "var(--font-body)",
-                borderRadius: "10px",
+                borderRadius: "8px",
               }}
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded transition-colors"
-              style={{ color: "#6B7280" }}
+              style={{ color: "#6B6B6B" }}
             >
               {showPassword ? (
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -167,7 +167,7 @@ function LoginForm() {
           type="submit"
           disabled={loading}
           className="w-full py-3 rounded-lg text-sm font-bold uppercase tracking-wider transition-all disabled:opacity-50"
-          style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)", borderRadius: "10px" }}
+          style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)", borderRadius: "8px" }}
         >
           {loading ? "Signing in..." : "Login"}
         </button>
@@ -184,7 +184,7 @@ function LoginForm() {
         )}
       </form>
 
-      <p className="text-center mt-6" style={{ color: "#6B7280", fontSize: "0.9rem" }}>
+      <p className="text-center mt-6" style={{ color: "#6B6B6B", fontSize: "0.9rem" }}>
         Don&apos;t have an account?{" "}
         <Link href="/register" className="hover:underline" style={{ color: "#1C1C1C", fontWeight: 600 }}>
           Sign up
@@ -198,7 +198,7 @@ function LoginForm() {
 export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center px-4" style={{ background: "#EDE4D5" }}>
-      <Suspense fallback={<div className="text-center" style={{ color: "#6B7280" }}>Loading...</div>}>
+      <Suspense fallback={<div className="text-center" style={{ color: "#6B6B6B" }}>Loading...</div>}>
         <LoginForm />
       </Suspense>
     </div>

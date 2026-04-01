@@ -227,7 +227,7 @@ export default function MyPedigreesPage() {
               }}>
               My Pedigrees
             </h1>
-            <p className="text-xs mt-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+            <p className="text-xs mt-1" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
               Manage your published pedigrees and journals
             </p>
           </div>
@@ -312,7 +312,7 @@ export default function MyPedigreesPage() {
             />
             <span
               className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs"
-              style={{ color: "#6B7280" }}
+              style={{ color: "#6B6B6B" }}
             >
               🔍
             </span>
@@ -357,7 +357,7 @@ export default function MyPedigreesPage() {
                       style={{ color: getDogColor(r.dogName), fontFamily: "var(--font-table)" }}>
                       {r.dogName}
                     </Link>
-                    <span className="text-[10px]" style={{ color: "#6B7280" }}>—</span>
+                    <span className="text-[10px]" style={{ color: "#6B6B6B" }}>—</span>
                     <span className="text-xs" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{r.label}</span>
                   </div>
                   <div className="flex items-center gap-2">
@@ -383,7 +383,7 @@ export default function MyPedigreesPage() {
         {/* Pedigree Cards */}
         {loading ? (
           <div className="flex items-center justify-center py-16">
-            <div className="flex items-center gap-3" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+            <div className="flex items-center gap-3" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
               <div className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} />
               Loading your pedigrees...
             </div>
@@ -391,7 +391,7 @@ export default function MyPedigreesPage() {
         ) : filtered.length === 0 ? (
           <div className="text-center py-16">
             <div className="text-5xl mb-4 opacity-30">🐕</div>
-            <p className="text-sm mb-2" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+            <p className="text-sm mb-2" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
               {search.trim()
                 ? "No pedigrees match your search"
                 : "No pedigrees published yet"}
@@ -422,7 +422,7 @@ export default function MyPedigreesPage() {
                   style={{
                     background: "#FAF7F2",
                     border: "2px solid #C9B29F",
-                    borderRadius: "10px",
+                    borderRadius: "8px",
                   }}>
                   {/* Photo area */}
                   <div
@@ -492,16 +492,16 @@ export default function MyPedigreesPage() {
                         {isMale ? "♂" : "♀"}
                       </span>
                       {p.country && (
-                        <span className="text-[9px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                        <span className="text-[9px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                           · {p.country}
                         </span>
                       )}
                     </div>
                     <div className="flex items-center justify-between mt-1">
-                      <span className="text-[8px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                      <span className="text-[8px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                         {formatDate(p.date_posted)}
                       </span>
-                      <span className="text-[8px]" style={{ color: "#6B7280", fontFamily: "var(--font-mono)" }}>
+                      <span className="text-[8px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-mono)" }}>
                         ID: <span style={{ color: "#1C1C1C" }}>{p.id}</span>
                       </span>
                     </div>
@@ -563,7 +563,7 @@ export default function MyPedigreesPage() {
                 style={{
                   background: page === 1 ? "#EDE4D5" : "#FAF7F2",
                   border: "2px solid #C9B29F",
-                  color: page === 1 ? "#6B7280" : "#1C1C1C",
+                  color: page === 1 ? "#6B6B6B" : "#1C1C1C",
                   fontFamily: "var(--font-table)",
                   cursor: page === 1 ? "not-allowed" : "pointer",
                   opacity: page === 1 ? 0.5 : 1,
@@ -576,7 +576,7 @@ export default function MyPedigreesPage() {
                 .map((p, idx, arr) => (
                   <span key={p}>
                     {idx > 0 && arr[idx - 1] !== p - 1 && (
-                      <span className="text-[10px] px-1" style={{ color: "#6B7280" }}>…</span>
+                      <span className="text-[10px] px-1" style={{ color: "#6B6B6B" }}>…</span>
                     )}
                     <button
                       onClick={() => setPage(p)}
@@ -599,7 +599,7 @@ export default function MyPedigreesPage() {
                 style={{
                   background: page === totalPages ? "#EDE4D5" : "#FAF7F2",
                   border: "2px solid #C9B29F",
-                  color: page === totalPages ? "#6B7280" : "#1C1C1C",
+                  color: page === totalPages ? "#6B6B6B" : "#1C1C1C",
                   fontFamily: "var(--font-table)",
                   cursor: page === totalPages ? "not-allowed" : "pointer",
                   opacity: page === totalPages ? 0.5 : 1,

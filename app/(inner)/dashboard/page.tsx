@@ -8,7 +8,7 @@ import { getDogColor } from "@/app/utils/colors";
 const steelFrame = {
   background: "#FAF7F2",
   border: "2px solid #C9B29F",
-  borderRadius: "10px",
+  borderRadius: "8px",
 };
 
 interface TitleAlert {
@@ -195,13 +195,13 @@ export default function Dashboard() {
               <Link key={item.href} href={item.href}
                 className="dash-nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg group"
                 style={{ fontFamily: "var(--font-table)", "--item-color": item.color.replace("#", "").match(/.{2}/g)!.map(h => parseInt(h, 16)).join(",") } as React.CSSProperties}>
-                <span className="text-base w-6 text-center transition-transform group-hover:scale-125 group-hover:drop-shadow-lg">{item.icon}</span>
+                <span className="text-base w-6 text-center transition-transform group-hover:scale-125">{item.icon}</span>
                 <div>
                   <span className="dash-nav-label text-sm font-medium transition-colors"
                     style={{ color: "#1C1C1C" }}>
                     {item.label}
                   </span>
-                  <p className="text-[9px] mt-0.5" style={{ color: "#6B7280" }}>{item.desc}</p>
+                  <p className="text-[9px] mt-0.5" style={{ color: "#6B6B6B" }}>{item.desc}</p>
                 </div>
               </Link>
             ))}
@@ -217,7 +217,7 @@ export default function Dashboard() {
           <h1 style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", fontWeight: 700, color: "#1C1C1C" }}>
             Welcome back, <span style={{ color: "#C9B29F" }}>{user?.username || "User"}</span>
           </h1>
-          <p className="text-xs mt-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+          <p className="text-xs mt-1" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
             APBT Pedigree Platform Dashboard
           </p>
         </div>
@@ -263,7 +263,7 @@ export default function Dashboard() {
                     style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                     {action.label}
                   </span>
-                  <span className="dash-arrow ml-auto text-xs transition-all" style={{ color: "#6B7280" }}>→</span>
+                  <span className="dash-arrow ml-auto text-xs transition-all" style={{ color: "#6B6B6B" }}>→</span>
                 </Link>
               ))}
             </div>
@@ -293,7 +293,7 @@ export default function Dashboard() {
                     style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                     {tool.label}
                   </span>
-                  <span className="dash-arrow ml-auto text-xs transition-all" style={{ color: "#6B7280" }}>→</span>
+                  <span className="dash-arrow ml-auto text-xs transition-all" style={{ color: "#6B6B6B" }}>→</span>
                 </Link>
               ))}
             </div>
@@ -323,7 +323,7 @@ export default function Dashboard() {
                 <div className="fixed inset-0 z-[60]" onClick={() => setShowAvatarPicker(false)} />
                 <div className="absolute top-20 left-1/2 -translate-x-1/2 w-48 sm:w-56 overflow-hidden z-[70]"
                   onClick={(e) => e.stopPropagation()}
-                  style={{ background: "#FAFAFA", border: "2px solid #C9B29F", borderRadius: "10px" }}>
+                  style={{ background: "#FAFAFA", border: "2px solid #C9B29F", borderRadius: "8px" }}>
                   <div className="px-3 py-2" style={{ borderBottom: "2px solid #C9B29F" }}>
                     <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Choose Avatar</p>
                   </div>
@@ -371,14 +371,14 @@ export default function Dashboard() {
               💳 Subscription
             </h3>
             <div className="p-3"
-              style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "10px" }}>
+              style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px" }}>
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-sm">★</span>
                 <span className="text-xs font-bold" style={{ color: "#C9B29F", fontFamily: "var(--font-display)" }}>
                   FREE PLAN
                 </span>
               </div>
-              <p className="text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+              <p className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                 Basic access to all features
               </p>
               <div className="mt-2 flex items-center gap-1.5">
@@ -403,7 +403,7 @@ export default function Dashboard() {
               </span>
               <div className="text-left">
                 <span className="text-xs font-medium" style={{ color: "#1C1C1C" }}>Messages</span>
-                <p className="text-[9px]" style={{ color: "#6B7280" }}>
+                <p className="text-[9px]" style={{ color: "#6B6B6B" }}>
                   {unreadMessages > 0 ? `${unreadMessages} unread` : "No new messages"}
                 </p>
               </div>
@@ -417,7 +417,7 @@ export default function Dashboard() {
               <span className="text-base">📩</span>
               <div className="text-left">
                 <span className="text-xs font-medium" style={{ color: "#1C1C1C" }}>Support Messages</span>
-                <p className="text-[9px]" style={{ color: "#6B7280" }}>
+                <p className="text-[9px]" style={{ color: "#6B6B6B" }}>
                   View replies from support
                 </p>
               </div>

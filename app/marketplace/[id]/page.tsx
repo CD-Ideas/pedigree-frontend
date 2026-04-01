@@ -153,7 +153,7 @@ export default function MarketplaceAdPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: "#EDE4D5" }}>
-        <div className="flex items-center gap-3" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+        <div className="flex items-center gap-3" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
           <div
             className="w-5 h-5 rounded-lg border-2 border-t-transparent animate-spin"
             style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }}
@@ -202,7 +202,7 @@ export default function MarketplaceAdPage() {
           >
             Marketplace
           </Link>
-          <span style={{ color: "#6B7280", fontSize: "10px" }}>/</span>
+          <span style={{ color: "#6B6B6B", fontSize: "10px" }}>/</span>
           <span className="text-[10px] font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
             {ad.title}
           </span>
@@ -285,7 +285,7 @@ export default function MarketplaceAdPage() {
             >
               <h3
                 className="text-xs font-bold uppercase tracking-widest mb-3"
-                style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
+                style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
               >
                 Description
               </h3>
@@ -317,7 +317,7 @@ export default function MarketplaceAdPage() {
                   <div className="text-xs font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                     View Pedigree
                   </div>
-                  <div className="text-[10px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                  <div className="text-[10px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                     This ad is linked to a registered pedigree
                   </div>
                 </div>
@@ -338,7 +338,7 @@ export default function MarketplaceAdPage() {
             >
               <h3
                 className="text-xs font-bold uppercase tracking-widest mb-3"
-                style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
+                style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
               >
                 Share This Listing
               </h3>
@@ -458,7 +458,7 @@ export default function MarketplaceAdPage() {
               <div
                 className="text-2xl font-black mb-4"
                 style={{
-                  color: ad.price !== null && ad.price !== undefined ? "#C9B29F" : "#6B7280",
+                  color: ad.price !== null && ad.price !== undefined ? "#C9B29F" : "#6B6B6B",
                   fontFamily: "var(--font-mono)",
                 }}
               >
@@ -474,7 +474,7 @@ export default function MarketplaceAdPage() {
                   <span className="text-sm">{"\uD83D\uDCCD"}</span>
                 </div>
                 <div>
-                  <div className="text-[10px] uppercase tracking-wider" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                  <div className="text-[10px] uppercase tracking-wider" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                     Location
                   </div>
                   <div className="text-xs font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
@@ -493,7 +493,7 @@ export default function MarketplaceAdPage() {
                     {ad.username.charAt(0).toUpperCase()}
                   </div>
                   <div className="flex-1">
-                    <div className="text-[10px] uppercase tracking-wider" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                    <div className="text-[10px] uppercase tracking-wider" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                       Listed By
                     </div>
                     <div className="text-xs font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
@@ -516,7 +516,7 @@ export default function MarketplaceAdPage() {
               {/* Dates & Expiry Countdown */}
               <div className="flex flex-wrap gap-4 pt-3" style={{ borderTop: "2px solid #C9B29F" }}>
                 <div>
-                  <div className="text-[9px] uppercase tracking-wider" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                  <div className="text-[9px] uppercase tracking-wider" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                     Posted
                   </div>
                   <div className="text-[11px] font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
@@ -524,7 +524,7 @@ export default function MarketplaceAdPage() {
                   </div>
                 </div>
                 <div>
-                  <div className="text-[9px] uppercase tracking-wider" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                  <div className="text-[9px] uppercase tracking-wider" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                     Expires
                   </div>
                   <div className="text-[11px] font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
@@ -532,7 +532,7 @@ export default function MarketplaceAdPage() {
                   </div>
                 </div>
                 <div>
-                  <div className="text-[9px] uppercase tracking-wider" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                  <div className="text-[9px] uppercase tracking-wider" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                     Views
                   </div>
                   <div className="text-[11px] font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
@@ -588,7 +588,7 @@ export default function MarketplaceAdPage() {
               >
                 <h3
                   className="text-xs font-bold uppercase tracking-widest mb-3"
-                  style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
+                  style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
                 >
                   Manage Your Ad
                 </h3>
@@ -671,7 +671,7 @@ export default function MarketplaceAdPage() {
               >
                 <h3
                   className="text-xs font-bold uppercase tracking-widest mb-2"
-                  style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
+                  style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
                 >
                   Verification
                 </h3>
@@ -682,14 +682,14 @@ export default function MarketplaceAdPage() {
                       <p className="text-xs font-bold" style={{ color: "#eab308", fontFamily: "var(--font-table)" }}>
                         Verification Pending
                       </p>
-                      <p className="text-[10px]" style={{ color: "#6B7280" }}>
+                      <p className="text-[10px]" style={{ color: "#6B6B6B" }}>
                         Our team is reviewing your listing. You&apos;ll receive an email when verified.
                       </p>
                     </div>
                   </div>
                 ) : (
                   <div>
-                    <p className="text-[10px] mb-3" style={{ color: "#6B7280" }}>
+                    <p className="text-[10px] mb-3" style={{ color: "#6B6B6B" }}>
                       Get a verified badge to build trust with buyers. Our team will review your listing.
                     </p>
                     <button
@@ -747,7 +747,7 @@ export default function MarketplaceAdPage() {
               >
                 <h3
                   className="text-xs font-bold uppercase tracking-widest mb-3"
-                  style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
+                  style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}
                 >
                   Contact Information
                 </h3>
@@ -761,7 +761,7 @@ export default function MarketplaceAdPage() {
                         <span className="text-sm">{"\uD83D\uDCDE"}</span>
                       </div>
                       <div>
-                        <div className="text-[9px] uppercase tracking-wider" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                        <div className="text-[9px] uppercase tracking-wider" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                           Phone
                         </div>
                         <div className="text-xs font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
@@ -780,7 +780,7 @@ export default function MarketplaceAdPage() {
                         <span className="text-sm">{"\u2709\uFE0F"}</span>
                       </div>
                       <div>
-                        <div className="text-[9px] uppercase tracking-wider" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                        <div className="text-[9px] uppercase tracking-wider" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                           Email
                         </div>
                         <a
@@ -803,7 +803,7 @@ export default function MarketplaceAdPage() {
                         <span className="text-sm font-bold" style={{ color: "#8b5cf6" }}>V</span>
                       </div>
                       <div>
-                        <div className="text-[9px] uppercase tracking-wider" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                        <div className="text-[9px] uppercase tracking-wider" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                           Venmo
                         </div>
                         <div className="text-xs font-bold" style={{ color: "#8b5cf6", fontFamily: "var(--font-mono)" }}>
@@ -822,7 +822,7 @@ export default function MarketplaceAdPage() {
                         <span className="text-sm font-bold" style={{ color: "#1d5bbf" }}>P</span>
                       </div>
                       <div>
-                        <div className="text-[9px] uppercase tracking-wider" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                        <div className="text-[9px] uppercase tracking-wider" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                           PayPal
                         </div>
                         <div className="text-xs font-bold" style={{ color: "#1d5bbf", fontFamily: "var(--font-mono)" }}>
@@ -903,7 +903,7 @@ export default function MarketplaceAdPage() {
                           className="px-4 py-1.5 rounded-lg text-[11px] font-bold transition-all hover:scale-105"
                           style={{
                             background: "rgba(148,163,184,0.15)",
-                            color: "#6B7280",
+                            color: "#6B6B6B",
                             border: "1px solid rgba(148,163,184,0.3)",
                             fontFamily: "var(--font-table)",
                           }}
@@ -939,8 +939,8 @@ export default function MarketplaceAdPage() {
         </div>
         <div className="flex items-center justify-center gap-2 sm:gap-4 flex-wrap">
           <Link href="/marketplace" className="text-[10px] hover:underline" style={{ color: "#1C1C1C" }}>Marketplace</Link>
-          <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Privacy</Link>
-          <Link href="/terms" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Terms</Link>
+          <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "#6B6B6B" }}>Privacy</Link>
+          <Link href="/terms" className="text-[10px] hover:underline" style={{ color: "#6B6B6B" }}>Terms</Link>
         </div>
       </footer>
     </div>

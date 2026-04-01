@@ -67,7 +67,7 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
       style={{
         background: "#FAF7F2",
         border: "2px solid #C9B29F",
-        borderRadius: "10px",
+        borderRadius: "8px",
         animation: `cardReveal 0.4s ease both`,
         animationDelay: `${index * 25}ms`,
       }}>
@@ -105,7 +105,7 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
               <span key={t} className="text-[8px] font-bold px-1.5 py-0.5 rounded"
                 style={{
                   background: "#FAF7F2",
-                  border: "1px solid #C9B29F",
+                  border: "2px solid #C9B29F",
                   color: TC[t] || "#1C1C1C",
                   fontFamily: "var(--font-table)",
                   letterSpacing: "0.05em",
@@ -126,7 +126,7 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
 
         {dog.color && (
           <span className="inline-block text-[9px] px-1.5 py-0.5 rounded mb-1.5"
-            style={{ background: "#FAFAFA", border: "1px solid #C9B29F", color: "#6B7280", fontFamily: "var(--font-table)" }}>
+            style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
             {dog.color}
           </span>
         )}
@@ -149,7 +149,7 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
 
         {/* Footer */}
         <div className="flex items-center justify-between mt-1.5 pt-1 text-[8px]"
-          style={{ borderTop: "1px solid #C9B29F", color: "#6B7280", fontFamily: "var(--font-mono)" }}>
+          style={{ borderTop: "2px solid #C9B29F", color: "#6B6B6B", fontFamily: "var(--font-mono)" }}>
           <span>{dog.reg_number}</span>
           <span className="opacity-0 group-hover:opacity-100 transition-opacity text-[9px] font-semibold"
             style={{ color: "#1d5bbf", fontFamily: "var(--font-table)" }}>
@@ -272,12 +272,12 @@ export default function PublicDogsPage() {
         </Link>
         <div className="flex items-center gap-2">
           <Link href="/pedigree" className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all hover:scale-105"
-            style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+            style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
             Search
           </Link>
           <Link href="/login"
             className="px-3.5 py-1.5 text-xs font-semibold transition-all hover:scale-105"
-            style={{ background: "#1d5bbf", color: "#fff", fontFamily: "var(--font-table)", borderRadius: "10px" }}>
+            style={{ background: "#1d5bbf", color: "#fff", fontFamily: "var(--font-table)", borderRadius: "8px" }}>
             Sign In
           </Link>
         </div>
@@ -291,10 +291,10 @@ export default function PublicDogsPage() {
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <Link href="/" className="text-[10px] font-medium hover:underline transition-colors"
-                  style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                  style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                   Home
                 </Link>
-                <span style={{ color: "#6B7280", fontSize: "10px" }}>/</span>
+                <span style={{ color: "#6B6B6B", fontSize: "10px" }}>/</span>
                 <span className="text-[10px] font-medium"
                   style={{ color: "#1d5bbf", fontFamily: "var(--font-table)" }}>
                   Dogs
@@ -308,7 +308,7 @@ export default function PublicDogsPage() {
                 Browse <span style={{ color: "#1d5bbf" }}>Dogs</span>
               </h1>
               <p className="mt-1.5" style={{
-                fontFamily: "var(--font-table)", fontSize: "13px", color: "#6B7280",
+                fontFamily: "var(--font-table)", fontSize: "13px", color: "#6B6B6B",
               }}>
                 Explore <span style={{ color: "#1d5bbf", fontWeight: 700, fontFamily: "var(--font-mono)" }}>
                   <AnimatedCount value={total} />
@@ -325,7 +325,7 @@ export default function PublicDogsPage() {
                   <div className="text-lg font-bold" style={{ color: s.color, fontFamily: "var(--font-mono)" }}>
                     {s.value.toLocaleString()}
                   </div>
-                  <div className="text-[9px] uppercase tracking-wider" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                  <div className="text-[9px] uppercase tracking-wider" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                     {s.label}
                   </div>
                 </div>
@@ -340,10 +340,10 @@ export default function PublicDogsPage() {
                 style={{
                   background: "#FAF7F2",
                   border: "2px solid #C9B29F",
-                  borderRadius: "10px",
+                  borderRadius: "8px",
                 }}>
                 <div className="pl-3.5 pr-2 flex-shrink-0">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7280" strokeWidth="2.5" strokeLinecap="round">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" strokeWidth="2.5" strokeLinecap="round">
                     <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
                   </svg>
                 </div>
@@ -355,7 +355,7 @@ export default function PublicDogsPage() {
                 />
                 {searchInput && (
                   <button type="button" onClick={() => { setSearchInput(""); setSearch(""); setPage(1); }}
-                    className="pr-3 text-xs" style={{ color: "#6B7280" }}>✕</button>
+                    className="pr-3 text-xs" style={{ color: "#6B6B6B" }}>✕</button>
                 )}
               </div>
               <button type="submit"
@@ -363,7 +363,7 @@ export default function PublicDogsPage() {
                 style={{
                   background: "#1d5bbf", color: "#fff",
                   fontFamily: "var(--font-table)", letterSpacing: "0.04em", textTransform: "uppercase",
-                  borderRadius: "10px",
+                  borderRadius: "8px",
                 }}>
                 Search
               </button>
@@ -373,7 +373,7 @@ export default function PublicDogsPage() {
           {/* ─── Filter Bar ─── */}
           <div className="flex flex-wrap items-center gap-2">
             {/* Sex filter pills */}
-            <div className="flex items-center gap-1 p-0.5" style={{ border: "2px solid #C9B29F", borderRadius: "10px", background: "#FAF7F2" }}>
+            <div className="flex items-center gap-1 p-0.5" style={{ border: "2px solid #C9B29F", borderRadius: "8px", background: "#FAF7F2" }}>
               {[
                 { label: "All", value: "", icon: "" },
                 { label: "Males", value: "MALE", icon: "\u2642" },
@@ -388,7 +388,7 @@ export default function PublicDogsPage() {
                       : "transparent",
                     color: sexFilter === f.value
                       ? f.value === "MALE" ? "#1d5bbf" : f.value === "FEMALE" ? "#9f1239" : "#1d5bbf"
-                      : "#6B7280",
+                      : "#6B6B6B",
                     border: "1px solid transparent",
                   }}>
                   {f.icon && <span className="mr-1">{f.icon}</span>}{f.label}
@@ -403,8 +403,8 @@ export default function PublicDogsPage() {
               style={{
                 background: colorFilter ? "rgba(29,91,191,0.08)" : "#FAF7F2",
                 border: "2px solid #C9B29F",
-                borderRadius: "10px",
-                color: colorFilter ? "#1d5bbf" : "#6B7280",
+                borderRadius: "8px",
+                color: colorFilter ? "#1d5bbf" : "#6B6B6B",
                 fontFamily: "var(--font-table)",
                 paddingRight: "24px",
                 backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236B7280'/%3E%3C/svg%3E")`,
@@ -423,8 +423,8 @@ export default function PublicDogsPage() {
               style={{
                 background: hasPhotoFilter ? "rgba(29,91,191,0.08)" : "#FAF7F2",
                 border: "2px solid #C9B29F",
-                borderRadius: "10px",
-                color: hasPhotoFilter ? "#1d5bbf" : "#6B7280",
+                borderRadius: "8px",
+                color: hasPhotoFilter ? "#1d5bbf" : "#6B6B6B",
                 fontFamily: "var(--font-table)",
               }}>
               📷 {hasPhotoFilter ? "With Photos \u2713" : "Has Photo"}
@@ -436,8 +436,8 @@ export default function PublicDogsPage() {
               style={{
                 background: showFilters ? "#FAFAFA" : "#FAF7F2",
                 border: "2px solid #C9B29F",
-                borderRadius: "10px",
-                color: showFilters ? "#1d5bbf" : "#6B7280",
+                borderRadius: "8px",
+                color: showFilters ? "#1d5bbf" : "#6B6B6B",
                 fontFamily: "var(--font-table)",
               }}>
               ⚙ Sort
@@ -453,7 +453,7 @@ export default function PublicDogsPage() {
             {(search || activeFilters > 0) && (
               <button onClick={clearFilters}
                 className="text-[11px] font-medium px-3 py-1.5 transition-all hover:scale-105"
-                style={{ color: "#dc2626", background: "rgba(220,38,38,0.06)", fontFamily: "var(--font-table)", border: "2px solid #C9B29F", borderRadius: "10px" }}>
+                style={{ color: "#dc2626", background: "rgba(220,38,38,0.06)", fontFamily: "var(--font-table)", border: "2px solid #C9B29F", borderRadius: "8px" }}>
                 ✕ Clear
               </button>
             )}
@@ -462,8 +462,8 @@ export default function PublicDogsPage() {
           {/* Sort panel */}
           {showFilters && (
             <div className="mt-2 p-3 flex flex-wrap items-center gap-2"
-              style={{ border: "2px solid #C9B29F", borderRadius: "10px", background: "#FAF7F2", animation: "cardReveal 0.2s ease both" }}>
-              <span className="text-[10px] uppercase tracking-wider mr-1" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+              style={{ border: "2px solid #C9B29F", borderRadius: "8px", background: "#FAF7F2", animation: "cardReveal 0.2s ease both" }}>
+              <span className="text-[10px] uppercase tracking-wider mr-1" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                 Sort by:
               </span>
               {[
@@ -480,8 +480,8 @@ export default function PublicDogsPage() {
                   className="px-3 py-1.5 rounded-md text-[11px] font-semibold transition-all flex items-center gap-1.5"
                   style={{
                     background: sort === s.key ? "rgba(29,91,191,0.08)" : "transparent",
-                    color: sort === s.key ? "#1d5bbf" : "#6B7280",
-                    border: sort === s.key ? "1px solid #C9B29F" : "1px solid transparent",
+                    color: sort === s.key ? "#1d5bbf" : "#6B6B6B",
+                    border: sort === s.key ? "2px solid #C9B29F" : "1px solid transparent",
                     fontFamily: "var(--font-table)",
                   }}>
                   <span className="opacity-70">{s.icon}</span> {s.label}
@@ -498,7 +498,7 @@ export default function PublicDogsPage() {
         {/* Results info */}
         {search && !loading && (
           <div className="mb-3 flex items-center gap-2">
-            <span className="text-xs" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+            <span className="text-xs" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
               Showing results for
             </span>
             <span className="text-xs font-bold px-2 py-0.5 rounded-md"
@@ -515,7 +515,7 @@ export default function PublicDogsPage() {
               /* Skeleton grid for initial load */
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2.5">
                 {Array.from({ length: 18 }).map((_, i) => (
-                  <div key={i} className="overflow-hidden" style={{ border: "2px solid #C9B29F", borderRadius: "10px", background: "#FAF7F2" }}>
+                  <div key={i} className="overflow-hidden" style={{ border: "2px solid #C9B29F", borderRadius: "8px", background: "#FAF7F2" }}>
                     <div className="h-36" style={{
                       background: "linear-gradient(90deg, #FAF7F2 0%, #FAFAFA 50%, #FAF7F2 100%)",
                       backgroundSize: "200% 100%",
@@ -529,7 +529,7 @@ export default function PublicDogsPage() {
                 ))}
               </div>
             ) : (
-              <div className="flex items-center justify-center gap-3" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+              <div className="flex items-center justify-center gap-3" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                 <div className="w-5 h-5 rounded-lg border-2 border-t-transparent animate-spin"
                   style={{ borderColor: "#1d5bbf", borderTopColor: "transparent" }} />
                 Loading dogs...
@@ -543,12 +543,12 @@ export default function PublicDogsPage() {
             <h3 className="text-lg font-bold mb-2" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               No dogs found
             </h3>
-            <p className="text-sm mb-4" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+            <p className="text-sm mb-4" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
               Try adjusting your search or filters
             </p>
             <button onClick={clearFilters}
               className="px-5 py-2 text-sm font-semibold transition-all hover:scale-105"
-              style={{ background: "rgba(29,91,191,0.06)", color: "#1d5bbf", border: "2px solid #C9B29F", fontFamily: "var(--font-table)", borderRadius: "10px" }}>
+              style={{ background: "rgba(29,91,191,0.06)", color: "#1d5bbf", border: "2px solid #C9B29F", fontFamily: "var(--font-table)", borderRadius: "8px" }}>
               Clear All Filters
             </button>
           </div>
@@ -566,7 +566,7 @@ export default function PublicDogsPage() {
             {totalPages > 1 && (
               <div className="mt-8 flex flex-col items-center gap-3">
                 {/* Page info */}
-                <div className="text-[11px]" style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}>
+                <div className="text-[11px]" style={{ color: "#6B6B6B", fontFamily: "var(--font-table)" }}>
                   Showing <span style={{ color: "#1d5bbf", fontWeight: 700 }}>{((page - 1) * LIMIT) + 1}–{Math.min(page * LIMIT, total)}</span> of{" "}
                   <span style={{ color: "#1C1C1C", fontWeight: 600 }}>{total.toLocaleString()}</span> dogs
                 </div>
@@ -576,7 +576,7 @@ export default function PublicDogsPage() {
                   {/* Prev */}
                   <button onClick={() => goToPage(page - 1)} disabled={page === 1}
                     className="px-3 py-1.5 text-xs font-medium disabled:opacity-20 transition-all hover:scale-105"
-                    style={{ background: "#FAF7F2", color: "#6B7280", border: "2px solid #C9B29F", fontFamily: "var(--font-table)", borderRadius: "10px" }}>
+                    style={{ background: "#FAF7F2", color: "#6B6B6B", border: "2px solid #C9B29F", fontFamily: "var(--font-table)", borderRadius: "8px" }}>
                     ←
                   </button>
 
@@ -594,16 +594,16 @@ export default function PublicDogsPage() {
                     }
                     return pages.map((p, i) =>
                       typeof p === "string" ? (
-                        <span key={`dots-${i}`} className="px-1 text-xs" style={{ color: "#6B7280" }}>…</span>
+                        <span key={`dots-${i}`} className="px-1 text-xs" style={{ color: "#6B6B6B" }}>…</span>
                       ) : (
                         <button key={p} onClick={() => goToPage(p)}
                           className="w-8 h-8 text-xs font-bold transition-all hover:scale-105"
                           style={{
                             background: page === p ? "#1d5bbf" : "#FAF7F2",
-                            color: page === p ? "#fff" : "#6B7280",
+                            color: page === p ? "#fff" : "#6B6B6B",
                             border: page === p ? "2px solid #1d5bbf" : "2px solid #C9B29F",
                             fontFamily: "var(--font-mono)",
-                            borderRadius: "10px",
+                            borderRadius: "8px",
                           }}>
                           {p}
                         </button>
@@ -614,7 +614,7 @@ export default function PublicDogsPage() {
                   {/* Next */}
                   <button onClick={() => goToPage(page + 1)} disabled={page === totalPages}
                     className="px-3 py-1.5 text-xs font-medium disabled:opacity-20 transition-all hover:scale-105"
-                    style={{ background: "#FAF7F2", color: "#6B7280", border: "2px solid #C9B29F", fontFamily: "var(--font-table)", borderRadius: "10px" }}>
+                    style={{ background: "#FAF7F2", color: "#6B6B6B", border: "2px solid #C9B29F", fontFamily: "var(--font-table)", borderRadius: "8px" }}>
                     →
                   </button>
                 </div>
@@ -628,12 +628,12 @@ export default function PublicDogsPage() {
           style={{
             background: "#FAF7F2",
             border: "2px solid #C9B29F",
-            borderRadius: "10px",
+            borderRadius: "8px",
           }}>
           <h2 style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "1.1rem", color: "#1C1C1C" }}>
             Want to add your dogs?
           </h2>
-          <p className="mt-1.5 mb-4" style={{ fontFamily: "var(--font-table)", fontSize: "12px", color: "#6B7280" }}>
+          <p className="mt-1.5 mb-4" style={{ fontFamily: "var(--font-table)", fontSize: "12px", color: "#6B6B6B" }}>
             Create an account to register dogs, build pedigree trees, track litters, and more.
           </p>
           <Link href="/register"
@@ -641,7 +641,7 @@ export default function PublicDogsPage() {
             style={{
               background: "#1d5bbf", color: "#fff",
               fontFamily: "var(--font-table)", letterSpacing: "0.04em", textTransform: "uppercase",
-              borderRadius: "10px",
+              borderRadius: "8px",
             }}>
             Get Started Free →
           </Link>
@@ -658,10 +658,10 @@ export default function PublicDogsPage() {
           }}>Pedigree Platform</span>
         </div>
         <div className="flex items-center justify-center gap-4">
-          <Link href="/pedigree" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Search</Link>
-          <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Privacy</Link>
-          <Link href="/terms" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Terms</Link>
-          <Link href="/contact" className="text-[10px] hover:underline" style={{ color: "#6B7280" }}>Contact</Link>
+          <Link href="/pedigree" className="text-[10px] hover:underline" style={{ color: "#6B6B6B" }}>Search</Link>
+          <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "#6B6B6B" }}>Privacy</Link>
+          <Link href="/terms" className="text-[10px] hover:underline" style={{ color: "#6B6B6B" }}>Terms</Link>
+          <Link href="/contact" className="text-[10px] hover:underline" style={{ color: "#6B6B6B" }}>Contact</Link>
         </div>
       </footer>
     </div>
