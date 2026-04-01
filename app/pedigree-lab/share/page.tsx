@@ -49,6 +49,7 @@ function SharePreviewInner() {
   const sireId = searchParams.get("sire") || "0";
   const damId = searchParams.get("dam") || "0";
   const name = searchParams.get("name") || "Pedigree Preview";
+  const displayGens = Math.min(Math.max(parseInt(searchParams.get("gens") || "4", 10), 3), 5);
 
   const [tree, setTree] = useState<{ gen: number; pos: number; dog_id: number | null; name: string; sex: string | null }[]>([]);
   const [loading, setLoading] = useState(true);
@@ -122,12 +123,12 @@ function SharePreviewInner() {
     return { cellBg, cellBorder, cellTextColor, isChampion };
   }
 
-  const hasGen5 = tree.some((r) => r.gen === 5);
+  const isCompact = displayGens >= 5;
 
   function renderCell(dog: { name: string; dog_id: number | null } | undefined, gen: number, rSpan: number, key: string) {
     const cellName = dog?.name || "Unknown";
     const { cellBg, cellBorder, cellTextColor, isChampion } = getCellStyle(cellName);
-    const fontSize = hasGen5
+    const fontSize = isCompact
       ? (gen <= 1 ? 11 : gen === 2 ? 10 : gen === 3 ? 10 : 9.5)
       : (gen <= 2 ? 13 : gen === 3 ? 12 : 11);
     return (
@@ -139,10 +140,10 @@ function SharePreviewInner() {
           background: cellBg,
           border: "2px solid #EDE4D5",
           borderLeftColor: cellBorder,
-          borderLeftWidth: hasGen5 ? "3px" : "4px",
+          borderLeftWidth: isCompact ? "3px" : "4px",
           borderRadius: 8,
-          padding: hasGen5 ? "3px 6px" : "6px 10px",
-          minHeight: hasGen5 ? 20 : 40,
+          padding: isCompact ? "3px 6px" : "6px 10px",
+          minHeight: isCompact ? 20 : 40,
           fontSize,
           fontWeight: isChampion ? 700 : 600,
           color: cellTextColor,
@@ -154,11 +155,11 @@ function SharePreviewInner() {
           <span
             className="absolute -top-0.5 -right-0.5 flex items-center justify-center rounded-lg"
             style={{
-              fontSize: hasGen5 ? 7 : 9,
+              fontSize: isCompact ? 7 : 9,
               color: "#8a6518",
               background: "#F5EDE0",
-              width: hasGen5 ? 12 : 15,
-              height: hasGen5 ? 12 : 15,
+              width: isCompact ? 12 : 15,
+              height: isCompact ? 12 : 15,
               border: "1px solid #C9B29F",
             }}
           >
@@ -214,8 +215,8 @@ function SharePreviewInner() {
     );
   }
 
-  const TOTAL_ROWS = hasGen5 ? 32 : 16;
-  const genKeys = hasGen5 ? [1, 2, 3, 4, 5] : [1, 2, 3, 4];
+  const TOTAL_ROWS = Math.pow(2, displayGens);
+  const genKeys = Array.from({ length: displayGens }, (_, i) => i + 1);
   const genData: Record<number, { pos: number; name: string; dog_id: number | null; sex: string | null }[]> = {};
   for (const g of genKeys) genData[g] = [];
   for (const row of tree) {
@@ -228,25 +229,15 @@ function SharePreviewInner() {
   }
 
   const tableRows: React.ReactNode[] = [];
-  if (hasGen5) {
-    for (let r = 0; r < TOTAL_ROWS; r++) {
-      const cells: React.ReactNode[] = [];
-      if (r % 16 === 0) cells.push(renderCell(genData[1]?.[Math.floor(r / 16)], 1, 16, "g1"));
-      if (r % 8 === 0) cells.push(renderCell(genData[2]?.[Math.floor(r / 8)], 2, 8, "g2"));
-      if (r % 4 === 0) cells.push(renderCell(genData[3]?.[Math.floor(r / 4)], 3, 4, "g3"));
-      if (r % 2 === 0) cells.push(renderCell(genData[4]?.[Math.floor(r / 2)], 4, 2, "g4"));
-      cells.push(renderCell(genData[5]?.[r], 5, 1, "g5"));
-      tableRows.push(<tr key={r}>{cells}</tr>);
+  for (let r = 0; r < TOTAL_ROWS; r++) {
+    const cells: React.ReactNode[] = [];
+    for (let g = 1; g <= displayGens; g++) {
+      const rowsPerCell = Math.pow(2, displayGens - g);
+      if (r % rowsPerCell === 0) {
+        cells.push(renderCell(genData[g]?.[Math.floor(r / rowsPerCell)], g, rowsPerCell, `g${g}`));
+      }
     }
-  } else {
-    for (let r = 0; r < TOTAL_ROWS; r++) {
-      const cells: React.ReactNode[] = [];
-      if (r % 8 === 0) cells.push(renderCell(genData[1]?.[Math.floor(r / 8)], 1, 8, "g1"));
-      if (r % 4 === 0) cells.push(renderCell(genData[2]?.[Math.floor(r / 4)], 2, 4, "g2"));
-      if (r % 2 === 0) cells.push(renderCell(genData[3]?.[Math.floor(r / 2)], 3, 2, "g3"));
-      cells.push(renderCell(genData[4]?.[r], 4, 1, "g4"));
-      tableRows.push(<tr key={r}>{cells}</tr>);
-    }
+    tableRows.push(<tr key={r}>{cells}</tr>);
   }
 
   return (
@@ -309,7 +300,7 @@ function SharePreviewInner() {
             >
               <thead>
                 <tr>
-                  {(hasGen5 ? ["First", "Second", "Third", "Fourth", "Fifth"] : ["First", "Second", "Third", "Fourth"]).map((label) => (
+                  {["First", "Second", "Third", "Fourth", "Fifth"].slice(0, displayGens).map((label) => (
                     <th
                       key={label}
                       className="text-center text-[11px] uppercase tracking-widest font-bold py-2"

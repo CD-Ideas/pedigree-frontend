@@ -309,6 +309,7 @@ function PedigreeLabInner() {
 
   /* ---------- UI state ---------- */
   const [previewMode, setPreviewMode] = useState(false);
+  const [previewDisplayGens, setPreviewDisplayGens] = useState(4);
   const [showPublishModal, setShowPublishModal] = useState(false);
   const [publishForm, setPublishForm] = useState<PublishForm>(defaultPublishForm());
 
@@ -822,6 +823,26 @@ function PedigreeLabInner() {
                   )}
                 </div>
                 <div className="flex items-center gap-3">
+                  {/* Generation Toggle */}
+                  <div className="flex items-center gap-1 rounded-lg p-1" style={{ background: "#1C1C1C", borderRadius: "8px" }}>
+                    {[3, 4, 5].map((g) => (
+                      <button
+                        key={g}
+                        onClick={() => setPreviewDisplayGens(g)}
+                        className="px-3 py-1 rounded-md flex items-center justify-center text-xs font-bold transition-all cursor-pointer"
+                        style={{
+                          background: previewDisplayGens === g ? "#C9B29F" : "transparent",
+                          color: previewDisplayGens === g ? "#1C1C1C" : "#FAF7F2",
+                          border: "1px solid transparent",
+                          fontFamily: "var(--font-table)",
+                          letterSpacing: "0.03em",
+                          borderRadius: "6px",
+                        }}
+                      >
+                        {g}G
+                      </button>
+                    ))}
+                  </div>
                   {/* Share Buttons */}
                   <div className="flex items-center gap-1.5">
                     <button
@@ -829,7 +850,7 @@ function PedigreeLabInner() {
                         const sireId = slots.sire?.dog_id || 0;
                         const damId = slots.dam?.dog_id || 0;
                         const name = slots.subject?.registered_name || "";
-                        const shareUrl = `${window.location.origin}/pedigree-lab/share?sire=${sireId}&dam=${damId}&name=${encodeURIComponent(name)}`;
+                        const shareUrl = `${window.location.origin}/pedigree-lab/share?sire=${sireId}&dam=${damId}&name=${encodeURIComponent(name)}&gens=${previewDisplayGens}`;
                         if (navigator.share) {
                           navigator.share({ title: name || "Pedigree Preview", url: shareUrl });
                         } else {
@@ -853,7 +874,7 @@ function PedigreeLabInner() {
                         const sireId = slots.sire?.dog_id || 0;
                         const damId = slots.dam?.dog_id || 0;
                         const name = slots.subject?.registered_name || "";
-                        const shareUrl = `${window.location.origin}/pedigree-lab/share?sire=${sireId}&dam=${damId}&name=${encodeURIComponent(name)}`;
+                        const shareUrl = `${window.location.origin}/pedigree-lab/share?sire=${sireId}&dam=${damId}&name=${encodeURIComponent(name)}&gens=${previewDisplayGens}`;
                         window.open(`https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(name || "Check out this pedigree!")}`, "_blank");
                       }}
                       className="flex items-center justify-center rounded-lg transition-all hover:scale-105 cursor-pointer"
@@ -870,11 +891,11 @@ function PedigreeLabInner() {
                       </svg>
                     </button>
                     <button
-                      onClick={async () => {
+                      onClick={() => {
                         const sireId = slots.sire?.dog_id || 0;
                         const damId = slots.dam?.dog_id || 0;
                         const name = slots.subject?.registered_name || "";
-                        const shareUrl = `${window.location.origin}/pedigree-lab/share?sire=${sireId}&dam=${damId}&name=${encodeURIComponent(name)}`;
+                        const shareUrl = `${window.location.origin}/pedigree-lab/share?sire=${sireId}&dam=${damId}&name=${encodeURIComponent(name)}&gens=${previewDisplayGens}`;
                         const waText = `${name || "Check out this pedigree!"}\n${shareUrl}`;
                         window.open(`https://wa.me/?text=${encodeURIComponent(waText)}`, "_blank");
                       }}
@@ -922,7 +943,7 @@ function PedigreeLabInner() {
                 >
                   <thead>
                     <tr>
-                      {(previewTree.some((r) => r.gen === 5) ? ["First", "Second", "Third", "Fourth", "Fifth"] : ["First", "Second", "Third", "Fourth"]).map((label) => (
+                      {["First", "Second", "Third", "Fourth", "Fifth"].slice(0, previewDisplayGens).map((label) => (
                         <th
                           key={label}
                           className="text-center text-[11px] uppercase tracking-widest font-bold py-2"
@@ -940,9 +961,10 @@ function PedigreeLabInner() {
                   </thead>
                   <tbody>
                     {(() => {
-                      const hasGen5 = previewTree.some((r) => r.gen === 5);
-                      const TOTAL_ROWS = hasGen5 ? 32 : 16;
-                      const genKeys = hasGen5 ? [1, 2, 3, 4, 5] : [1, 2, 3, 4];
+                      const dg = previewDisplayGens;
+                      const isCompact = dg >= 5;
+                      const TOTAL_ROWS = Math.pow(2, dg);
+                      const genKeys = Array.from({ length: dg }, (_, i) => i + 1);
                       const genData: Record<number, { pos: number; name: string; dog_id: number | null; sex: string | null }[]> = {};
                       for (const g of genKeys) genData[g] = [];
                       for (const row of previewTree) {
@@ -1009,7 +1031,7 @@ function PedigreeLabInner() {
                       function renderCell(dog: { name: string; dog_id: number | null } | undefined, gen: number, rSpan: number, key: string) {
                         const name = dog?.name || "Unknown";
                         const { cellBg, cellBorder, cellTextColor, isChampion } = getCellStyle(name);
-                        const fontSize = hasGen5
+                        const fontSize = isCompact
                           ? (gen <= 1 ? 11 : gen === 2 ? 10 : gen === 3 ? 10 : 9.5)
                           : (gen <= 2 ? 13 : gen === 3 ? 12 : 11);
                         return (
@@ -1021,10 +1043,10 @@ function PedigreeLabInner() {
                               background: cellBg,
                               border: "2px solid #EDE4D5",
                               borderLeftColor: cellBorder,
-                              borderLeftWidth: hasGen5 ? "3px" : "4px",
+                              borderLeftWidth: isCompact ? "3px" : "4px",
                               borderRadius: 8,
-                              padding: hasGen5 ? "3px 6px" : "6px 10px",
-                              minHeight: hasGen5 ? 20 : 40,
+                              padding: isCompact ? "3px 6px" : "6px 10px",
+                              minHeight: isCompact ? 20 : 40,
                               fontSize,
                               fontWeight: isChampion ? 700 : 600,
                               color: cellTextColor,
@@ -1036,11 +1058,11 @@ function PedigreeLabInner() {
                               <span
                                 className="absolute -top-0.5 -right-0.5 flex items-center justify-center rounded-lg"
                                 style={{
-                                  fontSize: hasGen5 ? 7 : 9,
+                                  fontSize: isCompact ? 7 : 9,
                                   color: "#8a6518",
                                   background: "#F5EDE0",
-                                  width: hasGen5 ? 12 : 15,
-                                  height: hasGen5 ? 12 : 15,
+                                  width: isCompact ? 12 : 15,
+                                  height: isCompact ? 12 : 15,
                                   border: "1px solid #C9B29F",
                                 }}
                               >
@@ -1057,25 +1079,15 @@ function PedigreeLabInner() {
                       }
 
                       const tableRows: React.ReactNode[] = [];
-                      if (hasGen5) {
-                        for (let r = 0; r < TOTAL_ROWS; r++) {
-                          const cells: React.ReactNode[] = [];
-                          if (r % 16 === 0) cells.push(renderCell(genData[1]?.[Math.floor(r / 16)], 1, 16, "g1"));
-                          if (r % 8 === 0) cells.push(renderCell(genData[2]?.[Math.floor(r / 8)], 2, 8, "g2"));
-                          if (r % 4 === 0) cells.push(renderCell(genData[3]?.[Math.floor(r / 4)], 3, 4, "g3"));
-                          if (r % 2 === 0) cells.push(renderCell(genData[4]?.[Math.floor(r / 2)], 4, 2, "g4"));
-                          cells.push(renderCell(genData[5]?.[r], 5, 1, "g5"));
-                          tableRows.push(<tr key={r}>{cells}</tr>);
+                      for (let r = 0; r < TOTAL_ROWS; r++) {
+                        const cells: React.ReactNode[] = [];
+                        for (let g = 1; g <= dg; g++) {
+                          const rowsPerCell = Math.pow(2, dg - g);
+                          if (r % rowsPerCell === 0) {
+                            cells.push(renderCell(genData[g]?.[Math.floor(r / rowsPerCell)], g, rowsPerCell, `g${g}`));
+                          }
                         }
-                      } else {
-                        for (let r = 0; r < TOTAL_ROWS; r++) {
-                          const cells: React.ReactNode[] = [];
-                          if (r % 8 === 0) cells.push(renderCell(genData[1]?.[Math.floor(r / 8)], 1, 8, "g1"));
-                          if (r % 4 === 0) cells.push(renderCell(genData[2]?.[Math.floor(r / 4)], 2, 4, "g2"));
-                          if (r % 2 === 0) cells.push(renderCell(genData[3]?.[Math.floor(r / 2)], 3, 2, "g3"));
-                          cells.push(renderCell(genData[4]?.[r], 4, 1, "g4"));
-                          tableRows.push(<tr key={r}>{cells}</tr>);
-                        }
+                        tableRows.push(<tr key={r}>{cells}</tr>);
                       }
                       return tableRows;
                     })()}
