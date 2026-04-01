@@ -242,6 +242,52 @@ function SharePreviewInner() {
 
   return (
     <div className="min-h-screen" style={{ background: "#EDE4D5" }}>
+      {/* Custom NavBar for Share Page */}
+      <nav
+        className="sticky top-0 z-50 flex items-center justify-between px-6 py-3"
+        style={{
+          background: "#1C1C1C",
+          borderBottom: "2px solid #C9B29F",
+        }}
+      >
+        {/* Logo + Branding */}
+        <a href="/" className="flex items-center gap-3" style={{ textDecoration: "none" }}>
+          <img src="/logo.png" alt="Pedigree Platform" style={{ height: 36 }} />
+          <span
+            className="text-lg font-bold tracking-wide"
+            style={{ color: "#C9B29F", fontFamily: "var(--font-display)" }}
+          >
+            Pedigree Platform
+          </span>
+        </a>
+
+        {/* Sign In / Sign Up */}
+        <div className="flex items-center gap-3">
+          <a
+            href="/login"
+            className="px-4 py-2 rounded-lg text-sm font-semibold"
+            style={{
+              color: "#C9B29F",
+              border: "1px solid #C9B29F",
+              textDecoration: "none",
+            }}
+          >
+            Sign In
+          </a>
+          <a
+            href="/register"
+            className="px-4 py-2 rounded-lg text-sm font-semibold"
+            style={{
+              background: "#C9B29F",
+              color: "#1C1C1C",
+              textDecoration: "none",
+            }}
+          >
+            Sign Up
+          </a>
+        </div>
+      </nav>
+
       {/* Pedigree Card */}
       <div className="max-w-6xl mx-auto px-4 py-8">
         <div
@@ -251,7 +297,7 @@ function SharePreviewInner() {
             border: "2px solid #C9B29F",
           }}
         >
-          {/* Header */}
+          {/* Header — Logo watermark + COI */}
           <div
             className="px-5 py-3 flex items-center justify-between"
             style={{
@@ -259,17 +305,15 @@ function SharePreviewInner() {
               borderBottom: "2px solid #C9B29F",
             }}
           >
-            <div className="flex items-center gap-3">
+            <a href="/" className="flex items-center gap-2" style={{ textDecoration: "none" }}>
+              <img src="/logo.png" alt="Pedigree Platform" style={{ height: 24 }} />
               <span
-                className="text-sm font-bold uppercase tracking-widest"
-                style={{ fontFamily: "var(--font-display)", color: "#1C1C1C" }}
+                className="text-xs font-semibold uppercase tracking-widest"
+                style={{ color: "#B8860B", fontFamily: "var(--font-display)" }}
               >
-                Pedigree Preview
+                Generated in Pedigree Platform
               </span>
-              <span className="text-xs" style={{ color: getDogColor(name) }}>
-                — {decodeURIComponent(name)}
-              </span>
-            </div>
+            </a>
             <div className="flex items-center gap-2">
               <span
                 className="text-[10px] uppercase tracking-widest font-bold"
@@ -323,15 +367,14 @@ function SharePreviewInner() {
 
         {/* Footer */}
         <div className="text-center mt-4">
-          <span
+          <a
+            href="/"
             className="text-[10px]"
-            style={{ color: "#6B7280", fontFamily: "var(--font-table)" }}
+            style={{ color: "#6B7280", fontFamily: "var(--font-table)", textDecoration: "none" }}
           >
-            Shared from{" "}
-            <a href="https://pedigreeplatform.com" style={{ color: "#B8860B", textDecoration: "none" }}>
-              PedigreePlatform.com
-            </a>
-          </span>
+            Generated in{" "}
+            <span style={{ color: "#B8860B" }}>PedigreePlatform.com</span>
+          </a>
         </div>
       </div>
     </div>

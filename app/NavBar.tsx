@@ -324,8 +324,8 @@ export default function NavBar() {
     e.target.value = "";
   }, [userId]);
 
-  // Don't show navbar on landing, login, register
-  if (pathname === "/" || pathname === "/login" || pathname === "/register") return null;
+  // Don't show navbar on landing, login, register, share preview
+  if (pathname === "/" || pathname === "/login" || pathname === "/register" || pathname === "/pedigree-lab/share") return null;
 
   const handleLogout = () => {
     localStorage.removeItem("token");
