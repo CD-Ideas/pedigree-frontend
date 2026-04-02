@@ -5,6 +5,8 @@ import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { getDogColor } from "@/app/utils/colors";
 
+const capName = (s: string) => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+
 /* ─── Types ─── */
 interface MarketplaceAd {
   id: number;
@@ -597,7 +599,7 @@ export default function MarketplaceAdPage() {
                       Listed By
                     </div>
                     <Link href={`/profile/${encodeURIComponent(ad.username)}`} className="text-xs font-bold hover:underline" style={{ color: "#1d5bbf", fontFamily: "var(--font-table)" }}>
-                      {ad.username}
+                      {capName(ad.username)}
                     </Link>
                   </div>
                   <a href={`/messages?to=${encodeURIComponent(ad.username)}&subject=${encodeURIComponent(`Re: ${ad.title}`)}&adId=${ad.id}`}

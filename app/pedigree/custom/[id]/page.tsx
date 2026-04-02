@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { getDogColor } from "@/app/utils/colors";
 
+const capName = (s: string) => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+
 /* ─── Types ─── */
 interface PublishedPedigree {
   id: number;
@@ -603,7 +605,7 @@ export default function PublishedPedigreePage() {
                   background: "rgba(201,178,159,0.12)", color: "#1d5bbf",
                   fontFamily: "var(--font-table)", border: "1px solid rgba(96,165,250,0.3)",
                 }}>
-                  {ped.creator_username}
+                  {capName(ped.creator_username)}
                 </Link>
               )}
               {isOwner && (

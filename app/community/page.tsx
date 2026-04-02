@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getDogColor } from "@/app/utils/colors";
 
+const capName = (s: string) => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+
 const LOGO = "/logo.png";
 const PER_PAGE = 24;
 
@@ -509,7 +511,7 @@ export default function CommunityPedigreesPage() {
                             </span>
                           </td>
                           <td className="px-3 py-2 hidden md:table-cell text-xs" style={{ color: "#1d5bbf", fontFamily: "var(--font-table)" }}>
-                            {p.creator ? <Link href={`/profile/${encodeURIComponent(p.creator)}`} className="hover:underline" style={{ color: "#1d5bbf" }}>{p.creator}</Link> : "\u2014"}
+                            {p.creator ? <Link href={`/profile/${encodeURIComponent(p.creator)}`} className="hover:underline" style={{ color: "#1d5bbf" }}>{capName(p.creator)}</Link> : "\u2014"}
                           </td>
                           <td className="px-3 py-2 hidden md:table-cell text-xs" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                             {p.country || "\u2014"}
@@ -594,7 +596,7 @@ export default function CommunityPedigreesPage() {
                               fontFamily: "var(--font-table)",
                             }}
                           >
-                            {p.creator}
+                            {capName(p.creator)}
                           </Link>
                         </div>
                       )}

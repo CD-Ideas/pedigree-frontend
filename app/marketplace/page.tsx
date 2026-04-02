@@ -4,6 +4,8 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import Link from "next/link";
 import { getDogColor } from "@/app/utils/colors";
 
+const capName = (s: string) => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+
 /* ─── Types ─── */
 interface MarketplaceAd {
   id: number;
@@ -173,7 +175,7 @@ function AdCard({ ad, index }: { ad: MarketplaceAd; index: number }) {
               {ad.username.charAt(0).toUpperCase()}
             </div>
             <Link href={`/profile/${encodeURIComponent(ad.username)}`} className="text-[12px] font-medium hover:underline" style={{ color: "#1d5bbf", fontFamily: "var(--font-table)" }}>
-              {ad.username}
+              {capName(ad.username)}
             </Link>
           </div>
         )}
