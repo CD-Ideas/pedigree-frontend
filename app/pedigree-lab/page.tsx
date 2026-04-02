@@ -1890,9 +1890,10 @@ function PedigreeLabInner() {
                     color: "#1C1C1C",
                     fontFamily: "var(--font-table)",
                     resize: "vertical",
+                    textTransform: "uppercase",
                   }}
                   value={publishForm.notes}
-                  onChange={(e) => setPublishForm((p) => ({ ...p, notes: e.target.value }))}
+                  onChange={(e) => setPublishForm((p) => ({ ...p, notes: e.target.value.toUpperCase() }))}
                   placeholder="Additional notes..."
                 />
               </div>
@@ -1990,7 +1991,7 @@ function PedigreeLabInner() {
                 onChange={(v) =>
                   setPublishForm((p) => ({
                     ...p,
-                    journal: { ...p.journal, avidChip: v },
+                    journal: { ...p.journal, avidChip: v.toUpperCase() },
                   }))
                 }
                 placeholder="Enter chip number..."
@@ -2096,7 +2097,7 @@ function PedigreeLabInner() {
                       onChange={(e) =>
                         setPublishForm((p) => ({
                           ...p,
-                          journal: { ...p.journal, wormingDraft: { ...p.journal.wormingDraft, otherType: e.target.value } },
+                          journal: { ...p.journal, wormingDraft: { ...p.journal.wormingDraft, otherType: e.target.value.toUpperCase() } },
                         }))
                       }
                       className="w-full rounded-lg px-3 py-2 text-xs outline-none transition-all"
@@ -2105,6 +2106,7 @@ function PedigreeLabInner() {
                         border: "2px solid #C9B29F",
                         color: "#1C1C1C",
                         fontFamily: "var(--font-table)",
+                        textTransform: "uppercase",
                       }}
                     />
                   )}
@@ -2493,7 +2495,7 @@ function PedigreeLabInner() {
                   onChange={(e) =>
                     setPublishForm((p) => ({
                       ...p,
-                      journal: { ...p.journal, notes: e.target.value },
+                      journal: { ...p.journal, notes: e.target.value.toUpperCase() },
                     }))
                   }
                   rows={3}
@@ -2502,6 +2504,7 @@ function PedigreeLabInner() {
                   style={{
                     background: "#FAFAFA",
                     border: "2px solid #C9B29F",
+                    textTransform: "uppercase",
                     color: "#1C1C1C",
                     fontFamily: "var(--font-table)",
                   }}
@@ -2874,7 +2877,7 @@ function ModalInput({
       <input
         type={type}
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => onChange(type === "date" ? e.target.value : e.target.value.toUpperCase())}
         placeholder={placeholder}
         className="w-full rounded-lg px-3 py-2 text-sm outline-none transition-all focus:ring-1"
         style={{
@@ -2882,6 +2885,7 @@ function ModalInput({
           border: "2px solid #C9B29F",
           color: "#1C1C1C",
           fontFamily: "var(--font-table)",
+          textTransform: type === "date" ? undefined : "uppercase",
           ...extraStyle,
         }}
       />
