@@ -592,12 +592,12 @@ export default function PublishedPedigreePage() {
               {displayName}
             </h1>
             <div className="flex items-center justify-center gap-2 mt-1">
-              <span className="text-[12px] px-2 py-0.5 rounded-lg" style={{
+              <Link href="/community" className="text-[12px] px-2 py-0.5 rounded-lg hover:underline" style={{
                 background: "rgba(201,178,159,0.15)", color: "#1C1C1C",
                 fontFamily: "var(--font-mono)", border: "2px solid #C9B29F",
               }}>
                 Community Pedigree
-              </span>
+              </Link>
               {ped.creator_username && (
                 <Link href={`/profile/${encodeURIComponent(ped.creator_username)}`} className="text-[12px] px-2 py-0.5 rounded-lg hover:underline" style={{
                   background: "rgba(201,178,159,0.12)", color: "#1d5bbf",
