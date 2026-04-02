@@ -474,34 +474,44 @@ export default function Home() {
                 </div>
                 <div className="flex justify-center">
                   <svg width="180" height="180" viewBox="0 0 220 220">
-                    {/* Carver 42% — #3a3a3a (no title) */}
+                    {/* Carver 25% — #3a3a3a (no title) */}
                     <circle cx="110" cy="110" r="85" fill="none" stroke="#3a3a3a" strokeWidth="45"
-                      strokeDasharray={`${42 * 5.34} ${100 * 5.34}`} strokeDashoffset="0"
+                      strokeDasharray={`${25 * 5.34} ${100 * 5.34}`} strokeDashoffset="0"
                       transform="rotate(-90 110 110)" />
-                    {/* Eli/Boudreaux 35% — #b45a0a (2XW dark orange) */}
+                    {/* Boudreaux' Eli (2XW) 21% — #b45a0a (2XW orange) */}
                     <circle cx="110" cy="110" r="85" fill="none" stroke="#b45a0a" strokeWidth="45"
-                      strokeDasharray={`${35 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(42) * 5.34}`}
+                      strokeDasharray={`${21 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(25) * 5.34}`}
                       transform="rotate(-90 110 110)" />
-                    {/* GR CH Rascal 13% — #1d5bbf (GR CH blue) */}
+                    {/* Carver's Pistol (2XW) ROM 15% — #0d7468 (ROM teal) */}
+                    <circle cx="110" cy="110" r="85" fill="none" stroke="#0d7468" strokeWidth="45"
+                      strokeDasharray={`${15 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(25 + 21) * 5.34}`}
+                      transform="rotate(-90 110 110)" />
+                    {/* GR CH Rascal (6XW) 15% — #1d5bbf (GR CH blue) */}
                     <circle cx="110" cy="110" r="85" fill="none" stroke="#1d5bbf" strokeWidth="45"
-                      strokeDasharray={`${13 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(42 + 35) * 5.34}`}
+                      strokeDasharray={`${15 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(25 + 21 + 15) * 5.34}`}
                       transform="rotate(-90 110 110)" />
-                    {/* CH Crenshaw 10% — #c02828 (CH red) */}
+                    {/* Tudor/Dibo (3XW) 12% — #8a6518 (3XW gold) */}
+                    <circle cx="110" cy="110" r="85" fill="none" stroke="#8a6518" strokeWidth="45"
+                      strokeDasharray={`${12 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(25 + 21 + 15 + 15) * 5.34}`}
+                      transform="rotate(-90 110 110)" />
+                    {/* CH Crenshaw 12% — #c02828 (CH red) */}
                     <circle cx="110" cy="110" r="85" fill="none" stroke="#c02828" strokeWidth="45"
-                      strokeDasharray={`${10 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(42 + 35 + 13) * 5.34}`}
+                      strokeDasharray={`${12 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(25 + 21 + 15 + 15 + 12) * 5.34}`}
                       transform="rotate(-90 110 110)" />
                     <circle cx="110" cy="110" r="62" fill="#FAFAFA" />
-                    <text x="110" y="100" textAnchor="middle" fill="#1C1C1C" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "22px" }}>42%</text>
+                    <text x="110" y="100" textAnchor="middle" fill="#1C1C1C" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "22px" }}>25%</text>
                     <text x="110" y="118" textAnchor="middle" fill="#3a3a3a" style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "12px", letterSpacing: "0.05em" }}>CARVER DOMINANT</text>
                     <text x="110" y="134" textAnchor="middle" fill="#4A4A4A" style={{ fontFamily: "var(--font-body)", fontWeight: 400, fontSize: "12px" }}>6-gen analysis</text>
                   </svg>
                 </div>
                 <div className="grid grid-cols-2 gap-x-3 gap-y-1 mt-2">
                   {[
-                    { name: "Carver", pct: "42%", color: "#3a3a3a" },
-                    { name: "Eli/Boudreaux", pct: "35%", color: "#b45a0a" },
-                    { name: "GR CH Rascal", pct: "13%", color: "#1d5bbf" },
-                    { name: "CH Crenshaw", pct: "10%", color: "#c02828" },
+                    { name: "Carver", pct: "25%", color: "#3a3a3a" },
+                    { name: "Eli (2XW)", pct: "21%", color: "#b45a0a" },
+                    { name: "Pistol (2XW) ROM", pct: "15%", color: "#0d7468" },
+                    { name: "GR CH Rascal", pct: "15%", color: "#1d5bbf" },
+                    { name: "Tudor/Dibo (3XW)", pct: "12%", color: "#8a6518" },
+                    { name: "CH Crenshaw", pct: "12%", color: "#c02828" },
                   ].map((b, i) => (
                     <div key={i} className="flex items-center gap-2">
                       <div className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ background: b.color }} />
@@ -542,10 +552,10 @@ export default function Home() {
                   </h4>
                   <ul className="space-y-1.5">
                     {[
-                      "42% Carver blood — deep foundational influence",
-                      "35% Boudreaux' Eli lineage — athletic drive & endurance",
-                      "GR CH Rascal appears on both sides — tight breeding",
-                      "52 ancestor slots analyzed across 6 generations",
+                      "25% Carver blood — deep foundational influence",
+                      "21% Boudreaux' Eli lineage — athletic drive & endurance",
+                      "GR CH Rascal + Pistol ROM on both sides — tight breeding",
+                      "6 distinct bloodlines across 52 ancestor slots",
                     ].map((tip, i) => (
                       <li key={i} className="flex items-start gap-1.5" style={{ fontFamily: "var(--font-body)", fontSize: "12px", color: "#4A4A4A", lineHeight: 1.45 }}>
                         <span style={{ color: "#C9B29F", fontSize: "12px", marginTop: "3px" }}>◆</span>
