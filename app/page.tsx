@@ -644,7 +644,7 @@ export default function Home() {
                     {/* Text */}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1.5">
-                        <h3 style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "12px", color: "#1C1C1C", letterSpacing: "0.02em" }}>{m.title}</h3>
+                        <h3 style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "14px", color: "#1C1C1C", letterSpacing: "0.02em" }}>{m.title}</h3>
                         {m.tag && (
                           <span style={{
                             fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "12px", letterSpacing: "0.08em",
