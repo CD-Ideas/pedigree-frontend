@@ -103,7 +103,7 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
         {hasTitle && (
           <div className="absolute top-1.5 left-1.5 flex gap-1 flex-wrap">
             {titles.slice(0, 3).map((t) => (
-              <span key={t} className="text-[8px] font-bold px-1.5 py-0.5 rounded"
+              <span key={t} className="text-[12px] font-bold px-1.5 py-0.5 rounded"
                 style={{
                   background: "#FAF7F2",
                   border: "2px solid #C9B29F",
@@ -149,7 +149,7 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between mt-1.5 pt-1 text-[8px]"
+        <div className="flex items-center justify-between mt-1.5 pt-1 text-[12px]"
           style={{ borderTop: "2px solid #C9B29F", color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
           <span>{dog.reg_number}</span>
           <span className="opacity-0 group-hover:opacity-100 transition-opacity text-[12px] font-semibold"
@@ -339,7 +339,7 @@ export default function PublicDogsPage() {
                   borderRadius: "8px",
                 }}>
                 <div className="pl-3.5 pr-2 flex-shrink-0">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" strokeWidth="2.5" strokeLinecap="round">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4A4A4A" strokeWidth="2.5" strokeLinecap="round">
                     <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
                   </svg>
                 </div>
@@ -384,7 +384,7 @@ export default function PublicDogsPage() {
                       : "transparent",
                     color: sexFilter === f.value
                       ? f.value === "MALE" ? "#1d5bbf" : f.value === "FEMALE" ? "#9f1239" : "#1d5bbf"
-                      : "#6B6B6B",
+                      : "#4A4A4A",
                     border: "1px solid transparent",
                   }}>
                   {f.icon && <span className="mr-1">{f.icon}</span>}{f.label}
@@ -400,7 +400,7 @@ export default function PublicDogsPage() {
                 background: colorFilter ? "rgba(29,91,191,0.08)" : "#FAF7F2",
                 border: "2px solid #C9B29F",
                 borderRadius: "8px",
-                color: colorFilter ? "#1d5bbf" : "#6B6B6B",
+                color: colorFilter ? "#1d5bbf" : "#4A4A4A",
                 fontFamily: "var(--font-table)",
                 paddingRight: "24px",
                 backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236B6B6B'/%3E%3C/svg%3E")`,
@@ -420,7 +420,7 @@ export default function PublicDogsPage() {
                 background: hasPhotoFilter ? "rgba(29,91,191,0.08)" : "#FAF7F2",
                 border: "2px solid #C9B29F",
                 borderRadius: "8px",
-                color: hasPhotoFilter ? "#1d5bbf" : "#6B6B6B",
+                color: hasPhotoFilter ? "#1d5bbf" : "#4A4A4A",
                 fontFamily: "var(--font-table)",
               }}>
               📷 {hasPhotoFilter ? "With Photos \u2713" : "Has Photo"}
@@ -433,12 +433,12 @@ export default function PublicDogsPage() {
                 background: showFilters ? "#FAFAFA" : "#FAF7F2",
                 border: "2px solid #C9B29F",
                 borderRadius: "8px",
-                color: showFilters ? "#1d5bbf" : "#6B6B6B",
+                color: showFilters ? "#1d5bbf" : "#4A4A4A",
                 fontFamily: "var(--font-table)",
               }}>
               ⚙ Sort
               {activeFilters > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-lg flex items-center justify-center text-[8px] font-bold"
+                <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-lg flex items-center justify-center text-[12px] font-bold"
                   style={{ background: "#1d5bbf", color: "#fff" }}>
                   {activeFilters}
                 </span>
@@ -476,7 +476,7 @@ export default function PublicDogsPage() {
                   className="px-3 py-1.5 rounded-lg text-[12px] font-semibold transition-all flex items-center gap-1.5"
                   style={{
                     background: sort === s.key ? "rgba(29,91,191,0.08)" : "transparent",
-                    color: sort === s.key ? "#1d5bbf" : "#6B6B6B",
+                    color: sort === s.key ? "#1d5bbf" : "#4A4A4A",
                     border: sort === s.key ? "2px solid #C9B29F" : "1px solid transparent",
                     fontFamily: "var(--font-table)",
                   }}>
@@ -596,7 +596,7 @@ export default function PublicDogsPage() {
                           className="w-8 h-8 text-xs font-bold transition-all hover:scale-105"
                           style={{
                             background: page === p ? "#1d5bbf" : "#FAF7F2",
-                            color: page === p ? "#fff" : "#6B6B6B",
+                            color: page === p ? "#fff" : "#4A4A4A",
                             border: page === p ? "2px solid #1d5bbf" : "2px solid #C9B29F",
                             fontFamily: "var(--font-mono)",
                             borderRadius: "8px",

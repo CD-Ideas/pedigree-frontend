@@ -93,7 +93,7 @@ function SectionHeader({ children, color }: { children: React.ReactNode; color?:
   return (
     <p
       className="text-[12px] uppercase tracking-widest font-semibold mb-3"
-      style={{ color: color || "#6B6B6B", fontFamily: "var(--font-table)" }}
+      style={{ color: color || "#4A4A4A", fontFamily: "var(--font-table)" }}
     >
       {children}
     </p>
@@ -367,7 +367,7 @@ function DonutChart({ ancestors, hoveredIdx, onHover }: { ancestors: SharedAnces
         <text x={cx} y={cy - 6} textAnchor="middle" fill="#1C1C1C" fontSize="22" fontWeight="bold" fontFamily="var(--font-table)">
           {ancestors.length}
         </text>
-        <text x={cx} y={cy + 10} textAnchor="middle" fill="#6B6B6B" fontSize="8" fontFamily="var(--font-mono)">
+        <text x={cx} y={cy + 10} textAnchor="middle" fill="#4A4A4A" fontSize="8" fontFamily="var(--font-mono)">
           SHARED
         </text>
       </svg>
@@ -553,7 +553,7 @@ export default function BreedingCalculatorPage() {
           <div className="flex flex-col md:flex-row gap-3 mb-3">
             <DogSlot label="Sire" color="#1d5bbf" icon="&#x2642;" selected={sire} onSelect={setSire} />
             <div className="hidden md:flex items-center justify-center px-2">
-              <span className="text-xl font-bold" style={{ color: bothReady ? "#1C1C1C" : "#6B6B6B", fontFamily: "var(--font-table)", opacity: bothReady ? 1 : 0.2 }}>&#xd7;</span>
+              <span className="text-xl font-bold" style={{ color: bothReady ? "#1C1C1C" : "#4A4A4A", fontFamily: "var(--font-table)", opacity: bothReady ? 1 : 0.2 }}>&#xd7;</span>
             </div>
             <DogSlot label="Dam" color="#9f1239" icon="&#x2640;" selected={dam} onSelect={setDam} />
           </div>
@@ -586,7 +586,7 @@ export default function BreedingCalculatorPage() {
               style={{
                 fontFamily: "var(--font-table)",
                 background: bothReady && !calculating ? "#C9B29F" : "#FAFAFA",
-                color: bothReady && !calculating ? "#FAFAFA" : "#6B6B6B",
+                color: bothReady && !calculating ? "#FAFAFA" : "#4A4A4A",
                 border: "2px solid #C9B29F",
                 letterSpacing: "0.1em",
               }}>
@@ -602,7 +602,7 @@ export default function BreedingCalculatorPage() {
             <label className="flex items-center gap-2 cursor-pointer">
               <div className="relative inline-block w-8 h-[18px] rounded-full transition-colors" style={{ background: includeHalf ? "#C9B29F" : "#EDE4D5" }}
                 onClick={() => setIncludeHalf(!includeHalf)}>
-                <span className="absolute top-[2px] left-[2px] w-[14px] h-[14px] rounded-full transition-transform" style={{ transform: includeHalf ? "translateX(14px)" : "translateX(0)", background: includeHalf ? "#1C1C1C" : "#6B6B6B" }} />
+                <span className="absolute top-[2px] left-[2px] w-[14px] h-[14px] rounded-full transition-transform" style={{ transform: includeHalf ? "translateX(14px)" : "translateX(0)", background: includeHalf ? "#1C1C1C" : "#4A4A4A" }} />
               </div>
               <span className="text-[12px] uppercase tracking-widest font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Half-Sib Mode</span>
             </label>
@@ -702,7 +702,7 @@ export default function BreedingCalculatorPage() {
               {/* Bloodline Radar */}
               {bloodlines.length > 0 && (
                 <Card className="p-5">
-                  <SectionHeader color="#6B6B6B">Bloodline Radar</SectionHeader>
+                  <SectionHeader color="#4A4A4A">Bloodline Radar</SectionHeader>
                   <div className="space-y-2.5">
                     {bloodlines.slice(0, 8).map((bl, i) => {
                       const colors = ["#8a6518", "#1d5bbf", "#c02828", "#0d7468", "#b03878", "#b45a0a", "#6d30b0", "#0d7468"];
@@ -728,7 +728,7 @@ export default function BreedingCalculatorPage() {
             <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-4">
               {/* Donut */}
               <Card className="p-5 flex flex-col items-center">
-                <SectionHeader color="#6B6B6B">Ancestor Overlap</SectionHeader>
+                <SectionHeader color="#4A4A4A">Ancestor Overlap</SectionHeader>
                 {directShared.length > 0 ? <DonutChart ancestors={directShared} hoveredIdx={sharedHover} onHover={(i) => {
                   setSharedHover(i);
                   if (i !== null && sharedListRef.current) {
@@ -744,7 +744,7 @@ export default function BreedingCalculatorPage() {
 
               {/* Shared list */}
               <Card className="p-5">
-                <SectionHeader color="#6B6B6B">Shared Ancestors ({directShared.length})</SectionHeader>
+                <SectionHeader color="#4A4A4A">Shared Ancestors ({directShared.length})</SectionHeader>
                 <div ref={sharedListRef} className="space-y-1.5 max-h-[320px] sm:max-h-[480px] overflow-y-auto pr-1">
                   {directShared.map((a, i) => {
                     const photoSrc = a.photo ? (a.photo.startsWith("http") ? a.photo : `https://www.apbt.online-pedigrees.com/${a.photo}`) : null;

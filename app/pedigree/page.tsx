@@ -181,7 +181,7 @@ export default function PedigreeHub() {
                 style={{
                   fontFamily: "var(--font-table)",
                   background: sexFilter === f.value ? "#1C1C1C" : "#FAF7F2",
-                  color: sexFilter === f.value ? "#FAF7F2" : "#6B6B6B",
+                  color: sexFilter === f.value ? "#FAF7F2" : "#4A4A4A",
                   border: "2px solid #C9B29F",
                 }}>
                 {f.label}

@@ -395,7 +395,7 @@ export default function Dashboard() {
               <span className="relative">
                 <span className="text-base">🔔</span>
                 {unreadMessages > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-bold"
+                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center text-[12px] font-bold"
                     style={{ background: "#ef4444", color: "#fff" }}>
                     {unreadMessages}
                   </span>

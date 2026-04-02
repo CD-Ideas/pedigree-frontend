@@ -157,7 +157,7 @@ function _BreedingCalcPreview_UNUSED() {
               <ul className="space-y-1.5">
                 {insights.map((tip, i) => (
                   <li key={i} className="flex items-start gap-1.5" style={{ fontFamily: "var(--font-body)", fontSize: "12px", color: "#4A4A4A", lineHeight: 1.45 }}>
-                    <span style={{ color: "#C9B29F", fontSize: "7px", marginTop: "3px" }}>◆</span>
+                    <span style={{ color: "#C9B29F", fontSize: "12px", marginTop: "3px" }}>◆</span>
                     {tip}
                   </li>
                 ))}
@@ -548,7 +548,7 @@ export default function Home() {
                       "Test for joint health due to inbreeding overlap",
                     ].map((tip, i) => (
                       <li key={i} className="flex items-start gap-1.5" style={{ fontFamily: "var(--font-body)", fontSize: "12px", color: "#4A4A4A", lineHeight: 1.45 }}>
-                        <span style={{ color: "#C9B29F", fontSize: "7px", marginTop: "3px" }}>◆</span>
+                        <span style={{ color: "#C9B29F", fontSize: "12px", marginTop: "3px" }}>◆</span>
                         {tip}
                       </li>
                     ))}
@@ -647,7 +647,7 @@ export default function Home() {
                         <h3 style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "12px", color: "#1C1C1C", letterSpacing: "0.02em" }}>{m.title}</h3>
                         {m.tag && (
                           <span style={{
-                            fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "8px", letterSpacing: "0.08em",
+                            fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "12px", letterSpacing: "0.08em",
                             color: m.tag === "HOT" ? "#ef4444" : "#22c55e",
                             background: m.tag === "HOT" ? "rgba(239,68,68,0.12)" : "rgba(34,197,94,0.12)",
                             border: `1px solid ${m.tag === "HOT" ? "rgba(239,68,68,0.25)" : "rgba(34,197,94,0.25)"}`,

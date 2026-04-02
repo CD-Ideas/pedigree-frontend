@@ -474,7 +474,7 @@ function CreateAdContent() {
                     <span
                       className="text-[12px] font-bold"
                       style={{
-                        color: category === cat.key ? cat.color : "#6B6B6B",
+                        color: category === cat.key ? cat.color : "#4A4A4A",
                         fontFamily: "var(--font-table)",
                       }}
                     >
@@ -784,7 +784,7 @@ function CreateAdContent() {
                           className="absolute bottom-0 left-0 right-0 rounded-b-lg px-1 py-0.5 text-center"
                           style={{ background: "rgba(0,0,0,0.4)",  }}
                         >
-                          <span className="text-[8px] font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+                          <span className="text-[12px] font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                             Auto
                           </span>
                         </div>

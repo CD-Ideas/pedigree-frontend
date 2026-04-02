@@ -576,7 +576,7 @@ export default function AccountPage() {
                 btn.dataset.on = isOn ? "false" : "true";
                 btn.style.background = isOn ? "#EDE4D5" : "rgba(34,197,94,0.3)";
                 btn.querySelector("span")!.style.transform = isOn ? "translateX(0)" : "translateX(20px)";
-                btn.querySelector("span")!.style.background = isOn ? "#6B6B6B" : "#22c55e";
+                btn.querySelector("span")!.style.background = isOn ? "#4A4A4A" : "#22c55e";
                 localStorage.setItem("pref_email_notifs", isOn ? "off" : "on");
                 showMsg(`Email notifications ${isOn ? "disabled" : "enabled"}`, "success");
               }}
@@ -584,7 +584,7 @@ export default function AccountPage() {
               className="relative w-11 h-6 rounded-full transition-all flex-shrink-0"
               style={{ background: "#EDE4D5", border: "2px solid #C9B29F" }}
             >
-              <span className="absolute top-0.5 left-0.5 w-5 h-5 rounded-full transition-all" style={{ background: "#6B6B6B" }} />
+              <span className="absolute top-0.5 left-0.5 w-5 h-5 rounded-full transition-all" style={{ background: "#4A4A4A" }} />
             </button>
           </div>
 
@@ -616,7 +616,7 @@ export default function AccountPage() {
               <span
                 className="absolute top-0.5 left-0.5 w-5 h-5 rounded-full transition-all"
                 style={{
-                  background: soundMuted ? "#6B6B6B" : "#22c55e",
+                  background: soundMuted ? "#4A4A4A" : "#22c55e",
                   transform: soundMuted ? "translateX(0)" : "translateX(20px)",
                 }}
               />
@@ -656,7 +656,7 @@ export default function AccountPage() {
               <span
                 className="absolute top-0.5 left-0.5 w-5 h-5 rounded-full transition-all"
                 style={{
-                  background: activeStatus ? "#22c55e" : "#6B6B6B",
+                  background: activeStatus ? "#22c55e" : "#4A4A4A",
                   transform: activeStatus ? "translateX(20px)" : "translateX(0)",
                 }}
               />

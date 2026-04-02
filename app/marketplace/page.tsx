@@ -113,7 +113,7 @@ function AdCard({ ad, index }: { ad: MarketplaceAd; index: number }) {
           >
             <span className="text-[12px]">{cat.icon}</span>
             <span
-              className="text-[8px] font-bold uppercase tracking-wide"
+              className="text-[12px] font-bold uppercase tracking-wide"
               style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}
             >
               {cat.label}
@@ -126,7 +126,7 @@ function AdCard({ ad, index }: { ad: MarketplaceAd; index: number }) {
           className="absolute top-2 right-2 flex items-center gap-1 px-1.5 py-0.5 rounded-lg"
           style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}
         >
-          <span className="text-[8px]" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
+          <span className="text-[12px]" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
             {"\uD83D\uDC41"} {(ad.views || 0).toLocaleString()}
           </span>
         </div>
@@ -144,7 +144,7 @@ function AdCard({ ad, index }: { ad: MarketplaceAd; index: number }) {
           </h3>
           {ad.is_verified && (
             <span
-              className="flex-shrink-0 text-[7px] font-bold px-1.5 py-0.5 rounded"
+              className="flex-shrink-0 text-[12px] font-bold px-1.5 py-0.5 rounded"
               style={{ background: "rgba(34,197,94,0.15)", color: "#16a34a", border: "1px solid rgba(34,197,94,0.3)", fontFamily: "var(--font-table)" }}
             >
               ✓
@@ -156,7 +156,7 @@ function AdCard({ ad, index }: { ad: MarketplaceAd; index: number }) {
         <div
           className="text-sm font-black mb-1.5"
           style={{
-            color: ad.price !== null && ad.price !== undefined ? "#1C1C1C" : "#6B6B6B",
+            color: ad.price !== null && ad.price !== undefined ? "#1C1C1C" : "#4A4A4A",
             fontFamily: "var(--font-mono)",
           }}
         >
@@ -167,7 +167,7 @@ function AdCard({ ad, index }: { ad: MarketplaceAd; index: number }) {
         {ad.username && (
           <div className="flex items-center gap-1.5 mb-1">
             <div
-              className="w-3.5 h-3.5 rounded-lg flex items-center justify-center text-[7px] font-bold flex-shrink-0"
+              className="w-3.5 h-3.5 rounded-lg flex items-center justify-center text-[12px] font-bold flex-shrink-0"
               style={{ background: "#C9B29F", color: "#1C1C1C" }}
             >
               {ad.username.charAt(0).toUpperCase()}
@@ -197,7 +197,7 @@ function AdCard({ ad, index }: { ad: MarketplaceAd; index: number }) {
               style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}
               title="Copy Link"
             >
-              <span className="text-[8px]">{"\uD83D\uDD17"}</span>
+              <span className="text-[12px]">{"\uD83D\uDD17"}</span>
             </button>
             <a
               href={`https://wa.me/?text=${encodeURIComponent(`${ad.title}${ad.price ? ` - $${ad.price}` : ""} | Pedigree Platform\nhttps://pedigreeplatform.com/marketplace/${ad.id}`)}`}
@@ -405,7 +405,7 @@ export default function MarketplacePage() {
                       </h3>
                       {cat.tag && (
                         <span style={{
-                          fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "8px", letterSpacing: "0.08em",
+                          fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "12px", letterSpacing: "0.08em",
                           color: cat.tag === "HOT" ? "#ef4444" : "#22c55e",
                           background: "#FAF7F2",
                           border: "2px solid #C9B29F",
@@ -414,7 +414,7 @@ export default function MarketplacePage() {
                       )}
                       {isActive && (
                         <span style={{
-                          fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "8px", letterSpacing: "0.08em",
+                          fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "12px", letterSpacing: "0.08em",
                           color: cat.color,
                           background: "#FAF7F2",
                           border: "2px solid #C9B29F",
@@ -449,7 +449,7 @@ export default function MarketplacePage() {
                   height="16"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#6B6B6B"
+                  stroke="#4A4A4A"
                   strokeWidth="2.5"
                   strokeLinecap="round"
                 >
@@ -724,7 +724,7 @@ export default function MarketplacePage() {
                           className="w-8 h-8 text-xs font-bold transition-all hover:scale-105"
                           style={{
                             background: page === p ? "#1C1C1C" : "#FAF7F2",
-                            color: page === p ? "#FAF7F2" : "#6B6B6B",
+                            color: page === p ? "#FAF7F2" : "#4A4A4A",
                             border: page === p ? "2px solid #1C1C1C" : "2px solid #C9B29F",
                             fontFamily: "var(--font-mono)",
                             borderRadius: "8px",

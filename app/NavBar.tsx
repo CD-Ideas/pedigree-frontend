@@ -555,7 +555,7 @@ export default function NavBar() {
                             <span className="text-sm mt-0.5 flex-shrink-0">{group.icon}</span>
                             <div className="flex-1 min-w-0">
                               <p className="text-xs font-semibold truncate" style={{
-                                color: group.hasUnread ? "#1C1C1C" : "#6B6B6B",
+                                color: group.hasUnread ? "#1C1C1C" : "#4A4A4A",
                                 fontFamily: "var(--font-table)",
                               }}>
                                 {group.count > 1 ? (

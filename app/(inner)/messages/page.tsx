@@ -640,7 +640,7 @@ function MessagesContent() {
                     <span className="text-sm font-semibold truncate" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                       {t.other_username}
                     </span>
-                    <span className="text-[12px] flex-shrink-0 ml-2" style={{ color: t.unread_count > 0 ? "#C9B29F" : "#6B6B6B", fontWeight: t.unread_count > 0 ? 700 : 400 }}>
+                    <span className="text-[12px] flex-shrink-0 ml-2" style={{ color: t.unread_count > 0 ? "#C9B29F" : "#4A4A4A", fontWeight: t.unread_count > 0 ? 700 : 400 }}>
                       {formatTime(t.last_time)}
                     </span>
                   </div>
@@ -801,7 +801,7 @@ function MessagesContent() {
                     <p className="text-sm font-bold" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>
                       {selectedThreadData.other_username}
                     </p>
-                    <p className="text-[12px]" style={{ color: "#C9B29F", fontFamily: "var(--font-table)" }}>
+                    <p className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                       {otherUserStatus?.online ? "online" : otherUserStatus ? formatLastSeen(otherUserStatus.seconds_ago) : ""}
                     </p>
                   </div>
@@ -995,7 +995,7 @@ function MessagesContent() {
                         <div className={`flex items-center gap-1 mt-0.5 px-1 ${isMine ? "justify-end" : ""}`}>
                           <span className="text-[12px]" style={{ color: "#4A4A4A" }}>{formatFullTime(msg.created_at)}</span>
                           {isMine && (
-                            <span style={{ color: msg.is_read ? "#1d5bbf" : "#6B6B6B", fontSize: "12px" }}>
+                            <span style={{ color: msg.is_read ? "#1d5bbf" : "#4A4A4A", fontSize: "12px" }}>
                               {msg.is_read ? "✓✓" : "✓"}
                             </span>
                           )}

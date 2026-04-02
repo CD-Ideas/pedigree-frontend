@@ -302,7 +302,7 @@ export default function DogsPage() {
             className="px-3 py-1.5 text-xs font-medium transition-all"
             style={{
               background: viewMode === "grid" ? "rgba(201,178,159,0.25)" : "transparent",
-              color: viewMode === "grid" ? "#1C1C1C" : "#6B6B6B",
+              color: viewMode === "grid" ? "#1C1C1C" : "#4A4A4A",
               fontFamily: "var(--font-table)",
             }}
           >
@@ -313,7 +313,7 @@ export default function DogsPage() {
             className="px-3 py-1.5 text-xs font-medium transition-all"
             style={{
               background: viewMode === "table" ? "rgba(201,178,159,0.25)" : "transparent",
-              color: viewMode === "table" ? "#1C1C1C" : "#6B6B6B",
+              color: viewMode === "table" ? "#1C1C1C" : "#4A4A4A",
               fontFamily: "var(--font-table)",
             }}
           >
@@ -483,7 +483,7 @@ export default function DogsPage() {
             className={`sort-btn px-2.5 py-1 rounded-lg text-xs font-medium ${sort === s.key ? "sort-btn-active" : ""}`}
             style={{
               background: sort === s.key ? "rgba(201,178,159,0.2)" : "transparent",
-              color: sort === s.key ? "#1C1C1C" : "#6B6B6B",
+              color: sort === s.key ? "#1C1C1C" : "#4A4A4A",
               border: sort === s.key ? "2px solid #C9B29F" : "2px solid transparent",
               fontFamily: "var(--font-table)",
             }}
@@ -633,7 +633,7 @@ export default function DogsPage() {
                   className="page-btn w-8 h-8 rounded-lg text-xs font-bold transition-all"
                   style={{
                     background: page === p ? "#C9B29F" : "#FAF7F2",
-                    color: page === p ? "#1C1C1C" : "#6B6B6B",
+                    color: page === p ? "#1C1C1C" : "#4A4A4A",
                     border: "2px solid #C9B29F",
                     fontFamily: "var(--font-table)",
                   }}

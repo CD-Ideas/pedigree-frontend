@@ -241,7 +241,7 @@ export default function MarketplaceAdPage() {
               >
                 <img src={LOGO} alt="" className="w-6" style={{ height: "auto" }} />
                 <span
-                  className="text-[8px] font-bold"
+                  className="text-[12px] font-bold"
                   style={{
                     color: "#1C1C1C",
                     fontFamily: "var(--font-table)",
@@ -558,7 +558,7 @@ export default function MarketplaceAdPage() {
               <div
                 className="text-2xl font-black mb-4"
                 style={{
-                  color: ad.price !== null && ad.price !== undefined ? "#C9B29F" : "#6B6B6B",
+                  color: ad.price !== null && ad.price !== undefined ? "#C9B29F" : "#4A4A4A",
                   fontFamily: "var(--font-mono)",
                 }}
               >

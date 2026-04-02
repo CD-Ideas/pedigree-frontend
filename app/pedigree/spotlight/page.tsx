@@ -166,7 +166,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
             })}
             <circle cx={cx} cy={cy} r="55" fill="#FAFAFA" stroke="#C9B29F" strokeWidth="2" />
             <text x={cx} y={cy - 8} textAnchor="middle" fill="#1C1C1C" fontSize="14" fontWeight="bold" fontFamily="var(--font-table)">{matches.length}</text>
-            <text x={cx} y={cy + 10} textAnchor="middle" fill="#6B6B6B" fontSize="8" fontFamily="var(--font-table)">Legendary</text>
+            <text x={cx} y={cy + 10} textAnchor="middle" fill="#4A4A4A" fontSize="8" fontFamily="var(--font-table)">Legendary</text>
           </svg>
           {hovered !== null && slices[hovered] && (
             <div className="absolute top-1 left-1 px-2 py-1 rounded-lg text-[12px] font-bold"
@@ -414,7 +414,7 @@ export default function SpotlightPage() {
                       style={{ background: "#FAFAFA", border: dropdownOpen ? "2px solid #C9B29F" : "2px solid #C9B29F",
                                fontFamily: "var(--font-table)", borderRadius: "8px" }}>
                 <span className="truncate" style={{ color: getDogColor(selectedDogName) }}>{selectedDogName}</span>
-                <svg className={`w-4 h-4 transition-transform ${dropdownOpen ? "rotate-180" : ""}`} fill="none" stroke="#6B6B6B" viewBox="0 0 24 24">
+                <svg className={`w-4 h-4 transition-transform ${dropdownOpen ? "rotate-180" : ""}`} fill="none" stroke="#4A4A4A" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
@@ -519,7 +519,7 @@ export default function SpotlightPage() {
                         className="text-[12px] px-2 py-1 rounded-lg font-semibold transition-all"
                         style={{
                           background: sort === s.key ? "#C9B29F" : "#FAFAFA",
-                          color: sort === s.key ? "#1C1C1C" : "#6B6B6B",
+                          color: sort === s.key ? "#1C1C1C" : "#4A4A4A",
                           border: "2px solid #C9B29F",
                           borderRadius: "8px",
                           fontFamily: "var(--font-table)",
@@ -607,7 +607,7 @@ export default function SpotlightPage() {
                   {/* Rank Badge */}
                   <div className="absolute top-2 left-2 z-10 w-6 h-6 rounded-full flex items-center justify-center text-[12px] font-bold"
                        style={{
-                         background: idx === 0 ? "#C9B29F" : idx === 1 ? "#6B6B6B" : idx === 2 ? "#8a6518" : "#FAFAFA",
+                         background: idx === 0 ? "#C9B29F" : idx === 1 ? "#4A4A4A" : idx === 2 ? "#8a6518" : "#FAFAFA",
                          color: idx === 0 ? "#1C1C1C" : idx < 3 ? "#fff" : "#1C1C1C",
                          border: idx >= 3 ? "2px solid #C9B29F" : "2px solid transparent",
                          fontFamily: "var(--font-mono)",
@@ -716,7 +716,7 @@ export default function SpotlightPage() {
                     )}
                   </div>
                   <div className="p-1.5">
-                    <span className="text-[8px] font-bold truncate block"
+                    <span className="text-[12px] font-bold truncate block"
                           style={{ color: selectedDog === f.id ? "#1C1C1C" : getDogColor(f.name), fontFamily: "var(--font-table)" }}>
                       {f.name}
                     </span>

@@ -50,7 +50,7 @@ const PG = {
   subjectBg: "#F5EDE0",
   subjectBorder: "2px solid #C9B29F",
   text: "#1C1C1C",
-  textMuted: "#6B6B6B",
+  textMuted: "#4A4A4A",
   font: "var(--font-body)",
   tabBg: "#1C1C1C",
   tabText: "#FAF7F2",

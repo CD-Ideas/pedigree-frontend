@@ -431,7 +431,7 @@ function DogSearch({ label, onSelect }: { label: string; onSelect: (dog: SearchD
           placeholder={`Search ${label} from database...`}
           className="flex-1 bg-transparent text-xs outline-none"
           style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
-        {q && <button onClick={() => { setQ(""); setResults([]); setShow(false); }} className="text-[12px] text-[#6B6B6B] hover:text-[#1C1C1C]">✕</button>}
+        {q && <button onClick={() => { setQ(""); setResults([]); setShow(false); }} className="text-[12px] text-[#4A4A4A] hover:text-[#1C1C1C]">✕</button>}
       </div>
       {show && results.length > 0 && (
         <div className="absolute left-0 right-0 top-full mt-1 rounded-lg overflow-hidden z-50 max-h-48 overflow-y-auto"
@@ -669,7 +669,7 @@ export default function PuppyPredictorPage() {
               <h3 className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", letterSpacing: "0.05em" }}>
                 DNA COLOR TEST GUIDE
               </h3>
-              <button onClick={() => setShowGuide(false)} className="text-xs text-[#6B6B6B] hover:text-[#1C1C1C]">✕</button>
+              <button onClick={() => setShowGuide(false)} className="text-xs text-[#4A4A4A] hover:text-[#1C1C1C]">✕</button>
             </div>
             <p className="text-xs leading-relaxed" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               To get accurate predictions, you need your dog&apos;s coat color genotype from a DNA test. Here are the most popular services:
@@ -734,7 +734,7 @@ export default function PuppyPredictorPage() {
                     </button>
                   </div>
                 )}
-                <button onClick={() => { setShowHistory(false); setConfirmClear(false); }} className="text-xs text-[#6B6B6B] hover:text-[#1C1C1C]">✕</button>
+                <button onClick={() => { setShowHistory(false); setConfirmClear(false); }} className="text-xs text-[#4A4A4A] hover:text-[#1C1C1C]">✕</button>
               </div>
             </div>
             {history.length === 0 ? (
@@ -790,7 +790,7 @@ export default function PuppyPredictorPage() {
                       style={{
                         background: sirePreset === key ? "#F0EBE3" : "#FAFAFA",
                         border: sirePreset === key ? "2px solid #1C1C1C" : "2px solid #C9B29F",
-                        color: sirePreset === key ? "#1C1C1C" : "#6B6B6B",
+                        color: sirePreset === key ? "#1C1C1C" : "#4A4A4A",
                         fontFamily: "var(--font-table)",
                       }}>
                       <div className="w-4 h-4 rounded-full flex-shrink-0" style={{ background: val.swatch, border: "2px solid #C9B29F" }} />
@@ -846,7 +846,7 @@ export default function PuppyPredictorPage() {
                       style={{
                         background: damPreset === key ? "#F0EBE3" : "#FAFAFA",
                         border: damPreset === key ? "2px solid #1C1C1C" : "2px solid #C9B29F",
-                        color: damPreset === key ? "#1C1C1C" : "#6B6B6B",
+                        color: damPreset === key ? "#1C1C1C" : "#4A4A4A",
                         fontFamily: "var(--font-table)",
                       }}>
                       <div className="w-4 h-4 rounded-full flex-shrink-0" style={{ background: val.swatch, border: "2px solid #C9B29F" }} />

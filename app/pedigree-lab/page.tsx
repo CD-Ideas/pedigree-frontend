@@ -787,7 +787,7 @@ function PedigreeLabInner() {
                         </p>
                       </div>
                       {/* Drag indicator */}
-                      <span className="text-[12px]" style={{ color: "#C9B29F" }}>
+                      <span className="text-[12px]" style={{ color: "#4A4A4A" }}>
                         {"\u2630"}
                       </span>
                     </div>
@@ -1311,7 +1311,7 @@ function PedigreeLabInner() {
                 if (hasDog) {
                   return (
                     <div className="space-y-3">
-                      <p className="text-[12px] uppercase tracking-widest font-semibold" style={{ color: "#C9B29F", fontFamily: "var(--font-table)", visibility: isHovered ? "visible" : "hidden" }}>
+                      <p className="text-[12px] uppercase tracking-widest font-semibold" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)", visibility: isHovered ? "visible" : "hidden" }}>
                         Hovering
                       </p>
                       <div
@@ -1351,7 +1351,7 @@ function PedigreeLabInner() {
                 }
                 return (
                   <div className="space-y-3">
-                    <p className="text-[12px] uppercase tracking-widest font-semibold" style={{ color: "#C9B29F", fontFamily: "var(--font-table)", visibility: "hidden" }}>
+                    <p className="text-[12px] uppercase tracking-widest font-semibold" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)", visibility: "hidden" }}>
                       Hovering
                     </p>
                     <div
@@ -1491,7 +1491,7 @@ function PedigreeLabInner() {
           style={{
             fontFamily: "var(--font-table)",
             background: previewMode ? "#C9B29F" : "#FAF7F2",
-            color: previewMode ? "#1C1C1C" : "#6B6B6B",
+            color: previewMode ? "#1C1C1C" : "#4A4A4A",
             border: `2px solid #C9B29F`,
           }}
         >
@@ -1703,7 +1703,7 @@ function PedigreeLabInner() {
                 </div>
                 {/* Preview of built suffix */}
                 {(publishForm.suffixWins || publishForm.suffixLosses || publishForm.suffixDraws || publishForm.suffixHonors) && (
-                  <p className="mt-1.5 text-xs font-semibold" style={{ color: "#C9B29F", fontFamily: "var(--font-table)" }}>
+                  <p className="mt-1.5 text-xs font-semibold" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                     {[
                       publishForm.suffixWins ? `(${publishForm.suffixWins})` : "",
                       publishForm.suffixLosses ? `(${publishForm.suffixLosses})` : "",
@@ -1974,7 +1974,7 @@ function PedigreeLabInner() {
                     style={{
                       background: "#FAFAFA",
                       border: "2px solid #C9B29F",
-                      color: publishForm.journal.rabiesNextDue ? "#22c55e" : "#6B6B6B",
+                      color: publishForm.journal.rabiesNextDue ? "#22c55e" : "#4A4A4A",
                       fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
                     }}
                   >
@@ -2024,7 +2024,7 @@ function PedigreeLabInner() {
                       <span
                         className="text-xs flex-1 font-semibold"
                         style={{
-                          color: vax.checked ? "#1C1C1C" : "#6B6B6B",
+                          color: vax.checked ? "#1C1C1C" : "#4A4A4A",
                           fontFamily: "var(--font-table)",
                         }}
                       >
@@ -2174,7 +2174,7 @@ function PedigreeLabInner() {
                               : "#FAFAFA",
                             color: publishForm.journal.wormingDraft.intervalDays === days
                               ? "#1C1C1C"
-                              : "#6B6B6B",
+                              : "#4A4A4A",
                             border: `2px solid #C9B29F`,
                           }}
                         >
@@ -2249,7 +2249,7 @@ function PedigreeLabInner() {
                       >
                         <div className="flex items-center gap-2">
                           {entry.remindMe && (
-                            <span className="text-[12px] rounded-full px-1.5 py-0.5" style={{ background: "#C9B29F", color: "#C9B29F" }}>
+                            <span className="text-[12px] rounded-full px-1.5 py-0.5" style={{ background: "#C9B29F", color: "#4A4A4A" }}>
                               {"\uD83D\uDD14"}
                             </span>
                           )}
@@ -2326,7 +2326,7 @@ function PedigreeLabInner() {
                         color: "#9f1239",
                         fontFamily: "var(--font-table)",
                       }}>Heat Cycle Tracker</span>
-                      <span className="text-[8px] px-1.5 py-0.5 rounded-full" style={{
+                      <span className="text-[12px] px-1.5 py-0.5 rounded-full" style={{
                         background: "#FAF7F2",
                         color: "#9f1239",
                         border: "2px solid #C9B29F",
@@ -2432,7 +2432,7 @@ function PedigreeLabInner() {
                           }}>
                             {isOverdue ? `${Math.abs(daysUntilNext!)}d ago` : `${daysUntilNext}d`}
                           </p>
-                          <p className="text-[8px] uppercase" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                          <p className="text-[12px] uppercase" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                             {isOverdue ? "past due" : "remaining"}
                           </p>
                         </div>
@@ -2727,7 +2727,7 @@ function DropZone({
           {displayName}
         </p>
         {/* Label */}
-        <p className="text-center text-[8px] mt-0.5" style={{ color: "#C9B29F" }}>
+        <p className="text-center text-[12px] mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
           {label}
         </p>
         {/* Remove X button - top right */}
@@ -2743,7 +2743,7 @@ function DropZone({
               right: -6,
               width: 18,
               height: 18,
-              fontSize: 10,
+              fontSize: 12,
               fontWeight: 800,
               color: "#FAF7F2",
               background: "#dc2626",
@@ -2833,9 +2833,9 @@ function DropZone({
         +
       </span>
       <span
-        className={`${isSm ? "text-[8px]" : "text-[12px]"} uppercase tracking-widest font-semibold`}
+        className={`${isSm ? "text-[12px]" : "text-[12px]"} uppercase tracking-widest font-semibold`}
         style={{
-          color: "#C9B29F",
+          color: "#4A4A4A",
           fontFamily: "var(--font-table)",
         }}
       >

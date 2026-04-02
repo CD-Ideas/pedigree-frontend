@@ -255,7 +255,7 @@ function SharePreviewInner() {
           <img src="/logo.png" alt="Pedigree Platform" style={{ height: 36 }} />
           <span
             className="text-lg font-bold tracking-wide"
-            style={{ color: "#C9B29F", fontFamily: "var(--font-table)" }}
+            style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}
           >
             Pedigree Platform
           </span>

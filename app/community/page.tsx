@@ -192,7 +192,7 @@ export default function CommunityPedigreesPage() {
                 className="px-3 py-1.5 text-xs font-medium transition-all"
                 style={{
                   background: viewMode === "grid" ? "rgba(201,178,159,0.25)" : "transparent",
-                  color: viewMode === "grid" ? "#1C1C1C" : "#6B6B6B",
+                  color: viewMode === "grid" ? "#1C1C1C" : "#4A4A4A",
                   fontFamily: "var(--font-table)",
                 }}
               >
@@ -203,7 +203,7 @@ export default function CommunityPedigreesPage() {
                 className="px-3 py-1.5 text-xs font-medium transition-all"
                 style={{
                   background: viewMode === "table" ? "rgba(201,178,159,0.25)" : "transparent",
-                  color: viewMode === "table" ? "#1C1C1C" : "#6B6B6B",
+                  color: viewMode === "table" ? "#1C1C1C" : "#4A4A4A",
                   fontFamily: "var(--font-table)",
                 }}
               >
@@ -332,7 +332,7 @@ export default function CommunityPedigreesPage() {
                   style={{
                     background: "#FAFAFA",
                     border: "2px solid #C9B29F",
-                    color: filterContinent ? "#1C1C1C" : "#6B6B6B",
+                    color: filterContinent ? "#1C1C1C" : "#4A4A4A",
                   }}
                 >
                   <option value="">All Continents</option>
@@ -365,7 +365,7 @@ export default function CommunityPedigreesPage() {
                   style={{
                     background: "#FAFAFA",
                     border: "2px solid #C9B29F",
-                    color: filterCountry ? "#1C1C1C" : "#6B6B6B",
+                    color: filterCountry ? "#1C1C1C" : "#4A4A4A",
                   }}
                 >
                   <option value="">All Countries</option>
@@ -387,7 +387,7 @@ export default function CommunityPedigreesPage() {
                   style={{
                     background: "#FAFAFA",
                     border: "2px solid #C9B29F",
-                    color: sexFilter ? "#1C1C1C" : "#6B6B6B",
+                    color: sexFilter ? "#1C1C1C" : "#4A4A4A",
                   }}
                 >
                   <option value="">All</option>
@@ -568,7 +568,7 @@ export default function CommunityPedigreesPage() {
                         }}
                       >
                         <span
-                          className="text-[8px]"
+                          className="text-[12px]"
                           style={{
                             color: "#1C1C1C",
                             fontFamily: "var(--font-mono)",
@@ -587,7 +587,7 @@ export default function CommunityPedigreesPage() {
                           }}
                         >
                           <span
-                            className="text-[8px] font-bold"
+                            className="text-[12px] font-bold"
                             style={{
                               color: "#1d5bbf",
                               fontFamily: "var(--font-table)",
@@ -624,10 +624,10 @@ export default function CommunityPedigreesPage() {
                         )}
                       </div>
                       <div className="flex items-center justify-between mt-1">
-                        <span className="text-[8px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                        <span className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                           {formatDate(p.date_posted)}
                         </span>
-                        <span className="text-[8px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
+                        <span className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
                           ID: <span style={{ color: "#1C1C1C" }}>{p.id}</span>
                         </span>
                       </div>
@@ -635,7 +635,7 @@ export default function CommunityPedigreesPage() {
                       {(p.breeder || p.owner) && (
                         <div className="flex items-center gap-1 flex-wrap mt-1">
                           {p.breeder && (
-                            <span className="text-[8px] px-1 py-0.5 rounded-full" style={{
+                            <span className="text-[12px] px-1 py-0.5 rounded-full" style={{
                               background: "rgba(201,178,159,0.1)",
                               color: "#1C1C1C",
                               border: "1px solid #C9B29F",
@@ -645,7 +645,7 @@ export default function CommunityPedigreesPage() {
                             </span>
                           )}
                           {p.owner && (
-                            <span className="text-[8px] px-1 py-0.5 rounded-full" style={{
+                            <span className="text-[12px] px-1 py-0.5 rounded-full" style={{
                               background: "rgba(34,197,94,0.1)",
                               color: "#22c55e",
                               border: "1px solid rgba(34,197,94,0.2)",
@@ -687,7 +687,7 @@ export default function CommunityPedigreesPage() {
                   style={{
                     background: page === 1 ? "#EDE4D5" : "#FAF7F2",
                     border: "2px solid #C9B29F",
-                    color: page === 1 ? "#6B6B6B" : "#1C1C1C",
+                    color: page === 1 ? "#4A4A4A" : "#1C1C1C",
                     fontFamily: "var(--font-table)",
                     cursor: page === 1 ? "not-allowed" : "pointer",
                     opacity: page === 1 ? 0.5 : 1,
@@ -723,7 +723,7 @@ export default function CommunityPedigreesPage() {
                   style={{
                     background: page === totalPages ? "#EDE4D5" : "#FAF7F2",
                     border: "2px solid #C9B29F",
-                    color: page === totalPages ? "#6B6B6B" : "#1C1C1C",
+                    color: page === totalPages ? "#4A4A4A" : "#1C1C1C",
                     fontFamily: "var(--font-table)",
                     cursor: page === totalPages ? "not-allowed" : "pointer",
                     opacity: page === totalPages ? 0.5 : 1,

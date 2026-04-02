@@ -529,7 +529,7 @@ export default function EditAdPage() {
                   <span
                     className="text-[12px] font-bold"
                     style={{
-                      color: category === cat.key ? cat.color : "#6B6B6B",
+                      color: category === cat.key ? cat.color : "#4A4A4A",
                       fontFamily: "var(--font-table)",
                     }}
                   >

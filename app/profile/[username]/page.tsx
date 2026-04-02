@@ -306,7 +306,7 @@ export default function ProfilePage() {
                       background: isBlocked ? "#FEF2F2" : "#FAF7F2",
                       border: `2px solid ${isBlocked ? "#ef4444" : "#C9B29F"}`,
                       borderRadius: "8px",
-                      color: isBlocked ? "#ef4444" : "#6B6B6B",
+                      color: isBlocked ? "#ef4444" : "#4A4A4A",
                       fontFamily: "var(--font-table)",
                       opacity: blockLoading ? 0.5 : 1,
                     }}
@@ -323,13 +323,13 @@ export default function ProfilePage() {
               <span
                 className="w-2 h-2 rounded-full"
                 style={{
-                  background: online ? "#22c55e" : "#6B6B6B",
+                  background: online ? "#22c55e" : "#4A4A4A",
                 }}
               />
               <span
                 className="text-xs"
                 style={{
-                  color: online ? "#22c55e" : "#6B6B6B",
+                  color: online ? "#22c55e" : "#4A4A4A",
                   fontFamily: "var(--font-table)",
                 }}
               >
