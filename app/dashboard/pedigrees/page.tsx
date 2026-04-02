@@ -677,7 +677,7 @@ export default function MyPedigreesPage() {
                   return (
                     <tr key={p.id} className="transition-colors" style={{ borderBottom: "1px solid #C9B29F" }}>
                       <td className="px-3 py-2">
-                        <Link href={`/pedigree/custom/${p.id}`} className="font-medium hover:underline text-xs" style={{ color: getDogColor(displayName), fontFamily: "var(--font-table)" }}>
+                        <Link href={`/pedigree/custom/${p.id}`} className="font-bold hover:underline text-sm" style={{ color: getDogColor(displayName), fontFamily: "var(--font-table)" }}>
                           {displayName}
                         </Link>
                         <div className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
