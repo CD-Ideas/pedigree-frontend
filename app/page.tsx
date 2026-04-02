@@ -347,7 +347,7 @@ export default function Home() {
           <div className="relative max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-3 md:gap-5 animate-reveal">
             <img src={LOGO} alt="Pedigree Platform" className="flex-shrink-0 w-[160px] md:w-[240px]" style={{ height: "auto" }} />
             <div className="text-center md:text-left">
-              <h1 style={{ fontFamily: "var(--font-body)", fontSize: "clamp(1.2rem, 3.5vw, 2.2rem)", fontWeight: 500, lineHeight: 1.1, color: "#1C1C1C" }} className="mb-1.5">
+              <h1 style={{ fontFamily: "var(--font-body)", fontSize: "clamp(1.2rem, 3.5vw, 2.2rem)", fontWeight: 700, lineHeight: 1.1, color: "#1C1C1C" }} className="mb-1.5">
                 The Ultimate <span style={{ color: "#C9B29F" }}>Pedigree Hub</span>
               </h1>
               <p className="max-w-md mb-3 mx-auto md:mx-0" style={{ color: "#4A4A4A", fontFamily: "var(--font-body)", fontSize: "12px", fontWeight: 400, lineHeight: 1.6 }}>
@@ -382,7 +382,7 @@ export default function Home() {
         {/* ── Features ── */}
         <section id="features" className="py-4 px-4">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-center mb-3" style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "clamp(0.95rem, 2vw, 1.25rem)", color: "#1C1C1C" }}>
+            <h2 className="text-center mb-3" style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "clamp(0.95rem, 2vw, 1.25rem)", color: "#1C1C1C" }}>
               Why Pedigree Platform?
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
@@ -442,7 +442,7 @@ export default function Home() {
                     }}>
                     <span className="text-sm">{f.icon}</span>
                   </div>
-                  <h3 style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "12px", color: "#1C1C1C", letterSpacing: "0.03em" }} className="mb-0.5">{f.title}</h3>
+                  <h3 style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "14px", color: "#1C1C1C", letterSpacing: "0.03em" }} className="mb-0.5">{f.title}</h3>
                   <div className="w-5 h-[1px] mx-auto mb-1" style={{ background: "#C9B29F" }} />
                   <p style={{ color: "#4A4A4A", fontFamily: "var(--font-body)", fontSize: "12px", fontWeight: 400, lineHeight: 1.45 }}>{f.desc}</p>
                 </div>
@@ -454,7 +454,7 @@ export default function Home() {
         {/* ── Bloodline Calculator ── */}
         <section id="breeding-calculator" className="py-5 px-4">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-center mb-0.5" style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "clamp(0.95rem, 2vw, 1.25rem)", color: "#1C1C1C" }}>
+            <h2 className="text-center mb-0.5" style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "clamp(0.95rem, 2vw, 1.25rem)", color: "#1C1C1C" }}>
               Bloodline Calculator
             </h2>
             <p className="text-center mb-3" style={{ color: "#4A4A4A", fontFamily: "var(--font-body)", fontSize: "12px", fontWeight: 400 }}>
@@ -601,7 +601,7 @@ export default function Home() {
         {/* ── Marketplace ── */}
         <section id="marketplace" className="py-4 px-4">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-center mb-1" style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "clamp(0.95rem, 2vw, 1.25rem)", color: "#1C1C1C" }}>
+            <h2 className="text-center mb-1" style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "clamp(0.95rem, 2vw, 1.25rem)", color: "#1C1C1C" }}>
               Marketplace
             </h2>
             <p className="text-center mb-3" style={{ color: "#4A4A4A", fontFamily: "var(--font-body)", fontSize: "12px", fontWeight: 400 }}>
