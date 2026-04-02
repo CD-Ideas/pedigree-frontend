@@ -24,7 +24,7 @@ interface MarketplaceAd {
 const LOGO = "/logo.png";
 
 const CATEGORIES: Record<string, { label: string; icon: string; color: string }> = {
-  dogs_for_sale: { label: "Dogs for Sale", icon: "\uD83D\uDC15", color: "#ef4444" },
+  dogs_for_sale: { label: "Dogs for Sale", icon: "🐾", color: "#ef4444" },
   stud_service: { label: "Stud Service", icon: "\uD83D\uDC8E", color: "#8b5cf6" },
   litters_for_sale: { label: "Litters for Sale", icon: "\uD83C\uDF7C", color: "#f472b6" },
   supplies_gear: { label: "Supplies & Gear", icon: "\uD83C\uDF92", color: "#22c55e" },

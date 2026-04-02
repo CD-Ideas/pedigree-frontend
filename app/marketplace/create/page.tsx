@@ -31,7 +31,7 @@ const INPUT_STYLE: React.CSSProperties = {
 };
 
 const CATEGORIES = [
-  { key: "dogs_for_sale", label: "Dogs for Sale", icon: "\uD83D\uDC15", color: "#ef4444" },
+  { key: "dogs_for_sale", label: "Dogs for Sale", icon: "🐾", color: "#ef4444" },
   { key: "stud_service", label: "Stud Service", icon: "\uD83D\uDC8E", color: "#8b5cf6" },
   { key: "litters_for_sale", label: "Litters for Sale", icon: "\uD83C\uDF7C", color: "#f472b6" },
   { key: "supplies_gear", label: "Supplies & Gear", icon: "\uD83C\uDF92", color: "#22c55e" },

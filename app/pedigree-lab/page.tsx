@@ -1326,10 +1326,10 @@ function PedigreeLabInner() {
                           />
                         ) : (
                           <div
-                            className="w-full h-36 flex items-center justify-center text-3xl"
-                            style={{ background: "#FAFAFA", color: "#4A4A4A" }}
+                            className="w-full h-36 flex items-center justify-center"
+                            style={{ background: "#FAFAFA" }}
                           >
-                            {"\uD83D\uDC36"}
+                            <img src="/logo.png" alt="" className="opacity-30" style={{ width: "64px", height: "64px" }} />
                           </div>
                         )}
                       </div>
@@ -2717,8 +2717,8 @@ function DropZone({
           }}
         >
           {!dog.photo_url && (
-            <div className="w-full h-full flex items-center justify-center text-sm" style={{ color: "#4A4A4A" }}>
-              {"\uD83D\uDC36"}
+            <div className="w-full h-full flex items-center justify-center">
+              <img src="/logo.png" alt="" className="opacity-30" style={{ width: "20px", height: "20px" }} />
             </div>
           )}
         </div>
