@@ -233,7 +233,7 @@ export default function MarketplaceAdPage() {
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
-                  <span className="text-7xl opacity-20">{cat?.icon || "\uD83D\uDC15"}</span>
+                  <span className="text-7xl opacity-20">{cat?.icon || "🐾"}</span>
                 </div>
               )}
 

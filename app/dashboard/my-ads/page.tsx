@@ -273,7 +273,7 @@ export default function MyAdsPage() {
                           className="w-full h-full flex items-center justify-center min-h-[100px]"
                           style={{ background: "#C9B29F" }}
                         >
-                          <span className="text-3xl opacity-20">{cat?.icon || "\uD83D\uDC15"}</span>
+                          <span className="text-3xl opacity-20">{cat?.icon || "🐾"}</span>
                         </div>
                       )}
                     </div>

@@ -576,7 +576,7 @@ export default function EditAdPage() {
                   className="flex-1 flex items-center gap-2 rounded-lg px-3 py-2"
                   style={{ background: "rgba(201,178,159,0.1)", border: "2px solid #C9B29F" }}
                 >
-                  <span className="text-xs">{"\uD83D\uDC15"}</span>
+                  <img src="/logo.png" alt="" style={{ width: "16px", height: "16px" }} />
                   <span className="text-xs font-bold" style={{ color: getDogColor(selectedDogName), fontFamily: "var(--font-table)" }}>
                     {selectedDogName}
                   </span>

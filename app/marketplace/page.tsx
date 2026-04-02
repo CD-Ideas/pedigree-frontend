@@ -101,7 +101,7 @@ function AdCard({ ad, index }: { ad: MarketplaceAd; index: number }) {
             className="w-full h-full flex items-center justify-center"
             style={{ background: "#FAFAFA" }}
           >
-            <span className="text-4xl opacity-20">{cat?.icon || "\uD83D\uDC15"}</span>
+            <span className="text-4xl opacity-20">{cat?.icon || "🐾"}</span>
           </div>
         )}
 
