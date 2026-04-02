@@ -93,8 +93,7 @@ function NavSearch() {
                 {photoSrc ? (
                   <img src={photoSrc} alt="" className="w-6 h-6 rounded-lg object-cover flex-shrink-0" style={{ border: "1px solid #C9B29F" }} />
                 ) : (
-                  <div className="w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0 text-[12px]"
-                       style={{ background: "#FAFAFA", border: "1px solid #C9B29F" }}>🐕</div>
+                  <img src="/logo.png" alt="" className="w-6 h-6 rounded-lg object-cover flex-shrink-0" style={{ border: "1px solid #C9B29F" }} />
                 )}
                 <span className="font-semibold truncate" style={{ color: getDogColor(r.registered_name), fontFamily: "var(--font-table)" }}>
                   {r.registered_name}

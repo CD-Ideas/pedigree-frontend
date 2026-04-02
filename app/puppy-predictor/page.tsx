@@ -444,8 +444,7 @@ function DogSearch({ label, onSelect }: { label: string; onSelect: (dog: SearchD
                 <img src={d.photo_url.startsWith("http") ? d.photo_url : `https://www.apbt.online-pedigrees.com/${d.photo_url}`}
                   alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" />
               ) : (
-                <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-[12px]"
-                  style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}>🐕</div>
+                <img src="/logo.png" alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} />
               )}
               <span className="truncate font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{d.registered_name}</span>
               {d.color && <span className="ml-auto text-[12px]" style={{ color: "#4A4A4A" }}>{d.color}</span>}

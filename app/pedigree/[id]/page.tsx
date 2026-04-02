@@ -264,8 +264,7 @@ function PedigreeSearch() {
                 <img src={d.photo_url.startsWith("http") ? d.photo_url : `https://www.apbt.online-pedigrees.com/${d.photo_url}`}
                      alt="" className="w-8 h-8 rounded-lg object-cover flex-shrink-0" style={{ border: "1px solid #EDE4D5" }} />
               ) : (
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 text-sm"
-                     style={{ background: PG.bg, border: "2px solid #EDE4D5" }}>🐕</div>
+                <img src="/logo.png" alt="" className="w-8 h-8 rounded-lg object-cover flex-shrink-0" style={{ border: "2px solid #EDE4D5" }} />
               )}
               <span className="text-sm font-semibold truncate" style={{ color: getDogColorDark(d.registered_name), fontFamily: PG.font }}>
                 {d.registered_name}

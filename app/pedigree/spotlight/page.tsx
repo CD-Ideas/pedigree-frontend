@@ -191,8 +191,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
                 <img src={s.photo_url.startsWith("http") ? s.photo_url : `https://www.apbt.online-pedigrees.com/${s.photo_url}`}
                      alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} />
               ) : (
-                <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-[12px]"
-                     style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}>🐕</div>
+                <img src="/logo.png" alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} />
               )}
               <div className="flex-1 min-w-0">
                 <span className="text-xs font-semibold truncate block" style={{ color: s.color, fontFamily: "var(--font-table)" }}>{s.name}</span>
@@ -632,7 +631,7 @@ export default function SpotlightPage() {
                     {r.photo_url ? (
                       <img src={r.photo_url} alt={r.name} className="w-full h-full object-cover transition-transform group-hover:scale-110" />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-2xl opacity-20">🐕</div>
+                      <div className="w-full h-full flex items-center justify-center opacity-20"><img src="/logo.png" alt="" style={{ width: "40px", height: "40px" }} /></div>
                     )}
                   </div>
 
@@ -712,7 +711,7 @@ export default function SpotlightPage() {
                       <img src={f.photo_url.startsWith("http") ? f.photo_url : `https://www.apbt.online-pedigrees.com/${f.photo_url}`}
                            alt="" className="w-full h-full object-cover transition-transform group-hover:scale-110" />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-xl opacity-20">🐕</div>
+                      <div className="w-full h-full flex items-center justify-center opacity-20"><img src="/logo.png" alt="" style={{ width: "32px", height: "32px" }} /></div>
                     )}
                   </div>
                   <div className="p-1.5">
