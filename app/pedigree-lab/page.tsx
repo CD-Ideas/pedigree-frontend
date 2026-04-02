@@ -754,18 +754,18 @@ function PedigreeLabInner() {
                     <div className="flex items-center gap-2.5">
                       {/* Photo */}
                       <div
-                        className="w-10 h-10 rounded-lg flex-shrink-0 bg-cover bg-center"
+                        className="w-10 h-10 rounded-lg flex-shrink-0 bg-cover bg-center overflow-hidden"
                         style={{
-                          backgroundImage: dog.photo_url
-                            ? `url(${PHOTO_BASE}${dog.photo_url})`
-                            : "none",
-                          backgroundColor: dog.photo_url ? "transparent" : "#FAFAFA",
+                          backgroundColor: "#FAFAFA",
                           border: `2px solid #C9B29F`,
                         }}
                       >
-                        {!dog.photo_url && (
-                          <div className="w-full h-full flex items-center justify-center text-xs" style={{ color: "#4A4A4A" }}>
-                            {"\uD83D\uDC36"}
+                        {dog.photo_url ? (
+                          <img src={`${PHOTO_BASE}${dog.photo_url}`} alt="" className="w-full h-full object-cover"
+                            onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; e.currentTarget.parentElement!.classList.add("flex","items-center","justify-center"); const img = document.createElement("img"); img.src = "/logo.png"; img.style.width = "24px"; img.style.height = "24px"; img.style.opacity = "0.3"; e.currentTarget.parentElement!.appendChild(img); }} />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center">
+                            <img src="/logo.png" alt="" className="opacity-30" style={{ width: "24px", height: "24px" }} />
                           </div>
                         )}
                       </div>
