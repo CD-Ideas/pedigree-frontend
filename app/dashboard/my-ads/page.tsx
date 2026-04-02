@@ -179,7 +179,7 @@ export default function MyAdsPage() {
           {/* Stats */}
           <div className="flex items-center gap-3">
             <span
-              className="text-[10px] px-3 py-1 rounded-lg"
+              className="text-[12px] px-3 py-1 rounded-lg"
               style={{
                 background: "rgba(201,178,159,0.1)",
                 color: "#1C1C1C",
@@ -191,7 +191,7 @@ export default function MyAdsPage() {
             </span>
             <Link
               href="/marketplace/create"
-              className="px-4 py-1.5 rounded-lg text-[11px] font-bold transition-all hover:scale-105"
+              className="px-4 py-1.5 rounded-lg text-[12px] font-bold transition-all hover:scale-105"
               style={{
                 background: "#1C1C1C",
                 color: "#FAF7F2",
@@ -286,7 +286,7 @@ export default function MyAdsPage() {
                             {/* Category badge */}
                             {cat && (
                               <span
-                                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[11px] font-bold"
+                                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[12px] font-bold"
                                 style={{
                                   background: `${cat.color}18`,
                                   color: cat.color,
@@ -300,7 +300,7 @@ export default function MyAdsPage() {
 
                             {/* Status badge */}
                             <span
-                              className="inline-flex items-center px-2 py-0.5 rounded-lg text-[11px] font-bold uppercase tracking-wider"
+                              className="inline-flex items-center px-2 py-0.5 rounded-lg text-[12px] font-bold uppercase tracking-wider"
                               style={{
                                 background: statusStyle.bg,
                                 color: statusStyle.color,
@@ -314,7 +314,7 @@ export default function MyAdsPage() {
 
                           {/* Views */}
                           <span
-                            className="text-[10px] flex items-center gap-1 flex-shrink-0"
+                            className="text-[12px] flex items-center gap-1 flex-shrink-0"
                             style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}
                           >
                             {"\uD83D\uDC41"} {(ad.views || 0).toLocaleString()}
@@ -343,14 +343,14 @@ export default function MyAdsPage() {
 
                       {/* Footer */}
                       <div className="flex items-center justify-between mt-3 pt-3" style={{ borderTop: "1px solid #C9B29F" }}>
-                        <span className="text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
+                        <span className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
                           Created {formatDate(ad.created_at)}
                         </span>
 
                         <div className="flex items-center gap-2">
                           <Link
                             href={`/marketplace/${ad.id}`}
-                            className="px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all hover:scale-105"
+                            className="px-3 py-1.5 rounded-lg text-[12px] font-bold transition-all hover:scale-105"
                             style={{
                               background: "rgba(201,178,159,0.1)",
                               color: "#1C1C1C",
@@ -362,7 +362,7 @@ export default function MyAdsPage() {
                           </Link>
                           <Link
                             href={`/marketplace/${ad.id}/edit`}
-                            className="px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all hover:scale-105"
+                            className="px-3 py-1.5 rounded-lg text-[12px] font-bold transition-all hover:scale-105"
                             style={{
                               background: "rgba(96,165,250,0.1)",
                               color: "#60a5fa",
@@ -375,7 +375,7 @@ export default function MyAdsPage() {
                           <button
                             onClick={() => handleDelete(ad.id)}
                             disabled={deletingId === ad.id}
-                            className="px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all hover:scale-105 disabled:opacity-50"
+                            className="px-3 py-1.5 rounded-lg text-[12px] font-bold transition-all hover:scale-105 disabled:opacity-50"
                             style={{
                               background: "rgba(239,68,68,0.1)",
                               color: "#ef4444",
@@ -414,10 +414,10 @@ export default function MyAdsPage() {
           </span>
         </div>
         <div className="flex items-center justify-center gap-4">
-          <Link href="/marketplace" className="text-[10px] hover:underline" style={{ color: "#1C1C1C" }}>Marketplace</Link>
-          <Link href="/dashboard/my-ads" className="text-[10px] hover:underline" style={{ color: "#1C1C1C" }}>My Ads</Link>
-          <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "#4A4A4A" }}>Privacy</Link>
-          <Link href="/terms" className="text-[10px] hover:underline" style={{ color: "#4A4A4A" }}>Terms</Link>
+          <Link href="/marketplace" className="text-[12px] hover:underline" style={{ color: "#1C1C1C" }}>Marketplace</Link>
+          <Link href="/dashboard/my-ads" className="text-[12px] hover:underline" style={{ color: "#1C1C1C" }}>My Ads</Link>
+          <Link href="/privacy" className="text-[12px] hover:underline" style={{ color: "#4A4A4A" }}>Privacy</Link>
+          <Link href="/terms" className="text-[12px] hover:underline" style={{ color: "#4A4A4A" }}>Terms</Link>
         </div>
       </footer>
     </div>

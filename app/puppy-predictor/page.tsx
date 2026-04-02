@@ -431,7 +431,7 @@ function DogSearch({ label, onSelect }: { label: string; onSelect: (dog: SearchD
           placeholder={`Search ${label} from database...`}
           className="flex-1 bg-transparent text-xs outline-none"
           style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
-        {q && <button onClick={() => { setQ(""); setResults([]); setShow(false); }} className="text-[10px] text-[#6B6B6B] hover:text-[#1C1C1C]">✕</button>}
+        {q && <button onClick={() => { setQ(""); setResults([]); setShow(false); }} className="text-[12px] text-[#6B6B6B] hover:text-[#1C1C1C]">✕</button>}
       </div>
       {show && results.length > 0 && (
         <div className="absolute left-0 right-0 top-full mt-1 rounded-lg overflow-hidden z-50 max-h-48 overflow-y-auto"
@@ -444,11 +444,11 @@ function DogSearch({ label, onSelect }: { label: string; onSelect: (dog: SearchD
                 <img src={d.photo_url.startsWith("http") ? d.photo_url : `https://www.apbt.online-pedigrees.com/${d.photo_url}`}
                   alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" />
               ) : (
-                <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-[10px]"
+                <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-[12px]"
                   style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}>🐕</div>
               )}
               <span className="truncate font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{d.registered_name}</span>
-              {d.color && <span className="ml-auto text-[10px]" style={{ color: "#4A4A4A" }}>{d.color}</span>}
+              {d.color && <span className="ml-auto text-[12px]" style={{ color: "#4A4A4A" }}>{d.color}</span>}
             </button>
           ))}
         </div>
@@ -682,12 +682,12 @@ export default function PuppyPredictorPage() {
               ].map(s => (
                 <div key={s.name} className="rounded-lg p-3 space-y-1" style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}>
                   <h4 className="text-xs font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{s.name}</h4>
-                  <p className="text-[11px] leading-tight" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>{s.desc}</p>
-                  <p className="text-[10px] font-bold" style={{ color: "#1C1C1C" }}>{s.price}</p>
+                  <p className="text-[12px] leading-tight" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>{s.desc}</p>
+                  <p className="text-[12px] font-bold" style={{ color: "#1C1C1C" }}>{s.price}</p>
                 </div>
               ))}
             </div>
-            <p className="text-[11px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+            <p className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Don&apos;t have DNA results? Use the &quot;I Don&apos;t Know Genotype&quot; mode — select your dog&apos;s visible coat color and we&apos;ll estimate the most likely genotype.
             </p>
           </div>
@@ -706,14 +706,14 @@ export default function PuppyPredictorPage() {
               <div className="flex items-center gap-2">
                 {history.length > 0 && !confirmClear && (
                   <button onClick={() => setConfirmClear(true)}
-                    className="text-[10px] px-2 py-0.5 rounded-lg transition-all"
+                    className="text-[12px] px-2 py-0.5 rounded-lg transition-all"
                     style={{ background: "#FAFAFA", color: "#ef4444", border: "2px solid #ef4444", fontFamily: "var(--font-table)" }}>
                     Clear All
                   </button>
                 )}
                 {confirmClear && (
                   <div className="flex items-center gap-1.5">
-                    <span className="text-[10px]" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>Are you sure?</span>
+                    <span className="text-[12px]" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>Are you sure?</span>
                     <button onClick={async () => {
                       try {
                         const u = JSON.parse(localStorage.getItem("user") || "null");
@@ -723,12 +723,12 @@ export default function PuppyPredictorPage() {
                         setConfirmClear(false);
                       } catch (_e) {}
                     }}
-                      className="text-[10px] px-2 py-0.5 rounded-lg transition-all"
+                      className="text-[12px] px-2 py-0.5 rounded-lg transition-all"
                       style={{ background: "#FAFAFA", color: "#ef4444", border: "2px solid #ef4444", fontFamily: "var(--font-table)", fontWeight: 700 }}>
                       Yes, Clear
                     </button>
                     <button onClick={() => setConfirmClear(false)}
-                      className="text-[10px] px-2 py-0.5 rounded-lg transition-all"
+                      className="text-[12px] px-2 py-0.5 rounded-lg transition-all"
                       style={{ background: "#FAFAFA", color: "#4A4A4A", border: "2px solid #C9B29F", fontFamily: "var(--font-table)" }}>
                       Cancel
                     </button>
@@ -750,7 +750,7 @@ export default function PuppyPredictorPage() {
                     <span style={{ color: "#4A4A4A" }}>×</span>
                     <span style={{ color: "#1C1C1C" }}>♀ {h.dam_name || `Dog #${h.dam_dog_id || "?"}`}</span>
                   </div>
-                  <span className="text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
+                  <span className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
                     {new Date(h.created_at).toLocaleDateString()}
                   </span>
                 </Link>
@@ -786,7 +786,7 @@ export default function PuppyPredictorPage() {
                 <div className="grid grid-cols-3 gap-2">
                   {Object.entries(COAT_PRESETS).map(([key, val]) => (
                     <button key={key} onClick={() => handleSelectSirePreset(key)}
-                      className="flex items-center gap-2 px-2 py-1.5 rounded-lg text-[11px] transition-all"
+                      className="flex items-center gap-2 px-2 py-1.5 rounded-lg text-[12px] transition-all"
                       style={{
                         background: sirePreset === key ? "#F0EBE3" : "#FAFAFA",
                         border: sirePreset === key ? "2px solid #1C1C1C" : "2px solid #C9B29F",
@@ -806,7 +806,7 @@ export default function PuppyPredictorPage() {
                   <div key={`sire-${l.key}`} className="space-y-1">
                     <div className="flex items-center gap-1.5">
                       <label className="text-xs font-semibold" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>{l.label}</label>
-                      <span className="cursor-help text-[10px] w-3.5 h-3.5 rounded-full flex items-center justify-center"
+                      <span className="cursor-help text-[12px] w-3.5 h-3.5 rounded-full flex items-center justify-center"
                         style={{ background: "#FAFAFA", color: "#1C1C1C", border: "2px solid #C9B29F" }}
                         title={LOCUS_INFO[l.key]}>?</span>
                     </div>
@@ -842,7 +842,7 @@ export default function PuppyPredictorPage() {
                 <div className="grid grid-cols-3 gap-2">
                   {Object.entries(COAT_PRESETS).map(([key, val]) => (
                     <button key={key} onClick={() => handleSelectDamPreset(key)}
-                      className="flex items-center gap-2 px-2 py-1.5 rounded-lg text-[11px] transition-all"
+                      className="flex items-center gap-2 px-2 py-1.5 rounded-lg text-[12px] transition-all"
                       style={{
                         background: damPreset === key ? "#F0EBE3" : "#FAFAFA",
                         border: damPreset === key ? "2px solid #1C1C1C" : "2px solid #C9B29F",
@@ -861,7 +861,7 @@ export default function PuppyPredictorPage() {
                   <div key={`dam-${l.key}`} className="space-y-1">
                     <div className="flex items-center gap-1.5">
                       <label className="text-xs font-semibold" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>{l.label}</label>
-                      <span className="cursor-help text-[10px] w-3.5 h-3.5 rounded-full flex items-center justify-center"
+                      <span className="cursor-help text-[12px] w-3.5 h-3.5 rounded-full flex items-center justify-center"
                         style={{ background: "#FAFAFA", color: "#1C1C1C", border: "2px solid #C9B29F" }}
                         title={LOCUS_INFO[l.key]}>?</span>
                     </div>
@@ -924,7 +924,7 @@ export default function PuppyPredictorPage() {
                 ) : (
                   <div className="flex items-center gap-2">
                     <input type="text" readOnly value={shareUrl}
-                      className="px-3 py-1.5 rounded-lg text-[11px] w-64 outline-none"
+                      className="px-3 py-1.5 rounded-lg text-[12px] w-64 outline-none"
                       style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-mono)" }}
                       onClick={e => (e.target as HTMLInputElement).select()} />
                     <button onClick={() => {
@@ -994,11 +994,11 @@ export default function PuppyPredictorPage() {
                         const info = getNoseEyeInfo(r.phenotype);
                         return (
                           <div className="flex items-center gap-3 mt-1.5">
-                            <div className="flex items-center gap-1 text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                            <div className="flex items-center gap-1 text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                               <div className="w-2.5 h-2.5 rounded-full" style={{ background: info.noseColor, border: "2px solid #C9B29F" }} />
                               {info.nose}
                             </div>
-                            <div className="text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                            <div className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                               Eyes: {info.eyes}
                             </div>
                           </div>
@@ -1014,7 +1014,7 @@ export default function PuppyPredictorPage() {
                       {r.carriers.length > 0 && (
                         <div className="mt-2 space-y-0.5">
                           {r.carriers.map((c, ci) => (
-                            <div key={ci} className="flex items-center gap-1.5 text-[10px]" style={{ color: "#b45309", fontFamily: "var(--font-table)" }}>
+                            <div key={ci} className="flex items-center gap-1.5 text-[12px]" style={{ color: "#b45309", fontFamily: "var(--font-table)" }}>
                               <span>⚠</span>
                               <span>{c}</span>
                             </div>
@@ -1068,7 +1068,7 @@ export default function PuppyPredictorPage() {
                           <p className="text-xs font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
                             Puppy #{pup.id}
                           </p>
-                          <p className="text-[11px] font-semibold mt-0.5" style={{
+                          <p className="text-[12px] font-semibold mt-0.5" style={{
                             color: "#1C1C1C",
                             fontFamily: "var(--font-table)",
                           }}>
@@ -1085,13 +1085,13 @@ export default function PuppyPredictorPage() {
                             }} />
                           )}
                         </div>
-                        <p className="text-[11px] font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+                        <p className="text-[12px] font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                           {pup.phenotype}
                         </p>
                         {pup.carriers.length > 0 && (
                           <div className="space-y-0.5">
                             {pup.carriers.slice(0, 2).map((c, ci) => (
-                              <p key={ci} className="text-[11px]" style={{ color: "#b45309" }}>⚠ {c}</p>
+                              <p key={ci} className="text-[12px]" style={{ color: "#b45309" }}>⚠ {c}</p>
                             ))}
                           </div>
                         )}
@@ -1113,7 +1113,7 @@ export default function PuppyPredictorPage() {
               }}>
                 GENETICS REFERENCE
               </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 text-[11px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                 {Object.entries(LOCUS_INFO).map(([key, info]) => (
                   <div key={key} className="space-y-1">
                     <span className="font-bold" style={{ color: "#1C1C1C" }}>{key} Locus</span>

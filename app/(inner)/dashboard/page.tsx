@@ -185,7 +185,7 @@ export default function Dashboard() {
       {/* ─── Left Sidebar ─── */}
       <aside className="w-64 flex-shrink-0 hidden lg:block">
         <div className="rounded-lg p-4 sticky top-20" style={steelFrame}>
-          <h2 className="text-[10px] uppercase tracking-widest font-bold mb-4 px-2"
+          <h2 className="text-[12px] uppercase tracking-widest font-bold mb-4 px-2"
             style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
             📋 Menu
           </h2>
@@ -201,7 +201,7 @@ export default function Dashboard() {
                     style={{ color: "#1C1C1C" }}>
                     {item.label}
                   </span>
-                  <p className="text-[11px] mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>{item.desc}</p>
+                  <p className="text-[12px] mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>{item.desc}</p>
                 </div>
               </Link>
             ))}
@@ -229,7 +229,7 @@ export default function Dashboard() {
               className="rounded-lg p-3 flex flex-col items-center gap-2 transition-all hover:scale-[1.02]"
               style={steelFrame}>
               <span className="text-2xl">{item.icon}</span>
-              <span className="text-[10px] font-medium text-center" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+              <span className="text-[12px] font-medium text-center" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                 {item.label}
               </span>
             </Link>
@@ -240,7 +240,7 @@ export default function Dashboard() {
         <div className="grid md:grid-cols-2 gap-4">
           {/* Quick Actions */}
           <div className="dash-box-hover rounded-lg p-5" style={steelFrame}>
-            <h2 className="text-[10px] uppercase tracking-widest font-bold mb-4 flex items-center gap-2"
+            <h2 className="text-[12px] uppercase tracking-widest font-bold mb-4 flex items-center gap-2"
               style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               <span style={{ width: 16, height: 2, background: "#C9B29F", borderRadius: 1 }} />
               ⚡ Quick Actions
@@ -271,7 +271,7 @@ export default function Dashboard() {
 
           {/* Tools & Features */}
           <div className="dash-box-hover rounded-lg p-5" style={steelFrame}>
-            <h2 className="text-[10px] uppercase tracking-widest font-bold mb-4 flex items-center gap-2"
+            <h2 className="text-[12px] uppercase tracking-widest font-bold mb-4 flex items-center gap-2"
               style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               <span style={{ width: 16, height: 2, background: "#C9B29F", borderRadius: 1 }} />
               🛠️ Tools
@@ -311,7 +311,7 @@ export default function Dashboard() {
               {renderAvatar("w-24 h-24", "text-3xl")}
               <div className="absolute inset-0 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                 style={{ background: "rgba(0,0,0,0.4)" }}>
-                <span className="text-white text-[10px] font-bold" style={{ fontFamily: "var(--font-table)" }}>
+                <span className="text-white text-[12px] font-bold" style={{ fontFamily: "var(--font-table)" }}>
                   {avatarUploading ? "..." : "Change"}
                 </span>
               </div>
@@ -325,7 +325,7 @@ export default function Dashboard() {
                   onClick={(e) => e.stopPropagation()}
                   style={{ background: "#FAFAFA", border: "2px solid #C9B29F", borderRadius: "8px" }}>
                   <div className="px-3 py-2" style={{ borderBottom: "2px solid #C9B29F" }}>
-                    <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Choose Avatar</p>
+                    <p className="text-[12px] font-bold uppercase tracking-wider" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Choose Avatar</p>
                   </div>
                   <button onClick={() => { setShowAvatarPicker(false); avatarInputRef.current?.click(); }}
                     className="w-full flex items-center gap-2 px-3 py-2 transition-colors hover:bg-black/5"
@@ -347,7 +347,7 @@ export default function Dashboard() {
                   </div>
                   {user?.profile_picture && (
                     <button onClick={() => handleAvatarSelect("")}
-                      className="w-full flex items-center justify-center gap-1 px-3 py-1.5 transition-colors hover:bg-red-500/5 text-[10px]"
+                      className="w-full flex items-center justify-center gap-1 px-3 py-1.5 transition-colors hover:bg-red-500/5 text-[12px]"
                       style={{ borderTop: "2px solid #C9B29F", color: "#ef4444", fontFamily: "var(--font-table)" }}>
                       Remove
                     </button>
@@ -358,7 +358,7 @@ export default function Dashboard() {
             <p className="text-sm font-bold mt-3" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               {user?.username || "User"}
             </p>
-            <span className="text-[10px] px-2 py-0.5 rounded-full mt-1"
+            <span className="text-[12px] px-2 py-0.5 rounded-full mt-1"
               style={{ background: "#FAF7F2", color: "#C9B29F", border: "2px solid #C9B29F", fontFamily: "var(--font-table)" }}>
               {user?.role || "Member"}
             </span>
@@ -366,7 +366,7 @@ export default function Dashboard() {
 
           {/* Subscription */}
           <div className="pb-4" style={{ borderBottom: "2px solid #C9B29F" }}>
-            <h3 className="text-[10px] uppercase tracking-widest font-bold mb-3"
+            <h3 className="text-[12px] uppercase tracking-widest font-bold mb-3"
               style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               💳 Subscription
             </h3>
@@ -378,12 +378,12 @@ export default function Dashboard() {
                   FREE PLAN
                 </span>
               </div>
-              <p className="text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                 Basic access to all features
               </p>
               <div className="mt-2 flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#22c55e" }} />
-                <span className="text-[10px] font-bold" style={{ color: "#22c55e", fontFamily: "var(--font-table)" }}>Active</span>
+                <span className="text-[12px] font-bold" style={{ color: "#22c55e", fontFamily: "var(--font-table)" }}>Active</span>
               </div>
             </div>
           </div>
@@ -403,7 +403,7 @@ export default function Dashboard() {
               </span>
               <div className="text-left">
                 <span className="text-xs font-medium" style={{ color: "#1C1C1C" }}>Messages</span>
-                <p className="text-[11px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                <p className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                   {unreadMessages > 0 ? `${unreadMessages} unread` : "No new messages"}
                 </p>
               </div>
@@ -417,7 +417,7 @@ export default function Dashboard() {
               <span className="text-base">📩</span>
               <div className="text-left">
                 <span className="text-xs font-medium" style={{ color: "#1C1C1C" }}>Support Messages</span>
-                <p className="text-[11px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                <p className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                   View replies from support
                 </p>
               </div>

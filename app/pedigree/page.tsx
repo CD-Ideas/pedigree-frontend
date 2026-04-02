@@ -245,7 +245,7 @@ export default function PedigreeHub() {
                           {titles.length > 0 && (
                             <div className="absolute top-2 right-2 flex gap-1">
                               {titles.slice(0, 2).map((t) => (
-                                <span key={t} className="text-[11px] font-bold px-1.5 py-0.5 rounded"
+                                <span key={t} className="text-[12px] font-bold px-1.5 py-0.5 rounded"
                                   style={{ background: "#FAF7F2", color: TC[t] || "#1C1C1C", fontFamily: "var(--font-table)", border: "1px solid #C9B29F" }}>
                                   {t}
                                 </span>
@@ -261,25 +261,25 @@ export default function PedigreeHub() {
                           </h3>
                           <div className="flex items-center gap-2 mt-1.5">
                             {dog.color && (
-                              <span className="text-[10px] px-2 py-0.5 rounded-lg"
+                              <span className="text-[12px] px-2 py-0.5 rounded-lg"
                                 style={{ background: "#FAFAFA", color: "#4A4A4A", fontFamily: "var(--font-table)", border: "1px solid #C9B29F" }}>
                                 {dog.color}
                               </span>
                             )}
-                            <span className="text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
+                            <span className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
                               {dog.reg_number}
                             </span>
                           </div>
                           {(dog.sire_name || dog.dam_name) && (
                             <div className="mt-2 pt-2 flex flex-col gap-0.5" style={{ borderTop: "1px solid #C9B29F" }}>
                               {dog.sire_name && (
-                                <div className="text-[10px] truncate" style={{ fontFamily: "var(--font-table)" }}>
+                                <div className="text-[12px] truncate" style={{ fontFamily: "var(--font-table)" }}>
                                   <span style={{ color: "#1d5bbf" }}>Sire:</span>{" "}
                                   <span style={{ color: "#4A4A4A" }}>{dog.sire_name}</span>
                                 </div>
                               )}
                               {dog.dam_name && (
-                                <div className="text-[10px] truncate" style={{ fontFamily: "var(--font-table)" }}>
+                                <div className="text-[12px] truncate" style={{ fontFamily: "var(--font-table)" }}>
                                   <span style={{ color: "#9f1239" }}>Dam:</span>{" "}
                                   <span style={{ color: "#4A4A4A" }}>{dog.dam_name}</span>
                                 </div>
@@ -362,7 +362,7 @@ export default function PedigreeHub() {
                     </h3>
                     <div className="flex items-center justify-center gap-2 mt-1.5">
                       {dog.color && (
-                        <span className="text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>{dog.color}</span>
+                        <span className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>{dog.color}</span>
                       )}
                     </div>
                     <div className="mt-3 text-xs font-semibold px-3 py-1.5 rounded-lg inline-block transition-all group-hover:scale-105"

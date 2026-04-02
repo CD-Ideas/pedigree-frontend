@@ -468,15 +468,15 @@ export default function EditAdPage() {
       <div className="max-w-[700px] mx-auto px-4 md:px-6 py-6">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 mb-4">
-          <Link href="/marketplace" className="text-[10px] font-medium hover:underline" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+          <Link href="/marketplace" className="text-[12px] font-medium hover:underline" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
             Marketplace
           </Link>
-          <span style={{ color: "#4A4A4A", fontSize: "10px" }}>/</span>
-          <Link href={`/marketplace/${adId}`} className="text-[10px] font-medium hover:underline" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+          <span style={{ color: "#4A4A4A", fontSize: "12px" }}>/</span>
+          <Link href={`/marketplace/${adId}`} className="text-[12px] font-medium hover:underline" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
             Ad #{adId}
           </Link>
-          <span style={{ color: "#4A4A4A", fontSize: "10px" }}>/</span>
-          <span className="text-[10px] font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+          <span style={{ color: "#4A4A4A", fontSize: "12px" }}>/</span>
+          <span className="text-[12px] font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
             Edit
           </span>
         </div>
@@ -527,7 +527,7 @@ export default function EditAdPage() {
                 >
                   <span className="text-base">{cat.icon}</span>
                   <span
-                    className="text-[10px] font-bold"
+                    className="text-[12px] font-bold"
                     style={{
                       color: category === cat.key ? cat.color : "#6B6B6B",
                       fontFamily: "var(--font-table)",
@@ -539,7 +539,7 @@ export default function EditAdPage() {
               ))}
             </div>
             {errors.category && (
-              <p className="text-[10px] mt-2 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px] mt-2 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
                 {errors.category}
               </p>
             )}
@@ -558,14 +558,14 @@ export default function EditAdPage() {
           >
             <label className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Link to Dog {["dogs_for_sale", "stud_service", "litters_for_sale"].includes(category)
-                ? <span className="text-[11px] normal-case tracking-normal font-normal" style={{ color: "#ef4444" }}>(required)</span>
-                : <span className="text-[11px] normal-case tracking-normal font-normal">(optional)</span>}
+                ? <span className="text-[12px] normal-case tracking-normal font-normal" style={{ color: "#ef4444" }}>(required)</span>
+                : <span className="text-[12px] normal-case tracking-normal font-normal">(optional)</span>}
             </label>
-            <p className="text-[10px] mb-3" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+            <p className="text-[12px] mb-3" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Link this ad to a registered pedigree on the platform — the heading will be auto-filled
             </p>
             {errors.dog && (
-              <p className="text-[10px] mb-2" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px] mb-2" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
                 {errors.dog}
               </p>
             )}
@@ -580,7 +580,7 @@ export default function EditAdPage() {
                   <span className="text-xs font-bold" style={{ color: getDogColor(selectedDogName), fontFamily: "var(--font-table)" }}>
                     {selectedDogName}
                   </span>
-                  <span className="text-[11px]" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
+                  <span className="text-[12px]" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
                     ID: {dogId}
                   </span>
                 </div>
@@ -654,7 +654,7 @@ export default function EditAdPage() {
                         <span style={{ color: getDogColor(dog.name), fontFamily: "var(--font-table)", fontWeight: 600 }}>
                           {dog.name}
                         </span>
-                        <span className="text-[11px] ml-auto" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
+                        <span className="text-[12px] ml-auto" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
                           {dog.reg_number}
                         </span>
                       </button>
@@ -679,7 +679,7 @@ export default function EditAdPage() {
                 Heading <span style={{ color: "#ef4444" }}>*</span>
               </label>
               <span
-                className="text-[10px]"
+                className="text-[12px]"
                 style={{
                   color: title.length > 80 ? "#ef4444" : title.length > 60 ? "#eab308" : "#5a6a82",
                   fontFamily: "var(--font-mono)",
@@ -708,12 +708,12 @@ export default function EditAdPage() {
               }}
             />
             {selectedDogName && (
-              <p className="text-[10px] mt-1.5" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px] mt-1.5" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                 Auto-filled from linked dog
               </p>
             )}
             {errors.title && (
-              <p className="text-[10px] mt-1.5 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px] mt-1.5 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
                 {errors.title}
               </p>
             )}
@@ -733,7 +733,7 @@ export default function EditAdPage() {
                 Description <span style={{ color: "#ef4444" }}>*</span>
               </label>
               <span
-                className="text-[10px]"
+                className="text-[12px]"
                 style={{
                   color: description.length > 500 ? "#ef4444" : description.length > 400 ? "#eab308" : "#5a6a82",
                   fontFamily: "var(--font-mono)",
@@ -760,7 +760,7 @@ export default function EditAdPage() {
               }}
             />
             {errors.description && (
-              <p className="text-[10px] mt-1.5 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px] mt-1.5 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
                 {errors.description}
               </p>
             )}
@@ -776,7 +776,7 @@ export default function EditAdPage() {
             }}
           >
             <label className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-              Price <span className="text-[11px] normal-case tracking-normal font-normal">(optional)</span>
+              Price <span className="text-[12px] normal-case tracking-normal font-normal">(optional)</span>
             </label>
             <div className="relative">
               <span
@@ -801,7 +801,7 @@ export default function EditAdPage() {
                 }}
               />
             </div>
-            <p className="text-[11px] mt-1.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+            <p className="text-[12px] mt-1.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Leave blank to show &ldquo;Contact for Price&rdquo;
             </p>
           </div>
@@ -819,7 +819,7 @@ export default function EditAdPage() {
               <label className="text-xs font-bold uppercase tracking-widest" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                 Photos <span style={{ color: "#ef4444" }}>*</span>
               </label>
-              <span className="text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
+              <span className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
                 {photos.length}/5
               </span>
             </div>
@@ -842,7 +842,7 @@ export default function EditAdPage() {
                     <button
                       type="button"
                       onClick={() => removePhoto(i)}
-                      className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-lg flex items-center justify-center text-[10px] font-bold transition-all opacity-0 group-hover:opacity-100 hover:scale-110"
+                      className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-lg flex items-center justify-center text-[12px] font-bold transition-all opacity-0 group-hover:opacity-100 hover:scale-110"
                       style={{
                         background: "rgba(239,68,68,0.9)",
                         color: "#fff",
@@ -891,7 +891,7 @@ export default function EditAdPage() {
                     <span className="text-xs font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                       Drag photos here or click to browse
                     </span>
-                    <span className="text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                    <span className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                       JPG, PNG, WebP — Max 5MB each — Up to {5 - photos.length} more
                     </span>
                   </div>
@@ -900,7 +900,7 @@ export default function EditAdPage() {
             )}
 
             {errors.photos && (
-              <p className="text-[10px] mt-1.5 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px] mt-1.5 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
                 {errors.photos}
               </p>
             )}
@@ -921,7 +921,7 @@ export default function EditAdPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {/* Continent */}
               <div>
-                <label className="text-[10px] font-medium uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                <label className="text-[12px] font-medium uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                   Continent
                 </label>
                 <select
@@ -942,7 +942,7 @@ export default function EditAdPage() {
               </div>
               {/* Country */}
               <div>
-                <label className="text-[10px] font-medium uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                <label className="text-[12px] font-medium uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                   Country
                 </label>
                 <select
@@ -963,7 +963,7 @@ export default function EditAdPage() {
               </div>
             </div>
             {errors.location && (
-              <p className="text-[10px] mt-2 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px] mt-2 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
                 {errors.location}
               </p>
             )}
@@ -981,7 +981,7 @@ export default function EditAdPage() {
             <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Contact Information <span style={{ color: "#ef4444" }}>*</span>
             </label>
-            <p className="text-[10px] mb-3" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+            <p className="text-[12px] mb-3" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Provide at least one contact method
             </p>
             <div className="space-y-3">
@@ -1071,7 +1071,7 @@ export default function EditAdPage() {
               </div>
             </div>
             {errors.contact && (
-              <p className="text-[10px] mt-2 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px] mt-2 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
                 {errors.contact}
               </p>
             )}
@@ -1134,9 +1134,9 @@ export default function EditAdPage() {
           </span>
         </div>
         <div className="flex items-center justify-center gap-4">
-          <Link href="/marketplace" className="text-[10px] hover:underline" style={{ color: "#1C1C1C" }}>Marketplace</Link>
-          <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "#4A4A4A" }}>Privacy</Link>
-          <Link href="/terms" className="text-[10px] hover:underline" style={{ color: "#4A4A4A" }}>Terms</Link>
+          <Link href="/marketplace" className="text-[12px] hover:underline" style={{ color: "#1C1C1C" }}>Marketplace</Link>
+          <Link href="/privacy" className="text-[12px] hover:underline" style={{ color: "#4A4A4A" }}>Privacy</Link>
+          <Link href="/terms" className="text-[12px] hover:underline" style={{ color: "#4A4A4A" }}>Terms</Link>
         </div>
       </footer>
 

@@ -198,13 +198,13 @@ export default function MarketplaceAdPage() {
           
           <Link
             href="/marketplace"
-            className="text-[10px] font-medium hover:underline"
+            className="text-[12px] font-medium hover:underline"
             style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}
           >
             Marketplace
           </Link>
-          <span style={{ color: "#4A4A4A", fontSize: "10px" }}>/</span>
-          <span className="text-[10px] font-medium" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+          <span style={{ color: "#4A4A4A", fontSize: "12px" }}>/</span>
+          <span className="text-[12px] font-medium" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
             {ad.title}
           </span>
         </div>
@@ -356,7 +356,7 @@ export default function MarketplaceAdPage() {
                   <div className="text-sm font-bold" style={{ color: "#8a6518", fontFamily: "var(--font-table)" }}>
                     View Pedigree
                   </div>
-                  <div className="text-[10px] font-medium" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                  <div className="text-[12px] font-medium" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                     This ad is linked to a registered pedigree
                   </div>
                 </div>
@@ -416,7 +416,7 @@ export default function MarketplaceAdPage() {
                       <div className="flex gap-2 flex-wrap">
                         <button
                           onClick={handleReport}
-                          className="px-4 py-1.5 rounded-lg text-[11px] font-bold transition-all hover:scale-105"
+                          className="px-4 py-1.5 rounded-lg text-[12px] font-bold transition-all hover:scale-105"
                           style={{
                             background: "rgba(239,68,68,0.15)",
                             color: "#ef4444",
@@ -431,7 +431,7 @@ export default function MarketplaceAdPage() {
                             setShowReport(false);
                             setReportReason("");
                           }}
-                          className="px-4 py-1.5 rounded-lg text-[11px] font-bold transition-all hover:scale-105"
+                          className="px-4 py-1.5 rounded-lg text-[12px] font-bold transition-all hover:scale-105"
                           style={{
                             background: "rgba(148,163,184,0.15)",
                             color: "#4A4A4A",
@@ -470,7 +470,7 @@ export default function MarketplaceAdPage() {
                   >
                     <span className="text-xs">{cat.icon}</span>
                     <span
-                      className="text-[10px] font-bold uppercase tracking-wide"
+                      className="text-[12px] font-bold uppercase tracking-wide"
                       style={{ color: cat.color, fontFamily: "var(--font-table)" }}
                     >
                       {cat.label}
@@ -484,7 +484,7 @@ export default function MarketplaceAdPage() {
                       setCopied(true);
                       setTimeout(() => setCopied(false), 2000);
                     }}
-                    className="flex items-center gap-1 px-2 py-1 rounded-lg text-[11px] font-bold transition-all hover:scale-105"
+                    className="flex items-center gap-1 px-2 py-1 rounded-lg text-[12px] font-bold transition-all hover:scale-105"
                     style={{
                       background: "#FAF7F2",
                       border: "1.5px solid #C9B29F",
@@ -498,7 +498,7 @@ export default function MarketplaceAdPage() {
                     href={`https://wa.me/?text=${encodeURIComponent(`${ad.title}${ad.price ? ` - $${ad.price}` : ""} | Pedigree Platform\nhttps://pedigreeplatform.com/marketplace/${ad.id}`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-1 px-2 py-1 rounded-lg text-[11px] font-bold transition-all hover:scale-105"
+                    className="flex items-center gap-1 px-2 py-1 rounded-lg text-[12px] font-bold transition-all hover:scale-105"
                     style={{
                       background: "#FAF7F2",
                       border: "1.5px solid #C9B29F",
@@ -512,7 +512,7 @@ export default function MarketplaceAdPage() {
                     href={`https://t.me/share/url?url=${encodeURIComponent(`https://pedigreeplatform.com/marketplace/${ad.id}`)}&text=${encodeURIComponent(`${ad.title}${ad.price ? ` - $${ad.price}` : ""} | Pedigree Platform`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-1 px-2 py-1 rounded-lg text-[11px] font-bold transition-all hover:scale-105"
+                    className="flex items-center gap-1 px-2 py-1 rounded-lg text-[12px] font-bold transition-all hover:scale-105"
                     style={{
                       background: "#FAF7F2",
                       border: "1.5px solid #C9B29F",
@@ -546,7 +546,7 @@ export default function MarketplaceAdPage() {
                 >
                   <span className="text-xs" style={{ color: "#16a34a" }}>{"\u2713"}</span>
                   <span
-                    className="text-[10px] font-bold"
+                    className="text-[12px] font-bold"
                     style={{ color: "#16a34a", fontFamily: "var(--font-table)" }}
                   >
                     Verified Listing
@@ -574,7 +574,7 @@ export default function MarketplaceAdPage() {
                   <span className="text-sm">{"\uD83D\uDCCD"}</span>
                 </div>
                 <div>
-                  <div className="text-[10px] uppercase tracking-wider" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                  <div className="text-[12px] uppercase tracking-wider" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                     Location
                   </div>
                   <div className="text-xs font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
@@ -593,7 +593,7 @@ export default function MarketplaceAdPage() {
                     {ad.username.charAt(0).toUpperCase()}
                   </div>
                   <div className="flex-1">
-                    <div className="text-[10px] uppercase tracking-wider" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                    <div className="text-[12px] uppercase tracking-wider" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                       Listed By
                     </div>
                     <div className="text-xs font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
@@ -601,7 +601,7 @@ export default function MarketplaceAdPage() {
                     </div>
                   </div>
                   <a href={`/messages?to=${encodeURIComponent(ad.username)}&subject=${encodeURIComponent(`Re: ${ad.title}`)}&adId=${ad.id}`}
-                    className="px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all hover:scale-[1.02]"
+                    className="px-3 py-1.5 rounded-lg text-[12px] font-bold uppercase tracking-wider transition-all hover:scale-[1.02]"
                     style={{
                       background: "#1C1C1C",
                       color: "#FAF7F2",
@@ -616,26 +616,26 @@ export default function MarketplaceAdPage() {
               {/* Dates & Expiry Countdown */}
               <div className="flex flex-wrap gap-4 pt-3" style={{ borderTop: "2px solid #C9B29F" }}>
                 <div>
-                  <div className="text-[11px] uppercase tracking-wider" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                  <div className="text-[12px] uppercase tracking-wider" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                     Posted
                   </div>
-                  <div className="text-[11px] font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
+                  <div className="text-[12px] font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
                     {formatDate(ad.created_at)}
                   </div>
                 </div>
                 <div>
-                  <div className="text-[11px] uppercase tracking-wider" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                  <div className="text-[12px] uppercase tracking-wider" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                     Expires
                   </div>
-                  <div className="text-[11px] font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
+                  <div className="text-[12px] font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
                     {formatDate(ad.expires_at)}
                   </div>
                 </div>
                 <div>
-                  <div className="text-[11px] uppercase tracking-wider" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                  <div className="text-[12px] uppercase tracking-wider" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                     Views
                   </div>
-                  <div className="text-[11px] font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
+                  <div className="text-[12px] font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
                     {(ad.views || 0).toLocaleString()}
                   </div>
                 </div>
@@ -658,7 +658,7 @@ export default function MarketplaceAdPage() {
                     {daysUntilExpiry <= 7 ? "\u26A0" : "\u23F0"}
                   </span>
                   <span
-                    className="text-[11px] font-bold"
+                    className="text-[12px] font-bold"
                     style={{
                       color: daysUntilExpiry <= 0
                         ? "#ef4444"
@@ -721,7 +721,7 @@ export default function MarketplaceAdPage() {
                   ) : (
                     <div className="flex-1 flex flex-col gap-2">
                       <span
-                        className="text-[11px] font-bold text-center"
+                        className="text-[12px] font-bold text-center"
                         style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}
                       >
                         Are you sure?
@@ -730,7 +730,7 @@ export default function MarketplaceAdPage() {
                         <button
                           onClick={handleDelete}
                           disabled={deleting}
-                          className="flex-1 rounded-lg px-2 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all hover:scale-105 disabled:opacity-50"
+                          className="flex-1 rounded-lg px-2 py-1.5 text-[12px] font-bold uppercase tracking-wider transition-all hover:scale-105 disabled:opacity-50"
                           style={{
                             background: "#ef4444",
                             color: "#fff",
@@ -741,7 +741,7 @@ export default function MarketplaceAdPage() {
                         </button>
                         <button
                           onClick={() => setShowDeleteConfirm(false)}
-                          className="flex-1 rounded-lg px-2 py-1.5 text-[10px] font-medium transition-all hover:scale-105"
+                          className="flex-1 rounded-lg px-2 py-1.5 text-[12px] font-medium transition-all hover:scale-105"
                           style={{
                             background: "#C9B29F",
                             color: "#FAF7F2",
@@ -782,14 +782,14 @@ export default function MarketplaceAdPage() {
                       <p className="text-xs font-bold" style={{ color: "#eab308", fontFamily: "var(--font-table)" }}>
                         Verification Pending
                       </p>
-                      <p className="text-[10px]" style={{ color: "#4A4A4A" }}>
+                      <p className="text-[12px]" style={{ color: "#4A4A4A" }}>
                         Our team is reviewing your listing. You&apos;ll receive an email when verified.
                       </p>
                     </div>
                   </div>
                 ) : (
                   <div>
-                    <p className="text-[10px] mb-3" style={{ color: "#4A4A4A" }}>
+                    <p className="text-[12px] mb-3" style={{ color: "#4A4A4A" }}>
                       Get a verified badge to build trust with buyers. Our team will review your listing.
                     </p>
                     <button
@@ -826,7 +826,7 @@ export default function MarketplaceAdPage() {
                       {verifyRequesting ? "Requesting..." : "🛡 Request Free Verification"}
                     </button>
                     {verifyMsg && (
-                      <p className="text-[10px] text-center mt-2" style={{ color: verifyMsg.includes("!") ? "#22c55e" : "#ef4444" }}>
+                      <p className="text-[12px] text-center mt-2" style={{ color: verifyMsg.includes("!") ? "#22c55e" : "#ef4444" }}>
                         {verifyMsg}
                       </p>
                     )}
@@ -861,7 +861,7 @@ export default function MarketplaceAdPage() {
                         <span className="text-sm">{"\uD83D\uDCDE"}</span>
                       </div>
                       <div>
-                        <div className="text-[11px] uppercase tracking-wider" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                        <div className="text-[12px] uppercase tracking-wider" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                           Phone
                         </div>
                         <div className="text-xs font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
@@ -880,7 +880,7 @@ export default function MarketplaceAdPage() {
                         <span className="text-sm">{"\u2709\uFE0F"}</span>
                       </div>
                       <div>
-                        <div className="text-[11px] uppercase tracking-wider" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                        <div className="text-[12px] uppercase tracking-wider" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                           Email
                         </div>
                         <a
@@ -903,7 +903,7 @@ export default function MarketplaceAdPage() {
                         <span className="text-sm font-bold" style={{ color: "#8b5cf6" }}>V</span>
                       </div>
                       <div>
-                        <div className="text-[11px] uppercase tracking-wider" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                        <div className="text-[12px] uppercase tracking-wider" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                           Venmo
                         </div>
                         <div className="text-xs font-bold" style={{ color: "#8b5cf6", fontFamily: "var(--font-mono)" }}>
@@ -922,7 +922,7 @@ export default function MarketplaceAdPage() {
                         <span className="text-sm font-bold" style={{ color: "#1d5bbf" }}>P</span>
                       </div>
                       <div>
-                        <div className="text-[11px] uppercase tracking-wider" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                        <div className="text-[12px] uppercase tracking-wider" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                           PayPal
                         </div>
                         <div className="text-xs font-bold" style={{ color: "#1d5bbf", fontFamily: "var(--font-mono)" }}>
@@ -957,9 +957,9 @@ export default function MarketplaceAdPage() {
           </span>
         </div>
         <div className="flex items-center justify-center gap-2 sm:gap-4 flex-wrap">
-          <Link href="/marketplace" className="text-[10px] hover:underline" style={{ color: "#1C1C1C" }}>Marketplace</Link>
-          <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "#4A4A4A" }}>Privacy</Link>
-          <Link href="/terms" className="text-[10px] hover:underline" style={{ color: "#4A4A4A" }}>Terms</Link>
+          <Link href="/marketplace" className="text-[12px] hover:underline" style={{ color: "#1C1C1C" }}>Marketplace</Link>
+          <Link href="/privacy" className="text-[12px] hover:underline" style={{ color: "#4A4A4A" }}>Privacy</Link>
+          <Link href="/terms" className="text-[12px] hover:underline" style={{ color: "#4A4A4A" }}>Terms</Link>
         </div>
       </footer>
     </div>

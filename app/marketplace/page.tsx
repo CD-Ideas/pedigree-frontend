@@ -111,7 +111,7 @@ function AdCard({ ad, index }: { ad: MarketplaceAd; index: number }) {
               border: "2px solid #C9B29F",
             }}
           >
-            <span className="text-[11px]">{cat.icon}</span>
+            <span className="text-[12px]">{cat.icon}</span>
             <span
               className="text-[8px] font-bold uppercase tracking-wide"
               style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}
@@ -172,7 +172,7 @@ function AdCard({ ad, index }: { ad: MarketplaceAd; index: number }) {
             >
               {ad.username.charAt(0).toUpperCase()}
             </div>
-            <span className="text-[11px] font-medium" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+            <span className="text-[12px] font-medium" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               {ad.username}
             </span>
           </div>
@@ -180,7 +180,7 @@ function AdCard({ ad, index }: { ad: MarketplaceAd; index: number }) {
 
         {/* Location & time & share */}
         <div className="flex items-center justify-between" style={{ borderTop: "1px solid #EDE4D5", paddingTop: 6 }}>
-          <div className="flex items-center gap-1 text-[11px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+          <div className="flex items-center gap-1 text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
             <span>{"\uD83D\uDCCD"}</span>
             <span className="truncate max-w-[70px]">{ad.location || "Unknown"}</span>
             <span style={{ color: "#C9B29F" }}>{"\u00B7"}</span>
@@ -318,14 +318,14 @@ export default function MarketplacePage() {
           <div className="flex items-center gap-2 mb-1">
             <Link
               href="/dashboard"
-              className="text-[10px] font-medium hover:underline transition-colors"
+              className="text-[12px] font-medium hover:underline transition-colors"
               style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}
             >
               Dashboard
             </Link>
-            <span style={{ color: "#4A4A4A", fontSize: "10px" }}>/</span>
+            <span style={{ color: "#4A4A4A", fontSize: "12px" }}>/</span>
             <span
-              className="text-[10px] font-medium"
+              className="text-[12px] font-medium"
               style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}
             >
               Marketplace
@@ -353,7 +353,7 @@ export default function MarketplacePage() {
             </div>
             <Link
               href={category ? `/marketplace/create?category=${category}` : "/marketplace/create"}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-[11px] font-bold transition-all hover:scale-105 flex-shrink-0 mt-2"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-[12px] font-bold transition-all hover:scale-105 flex-shrink-0 mt-2"
               style={{
                 background: "#1C1C1C",
                 color: "#FAF7F2",
@@ -400,7 +400,7 @@ export default function MarketplacePage() {
                   {/* Text */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-1.5">
-                      <h3 style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "11px", color: isActive ? cat.color : "#1C1C1C", letterSpacing: "0.02em" }}>
+                      <h3 style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "12px", color: isActive ? cat.color : "#1C1C1C", letterSpacing: "0.02em" }}>
                         {cat.label}
                       </h3>
                       {cat.tag && (
@@ -422,7 +422,7 @@ export default function MarketplacePage() {
                         }}>{"\u2713"} ACTIVE</span>
                       )}
                     </div>
-                    <p style={{ fontFamily: "var(--font-table)", fontSize: "9px", color: "#4A4A4A", marginTop: "2px", fontWeight: 400 }}>
+                    <p style={{ fontFamily: "var(--font-table)", fontSize: "12px", color: "#4A4A4A", marginTop: "2px", fontWeight: 400 }}>
                       {isActive ? "Click to clear filter" : "Browse listings"}
                     </p>
                   </div>
@@ -562,7 +562,7 @@ export default function MarketplacePage() {
                 setSearchInput("");
                 setPage(1);
               }}
-              className="text-[11px] font-medium px-3 py-1 transition-all hover:scale-105"
+              className="text-[12px] font-medium px-3 py-1 transition-all hover:scale-105"
               style={{
                 color: "#ef4444",
                 background: "#FAF7F2",
@@ -574,7 +574,7 @@ export default function MarketplacePage() {
               {"\u2715"} Clear
             </button>
             <span
-              className="text-[11px] ml-auto"
+              className="text-[12px] ml-auto"
               style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}
             >
               {total} result{total !== 1 ? "s" : ""}
@@ -670,7 +670,7 @@ export default function MarketplacePage() {
             {totalPages > 1 && (
               <div className="mt-8 flex flex-col items-center gap-3">
                 <div
-                  className="text-[11px]"
+                  className="text-[12px]"
                   style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}
                 >
                   Showing{" "}
@@ -774,16 +774,16 @@ export default function MarketplacePage() {
           </span>
         </div>
         <div className="flex items-center justify-center gap-4">
-          <Link href="/browse" className="text-[10px] hover:underline" style={{ color: "#4A4A4A" }}>
+          <Link href="/browse" className="text-[12px] hover:underline" style={{ color: "#4A4A4A" }}>
             Dogs
           </Link>
-          <Link href="/marketplace" className="text-[10px] hover:underline" style={{ color: "#1C1C1C" }}>
+          <Link href="/marketplace" className="text-[12px] hover:underline" style={{ color: "#1C1C1C" }}>
             Marketplace
           </Link>
-          <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "#4A4A4A" }}>
+          <Link href="/privacy" className="text-[12px] hover:underline" style={{ color: "#4A4A4A" }}>
             Privacy
           </Link>
-          <Link href="/terms" className="text-[10px] hover:underline" style={{ color: "#4A4A4A" }}>
+          <Link href="/terms" className="text-[12px] hover:underline" style={{ color: "#4A4A4A" }}>
             Terms
           </Link>
         </div>

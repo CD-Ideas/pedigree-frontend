@@ -99,7 +99,7 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
             {(dog.titles ?? []).map((t) => (
               <span
                 key={t}
-                className="text-[10px] font-bold px-1.5 py-0.5 rounded"
+                className="text-[12px] font-bold px-1.5 py-0.5 rounded"
                 style={{
                   background: "#FAF7F2",
                   border: "1px solid #C9B29F",
@@ -128,7 +128,7 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
         </h3>
 
         {dog.color && (
-          <p className="text-[10px] mb-1.5" style={{ color: "#4A4A4A" }}>
+          <p className="text-[12px] mb-1.5" style={{ color: "#4A4A4A" }}>
             {dog.color}
           </p>
         )}
@@ -136,7 +136,7 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
         {/* Parents */}
         <div className="space-y-0.5 mt-1.5">
           {dog.sire_name && (
-            <div className="flex items-center gap-1.5 text-[10px]">
+            <div className="flex items-center gap-1.5 text-[12px]">
               <span
                 className="w-1 h-1 rounded-full flex-shrink-0"
                 style={{ background: MALE_COLOR }}
@@ -151,7 +151,7 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
             </div>
           )}
           {dog.dam_name && (
-            <div className="flex items-center gap-1.5 text-[10px]">
+            <div className="flex items-center gap-1.5 text-[12px]">
               <span
                 className="w-1 h-1 rounded-full flex-shrink-0"
                 style={{ background: FEMALE_COLOR }}
@@ -166,7 +166,7 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
             </div>
           )}
           {!dog.sire_name && !dog.dam_name && (
-            <div className="text-[10px]" style={{ color: "#4A4A4A" }}>
+            <div className="text-[12px]" style={{ color: "#4A4A4A" }}>
               No parents recorded
             </div>
           )}
@@ -174,7 +174,7 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
 
         {/* Footer */}
         <div
-          className="flex items-center justify-between mt-2 pt-1.5 text-[11px]"
+          className="flex items-center justify-between mt-2 pt-1.5 text-[12px]"
           style={{
             borderTop: "2px solid #C9B29F",
             color: "#4A4A4A",
@@ -357,7 +357,7 @@ export default function DogsPage() {
           Filters
           {activeFilters > 0 && (
             <span
-              className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold"
+              className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full flex items-center justify-center text-[12px] font-bold"
               style={{ background: "#C9B29F", color: "#1C1C1C" }}
             >
               {activeFilters}
@@ -378,7 +378,7 @@ export default function DogsPage() {
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2.5">
             <div>
-              <label className="text-[10px] uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A" }}>
+              <label className="text-[12px] uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A" }}>
                 Sex
               </label>
               <select
@@ -397,7 +397,7 @@ export default function DogsPage() {
               </select>
             </div>
             <div>
-              <label className="text-[10px] uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A" }}>
+              <label className="text-[12px] uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A" }}>
                 Color
               </label>
               <select
@@ -417,7 +417,7 @@ export default function DogsPage() {
               </select>
             </div>
             <div>
-              <label className="text-[10px] uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A" }}>
+              <label className="text-[12px] uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A" }}>
                 Title
               </label>
               <select
@@ -465,7 +465,7 @@ export default function DogsPage() {
 
       {/* Sort */}
       <div className="flex items-center gap-2 mb-5">
-        <span className="text-[10px] uppercase tracking-wider" style={{ color: "#4A4A4A" }}>
+        <span className="text-[12px] uppercase tracking-wider" style={{ color: "#4A4A4A" }}>
           Sort by:
         </span>
         {sortOptions.map((s) => (
@@ -527,12 +527,12 @@ export default function DogsPage() {
           <table className="w-full text-sm">
             <thead>
               <tr style={{ borderBottom: "2px solid #C9B29F" }}>
-                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Dog</th>
-                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Sex</th>
-                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden md:table-cell" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Color</th>
-                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden lg:table-cell" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Sire</th>
-                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden lg:table-cell" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Dam</th>
-                <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden md:table-cell" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Titles</th>
+                <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-medium" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Dog</th>
+                <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-medium" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Sex</th>
+                <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-medium hidden md:table-cell" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Color</th>
+                <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-medium hidden lg:table-cell" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Sire</th>
+                <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-medium hidden lg:table-cell" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Dam</th>
+                <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-medium hidden md:table-cell" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Titles</th>
               </tr>
             </thead>
             <tbody>
@@ -546,7 +546,7 @@ export default function DogsPage() {
                     <Link href={`/dogs/${dog.id}`} className="font-medium hover:underline" style={{ color: getDogColor(dog.name), fontFamily: "var(--font-table)" }}>
                       {dog.name}
                     </Link>
-                    <div className="text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
+                    <div className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
                       {dog.reg_number}
                     </div>
                   </td>
@@ -579,7 +579,7 @@ export default function DogsPage() {
                       {(dog.titles ?? []).map((t) => (
                         <span
                           key={t}
-                          className="text-[10px] font-bold px-1.5 py-0.5 rounded"
+                          className="text-[12px] font-bold px-1.5 py-0.5 rounded"
                           style={{
                             background: "rgba(201,178,159,0.15)",
                             color: TITLE_COLORS[t] || "#1C1C1C",

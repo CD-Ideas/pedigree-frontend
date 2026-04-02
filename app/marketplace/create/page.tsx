@@ -350,11 +350,11 @@ function CreateAdContent() {
       <div className="max-w-[700px] mx-auto px-4 md:px-6 py-6">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 mb-4">
-          <Link href="/marketplace" className="text-[10px] font-medium hover:underline" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+          <Link href="/marketplace" className="text-[12px] font-medium hover:underline" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
             Marketplace
           </Link>
-          <span style={{ color: "#4A4A4A", fontSize: "10px" }}>/</span>
-          <span className="text-[10px] font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+          <span style={{ color: "#4A4A4A", fontSize: "12px" }}>/</span>
+          <span className="text-[12px] font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
             Create Ad
           </span>
         </div>
@@ -422,7 +422,7 @@ function CreateAdContent() {
             >
               <span className="text-lg">{CATEGORIES.find(c => c.key === category)?.icon}</span>
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-widest block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                <span className="text-[12px] font-bold uppercase tracking-widest block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                   📂 Category
                 </span>
                 <span className="text-sm font-bold" style={{ color: CATEGORIES.find(c => c.key === category)?.color, fontFamily: "var(--font-table)" }}>
@@ -435,7 +435,7 @@ function CreateAdContent() {
                   setCategory("");
                   router.replace("/marketplace/create");
                 }}
-                className="ml-auto text-[10px] px-2.5 py-1 rounded-lg transition-all duration-200 hover:scale-105 hover:brightness-125"
+                className="ml-auto text-[12px] px-2.5 py-1 rounded-lg transition-all duration-200 hover:scale-105 hover:brightness-125"
                 style={{ background: "#FAFAFA", border: "1px solid #C9B29F", color: "#4A4A4A", fontFamily: "var(--font-table)" }}
               >
                 Change
@@ -472,7 +472,7 @@ function CreateAdContent() {
                   >
                     <span className="text-lg">{cat.icon}</span>
                     <span
-                      className="text-[10px] font-bold"
+                      className="text-[12px] font-bold"
                       style={{
                         color: category === cat.key ? cat.color : "#6B6B6B",
                         fontFamily: "var(--font-table)",
@@ -484,7 +484,7 @@ function CreateAdContent() {
                 ))}
               </div>
               {errors.category && (
-                <p className="text-[10px] mt-2 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+                <p className="text-[12px] mt-2 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
                   {errors.category}
                 </p>
               )}
@@ -503,14 +503,14 @@ function CreateAdContent() {
           >
             <label className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               🐕 Link to Dog {["dogs_for_sale", "stud_service", "litters_for_sale"].includes(category)
-                ? <span className="text-[11px] normal-case tracking-normal font-normal" style={{ color: "#ef4444" }}>(required)</span>
-                : <span className="text-[11px] normal-case tracking-normal font-normal">(optional)</span>}
+                ? <span className="text-[12px] normal-case tracking-normal font-normal" style={{ color: "#ef4444" }}>(required)</span>
+                : <span className="text-[12px] normal-case tracking-normal font-normal">(optional)</span>}
             </label>
-            <p className="text-[10px] mb-3" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+            <p className="text-[12px] mb-3" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Link this ad to a registered pedigree on the platform — the heading will be auto-filled
             </p>
             {errors.dog && (
-              <p className="text-[10px] mb-2" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px] mb-2" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
                 {errors.dog}
               </p>
             )}
@@ -525,7 +525,7 @@ function CreateAdContent() {
                   <span className="text-xs font-bold" style={{ color: getDogColor(selectedDogName), fontFamily: "var(--font-table)" }}>
                     {selectedDogName}
                   </span>
-                  <span className="text-[11px]" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
+                  <span className="text-[12px]" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
                     ID: {dogId}
                   </span>
                 </div>
@@ -600,7 +600,7 @@ function CreateAdContent() {
                         <span style={{ color: getDogColor(dog.registered_name), fontFamily: "var(--font-table)", fontWeight: 600 }}>
                           {dog.registered_name}
                         </span>
-                        <span className="text-[11px] ml-auto" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
+                        <span className="text-[12px] ml-auto" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
                           ID: {dog.dog_id}
                         </span>
                       </button>
@@ -624,7 +624,7 @@ function CreateAdContent() {
                 ✏️ Heading <span style={{ color: "#ef4444" }}>*</span>
               </label>
               <span
-                className="text-[10px]"
+                className="text-[12px]"
                 style={{
                   color: title.length > 80 ? "#ef4444" : title.length > 60 ? "#eab308" : "#5a6a82",
                   fontFamily: "var(--font-mono)",
@@ -654,12 +654,12 @@ function CreateAdContent() {
               }}
             />
             {selectedDogName && (
-              <p className="text-[10px] mt-1.5" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px] mt-1.5" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                 Auto-filled from linked dog
               </p>
             )}
             {errors.title && (
-              <p className="text-[10px] mt-1.5 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px] mt-1.5 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
                 {errors.title}
               </p>
             )}
@@ -678,7 +678,7 @@ function CreateAdContent() {
                 📝 Description <span style={{ color: "#ef4444" }}>*</span>
               </label>
               <span
-                className="text-[10px]"
+                className="text-[12px]"
                 style={{
                   color: description.length > 500 ? "#ef4444" : description.length > 400 ? "#eab308" : "#5a6a82",
                   fontFamily: "var(--font-mono)",
@@ -702,7 +702,7 @@ function CreateAdContent() {
               }}
             />
             {errors.description && (
-              <p className="text-[10px] mt-1.5 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px] mt-1.5 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
                 {errors.description}
               </p>
             )}
@@ -714,7 +714,7 @@ function CreateAdContent() {
             style={{ ...GLASS_BOX }}
           >
             <label className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-              💰 Price <span className="text-[11px] normal-case tracking-normal font-normal">(optional)</span>
+              💰 Price <span className="text-[12px] normal-case tracking-normal font-normal">(optional)</span>
             </label>
             <div className="relative">
               <span
@@ -740,7 +740,7 @@ function CreateAdContent() {
                 }}
               />
             </div>
-            <p className="text-[11px] mt-1.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+            <p className="text-[12px] mt-1.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Leave blank to show &ldquo;Contact for Price&rdquo;
             </p>
           </div>
@@ -757,7 +757,7 @@ function CreateAdContent() {
               <label className="text-xs font-bold uppercase tracking-widest" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                 📸 Photos <span style={{ color: "#ef4444" }}>*</span>
               </label>
-              <span className="text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
+              <span className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
                 {photos.length}/5
               </span>
             </div>
@@ -794,7 +794,7 @@ function CreateAdContent() {
                         <button
                           type="button"
                           onClick={() => removePhoto(i)}
-                          className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-lg flex items-center justify-center text-[10px] font-bold transition-all opacity-0 group-hover:opacity-100 hover:scale-110"
+                          className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-lg flex items-center justify-center text-[12px] font-bold transition-all opacity-0 group-hover:opacity-100 hover:scale-110"
                           style={{
                             background: "rgba(239,68,68,0.9)",
                             color: "#fff",
@@ -811,7 +811,7 @@ function CreateAdContent() {
 
             {/* Auto-loaded note */}
             {selectedDogName && photos.length > 0 && (photos[0].includes("online-pedigrees.com") || photos[0].includes("apbt")) && (
-              <p className="text-[10px] mb-3" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px] mb-3" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                 First photo auto-loaded from database — you can add up to {5 - photos.length} more below
               </p>
             )}
@@ -852,7 +852,7 @@ function CreateAdContent() {
                     <span className="text-xs font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                       {selectedDogName ? "Add more photos" : "Drag photos here or click to browse"}
                     </span>
-                    <span className="text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                    <span className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                       JPG, PNG, WebP — Max 5MB each — Up to {5 - photos.length} more
                     </span>
                   </div>
@@ -861,7 +861,7 @@ function CreateAdContent() {
             )}
 
             {errors.photos && (
-              <p className="text-[10px] mt-1.5 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px] mt-1.5 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
                 {errors.photos}
               </p>
             )}
@@ -881,7 +881,7 @@ function CreateAdContent() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {/* Continent */}
               <div>
-                <label className="text-[10px] font-medium uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                <label className="text-[12px] font-medium uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                   Continent
                 </label>
                 <select
@@ -902,7 +902,7 @@ function CreateAdContent() {
               </div>
               {/* Country */}
               <div>
-                <label className="text-[10px] font-medium uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                <label className="text-[12px] font-medium uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                   Country
                 </label>
                 <select
@@ -923,7 +923,7 @@ function CreateAdContent() {
               </div>
             </div>
             {errors.location && (
-              <p className="text-[10px] mt-2 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px] mt-2 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
                 {errors.location}
               </p>
             )}
@@ -940,7 +940,7 @@ function CreateAdContent() {
             <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               📞 Contact Information <span style={{ color: "#ef4444" }}>*</span>
             </label>
-            <p className="text-[10px] mb-3" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+            <p className="text-[12px] mb-3" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Provide at least one contact method
             </p>
             <div className="space-y-3">
@@ -1034,7 +1034,7 @@ function CreateAdContent() {
               </div>
             </div>
             {errors.contact && (
-              <p className="text-[10px] mt-2 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px] mt-2 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
                 {errors.contact}
               </p>
             )}
@@ -1097,9 +1097,9 @@ function CreateAdContent() {
           </span>
         </div>
         <div className="flex items-center justify-center gap-4">
-          <Link href="/marketplace" className="text-[10px] hover:underline" style={{ color: "#1C1C1C" }}>Marketplace</Link>
-          <Link href="/privacy" className="text-[10px] hover:underline" style={{ color: "#4A4A4A" }}>Privacy</Link>
-          <Link href="/terms" className="text-[10px] hover:underline" style={{ color: "#4A4A4A" }}>Terms</Link>
+          <Link href="/marketplace" className="text-[12px] hover:underline" style={{ color: "#1C1C1C" }}>Marketplace</Link>
+          <Link href="/privacy" className="text-[12px] hover:underline" style={{ color: "#4A4A4A" }}>Privacy</Link>
+          <Link href="/terms" className="text-[12px] hover:underline" style={{ color: "#4A4A4A" }}>Terms</Link>
         </div>
       </footer>
 

@@ -169,7 +169,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
             <text x={cx} y={cy + 10} textAnchor="middle" fill="#6B6B6B" fontSize="8" fontFamily="var(--font-table)">Legendary</text>
           </svg>
           {hovered !== null && slices[hovered] && (
-            <div className="absolute top-1 left-1 px-2 py-1 rounded-lg text-[10px] font-bold"
+            <div className="absolute top-1 left-1 px-2 py-1 rounded-lg text-[12px] font-bold"
                  style={{ background: "#FAF7F2", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               {slices[hovered].name}: {slices[hovered].count}x ({((slices[hovered].count / total) * 100).toFixed(1)}%)
             </div>
@@ -191,13 +191,13 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
                 <img src={s.photo_url.startsWith("http") ? s.photo_url : `https://www.apbt.online-pedigrees.com/${s.photo_url}`}
                      alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} />
               ) : (
-                <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-[11px]"
+                <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-[12px]"
                      style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}>🐕</div>
               )}
               <div className="flex-1 min-w-0">
                 <span className="text-xs font-semibold truncate block" style={{ color: s.color, fontFamily: "var(--font-table)" }}>{s.name}</span>
                 {(s as any).gens && (s as any).gens.length > 0 && (
-                  <span className="text-[11px] block mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)", fontFamily: "var(--font-mono)" }}>
+                  <span className="text-[12px] block mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
                     Gen: {(s as any).gens.join(",")}
                   </span>
                 )}
@@ -250,7 +250,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
                 {[6, 8, 10, 12].map((g) => (
                   <button key={g}
                     onClick={() => { setGenDepth(g); fetchLineage(lineage.dog.id, lineage.dog.name, lineage.dog.photo_url, g); }}
-                    className="px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all"
+                    className="px-2.5 py-1 rounded-lg text-[12px] font-bold transition-all"
                     style={{
                       fontFamily: "var(--font-table)",
                       background: genDepth === g ? "#C9B29F" : "#FAFAFA",
@@ -265,7 +265,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
             </div>
             {lineage.legendaryMatches.length > 0 ? (
               <>
-                <p className="text-[10px] mb-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                <p className="text-[12px] mb-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                   Found {lineage.legendaryMatches.length} legendary {lineage.legendaryMatches.length === 1 ? "dog" : "dogs"} in pedigree. Click to run Find Tightest.
                 </p>
                 {renderPie()}
@@ -405,7 +405,7 @@ export default function SpotlightPage() {
 
             {/* Dog Selector Dropdown */}
             <div className="md:col-span-5">
-              <label className="block text-[10px] uppercase tracking-widest font-semibold mb-1.5"
+              <label className="block text-[12px] uppercase tracking-widest font-semibold mb-1.5"
                      style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                 🏛 Select Legendary Dog
               </label>
@@ -422,7 +422,7 @@ export default function SpotlightPage() {
 
             {/* Year Range */}
             <div className="md:col-span-2">
-              <label className="block text-[10px] uppercase tracking-widest font-semibold mb-1.5"
+              <label className="block text-[12px] uppercase tracking-widest font-semibold mb-1.5"
                      style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                 📅 From Year
               </label>
@@ -434,7 +434,7 @@ export default function SpotlightPage() {
             </div>
 
             <div className="md:col-span-2">
-              <label className="block text-[10px] uppercase tracking-widest font-semibold mb-1.5"
+              <label className="block text-[12px] uppercase tracking-widest font-semibold mb-1.5"
                      style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                 📅 To Year
               </label>
@@ -447,7 +447,7 @@ export default function SpotlightPage() {
 
             {/* Search Button */}
             <div className="md:col-span-3">
-              <label className="block text-[10px] uppercase tracking-widest font-semibold mb-1.5 opacity-0"
+              <label className="block text-[12px] uppercase tracking-widest font-semibold mb-1.5 opacity-0"
                      style={{ fontFamily: "var(--font-table)" }}>Action</label>
               <button onClick={runSearch} disabled={loading}
                       className="w-full py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all hover:scale-[1.02] disabled:opacity-50"
@@ -489,14 +489,14 @@ export default function SpotlightPage() {
                       <img src={f.photo_url.startsWith("http") ? f.photo_url : `https://www.apbt.online-pedigrees.com/${f.photo_url}`}
                            alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} />
                     ) : (
-                      <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-[10px]"
+                      <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-[12px]"
                            style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}>🐕</div>
                     )}
                     <div className="min-w-0 flex-1">
                       <span className="block text-xs font-semibold truncate" style={{ color: getDogColor(f.name), fontFamily: "var(--font-table)" }}>
                         {f.name}
                       </span>
-                      <span className="text-[11px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                      <span className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                         {f.view_count?.toLocaleString()} views
                       </span>
                     </div>
@@ -510,13 +510,13 @@ export default function SpotlightPage() {
           {/* Sort Controls */}
           {searched && (
             <div className="flex items-center gap-1.5 mt-3 pt-3" style={{ borderTop: "2px solid #C9B29F" }}>
-              <span className="text-[11px] uppercase tracking-widest font-semibold mr-1.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)", fontFamily: "var(--font-table)" }}>
+              <span className="text-[12px] uppercase tracking-widest font-semibold mr-1.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                 Sort by:
               </span>
               {SORT_OPTIONS.map((s) => (
                 <button key={s.key}
                         onClick={() => { setSort(s.key); }}
-                        className="text-[10px] px-2 py-1 rounded-lg font-semibold transition-all"
+                        className="text-[12px] px-2 py-1 rounded-lg font-semibold transition-all"
                         style={{
                           background: sort === s.key ? "#C9B29F" : "#FAFAFA",
                           color: sort === s.key ? "#1C1C1C" : "#6B6B6B",
@@ -583,12 +583,12 @@ export default function SpotlightPage() {
                 )}
                 <div>
                   <h2 className="text-sm font-bold" style={{ fontFamily: "var(--font-table)", color: getDogColor(target?.name || "") }}>{target?.name}</h2>
-                  <p className="text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                  <p className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                     {total.toLocaleString()} descendants found · Top {results.length} shown
                   </p>
                 </div>
               </div>
-              <span className="text-[10px] px-3 py-1 rounded-full font-semibold"
+              <span className="text-[12px] px-3 py-1 rounded-full font-semibold"
                     style={{ background: "#FAF7F2", color: "#1C1C1C", border: "2px solid #C9B29F", fontFamily: "var(--font-table)" }}>
                 {fromYear}–{toYear}
               </span>
@@ -605,7 +605,7 @@ export default function SpotlightPage() {
                       }}>
 
                   {/* Rank Badge */}
-                  <div className="absolute top-2 left-2 z-10 w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold"
+                  <div className="absolute top-2 left-2 z-10 w-6 h-6 rounded-full flex items-center justify-center text-[12px] font-bold"
                        style={{
                          background: idx === 0 ? "#C9B29F" : idx === 1 ? "#6B6B6B" : idx === 2 ? "#8a6518" : "#FAFAFA",
                          color: idx === 0 ? "#1C1C1C" : idx < 3 ? "#fff" : "#1C1C1C",
@@ -617,11 +617,11 @@ export default function SpotlightPage() {
 
                   {/* Blood % + COI Badges */}
                   <div className="absolute top-2 right-2 z-10 flex flex-col gap-0.5 items-end">
-                    <div className="px-2 py-0.5 rounded-full text-[10px] font-bold"
+                    <div className="px-2 py-0.5 rounded-full text-[12px] font-bold"
                          style={{ background: "#FAF7F2", color: "#ef4444", fontFamily: "var(--font-mono)", border: "2px solid #C9B29F" }}>
                       🩸 {r.blood_pct}% {target?.name?.split("'S ")[1]?.split(" ")[0] || "Blood"}
                     </div>
-                    <div className="px-2 py-0.5 rounded-full text-[10px] font-bold"
+                    <div className="px-2 py-0.5 rounded-full text-[12px] font-bold"
                          style={{ background: "#FAF7F2", color: r.coi >= 10 ? "#ef4444" : r.coi >= 5 ? "#f59e0b" : "#22c55e", fontFamily: "var(--font-mono)", border: "2px solid #C9B29F" }}>
                       COI {r.coi}%
                     </div>
@@ -646,7 +646,7 @@ export default function SpotlightPage() {
                     {r.titles.length > 0 && (
                       <div className="flex flex-wrap gap-1 mb-2">
                         {r.titles.map((t) => (
-                          <span key={t} className="text-[11px] px-1.5 py-0.5 rounded font-bold"
+                          <span key={t} className="text-[12px] px-1.5 py-0.5 rounded font-bold"
                                 style={{ background: `${TITLE_COLORS[t] || "#888"}20`, color: TITLE_COLORS[t] || "#888", fontFamily: "var(--font-mono)" }}>
                             {t}
                           </span>
@@ -655,7 +655,7 @@ export default function SpotlightPage() {
                     )}
 
                     {/* Relation */}
-                    <div className="text-[10px] mb-1.5 flex items-center gap-1.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                    <div className="text-[12px] mb-1.5 flex items-center gap-1.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                       <span>🧬</span>
                       <span>{r.gen_label}</span>
                       <span style={{ color: "#4A4A4A" }}>·</span>
@@ -664,20 +664,20 @@ export default function SpotlightPage() {
 
                     {/* Lineage Path Preview */}
                     {r.lineage_paths.length > 0 && (
-                      <div className="text-[11px] px-2 py-1.5 rounded-lg mb-2" style={{ background: "#FAFAFA", fontFamily: "var(--font-mono)", color: "#4A4A4A", fontFamily: "var(--font-table)", border: "1px solid #C9B29F" }}>
+                      <div className="text-[12px] px-2 py-1.5 rounded-lg mb-2" style={{ background: "#FAFAFA", fontFamily: "var(--font-mono)", color: "#4A4A4A", border: "1px solid #C9B29F" }}>
                         Gen {r.lineage_paths[0].gen}: {r.lineage_paths[0].path}
                         {r.lineage_paths.length > 1 && <span style={{ color: "#1C1C1C" }}> +{r.lineage_paths.length - 1} more</span>}
                       </div>
                     )}
 
                     {/* Meta */}
-                    <div className="flex items-center justify-between text-[11px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)", fontFamily: "var(--font-table)" }}>
+                    <div className="flex items-center justify-between text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                       <span>🎂 {r.birthdate?.slice(0, 4) || "—"}</span>
                       <span>{r.owner || r.breeder || "—"}</span>
                       <span>👁 {(r.view_count || 0).toLocaleString()}</span>
                     </div>
                     {r.posted_date && (
-                      <div className="text-[11px] mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)", fontFamily: "var(--font-table)" }}>
+                      <div className="text-[12px] mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                         📅 Posted: {r.posted_date}
                       </div>
                     )}
@@ -695,7 +695,7 @@ export default function SpotlightPage() {
             <h3 className="text-sm font-semibold mb-1.5" style={{ fontFamily: "var(--font-table)", color: "#1C1C1C" }}>
               Select a legendary dog and hit &quot;Find Tightest&quot;
             </h3>
-            <p className="text-[10px] max-w-md mx-auto" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+            <p className="text-[12px] max-w-md mx-auto" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               The system will scan all registered pedigrees to find the dogs most tightly bred to your selected foundation dog, ranked by coefficient of inbreeding (COI).
             </p>
 

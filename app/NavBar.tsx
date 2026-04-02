@@ -67,7 +67,7 @@ function NavSearch() {
           className="flex-1 bg-transparent text-xs outline-none"
           style={{ color: q && getDogColor(q) !== "#3a3a3a" ? getDogColor(q) : "#1C1C1C", fontFamily: "var(--font-table, system-ui, sans-serif)", minWidth: 0 }}
         />
-        {q && <button onClick={() => { setQ(""); setResults([]); setSuggestions([]); setShow(false); }} className="text-[10px] opacity-50 hover:opacity-100">✕</button>}
+        {q && <button onClick={() => { setQ(""); setResults([]); setSuggestions([]); setShow(false); }} className="text-[12px] opacity-50 hover:opacity-100">✕</button>}
       </div>
       {show && (results.length > 0 || suggestions.length > 0) && (
         <div
@@ -93,7 +93,7 @@ function NavSearch() {
                 {photoSrc ? (
                   <img src={photoSrc} alt="" className="w-6 h-6 rounded-lg object-cover flex-shrink-0" style={{ border: "1px solid #C9B29F" }} />
                 ) : (
-                  <div className="w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0 text-[10px]"
+                  <div className="w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0 text-[12px]"
                        style={{ background: "#FAFAFA", border: "1px solid #C9B29F" }}>🐕</div>
                 )}
                 <span className="font-semibold truncate" style={{ color: getDogColor(r.registered_name), fontFamily: "var(--font-table)" }}>
@@ -104,7 +104,7 @@ function NavSearch() {
           })}
           {results.length === 0 && suggestions.length > 0 && (
             <>
-              <div className="px-3 py-2 text-[10px] uppercase tracking-wider font-semibold"
+              <div className="px-3 py-2 text-[12px] uppercase tracking-wider font-semibold"
                 style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", borderBottom: "1px solid #C9B29F", background: "rgba(201,178,159,0.1)" }}>
                 Similar names
               </div>
@@ -122,7 +122,7 @@ function NavSearch() {
                     {photoSrc ? (
                       <img src={photoSrc} alt="" className="w-6 h-6 rounded-lg object-cover flex-shrink-0" style={{ border: "1px solid #C9B29F" }} />
                     ) : (
-                      <div className="w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0 text-[10px]"
+                      <div className="w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0 text-[12px]"
                            style={{ background: "#FAFAFA", border: "1px solid #C9B29F" }}>🐕</div>
                     )}
                     <span className="font-semibold truncate" style={{ color: getDogColor(r.registered_name), fontFamily: "var(--font-table)" }}>
@@ -447,7 +447,7 @@ export default function NavBar() {
                   <path d="M13.73 21a2 2 0 0 1-3.46 0" />
                 </svg>
                 {unreadCount > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-1 rounded-lg flex items-center justify-center text-[11px] font-bold"
+                  <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-1 rounded-lg flex items-center justify-center text-[12px] font-bold"
                     style={{
                       background: "#ef4444",
                       color: "#fff",
@@ -469,11 +469,11 @@ export default function NavBar() {
                     {/* Header */}
                     <div className="px-4 py-3 flex items-center justify-between" style={{ borderBottom: "2px solid #C9B29F" }}>
                       <p className="text-xs font-bold uppercase tracking-wider" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-                        Notifications {unreadCount > 0 && <span className="ml-1 text-[10px]" style={{ color: "#ef4444" }}>({unreadCount} new)</span>}
+                        Notifications {unreadCount > 0 && <span className="ml-1 text-[12px]" style={{ color: "#ef4444" }}>({unreadCount} new)</span>}
                       </p>
                       {notifications.length > 0 && (
                         <button onClick={clearAllNotifications}
-                          className="text-[10px] px-2 py-0.5 rounded transition-colors hover:bg-red-500/10"
+                          className="text-[12px] px-2 py-0.5 rounded transition-colors hover:bg-red-500/10"
                           style={{ color: "#ef4444", fontFamily: "var(--font-table)", border: "1px solid #ef4444" }}>
                           Clear All
                         </button>
@@ -573,23 +573,23 @@ export default function NavBar() {
                                 )}
                               </p>
                               {group.body && (
-                                <p className="text-[10px] mt-0.5 truncate" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                                <p className="text-[12px] mt-0.5 truncate" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                                   {group.body}
                                 </p>
                               )}
-                              <p className="text-[11px] mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
+                              <p className="text-[12px] mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
                                 {new Date(group.latestTime + "Z").toLocaleString()}
                               </p>
                             </div>
                             {group.hasUnread && (
                               <div className="flex items-center gap-1 flex-shrink-0 mt-1.5">
-                                {group.count > 1 && <span className="text-[11px] font-bold px-1.5 py-0.5 rounded-lg" style={{ background: "rgba(201,178,159,0.2)", color: "#1C1C1C" }}>{group.count}</span>}
+                                {group.count > 1 && <span className="text-[12px] font-bold px-1.5 py-0.5 rounded-lg" style={{ background: "rgba(201,178,159,0.2)", color: "#1C1C1C" }}>{group.count}</span>}
                                 <div className="w-2 h-2 rounded-lg" style={{ background: "#C9B29F" }} />
                               </div>
                             )}
                             <button
                               onClick={(e) => { e.stopPropagation(); group.ids.forEach(id => deleteNotification(id)); }}
-                              className="text-[10px] flex-shrink-0 p-1 rounded transition-colors hover:bg-red-500/10"
+                              className="text-[12px] flex-shrink-0 p-1 rounded transition-colors hover:bg-red-500/10"
                               style={{ color: "#5a6a82" }}
                               title="Delete all"
                             >
@@ -713,7 +713,7 @@ export default function NavBar() {
                     {/* User info */}
                     <div className="px-4 py-3" style={{ borderBottom: "1px solid #C9B29F" }}>
                       <p className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{userName}</p>
-                      <p className="text-[10px] mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>Admin</p>
+                      <p className="text-[12px] mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>Admin</p>
                     </div>
 
                     {/* Account Settings */}

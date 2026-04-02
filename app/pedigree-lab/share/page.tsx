@@ -316,7 +316,7 @@ function SharePreviewInner() {
               <a href="/" className="flex items-center gap-2" style={{ textDecoration: "none" }} title="Visit PedigreePlatform.com">
                 <img src="/logo.png" alt="Pedigree Platform" style={{ height: 20 }} />
                 <span
-                  className="text-[11px] tracking-wide italic hover:underline"
+                  className="text-[12px] tracking-wide italic hover:underline"
                   style={{ color: "#B8860B", fontFamily: "var(--font-table)", fontWeight: 500 }}
                 >
                   Generated in PedigreePlatform.com
@@ -325,7 +325,7 @@ function SharePreviewInner() {
             </div>
             <div className="flex items-center gap-2">
               <span
-                className="text-[10px] uppercase tracking-widest font-bold"
+                className="text-[12px] uppercase tracking-widest font-bold"
                 style={{ color: riskColor(coi), fontFamily: "var(--font-table)" }}
               >
                 COI
@@ -356,7 +356,7 @@ function SharePreviewInner() {
                   {["First", "Second", "Third", "Fourth", "Fifth"].slice(0, displayGens).map((label) => (
                     <th
                       key={label}
-                      className="text-center text-[11px] uppercase tracking-widest font-bold py-2"
+                      className="text-center text-[12px] uppercase tracking-widest font-bold py-2"
                       style={{
                         background: "#1C1C1C",
                         color: "#FAF7F2",

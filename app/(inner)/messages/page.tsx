@@ -640,7 +640,7 @@ function MessagesContent() {
                     <span className="text-sm font-semibold truncate" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                       {t.other_username}
                     </span>
-                    <span className="text-[10px] flex-shrink-0 ml-2" style={{ color: t.unread_count > 0 ? "#C9B29F" : "#6B6B6B", fontWeight: t.unread_count > 0 ? 700 : 400 }}>
+                    <span className="text-[12px] flex-shrink-0 ml-2" style={{ color: t.unread_count > 0 ? "#C9B29F" : "#6B6B6B", fontWeight: t.unread_count > 0 ? 700 : 400 }}>
                       {formatTime(t.last_time)}
                     </span>
                   </div>
@@ -649,7 +649,7 @@ function MessagesContent() {
                       {t.last_body.substring(0, 50)}
                     </p>
                     {t.unread_count > 0 && (
-                      <span className="flex-shrink-0 ml-2 w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-bold"
+                      <span className="flex-shrink-0 ml-2 w-5 h-5 rounded-full flex items-center justify-center text-[12px] font-bold"
                         style={{ background: "#C9B29F", color: "#1C1C1C" }}>
                         {t.unread_count}
                       </span>
@@ -801,7 +801,7 @@ function MessagesContent() {
                     <p className="text-sm font-bold" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>
                       {selectedThreadData.other_username}
                     </p>
-                    <p className="text-[10px]" style={{ color: "#C9B29F", fontFamily: "var(--font-table)" }}>
+                    <p className="text-[12px]" style={{ color: "#C9B29F", fontFamily: "var(--font-table)" }}>
                       {otherUserStatus?.online ? "online" : otherUserStatus ? formatLastSeen(otherUserStatus.seconds_ago) : ""}
                     </p>
                   </div>
@@ -810,7 +810,7 @@ function MessagesContent() {
               <div className="flex items-center gap-2">
                 {selectedThreadData.marketplace_ad_id && (
                   <a href={`/marketplace/${selectedThreadData.marketplace_ad_id}`}
-                    className="px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase"
+                    className="px-3 py-1.5 rounded-lg text-[12px] font-bold uppercase"
                     style={{ background: "#C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                     View Listing
                   </a>
@@ -838,7 +838,7 @@ function MessagesContent() {
                   <div key={msg.id}>
                     {showDate && (
                       <div className="flex justify-center my-3">
-                        <span className="px-3 py-1 rounded-lg text-[10px] font-medium"
+                        <span className="px-3 py-1 rounded-lg text-[12px] font-medium"
                           style={{ background: "#FAF7F2", color: "#4A4A4A", border: "1px solid #EDE4D5", fontFamily: "var(--font-table)" }}>
                           {formatDateSeparator(msg.created_at)}
                         </span>
@@ -890,7 +890,7 @@ function MessagesContent() {
                                         className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs hover:opacity-80"
                                         style={{ background: isMine ? "rgba(0,0,0,0.08)" : "#FAF7F2", color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                                         📎 <span className="truncate">{att.name}</span>
-                                        <span className="text-[11px] flex-shrink-0" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>{formatFileSize(att.size)}</span>
+                                        <span className="text-[12px] flex-shrink-0" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>{formatFileSize(att.size)}</span>
                                       </a>
                                     );
                                   })}
@@ -944,7 +944,7 @@ function MessagesContent() {
                               }}>
                                 {EMOJI_CATEGORIES.map(cat => (
                                   <div key={cat.name} className="mb-2">
-                                    <div style={{ fontSize: "10px", fontWeight: 600, color: "#4A4A4A", textTransform: "uppercase", letterSpacing: "0.05em", padding: "4px 2px", fontFamily: "var(--font-body)" }}>{cat.name}</div>
+                                    <div style={{ fontSize: "12px", fontWeight: 600, color: "#4A4A4A", textTransform: "uppercase", letterSpacing: "0.05em", padding: "4px 2px", fontFamily: "var(--font-body)" }}>{cat.name}</div>
                                     <div className="flex flex-wrap">
                                       {cat.emojis.map(em => (
                                         <button key={em} onClick={() => { toggleReaction(msg.id, em); setReactionPickerMsgId(null); setEmojiPanelOpen(false); }}
@@ -984,7 +984,7 @@ function MessagesContent() {
                                       cursor: "pointer",
                                     }}>
                                     <span>{emoji}</span>
-                                    <span style={{ fontSize: "11px", fontWeight: 600 }}>{userIds.length}</span>
+                                    <span style={{ fontSize: "12px", fontWeight: 600 }}>{userIds.length}</span>
                                   </button>
                                 );
                               })}
@@ -993,9 +993,9 @@ function MessagesContent() {
                         })()}
                         {/* Time + Read receipt */}
                         <div className={`flex items-center gap-1 mt-0.5 px-1 ${isMine ? "justify-end" : ""}`}>
-                          <span className="text-[10px]" style={{ color: "#4A4A4A" }}>{formatFullTime(msg.created_at)}</span>
+                          <span className="text-[12px]" style={{ color: "#4A4A4A" }}>{formatFullTime(msg.created_at)}</span>
                           {isMine && (
-                            <span style={{ color: msg.is_read ? "#1d5bbf" : "#6B6B6B", fontSize: "11px" }}>
+                            <span style={{ color: msg.is_read ? "#1d5bbf" : "#6B6B6B", fontSize: "12px" }}>
                               {msg.is_read ? "✓✓" : "✓"}
                             </span>
                           )}
@@ -1026,7 +1026,7 @@ function MessagesContent() {
               {pendingAttachments.length > 0 && (
                 <div className="flex flex-wrap gap-2 mb-2">
                   {pendingAttachments.map((att, i) => (
-                    <div key={i} className="flex items-center gap-1.5 px-2 py-1 rounded-lg text-[10px]"
+                    <div key={i} className="flex items-center gap-1.5 px-2 py-1 rounded-lg text-[12px]"
                       style={{ background: "#FAF7F2", border: "1px solid #C9B29F" }}>
                       {att.isImage ? <img src={att.url} alt="" className="w-8 h-8 rounded object-cover" /> : (att as { isVoice?: boolean }).isVoice ? <span>🎤</span> : <span>📎</span>}
                       <span className="truncate max-w-[80px]" style={{ color: "#1C1C1C" }}>{att.name}</span>

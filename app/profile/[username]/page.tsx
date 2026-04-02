@@ -272,7 +272,7 @@ export default function ProfilePage() {
                 {user.username}
               </h1>
               <span
-                className="text-[10px] px-2 py-0.5 rounded-full"
+                className="text-[12px] px-2 py-0.5 rounded-full"
                 style={{
                   background: "#FAF7F2",
                   color: "#1C1C1C",
@@ -286,7 +286,7 @@ export default function ProfilePage() {
                 <>
                   <button
                     onClick={() => router.push(`/messages?to=${encodeURIComponent(user.username)}`)}
-                    className="flex items-center gap-1.5 px-3 py-1 rounded-lg text-[11px] font-semibold transition-all hover:scale-105"
+                    className="flex items-center gap-1.5 px-3 py-1 rounded-lg text-[12px] font-semibold transition-all hover:scale-105"
                     style={{
                       background: "#FAF7F2",
                       border: "2px solid #C9B29F",
@@ -301,7 +301,7 @@ export default function ProfilePage() {
                   <button
                     onClick={toggleBlock}
                     disabled={blockLoading}
-                    className="flex items-center gap-1.5 px-3 py-1 rounded-lg text-[11px] font-semibold transition-all hover:scale-105"
+                    className="flex items-center gap-1.5 px-3 py-1 rounded-lg text-[12px] font-semibold transition-all hover:scale-105"
                     style={{
                       background: isBlocked ? "#FEF2F2" : "#FAF7F2",
                       border: `2px solid ${isBlocked ? "#ef4444" : "#C9B29F"}`,
@@ -344,7 +344,7 @@ export default function ProfilePage() {
             {/* Member Since */}
             {user.created_at && (
               <p
-                className="text-[11px] mt-2"
+                className="text-[12px] mt-2"
                 style={{
                   color: "#4A4A4A",
                   fontFamily: "var(--font-table)",
@@ -360,7 +360,7 @@ export default function ProfilePage() {
       {/* Published Pedigrees */}
       <div className="p-5" style={pgCard}>
         <h2
-          className="text-[10px] uppercase tracking-widest font-bold mb-4 flex items-center gap-2"
+          className="text-[12px] uppercase tracking-widest font-bold mb-4 flex items-center gap-2"
           style={{
             color: "#1C1C1C",
             fontFamily: "var(--font-table)",
@@ -409,7 +409,7 @@ export default function ProfilePage() {
                   </span>
                 </div>
                 <span
-                  className="text-[10px] flex-shrink-0 ml-3"
+                  className="text-[12px] flex-shrink-0 ml-3"
                   style={{ color: "#4A4A4A" }}
                 >
                   {formatDate(ped.created_at)}
@@ -423,7 +423,7 @@ export default function ProfilePage() {
       {/* Marketplace Ads */}
       <div className="p-5" style={pgCard}>
         <h2
-          className="text-[10px] uppercase tracking-widest font-bold mb-4 flex items-center gap-2"
+          className="text-[12px] uppercase tracking-widest font-bold mb-4 flex items-center gap-2"
           style={{
             color: "#1C1C1C",
             fontFamily: "var(--font-table)",
@@ -473,7 +473,7 @@ export default function ProfilePage() {
                     </span>
                     {ad.price != null && (
                       <span
-                        className="text-[10px] font-bold"
+                        className="text-[12px] font-bold"
                         style={{ color: "#22c55e" }}
                       >
                         ${Number(ad.price).toLocaleString()}
@@ -482,7 +482,7 @@ export default function ProfilePage() {
                   </div>
                 </div>
                 <span
-                  className="text-[10px] flex-shrink-0 ml-3"
+                  className="text-[12px] flex-shrink-0 ml-3"
                   style={{ color: "#4A4A4A" }}
                 >
                   {formatDate(ad.created_at)}

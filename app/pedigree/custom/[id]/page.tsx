@@ -271,7 +271,7 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
           <button onClick={() => setZoom((z) => Math.max(0.5, z - 0.1))} className="w-7 h-7 rounded-lg flex items-center justify-center text-sm font-bold transition-all" style={{ color: "#FAF7F2" }}>−</button>
           <span className="text-xs px-1.5 font-bold" style={{ color: "#C9B29F", fontFamily: "var(--font-table)", minWidth: "36px", textAlign: "center" }}>{Math.round(zoom * 100)}%</span>
           <button onClick={() => setZoom((z) => Math.min(1.5, z + 0.1))} className="w-7 h-7 rounded-lg flex items-center justify-center text-sm font-bold transition-all" style={{ color: "#FAF7F2" }}>+</button>
-          <button onClick={() => setZoom(1)} className="ml-0.5 px-2.5 py-1 rounded-lg flex items-center justify-center text-[11px] font-bold transition-all" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)", opacity: 0.7 }}>Reset</button>
+          <button onClick={() => setZoom(1)} className="ml-0.5 px-2.5 py-1 rounded-lg flex items-center justify-center text-[12px] font-bold transition-all" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)", opacity: 0.7 }}>Reset</button>
         </div>
       </div>
 
@@ -285,9 +285,9 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
 
           {/* Column headers */}
           <div className="mb-1" style={{ display: "grid", gridTemplateColumns: `${maxGen >= 5 ? "130px" : "170px"} repeat(${maxGen}, 1fr)`, gap: "4px" }}>
-            <div className="px-1.5 py-1 text-center" style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "11px", color: "#1C1C1C", textTransform: "uppercase", letterSpacing: "0.1em" }}>Dog</div>
+            <div className="px-1.5 py-1 text-center" style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "12px", color: "#1C1C1C", textTransform: "uppercase", letterSpacing: "0.1em" }}>Dog</div>
             {gens.filter((g) => g <= maxGen).map((g) => (
-              <div key={g} className="px-1.5 py-1 text-center" style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "11px", color: "#1C1C1C", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+              <div key={g} className="px-1.5 py-1 text-center" style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "12px", color: "#1C1C1C", textTransform: "uppercase", letterSpacing: "0.1em" }}>
                 {genLabels[g - 1] || `Gen ${g}`}
               </div>
             ))}
@@ -592,14 +592,14 @@ export default function PublishedPedigreePage() {
               {displayName}
             </h1>
             <div className="flex items-center justify-center gap-2 mt-1">
-              <span className="text-[10px] px-2 py-0.5 rounded-lg" style={{
+              <span className="text-[12px] px-2 py-0.5 rounded-lg" style={{
                 background: "rgba(201,178,159,0.15)", color: "#1C1C1C",
                 fontFamily: "var(--font-mono)", border: "2px solid #C9B29F",
               }}>
                 Community Pedigree
               </span>
               {ped.creator_username && (
-                <span className="text-[10px] px-2 py-0.5 rounded-lg" style={{
+                <span className="text-[12px] px-2 py-0.5 rounded-lg" style={{
                   background: "rgba(201,178,159,0.12)", color: "#1C1C1C",
                   fontFamily: "var(--font-table)", border: "1px solid rgba(96,165,250,0.3)",
                 }}>
@@ -609,7 +609,7 @@ export default function PublishedPedigreePage() {
               {isOwner && (
                 <>
                   <Link href={`/pedigree-lab?edit=${ped.id}`}
-                    className="text-[10px] px-2 py-0.5 rounded-lg font-semibold transition-all hover:scale-105"
+                    className="text-[12px] px-2 py-0.5 rounded-lg font-semibold transition-all hover:scale-105"
                     style={{
                       background: "rgba(34,197,94,0.12)", color: "#22c55e",
                       fontFamily: "var(--font-table)", border: "1px solid rgba(34,197,94,0.3)",
@@ -618,7 +618,7 @@ export default function PublishedPedigreePage() {
                   </Link>
                   <button
                     onClick={() => setShowDeleteConfirm(true)}
-                    className="text-[10px] px-2 py-0.5 rounded-lg font-semibold transition-all hover:scale-105"
+                    className="text-[12px] px-2 py-0.5 rounded-lg font-semibold transition-all hover:scale-105"
                     style={{
                       background: "rgba(239,68,68,0.12)", color: "#ef4444",
                       fontFamily: "var(--font-table)", border: "1px solid rgba(239,68,68,0.3)",
@@ -692,7 +692,7 @@ export default function PublishedPedigreePage() {
           }}>
             <div className="flex items-center gap-2">
               <div className="w-5 h-5 rounded flex items-center justify-center flex-shrink-0" style={{ background: "rgba(201,178,159,0.15)", border: "2px solid #C9B29F" }}>
-                <span className="text-[10px]">📝</span>
+                <span className="text-[12px]">📝</span>
               </div>
               <span className="text-xs font-semibold flex-shrink-0" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Pedigree Notes:</span>
               <p className="text-xs" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", lineHeight: "1.4" }}>
@@ -706,7 +706,7 @@ export default function PublishedPedigreePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           <div className="rounded-lg p-2.5"
             style={{ border: "2px solid #C9B29F",  background: "#FAFAFA",  }}>
-            <div className="text-[11px] uppercase tracking-wider mb-0.5 font-semibold" style={{ color: "#1d5bbf", letterSpacing: "0.1em" }}>♂ Sire (Father)</div>
+            <div className="text-[12px] uppercase tracking-wider mb-0.5 font-semibold" style={{ color: "#1d5bbf", letterSpacing: "0.1em" }}>♂ Sire (Father)</div>
             {sire ? (
               <Link href={`/pedigree/${sire.dog_id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColor(sire.registered_name) }}>
                 {sire.registered_name}
@@ -715,7 +715,7 @@ export default function PublishedPedigreePage() {
           </div>
           <div className="rounded-lg p-2.5"
             style={{ border: "2px solid #C9B29F",  background: "#FAFAFA",  }}>
-            <div className="text-[11px] uppercase tracking-wider mb-0.5 font-semibold" style={{ color: "#9f1239", letterSpacing: "0.1em" }}>♀ Dam (Mother)</div>
+            <div className="text-[12px] uppercase tracking-wider mb-0.5 font-semibold" style={{ color: "#9f1239", letterSpacing: "0.1em" }}>♀ Dam (Mother)</div>
             {dam ? (
               <Link href={`/pedigree/${dam.dog_id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColor(dam.registered_name) }}>
                 {dam.registered_name}
@@ -737,7 +737,7 @@ export default function PublishedPedigreePage() {
               <span className="text-sm">🌳</span>
               <span className="text-sm font-semibold" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Pedigree</span>
               {tree.length > 0 && (
-                <span className="text-[10px] px-2 py-0.5 rounded-lg font-medium" style={{
+                <span className="text-[12px] px-2 py-0.5 rounded-lg font-medium" style={{
                   background: "rgba(201,178,159,0.3)",
                   color: "#C9B29F",
                   fontFamily: "var(--font-table)",
@@ -746,7 +746,7 @@ export default function PublishedPedigreePage() {
                 </span>
               )}
             </div>
-            <div className="flex items-center gap-3" style={{ fontFamily: "var(--font-table)", fontSize: "10px", color: "#C9B29F" }}>
+            <div className="flex items-center gap-3" style={{ fontFamily: "var(--font-table)", fontSize: "12px", color: "#C9B29F" }}>
               <span>👁 {((ped.view_count || 0) + 1).toLocaleString()} views</span>
             </div>
           </div>
@@ -787,7 +787,7 @@ export default function PublishedPedigreePage() {
                     Journal
                   </span>
                 </div>
-                <span className="text-[11px] px-2 py-0.5 rounded-lg" style={{
+                <span className="text-[12px] px-2 py-0.5 rounded-lg" style={{
                   background: "rgba(220,38,38,0.12)", color: "#ef4444",
                   fontFamily: "var(--font-table)", border: "1px solid rgba(220,38,38,0.3)",
                 }}>
@@ -800,11 +800,11 @@ export default function PublishedPedigreePage() {
                 {journal.rabiesDate && (
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <span className="text-[10px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Rabies: Date Given</span>
+                      <span className="text-[12px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Rabies: Date Given</span>
                       <span className="text-sm" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{fmtDate(journal.rabiesDate)}</span>
                     </div>
                     <div>
-                      <span className="text-[10px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Rabies: Next Due</span>
+                      <span className="text-[12px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Rabies: Next Due</span>
                       <span className="text-sm" style={{ color: "#22c55e", fontFamily: "var(--font-mono)" }}>{fmtDate(journal.rabiesNextDue || "")}</span>
                     </div>
                   </div>
@@ -813,7 +813,7 @@ export default function PublishedPedigreePage() {
                 {/* AVID Chip */}
                 {journal.avidChip && (
                   <div>
-                    <span className="text-[10px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>AVID Chip</span>
+                    <span className="text-[12px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>AVID Chip</span>
                     <span className="text-sm" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{journal.avidChip}</span>
                   </div>
                 )}
@@ -821,13 +821,13 @@ export default function PublishedPedigreePage() {
                 {/* Vaccines */}
                 {journal.vaccines && journal.vaccines.some(v => v.checked) && (
                   <div>
-                    <span className="text-[10px] uppercase tracking-widest font-semibold block mb-2" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Vaccines</span>
+                    <span className="text-[12px] uppercase tracking-widest font-semibold block mb-2" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Vaccines</span>
                     <div className="space-y-1.5">
                       {journal.vaccines.filter(v => v.checked).map(v => (
                         <div key={v.name} className="flex items-center justify-between rounded-lg px-3 py-2"
                           style={{ background: "#FAF7F2", border: "2px solid #EDE4D5" }}>
                           <span className="text-xs font-semibold" style={{ color: "#22c55e", fontFamily: "var(--font-table)" }}>✓ {v.name}</span>
-                          {v.date && <span className="text-[10px]" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{fmtDate(v.date)}</span>}
+                          {v.date && <span className="text-[12px]" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{fmtDate(v.date)}</span>}
                         </div>
                       ))}
                     </div>
@@ -837,23 +837,23 @@ export default function PublishedPedigreePage() {
                 {/* Worming History */}
                 {journal.worming && journal.worming.length > 0 && (
                   <div>
-                    <span className="text-[10px] uppercase tracking-widest font-semibold block mb-2" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Worming History</span>
+                    <span className="text-[12px] uppercase tracking-widest font-semibold block mb-2" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Worming History</span>
                     <div className="space-y-1.5">
                       {journal.worming.map((w, i) => (
                         <div key={i} className="flex items-center justify-between rounded-lg px-3 py-2"
                           style={{ background: "#FAF7F2", border: "2px solid #EDE4D5" }}>
                           <div className="flex items-center gap-2">
-                            {w.remindMe && <span className="text-[11px]">🔔</span>}
+                            {w.remindMe && <span className="text-[12px]">🔔</span>}
                             <span className="text-xs font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                               {w.type === "Other" ? w.otherType || "Other" : w.type}
                             </span>
                           </div>
                           <div className="flex items-center gap-3">
-                            <span className="text-[10px]" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{fmtDate(w.dateWormed)}</span>
+                            <span className="text-[12px]" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{fmtDate(w.dateWormed)}</span>
                             {w.nextDue && (
                               <>
-                                <span className="text-[11px]" style={{ color: "#4A4A4A" }}>→</span>
-                                <span className="text-[10px]" style={{ color: "#22c55e", fontFamily: "var(--font-mono)" }}>Due: {fmtDate(w.nextDue)}</span>
+                                <span className="text-[12px]" style={{ color: "#4A4A4A" }}>→</span>
+                                <span className="text-[12px]" style={{ color: "#22c55e", fontFamily: "var(--font-mono)" }}>Due: {fmtDate(w.nextDue)}</span>
                               </>
                             )}
                           </div>
@@ -866,7 +866,7 @@ export default function PublishedPedigreePage() {
                 {/* Journal Notes */}
                 {journal.notes && (
                   <div>
-                    <span className="text-[10px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Journal Notes</span>
+                    <span className="text-[12px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Journal Notes</span>
                     <p className="text-sm leading-relaxed" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{journal.notes}</p>
                   </div>
                 )}
@@ -915,7 +915,7 @@ export default function PublishedPedigreePage() {
             <p className="text-xs text-center font-bold mb-4" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               {ped?.name || "this pedigree"}?
             </p>
-            <p className="text-[10px] text-center mb-5" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+            <p className="text-[12px] text-center mb-5" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
               This action cannot be undone.
             </p>
             <div className="flex gap-3">

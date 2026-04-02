@@ -109,7 +109,7 @@ export default function DogOfTheMonthPage() {
               style={{ color: item.color, fontFamily: "var(--font-table)" }}>
               {item.title}
             </p>
-            <p className="text-[11px]"
+            <p className="text-[12px]"
               style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               {item.desc}
             </p>

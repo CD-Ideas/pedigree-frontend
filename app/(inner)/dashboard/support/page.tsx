@@ -167,7 +167,7 @@ export default function SupportPage() {
           {/* Message List */}
           <div className="md:col-span-1 rounded-lg overflow-hidden" style={steelFrame}>
             <div className="px-4 py-3" style={{ borderBottom: "2px solid #C9B29F" }}>
-              <p className="text-[10px] uppercase tracking-widest font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px] uppercase tracking-widest font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                 Tickets ({messages.length})
               </p>
             </div>
@@ -184,11 +184,11 @@ export default function SupportPage() {
                       <p className="text-xs font-semibold truncate" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                         {m.subject}
                       </p>
-                      <p className="text-[10px] truncate" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", opacity: 0.8 }}>
+                      <p className="text-[12px] truncate" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", opacity: 0.8 }}>
                         {m.name}
                       </p>
                     </div>
-                    <span className="text-[11px] px-1.5 py-0.5 rounded-full ml-2 flex-shrink-0" style={{
+                    <span className="text-[12px] px-1.5 py-0.5 rounded-full ml-2 flex-shrink-0" style={{
                       background: m.status === "new" ? "rgba(234,179,8,0.15)" : m.status === "replied" ? "rgba(34,197,94,0.15)" : "rgba(107,114,128,0.15)",
                       color: m.status === "new" ? "#eab308" : m.status === "replied" ? "#22c55e" : "#6B6B6B",
                       fontFamily: "var(--font-table)",
@@ -196,10 +196,10 @@ export default function SupportPage() {
                       {m.status}
                     </span>
                   </div>
-                  <p className="text-[10px] truncate mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                  <p className="text-[12px] truncate mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                     {m.message}
                   </p>
-                  <p className="text-[11px] mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                  <p className="text-[12px] mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                     {formatDate(m.created_at)}
                   </p>
                 </button>
@@ -217,13 +217,13 @@ export default function SupportPage() {
                     <p className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                       {originalMessage.subject}
                     </p>
-                    <p className="text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                    <p className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                       Opened {formatDate(originalMessage.created_at)}
                     </p>
                   </div>
                   <button
                     onClick={() => deleteTicket(selected!)}
-                    className="px-3 py-1 rounded-lg text-[10px] font-semibold uppercase tracking-wider transition-all hover:scale-105"
+                    className="px-3 py-1 rounded-lg text-[12px] font-semibold uppercase tracking-wider transition-all hover:scale-105"
                     style={{
                       background: "rgba(239,68,68,0.1)",
                       border: "1px solid rgba(239,68,68,0.3)",
@@ -243,7 +243,7 @@ export default function SupportPage() {
                       <p className="text-xs" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", wordBreak: "break-word" }}>
                         {originalMessage.message}
                       </p>
-                      <p className="text-[11px] mt-1 text-right" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                      <p className="text-[12px] mt-1 text-right" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                         {formatDate(originalMessage.created_at)}
                       </p>
                     </div>
@@ -257,12 +257,12 @@ export default function SupportPage() {
                         border: r.sender_type === "admin" ? "2px solid #C9B29F" : "none",
                       }}>
                         {r.sender_type === "admin" && (
-                          <p className="text-[11px] font-bold mb-1" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>⚡ Support Team</p>
+                          <p className="text-[12px] font-bold mb-1" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>⚡ Support Team</p>
                         )}
                         <p className="text-xs" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", wordBreak: "break-word" }}>
                           {r.message}
                         </p>
-                        <p className="text-[11px] mt-1" style={{ color: "#4A4A4A", textAlign: r.sender_type === "user" ? "right" : "left", fontFamily: "var(--font-table)" }}>
+                        <p className="text-[12px] mt-1" style={{ color: "#4A4A4A", textAlign: r.sender_type === "user" ? "right" : "left", fontFamily: "var(--font-table)" }}>
                           {formatDate(r.created_at)}
                         </p>
                       </div>
@@ -298,7 +298,7 @@ export default function SupportPage() {
                 <p className="text-sm font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                   Select a ticket to view
                 </p>
-                <p className="text-[10px] mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                <p className="text-[12px] mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                   Click a ticket on the left to see the conversation
                 </p>
               </div>

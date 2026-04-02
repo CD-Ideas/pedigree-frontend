@@ -260,7 +260,7 @@ export default function MyPedigreesPage() {
         {/* Stats bar */}
         <div className="flex items-center gap-4">
           <span
-            className="text-[10px] px-3 py-1 rounded-full"
+            className="text-[12px] px-3 py-1 rounded-full"
             style={{
               background: "rgba(201,178,159,0.1)",
               color: "#1C1C1C",
@@ -272,7 +272,7 @@ export default function MyPedigreesPage() {
           </span>
           <Link
             href="/pedigree-lab"
-            className="text-[10px] px-3 py-1 rounded-full transition-all hover:scale-105"
+            className="text-[12px] px-3 py-1 rounded-full transition-all hover:scale-105"
             style={{
               background: "rgba(184,134,11,0.25)",
               color: "#8a6518",
@@ -285,7 +285,7 @@ export default function MyPedigreesPage() {
           </Link>
           {(search.trim() || filterContinent || filterCountry || sexFilter || hasPhotoFilter) && (
             <span
-              className="text-[10px] px-3 py-1 rounded-full"
+              className="text-[12px] px-3 py-1 rounded-full"
               style={{
                 background: "rgba(96,165,250,0.1)",
                 color: "#1d5bbf",
@@ -319,7 +319,7 @@ export default function MyPedigreesPage() {
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value as SortOption)}
-            className="rounded-lg px-3 text-[11px] outline-none cursor-pointer"
+            className="rounded-lg px-3 text-[12px] outline-none cursor-pointer"
             style={{
               background: "#FAF7F2",
               border: "2px solid #C9B29F",
@@ -344,7 +344,7 @@ export default function MyPedigreesPage() {
             Filters
             {activeFilters > 0 && (
               <span
-                className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold"
+                className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full flex items-center justify-center text-[12px] font-bold"
                 style={{ background: "#C9B29F", color: "#1C1C1C" }}
               >
                 {activeFilters}
@@ -369,7 +369,7 @@ export default function MyPedigreesPage() {
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2.5">
               <div>
-                <label className="text-[10px] uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A" }}>Continent</label>
+                <label className="text-[12px] uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A" }}>Continent</label>
                 <select
                   value={filterContinent}
                   onChange={(e) => { setFilterContinent(e.target.value); setFilterCountry(""); setPage(1); }}
@@ -383,7 +383,7 @@ export default function MyPedigreesPage() {
                 </select>
               </div>
               <div>
-                <label className="text-[10px] uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A" }}>Country</label>
+                <label className="text-[12px] uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A" }}>Country</label>
                 <select
                   value={filterCountry}
                   onChange={(e) => { setFilterCountry(e.target.value); setPage(1); }}
@@ -397,7 +397,7 @@ export default function MyPedigreesPage() {
                 </select>
               </div>
               <div>
-                <label className="text-[10px] uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A" }}>Sex</label>
+                <label className="text-[12px] uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A" }}>Sex</label>
                 <select
                   value={sexFilter}
                   onChange={(e) => { setSexFilter(e.target.value); setPage(1); }}
@@ -454,14 +454,14 @@ export default function MyPedigreesPage() {
                       style={{ color: getDogColor(r.dogName), fontFamily: "var(--font-table)" }}>
                       {r.dogName}
                     </Link>
-                    <span className="text-[10px]" style={{ color: "#4A4A4A" }}>—</span>
+                    <span className="text-[12px]" style={{ color: "#4A4A4A" }}>—</span>
                     <span className="text-xs" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{r.label}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px]" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}>
+                    <span className="text-[12px]" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}>
                       {formatDate(r.dueDate)}
                     </span>
-                    <span className="text-[10px] px-1.5 py-0.5 rounded-full font-bold"
+                    <span className="text-[12px] px-1.5 py-0.5 rounded-full font-bold"
                       style={{
                         background: r.daysLeft <= 0 ? "rgba(220,38,38,0.2)" : r.daysLeft <= 3 ? "rgba(234,179,8,0.2)" : "rgba(34,197,94,0.15)",
                         color: r.daysLeft <= 0 ? "#fc8181" : r.daysLeft <= 3 ? "#eab308" : "#22c55e",
@@ -576,7 +576,7 @@ export default function MyPedigreesPage() {
                   {/* Details */}
                   <div className="px-2 py-1.5">
                     <p
-                      className="text-[11px] font-bold truncate"
+                      className="text-[12px] font-bold truncate"
                       style={{
                         color: titleColor,
                         fontFamily: "var(--font-table)",
@@ -586,13 +586,13 @@ export default function MyPedigreesPage() {
                     </p>
                     <div className="flex items-center gap-1 mt-0.5">
                       <span
-                        className="text-[11px]"
+                        className="text-[12px]"
                         style={{ color: isMale ? "#1d5bbf" : "#9f1239" }}
                       >
                         {isMale ? "♂" : "♀"}
                       </span>
                       {p.country && (
-                        <span className="text-[11px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                        <span className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                           · {p.country}
                         </span>
                       )}
@@ -625,7 +625,7 @@ export default function MyPedigreesPage() {
                     {/* Actions */}
                     <div className="flex items-center gap-1 mt-1.5">
                       <span
-                        className="text-[11px] px-2 py-0.5 rounded-lg font-semibold transition-all group-hover:scale-105 inline-block"
+                        className="text-[12px] px-2 py-0.5 rounded-lg font-semibold transition-all group-hover:scale-105 inline-block"
                         style={{
                           background: "rgba(201,178,159,0.1)",
                           color: "#1C1C1C",
@@ -636,7 +636,7 @@ export default function MyPedigreesPage() {
                         View
                       </span>
                       <span
-                        className="text-[11px] px-2 py-0.5 rounded-lg font-semibold inline-block"
+                        className="text-[12px] px-2 py-0.5 rounded-lg font-semibold inline-block"
                         style={{
                           background: "rgba(34,197,94,0.1)",
                           color: "#22c55e",
@@ -661,13 +661,13 @@ export default function MyPedigreesPage() {
             <table className="w-full text-sm">
               <thead>
                 <tr style={{ borderBottom: "2px solid #C9B29F" }}>
-                  <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Dog Name</th>
-                  <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Sex</th>
-                  <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden md:table-cell" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Country</th>
-                  <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden md:table-cell" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Breeder</th>
-                  <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden lg:table-cell" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Owner</th>
-                  <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden lg:table-cell" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Date Posted</th>
-                  <th className="text-left px-3 py-2 text-[10px] uppercase tracking-wider font-medium hidden md:table-cell" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Views</th>
+                  <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-medium" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Dog Name</th>
+                  <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-medium" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Sex</th>
+                  <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-medium hidden md:table-cell" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Country</th>
+                  <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-medium hidden md:table-cell" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Breeder</th>
+                  <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-medium hidden lg:table-cell" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Owner</th>
+                  <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-medium hidden lg:table-cell" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Date Posted</th>
+                  <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-medium hidden md:table-cell" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Views</th>
                 </tr>
               </thead>
               <tbody>
@@ -680,7 +680,7 @@ export default function MyPedigreesPage() {
                         <Link href={`/pedigree/custom/${p.id}`} className="font-medium hover:underline text-xs" style={{ color: getDogColor(displayName), fontFamily: "var(--font-table)" }}>
                           {displayName}
                         </Link>
-                        <div className="text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
+                        <div className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
                           ID: {p.id}
                         </div>
                       </td>
@@ -724,7 +724,7 @@ export default function MyPedigreesPage() {
               <button
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={page === 1}
-                className="px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-all"
+                className="px-3 py-1.5 rounded-lg text-[12px] font-semibold transition-all"
                 style={{
                   background: page === 1 ? "#EDE4D5" : "#FAF7F2",
                   border: "2px solid #C9B29F",
@@ -741,11 +741,11 @@ export default function MyPedigreesPage() {
                 .map((p, idx, arr) => (
                   <span key={p}>
                     {idx > 0 && arr[idx - 1] !== p - 1 && (
-                      <span className="text-[10px] px-1" style={{ color: "#4A4A4A" }}>…</span>
+                      <span className="text-[12px] px-1" style={{ color: "#4A4A4A" }}>…</span>
                     )}
                     <button
                       onClick={() => setPage(p)}
-                      className="w-8 h-8 rounded-lg text-[11px] font-semibold transition-all"
+                      className="w-8 h-8 rounded-lg text-[12px] font-semibold transition-all"
                       style={{
                         background: page === p ? "#1C1C1C" : "#FAF7F2",
                         border: "2px solid #C9B29F",
@@ -760,7 +760,7 @@ export default function MyPedigreesPage() {
               <button
                 onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                 disabled={page === totalPages}
-                className="px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-all"
+                className="px-3 py-1.5 rounded-lg text-[12px] font-semibold transition-all"
                 style={{
                   background: page === totalPages ? "#EDE4D5" : "#FAF7F2",
                   border: "2px solid #C9B29F",

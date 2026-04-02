@@ -90,7 +90,7 @@ export default function ContactPage() {
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Name */}
           <div>
-            <label className="block text-[10px] uppercase tracking-widest font-bold mb-1.5"
+            <label className="block text-[12px] uppercase tracking-widest font-bold mb-1.5"
               style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               Your Name
             </label>
@@ -108,7 +108,7 @@ export default function ContactPage() {
 
           {/* Subject */}
           <div>
-            <label className="block text-[10px] uppercase tracking-widest font-bold mb-1.5"
+            <label className="block text-[12px] uppercase tracking-widest font-bold mb-1.5"
               style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               Subject
             </label>
@@ -125,7 +125,7 @@ export default function ContactPage() {
 
           {/* Message */}
           <div>
-            <label className="block text-[10px] uppercase tracking-widest font-bold mb-1.5"
+            <label className="block text-[12px] uppercase tracking-widest font-bold mb-1.5"
               style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               Message
             </label>
@@ -138,7 +138,7 @@ export default function ContactPage() {
               style={inputStyle}
               maxLength={5000}
             />
-            <p className="text-right text-[10px] mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+            <p className="text-right text-[12px] mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               {message.length}/5000
             </p>
           </div>

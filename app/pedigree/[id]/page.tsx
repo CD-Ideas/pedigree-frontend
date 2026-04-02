@@ -360,7 +360,7 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
             className="w-7 h-7 rounded-lg flex items-center justify-center text-sm font-bold transition-all"
             style={{ color: PG.tabText }}>+</button>
           <button onClick={() => setZoom(1)}
-            className="ml-0.5 px-2.5 py-1 rounded-lg flex items-center justify-center text-[11px] font-bold transition-all"
+            className="ml-0.5 px-2.5 py-1 rounded-lg flex items-center justify-center text-[12px] font-bold transition-all"
             style={{ color: PG.tabText, fontFamily: PG.font, opacity: 0.7 }}>Reset</button>
         </div>
       </div>
@@ -576,7 +576,7 @@ function SiblingsTab({ siblings }: { siblings: Dog["siblings"] }) {
       <div className="flex flex-wrap gap-1.5 mb-3">
         {sections.map((s) => (
           <button key={s.key} onClick={() => setOpenSib(openSib === s.key ? null : s.key)}
-            className="flex items-center gap-1.5 px-3 py-1 rounded text-[11px] uppercase tracking-wider font-semibold transition-all cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-1 rounded text-[12px] uppercase tracking-wider font-semibold transition-all cursor-pointer"
             style={{
               background: openSib === s.key ? PG.subjectBg : PG.cardBg,
               border: openSib === s.key ? PG.subjectBorder : PG.cardBorder,
@@ -586,7 +586,7 @@ function SiblingsTab({ siblings }: { siblings: Dog["siblings"] }) {
               borderRadius: PG.cardRadius,
             }}>
             {s.label}
-            <span className="text-[11px] px-1.5 rounded-lg" style={{ background: PG.bg, fontFamily: PG.font }}>
+            <span className="text-[12px] px-1.5 rounded-lg" style={{ background: PG.bg, fontFamily: PG.font }}>
               {s.list.length}
             </span>
             <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" style={{ transform: openSib === s.key ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>
@@ -699,7 +699,7 @@ function PedStatsTab({ genetics }: { genetics: Genetic[] }) {
 
   return (
     <div>
-      <p className="text-[10px] mb-3 font-semibold" style={{ color: PG.textMuted, fontFamily: PG.font }}>
+      <p className="text-[12px] mb-3 font-semibold" style={{ color: PG.textMuted, fontFamily: PG.font }}>
         Genetic contribution of ancestors to this dog&apos;s pedigree
       </p>
       <div className="flex flex-col lg:flex-row gap-4 items-start">
@@ -717,7 +717,7 @@ function PedStatsTab({ genetics }: { genetics: Genetic[] }) {
             </text>
           </svg>
           {hovered !== null && slices[hovered] && (
-            <div className="absolute top-1 left-1 px-2 py-1 rounded-lg text-[10px] font-bold"
+            <div className="absolute top-1 left-1 px-2 py-1 rounded-lg text-[12px] font-bold"
                  style={{ background: PG.cardBg, border: `1px solid ${slices[hovered].color}`, color: slices[hovered].color, fontFamily: PG.font }}>
               {slices[hovered].ancestor_name}: {slices[hovered].percentage.toFixed(1)}%
             </div>
@@ -743,7 +743,7 @@ function PedStatsTab({ genetics }: { genetics: Genetic[] }) {
                   {s.ancestor_id ? <DogLink dogId={s.ancestor_id} name={s.ancestor_name} /> : <span style={{ color: PG.textMuted }}>{s.ancestor_name}</span>}
                 </div>
                 <span className="font-bold flex-shrink-0"
-                      style={{ fontFamily: PG.font, fontSize: "11px", color: s.color }}>
+                      style={{ fontFamily: PG.font, fontSize: "12px", color: s.color }}>
                   {s.percentage.toFixed(1)}%
                 </span>
               </div>
@@ -777,7 +777,7 @@ function PhotosTab({ offspring }: { offspring: Offspring[] }) {
               <img src={src} alt={o.offspring_name} className="w-full h-full object-cover transition-transform group-hover:scale-105" />
             </div>
             <div className="px-1.5 py-1" style={{ borderTop: "1px solid #EDE4D5" }}>
-              <p className="font-semibold truncate" style={{ color: cc, fontFamily: PG.font, fontSize: "11px", lineHeight: 1.1 }}>
+              <p className="font-semibold truncate" style={{ color: cc, fontFamily: PG.font, fontSize: "12px", lineHeight: 1.1 }}>
                 {o.offspring_name}
               </p>
             </div>
@@ -850,7 +850,7 @@ function TitlesTab({ offspring }: { offspring: Offspring[] }) {
       <div className="flex flex-wrap gap-1 mb-3">
         {sortedKeys.map((title) => (
           <button key={title} onClick={() => setOpenTitle(openTitle === title ? null : title)}
-            className="flex items-center gap-1.5 px-3 py-1 rounded text-[11px] uppercase tracking-wider font-semibold transition-all cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-1 rounded text-[12px] uppercase tracking-wider font-semibold transition-all cursor-pointer"
             style={{
               background: openTitle === title ? PG.subjectBg : PG.cardBg,
               border: openTitle === title ? PG.subjectBorder : PG.cardBorder,
@@ -860,7 +860,7 @@ function TitlesTab({ offspring }: { offspring: Offspring[] }) {
               borderRadius: PG.cardRadius,
             }}>
             {LABELS[title] || title}
-            <span className="text-[11px] px-1.5 rounded-lg" style={{ background: PG.bg, fontFamily: PG.font }}>
+            <span className="text-[12px] px-1.5 rounded-lg" style={{ background: PG.bg, fontFamily: PG.font }}>
               {groups[title].length}
             </span>
             <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" style={{ transform: openTitle === title ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>
@@ -1079,7 +1079,7 @@ export default function PublicPedigreePage() {
                style={{ border: "2px solid #C9B29F", background: "#FAFAFA", borderRadius: PG.cardRadius }}
                onMouseEnter={() => { if (dog.sire?.photo_url) { const u = dog.sire.photo_url; setHoverPhoto(u.startsWith("http") ? u : `https://www.apbt.online-pedigrees.com/${u}`); } }}
                onMouseLeave={() => setHoverPhoto(null)}>
-            <div className="text-[11px] uppercase tracking-wider mb-0.5 font-semibold"
+            <div className="text-[12px] uppercase tracking-wider mb-0.5 font-semibold"
                  style={{ color: "#1d5bbf", letterSpacing: "0.1em" }}>♂ Sire (Father)</div>
             {dog.sire ? (
               <Link href={`/pedigree/${dog.sire.id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColorDark(dog.sire.name) }}>
@@ -1091,7 +1091,7 @@ export default function PublicPedigreePage() {
                style={{ border: "2px solid #C9B29F", background: "#FAFAFA", borderRadius: PG.cardRadius }}
                onMouseEnter={() => { if (dog.dam?.photo_url) { const u = dog.dam.photo_url; setHoverPhoto(u.startsWith("http") ? u : `https://www.apbt.online-pedigrees.com/${u}`); } }}
                onMouseLeave={() => setHoverPhoto(null)}>
-            <div className="text-[11px] uppercase tracking-wider mb-0.5 font-semibold"
+            <div className="text-[12px] uppercase tracking-wider mb-0.5 font-semibold"
                  style={{ color: "#9f1239", letterSpacing: "0.1em" }}>♀ Dam (Mother)</div>
             {dog.dam ? (
               <Link href={`/pedigree/${dog.dam.id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColorDark(dog.dam.name) }}>
@@ -1117,7 +1117,7 @@ export default function PublicPedigreePage() {
                 fontFamily: PG.font,
               }}>Pedigree</span>
               {(dog.pedigree?.length || 0) > 0 && (
-                <span className="text-[10px] px-2 py-0.5 rounded-lg font-medium" style={{
+                <span className="text-[12px] px-2 py-0.5 rounded-lg font-medium" style={{
                   background: "rgba(201,178,159,0.3)",
                   color: PG.tabActive,
                   fontFamily: PG.font,
@@ -1126,7 +1126,7 @@ export default function PublicPedigreePage() {
                 </span>
               )}
             </div>
-            <div className="flex items-center gap-2 sm:gap-3 flex-wrap" style={{ fontFamily: PG.font, fontSize: "10px", color: PG.tabActive }}>
+            <div className="flex items-center gap-2 sm:gap-3 flex-wrap" style={{ fontFamily: PG.font, fontSize: "12px", color: PG.tabActive }}>
               <span>🐾 {dog.offspring?.length || dog.offspring_count || 0} offspring</span>
               <span>🐕 {(dog.siblings?.full?.length || 0) + (dog.siblings?.halfSire?.length || 0) + (dog.siblings?.halfDam?.length || 0)} siblings</span>
               <span>👁 {(dog.view_count || 0).toLocaleString()} views</span>
@@ -1170,7 +1170,7 @@ export default function PublicPedigreePage() {
                     <span className="text-sm">{tab.icon}</span>
                     <span className="text-sm font-semibold">{tab.label}</span>
                     {tab.count > 0 && (
-                      <span className="text-[10px] px-2 py-0.5 rounded-lg font-medium"
+                      <span className="text-[12px] px-2 py-0.5 rounded-lg font-medium"
                             style={{
                               background: currentTab === tab.key ? "rgba(28,28,28,0.15)" : "rgba(201,178,159,0.3)",
                               color: currentTab === tab.key ? PG.tabActiveTxt : PG.tabActive,

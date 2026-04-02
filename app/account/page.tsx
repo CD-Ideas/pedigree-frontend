@@ -313,7 +313,7 @@ export default function AccountPage() {
             <p className="text-xs mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Click on the picture to upload a new one
             </p>
-            <p className="text-[10px] mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
+            <p className="text-[12px] mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
               JPG, PNG or GIF. Max 5MB.
             </p>
           </div>
@@ -327,7 +327,7 @@ export default function AccountPage() {
         </h2>
         <div className="space-y-4">
           <div>
-            <label className="block text-[10px] uppercase tracking-widest font-semibold mb-1.5"
+            <label className="block text-[12px] uppercase tracking-widest font-semibold mb-1.5"
               style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Username
             </label>
@@ -340,7 +340,7 @@ export default function AccountPage() {
             />
           </div>
           <div>
-            <label className="block text-[10px] uppercase tracking-widest font-semibold mb-1.5"
+            <label className="block text-[12px] uppercase tracking-widest font-semibold mb-1.5"
               style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Email
             </label>
@@ -356,10 +356,10 @@ export default function AccountPage() {
           <div className="flex items-center justify-between pt-2" style={{ borderTop: "2px solid #C9B29F" }}>
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2">
-                <span className="text-[10px] uppercase tracking-wider" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Role</span>
+                <span className="text-[12px] uppercase tracking-wider" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Role</span>
                 <span className="text-xs font-bold uppercase" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{user.role}</span>
               </div>
-              <span className="text-[10px]" style={{ color: "#4A4A4A" }}>|</span>
+              <span className="text-[12px]" style={{ color: "#4A4A4A" }}>|</span>
               <div className="flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full" style={{ background: "#22c55e" }} />
                 <span className="text-xs font-bold" style={{ color: "#22c55e", fontFamily: "var(--font-table)" }}>Active</span>
@@ -390,7 +390,7 @@ export default function AccountPage() {
         </h2>
         <div className="space-y-4">
           <div>
-            <label className="block text-[10px] uppercase tracking-widest font-semibold mb-1.5"
+            <label className="block text-[12px] uppercase tracking-widest font-semibold mb-1.5"
               style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Current Password
             </label>
@@ -413,7 +413,7 @@ export default function AccountPage() {
             </div>
           </div>
           <div>
-            <label className="block text-[10px] uppercase tracking-widest font-semibold mb-1.5"
+            <label className="block text-[12px] uppercase tracking-widest font-semibold mb-1.5"
               style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               New Password
             </label>
@@ -437,7 +437,7 @@ export default function AccountPage() {
             </div>
           </div>
           <div>
-            <label className="block text-[10px] uppercase tracking-widest font-semibold mb-1.5"
+            <label className="block text-[12px] uppercase tracking-widest font-semibold mb-1.5"
               style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Confirm New Password
             </label>
@@ -449,7 +449,7 @@ export default function AccountPage() {
               style={inputStyle}
             />
             {confirmPassword && newPassword !== confirmPassword && (
-              <p className="text-[10px] mt-1" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px] mt-1" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
                 Passwords do not match
               </p>
             )}
@@ -494,12 +494,12 @@ export default function AccountPage() {
                   <span style={{ color: "#1C1C1C" }}>FREE PLAN</span>
                   <span className="text-xs font-normal ml-1" style={{ color: "#4A4A4A" }}>/ 3 MONTHS</span>
                 </p>
-                <p className="text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                <p className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                   Basic access to all features
                 </p>
               </div>
             </div>
-            <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase"
+            <span className="px-3 py-1 rounded-full text-[12px] font-bold uppercase"
               style={{ background: "#F0FDF4", color: "#166534", border: "2px solid #86EFAC", fontFamily: "var(--font-table)" }}>
               Active
             </span>
@@ -516,7 +516,7 @@ export default function AccountPage() {
                 style={{ background: "#FAFAFA", border: "2px solid #C9B29F", borderRadius: "8px" }}>
                 <span className="text-sm">{item.icon}</span>
                 <div>
-                  <p className="text-[10px] uppercase tracking-wider" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>{item.label}</p>
+                  <p className="text-[12px] uppercase tracking-wider" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>{item.label}</p>
                   <p className="text-xs font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{item.value}</p>
                 </div>
               </div>
@@ -524,7 +524,7 @@ export default function AccountPage() {
           </div>
 
           <div className="pt-2 text-center" style={{ borderTop: "2px solid #C9B29F" }}>
-            <p className="text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+            <p className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Premium plans coming soon with advanced features
             </p>
           </div>
@@ -541,7 +541,7 @@ export default function AccountPage() {
           <div className="flex items-center justify-between py-2" style={{ borderBottom: "2px solid #C9B29F" }}>
             <div>
               <p className="text-sm font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Default Pedigree Generations</p>
-              <p className="text-[10px] mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px] mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                 How many generations to show by default
               </p>
             </div>
@@ -565,7 +565,7 @@ export default function AccountPage() {
           <div className="flex items-center justify-between py-2" style={{ borderBottom: "2px solid #C9B29F" }}>
             <div>
               <p className="text-sm font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Email Notifications</p>
-              <p className="text-[10px] mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px] mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                 Receive updates about your pedigrees and community activity
               </p>
             </div>
@@ -592,7 +592,7 @@ export default function AccountPage() {
           <div className="flex items-center justify-between py-2">
             <div>
               <p className="text-sm font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Notification Sounds</p>
-              <p className="text-[10px] mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px] mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                 Play sounds for new notifications and messages
               </p>
             </div>
@@ -627,7 +627,7 @@ export default function AccountPage() {
           <div className="flex items-center justify-between py-2">
             <div>
               <p className="text-sm font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Active Status</p>
-              <p className="text-[10px] mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px] mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                 Show when you&apos;re online to other users
               </p>
             </div>

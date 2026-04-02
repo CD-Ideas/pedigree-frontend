@@ -133,7 +133,7 @@ export default function PredictionResultPage() {
             <span style={{ color: "#64748b" }}>×</span>
             <span style={{ color: getDogColor(data.dam_name || "") }}>♀ {data.dam_name || "Dam"}</span>
           </div>
-          <p className="text-[10px]" style={{ color: "#64748b", fontFamily: "var(--font-mono)" }}>
+          <p className="text-[12px]" style={{ color: "#64748b", fontFamily: "var(--font-mono)" }}>
             Created {new Date(data.created_at).toLocaleDateString()}
           </p>
         </div>
@@ -151,7 +151,7 @@ export default function PredictionResultPage() {
               <h3 className="text-xs font-bold" style={{ color: g.color, fontFamily: "var(--font-table)" }}>
                 {g.icon} {g.label}
               </h3>
-              <div className="grid grid-cols-5 gap-1 text-[10px]" style={{ fontFamily: "var(--font-mono)", color: "#4A4A4A" }}>
+              <div className="grid grid-cols-5 gap-1 text-[12px]" style={{ fontFamily: "var(--font-mono)", color: "#4A4A4A" }}>
                 {Object.entries(g.geno).map(([k, v]) => (
                   <div key={k}><span style={{ color: "#1C1C1C" }}>{k}:</span> {v}</div>
                 ))}
@@ -192,7 +192,7 @@ export default function PredictionResultPage() {
               {r.carriers.length > 0 && (
                 <div className="mt-2 space-y-0.5">
                   {r.carriers.map((c, ci) => (
-                    <div key={ci} className="flex items-center gap-1.5 text-[10px]" style={{ color: "#f59e0b" }}>
+                    <div key={ci} className="flex items-center gap-1.5 text-[12px]" style={{ color: "#f59e0b" }}>
                       <span>⚠</span><span>{c}</span>
                     </div>
                   ))}
