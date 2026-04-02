@@ -697,7 +697,7 @@ export default function PublishedPedigreePage() {
                 <span className="text-[12px]">📝</span>
               </div>
               <span className="text-xs font-semibold flex-shrink-0" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Pedigree Notes:</span>
-              <p className="text-xs" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", lineHeight: "1.4" }}>
+              <p className="text-xs uppercase" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", lineHeight: "1.4" }}>
                 {ped.pedigree_notes}
               </p>
             </div>
@@ -816,7 +816,7 @@ export default function PublishedPedigreePage() {
                 {journal.avidChip && (
                   <div>
                     <span className="text-[12px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>AVID Chip</span>
-                    <span className="text-sm" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{journal.avidChip}</span>
+                    <span className="text-sm uppercase" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{journal.avidChip}</span>
                   </div>
                 )}
 
@@ -869,7 +869,7 @@ export default function PublishedPedigreePage() {
                 {journal.notes && (
                   <div>
                     <span className="text-[12px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Journal Notes</span>
-                    <p className="text-sm leading-relaxed" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{journal.notes}</p>
+                    <p className="text-sm leading-relaxed uppercase" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{journal.notes}</p>
                   </div>
                 )}
               </div>
