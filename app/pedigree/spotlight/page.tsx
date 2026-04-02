@@ -699,24 +699,24 @@ export default function SpotlightPage() {
             </p>
 
             {/* Famous Dogs Preview Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-2 mt-6 max-w-4xl mx-auto">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 mt-6 max-w-5xl mx-auto">
               {famous.slice(0, 10).map((f) => (
                 <button key={f.id} onClick={() => { setSelectedDog(f.id); }}
                         className="rounded-lg overflow-hidden transition-all hover:scale-105 group"
                         style={{
                           border: selectedDog === f.id ? "2px solid #1C1C1C" : "2px solid #C9B29F", background: "#FAF7F2", borderRadius: "8px",
                         }}>
-                  <div className="aspect-square overflow-hidden" style={{ background: "#FAFAFA" }}>
+                  <div className="aspect-[4/3] overflow-hidden" style={{ background: "#FAFAFA" }}>
                     {f.photo_url ? (
                       <img src={f.photo_url.startsWith("http") ? f.photo_url : `https://www.apbt.online-pedigrees.com/${f.photo_url}`}
                            alt="" className="w-full h-full object-cover transition-transform group-hover:scale-110" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center opacity-20"><img src="/logo.png" alt="" style={{ width: "32px", height: "32px" }} /></div>
+                      <div className="w-full h-full flex items-center justify-center opacity-20"><img src="/logo.png" alt="" style={{ width: "40px", height: "40px" }} /></div>
                     )}
                   </div>
-                  <div className="p-1.5">
-                    <span className="text-[12px] font-bold truncate block"
-                          style={{ color: selectedDog === f.id ? "#1C1C1C" : getDogColor(f.name), fontFamily: "var(--font-table)" }}>
+                  <div className="p-2">
+                    <span className="text-[11px] font-bold block leading-tight"
+                          style={{ color: selectedDog === f.id ? "#1C1C1C" : getDogColor(f.name), fontFamily: "var(--font-table)", wordBreak: "break-word" }}>
                       {f.name}
                     </span>
                   </div>
