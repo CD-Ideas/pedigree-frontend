@@ -38,6 +38,8 @@ interface SupportMessage {
   replied_at: string | null;
 }
 
+const capName = (s: string) => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+
 export default function AccountPage() {
   const router = useRouter();
   const fileRef = useRef<HTMLInputElement>(null);
@@ -282,6 +284,7 @@ export default function AccountPage() {
                 alt="Avatar"
                 className="rounded-lg object-cover"
                 style={{ border: "2px solid #C9B29F", width: "120px", height: "90px" }}
+                onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }}
               />
             ) : (
               <div
@@ -308,7 +311,7 @@ export default function AccountPage() {
           </div>
           <div>
             <p className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-              {user.username}
+              {capName(user.username)}
             </p>
             <p className="text-xs mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Click on the picture to upload a new one

@@ -638,7 +638,7 @@ export default function PublishedPedigreePage() {
             {/* Photo */}
             <div className="flex-shrink-0 relative m-2 w-full sm:w-[200px] h-[200px]">
               {photoUrl ? (
-                <img src={photoUrl} alt={displayName} className="rounded-lg w-full sm:w-[200px] h-[200px]" style={{ objectFit: "fill" }} />
+                <img src={photoUrl} alt={displayName} className="rounded-lg w-full sm:w-[200px] h-[200px]" style={{ objectFit: "fill" }} onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
               ) : (
                 <div className="rounded-lg flex items-center justify-center w-full sm:w-[200px] h-[200px]"
                   style={{ background: isMale ? "rgba(29,91,191,0.08)" : "rgba(159,18,57,0.08)" }}>

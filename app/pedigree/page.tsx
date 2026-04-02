@@ -224,7 +224,7 @@ export default function PedigreeHub() {
                         {/* Photo or placeholder */}
                         <div className="h-36 relative overflow-hidden">
                           {photo ? (
-                            <img src={photo} alt={dog.name} className="w-full h-full object-cover transition-transform group-hover:scale-110" />
+                            <img src={photo} alt={dog.name} className="w-full h-full object-cover transition-transform group-hover:scale-110" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center"
                                  style={{ background: isMale ? "rgba(29,91,191,0.08)" : "rgba(159,18,57,0.08)" }}>

@@ -838,6 +838,7 @@ export default function EditAdPage() {
                       alt={`Photo ${i + 1}`}
                       className="w-full h-full object-cover rounded-lg"
                       style={{ border: "2px solid #C9B29F" }}
+                      onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }}
                     />
                     <button
                       type="button"

@@ -48,6 +48,8 @@ const COUNTRY_MAP: Record<string, string[]> = {
   "Oceania": ["Australia", "New Zealand", "Fiji", "Papua New Guinea"],
 };
 
+const capName = (s: string) => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+
 /* ─── Main Create Ad Page ─── */
 export default function CreateAdPage() {
   return (
@@ -405,7 +407,7 @@ function CreateAdContent() {
                 className="text-sm font-bold"
                 style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}
               >
-                {user?.username || "Loading..."}
+                {user?.username ? capName(user.username) : "Loading..."}
               </span>
             </div>
           </div>
@@ -780,6 +782,7 @@ function CreateAdContent() {
                         alt={`Photo ${i + 1}`}
                         className="w-full h-full object-cover rounded-lg"
                         style={{ border: isAutoPhoto ? "2px solid rgba(201,178,159,0.3)" : "2px solid #C9B29F" }}
+                        onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }}
                       />
                       {isAutoPhoto && (
                         <div

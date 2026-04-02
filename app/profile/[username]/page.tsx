@@ -165,9 +165,7 @@ export default function ProfilePage() {
             width: "120px",
             height: "90px",
           }}
-          onError={(e) => {
-            (e.target as HTMLImageElement).style.display = "none";
-          }}
+          onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }}
         />
       );
     }
@@ -511,6 +509,7 @@ export default function ProfilePage() {
                 border: "2px solid #C9B29F",
                 borderRadius: "8px",
               }}
+              onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }}
             />
             <button
               onClick={() => setShowPhotoModal(false)}

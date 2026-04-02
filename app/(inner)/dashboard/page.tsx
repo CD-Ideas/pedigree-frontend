@@ -37,12 +37,14 @@ const NAV_ITEMS = [
   { icon: "🧬", label: "Bloodline Calculator", href: "/breeding-calculator", desc: "COI & linebreeding analysis", color: "#a78bfa" },
   { icon: "🔦", label: "Lineage Spotlight", href: "/pedigree/spotlight", desc: "Explore lineage trees", color: "#f59e0b" },
   { icon: "🌍", label: "Community Pedigrees", href: "/community", desc: "Browse all pedigrees", color: "#34d399" },
-  { icon: "🐕", label: "Dogs", href: "/dogs", desc: "Browse dog database", color: "#f472b6" },
+  { icon: "🐾", label: "Dogs", href: "/dogs", desc: "Browse dog database", color: "#f472b6" },
   { icon: "👑", label: "Dog of the Month", href: "/dog-of-the-month", desc: "Monthly photo contest", color: "#f97316" },
   { icon: "🎨", label: "Puppy Color Predictor", href: "/puppy-predictor", desc: "Predict coat colors", color: "#fb923c" },
   { icon: "🏪", label: "Marketplace", href: "/marketplace", desc: "Buy, sell & advertise", color: "#ef4444" },
 ];
 
+
+const capName = (s: string) => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
 
 export default function Dashboard() {
   const router = useRouter();
@@ -215,7 +217,7 @@ export default function Dashboard() {
         {/* Welcome */}
         <div className="mb-6">
           <h1 style={{ fontFamily: "var(--font-table)", fontSize: "1.6rem", fontWeight: 700, color: "#1C1C1C" }}>
-            Welcome back, <span style={{ color: "#C9B29F" }}>{user?.username || "User"}</span>
+            Welcome back, <span style={{ color: "#C9B29F" }}>{user?.username ? capName(user.username) : "User"}</span>
           </h1>
           <p className="text-xs mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
             APBT Pedigree Platform Dashboard

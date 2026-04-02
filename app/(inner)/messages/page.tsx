@@ -638,7 +638,7 @@ function MessagesContent() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-semibold truncate" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-                      {t.other_username}
+                      {capName(t.other_username)}
                     </span>
                     <span className="text-[12px] flex-shrink-0 ml-2" style={{ color: t.unread_count > 0 ? "#C9B29F" : "#4A4A4A", fontWeight: t.unread_count > 0 ? 700 : 400 }}>
                       {formatTime(t.last_time)}
@@ -799,7 +799,7 @@ function MessagesContent() {
                   </div>
                   <div>
                     <p className="text-sm font-bold" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>
-                      {selectedThreadData.other_username}
+                      {capName(selectedThreadData.other_username)}
                     </p>
                     <p className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                       {otherUserStatus?.online ? "online" : otherUserStatus ? formatLastSeen(otherUserStatus.seconds_ago) : ""}
@@ -870,7 +870,7 @@ function MessagesContent() {
                                     if (att.isImage) {
                                       return (
                                         <a key={i} href={att.url} target="_blank" rel="noopener noreferrer" className="block">
-                                          <img src={att.url} alt={att.name} className="max-w-full rounded-lg max-h-52 object-cover" />
+                                          <img src={att.url} alt={att.name} className="max-w-full rounded-lg max-h-52 object-cover" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
                                         </a>
                                       );
                                     }
@@ -1028,7 +1028,7 @@ function MessagesContent() {
                   {pendingAttachments.map((att, i) => (
                     <div key={i} className="flex items-center gap-1.5 px-2 py-1 rounded-lg text-[12px]"
                       style={{ background: "#FAF7F2", border: "1px solid #C9B29F" }}>
-                      {att.isImage ? <img src={att.url} alt="" className="w-8 h-8 rounded object-cover" /> : (att as { isVoice?: boolean }).isVoice ? <span>🎤</span> : <span>📎</span>}
+                      {att.isImage ? <img src={att.url} alt="" className="w-8 h-8 rounded object-cover" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} /> : (att as { isVoice?: boolean }).isVoice ? <span>🎤</span> : <span>📎</span>}
                       <span className="truncate max-w-[80px]" style={{ color: "#1C1C1C" }}>{att.name}</span>
                       <button onClick={() => setPendingAttachments(prev => prev.filter((_, j) => j !== i))} className="text-red-400">✕</button>
                     </div>
@@ -1095,6 +1095,8 @@ function MessagesContent() {
     </div>
   );
 }
+
+const capName = (s: string) => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
 
 export default function MessagesPage() {
   return (

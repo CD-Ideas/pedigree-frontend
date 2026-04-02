@@ -773,7 +773,7 @@ function PhotosTab({ offspring }: { offspring: Offspring[] }) {
           <Link key={i} href={`/pedigree/${o.offspring_id}`} className="group relative rounded-lg overflow-hidden transition-all"
                 style={{ background: PG.cardBg, border: PG.cardBorder, borderRadius: PG.cardRadius }}>
             <div className="w-full h-[130px] sm:h-[150px] overflow-hidden">
-              <img src={src} alt={o.offspring_name} className="w-full h-full object-cover transition-transform group-hover:scale-105" />
+              <img src={src} alt={o.offspring_name} className="w-full h-full object-cover transition-transform group-hover:scale-105" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
             </div>
             <div className="px-1.5 py-1" style={{ borderTop: "1px solid #EDE4D5" }}>
               <p className="font-semibold truncate" style={{ color: cc, fontFamily: PG.font, fontSize: "12px", lineHeight: 1.1 }}>
@@ -1016,7 +1016,8 @@ export default function PublicPedigreePage() {
               {photoUrl ? (
                 <img src={photoUrl} alt={dog.registered_name}
                      className="rounded-lg w-full sm:w-[200px] h-[200px]"
-                     style={{ objectFit: "fill", borderRadius: PG.cardRadius }} />
+                     style={{ objectFit: "fill", borderRadius: PG.cardRadius }}
+                     onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
               ) : (
                 <div className="rounded-lg flex items-center justify-center w-full sm:w-[200px] h-[200px]"
                      style={{ background: PG.bg, borderRadius: PG.cardRadius }}>
@@ -1025,7 +1026,7 @@ export default function PublicPedigreePage() {
               )}
               {hoverPhoto && (
                 <div className="absolute inset-0 z-10 transition-opacity duration-200 rounded-lg overflow-hidden">
-                  <img src={hoverPhoto} alt="Parent" className="w-full h-full object-cover" />
+                  <img src={hoverPhoto} alt="Parent" className="w-full h-full object-cover" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
                 </div>
               )}
             </div>

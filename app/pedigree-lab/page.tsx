@@ -1323,6 +1323,7 @@ function PedigreeLabInner() {
                             src={`${PHOTO_BASE}${dogPhoto}`}
                             alt={dogName}
                             className="w-full h-36 object-cover"
+                            onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }}
                           />
                         ) : (
                           <div
@@ -1920,6 +1921,7 @@ function PedigreeLabInner() {
                       src={publishForm.photoPreview}
                       alt="Preview"
                       className="max-h-32 rounded-lg object-cover"
+                      onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }}
                     />
                   ) : (
                     <>

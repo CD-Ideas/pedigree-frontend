@@ -267,7 +267,7 @@ export default function MyAdsPage() {
                     {/* Thumbnail */}
                     <div className="sm:w-36 md:w-40 h-32 sm:h-auto flex-shrink-0 relative overflow-hidden">
                       {photo ? (
-                        <img src={photo} alt={ad.title} className="w-full h-full object-cover" loading="lazy" />
+                        <img src={photo} alt={ad.title} className="w-full h-full object-cover" loading="lazy" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
                       ) : (
                         <div
                           className="w-full h-full flex items-center justify-center min-h-[100px]"
