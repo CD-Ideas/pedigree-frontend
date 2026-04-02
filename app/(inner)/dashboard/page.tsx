@@ -214,7 +214,7 @@ export default function Dashboard() {
       <main className="flex-1 min-w-0">
         {/* Welcome */}
         <div className="mb-6">
-          <h1 style={{ fontFamily: "var(--font-table)", fontSize: "1.6rem", fontWeight: 700, color: "#1C1C1C" }}>
+          <h1 style={{ fontFamily: "var(--font-table)", fontSize: "1.6rem", fontWeight: 700, color: "#1C1C1C", letterSpacing: "0.03em" }}>
             Welcome back, <span style={{ color: "#C9B29F" }}>{user?.username || "User"}</span>
           </h1>
           <p className="text-xs mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
