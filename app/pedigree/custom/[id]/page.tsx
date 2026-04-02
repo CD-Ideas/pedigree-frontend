@@ -603,7 +603,7 @@ export default function PublishedPedigreePage() {
                   background: "rgba(201,178,159,0.12)", color: "#1d5bbf",
                   fontFamily: "var(--font-table)", border: "1px solid rgba(96,165,250,0.3)",
                 }}>
-                  by {ped.creator_username}
+                  {ped.creator_username}
                 </Link>
               )}
               {isOwner && (

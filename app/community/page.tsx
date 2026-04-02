@@ -594,7 +594,7 @@ export default function CommunityPedigreesPage() {
                               fontFamily: "var(--font-table)",
                             }}
                           >
-                            by {p.creator}
+                            {p.creator}
                           </Link>
                         </div>
                       )}
