@@ -527,7 +527,7 @@ function OffspringTab({ offspring }: { offspring: Offspring[] }) {
   if (!offspring.length)
     return (
       <div className="text-center py-16">
-        <div className="text-4xl mb-3 opacity-30">🐾</div>
+        <img src="/logo.png" alt="" className="mx-auto mb-3 opacity-30" style={{ width: "48px", height: "48px" }} />
         <p style={{ color: PG.textMuted, fontFamily: PG.font }}>No offspring recorded</p>
       </div>
     );
@@ -560,7 +560,7 @@ function SiblingsTab({ siblings }: { siblings: Dog["siblings"] }) {
   const total = (siblings.full?.length || 0) + (siblings.halfSire?.length || 0) + (siblings.halfDam?.length || 0);
   if (!total) return (
     <div className="text-center py-16">
-      <div className="text-4xl mb-3 opacity-30">🐕‍🦺</div>
+      <img src="/logo.png" alt="" className="mx-auto mb-3 opacity-30" style={{ width: "48px", height: "48px" }} />
       <p style={{ color: PG.textMuted, fontFamily: PG.font }}>No siblings recorded</p>
     </div>
   );
@@ -933,7 +933,7 @@ export default function PublicPedigreePage() {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: PG.bg }}>
         <div className="text-center">
-          <div className="text-6xl mb-4">🐕</div>
+          <img src="/logo.png" alt="" className="mx-auto mb-4 opacity-50" style={{ width: "80px", height: "80px" }} />
           <h2 className="text-xl font-bold mb-2" style={{ color: PG.text, fontFamily: PG.font }}>Dog Not Found</h2>
           <p className="text-sm mb-6" style={{ color: PG.textMuted }}>This pedigree doesn&apos;t exist or has been removed.</p>
           <Link href="/" className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-semibold transition-all hover:scale-105"
