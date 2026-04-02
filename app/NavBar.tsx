@@ -121,8 +121,7 @@ function NavSearch() {
                     {photoSrc ? (
                       <img src={photoSrc} alt="" className="w-6 h-6 rounded-lg object-cover flex-shrink-0" style={{ border: "1px solid #C9B29F" }} onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
                     ) : (
-                      <div className="w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0 text-[12px]"
-                           style={{ background: "#FAFAFA", border: "1px solid #C9B29F" }}>🐕</div>
+                      <img src="/logo.png" alt="" className="w-6 h-6 rounded-lg object-contain flex-shrink-0 opacity-30" style={{ background: "#FAFAFA", border: "1px solid #C9B29F", padding: "2px" }} />
                     )}
                     <span className="font-semibold truncate" style={{ color: getDogColor(r.registered_name), fontFamily: "var(--font-table)" }}>
                       {r.registered_name}

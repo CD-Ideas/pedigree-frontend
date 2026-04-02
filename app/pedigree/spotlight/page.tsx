@@ -294,8 +294,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
                   <img src={d.photo_url.startsWith("http") ? d.photo_url : `https://www.apbt.online-pedigrees.com/${d.photo_url}`}
                        alt="" className="w-8 h-8 rounded-full object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
                 ) : (
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm"
-                       style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}>🐕</div>
+                  <img src="/logo.png" alt="" className="w-8 h-8 rounded-full object-contain flex-shrink-0 opacity-30" style={{ background: "#FAFAFA", border: "2px solid #C9B29F", padding: "4px" }} />
                 )}
                 <span className="text-sm font-semibold truncate" style={{ color, fontFamily: "var(--font-table)" }}>
                   {d.registered_name}
@@ -488,8 +487,7 @@ export default function SpotlightPage() {
                       <img src={f.photo_url.startsWith("http") ? f.photo_url : `https://www.apbt.online-pedigrees.com/${f.photo_url}`}
                            alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
                     ) : (
-                      <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-[12px]"
-                           style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}>🐕</div>
+                      <img src="/logo.png" alt="" className="w-6 h-6 rounded-full object-contain flex-shrink-0 opacity-30" style={{ background: "#FAFAFA", border: "2px solid #C9B29F", padding: "2px" }} />
                     )}
                     <div className="min-w-0 flex-1">
                       <span className="block text-xs font-semibold truncate" style={{ color: getDogColor(f.name), fontFamily: "var(--font-table)" }}>

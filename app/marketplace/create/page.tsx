@@ -502,7 +502,7 @@ function CreateAdContent() {
             }}
           >
             <label className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-              🐕 Link to Dog {["dogs_for_sale", "stud_service", "litters_for_sale"].includes(category)
+              🐾 Link to Dog {["dogs_for_sale", "stud_service", "litters_for_sale"].includes(category)
                 ? <span className="text-[12px] normal-case tracking-normal font-normal" style={{ color: "#ef4444" }}>(required)</span>
                 : <span className="text-[12px] normal-case tracking-normal font-normal">(optional)</span>}
             </label>
