@@ -761,8 +761,8 @@ export default function NavBar() {
         </div>
       </div>
     </nav>
-      {mounted && loggedIn && pathname !== "/dashboard" && !pathname.startsWith("/marketplace") && pathname !== "/dog-of-the-month" && (
-        <div className="max-w-7xl mx-auto px-4 pt-2">
+      {mounted && loggedIn && pathname !== "/dashboard" && (
+        <div className="max-w-7xl mx-auto px-4 pt-3 pb-1">
           <button
             onClick={() => {
               if (window.history.length > 2) {
@@ -771,9 +771,9 @@ export default function NavBar() {
                 router.push("/dashboard");
               }
             }}
-            className="flex items-center gap-1 text-[12px] font-semibold transition-all hover:underline"
+            className="flex items-center gap-1.5 text-sm font-bold transition-all hover:underline"
             style={{
-              color: "#4A4A4A",
+              color: "#1C1C1C",
               fontFamily: "var(--font-table)",
             }}
           >

@@ -317,23 +317,6 @@ export default function MarketplacePage() {
       <div className="relative overflow-hidden">
         <div className="relative max-w-[1200px] mx-auto px-4 md:px-6 pt-8 pb-5">
           {/* Breadcrumb */}
-          <div className="flex items-center gap-2 mb-1">
-            <Link
-              href="/dashboard"
-              className="text-[12px] font-medium hover:underline transition-colors"
-              style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}
-            >
-              Dashboard
-            </Link>
-            <span style={{ color: "#4A4A4A", fontSize: "12px" }}>/</span>
-            <span
-              className="text-[12px] font-medium"
-              style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}
-            >
-              Marketplace
-            </span>
-          </div>
-
           {/* Title + Create Ad */}
           <div className="flex items-start justify-between">
             <div>
