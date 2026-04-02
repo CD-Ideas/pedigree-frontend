@@ -271,7 +271,7 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
         </div>
         <div className="flex items-center gap-1 rounded-lg p-1" style={{ background: "#1C1C1C", borderRadius: "8px" }}>
           <button onClick={() => setZoom((z) => Math.max(0.5, z - 0.1))} className="w-7 h-7 rounded-lg flex items-center justify-center text-sm font-bold transition-all" style={{ color: "#FAF7F2" }}>−</button>
-          <span className="text-xs px-1.5 font-bold" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)", minWidth: "36px", textAlign: "center" }}>{Math.round(zoom * 100)}%</span>
+          <span className="text-xs px-1.5 font-bold" style={{ color: "#C9B29F", fontFamily: "var(--font-table)", minWidth: "36px", textAlign: "center" }}>{Math.round(zoom * 100)}%</span>
           <button onClick={() => setZoom((z) => Math.min(1.5, z + 0.1))} className="w-7 h-7 rounded-lg flex items-center justify-center text-sm font-bold transition-all" style={{ color: "#FAF7F2" }}>+</button>
           <button onClick={() => setZoom(1)} className="ml-0.5 px-2.5 py-1 rounded-lg flex items-center justify-center text-[12px] font-bold transition-all" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)", opacity: 0.7 }}>Reset</button>
         </div>
@@ -748,7 +748,7 @@ export default function PublishedPedigreePage() {
                 </span>
               )}
             </div>
-            <div className="flex items-center gap-3" style={{ fontFamily: "var(--font-table)", fontSize: "12px", color: "#4A4A4A" }}>
+            <div className="flex items-center gap-3" style={{ fontFamily: "var(--font-table)", fontSize: "12px", color: "#C9B29F" }}>
               <span>👁 {((ped.view_count || 0) + 1).toLocaleString()} views</span>
             </div>
           </div>
