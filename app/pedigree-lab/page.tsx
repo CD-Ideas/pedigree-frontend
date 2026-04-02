@@ -1359,10 +1359,10 @@ function PedigreeLabInner() {
                       style={{ border: "2px solid #C9B29F", borderRadius: 8 }}
                     >
                       <div
-                        className="w-full h-36 flex items-center justify-center text-3xl"
-                        style={{ background: "#FAFAFA", color: "#4A4A4A" }}
+                        className="w-full h-36 flex items-center justify-center"
+                        style={{ background: "#FAFAFA" }}
                       >
-                        {"\uD83D\uDC36"}
+                        <img src="/logo.png" alt="" className="opacity-30" style={{ width: "64px", height: "64px" }} />
                       </div>
                     </div>
                     <p className="text-sm font-bold leading-tight" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)", minHeight: "2.5em" }}>
