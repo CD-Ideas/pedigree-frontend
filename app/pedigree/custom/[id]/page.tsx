@@ -189,7 +189,7 @@ function PedigreeSearch() {
             onFocus={() => { if (results.length > 0) setOpen(true); }}
             className="flex-1 bg-transparent text-sm outline-none"
             style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
-          {query && <button onClick={() => { setQuery(""); setResults([]); setOpen(false); }} className="text-xs opacity-50 hover:opacity-100">✕</button>}
+          {query && <button onClick={() => { setQuery(""); setResults([]); setOpen(false); }} className="text-xs opacity-70 hover:opacity-100">✕</button>}
         </div>
       </div>
       {open && results.length > 0 && (

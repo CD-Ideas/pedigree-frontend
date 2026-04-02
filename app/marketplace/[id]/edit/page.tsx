@@ -681,7 +681,7 @@ export default function EditAdPage() {
               <span
                 className="text-[12px]"
                 style={{
-                  color: title.length > 80 ? "#ef4444" : title.length > 60 ? "#eab308" : "#5a6a82",
+                  color: title.length > 80 ? "#ef4444" : title.length > 60 ? "#eab308" : "#4A4A4A",
                   fontFamily: "var(--font-mono)",
                 }}
               >
@@ -692,7 +692,7 @@ export default function EditAdPage() {
               type="text"
               value={title}
               onChange={(e) => {
-                setTitle(e.target.value);
+                setTitle(e.target.value.toUpperCase());
                 if (errors.title) setErrors((prev) => ({ ...prev, title: "" }));
               }}
               placeholder={selectedDogName ? selectedDogName : "e.g., Champion Bloodline Male - 2 Years Old"}
@@ -705,6 +705,7 @@ export default function EditAdPage() {
                 color: selectedDogName ? getDogColor(selectedDogName) : "var(--text-primary, #C9B29F)",
                 fontFamily: "var(--font-table)",
                 cursor: selectedDogName ? "not-allowed" : "text",
+                textTransform: "uppercase",
               }}
             />
             {selectedDogName && (
@@ -735,7 +736,7 @@ export default function EditAdPage() {
               <span
                 className="text-[12px]"
                 style={{
-                  color: description.length > 500 ? "#ef4444" : description.length > 400 ? "#eab308" : "#5a6a82",
+                  color: description.length > 500 ? "#ef4444" : description.length > 400 ? "#eab308" : "#4A4A4A",
                   fontFamily: "var(--font-mono)",
                 }}
               >
@@ -745,7 +746,7 @@ export default function EditAdPage() {
             <textarea
               value={description}
               onChange={(e) => {
-                setDescription(e.target.value);
+                setDescription(e.target.value.toUpperCase());
                 if (errors.description) setErrors((prev) => ({ ...prev, description: "" }));
               }}
               placeholder="Describe your listing in detail..."
@@ -757,6 +758,7 @@ export default function EditAdPage() {
                 border: "2px solid #C9B29F",
                 color: "#1C1C1C",
                 fontFamily: "var(--font-table)",
+                textTransform: "uppercase",
               }}
             />
             {errors.description && (

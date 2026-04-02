@@ -713,7 +713,7 @@ export default function SpotlightPage() {
                     )}
                   </div>
                   <div className="p-2">
-                    <span className="text-[11px] font-bold block leading-tight"
+                    <span className="text-[12px] font-bold block leading-tight"
                           style={{ color: selectedDog === f.id ? "#1C1C1C" : getDogColor(f.name), fontFamily: "var(--font-table)", wordBreak: "break-word" }}>
                       {f.name}
                     </span>

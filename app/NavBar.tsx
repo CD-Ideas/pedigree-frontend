@@ -67,7 +67,7 @@ function NavSearch() {
           className="flex-1 bg-transparent text-xs outline-none"
           style={{ color: q && getDogColor(q) !== "#3a3a3a" ? getDogColor(q) : "#1C1C1C", fontFamily: "var(--font-table, system-ui, sans-serif)", minWidth: 0 }}
         />
-        {q && <button onClick={() => { setQ(""); setResults([]); setSuggestions([]); setShow(false); }} className="text-[12px] opacity-50 hover:opacity-100">✕</button>}
+        {q && <button onClick={() => { setQ(""); setResults([]); setSuggestions([]); setShow(false); }} className="text-[12px] opacity-70 hover:opacity-100">✕</button>}
       </div>
       {show && (results.length > 0 || suggestions.length > 0) && (
         <div
@@ -570,7 +570,7 @@ export default function NavBar() {
                             <button
                               onClick={(e) => { e.stopPropagation(); group.ids.forEach(id => deleteNotification(id)); }}
                               className="text-[12px] flex-shrink-0 p-1 rounded transition-colors hover:bg-red-500/10"
-                              style={{ color: "#5a6a82" }}
+                              style={{ color: "#4A4A4A" }}
                               title="Delete all"
                             >
                               ✕

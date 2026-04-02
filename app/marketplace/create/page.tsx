@@ -630,7 +630,7 @@ function CreateAdContent() {
               <span
                 className="text-[12px]"
                 style={{
-                  color: title.length > 80 ? "#ef4444" : title.length > 60 ? "#eab308" : "#5a6a82",
+                  color: title.length > 80 ? "#ef4444" : title.length > 60 ? "#eab308" : "#4A4A4A",
                   fontFamily: "var(--font-mono)",
                 }}
               >
@@ -641,7 +641,7 @@ function CreateAdContent() {
               type="text"
               value={title}
               onChange={(e) => {
-                setTitle(e.target.value);
+                setTitle(e.target.value.toUpperCase());
                 if (errors.title) setErrors((prev) => ({ ...prev, title: "" }));
               }}
               placeholder={selectedDogName ? selectedDogName : "e.g., Champion Bloodline Male - 2 Years Old"}
@@ -655,6 +655,7 @@ function CreateAdContent() {
                 fontFamily: "var(--font-table)",
                 cursor: selectedDogName ? "not-allowed" : "text",
                 transition: "all 0.2s ease",
+                textTransform: "uppercase",
               }}
             />
             {selectedDogName && (
@@ -684,7 +685,7 @@ function CreateAdContent() {
               <span
                 className="text-[12px]"
                 style={{
-                  color: description.length > 500 ? "#ef4444" : description.length > 400 ? "#eab308" : "#5a6a82",
+                  color: description.length > 500 ? "#ef4444" : description.length > 400 ? "#eab308" : "#4A4A4A",
                   fontFamily: "var(--font-mono)",
                 }}
               >
@@ -694,7 +695,7 @@ function CreateAdContent() {
             <textarea
               value={description}
               onChange={(e) => {
-                setDescription(e.target.value);
+                setDescription(e.target.value.toUpperCase());
                 if (errors.description) setErrors((prev) => ({ ...prev, description: "" }));
               }}
               placeholder="Describe your listing in detail..."
@@ -703,6 +704,7 @@ function CreateAdContent() {
               className="w-full rounded-lg px-4 py-2.5 text-sm outline-none resize-none"
               style={{
                 ...INPUT_STYLE,
+                textTransform: "uppercase",
               }}
             />
             {errors.description && (
