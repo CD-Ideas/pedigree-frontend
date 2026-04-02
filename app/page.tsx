@@ -63,7 +63,7 @@ function _BreedingCalcPreview_UNUSED() {
   return (
     <section id="breeding-calculator" className="py-5 px-4">
       <div className="max-w-5xl mx-auto">
-        <h2 className="text-center mb-0.5" style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "clamp(0.95rem, 2vw, 1.25rem)", color: "#1C1C1C" }}>
+        <h2 className="text-center mb-0.5" style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "clamp(0.95rem, 2vw, 1.25rem)", color: "#1C1C1C" }}>
           Bloodline Calculator
         </h2>
         <p className="text-center mb-3" style={{ color: "#4A4A4A", fontFamily: "var(--font-body)", fontSize: "12px", fontWeight: 400 }}>

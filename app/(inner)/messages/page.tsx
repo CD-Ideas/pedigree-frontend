@@ -108,7 +108,8 @@ function Avatar({ src, username, size = "w-10 h-10", textSize = "text-sm" }: { s
   if (src) {
     return (
       <img src={src} alt="" className={`${size} rounded-full object-cover flex-shrink-0`}
-        style={{ border: "2px solid #C9B29F" }} />
+        style={{ border: "2px solid #C9B29F" }}
+        onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
     );
   }
   return (

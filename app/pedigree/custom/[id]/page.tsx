@@ -434,7 +434,7 @@ function NavAuthButton() {
     return (
       <div className="flex items-center gap-2">
         <span className="text-xs font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-          {user.username}
+          {capName(user.username)}
         </span>
         <button
           onClick={() => { localStorage.removeItem("token"); localStorage.removeItem("refreshToken"); localStorage.removeItem("user"); window.location.reload(); }}

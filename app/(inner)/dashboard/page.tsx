@@ -358,7 +358,7 @@ export default function Dashboard() {
               </>
             )}
             <p className="text-sm font-bold mt-3" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-              {user?.username || "User"}
+              {user?.username ? capName(user.username) : "User"}
             </p>
             <span className="text-[12px] px-2 py-0.5 rounded-full mt-1"
               style={{ background: "#FAF7F2", color: "#C9B29F", border: "2px solid #C9B29F", fontFamily: "var(--font-table)" }}>

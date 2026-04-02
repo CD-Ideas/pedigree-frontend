@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 
+const capName = (s: string) => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+
 const pgCard = {
   border: "2px solid #C9B29F",
   background: "#FAF7F2",
@@ -267,7 +269,7 @@ export default function ProfilePage() {
                   fontFamily: "var(--font-table)",
                 }}
               >
-                {user.username}
+                {capName(user.username)}
               </h1>
               <span
                 className="text-[12px] px-2 py-0.5 rounded-full"
@@ -523,7 +525,7 @@ export default function ProfilePage() {
               ✕
             </button>
             <p className="text-center mt-3 text-sm font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-              {user.username}
+              {capName(user.username)}
             </p>
           </div>
         </div>
