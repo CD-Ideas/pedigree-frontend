@@ -172,9 +172,9 @@ function AdCard({ ad, index }: { ad: MarketplaceAd; index: number }) {
             >
               {ad.username.charAt(0).toUpperCase()}
             </div>
-            <span className="text-[12px] font-medium" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+            <Link href={`/profile/${encodeURIComponent(ad.username)}`} className="text-[12px] font-medium hover:underline" style={{ color: "#1d5bbf", fontFamily: "var(--font-table)" }}>
               {ad.username}
-            </span>
+            </Link>
           </div>
         )}
 

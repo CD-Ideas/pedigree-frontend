@@ -596,9 +596,9 @@ export default function MarketplaceAdPage() {
                     <div className="text-[12px] uppercase tracking-wider" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                       Listed By
                     </div>
-                    <div className="text-xs font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+                    <Link href={`/profile/${encodeURIComponent(ad.username)}`} className="text-xs font-bold hover:underline" style={{ color: "#1d5bbf", fontFamily: "var(--font-table)" }}>
                       {ad.username}
-                    </div>
+                    </Link>
                   </div>
                   <a href={`/messages?to=${encodeURIComponent(ad.username)}&subject=${encodeURIComponent(`Re: ${ad.title}`)}&adId=${ad.id}`}
                     className="px-3 py-1.5 rounded-lg text-[12px] font-bold uppercase tracking-wider transition-all hover:scale-[1.02]"

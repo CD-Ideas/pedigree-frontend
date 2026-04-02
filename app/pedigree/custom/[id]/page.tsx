@@ -599,12 +599,12 @@ export default function PublishedPedigreePage() {
                 Community Pedigree
               </span>
               {ped.creator_username && (
-                <span className="text-[12px] px-2 py-0.5 rounded-lg" style={{
-                  background: "rgba(201,178,159,0.12)", color: "#1C1C1C",
+                <Link href={`/profile/${encodeURIComponent(ped.creator_username)}`} className="text-[12px] px-2 py-0.5 rounded-lg hover:underline" style={{
+                  background: "rgba(201,178,159,0.12)", color: "#1d5bbf",
                   fontFamily: "var(--font-table)", border: "1px solid rgba(96,165,250,0.3)",
                 }}>
                   by {ped.creator_username}
-                </span>
+                </Link>
               )}
               {isOwner && (
                 <>

@@ -509,7 +509,7 @@ export default function CommunityPedigreesPage() {
                             </span>
                           </td>
                           <td className="px-3 py-2 hidden md:table-cell text-xs" style={{ color: "#1d5bbf", fontFamily: "var(--font-table)" }}>
-                            {p.creator || "\u2014"}
+                            {p.creator ? <Link href={`/profile/${encodeURIComponent(p.creator)}`} className="hover:underline" style={{ color: "#1d5bbf" }}>{p.creator}</Link> : "\u2014"}
                           </td>
                           <td className="px-3 py-2 hidden md:table-cell text-xs" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                             {p.country || "\u2014"}
@@ -586,15 +586,16 @@ export default function CommunityPedigreesPage() {
                             border: "1px solid #C9B29F",
                           }}
                         >
-                          <span
-                            className="text-[12px] font-bold"
+                          <Link
+                            href={`/profile/${encodeURIComponent(p.creator)}`}
+                            className="text-[12px] font-bold hover:underline"
                             style={{
                               color: "#1d5bbf",
                               fontFamily: "var(--font-table)",
                             }}
                           >
                             by {p.creator}
-                          </span>
+                          </Link>
                         </div>
                       )}
                     </div>
