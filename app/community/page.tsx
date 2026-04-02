@@ -450,7 +450,7 @@ export default function CommunityPedigreesPage() {
           </div>
         ) : filtered.length === 0 ? (
           <div className="text-center py-16">
-            <img src="/logo.png" alt="" className="mx-auto mb-4 opacity-30" style={{ width: "64px", height: "64px" }} />
+            <div className="text-5xl mb-4 opacity-30">🐕</div>
             <p
               className="text-sm"
               style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}

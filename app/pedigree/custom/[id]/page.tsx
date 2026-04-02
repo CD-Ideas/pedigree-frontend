@@ -534,7 +534,7 @@ export default function PublishedPedigreePage() {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: "#EDE4D5" }}>
         <div className="text-center">
-          <img src="/logo.png" alt="" className="mx-auto mb-4 opacity-50" style={{ width: "80px", height: "80px" }} />
+          <div className="text-6xl mb-4">🐕</div>
           <h2 className="text-xl font-bold mb-2" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Pedigree Not Found</h2>
           <p className="text-sm mb-6" style={{ color: "#4A4A4A" }}>This pedigree doesn&apos;t exist or has been removed.</p>
           <Link href="/" className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-semibold transition-all hover:scale-105"

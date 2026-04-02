@@ -35,7 +35,7 @@ interface MarketplaceResponse {
 const LOGO = "/logo.png";
 
 const CATEGORIES = [
-  { key: "dogs_for_sale", label: "Dogs for Sale", icon: "\uD83D\uDC15", color: "#ef4444", tag: "HOT" },
+  { key: "dogs_for_sale", label: "Dogs for Sale", icon: "🐾", color: "#ef4444", tag: "HOT" },
   { key: "stud_service", label: "Stud Service", icon: "\uD83D\uDC8E", color: "#8b5cf6", tag: null },
   { key: "litters_for_sale", label: "Litters for Sale", icon: "\uD83C\uDF7C", color: "#f472b6", tag: "NEW" },
   { key: "supplies_gear", label: "Supplies & Gear", icon: "\uD83C\uDF92", color: "#22c55e", tag: null },

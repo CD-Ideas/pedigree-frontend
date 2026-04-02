@@ -609,7 +609,7 @@ export default function Home() {
             </p>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
               {[
-                { icon: "🐕", title: "Dogs For Sale", desc: "Browse verified listings from registered breeders", color: "#ef4444", glow: "239,68,68", tag: "HOT", category: "dogs_for_sale" },
+                { icon: "🐾", title: "Dogs For Sale", desc: "Browse verified listings from registered breeders", color: "#ef4444", glow: "239,68,68", tag: "HOT", category: "dogs_for_sale" },
                 { icon: "💎", title: "Stud Service", desc: "Find proven studs with full pedigree verification", color: "#8b5cf6", glow: "139,92,246", tag: null, category: "stud_service" },
                 { icon: "🍼", title: "Litters for Sale", desc: "Reserve puppies from planned breedings", color: "#f472b6", glow: "244,114,182", tag: "NEW", category: "litters_for_sale" },
                 { icon: "🎒", title: "Supplies & Gear", desc: "Premium products from trusted vendors", color: "#22c55e", glow: "34,197,94", tag: null, category: "supplies_gear" },
