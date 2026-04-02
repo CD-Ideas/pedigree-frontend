@@ -228,6 +228,7 @@ export default function MarketplaceAdPage() {
                 <img
                   src={photos[selectedPhoto]}
                   alt={ad.title}
+                  onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }}
                   className="w-full h-full object-cover rounded-lg"
                 />
               ) : (
@@ -290,7 +291,7 @@ export default function MarketplaceAdPage() {
                             boxShadow: isSelected ? "0 4px 12px rgba(0,0,0,0.25)" : "0 2px 6px rgba(0,0,0,0.15)",
                           }}
                         >
-                          <img src={photo} alt={`Photo ${i + 1}`} className="w-full h-full object-cover" />
+                          <img src={photo} alt={`Photo ${i + 1}`} className="w-full h-full object-cover" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
                         </button>
                       );
                     })}

@@ -442,7 +442,7 @@ function DogSearch({ label, onSelect }: { label: string; onSelect: (dog: SearchD
               style={{ borderBottom: "1px solid #C9B29F" }}>
               {d.photo_url ? (
                 <img src={d.photo_url.startsWith("http") ? d.photo_url : `https://www.apbt.online-pedigrees.com/${d.photo_url}`}
-                  alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" />
+                  alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
               ) : (
                 <img src="/logo.png" alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} />
               )}

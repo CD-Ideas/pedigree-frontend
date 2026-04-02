@@ -94,6 +94,7 @@ function AdCard({ ad, index }: { ad: MarketplaceAd; index: number }) {
             alt={ad.title}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             loading="lazy"
+            onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }}
           />
         ) : (
           <div

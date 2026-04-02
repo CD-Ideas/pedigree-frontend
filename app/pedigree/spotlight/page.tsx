@@ -189,7 +189,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
               <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ background: s.color }} />
               {s.photo_url ? (
                 <img src={s.photo_url.startsWith("http") ? s.photo_url : `https://www.apbt.online-pedigrees.com/${s.photo_url}`}
-                     alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} />
+                     alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
               ) : (
                 <img src="/logo.png" alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} />
               )}
@@ -292,7 +292,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
                  onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}>
                 {d.photo_url ? (
                   <img src={d.photo_url.startsWith("http") ? d.photo_url : `https://www.apbt.online-pedigrees.com/${d.photo_url}`}
-                       alt="" className="w-8 h-8 rounded-full object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} />
+                       alt="" className="w-8 h-8 rounded-full object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
                 ) : (
                   <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm"
                        style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}>🐕</div>
@@ -486,7 +486,7 @@ export default function SpotlightPage() {
                           onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}>
                     {f.photo_url ? (
                       <img src={f.photo_url.startsWith("http") ? f.photo_url : `https://www.apbt.online-pedigrees.com/${f.photo_url}`}
-                           alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} />
+                           alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
                     ) : (
                       <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-[12px]"
                            style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}>🐕</div>
@@ -578,7 +578,7 @@ export default function SpotlightPage() {
               <div className="flex items-center gap-2">
                 {target?.photo_url && (
                   <img src={target.photo_url.startsWith("http") ? target.photo_url : `https://www.apbt.online-pedigrees.com/${target.photo_url}`}
-                       alt="" className="w-8 h-8 rounded-full object-cover" style={{ border: "2px solid #C9B29F" }} />
+                       alt="" className="w-8 h-8 rounded-full object-cover" style={{ border: "2px solid #C9B29F" }} onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
                 )}
                 <div>
                   <h2 className="text-sm font-bold" style={{ fontFamily: "var(--font-table)", color: getDogColor(target?.name || "") }}>{target?.name}</h2>
@@ -629,7 +629,7 @@ export default function SpotlightPage() {
                   {/* Photo */}
                   <div className="aspect-[4/3] overflow-hidden" style={{ background: "#FAFAFA" }}>
                     {r.photo_url ? (
-                      <img src={r.photo_url} alt={r.name} className="w-full h-full object-cover transition-transform group-hover:scale-110" />
+                      <img src={r.photo_url} alt={r.name} className="w-full h-full object-cover transition-transform group-hover:scale-110" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center opacity-20"><img src="/logo.png" alt="" style={{ width: "40px", height: "40px" }} /></div>
                     )}
@@ -709,7 +709,7 @@ export default function SpotlightPage() {
                   <div className="aspect-square overflow-hidden" style={{ background: "#FAFAFA" }}>
                     {f.photo_url ? (
                       <img src={f.photo_url.startsWith("http") ? f.photo_url : `https://www.apbt.online-pedigrees.com/${f.photo_url}`}
-                           alt="" className="w-full h-full object-cover transition-transform group-hover:scale-110" />
+                           alt="" className="w-full h-full object-cover transition-transform group-hover:scale-110" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center opacity-20"><img src="/logo.png" alt="" style={{ width: "32px", height: "32px" }} /></div>
                     )}

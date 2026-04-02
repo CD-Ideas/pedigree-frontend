@@ -73,6 +73,7 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
             alt={dog.name}
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
             loading="lazy"
+            onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }}
           />
         ) : (
           <div
