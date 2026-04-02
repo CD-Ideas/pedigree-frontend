@@ -85,7 +85,7 @@ function _BreedingCalcPreview_UNUSED() {
                 </>
               ) : (
                 <>
-                  <span style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "12px", color: "#1d5bbf" }}>GR CH Razor&apos;s Edge Bloodfire</span>
+                  <span style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "12px", color: "#c02828" }}>CH Garner&apos;s Chinaman (4XW) ROM</span>
                 </>
               )}
             </div>
@@ -470,38 +470,38 @@ export default function Home() {
                   borderRadius: "8px",
                 }}>
                 <div className="text-center mb-2">
-                  <span style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "12px", color: "#1d5bbf" }}>GR CH Razor&apos;s Edge Bloodfire</span>
+                  <span style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "12px", color: "#c02828" }}>CH Garner&apos;s Chinaman (4XW) ROM</span>
                 </div>
                 <div className="flex justify-center">
                   <svg width="180" height="180" viewBox="0 0 220 220">
+                    {/* Carver 42% — #3a3a3a (no title) */}
+                    <circle cx="110" cy="110" r="85" fill="none" stroke="#3a3a3a" strokeWidth="45"
+                      strokeDasharray={`${42 * 5.34} ${100 * 5.34}`} strokeDashoffset="0"
+                      transform="rotate(-90 110 110)" />
+                    {/* Eli/Boudreaux 35% — #b45a0a (2XW dark orange) */}
+                    <circle cx="110" cy="110" r="85" fill="none" stroke="#b45a0a" strokeWidth="45"
+                      strokeDasharray={`${35 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(42) * 5.34}`}
+                      transform="rotate(-90 110 110)" />
+                    {/* GR CH Rascal 13% — #1d5bbf (GR CH blue) */}
+                    <circle cx="110" cy="110" r="85" fill="none" stroke="#1d5bbf" strokeWidth="45"
+                      strokeDasharray={`${13 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(42 + 35) * 5.34}`}
+                      transform="rotate(-90 110 110)" />
+                    {/* CH Crenshaw 10% — #c02828 (CH red) */}
                     <circle cx="110" cy="110" r="85" fill="none" stroke="#c02828" strokeWidth="45"
-                      strokeDasharray={`${31 * 5.34} ${100 * 5.34}`} strokeDashoffset="0"
-                      transform="rotate(-90 110 110)" />
-                    <circle cx="110" cy="110" r="85" fill="none" stroke="#3a3a3a" strokeWidth="45"
-                      strokeDasharray={`${22 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(31) * 5.34}`}
-                      transform="rotate(-90 110 110)" />
-                    <circle cx="110" cy="110" r="85" fill="none" stroke="#3a3a3a" strokeWidth="45"
-                      strokeDasharray={`${15 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(31 + 22) * 5.34}`}
-                      transform="rotate(-90 110 110)" />
-                    <circle cx="110" cy="110" r="85" fill="none" stroke="#3a3a3a" strokeWidth="45"
-                      strokeDasharray={`${12 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(31 + 22 + 15) * 5.34}`}
-                      transform="rotate(-90 110 110)" />
-                    <circle cx="110" cy="110" r="85" fill="none" stroke="rgba(58,58,58,0.5)" strokeWidth="45"
-                      strokeDasharray={`${20 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(31 + 22 + 15 + 12) * 5.34}`}
+                      strokeDasharray={`${10 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(42 + 35 + 13) * 5.34}`}
                       transform="rotate(-90 110 110)" />
                     <circle cx="110" cy="110" r="62" fill="#FAFAFA" />
-                    <text x="110" y="100" textAnchor="middle" fill="#1C1C1C" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "22px" }}>31%</text>
-                    <text x="110" y="118" textAnchor="middle" fill="#c02828" style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "12px", letterSpacing: "0.05em" }}>JEEP DOMINANT</text>
-                    <text x="110" y="134" textAnchor="middle" fill="#4A4A4A" style={{ fontFamily: "var(--font-body)", fontWeight: 400, fontSize: "12px" }}>4-gen analysis</text>
+                    <text x="110" y="100" textAnchor="middle" fill="#1C1C1C" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "22px" }}>42%</text>
+                    <text x="110" y="118" textAnchor="middle" fill="#3a3a3a" style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "12px", letterSpacing: "0.05em" }}>CARVER DOMINANT</text>
+                    <text x="110" y="134" textAnchor="middle" fill="#4A4A4A" style={{ fontFamily: "var(--font-body)", fontWeight: 400, fontSize: "12px" }}>6-gen analysis</text>
                   </svg>
                 </div>
                 <div className="grid grid-cols-2 gap-x-3 gap-y-1 mt-2">
                   {[
-                    { name: "CH Jeep", pct: "31%", color: "#c02828" },
-                    { name: "Red Boy", pct: "22%", color: "#3a3a3a" },
-                    { name: "Eli Jr", pct: "15%", color: "#3a3a3a" },
-                    { name: "Carver", pct: "12%", color: "#3a3a3a" },
-                    { name: "Other", pct: "20%", color: "rgba(58,58,58,0.5)" },
+                    { name: "Carver", pct: "42%", color: "#3a3a3a" },
+                    { name: "Eli/Boudreaux", pct: "35%", color: "#b45a0a" },
+                    { name: "GR CH Rascal", pct: "13%", color: "#1d5bbf" },
+                    { name: "CH Crenshaw", pct: "10%", color: "#c02828" },
                   ].map((b, i) => (
                     <div key={i} className="flex items-center gap-2">
                       <div className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ background: b.color }} />
@@ -524,10 +524,10 @@ export default function Home() {
                     <div className="w-6 h-6 rounded-lg flex items-center justify-center" style={{ background: "rgba(239,68,68,0.15)", border: "1px solid rgba(239,68,68,0.3)" }}>
                       <span style={{ fontSize: "12px" }}>⚠️</span>
                     </div>
-                    <span style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "12px", color: "#ef4444", textTransform: "uppercase", letterSpacing: "0.06em" }}>Inbreeding Alert — 4.5% COI</span>
+                    <span style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "12px", color: "#ef4444", textTransform: "uppercase", letterSpacing: "0.06em" }}>Inbreeding Alert — 6.2% COI</span>
                   </div>
                   <p style={{ fontFamily: "var(--font-body)", fontSize: "12px", color: "#4A4A4A", lineHeight: 1.5 }}>
-                    Jeep appears on <span style={{ color: "#ef4444", fontWeight: 600 }}>both sire and dam side</span>. Moderate risk. Monitor joint health and temperament stability.
+                    Carver&apos;s Black Widow appears <span style={{ color: "#ef4444", fontWeight: 600 }}>3 times across both sides</span>. Tight linebreeding. Monitor structural soundness.
                   </p>
                 </div>
 
@@ -542,10 +542,10 @@ export default function Home() {
                   </h4>
                   <ul className="space-y-1.5">
                     {[
-                      "31% Jeep lineage — expect explosive prey drive",
-                      "Double Jeep on both sides — high impact genetics",
-                      "22% Red Boy adds gameness & stamina",
-                      "Test for joint health due to inbreeding overlap",
+                      "42% Carver blood — deep foundational influence",
+                      "35% Boudreaux' Eli lineage — athletic drive & endurance",
+                      "GR CH Rascal appears on both sides — tight breeding",
+                      "52 ancestor slots analyzed across 6 generations",
                     ].map((tip, i) => (
                       <li key={i} className="flex items-start gap-1.5" style={{ fontFamily: "var(--font-body)", fontSize: "12px", color: "#4A4A4A", lineHeight: 1.45 }}>
                         <span style={{ color: "#C9B29F", fontSize: "12px", marginTop: "3px" }}>◆</span>
@@ -567,7 +567,7 @@ export default function Home() {
                   <div className="flex items-center gap-2">
                     {[
                       { step: "1", text: "Enter parents" },
-                      { step: "2", text: "We crunch 16 ancestors" },
+                      { step: "2", text: "We crunch 52+ ancestors" },
                       { step: "3", text: "Results light up" },
                     ].map((s, i) => (
                       <div key={i} className="flex-1 flex items-center gap-1.5">
