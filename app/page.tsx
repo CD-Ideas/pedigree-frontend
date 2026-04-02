@@ -469,11 +469,11 @@ export default function Home() {
                   border: "2px solid #C9B29F",
                   borderRadius: "8px",
                 }}>
-                <div className="text-center mb-2">
-                  <span style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "12px", color: "#c02828" }}>CH Garner&apos;s Chinaman (4XW) ROM</span>
+                <div className="text-center mb-3">
+                  <span style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "14px", color: "#c02828" }}>CH Garner&apos;s Chinaman (4XW) ROM</span>
                 </div>
                 <div className="flex justify-center">
-                  <svg width="180" height="180" viewBox="0 0 220 220">
+                  <svg width="220" height="220" viewBox="0 0 220 220">
                     {/* Carver 25% — #3a3a3a (no title) */}
                     <circle cx="110" cy="110" r="85" fill="none" stroke="#3a3a3a" strokeWidth="45"
                       strokeDasharray={`${25 * 5.34} ${100 * 5.34}`} strokeDashoffset="0"
@@ -499,12 +499,12 @@ export default function Home() {
                       strokeDasharray={`${12 * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-(25 + 21 + 15 + 15 + 12) * 5.34}`}
                       transform="rotate(-90 110 110)" />
                     <circle cx="110" cy="110" r="62" fill="#FAFAFA" />
-                    <text x="110" y="100" textAnchor="middle" fill="#1C1C1C" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "22px" }}>25%</text>
-                    <text x="110" y="118" textAnchor="middle" fill="#3a3a3a" style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "12px", letterSpacing: "0.05em" }}>CARVER DOMINANT</text>
+                    <text x="110" y="98" textAnchor="middle" fill="#1C1C1C" style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "26px" }}>25%</text>
+                    <text x="110" y="118" textAnchor="middle" fill="#3a3a3a" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "12px", letterSpacing: "0.05em" }}>CARVER DOMINANT</text>
                     <text x="110" y="134" textAnchor="middle" fill="#4A4A4A" style={{ fontFamily: "var(--font-body)", fontWeight: 400, fontSize: "12px" }}>6-gen analysis</text>
                   </svg>
                 </div>
-                <div className="grid grid-cols-2 gap-x-3 gap-y-1 mt-2">
+                <div className="grid grid-cols-2 gap-x-3 gap-y-1.5 mt-4">
                   {[
                     { name: "Carver", pct: "25%", color: "#3a3a3a" },
                     { name: "Eli (2XW)", pct: "21%", color: "#b45a0a" },
@@ -515,7 +515,7 @@ export default function Home() {
                   ].map((b, i) => (
                     <div key={i} className="flex items-center gap-2">
                       <div className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ background: b.color }} />
-                      <span style={{ fontFamily: "var(--font-body)", fontSize: "12px", color: "#1C1C1C", fontWeight: 500 }}>{b.name}</span>
+                      <span style={{ fontFamily: "var(--font-body)", fontSize: "12px", color: b.color, fontWeight: 600 }}>{b.name}</span>
                       <span style={{ fontFamily: "var(--font-body)", fontSize: "12px", color: b.color, fontWeight: 700, marginLeft: "auto" }}>{b.pct}</span>
                     </div>
                   ))}
