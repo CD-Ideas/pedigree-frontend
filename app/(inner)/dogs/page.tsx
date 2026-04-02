@@ -527,8 +527,8 @@ export default function DogsPage() {
           <table className="w-full text-sm">
             <thead>
               <tr style={{ background: "#1C1C1C", borderBottom: "2px solid #C9B29F" }}>
-                <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-medium" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Dog</th>
-                <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-medium" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Sex</th>
+                <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-bold" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Dog</th>
+                <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-bold" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Sex</th>
                 <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-medium hidden md:table-cell" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Color</th>
                 <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-medium hidden lg:table-cell" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Sire</th>
                 <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-medium hidden lg:table-cell" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Dam</th>
