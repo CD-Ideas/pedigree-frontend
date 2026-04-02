@@ -471,10 +471,10 @@ export default function CommunityPedigreesPage() {
                     <tr style={{ background: "#1C1C1C", borderBottom: "2px solid #C9B29F" }}>
                       <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-bold" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Dog Name</th>
                       <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-bold" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Sex</th>
-                      <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-medium hidden md:table-cell" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Creator</th>
-                      <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-medium hidden md:table-cell" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Country</th>
-                      <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-medium hidden lg:table-cell" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Breeder</th>
-                      <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-medium hidden lg:table-cell" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Date Posted</th>
+                      <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-bold hidden md:table-cell" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Creator</th>
+                      <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-bold hidden md:table-cell" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Country</th>
+                      <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-bold hidden lg:table-cell" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Breeder</th>
+                      <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-bold hidden lg:table-cell" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Date Posted</th>
                       <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-bold" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Views</th>
                     </tr>
                   </thead>
