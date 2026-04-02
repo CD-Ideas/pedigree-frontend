@@ -340,6 +340,7 @@ export default function NavBar() {
   ];
 
   return (
+    <>
     <nav
       style={{
         background: "#1C1C1C",
@@ -362,26 +363,7 @@ export default function NavBar() {
             Pedigree Platform
           </span>
         </Link>
-        {mounted && loggedIn && pathname !== "/dashboard" && !pathname.startsWith("/marketplace") && pathname !== "/dog-of-the-month" && (
-          <button
-            onClick={() => {
-              if (window.history.length > 2) {
-                router.back();
-              } else {
-                router.push("/dashboard");
-              }
-            }}
-            className="ml-4 flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold transition-all"
-            style={{
-              color: "#FAF7F2",
-              fontFamily: "var(--font-table, system-ui, sans-serif)",
-              background: "transparent",
-              border: "2px solid #C9B29F",
-            }}
-          >
-            ← Back
-          </button>
-        )}
+        {/* Back button moved below navbar */}
         {(pathname.startsWith("/pedigree/") && pathname !== "/pedigree/spotlight" || pathname === "/dashboard") && (
           <div className="flex-1 max-w-md mx-4 overflow-visible">
             <NavSearch />
@@ -779,5 +761,26 @@ export default function NavBar() {
         </div>
       </div>
     </nav>
+      {mounted && loggedIn && pathname !== "/dashboard" && !pathname.startsWith("/marketplace") && pathname !== "/dog-of-the-month" && (
+        <div className="max-w-7xl mx-auto px-4 pt-2">
+          <button
+            onClick={() => {
+              if (window.history.length > 2) {
+                router.back();
+              } else {
+                router.push("/dashboard");
+              }
+            }}
+            className="flex items-center gap-1 text-[12px] font-semibold transition-all hover:underline"
+            style={{
+              color: "#4A4A4A",
+              fontFamily: "var(--font-table)",
+            }}
+          >
+            ← Back
+          </button>
+        </div>
+      )}
+    </>
   );
 }
