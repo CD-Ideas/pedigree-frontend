@@ -696,7 +696,7 @@ export default function PublishedPedigreePage() {
               <div className="w-5 h-5 rounded flex items-center justify-center flex-shrink-0" style={{ background: "rgba(201,178,159,0.15)", border: "2px solid #C9B29F" }}>
                 <span className="text-[12px]">📝</span>
               </div>
-              <span className="text-xs font-semibold flex-shrink-0" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Pedigree Notes:</span>
+              <span className="text-xs font-semibold flex-shrink-0 uppercase tracking-widest" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Pedigree Notes:</span>
               <p className="text-xs uppercase" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", lineHeight: "1.4" }}>
                 {ped.pedigree_notes}
               </p>
