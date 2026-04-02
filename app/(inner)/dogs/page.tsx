@@ -543,7 +543,7 @@ export default function DogsPage() {
                   style={{ borderBottom: "1px solid #C9B29F" }}
                 >
                   <td className="px-3 py-2">
-                    <Link href={`/dogs/${dog.id}`} className="font-medium hover:underline" style={{ color: getDogColor(dog.name), fontFamily: "var(--font-table)" }}>
+                    <Link href={`/dogs/${dog.id}`} className="font-bold hover:underline text-[12px]" style={{ color: getDogColor(dog.name), fontFamily: "var(--font-table)" }}>
                       {dog.name}
                     </Link>
                     <div className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
