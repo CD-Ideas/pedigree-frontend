@@ -435,6 +435,11 @@ main { animation: pageIn 0.35s ease forwards; }
   body.printing-pedigree > #print-pedigree-wrapper * {
     visibility: visible !important;
   }
+  /* Prevent rows from being split across pages */
+  body.printing-pedigree #print-pedigree-wrapper div[style*="grid"] > div {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
   @page {
     size: landscape;
     margin: 0.5cm;
