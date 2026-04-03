@@ -967,12 +967,12 @@ function PedigreeLabInner() {
                   </button>
                   {/* Save to Folder Button */}
                   <button
-                    onClick={saveToFolder}
+                    onClick={() => { saveToFolder(); }}
                     className="px-2.5 py-1 rounded-lg text-xs font-bold transition-all hover:scale-105 cursor-pointer"
-                    style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)", border: "2px solid #C9B29F" }}
+                    style={{ background: "#C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)", border: "2px solid #1C1C1C" }}
                     title="Save to My Pedigree Folder"
                   >
-                    📁
+                    📁 Save
                   </button>
                   {/* Share Buttons */}
                   <div className="flex items-center gap-1.5">
