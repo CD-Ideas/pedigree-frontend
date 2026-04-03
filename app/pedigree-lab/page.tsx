@@ -1488,7 +1488,7 @@ function PedigreeLabInner() {
                 My Pedigrees
               </Link>
 
-              {/* My Pedigree Folder */}
+              {/* My Saved Pedigrees */}
               <Link
                 href="/dashboard/pedigree-folder"
                 className="w-full py-2.5 text-xs font-bold uppercase tracking-widest hover:scale-[1.02] flex items-center justify-center gap-2"
@@ -1503,7 +1503,7 @@ function PedigreeLabInner() {
                   textDecoration: "none",
                 }}
               >
-                📁 My Pedigree Folder
+                📁 My Saved Pedigrees
               </Link>
 
             </div>

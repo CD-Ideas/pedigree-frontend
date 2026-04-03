@@ -295,7 +295,7 @@ export default function MyPedigreesPage() {
               textDecoration: "none",
             }}
           >
-            📁 My Pedigree Folder
+            📁 My Saved Pedigrees
           </Link>
           {(search.trim() || filterContinent || filterCountry || sexFilter || hasPhotoFilter) && (
             <span
