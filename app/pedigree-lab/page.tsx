@@ -311,16 +311,6 @@ function PedigreeLabInner() {
   const [previewMode, setPreviewMode] = useState(false);
   const [previewDisplayGens, setPreviewDisplayGens] = useState(4);
 
-  const printPedigree = () => {
-    const el = document.getElementById("pedigree-tree-container");
-    if (!el) return;
-    const dogName = slots.subject?.registered_name;
-    document.title = dogName ? `${dogName} ${previewDisplayGens}G Pedigree` : "Pedigree View";
-    document.body.classList.add("printing-pedigree");
-    window.print();
-    document.body.classList.remove("printing-pedigree");
-  };
-
   const savePedigree = async () => {
     const el = document.getElementById("pedigree-tree-container");
     if (!el) return;
@@ -882,20 +872,12 @@ function PedigreeLabInner() {
                   </div>
                   {/* PDF Button */}
                   <button
-                    onClick={printPedigree}
+                    onClick={savePedigree}
                     className="px-2.5 py-1 rounded-lg text-xs font-bold transition-all hover:scale-105 cursor-pointer"
                     style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)", border: "2px solid #C9B29F" }}
                     title="Download as PDF"
                   >
                     PDF
-                  </button>
-                  <button
-                    onClick={savePedigree}
-                    className="px-2.5 py-1 rounded-lg text-xs font-bold transition-all hover:scale-105 cursor-pointer"
-                    style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)", border: "2px solid #C9B29F" }}
-                    title="Save as image"
-                  >
-                    💾
                   </button>
                   {/* Share Buttons */}
                   <div className="flex items-center gap-1.5">

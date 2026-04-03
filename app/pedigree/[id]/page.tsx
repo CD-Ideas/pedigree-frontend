@@ -269,17 +269,6 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
   const [zoom, setZoom] = useState(1);
   const [displayGens, setDisplayGens] = useState(4);
 
-  const printPedigree = () => {
-    const el = document.getElementById("pedigree-tree-container");
-    if (!el) return;
-    document.title = `${dogName} ${displayGens}G Pedigree`;
-    el.style.transform = "scale(1)";
-    document.body.classList.add("printing-pedigree");
-    window.print();
-    document.body.classList.remove("printing-pedigree");
-    el.style.transform = `scale(${zoom})`;
-  };
-
   const savePedigree = async () => {
     const el = document.getElementById("pedigree-tree-container");
     if (!el) return;
@@ -381,20 +370,12 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
 
         {/* PDF Button */}
         <button
-          onClick={printPedigree}
+          onClick={savePedigree}
           className="px-2.5 py-1 rounded-lg text-xs font-bold transition-all hover:scale-105 cursor-pointer"
           style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: PG.font, border: "2px solid #C9B29F" }}
           title="Download as PDF"
         >
           PDF
-        </button>
-        <button
-          onClick={savePedigree}
-          className="px-2.5 py-1 rounded-lg text-xs font-bold transition-all hover:scale-105 cursor-pointer"
-          style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: PG.font, border: "2px solid #C9B29F" }}
-          title="Save as image"
-        >
-          💾
         </button>
       </div>
 
