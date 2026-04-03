@@ -889,7 +889,11 @@ function PedigreeLabInner() {
                           navigator.share({ title: name || "Pedigree Preview", url: shareUrl });
                         } else {
                           navigator.clipboard.writeText(shareUrl);
-                          alert("Link copied to clipboard!");
+                          const toast = document.createElement("div");
+                          toast.textContent = "Link copied!";
+                          toast.style.cssText = "position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#1C1C1C;color:#FAF7F2;padding:8px 20px;border-radius:8px;font-size:12px;font-weight:700;z-index:99999;font-family:var(--font-table);";
+                          document.body.appendChild(toast);
+                          setTimeout(() => { toast.remove(); }, 2000);
                         }
                       }}
                       className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-[12px] font-semibold transition-all hover:scale-105 cursor-pointer"
