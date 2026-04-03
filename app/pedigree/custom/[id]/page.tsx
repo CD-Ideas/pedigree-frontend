@@ -238,7 +238,7 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF({ orientation: canvas.width > canvas.height ? "landscape" : "portrait", unit: "px", format: [canvas.width, canvas.height] });
       pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
-      pdf.save("Pedigree_View.pdf");
+      pdf.save(`${dogName} ${displayGens}G Pedigree.pdf`);
     } catch (e) { console.error("PDF error:", e); }
   };
 

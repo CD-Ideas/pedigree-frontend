@@ -321,7 +321,9 @@ function PedigreeLabInner() {
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF({ orientation: canvas.width > canvas.height ? "landscape" : "portrait", unit: "px", format: [canvas.width, canvas.height] });
       pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
-      pdf.save("Pedigree_View.pdf");
+      const dogName = slots.subject?.registered_name;
+      const fileName = dogName ? `${dogName} ${previewDisplayGens}G Pedigree.pdf` : "Pedigree View.pdf";
+      pdf.save(fileName);
     } catch (e) { console.error("PDF error:", e); }
   };
   const [showPublishModal, setShowPublishModal] = useState(false);
