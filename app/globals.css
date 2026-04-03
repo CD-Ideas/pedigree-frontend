@@ -423,3 +423,35 @@ main { animation: pageIn 0.35s ease forwards; }
   background: linear-gradient(90deg, transparent, var(--sandy-brown), transparent);
   opacity: 0.5;
 }
+
+/* ── PRINT STYLES FOR PEDIGREE PDF ─────────────────────────────────── */
+@media print {
+  body.printing-pedigree * {
+    visibility: hidden !important;
+  }
+  body.printing-pedigree #pedigree-tree-container,
+  body.printing-pedigree #pedigree-tree-container * {
+    visibility: visible !important;
+  }
+  body.printing-pedigree #pedigree-tree-container {
+    position: fixed !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    min-width: unset !important;
+    transform: none !important;
+    overflow: visible !important;
+    background: #fff !important;
+    padding: 12px !important;
+  }
+  body.printing-pedigree nav,
+  body.printing-pedigree footer,
+  body.printing-pedigree .chat-pulse,
+  body.printing-pedigree button[aria-label="Open chat assistant"] {
+    display: none !important;
+  }
+  @page {
+    size: landscape;
+    margin: 0.5cm;
+  }
+}

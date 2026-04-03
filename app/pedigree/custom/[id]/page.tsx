@@ -4,8 +4,6 @@ import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { getDogColor } from "@/app/utils/colors";
-import html2canvas from "html2canvas";
-import { jsPDF } from "jspdf";
 
 const capName = (s: string) => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
 
@@ -230,27 +228,15 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
   const [zoom, setZoom] = useState(1);
   const [displayGens, setDisplayGens] = useState(4);
 
-  const downloadPDF = async (elementId: string) => {
-    const el = document.getElementById(elementId);
+  const printPedigree = () => {
+    const el = document.getElementById("pedigree-tree-container");
     if (!el) return;
-    try {
-      const origTransform = el.style.transform;
-      const origMinWidth = el.style.minWidth;
-      const parent = el.parentElement;
-      const origOverflow = parent?.style.overflow || "";
-      el.style.transform = "scale(1)";
-      el.style.minWidth = maxGen >= 5 ? "1400px" : "1100px";
-      if (parent) parent.style.overflow = "visible";
-      await new Promise(r => setTimeout(r, 100));
-      const canvas = await html2canvas(el, { scale: 2, backgroundColor: "#FAFAFA", useCORS: true, windowWidth: 1600 });
-      el.style.transform = origTransform;
-      el.style.minWidth = origMinWidth;
-      if (parent) parent.style.overflow = origOverflow;
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF({ orientation: "landscape", unit: "px", format: [canvas.width, canvas.height] });
-      pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
-      pdf.save(`${dogName} ${displayGens}G Pedigree.pdf`);
-    } catch (e) { console.error("PDF error:", e); }
+    document.title = `${dogName} ${displayGens}G Pedigree`;
+    el.style.transform = "scale(1)";
+    document.body.classList.add("printing-pedigree");
+    window.print();
+    document.body.classList.remove("printing-pedigree");
+    el.style.transform = `scale(${zoom})`;
   };
 
   const byGen: Record<number, TreeRow[]> = {};
@@ -302,7 +288,7 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
 
         {/* PDF Button */}
         <button
-          onClick={() => downloadPDF("pedigree-tree-container")}
+          onClick={printPedigree}
           className="px-2.5 py-1 rounded-lg text-xs font-bold transition-all hover:scale-105 cursor-pointer"
           style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)", border: "2px solid #C9B29F" }}
           title="Download as PDF"

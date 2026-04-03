@@ -4,8 +4,6 @@ import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { getDogColor } from "@/app/utils/colors";
-import html2canvas from "html2canvas";
-import { jsPDF } from "jspdf";
 
 /* ------------------------------------------------------------------ */
 /* Types                                                              */
@@ -313,26 +311,14 @@ function PedigreeLabInner() {
   const [previewMode, setPreviewMode] = useState(false);
   const [previewDisplayGens, setPreviewDisplayGens] = useState(4);
 
-  const downloadPDF = async (elementId: string) => {
-    const el = document.getElementById(elementId);
+  const printPedigree = () => {
+    const el = document.getElementById("pedigree-tree-container");
     if (!el) return;
-    try {
-      const origMinWidth = el.style.minWidth;
-      const parent = el.parentElement;
-      const origOverflow = parent?.style.overflow || "";
-      el.style.minWidth = "1400px";
-      if (parent) parent.style.overflow = "visible";
-      await new Promise(r => setTimeout(r, 100));
-      const canvas = await html2canvas(el, { scale: 2, backgroundColor: "#FAFAFA", useCORS: true, windowWidth: 1600 });
-      el.style.minWidth = origMinWidth;
-      if (parent) parent.style.overflow = origOverflow;
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF({ orientation: "landscape", unit: "px", format: [canvas.width, canvas.height] });
-      pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
-      const dogName = slots.subject?.registered_name;
-      const fileName = dogName ? `${dogName} ${previewDisplayGens}G Pedigree.pdf` : "Pedigree View.pdf";
-      pdf.save(fileName);
-    } catch (e) { console.error("PDF error:", e); }
+    const dogName = slots.subject?.registered_name;
+    document.title = dogName ? `${dogName} ${previewDisplayGens}G Pedigree` : "Pedigree View";
+    document.body.classList.add("printing-pedigree");
+    window.print();
+    document.body.classList.remove("printing-pedigree");
   };
   const [showPublishModal, setShowPublishModal] = useState(false);
   const [publishForm, setPublishForm] = useState<PublishForm>(defaultPublishForm());
@@ -873,7 +859,7 @@ function PedigreeLabInner() {
                   </div>
                   {/* PDF Button */}
                   <button
-                    onClick={() => downloadPDF("pedigree-tree-container")}
+                    onClick={printPedigree}
                     className="px-2.5 py-1 rounded-lg text-xs font-bold transition-all hover:scale-105 cursor-pointer"
                     style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)", border: "2px solid #C9B29F" }}
                     title="Download as PDF"
