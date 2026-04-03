@@ -283,6 +283,20 @@ export default function MyPedigreesPage() {
           >
             🧪 Pedigree Lab →
           </Link>
+          <Link
+            href="/dashboard/pedigree-folder"
+            className="text-[12px] px-3 py-1 rounded-full transition-all hover:scale-105"
+            style={{
+              color: "#1C1C1C",
+              background: "#FAF7F2",
+              border: "2px solid #C9B29F",
+              fontFamily: "var(--font-table)",
+              fontWeight: 700,
+              textDecoration: "none",
+            }}
+          >
+            📁 My Pedigree Folder
+          </Link>
           {(search.trim() || filterContinent || filterCountry || sexFilter || hasPhotoFilter) && (
             <span
               className="text-[12px] px-3 py-1 rounded-full"
