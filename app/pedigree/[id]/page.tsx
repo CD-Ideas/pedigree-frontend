@@ -275,9 +275,22 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
     const el = document.getElementById(elementId);
     if (!el) return;
     try {
-      const canvas = await html2canvas(el, { scale: 2, backgroundColor: "#FAFAFA", useCORS: true });
+      // Temporarily reset zoom and expand for clean capture
+      const origTransform = el.style.transform;
+      const origMinWidth = el.style.minWidth;
+      const parent = el.parentElement;
+      const origOverflow = parent?.style.overflow || "";
+      el.style.transform = "scale(1)";
+      el.style.minWidth = maxGen >= 5 ? "1400px" : "1100px";
+      if (parent) parent.style.overflow = "visible";
+      await new Promise(r => setTimeout(r, 100));
+      const canvas = await html2canvas(el, { scale: 2, backgroundColor: "#FAFAFA", useCORS: true, windowWidth: 1600 });
+      // Restore original styles
+      el.style.transform = origTransform;
+      el.style.minWidth = origMinWidth;
+      if (parent) parent.style.overflow = origOverflow;
       const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF({ orientation: canvas.width > canvas.height ? "landscape" : "portrait", unit: "px", format: [canvas.width, canvas.height] });
+      const pdf = new jsPDF({ orientation: "landscape", unit: "px", format: [canvas.width, canvas.height] });
       pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
       pdf.save(`${dogName} ${displayGens}G Pedigree.pdf`);
     } catch (e) { console.error("PDF error:", e); }
