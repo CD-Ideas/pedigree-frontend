@@ -69,7 +69,7 @@ export default function ChatWidget() {
             width: 56,
             height: 56,
             borderRadius: "50%",
-            background: "linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dim))",
+            background: "#1C1C1C",
             color: "#fff",
             border: "none",
             cursor: "pointer",
@@ -103,8 +103,8 @@ export default function ChatWidget() {
             overflow: "hidden",
             display: "flex",
             flexDirection: "column",
-            background: "var(--bg-elevated, #FAF7F2)",
-            border: "1px solid var(--border, #C9B29F)",
+            background: "#FAF7F2",
+            border: "1px solid #C9B29F",
             boxShadow: "0 8px 40px rgba(0,0,0,0.2)",
           }}
         >
@@ -112,7 +112,7 @@ export default function ChatWidget() {
           <div
             style={{
               padding: "14px 16px",
-              background: "linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dim))",
+              background: "#1C1C1C",
               color: "#fff",
               display: "flex",
               alignItems: "center",
@@ -162,14 +162,14 @@ export default function ChatWidget() {
               <div
                 style={{
                   textAlign: "center",
-                  color: "var(--text-muted)",
+                  color: "#4A4A4A",
                   marginTop: 40,
                   fontSize: 14,
                   lineHeight: 1.6,
                 }}
               >
-                <div style={{ fontSize: 36, marginBottom: 8 }}>🐕</div>
-                <div style={{ fontWeight: 500 }}>Welcome!</div>
+                <img src="/logo.png" alt="" style={{ width: 48, height: 48, margin: "0 auto 8px", opacity: 0.6 }} />
+                <div style={{ fontWeight: 600, fontFamily: "var(--font-table)" }}>Welcome!</div>
                 <div>Ask me how to use the site, search dogs, breeding tools, marketplace, and more.</div>
               </div>
             )}
@@ -183,12 +183,12 @@ export default function ChatWidget() {
                   borderRadius: m.role === "user" ? "16px 16px 4px 16px" : "16px 16px 16px 4px",
                   background:
                     m.role === "user"
-                      ? "linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dim))"
-                      : "var(--bg-surface, #FAFAFA)",
-                  color: m.role === "user" ? "#fff" : "var(--text-primary)",
+                      ? "#1C1C1C"
+                      : "#FAFAFA",
+                  color: m.role === "user" ? "#fff" : "#1C1C1C",
                   fontSize: 14,
                   lineHeight: 1.5,
-                  border: m.role === "assistant" ? "1px solid var(--border, #C9B29F)" : "none",
+                  border: m.role === "assistant" ? "1px solid #C9B29F" : "none",
                   wordBreak: "break-word",
                   whiteSpace: "pre-wrap",
                 }}
@@ -202,10 +202,10 @@ export default function ChatWidget() {
                   alignSelf: "flex-start",
                   padding: "10px 14px",
                   borderRadius: "16px 16px 16px 4px",
-                  background: "var(--bg-surface, #FAFAFA)",
-                  border: "1px solid var(--border, #C9B29F)",
+                  background: "#FAFAFA",
+                  border: "1px solid #C9B29F",
                   fontSize: 14,
-                  color: "var(--text-muted)",
+                  color: "#4A4A4A",
                 }}
               >
                 <span className="typing-dots">Thinking</span>
@@ -218,10 +218,10 @@ export default function ChatWidget() {
           <div
             style={{
               padding: "10px 12px",
-              borderTop: "1px solid var(--border, #C9B29F)",
+              borderTop: "1px solid #C9B29F",
               display: "flex",
               gap: 8,
-              background: "var(--bg-surface, #FAFAFA)",
+              background: "#FAFAFA",
             }}
           >
             <input
@@ -235,9 +235,9 @@ export default function ChatWidget() {
                 flex: 1,
                 padding: "10px 14px",
                 borderRadius: 10,
-                border: "1px solid var(--border, #C9B29F)",
-                background: "var(--bg-elevated, #FAF7F2)",
-                color: "var(--text-primary)",
+                border: "1px solid #C9B29F",
+                background: "#FAF7F2",
+                color: "#1C1C1C",
                 fontSize: 14,
                 outline: "none",
                 fontFamily: "inherit",
@@ -251,8 +251,8 @@ export default function ChatWidget() {
                 borderRadius: 10,
                 border: "none",
                 background: loading || !input.trim()
-                  ? "var(--text-muted)"
-                  : "linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dim))",
+                  ? "#4A4A4A"
+                  : "#1C1C1C",
                 color: "#fff",
                 cursor: loading || !input.trim() ? "default" : "pointer",
                 fontSize: 14,
