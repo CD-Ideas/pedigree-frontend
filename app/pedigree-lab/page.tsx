@@ -314,76 +314,10 @@ function PedigreeLabInner() {
   /* ---------- Pedigree Folder state ---------- */
   const [savedViews, setSavedViews] = useState<{id: number; dog_name: string; generation: number; image_path: string; created_at: string}[]>([]);
 
-  const fetchSavedViews = async () => {
-    let userId = 0;
-    try { const u = JSON.parse(localStorage.getItem("user") || "{}"); userId = u?.id || 0; } catch {}
-    if (!userId) return;
-    try {
-      const res = await fetch(`/api/pedigree-folder/list?userId=${userId}`);
-      if (res.ok) { const data = await res.json(); setSavedViews(data.views || []); }
-    } catch {}
-  };
+  const fetchSavedViews = () => {};
 
-  useEffect(() => { fetchSavedViews(); }, []);
-
-  const saveToFolder = async () => {
-    const el = document.getElementById("pedigree-tree-container");
-    if (!el) { alert("No pedigree preview found. Please click Preview first."); return; }
-
-    let userId = 0;
-    try {
-      const userStr = localStorage.getItem("user");
-      if (userStr) { const u = JSON.parse(userStr); userId = u?.id || 0; }
-    } catch {}
-    if (!userId) { alert("Please log in to save pedigrees."); return; }
-
-    const defaultName = slots.subject?.registered_name || "Pedigree View";
-    const gen = previewDisplayGens;
-    const dogName = prompt("Name this pedigree:", `${defaultName} ${gen}G`);
-    if (!dogName) return;
-
-    const clone = el.cloneNode(true) as HTMLElement;
-
-    try {
-      const html2canvas = (await import("html2canvas")).default;
-      const tempWrapper = document.createElement("div");
-      tempWrapper.style.cssText = "position:fixed;left:-9999px;top:0;background:#fff;padding:8px;width:1400px;";
-      clone.style.transform = "none";
-      clone.style.minWidth = "unset";
-      clone.style.width = "100%";
-      if (gen >= 5) {
-        clone.querySelectorAll<HTMLElement>("[style*='minHeight'], [style*='min-height']").forEach(c => {
-          c.style.minHeight = "0";
-          c.style.padding = "1px 4px";
-        });
-        clone.querySelectorAll<HTMLElement>("div[style*='gap']").forEach(c => {
-          c.style.gap = "1px";
-        });
-        clone.style.fontSize = "9px";
-      }
-      tempWrapper.appendChild(clone);
-      document.body.appendChild(tempWrapper);
-
-      const canvas = await html2canvas(tempWrapper, { scale: 1, backgroundColor: "#FAFAFA", useCORS: true, windowWidth: 1400, logging: false });
-      document.body.removeChild(tempWrapper);
-
-      const imageData = canvas.toDataURL("image/jpeg", 0.7);
-
-      const res = await fetch("/api/pedigree-folder/save", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId, dogName, generation: gen, image: imageData }),
-      });
-
-      if (res.ok) {
-        fetchSavedViews();
-        alert("Saved to My Pedigree Folder!");
-      } else {
-        const err = await res.text();
-        console.error("Save failed:", res.status, err);
-        alert("Failed to save. Please try again.");
-      }
-    } catch (e) { console.error("Save to folder error:", e); alert("Error saving. Please try again."); }
+  const saveToFolder = () => {
+    alert("Save button clicked!");
   };
 
   const savePDF = () => {
@@ -966,14 +900,7 @@ function PedigreeLabInner() {
                     PDF
                   </button>
                   {/* Save to Folder Button */}
-                  <button
-                    onClick={() => { saveToFolder(); }}
-                    className="px-2.5 py-1 rounded-lg text-xs font-bold transition-all hover:scale-105 cursor-pointer"
-                    style={{ background: "#C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)", border: "2px solid #1C1C1C" }}
-                    title="Save to My Pedigree Folder"
-                  >
-                    📁 Save
-                  </button>
+                  <input type="button" value="📁 SAVE" onClick={() => alert("SAVE CLICKED")} style={{ background: "#C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)", border: "2px solid #1C1C1C", borderRadius: "8px", padding: "4px 10px", fontSize: "12px", fontWeight: 700, cursor: "pointer", position: "relative", zIndex: 9999 }} />
                   {/* Share Buttons */}
                   <div className="flex items-center gap-1.5">
                     <button
