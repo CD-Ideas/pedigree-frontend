@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import NavBar from "./NavBar";
 import HeartbeatTracker from "./HeartbeatTracker";
+import ChatWidget from "./ChatWidget";
 
 export const metadata: Metadata = {
   title: "Pedigree Platform",
@@ -28,6 +29,7 @@ export default function RootLayout({
         <main className="relative z-10">
           {children}
         </main>
+        <ChatWidget />
       </body>
     </html>
   );
