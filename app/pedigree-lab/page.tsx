@@ -311,37 +311,31 @@ function PedigreeLabInner() {
   const [previewMode, setPreviewMode] = useState(false);
   const [previewDisplayGens, setPreviewDisplayGens] = useState(4);
 
-  const savePDF = () => {
-    const el = document.getElementById("pedigree-tree-container");
-    if (!el) return;
-    const dogName = slots.subject?.registered_name;
-    document.title = dogName ? `${dogName} ${previewDisplayGens}G Pedigree` : "Pedigree View";
-    const wrapper = document.createElement("div");
-    wrapper.id = "print-pedigree-wrapper";
-    wrapper.style.cssText = "background:#fff;padding:8px;width:100%;";
-    const clone = el.cloneNode(true) as HTMLElement;
-    clone.style.transform = "none";
-    clone.style.minWidth = "unset";
-    clone.style.width = "100%";
-    if (previewDisplayGens >= 5) {
-      clone.querySelectorAll<HTMLElement>("[style*='minHeight'], [style*='min-height']").forEach(c => {
-        c.style.minHeight = "0";
-        c.style.padding = "1px 4px";
-      });
-      clone.querySelectorAll<HTMLElement>(".gap-1, [class*='gap-']").forEach(c => {
-        c.style.gap = "1px";
-      });
-      clone.querySelectorAll<HTMLElement>("div[style*='gap']").forEach(c => {
-        c.style.gap = "1px";
-      });
-      clone.style.fontSize = "9px";
-    }
-    wrapper.appendChild(clone);
-    document.body.appendChild(wrapper);
-    document.body.classList.add("printing-pedigree");
-    window.print();
-    document.body.classList.remove("printing-pedigree");
-    document.body.removeChild(wrapper);
+  const handlePDF = () => {
+    try {
+      const el = document.getElementById("pedigree-tree-container");
+      if (!el) { alert("No pedigree to save"); return; }
+      const dn = slots.subject?.registered_name;
+      document.title = dn ? dn + " " + previewDisplayGens + "G Pedigree" : "Pedigree View";
+      const w = document.createElement("div");
+      w.id = "print-pedigree-wrapper";
+      w.style.cssText = "background:#fff;padding:8px;width:100%;";
+      const c = el.cloneNode(true) as HTMLElement;
+      c.style.transform = "none";
+      c.style.minWidth = "unset";
+      c.style.width = "100%";
+      if (previewDisplayGens >= 5) {
+        c.querySelectorAll<HTMLElement>("[style*='minHeight']").forEach(x => { x.style.minHeight = "0"; x.style.padding = "1px 4px"; });
+        c.querySelectorAll<HTMLElement>("div[style*='gap']").forEach(x => { x.style.gap = "1px"; });
+        c.style.fontSize = "9px";
+      }
+      w.appendChild(c);
+      document.body.appendChild(w);
+      document.body.classList.add("printing-pedigree");
+      window.print();
+      document.body.classList.remove("printing-pedigree");
+      document.body.removeChild(w);
+    } catch (err) { alert("PDF error: " + String(err)); }
   };
 
   const [showPublishModal, setShowPublishModal] = useState(false);
@@ -882,15 +876,7 @@ function PedigreeLabInner() {
                     ))}
                   </div>
                   {/* PDF Button */}
-                  <button
-                    onClick={() => { window.print(); }}
-                    className="px-2.5 py-1 rounded-lg text-xs font-bold transition-all hover:scale-105 cursor-pointer"
-                    style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)", border: "2px solid #C9B29F" }}
-                    title="Download as PDF"
-                  >
-                    PDF
-                  </button>
-                  <span dangerouslySetInnerHTML={{ __html: '<button onclick="window.print()" style="background:red;color:white;padding:4px 12px;border-radius:8px;border:none;cursor:pointer;font-weight:bold;">TEST</button>' }} />
+                  <span dangerouslySetInnerHTML={{ __html: `<button onclick="try{var e=document.getElementById('pedigree-tree-container');if(!e){alert('No pedigree');return;}var w=document.createElement('div');w.id='print-pedigree-wrapper';w.style.cssText='background:#fff;padding:8px;width:100%';var c=e.cloneNode(true);c.style.transform='none';c.style.minWidth='unset';c.style.width='100%';w.appendChild(c);document.body.appendChild(w);document.body.classList.add('printing-pedigree');window.print();document.body.classList.remove('printing-pedigree');document.body.removeChild(w);}catch(x){alert(x);}" style="background:#1C1C1C;color:#FAF7F2;padding:4px 10px;border-radius:8px;border:2px solid #C9B29F;cursor:pointer;font-weight:bold;font-size:12px;font-family:var(--font-table)">PDF</button>` }} />
                   {/* Share Buttons */}
                   <div className="flex items-center gap-1.5">
                     <button
