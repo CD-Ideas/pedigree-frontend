@@ -320,6 +320,29 @@ function PedigreeLabInner() {
     window.print();
     document.body.classList.remove("printing-pedigree");
   };
+
+  const savePedigree = async () => {
+    const el = document.getElementById("pedigree-tree-container");
+    if (!el) return;
+    const origMinWidth = el.style.minWidth;
+    const parent = el.parentElement;
+    const origOverflow = parent?.style.overflow || "";
+    el.style.minWidth = "1400px";
+    if (parent) parent.style.overflow = "visible";
+    await new Promise(r => setTimeout(r, 200));
+    try {
+      const html2canvas = (await import("html2canvas")).default;
+      const canvas = await html2canvas(el, { scale: 2, backgroundColor: "#FAFAFA", useCORS: true, windowWidth: 1600, logging: false });
+      const link = document.createElement("a");
+      const dogName = slots.subject?.registered_name;
+      link.download = dogName ? `${dogName} ${previewDisplayGens}G Pedigree.png` : "Pedigree View.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    } catch (e) { console.error("Save error:", e); }
+    el.style.minWidth = origMinWidth;
+    if (parent) parent.style.overflow = origOverflow;
+  };
+
   const [showPublishModal, setShowPublishModal] = useState(false);
   const [publishForm, setPublishForm] = useState<PublishForm>(defaultPublishForm());
 
@@ -865,6 +888,14 @@ function PedigreeLabInner() {
                     title="Download as PDF"
                   >
                     PDF
+                  </button>
+                  <button
+                    onClick={savePedigree}
+                    className="px-2.5 py-1 rounded-lg text-xs font-bold transition-all hover:scale-105 cursor-pointer"
+                    style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)", border: "2px solid #C9B29F" }}
+                    title="Save as image"
+                  >
+                    💾
                   </button>
                   {/* Share Buttons */}
                   <div className="flex items-center gap-1.5">
