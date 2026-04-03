@@ -311,15 +311,6 @@ function PedigreeLabInner() {
   const [previewMode, setPreviewMode] = useState(false);
   const [previewDisplayGens, setPreviewDisplayGens] = useState(4);
 
-  /* ---------- Pedigree Folder state ---------- */
-  const [savedViews, setSavedViews] = useState<{id: number; dog_name: string; generation: number; image_path: string; created_at: string}[]>([]);
-
-  const fetchSavedViews = () => {};
-
-  const saveToFolder = () => {
-    alert("Save button clicked!");
-  };
-
   const savePDF = () => {
     const el = document.getElementById("pedigree-tree-container");
     if (!el) return;
@@ -892,15 +883,14 @@ function PedigreeLabInner() {
                   </div>
                   {/* PDF Button */}
                   <button
-                    onClick={savePDF}
+                    onClick={() => { window.print(); }}
                     className="px-2.5 py-1 rounded-lg text-xs font-bold transition-all hover:scale-105 cursor-pointer"
                     style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)", border: "2px solid #C9B29F" }}
                     title="Download as PDF"
                   >
                     PDF
                   </button>
-                  {/* Save to Folder Button */}
-                  <input type="button" value="📁 SAVE" onClick={() => alert("SAVE CLICKED")} style={{ background: "#C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)", border: "2px solid #1C1C1C", borderRadius: "8px", padding: "4px 10px", fontSize: "12px", fontWeight: 700, cursor: "pointer", position: "relative", zIndex: 9999 }} />
+                  <span dangerouslySetInnerHTML={{ __html: '<button onclick="window.print()" style="background:red;color:white;padding:4px 12px;border-radius:8px;border:none;cursor:pointer;font-weight:bold;">TEST</button>' }} />
                   {/* Share Buttons */}
                   <div className="flex items-center gap-1.5">
                     <button
@@ -1488,41 +1478,6 @@ function PedigreeLabInner() {
               >
                 {editingId ? "Edit & Save" : "+ Create & Publish"}
               </button>
-
-              {/* My Pedigree Folder */}
-              <div className="mt-3">
-                <h3 className="text-[12px] uppercase tracking-widest font-bold mb-2 flex items-center gap-2"
-                  style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-                  📁 My Pedigree Folder
-                </h3>
-                <div className="space-y-2 max-h-48 overflow-y-auto">
-                  {savedViews.length === 0 ? (
-                    <p className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-                      No saved pedigrees yet
-                    </p>
-                  ) : savedViews.map((v) => (
-                    <div key={v.id} className="flex items-center gap-2 p-2 rounded-lg" style={{ background: "#FAF7F2", border: "1px solid #C9B29F" }}>
-                      <img src={v.image_path} alt="" className="w-12 h-8 rounded object-cover" style={{ border: "1px solid #C9B29F" }} />
-                      <div className="flex-1 min-w-0">
-                        <p className="text-[12px] font-bold truncate" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{v.dog_name}</p>
-                        <p className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>{v.generation}G</p>
-                      </div>
-                      <div className="flex gap-1">
-                        <a href={v.image_path} download={`${v.dog_name} ${v.generation}G Pedigree.png`}
-                          className="text-[12px] px-1.5 py-0.5 rounded" style={{ background: "#1C1C1C", color: "#FAF7F2" }}>
-                          ↓
-                        </a>
-                        <button onClick={async () => {
-                          await fetch(`/api/pedigree-folder/${v.id}`, { method: "DELETE" });
-                          fetchSavedViews();
-                        }} className="text-[12px] px-1.5 py-0.5 rounded cursor-pointer" style={{ background: "#ef4444", color: "#fff" }}>
-                          ✕
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
 
               {/* My Pedigrees */}
               <Link
