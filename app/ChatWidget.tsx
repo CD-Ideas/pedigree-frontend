@@ -24,6 +24,23 @@ export default function ChatWidget() {
     if (open) { inputRef.current?.focus(); setHasNewReply(false); }
   }, [open]);
 
+  const playChime = useCallback(() => {
+    try {
+      const ctx = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.frequency.setValueAtTime(830, ctx.currentTime);
+      osc.frequency.setValueAtTime(1050, ctx.currentTime + 0.08);
+      osc.type = "sine";
+      gain.gain.setValueAtTime(0.08, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.3);
+    } catch { /* silent fallback */ }
+  }, []);
+
   const send = useCallback(async () => {
     const text = input.trim();
     if (!text || loading) return;
@@ -45,6 +62,7 @@ export default function ChatWidget() {
         ...prev,
         { role: "assistant", content: data.reply || "Something went wrong." },
       ]);
+      playChime();
       if (!open) setHasNewReply(true);
     } catch {
       setMessages((prev) => [
