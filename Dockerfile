@@ -18,7 +18,7 @@ RUN apk add --no-cache python3 py3-pillow
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
-RUN mkdir -p /app/public/uploads && chown -R nextjs:nodejs /app/public/uploads
+RUN mkdir -p /app/public/uploads /app/public/uploads/pedigree-views && chown -R nextjs:nodejs /app/public/uploads
 USER nextjs
 EXPOSE 3000
 ENV PORT=3000
