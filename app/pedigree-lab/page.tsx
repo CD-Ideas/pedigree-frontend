@@ -337,8 +337,10 @@ function PedigreeLabInner() {
     } catch {}
     if (!userId) { alert("Please log in to save pedigrees"); return; }
 
-    const dogName = slots.subject?.registered_name || "Unknown";
+    const defaultName = slots.subject?.registered_name || "Pedigree View";
     const gen = previewDisplayGens;
+    const dogName = prompt("Name this pedigree:", `${defaultName} ${gen}G`);
+    if (!dogName) return; // User cancelled
 
     const clone = el.cloneNode(true) as HTMLElement;
 
