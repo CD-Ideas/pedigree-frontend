@@ -362,10 +362,10 @@ function PedigreeLabInner() {
       tempWrapper.appendChild(clone);
       document.body.appendChild(tempWrapper);
 
-      const canvas = await html2canvas(tempWrapper, { scale: 2, backgroundColor: "#FAFAFA", useCORS: true, windowWidth: 1600, logging: false });
+      const canvas = await html2canvas(tempWrapper, { scale: 1, backgroundColor: "#FAFAFA", useCORS: true, windowWidth: 1400, logging: false });
       document.body.removeChild(tempWrapper);
 
-      const imageData = canvas.toDataURL("image/png");
+      const imageData = canvas.toDataURL("image/jpeg", 0.7);
 
       const res = await fetch("/api/pedigree-folder/save", {
         method: "POST",
@@ -376,8 +376,12 @@ function PedigreeLabInner() {
       if (res.ok) {
         fetchSavedViews();
         alert("Saved to My Pedigree Folder!");
+      } else {
+        const err = await res.text();
+        console.error("Save failed:", res.status, err);
+        alert("Failed to save. Please try again.");
       }
-    } catch (e) { console.error("Save to folder error:", e); }
+    } catch (e) { console.error("Save to folder error:", e); alert("Error saving. Please try again."); }
   };
 
   const savePDF = () => {

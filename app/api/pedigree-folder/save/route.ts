@@ -1,4 +1,5 @@
 export const dynamic = "force-dynamic";
+export const maxDuration = 30;
 
 import { NextRequest, NextResponse } from "next/server";
 import { execFile } from "child_process";
@@ -21,12 +22,13 @@ export async function POST(req: NextRequest) {
     // Ensure upload directory exists
     await mkdir(UPLOAD_DIR, { recursive: true });
 
-    // Extract base64 data (remove data:image/png;base64, prefix)
-    const base64Data = image.replace(/^data:image\/png;base64,/, "");
+    // Extract base64 data (remove data:image/...;base64, prefix)
+    const base64Data = image.replace(/^data:image\/[a-z]+;base64,/, "");
     const buffer = Buffer.from(base64Data, "base64");
+    const ext = image.startsWith("data:image/jpeg") ? "jpg" : "png";
 
     const timestamp = Date.now();
-    const filename = `${userId}_${timestamp}.png`;
+    const filename = `${userId}_${timestamp}.${ext}`;
     const filePath = `${UPLOAD_DIR}/${filename}`;
     const imagePath = `/uploads/pedigree-views/${filename}`;
 
