@@ -12,6 +12,7 @@ export default function ChatWidget() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [hasNewReply, setHasNewReply] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -20,7 +21,7 @@ export default function ChatWidget() {
   }, [messages, loading]);
 
   useEffect(() => {
-    if (open) inputRef.current?.focus();
+    if (open) { inputRef.current?.focus(); setHasNewReply(false); }
   }, [open]);
 
   const send = useCallback(async () => {
@@ -44,6 +45,7 @@ export default function ChatWidget() {
         ...prev,
         { role: "assistant", content: data.reply || "Something went wrong." },
       ]);
+      if (!open) setHasNewReply(true);
     } catch {
       setMessages((prev) => [
         ...prev,
@@ -61,6 +63,7 @@ export default function ChatWidget() {
         <button
           onClick={() => setOpen(true)}
           aria-label="Open chat assistant"
+          className={hasNewReply ? "chat-pulse" : ""}
           style={{
             position: "fixed",
             bottom: 24,
@@ -71,9 +74,9 @@ export default function ChatWidget() {
             borderRadius: "50%",
             background: "#1C1C1C",
             color: "#fff",
-            border: "none",
+            border: hasNewReply ? "2px solid #C9B29F" : "none",
             cursor: "pointer",
-            boxShadow: "0 4px 20px rgba(0,0,0,0.25)",
+            boxShadow: hasNewReply ? "0 0 0 0 rgba(201,178,159,0.7)" : "0 4px 20px rgba(0,0,0,0.25)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -277,6 +280,14 @@ export default function ChatWidget() {
           25% { content: '.'; }
           50% { content: '..'; }
           75% { content: '...'; }
+        }
+        .chat-pulse {
+          animation: chatPulse 2s ease-in-out infinite;
+        }
+        @keyframes chatPulse {
+          0%   { box-shadow: 0 0 0 0 rgba(201,178,159,0.6); }
+          50%  { box-shadow: 0 0 0 12px rgba(201,178,159,0); }
+          100% { box-shadow: 0 0 0 0 rgba(201,178,159,0); }
         }
       `}</style>
     </>
