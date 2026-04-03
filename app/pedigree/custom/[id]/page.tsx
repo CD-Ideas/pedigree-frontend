@@ -232,11 +232,19 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
     const el = document.getElementById("pedigree-tree-container");
     if (!el) return;
     document.title = `${dogName} ${displayGens}G Pedigree`;
-    el.style.transform = "scale(1)";
+    const wrapper = document.createElement("div");
+    wrapper.id = "print-pedigree-wrapper";
+    wrapper.style.cssText = "background:#fff;padding:8px;width:100%;";
+    const clone = el.cloneNode(true) as HTMLElement;
+    clone.style.transform = "none";
+    clone.style.minWidth = "unset";
+    clone.style.width = "100%";
+    wrapper.appendChild(clone);
+    document.body.appendChild(wrapper);
     document.body.classList.add("printing-pedigree");
     window.print();
     document.body.classList.remove("printing-pedigree");
-    el.style.transform = `scale(${zoom})`;
+    document.body.removeChild(wrapper);
   };
 
   const byGen: Record<number, TreeRow[]> = {};

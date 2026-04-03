@@ -426,35 +426,14 @@ main { animation: pageIn 0.35s ease forwards; }
 
 /* ── PRINT STYLES FOR PEDIGREE PDF ─────────────────────────────────── */
 @media print {
-  body.printing-pedigree *:not(#pedigree-tree-container):not(#pedigree-tree-container *) {
+  body.printing-pedigree > * {
     display: none !important;
   }
-  body.printing-pedigree,
-  body.printing-pedigree > div,
-  body.printing-pedigree > div > *,
-  body.printing-pedigree main,
-  body.printing-pedigree section {
+  body.printing-pedigree > #print-pedigree-wrapper {
     display: block !important;
-    visibility: visible !important;
-    height: auto !important;
-    overflow: visible !important;
-    position: static !important;
-    padding: 0 !important;
-    margin: 0 !important;
   }
-  body.printing-pedigree #pedigree-tree-container,
-  body.printing-pedigree #pedigree-tree-container * {
-    display: revert !important;
+  body.printing-pedigree > #print-pedigree-wrapper * {
     visibility: visible !important;
-    height: auto !important;
-    overflow: visible !important;
-  }
-  body.printing-pedigree #pedigree-tree-container {
-    width: 100% !important;
-    min-width: unset !important;
-    transform: none !important;
-    background: #fff !important;
-    padding: 8px !important;
   }
   @page {
     size: landscape;

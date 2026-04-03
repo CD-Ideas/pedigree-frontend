@@ -316,9 +316,19 @@ function PedigreeLabInner() {
     if (!el) return;
     const dogName = slots.subject?.registered_name;
     document.title = dogName ? `${dogName} ${previewDisplayGens}G Pedigree` : "Pedigree View";
+    const wrapper = document.createElement("div");
+    wrapper.id = "print-pedigree-wrapper";
+    wrapper.style.cssText = "background:#fff;padding:8px;width:100%;";
+    const clone = el.cloneNode(true) as HTMLElement;
+    clone.style.transform = "none";
+    clone.style.minWidth = "unset";
+    clone.style.width = "100%";
+    wrapper.appendChild(clone);
+    document.body.appendChild(wrapper);
     document.body.classList.add("printing-pedigree");
     window.print();
     document.body.classList.remove("printing-pedigree");
+    document.body.removeChild(wrapper);
   };
 
   const [showPublishModal, setShowPublishModal] = useState(false);
