@@ -269,28 +269,15 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
   const [zoom, setZoom] = useState(1);
   const [displayGens, setDisplayGens] = useState(4);
 
-  const savePedigree = async () => {
+  const savePDF = () => {
     const el = document.getElementById("pedigree-tree-container");
     if (!el) return;
-    const origTransform = el.style.transform;
-    const origMinWidth = el.style.minWidth;
-    const parent = el.parentElement;
-    const origOverflow = parent?.style.overflow || "";
+    document.title = `${dogName} ${displayGens}G Pedigree`;
     el.style.transform = "scale(1)";
-    el.style.minWidth = "1400px";
-    if (parent) parent.style.overflow = "visible";
-    await new Promise(r => setTimeout(r, 200));
-    try {
-      const html2canvas = (await import("html2canvas")).default;
-      const canvas = await html2canvas(el, { scale: 2, backgroundColor: "#FAFAFA", useCORS: true, windowWidth: 1600, logging: false });
-      const link = document.createElement("a");
-      link.download = `${dogName} ${displayGens}G Pedigree.png`;
-      link.href = canvas.toDataURL("image/png");
-      link.click();
-    } catch (e) { console.error("Save error:", e); }
-    el.style.transform = origTransform;
-    el.style.minWidth = origMinWidth;
-    if (parent) parent.style.overflow = origOverflow;
+    document.body.classList.add("printing-pedigree");
+    window.print();
+    document.body.classList.remove("printing-pedigree");
+    el.style.transform = `scale(${zoom})`;
   };
 
   const byGen: Record<number, Ancestor[]> = {};
@@ -370,7 +357,7 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
 
         {/* PDF Button */}
         <button
-          onClick={savePedigree}
+          onClick={savePDF}
           className="px-2.5 py-1 rounded-lg text-xs font-bold transition-all hover:scale-105 cursor-pointer"
           style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: PG.font, border: "2px solid #C9B29F" }}
           title="Download as PDF"
