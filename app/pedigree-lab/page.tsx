@@ -370,7 +370,7 @@ function PedigreeLabInner() {
     }
     let cancelled = false;
     setCoiLoading(true);
-    fetch(`/api/dogs/pedigree-tree?sire_id=${sireId}&dam_id=${damId}&gens=6`)
+    fetch(`/api/dogs/pedigree-tree?sire_id=${sireId}&dam_id=${damId}&gens=5`)
       .then((r) => r.json())
       .then((data) => {
         if (!cancelled) {
