@@ -233,8 +233,6 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
     if (!el) return;
     document.title = `${dogName} ${displayGens}G Pedigree`;
     el.style.transform = "scale(1)";
-    const printScale = displayGens >= 5 ? 0.5 : displayGens >= 4 ? 0.65 : 0.85;
-    document.documentElement.style.setProperty("--print-scale", String(printScale));
     document.body.classList.add("printing-pedigree");
     window.print();
     document.body.classList.remove("printing-pedigree");

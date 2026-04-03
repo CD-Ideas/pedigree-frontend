@@ -437,14 +437,12 @@ main { animation: pageIn 0.35s ease forwards; }
     position: fixed !important;
     left: 0 !important;
     top: 0 !important;
-    width: 180vw !important;
+    width: 100% !important;
     min-width: unset !important;
-    max-width: none !important;
-    transform: scale(var(--print-scale, 0.7)) !important;
-    transform-origin: top left !important;
+    transform: none !important;
     overflow: visible !important;
     background: #fff !important;
-    padding: 4px !important;
+    padding: 12px !important;
   }
   body.printing-pedigree nav,
   body.printing-pedigree footer,
@@ -454,6 +452,6 @@ main { animation: pageIn 0.35s ease forwards; }
   }
   @page {
     size: landscape;
-    margin: 0.3cm;
+    margin: 0.5cm;
   }
 }

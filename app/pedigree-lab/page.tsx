@@ -316,8 +316,6 @@ function PedigreeLabInner() {
     if (!el) return;
     const dogName = slots.subject?.registered_name;
     document.title = dogName ? `${dogName} ${previewDisplayGens}G Pedigree` : "Pedigree View";
-    const printScale = previewDisplayGens >= 5 ? 0.5 : previewDisplayGens >= 4 ? 0.65 : 0.85;
-    document.documentElement.style.setProperty("--print-scale", String(printScale));
     document.body.classList.add("printing-pedigree");
     window.print();
     document.body.classList.remove("printing-pedigree");
