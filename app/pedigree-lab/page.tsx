@@ -4,6 +4,8 @@ import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { getDogColor } from "@/app/utils/colors";
+import html2canvas from "html2canvas";
+import { jsPDF } from "jspdf";
 
 /* ------------------------------------------------------------------ */
 /* Types                                                              */
@@ -310,6 +312,18 @@ function PedigreeLabInner() {
   /* ---------- UI state ---------- */
   const [previewMode, setPreviewMode] = useState(false);
   const [previewDisplayGens, setPreviewDisplayGens] = useState(4);
+
+  const downloadPDF = async (elementId: string) => {
+    const el = document.getElementById(elementId);
+    if (!el) return;
+    try {
+      const canvas = await html2canvas(el, { scale: 2, backgroundColor: "#FAFAFA", useCORS: true });
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF({ orientation: canvas.width > canvas.height ? "landscape" : "portrait", unit: "px", format: [canvas.width, canvas.height] });
+      pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
+      pdf.save("Pedigree_View.pdf");
+    } catch (e) { console.error("PDF error:", e); }
+  };
   const [showPublishModal, setShowPublishModal] = useState(false);
   const [publishForm, setPublishForm] = useState<PublishForm>(defaultPublishForm());
 
@@ -847,6 +861,15 @@ function PedigreeLabInner() {
                       </button>
                     ))}
                   </div>
+                  {/* PDF Button */}
+                  <button
+                    onClick={() => downloadPDF("pedigree-tree-container")}
+                    className="px-2.5 py-1 rounded-lg text-xs font-bold transition-all hover:scale-105 cursor-pointer"
+                    style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)", border: "2px solid #C9B29F" }}
+                    title="Download as PDF"
+                  >
+                    PDF
+                  </button>
                   {/* Share Buttons */}
                   <div className="flex items-center gap-1.5">
                     <button
@@ -934,7 +957,7 @@ function PedigreeLabInner() {
               </div>
 
               {/* Pedigree Table */}
-              <div className="overflow-auto" style={{ background: "#FAFAFA" }}>
+              <div id="pedigree-tree-container" className="overflow-auto" style={{ background: "#FAFAFA" }}>
                 <table
                   className="w-full"
                   style={{

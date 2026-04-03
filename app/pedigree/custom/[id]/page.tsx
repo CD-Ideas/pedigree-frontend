@@ -4,6 +4,8 @@ import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { getDogColor } from "@/app/utils/colors";
+import html2canvas from "html2canvas";
+import { jsPDF } from "jspdf";
 
 const capName = (s: string) => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
 
@@ -228,6 +230,18 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
   const [zoom, setZoom] = useState(1);
   const [displayGens, setDisplayGens] = useState(4);
 
+  const downloadPDF = async (elementId: string) => {
+    const el = document.getElementById(elementId);
+    if (!el) return;
+    try {
+      const canvas = await html2canvas(el, { scale: 2, backgroundColor: "#FAFAFA", useCORS: true });
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF({ orientation: canvas.width > canvas.height ? "landscape" : "portrait", unit: "px", format: [canvas.width, canvas.height] });
+      pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
+      pdf.save("Pedigree_View.pdf");
+    } catch (e) { console.error("PDF error:", e); }
+  };
+
   const byGen: Record<number, TreeRow[]> = {};
   tree.forEach((r) => {
     if (!byGen[r.gen]) byGen[r.gen] = [];
@@ -274,10 +288,20 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
           <button onClick={() => setZoom((z) => Math.min(1.5, z + 0.1))} className="w-7 h-7 rounded-lg flex items-center justify-center text-sm font-bold transition-all" style={{ color: "#FAF7F2" }}>+</button>
           <button onClick={() => setZoom(1)} className="ml-0.5 px-2.5 py-1 rounded-lg flex items-center justify-center text-[12px] font-bold transition-all" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)", opacity: 0.7 }}>Reset</button>
         </div>
+
+        {/* PDF Button */}
+        <button
+          onClick={() => downloadPDF("pedigree-tree-container")}
+          className="px-2.5 py-1 rounded-lg text-xs font-bold transition-all hover:scale-105 cursor-pointer"
+          style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)", border: "2px solid #C9B29F" }}
+          title="Download as PDF"
+        >
+          PDF
+        </button>
       </div>
 
       <div ref={containerRef} className="overflow-x-auto overflow-y-hidden pb-1 pt-7" style={{ cursor: zoom !== 1 ? "grab" : "default" }}>
-        <div style={{ transform: `scale(${zoom})`, transformOrigin: "top left", transition: "transform 0.2s", minWidth: maxGen >= 5 ? "1100px" : "900px" }}>
+        <div id="pedigree-tree-container" style={{ transform: `scale(${zoom})`, transformOrigin: "top left", transition: "transform 0.2s", minWidth: maxGen >= 5 ? "1100px" : "900px" }}>
           <div className="text-center mb-2">
             <h3 style={{ fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "15px", letterSpacing: "0.08em", textTransform: "uppercase", color: "#1C1C1C" }}>
               {maxGen} Generation Pedigree
