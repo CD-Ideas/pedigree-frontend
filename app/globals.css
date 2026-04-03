@@ -435,10 +435,15 @@ main { animation: pageIn 0.35s ease forwards; }
   body.printing-pedigree > #print-pedigree-wrapper * {
     visibility: visible !important;
   }
-  /* Prevent rows from being split across pages */
+  /* Compact print for pedigree trees */
   body.printing-pedigree #print-pedigree-wrapper div[style*="grid"] > div {
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+    min-height: 0 !important;
+    font-size: 10px !important;
+  }
+  body.printing-pedigree #print-pedigree-wrapper div[style*="grid"] {
+    gap: 1px !important;
   }
   @page {
     size: landscape;
