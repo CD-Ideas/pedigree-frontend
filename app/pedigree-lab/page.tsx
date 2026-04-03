@@ -323,6 +323,19 @@ function PedigreeLabInner() {
     clone.style.transform = "none";
     clone.style.minWidth = "unset";
     clone.style.width = "100%";
+    if (previewDisplayGens >= 5) {
+      clone.querySelectorAll<HTMLElement>("[style*='minHeight'], [style*='min-height']").forEach(c => {
+        c.style.minHeight = "0";
+        c.style.padding = "1px 4px";
+      });
+      clone.querySelectorAll<HTMLElement>(".gap-1, [class*='gap-']").forEach(c => {
+        c.style.gap = "1px";
+      });
+      clone.querySelectorAll<HTMLElement>("div[style*='gap']").forEach(c => {
+        c.style.gap = "1px";
+      });
+      clone.style.fontSize = "9px";
+    }
     wrapper.appendChild(clone);
     document.body.appendChild(wrapper);
     document.body.classList.add("printing-pedigree");
