@@ -433,16 +433,18 @@ main { animation: pageIn 0.35s ease forwards; }
   body.printing-pedigree #pedigree-tree-container * {
     visibility: visible !important;
   }
+  body.printing-pedigree {
+    visibility: visible !important;
+  }
   body.printing-pedigree #pedigree-tree-container {
-    position: absolute !important;
-    left: 0 !important;
-    top: 0 !important;
+    position: static !important;
     width: 100% !important;
     min-width: unset !important;
     transform: none !important;
     overflow: visible !important;
     background: #fff !important;
-    padding: 12px !important;
+    padding: 8px !important;
+    page-break-inside: auto !important;
   }
   body.printing-pedigree nav,
   body.printing-pedigree footer,
