@@ -273,7 +273,6 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
     const el = document.getElementById("pedigree-tree-container");
     if (!el) return;
     document.title = `${dogName} ${displayGens}G Pedigree`;
-    // Clone tree into a top-level wrapper for clean printing
     const wrapper = document.createElement("div");
     wrapper.id = "print-pedigree-wrapper";
     wrapper.style.cssText = "background:#fff;padding:8px;width:100%;";
@@ -281,6 +280,20 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
     clone.style.transform = "none";
     clone.style.minWidth = "unset";
     clone.style.width = "100%";
+    // For 5G, compact the cells to fit better
+    if (displayGens >= 5) {
+      clone.querySelectorAll<HTMLElement>("[style*='minHeight'], [style*='min-height']").forEach(c => {
+        c.style.minHeight = "0";
+        c.style.padding = "1px 4px";
+      });
+      clone.querySelectorAll<HTMLElement>(".gap-1, [class*='gap-']").forEach(c => {
+        c.style.gap = "1px";
+      });
+      clone.querySelectorAll<HTMLElement>("div[style*='gap']").forEach(c => {
+        c.style.gap = "1px";
+      });
+      clone.style.fontSize = "9px";
+    }
     wrapper.appendChild(clone);
     document.body.appendChild(wrapper);
     document.body.classList.add("printing-pedigree");
