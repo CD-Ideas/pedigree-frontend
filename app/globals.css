@@ -426,31 +426,35 @@ main { animation: pageIn 0.35s ease forwards; }
 
 /* ── PRINT STYLES FOR PEDIGREE PDF ─────────────────────────────────── */
 @media print {
-  body.printing-pedigree * {
-    visibility: hidden !important;
+  body.printing-pedigree *:not(#pedigree-tree-container):not(#pedigree-tree-container *) {
+    display: none !important;
+  }
+  body.printing-pedigree,
+  body.printing-pedigree > div,
+  body.printing-pedigree > div > *,
+  body.printing-pedigree main,
+  body.printing-pedigree section {
+    display: block !important;
+    visibility: visible !important;
+    height: auto !important;
+    overflow: visible !important;
+    position: static !important;
+    padding: 0 !important;
+    margin: 0 !important;
   }
   body.printing-pedigree #pedigree-tree-container,
   body.printing-pedigree #pedigree-tree-container * {
+    display: revert !important;
     visibility: visible !important;
-  }
-  body.printing-pedigree {
-    visibility: visible !important;
+    height: auto !important;
+    overflow: visible !important;
   }
   body.printing-pedigree #pedigree-tree-container {
-    position: static !important;
     width: 100% !important;
     min-width: unset !important;
     transform: none !important;
-    overflow: visible !important;
     background: #fff !important;
     padding: 8px !important;
-    page-break-inside: auto !important;
-  }
-  body.printing-pedigree nav,
-  body.printing-pedigree footer,
-  body.printing-pedigree .chat-pulse,
-  body.printing-pedigree button[aria-label="Open chat assistant"] {
-    display: none !important;
   }
   @page {
     size: landscape;
