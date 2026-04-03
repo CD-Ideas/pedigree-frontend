@@ -328,19 +328,19 @@ function PedigreeLabInner() {
 
   const saveToFolder = async () => {
     const el = document.getElementById("pedigree-tree-container");
-    if (!el) return;
+    if (!el) { alert("No pedigree preview found. Please click Preview first."); return; }
 
     let userId = 0;
     try {
       const userStr = localStorage.getItem("user");
       if (userStr) { const u = JSON.parse(userStr); userId = u?.id || 0; }
     } catch {}
-    if (!userId) { alert("Please log in to save pedigrees"); return; }
+    if (!userId) { alert("Please log in to save pedigrees."); return; }
 
     const defaultName = slots.subject?.registered_name || "Pedigree View";
     const gen = previewDisplayGens;
     const dogName = prompt("Name this pedigree:", `${defaultName} ${gen}G`);
-    if (!dogName) return; // User cancelled
+    if (!dogName) return;
 
     const clone = el.cloneNode(true) as HTMLElement;
 
