@@ -123,8 +123,8 @@ export default function ChatWidget() {
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <span style={{ fontSize: 22 }}>🐾</span>
               <div>
-                <div style={{ fontWeight: 600, fontSize: 15 }}>Pedigree Assistant</div>
-                <div style={{ fontSize: 11, opacity: 0.85 }}>Ask me anything about the site</div>
+                <div style={{ fontWeight: 600, fontSize: 15 }}>Rex</div>
+                <div style={{ fontSize: 11, opacity: 0.85 }}>Your Pedigree Platform Assistant</div>
               </div>
             </div>
             <button
