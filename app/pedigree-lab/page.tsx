@@ -1113,26 +1113,34 @@ function PedigreeLabInner() {
                             }}
                             onMouseLeave={() => setHoveredDog(null)}
                           >
-                            {isChampion && (
-                              <span
-                                className="absolute -top-0.5 -right-0.5 flex items-center justify-center rounded-lg"
-                                style={{
-                                  fontSize: isCompact ? 7 : 9,
-                                  color: "#8a6518",
-                                  background: "#F5EDE0",
-                                  width: isCompact ? 12 : 15,
-                                  height: isCompact ? 12 : 15,
-                                  border: "1px solid #C9B29F",
-                                }}
-                              >
-                                ★
-                              </span>
-                            )}
-                            {dog?.dog_id ? (
-                              <a href={`/pedigree/${dog.dog_id}`} className="hover:underline" style={{ color: cellTextColor, textDecoration: "none" }}>
-                                {name}
-                              </a>
-                            ) : name}
+                            <div style={{ display: "flex", alignItems: "center", height: "100%", position: "relative" }}>
+                              {isChampion && (
+                                <span
+                                  style={{
+                                    position: "absolute",
+                                    top: -2,
+                                    right: -4,
+                                    fontSize: isCompact ? 7 : 9,
+                                    color: "#8a6518",
+                                    background: "#F5EDE0",
+                                    width: isCompact ? 12 : 15,
+                                    height: isCompact ? 12 : 15,
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    borderRadius: 4,
+                                    border: "1px solid #C9B29F",
+                                  }}
+                                >
+                                  ★
+                                </span>
+                              )}
+                              {dog?.dog_id ? (
+                                <a href={`/pedigree/${dog.dog_id}`} className="hover:underline" style={{ color: cellTextColor, textDecoration: "none" }}>
+                                  {name}
+                                </a>
+                              ) : name}
+                            </div>
                           </td>
                         );
                       }
