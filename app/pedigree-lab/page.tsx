@@ -1347,7 +1347,7 @@ function PedigreeLabInner() {
           style={{ width: 300 }}
         >
           <Card className="m-3 flex flex-col flex-1" style={{ padding: 0, overflow: "hidden" }}>
-            <div className="p-4 space-y-4" style={{ flex: "1 1 auto", overflow: "hidden" }}>
+            <div className="p-4 space-y-4" style={{ overflow: "hidden" }}>
               {/* Panel header */}
               <p
                 className="text-[12px] uppercase tracking-widest font-semibold"
@@ -1433,8 +1433,8 @@ function PedigreeLabInner() {
               })()}
 
             </div>
-            {/* Buttons section - pinned at bottom */}
-            <div className="p-4 space-y-3" style={{ flexShrink: 0, marginTop: "auto", borderTop: "2px solid #C9B29F" }}>
+            {/* Buttons section */}
+            <div className="p-4 space-y-3" style={{ flexShrink: 0, borderTop: "2px solid #C9B29F" }}>
               {/* Preview toggle */}
               <button
                 onClick={async () => {
