@@ -1497,8 +1497,8 @@ function PedigreeLabInner() {
                 className="w-full py-2.5 text-xs font-bold uppercase tracking-widest hover:scale-[1.02] flex items-center justify-center gap-2"
                 style={{
                   fontFamily: "var(--font-table)",
-                  background: "transparent",
-                  color: "#1C1C1C",
+                  background: "#1C1C1C",
+                  color: "#FAF7F2",
                   border: "2px solid #C9B29F",
                   borderRadius: 8,
                   transition: "all 0.3s ease",
@@ -1509,7 +1509,7 @@ function PedigreeLabInner() {
               </Link>
 
               {/* My Saved Pedigrees */}
-              <span dangerouslySetInnerHTML={{ __html: `<a onclick="var b=document.getElementById('saved-pedigrees-badge');if(b)b.style.display='none';" href="/dashboard/pedigree-folder" style="display:flex;align-items:center;justify-content:center;gap:8px;position:relative;width:100%;padding:10px 0;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-table);background:#FAF7F2;color:#1C1C1C;border:2px solid #C9B29F;border-radius:8px;cursor:pointer;text-decoration:none;transition:all 0.2s">📁 My Saved Pedigrees<span id="saved-pedigrees-badge" style="display:${savedViews.length > 0 ? "flex" : "none"};position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:#ef4444;color:#fff;font-size:10px;font-weight:700;align-items:center;justify-content:center">${savedViews.length}</span></a>` }} />
+              <span dangerouslySetInnerHTML={{ __html: `<a onclick="var b=document.getElementById('saved-pedigrees-badge');if(b)b.style.display='none';" href="/dashboard/pedigree-folder" style="display:flex;align-items:center;justify-content:center;gap:8px;position:relative;width:100%;padding:10px 0;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-table);background:#C9B29F;color:#1C1C1C;border:2px solid #1C1C1C;border-radius:8px;cursor:pointer;text-decoration:none;transition:all 0.2s">📁 My Saved Pedigrees<span id="saved-pedigrees-badge" style="display:${savedViews.length > 0 ? "flex" : "none"};position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:#ef4444;color:#fff;font-size:10px;font-weight:700;align-items:center;justify-content:center">${savedViews.length}</span></a>` }} />
 
             </div>
           </Card>
