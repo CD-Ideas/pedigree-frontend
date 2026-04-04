@@ -195,8 +195,9 @@ export default function PedigreeFolderPage() {
             {views.map((v) => (
               <div
                 key={v.id}
-                className="rounded-lg overflow-hidden transition-all hover:shadow-lg"
+                className="rounded-lg overflow-hidden transition-all hover:shadow-lg cursor-pointer"
                 style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px", maxWidth: "320px" }}
+                onClick={() => window.open(v.image_path, "_blank")}
               >
                 <div className="aspect-[16/9] overflow-hidden" style={{ background: "#FAFAFA" }}>
                   <img
@@ -213,14 +214,17 @@ export default function PedigreeFolderPage() {
                   />
                 </div>
                 <div className="p-3">
-                  <EditableTitle view={v} onRename={renameView} />
+                  <div onClick={(e) => e.stopPropagation()}>
+                    <EditableTitle view={v} onRename={renameView} />
+                  </div>
                   <p className="text-xs mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)", fontSize: "12px" }}>
                     {v.generation}G &bull; Saved {timeAgo(v.created_at)}
                   </p>
-                  <div className="flex gap-2 mt-3">
+                  <div className="flex gap-2 mt-3" onClick={(e) => e.stopPropagation()}>
                     <a
                       href={v.image_path}
                       download={`${v.dog_name}.png`}
+                      onClick={(e) => e.stopPropagation()}
                       className="flex-1 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider text-center transition-all hover:scale-105"
                       style={{
                         background: "#1C1C1C",
