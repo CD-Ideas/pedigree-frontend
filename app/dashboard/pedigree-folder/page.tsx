@@ -193,49 +193,15 @@ export default function PedigreeFolderPage() {
               gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
             }}
           >
-            {views.map((v) => {
-              const isExpanded = expandedId === v.id;
-              return (
+            {views.map((v) => (
               <div
                 key={v.id}
-                className="rounded-lg overflow-hidden transition-all cursor-pointer"
-                style={{
-                  background: "#FAF7F2",
-                  border: isExpanded ? "2px solid #1C1C1C" : "2px solid #C9B29F",
-                  borderRadius: "8px",
-                  maxWidth: isExpanded ? "100%" : "320px",
-                  gridColumn: isExpanded ? "1 / -1" : undefined,
-                  boxShadow: isExpanded ? "0 8px 30px rgba(0,0,0,0.15)" : undefined,
-                  transition: "all 0.3s ease",
-                }}
-                onClick={() => { if (!isExpanded) setExpandedId(v.id); }}
+                className="rounded-lg overflow-hidden transition-all hover:shadow-lg cursor-pointer"
+                style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px", maxWidth: "320px" }}
+                onClick={() => setExpandedId(v.id)}
               >
-                {/* Close button when expanded */}
-                {isExpanded && (
-                  <div style={{ background: "#1C1C1C", padding: "8px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <span style={{ color: "#FAF7F2", fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "14px" }}>{v.dog_name} — {v.generation}G Pedigree</span>
-                    <button
-                      onClick={(e) => { e.stopPropagation(); setExpandedId(null); }}
-                      style={{ background: "rgba(255,255,255,0.2)", border: "none", color: "#FAF7F2", width: 28, height: 28, borderRadius: "50%", cursor: "pointer", fontSize: 14, display: "flex", alignItems: "center", justifyContent: "center" }}
-                    >
-                      ✕
-                    </button>
-                  </div>
-                )}
-                <div style={{ overflow: "hidden", background: "#FAFAFA", maxHeight: isExpanded ? "none" : undefined }} className={isExpanded ? "" : "aspect-[16/9]"}>
-                  <img
-                    src={v.image_path}
-                    alt={v.dog_name}
-                    className="w-full"
-                    style={{ objectFit: isExpanded ? "contain" : "contain", maxHeight: isExpanded ? "70vh" : undefined }}
-                    onError={(e) => {
-                      const t = e.target as HTMLImageElement;
-                      t.onerror = null;
-                      t.src = "/logo.png";
-                      t.style.opacity = "0.3";
-                      t.style.padding = "20px";
-                    }}
-                  />
+                <div className="aspect-[16/9] overflow-hidden" style={{ background: "#FAFAFA" }}>
+                  <img src={v.image_path} alt={v.dog_name} className="w-full h-full object-contain" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.padding = "20px"; }} />
                 </div>
                 <div className="p-3">
                   <div onClick={(e) => e.stopPropagation()}>
@@ -245,39 +211,57 @@ export default function PedigreeFolderPage() {
                     {v.generation}G &bull; Saved {timeAgo(v.created_at)}
                   </p>
                   <div className="flex gap-2 mt-3" onClick={(e) => e.stopPropagation()}>
-                    <a
-                      href={v.image_path}
-                      download={`${v.dog_name}.png`}
-                      className="flex-1 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider text-center transition-all hover:scale-105"
-                      style={{
-                        background: "#1C1C1C",
-                        color: "#FAF7F2",
-                        fontFamily: "var(--font-table)",
-                        textDecoration: "none",
-                        fontSize: "12px",
-                      }}
-                    >
+                    <a href={v.image_path} download={`${v.dog_name}.png`} className="flex-1 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider text-center transition-all hover:scale-105" style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)", textDecoration: "none", fontSize: "12px" }}>
                       Download
                     </a>
-                    <button
-                      onClick={() => deleteView(v.id)}
-                      className="px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all hover:scale-105"
-                      style={{
-                        background: "#ef4444",
-                        color: "#fff",
-                        border: "none",
-                        fontFamily: "var(--font-table)",
-                        cursor: "pointer",
-                        fontSize: "12px",
-                      }}
-                    >
+                    <button onClick={() => deleteView(v.id)} className="px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all hover:scale-105" style={{ background: "#ef4444", color: "#fff", border: "none", fontFamily: "var(--font-table)", cursor: "pointer", fontSize: "12px" }}>
                       Delete
                     </button>
                   </div>
                 </div>
               </div>
+            ))}
+
+            {/* Modal popup */}
+            {expandedId && (() => {
+              const v = views.find(x => x.id === expandedId);
+              if (!v) return null;
+              return (
+                <div
+                  style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)", zIndex: 99998, display: "flex", alignItems: "center", justifyContent: "center", padding: "20px" }}
+                  onClick={() => setExpandedId(null)}
+                >
+                  <div
+                    style={{ background: "#FAF7F2", borderRadius: "12px", maxWidth: "900px", width: "100%", maxHeight: "90vh", overflow: "hidden", border: "2px solid #C9B29F", boxShadow: "0 8px 40px rgba(0,0,0,0.3)", display: "flex", flexDirection: "column" }}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {/* Header */}
+                    <div style={{ background: "#1C1C1C", padding: "12px 16px", display: "flex", justifyContent: "space-between", alignItems: "center", flexShrink: 0 }}>
+                      <span style={{ color: "#FAF7F2", fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "14px" }}>{v.dog_name} — {v.generation}G Pedigree</span>
+                      <button
+                        onClick={() => setExpandedId(null)}
+                        style={{ background: "rgba(255,255,255,0.2)", border: "none", color: "#FAF7F2", width: 30, height: 30, borderRadius: "50%", cursor: "pointer", fontSize: 16, display: "flex", alignItems: "center", justifyContent: "center" }}
+                      >
+                        ✕
+                      </button>
+                    </div>
+                    {/* Image */}
+                    <div style={{ overflow: "auto", flex: 1, background: "#FAFAFA", padding: "12px" }}>
+                      <img src={v.image_path} alt={v.dog_name} style={{ width: "100%", objectFit: "contain" }} />
+                    </div>
+                    {/* Footer buttons */}
+                    <div style={{ padding: "12px 16px", borderTop: "2px solid #C9B29F", display: "flex", gap: "8px", flexShrink: 0 }}>
+                      <a href={v.image_path} download={`${v.dog_name}.png`} className="flex-1 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-center transition-all hover:scale-105" style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)", textDecoration: "none", fontSize: "12px" }}>
+                        ↓ Download
+                      </a>
+                      <button onClick={() => { deleteView(v.id); setExpandedId(null); }} className="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all hover:scale-105" style={{ background: "#ef4444", color: "#fff", border: "none", fontFamily: "var(--font-table)", cursor: "pointer", fontSize: "12px" }}>
+                        ✕ Delete
+                      </button>
+                    </div>
+                  </div>
+                </div>
               );
-            })}
+            })()}
           </div>
         )}
       </div>
