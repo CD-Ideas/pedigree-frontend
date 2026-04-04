@@ -1398,7 +1398,7 @@ function PedigreeLabInner() {
                           minHeight: "2.5em",
                         }}
                       >
-                        {sexIcon(dogSex || undefined)} {dogName}
+                        <span style={{ color: dogSex?.toUpperCase() === "FEMALE" ? "#9f1239" : "#1d5bbf" }}>{sexIcon(dogSex || undefined)}</span> {dogName}
                       </p>
                       <p className="text-[12px]" style={{ color: "#4A4A4A" }}>
                         {isHovered ? "" : `Slot: ${selectedSlot ? SLOT_LABELS[selectedSlot] : "--"} | `}ID: <span style={{ color: "#1C1C1C", fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}>{dogId}</span>
