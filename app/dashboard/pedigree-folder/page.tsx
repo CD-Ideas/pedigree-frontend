@@ -188,16 +188,16 @@ export default function PedigreeFolderPage() {
           </div>
         ) : (
           <div
-            className="grid gap-4"
+            className="grid gap-3"
             style={{
-              gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
             }}
           >
             {views.map((v) => (
               <div
                 key={v.id}
                 className="rounded-lg overflow-hidden transition-all hover:shadow-lg cursor-pointer"
-                style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px", maxWidth: "320px" }}
+                style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px" }}
                 onClick={() => setExpandedId(v.id)}
               >
                 <div className="aspect-[16/9] overflow-hidden" style={{ background: "#FAFAFA" }}>
