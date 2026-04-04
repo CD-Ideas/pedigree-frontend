@@ -71,7 +71,12 @@ window.__savePedigree = function(gen) {
         }).then(function(r) {
           saving.remove();
           if (r.ok) {
-            window.location.href = '/dashboard/pedigrees';
+            var badge = document.getElementById('saved-pedigrees-badge');
+            if (badge) {
+              var n = parseInt(badge.textContent || '0') + 1;
+              badge.textContent = String(n);
+              badge.style.display = 'flex';
+            }
           } else {
             alert('Save failed. Please try again.');
           }
