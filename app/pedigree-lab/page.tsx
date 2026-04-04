@@ -1089,7 +1089,7 @@ function PedigreeLabInner() {
                           <td
                             key={key}
                             rowSpan={rSpan > 1 ? rSpan : undefined}
-                            className="align-middle relative"
+                            className="relative"
                             style={{
                               background: cellBg,
                               border: "2px solid #EDE4D5",
@@ -1103,6 +1103,7 @@ function PedigreeLabInner() {
                               color: cellTextColor,
                               fontFamily: "var(--font-body)",
                               lineHeight: 1.1,
+                              verticalAlign: "middle",
                               cursor: dog?.dog_id ? "pointer" : undefined,
                             }}
                             onMouseEnter={() => {
