@@ -1509,9 +1509,9 @@ function PedigreeLabInner() {
               </Link>
 
               {/* My Saved Pedigrees */}
-              <Link
+              <a
                 href="/dashboard/pedigree-folder"
-                onClick={() => { const b = document.getElementById("saved-pedigrees-badge"); if (b) b.style.display = "none"; }}
+                onMouseDown={() => { const b = document.getElementById("saved-pedigrees-badge"); if (b) b.style.display = "none"; }}
                 className="w-full py-2.5 text-xs font-bold uppercase tracking-widest hover:scale-[1.02] flex items-center justify-center gap-2 relative"
                 style={{
                   fontFamily: "var(--font-table)",
@@ -1545,7 +1545,7 @@ function PedigreeLabInner() {
                 >
                   {savedViews.length}
                 </span>
-              </Link>
+              </a>
 
             </div>
           </Card>
