@@ -1089,13 +1089,15 @@ function PedigreeLabInner() {
                           <td
                             key={key}
                             rowSpan={rSpan > 1 ? rSpan : undefined}
+                            className="relative"
                             style={{
                               background: cellBg,
                               border: "2px solid #EDE4D5",
                               borderLeftColor: cellBorder,
                               borderLeftWidth: isCompact ? "3px" : "4px",
                               borderRadius: 8,
-                              padding: 0,
+                              padding: isCompact ? "3px 6px" : "6px 10px",
+                              minHeight: isCompact ? 20 : 40,
                               fontSize,
                               fontWeight: isChampion ? 700 : 600,
                               color: cellTextColor,
@@ -1103,7 +1105,6 @@ function PedigreeLabInner() {
                               lineHeight: 1.1,
                               verticalAlign: "middle",
                               cursor: dog?.dog_id ? "pointer" : undefined,
-                              position: "relative",
                             }}
                             onMouseEnter={() => {
                               if (dog?.dog_id) {
@@ -1112,17 +1113,7 @@ function PedigreeLabInner() {
                             }}
                             onMouseLeave={() => setHoveredDog(null)}
                           >
-                            <div style={{
-                              position: "absolute",
-                              top: 0,
-                              left: 0,
-                              right: 0,
-                              bottom: 0,
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "flex-start",
-                              padding: isCompact ? "3px 6px" : "6px 10px",
-                            }}>
+                            <div style={{ display: "flex", alignItems: "center", height: "100%", position: "relative" }}>
                               {isChampion && (
                                 <span
                                   style={{
