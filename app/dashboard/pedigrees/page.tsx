@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { getDogColor } from "@/app/utils/colors";
@@ -125,6 +125,40 @@ function getUpcomingReminders(journal: JournalData): { label: string; dueDate: s
   return reminders.sort((a, b) => a.daysLeft - b.daysLeft);
 }
 
+function EditableSavedTitle({ name, onRename }: { name: string; onRename: (n: string) => void }) {
+  const [editing, setEditing] = useState(false);
+  const [value, setValue] = useState(name);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => { if (editing && inputRef.current) { inputRef.current.focus(); inputRef.current.select(); } }, [editing]);
+
+  const save = () => {
+    setEditing(false);
+    const trimmed = value.trim();
+    if (trimmed && trimmed !== name) onRename(trimmed);
+    else setValue(name);
+  };
+
+  if (editing) {
+    return <input ref={inputRef} value={value} onChange={e => setValue(e.target.value)} onBlur={save} onKeyDown={e => { if (e.key === "Enter") save(); if (e.key === "Escape") { setValue(name); setEditing(false); } }} className="w-full text-sm font-bold outline-none" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", background: "transparent", border: "none", borderBottom: "2px solid #C9B29F", padding: "0 0 2px 0" }} />;
+  }
+
+  return <p onClick={() => setEditing(true)} className="text-sm font-bold truncate cursor-pointer hover:opacity-70" title="Click to rename" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{name}</p>;
+}
+
+function timeAgo(iso: string): string {
+  try {
+    const diff = Date.now() - new Date(iso).getTime();
+    const mins = Math.floor(diff / 60000);
+    if (mins < 1) return "just now";
+    if (mins < 60) return mins + " min" + (mins > 1 ? "s" : "") + " ago";
+    const hours = Math.floor(mins / 60);
+    if (hours < 24) return hours + " hour" + (hours > 1 ? "s" : "") + " ago";
+    const days = Math.floor(hours / 24);
+    return days + " day" + (days > 1 ? "s" : "") + " ago";
+  } catch { return iso; }
+}
+
 export default function MyPedigreesPage() {
   const router = useRouter();
   const [pedigrees, setPedigrees] = useState<PedigreeItem[]>([]);
@@ -139,6 +173,28 @@ export default function MyPedigreesPage() {
   const [showFilters, setShowFilters] = useState(false);
   const [sexFilter, setSexFilter] = useState("");
   const [hasPhotoFilter, setHasPhotoFilter] = useState(false);
+  const [savedViews, setSavedViews] = useState<{id: number; dog_name: string; generation: number; image_path: string; created_at: string}[]>([]);
+
+  useEffect(() => {
+    let userId = 0;
+    try { const u = JSON.parse(localStorage.getItem("user") || "{}"); userId = u?.id || 0; } catch {}
+    if (!userId) return;
+    fetch(`/api/pedigree-folder/list?userId=${userId}`)
+      .then(r => r.ok ? r.json() : { views: [] })
+      .then(d => setSavedViews(d.views || []))
+      .catch(() => {});
+  }, []);
+
+  const deleteSavedView = async (id: number) => {
+    if (!confirm("Delete this saved pedigree?")) return;
+    await fetch(`/api/pedigree-folder/${id}`, { method: "DELETE" });
+    setSavedViews(prev => prev.filter(v => v.id !== id));
+  };
+
+  const renameSavedView = async (id: number, newName: string) => {
+    await fetch(`/api/pedigree-folder/${id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ dogName: newName }) });
+    setSavedViews(prev => prev.map(v => v.id === id ? { ...v, dog_name: newName } : v));
+  };
 
   useEffect(() => {
     try {
@@ -284,7 +340,7 @@ export default function MyPedigreesPage() {
             🧪 Pedigree Lab →
           </Link>
           <Link
-            href="/dashboard/pedigree-folder"
+            href="#saved-pedigrees"
             className="text-[12px] px-3 py-1 rounded-full transition-all hover:scale-105"
             style={{
               color: "#1C1C1C",
@@ -484,6 +540,39 @@ export default function MyPedigreesPage() {
                       }}>
                       {r.daysLeft <= 0 ? "OVERDUE" : r.daysLeft === 1 ? "Tomorrow" : `${r.daysLeft}d`}
                     </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* My Saved Pedigrees Section */}
+        {savedViews.length > 0 && (
+          <div id="saved-pedigrees" className="mb-8">
+            <h2 className="text-lg font-black uppercase tracking-widest mb-3 flex items-center gap-2" style={{ fontFamily: "var(--font-table)", color: "#1C1C1C" }}>
+              📁 My Saved Pedigrees
+              <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: "#ef4444", color: "#fff", fontFamily: "var(--font-mono)" }}>{savedViews.length}</span>
+            </h2>
+            <div className="grid gap-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))" }}>
+              {savedViews.map(v => (
+                <div key={v.id} className="rounded-lg overflow-hidden transition-all hover:shadow-lg cursor-pointer" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px" }}>
+                  <div className="aspect-[16/9] overflow-hidden" style={{ background: "#FAFAFA" }}>
+                    <img src={v.image_path} alt={v.dog_name} className="w-full h-full object-contain" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.padding = "20px"; }} />
+                  </div>
+                  <div className="p-3">
+                    <EditableSavedTitle name={v.dog_name} onRename={(n) => renameSavedView(v.id, n)} />
+                    <p className="text-xs mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
+                      {v.generation}G &bull; Saved {timeAgo(v.created_at)}
+                    </p>
+                    <div className="flex gap-2 mt-3">
+                      <a href={v.image_path} download={`${v.dog_name}.png`} className="flex-1 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider text-center transition-all hover:scale-105" style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)", textDecoration: "none" }}>
+                        ↓ Download
+                      </a>
+                      <button onClick={() => deleteSavedView(v.id)} className="px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all hover:scale-105" style={{ background: "rgba(239,68,68,0.1)", color: "#ef4444", border: "1px solid rgba(239,68,68,0.3)", fontFamily: "var(--font-table)" }}>
+                        ✕ Delete
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}

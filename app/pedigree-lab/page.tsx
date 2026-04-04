@@ -1501,7 +1501,7 @@ function PedigreeLabInner() {
 
               {/* My Saved Pedigrees */}
               <Link
-                href="/dashboard/pedigree-folder"
+                href="/dashboard/pedigrees"
                 className="w-full py-2.5 text-xs font-bold uppercase tracking-widest hover:scale-[1.02] flex items-center justify-center gap-2 relative"
                 style={{
                   fontFamily: "var(--font-table)",
