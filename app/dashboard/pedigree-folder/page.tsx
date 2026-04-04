@@ -86,6 +86,7 @@ function timeAgo(iso: string): string {
 export default function PedigreeFolderPage() {
   const [views, setViews] = useState<SavedView[]>([]);
   const [loading, setLoading] = useState(true);
+  const [expandedId, setExpandedId] = useState<number | null>(null);
 
   const fetchViews = async () => {
     let userId = 0;
@@ -192,18 +193,41 @@ export default function PedigreeFolderPage() {
               gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
             }}
           >
-            {views.map((v) => (
+            {views.map((v) => {
+              const isExpanded = expandedId === v.id;
+              return (
               <div
                 key={v.id}
-                className="rounded-lg overflow-hidden transition-all hover:shadow-lg cursor-pointer"
-                style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px", maxWidth: "320px" }}
-                onClick={() => window.open(v.image_path, "_blank")}
+                className="rounded-lg overflow-hidden transition-all cursor-pointer"
+                style={{
+                  background: "#FAF7F2",
+                  border: isExpanded ? "2px solid #1C1C1C" : "2px solid #C9B29F",
+                  borderRadius: "8px",
+                  maxWidth: isExpanded ? "100%" : "320px",
+                  gridColumn: isExpanded ? "1 / -1" : undefined,
+                  boxShadow: isExpanded ? "0 8px 30px rgba(0,0,0,0.15)" : undefined,
+                  transition: "all 0.3s ease",
+                }}
+                onClick={() => { if (!isExpanded) setExpandedId(v.id); }}
               >
-                <div className="aspect-[16/9] overflow-hidden" style={{ background: "#FAFAFA" }}>
+                {/* Close button when expanded */}
+                {isExpanded && (
+                  <div style={{ background: "#1C1C1C", padding: "8px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ color: "#FAF7F2", fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "14px" }}>{v.dog_name} — {v.generation}G Pedigree</span>
+                    <button
+                      onClick={(e) => { e.stopPropagation(); setExpandedId(null); }}
+                      style={{ background: "rgba(255,255,255,0.2)", border: "none", color: "#FAF7F2", width: 28, height: 28, borderRadius: "50%", cursor: "pointer", fontSize: 14, display: "flex", alignItems: "center", justifyContent: "center" }}
+                    >
+                      ✕
+                    </button>
+                  </div>
+                )}
+                <div style={{ overflow: "hidden", background: "#FAFAFA", maxHeight: isExpanded ? "none" : undefined }} className={isExpanded ? "" : "aspect-[16/9]"}>
                   <img
                     src={v.image_path}
                     alt={v.dog_name}
-                    className="w-full h-full object-contain"
+                    className="w-full"
+                    style={{ objectFit: isExpanded ? "contain" : "contain", maxHeight: isExpanded ? "70vh" : undefined }}
                     onError={(e) => {
                       const t = e.target as HTMLImageElement;
                       t.onerror = null;
@@ -224,7 +248,6 @@ export default function PedigreeFolderPage() {
                     <a
                       href={v.image_path}
                       download={`${v.dog_name}.png`}
-                      onClick={(e) => e.stopPropagation()}
                       className="flex-1 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider text-center transition-all hover:scale-105"
                       style={{
                         background: "#1C1C1C",
@@ -253,7 +276,8 @@ export default function PedigreeFolderPage() {
                   </div>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>
