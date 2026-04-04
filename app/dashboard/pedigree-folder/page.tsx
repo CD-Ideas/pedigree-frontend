@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 
 interface SavedView {
@@ -9,6 +9,78 @@ interface SavedView {
   generation: number;
   image_path: string;
   created_at: string;
+}
+
+function EditableTitle({ view, onRename }: { view: SavedView; onRename: (id: number, name: string) => void }) {
+  const [editing, setEditing] = useState(false);
+  const [value, setValue] = useState(view.dog_name);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (editing && inputRef.current) {
+      inputRef.current.focus();
+      inputRef.current.select();
+    }
+  }, [editing]);
+
+  const save = () => {
+    setEditing(false);
+    const trimmed = value.trim();
+    if (trimmed && trimmed !== view.dog_name) {
+      onRename(view.id, trimmed);
+    } else {
+      setValue(view.dog_name);
+    }
+  };
+
+  if (editing) {
+    return (
+      <input
+        ref={inputRef}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        onBlur={save}
+        onKeyDown={(e) => { if (e.key === "Enter") save(); if (e.key === "Escape") { setValue(view.dog_name); setEditing(false); } }}
+        className="w-full text-sm font-bold outline-none"
+        style={{
+          color: "#1C1C1C",
+          fontFamily: "var(--font-table)",
+          background: "transparent",
+          border: "none",
+          borderBottom: "2px solid #C9B29F",
+          padding: "0 0 2px 0",
+        }}
+      />
+    );
+  }
+
+  return (
+    <p
+      onClick={() => setEditing(true)}
+      className="text-sm font-bold truncate cursor-pointer hover:opacity-70"
+      title="Click to rename"
+      style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}
+    >
+      {view.dog_name}
+    </p>
+  );
+}
+
+function timeAgo(iso: string): string {
+  try {
+    const diff = Date.now() - new Date(iso).getTime();
+    const mins = Math.floor(diff / 60000);
+    if (mins < 1) return "just now";
+    if (mins < 60) return `${mins} min${mins > 1 ? "s" : ""} ago`;
+    const hours = Math.floor(mins / 60);
+    if (hours < 24) return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+    const days = Math.floor(hours / 24);
+    if (days < 30) return `${days} day${days > 1 ? "s" : ""} ago`;
+    const months = Math.floor(days / 30);
+    return `${months} month${months > 1 ? "s" : ""} ago`;
+  } catch {
+    return iso;
+  }
 }
 
 export default function PedigreeFolderPage() {
@@ -42,10 +114,17 @@ export default function PedigreeFolderPage() {
     } catch {}
   };
 
-  const formatDate = (iso: string) => {
+  const renameView = async (id: number, newName: string) => {
     try {
-      return new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", hour: "2-digit", minute: "2-digit" });
-    } catch { return iso; }
+      const res = await fetch(`/api/pedigree-folder/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ dogName: newName }),
+      });
+      if (res.ok) {
+        setViews((prev) => prev.map((v) => v.id === id ? { ...v, dog_name: newName } : v));
+      }
+    } catch {}
   };
 
   return (
@@ -57,7 +136,7 @@ export default function PedigreeFolderPage() {
               className="text-2xl md:text-3xl font-black uppercase tracking-widest"
               style={{ fontFamily: "var(--font-table)", color: "#1C1C1C" }}
             >
-              📁 My Saved Pedigrees
+              My Saved Pedigrees
             </h1>
             <p className="text-xs mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Your saved pedigree views
@@ -85,14 +164,16 @@ export default function PedigreeFolderPage() {
           </div>
         ) : views.length === 0 ? (
           <div className="text-center py-20">
-            <img src="/logo.png" alt="" className="mx-auto mb-4 opacity-30" style={{ width: "64px", height: "64px" }} />
-            <p className="text-sm font-bold mb-2" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>No saved pedigrees yet</p>
-            <p className="text-xs mb-4" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-              Go to Pedigree Lab, preview a pedigree, and click the 📁 Save button to save it here.
+            <img src="/logo.png" alt="" className="mx-auto mb-6" style={{ width: "80px", height: "80px", opacity: 0.3 }} />
+            <p className="text-base font-bold mb-2" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+              Your saved pedigrees live here
+            </p>
+            <p className="text-sm mb-6" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+              Save pedigrees from the Pedigree Lab to view them here
             </p>
             <Link
               href="/pedigree-lab"
-              className="inline-block px-5 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all hover:scale-105"
+              className="inline-block px-6 py-2.5 rounded-lg text-xs font-bold uppercase tracking-widest transition-all hover:scale-105"
               style={{
                 background: "#1C1C1C",
                 color: "#FAF7F2",
@@ -105,12 +186,17 @@ export default function PedigreeFolderPage() {
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div
+            className="grid gap-4"
+            style={{
+              gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+            }}
+          >
             {views.map((v) => (
               <div
                 key={v.id}
-                className="rounded-lg overflow-hidden transition-all hover:scale-[1.02]"
-                style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px" }}
+                className="rounded-lg overflow-hidden transition-all hover:shadow-lg"
+                style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px", maxWidth: "320px" }}
               >
                 <div className="aspect-[16/9] overflow-hidden" style={{ background: "#FAFAFA" }}>
                   <img
@@ -127,11 +213,9 @@ export default function PedigreeFolderPage() {
                   />
                 </div>
                 <div className="p-3">
-                  <p className="text-sm font-bold truncate" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-                    {v.dog_name}
-                  </p>
-                  <p className="text-xs mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
-                    {v.generation}G • {formatDate(v.created_at)}
+                  <EditableTitle view={v} onRename={renameView} />
+                  <p className="text-xs mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)", fontSize: "12px" }}>
+                    {v.generation}G &bull; Saved {timeAgo(v.created_at)}
                   </p>
                   <div className="flex gap-2 mt-3">
                     <a
@@ -143,21 +227,24 @@ export default function PedigreeFolderPage() {
                         color: "#FAF7F2",
                         fontFamily: "var(--font-table)",
                         textDecoration: "none",
+                        fontSize: "12px",
                       }}
                     >
-                      ↓ Download
+                      Download
                     </a>
                     <button
                       onClick={() => deleteView(v.id)}
                       className="px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all hover:scale-105"
                       style={{
-                        background: "rgba(239,68,68,0.1)",
-                        color: "#ef4444",
-                        border: "1px solid rgba(239,68,68,0.3)",
+                        background: "#ef4444",
+                        color: "#fff",
+                        border: "none",
                         fontFamily: "var(--font-table)",
+                        cursor: "pointer",
+                        fontSize: "12px",
                       }}
                     >
-                      ✕
+                      Delete
                     </button>
                   </div>
                 </div>
