@@ -353,7 +353,18 @@ function PedigreeLabInner() {
   /* ---------- COI ---------- */
   const [coi, setCoi] = useState(0);
   const [coiLoading, setCoiLoading] = useState(false);
+  const [savedViews, setSavedViews] = useState<{id: number}[]>([]);
   const dogsPlacedCount = Object.values(slots).filter(Boolean).length;
+
+  useEffect(() => {
+    let userId = 0;
+    try { const u = JSON.parse(localStorage.getItem("user") || "{}"); userId = u?.id || 0; } catch {}
+    if (!userId) return;
+    fetch(`/api/pedigree-folder/list?userId=${userId}`)
+      .then(r => r.ok ? r.json() : { views: [] })
+      .then(d => setSavedViews(d.views || []))
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     const sireId = slots.sire?.dog_id;
@@ -878,7 +889,7 @@ function PedigreeLabInner() {
                   {/* PDF Button */}
                   <span dangerouslySetInnerHTML={{ __html: `<button onclick="try{var e=document.getElementById('pedigree-tree-container');if(!e){alert('No pedigree');return;}var w=document.createElement('div');w.id='print-pedigree-wrapper';w.style.cssText='background:#fff;padding:8px;width:100%';var c=e.cloneNode(true);c.style.transform='none';c.style.minWidth='unset';c.style.width='100%';var gen=${previewDisplayGens};if(gen>=5){c.querySelectorAll('[style]').forEach(function(x){if(x.style.minHeight)x.style.minHeight='0';x.style.padding='1px 4px';});c.querySelectorAll('div[style]').forEach(function(x){if(x.style.gap)x.style.gap='1px';});c.style.fontSize='9px';}w.appendChild(c);document.body.appendChild(w);document.body.classList.add('printing-pedigree');window.print();document.body.classList.remove('printing-pedigree');document.body.removeChild(w);}catch(x){alert(x);}" style="background:#1C1C1C;color:#FAF7F2;padding:4px 10px;border-radius:8px;border:2px solid #C9B29F;cursor:pointer;font-weight:bold;font-size:12px;font-family:var(--font-table)">PDF</button>` }} />
                   {/* Save to Folder Button */}
-                  <span dangerouslySetInnerHTML={{ __html: `<button onclick="try{var e=document.getElementById('pedigree-tree-container');if(!e){alert('No pedigree');return;}var u=0;try{var us=JSON.parse(localStorage.getItem('user')||'{}');u=us.id||0;}catch(e){}if(!u){alert('Please log in to save');return;}var name=prompt('Name this pedigree:','Pedigree ${previewDisplayGens}G');if(!name)return;var t=document.createElement('div');t.textContent='Saving...';t.style.cssText='position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#1C1C1C;color:#FAF7F2;padding:8px 20px;border-radius:8px;font-size:12px;font-weight:700;z-index:99999';document.body.appendChild(t);import('html2canvas').then(function(m){var h=m.default;var tw=document.createElement('div');tw.style.cssText='position:fixed;left:-9999px;top:0;background:#fff;padding:8px;width:1400px';var cl=e.cloneNode(true);cl.style.transform='none';cl.style.minWidth='unset';cl.style.width='100%';tw.appendChild(cl);document.body.appendChild(tw);h(tw,{scale:1,backgroundColor:'#FAFAFA',useCORS:true,windowWidth:1400,logging:false}).then(function(cv){document.body.removeChild(tw);var img=cv.toDataURL('image/jpeg',0.7);fetch('/api/pedigree-folder/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:u,dogName:name,generation:${previewDisplayGens},image:img})}).then(function(r){t.remove();if(r.ok){var s=document.createElement('div');s.textContent='Saved!';s.style.cssText='position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#22c55e;color:#fff;padding:8px 20px;border-radius:8px;font-size:12px;font-weight:700;z-index:99999';document.body.appendChild(s);setTimeout(function(){s.remove();},2000);}else{alert('Save failed');}});});});}catch(x){alert(x);}" style="background:#C9B29F;color:#1C1C1C;padding:4px 10px;border-radius:8px;border:2px solid #1C1C1C;cursor:pointer;font-weight:bold;font-size:12px;font-family:var(--font-table)">Save</button>` }} />
+                  <span dangerouslySetInnerHTML={{ __html: `<button onclick="try{var e=document.getElementById('pedigree-tree-container');if(!e){alert('No pedigree');return;}var u=0;try{var us=JSON.parse(localStorage.getItem('user')||'{}');u=us.id||0;}catch(e){}if(!u){alert('Please log in to save');return;}var name=prompt('Name this pedigree:','Pedigree ${previewDisplayGens}G');if(!name)return;var t=document.createElement('div');t.textContent='Saving...';t.style.cssText='position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#1C1C1C;color:#FAF7F2;padding:8px 20px;border-radius:8px;font-size:12px;font-weight:700;z-index:99999';document.body.appendChild(t);import('html2canvas').then(function(m){var h=m.default;var tw=document.createElement('div');tw.style.cssText='position:fixed;left:-9999px;top:0;background:#fff;padding:8px;width:1400px';var cl=e.cloneNode(true);cl.style.transform='none';cl.style.minWidth='unset';cl.style.width='100%';tw.appendChild(cl);document.body.appendChild(tw);h(tw,{scale:1,backgroundColor:'#FAFAFA',useCORS:true,windowWidth:1400,logging:false}).then(function(cv){document.body.removeChild(tw);var img=cv.toDataURL('image/jpeg',0.7);fetch('/api/pedigree-folder/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:u,dogName:name,generation:${previewDisplayGens},image:img})}).then(function(r){t.remove();if(r.ok){var badge=document.getElementById('saved-pedigrees-badge');if(badge){var n=parseInt(badge.textContent||'0')+1;badge.textContent=String(n);badge.style.display='flex';}}else{alert('Save failed');}});});});}catch(x){alert(x);}" style="background:#C9B29F;color:#1C1C1C;padding:4px 10px;border-radius:8px;border:2px solid #1C1C1C;cursor:pointer;font-weight:bold;font-size:12px;font-family:var(--font-table)">Save</button>` }} />
                   {/* Share Buttons */}
                   <div className="flex items-center gap-1.5">
                     <button
@@ -1491,7 +1502,7 @@ function PedigreeLabInner() {
               {/* My Saved Pedigrees */}
               <Link
                 href="/dashboard/pedigree-folder"
-                className="w-full py-2.5 text-xs font-bold uppercase tracking-widest hover:scale-[1.02] flex items-center justify-center gap-2"
+                className="w-full py-2.5 text-xs font-bold uppercase tracking-widest hover:scale-[1.02] flex items-center justify-center gap-2 relative"
                 style={{
                   fontFamily: "var(--font-table)",
                   background: "#FAF7F2",
@@ -1504,6 +1515,26 @@ function PedigreeLabInner() {
                 }}
               >
                 📁 My Saved Pedigrees
+                <span
+                  id="saved-pedigrees-badge"
+                  style={{
+                    display: savedViews.length > 0 ? "flex" : "none",
+                    position: "absolute",
+                    top: "-6px",
+                    right: "-6px",
+                    width: "20px",
+                    height: "20px",
+                    borderRadius: "50%",
+                    background: "#ef4444",
+                    color: "#fff",
+                    fontSize: "10px",
+                    fontWeight: 700,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  {savedViews.length}
+                </span>
               </Link>
 
             </div>

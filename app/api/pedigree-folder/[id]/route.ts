@@ -8,6 +8,26 @@ import { unlink } from "fs/promises";
 const execFileAsync = promisify(execFile);
 const DB = process.env.SQLITE_DB_PATH || "/home/ubuntu/apbt-scraper/apbt_v2.db";
 
+export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  try {
+    const { id } = await params;
+    const { dogName } = await req.json();
+    const safeName = dogName.replace(/'/g, "''");
+    const script = `
+import sqlite3
+db = sqlite3.connect("${DB}")
+db.execute("UPDATE saved_pedigree_views SET dog_name = '${safeName}' WHERE id = ${id}")
+db.commit()
+db.close()
+print("ok")
+`;
+    await execFileAsync("python3", ["-c", script], { timeout: 10000 });
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    return NextResponse.json({ error: "Failed to rename" }, { status: 500 });
+  }
+}
+
 export async function DELETE(
   _req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
