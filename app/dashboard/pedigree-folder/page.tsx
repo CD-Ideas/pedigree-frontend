@@ -107,12 +107,19 @@ export default function PedigreeFolderPage() {
 
   useEffect(() => { fetchViews(); }, []);
 
-  const deleteView = async (id: number) => {
-    if (!confirm("Delete this saved pedigree?")) return;
+  const [deleteId, setDeleteId] = useState<number | null>(null);
+
+  const confirmDelete = async () => {
+    if (!deleteId) return;
     try {
-      await fetch(`/api/pedigree-folder/${id}`, { method: "DELETE" });
+      await fetch(`/api/pedigree-folder/${deleteId}`, { method: "DELETE" });
       fetchViews();
     } catch {}
+    setDeleteId(null);
+  };
+
+  const deleteView = (id: number) => {
+    setDeleteId(id);
   };
 
   const renameView = async (id: number, newName: string) => {
@@ -265,6 +272,41 @@ export default function PedigreeFolderPage() {
           </div>
         )}
       </div>
+      {/* Delete Confirmation Modal */}
+      {deleteId !== null && (
+        <div
+          style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)", zIndex: 99998, display: "flex", alignItems: "center", justifyContent: "center", padding: "20px" }}
+          onClick={() => setDeleteId(null)}
+        >
+          <div
+            style={{ background: "#FAF7F2", borderRadius: "12px", width: "380px", maxWidth: "90vw", overflow: "hidden", border: "2px solid #C9B29F", boxShadow: "0 8px 30px rgba(0,0,0,0.3)" }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ background: "#1C1C1C", padding: "12px 16px", color: "#FAF7F2", fontWeight: 700, fontSize: "14px", fontFamily: "var(--font-table)" }}>
+              Delete Pedigree
+            </div>
+            <div style={{ padding: "20px" }}>
+              <p style={{ fontSize: "14px", color: "#1C1C1C", fontFamily: "var(--font-table)", marginBottom: "16px" }}>
+                Are you sure you want to delete this saved pedigree?
+              </p>
+              <div style={{ display: "flex", gap: "8px", justifyContent: "flex-end" }}>
+                <button
+                  onClick={() => setDeleteId(null)}
+                  style={{ padding: "8px 20px", borderRadius: "8px", border: "2px solid #C9B29F", background: "transparent", color: "#4A4A4A", fontWeight: 700, fontSize: "12px", cursor: "pointer", fontFamily: "var(--font-table)" }}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={confirmDelete}
+                  style={{ padding: "8px 20px", borderRadius: "8px", border: "none", background: "#ef4444", color: "#fff", fontWeight: 700, fontSize: "12px", cursor: "pointer", fontFamily: "var(--font-table)" }}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
