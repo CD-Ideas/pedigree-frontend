@@ -424,6 +424,16 @@ main { animation: pageIn 0.35s ease forwards; }
   opacity: 0.5;
 }
 
+/* ── PEDIGREE TABLE CELL CENTERING ─────────────────────────────────── */
+#pedigree-tree-container td {
+  vertical-align: middle !important;
+  height: 85px;
+}
+#pedigree-tree-container td > div {
+  margin: 0;
+  padding: 0;
+}
+
 /* ── PRINT STYLES FOR PEDIGREE PDF ─────────────────────────────────── */
 @media print {
   body.printing-pedigree > * {
