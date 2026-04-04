@@ -1347,7 +1347,7 @@ function PedigreeLabInner() {
           style={{ width: 300 }}
         >
           <Card className="m-3 flex flex-col flex-1" style={{ padding: 0, overflow: "hidden" }}>
-            <div className="p-4 space-y-4" style={{ overflow: "hidden" }}>
+            <div className="p-4 space-y-4" style={{ height: "320px", overflow: "hidden" }}>
               {/* Panel header */}
               <p
                 className="text-[12px] uppercase tracking-widest font-semibold"
