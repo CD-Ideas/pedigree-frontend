@@ -23,6 +23,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script src="/save-pedigree.js" defer></script>
+      </head>
       <body className="antialiased">
         <NavBar />
         <HeartbeatTracker />
