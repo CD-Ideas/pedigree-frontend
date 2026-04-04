@@ -1344,7 +1344,7 @@ function PedigreeLabInner() {
         {/* ---------------------------------------------------------- */}
         <aside
           className="flex-shrink-0 flex flex-col overflow-hidden"
-          style={{ width: 300 }}
+          style={{ width: 300, position: "sticky", top: 0, alignSelf: "flex-start", maxHeight: "100vh" }}
         >
           <Card className="m-3 flex flex-col flex-1 overflow-y-auto" style={{ padding: 0 }}>
             <div className="p-4 space-y-4">
