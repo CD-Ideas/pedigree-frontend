@@ -1433,8 +1433,8 @@ function PedigreeLabInner() {
               })()}
 
             </div>
-            {/* Buttons section - fixed at bottom */}
-            <div className="p-4 space-y-3" style={{ flexShrink: 0, borderTop: "2px solid #C9B29F" }}>
+            {/* Buttons section - pinned at bottom */}
+            <div className="p-4 space-y-3" style={{ flexShrink: 0, marginTop: "auto", borderTop: "2px solid #C9B29F" }}>
               {/* Preview toggle */}
               <button
                 onClick={async () => {
