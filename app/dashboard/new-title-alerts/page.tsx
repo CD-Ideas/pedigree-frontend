@@ -29,7 +29,10 @@ export default function NewTitleAlertsPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("newest");
-  const [filter, setFilter] = useState("all");
+  const [showFilters, setShowFilters] = useState(false);
+  const [filterContinent, setFilterContinent] = useState("");
+  const [filterCountry, setFilterCountry] = useState("");
+  const [filterTime, setFilterTime] = useState("");
   const [view, setView] = useState<"grid" | "table">("grid");
   const [page, setPage] = useState(1);
   const perPage = 20;
@@ -78,10 +81,16 @@ export default function NewTitleAlertsPage() {
       (a.creator_username || "").toUpperCase().includes(q)
     );
   }
-  if (filter === "week") {
-    filtered = filtered.filter(a => Date.now() - new Date(a.date_posted).getTime() < 7 * 24 * 60 * 60 * 1000);
-  } else if (filter !== "all") {
-    filtered = filtered.filter(a => a.continent === filter);
+  if (filterContinent) {
+    filtered = filtered.filter(a => a.continent?.toUpperCase() === filterContinent.toUpperCase());
+  }
+  if (filterCountry) {
+    filtered = filtered.filter(a => a.country?.toUpperCase() === filterCountry.toUpperCase());
+  }
+  if (filterTime === "week") {
+    filtered = filtered.filter(a => Date.now() - new Date(a.last_modified || a.date_posted).getTime() < 7 * 24 * 60 * 60 * 1000);
+  } else if (filterTime === "month") {
+    filtered = filtered.filter(a => Date.now() - new Date(a.last_modified || a.date_posted).getTime() < 30 * 24 * 60 * 60 * 1000);
   }
 
   // Sort
@@ -94,7 +103,8 @@ export default function NewTitleAlertsPage() {
   // Pagination
   const totalPages = Math.ceil(filtered.length / perPage);
   const paginated = filtered.slice((page - 1) * perPage, page * perPage);
-  const continents = [...new Set(alerts.map(a => a.continent).filter(Boolean))];
+  const continents = [...new Set(alerts.map(a => a.continent).filter(Boolean))].sort();
+  const countries = [...new Set(alerts.filter(a => !filterContinent || a.continent?.toUpperCase() === filterContinent.toUpperCase()).map(a => a.country).filter(Boolean))].sort();
 
   return (
     <div className="min-h-screen" style={{ background: "#EDE4D5" }}>
@@ -114,20 +124,8 @@ export default function NewTitleAlertsPage() {
           </Link>
         </div>
 
-        {/* Filters Row */}
-        <div className="flex flex-wrap items-center gap-3 mb-4">
-          {/* Continent Filters */}
-          <div className="flex gap-2 flex-wrap">
-            <button onClick={() => { setFilter("all"); setPage(1); }} className="px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all" style={{ background: filter === "all" ? "#1C1C1C" : "#FAF7F2", color: filter === "all" ? "#FAF7F2" : "#1C1C1C", border: "2px solid #C9B29F", fontFamily: "var(--font-table)" }}>All</button>
-            <button onClick={() => { setFilter("week"); setPage(1); }} className="px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all" style={{ background: filter === "week" ? "#1C1C1C" : "#FAF7F2", color: filter === "week" ? "#FAF7F2" : "#1C1C1C", border: "2px solid #C9B29F", fontFamily: "var(--font-table)" }}>This Week</button>
-            {continents.map(c => (
-              <button key={c} onClick={() => { setFilter(c); setPage(1); }} className="px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all" style={{ background: filter === c ? "#1C1C1C" : "#FAF7F2", color: filter === c ? "#FAF7F2" : "#1C1C1C", border: "2px solid #C9B29F", fontFamily: "var(--font-table)" }}>{c}</button>
-            ))}
-          </div>
-        </div>
-
-        {/* Search + Sort + View Toggle */}
-        <div className="flex flex-wrap items-center gap-3 mb-4">
+        {/* Search + Sort + Filters + View Toggle */}
+        <div className="flex flex-wrap items-center gap-3 mb-3">
           <div className="flex-1 min-w-[200px]">
             <input
               type="text"
@@ -147,11 +145,68 @@ export default function NewTitleAlertsPage() {
             <option value="newest">Newest First</option>
             <option value="oldest">Oldest First</option>
           </select>
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            className="px-3 py-2 rounded-lg text-xs font-bold transition-all"
+            style={{ background: showFilters ? "#1C1C1C" : "#FAF7F2", color: showFilters ? "#FAF7F2" : "#1C1C1C", border: "2px solid #C9B29F", fontFamily: "var(--font-table)" }}
+          >
+            Filters
+          </button>
           <div className="flex rounded-lg overflow-hidden" style={{ border: "2px solid #C9B29F" }}>
             <button onClick={() => setView("grid")} className="px-3 py-1.5 text-xs font-bold" style={{ background: view === "grid" ? "#1C1C1C" : "#FAF7F2", color: view === "grid" ? "#FAF7F2" : "#1C1C1C", fontFamily: "var(--font-table)" }}>Grid</button>
             <button onClick={() => setView("table")} className="px-3 py-1.5 text-xs font-bold" style={{ background: view === "table" ? "#1C1C1C" : "#FAF7F2", color: view === "table" ? "#FAF7F2" : "#1C1C1C", fontFamily: "var(--font-table)" }}>Table</button>
           </div>
         </div>
+
+        {/* Filter Dropdowns (toggle) */}
+        {showFilters && (
+          <div className="rounded-lg p-4 mb-4 flex flex-wrap items-end gap-4" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px" }}>
+            <div>
+              <label className="block text-[12px] uppercase tracking-widest font-bold mb-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Continent</label>
+              <select
+                value={filterContinent}
+                onChange={e => { setFilterContinent(e.target.value); setFilterCountry(""); setPage(1); }}
+                className="rounded-lg px-3 py-2 text-xs outline-none min-w-[180px]"
+                style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }}
+              >
+                <option value="">All Continents</option>
+                {continents.map(c => <option key={c} value={c}>{c}</option>)}
+              </select>
+            </div>
+            <div>
+              <label className="block text-[12px] uppercase tracking-widest font-bold mb-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Country</label>
+              <select
+                value={filterCountry}
+                onChange={e => { setFilterCountry(e.target.value); setPage(1); }}
+                className="rounded-lg px-3 py-2 text-xs outline-none min-w-[180px]"
+                style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }}
+              >
+                <option value="">All Countries</option>
+                {countries.map(c => <option key={c} value={c}>{c}</option>)}
+              </select>
+            </div>
+            <div>
+              <label className="block text-[12px] uppercase tracking-widest font-bold mb-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Time</label>
+              <select
+                value={filterTime}
+                onChange={e => { setFilterTime(e.target.value); setPage(1); }}
+                className="rounded-lg px-3 py-2 text-xs outline-none min-w-[140px]"
+                style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }}
+              >
+                <option value="">All Time</option>
+                <option value="week">This Week</option>
+                <option value="month">This Month</option>
+              </select>
+            </div>
+            <button
+              onClick={() => { setFilterContinent(""); setFilterCountry(""); setFilterTime(""); setPage(1); }}
+              className="px-3 py-2 rounded-lg text-xs font-bold transition-all hover:scale-105"
+              style={{ background: "rgba(239,68,68,0.1)", color: "#ef4444", border: "1px solid rgba(239,68,68,0.3)", fontFamily: "var(--font-table)" }}
+            >
+              Clear all
+            </button>
+          </div>
+        )}
 
         {/* Content */}
         {loading ? (
