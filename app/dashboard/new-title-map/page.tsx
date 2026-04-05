@@ -193,9 +193,8 @@ export default function NewTitleMapPage() {
   const alertsWithCoords = alerts.map((a, i) => {
     const coords = getCoords(a);
     if (!coords) return null;
-    // Add small offset if multiple dogs in same area to prevent overlap
-    const offset = i * 0.8;
-    const adjustedCoords: [number, number] = [coords[0] + (i % 3 - 1) * offset * 0.5, coords[1] + (Math.floor(i / 3) % 3 - 1) * offset * 0.3];
+    // Add offset so pins in same location don't overlap
+    const adjustedCoords: [number, number] = [coords[0] + i * 2, coords[1] + (i % 2 === 0 ? i * 1.5 : -i * 1.5)];
     return { alert: a, coords: adjustedCoords };
   }).filter(Boolean) as { alert: TitleAlert; coords: [number, number] }[];
 
