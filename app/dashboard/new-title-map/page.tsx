@@ -123,7 +123,7 @@ export default function NewTitleMapPage() {
 
   return (
     <div className="min-h-screen" style={{ background: "#EDE4D5" }}>
-      <div className="max-w-7xl mx-auto px-4 py-6">
+      <div className="max-w-5xl mx-auto px-4 py-6">
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-2xl font-black uppercase tracking-widest" style={{ fontFamily: "var(--font-table)", color: "#1C1C1C" }}>
