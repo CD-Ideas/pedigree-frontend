@@ -274,8 +274,8 @@ export default function NewTitleMapPage() {
                 <p style={{ fontSize: "16px", fontWeight: 900, color: getDogColor(buildName(selected)), fontFamily: "var(--font-table)", marginBottom: "8px" }}>
                   {buildName(selected)}
                 </p>
-                <p style={{ fontSize: "12px", color: selected.sex === "Male" ? "#1d5bbf" : "#9f1239", fontFamily: "var(--font-table)", marginBottom: "4px" }}>
-                  {selected.sex === "Male" ? "♂" : "♀"} {selected.sex}
+                <p style={{ fontSize: "12px", color: selected.sex?.toUpperCase() === "MALE" ? "#1d5bbf" : "#9f1239", fontFamily: "var(--font-table)", marginBottom: "4px" }}>
+                  {selected.sex?.toUpperCase() === "MALE" ? "♂" : "♀"} {selected.sex}
                 </p>
                 {selected.breeder && (
                   <p style={{ fontSize: "12px", color: "#4A4A4A", fontFamily: "var(--font-table)", marginBottom: "4px" }}>
