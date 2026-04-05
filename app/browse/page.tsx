@@ -536,7 +536,7 @@ export default function PublicDogsPage() {
         ) : dogs.length === 0 ? (
           /* Empty state */
           <div className="text-center py-20">
-            <img src="/logo.png" alt="" className="mx-auto mb-4 opacity-30" style={{ width: "80px", height: "80px" }} />
+            <img src="/logo.png" alt="Pedigree Platform" className="mx-auto mb-4 opacity-30" style={{ width: "80px", height: "80px" }} />
             <h3 className="text-lg font-bold mb-2" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               No dogs found
             </h3>

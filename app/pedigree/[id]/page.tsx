@@ -245,7 +245,7 @@ function PedigreeSearch() {
                 <img src={d.photo_url.startsWith("http") ? d.photo_url : `https://www.apbt.online-pedigrees.com/${d.photo_url}`}
                      alt="" className="w-8 h-8 rounded-lg object-cover flex-shrink-0" style={{ border: "1px solid #EDE4D5" }} onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
               ) : (
-                <img src="/logo.png" alt="" className="w-8 h-8 rounded-lg object-cover flex-shrink-0" style={{ border: "2px solid #EDE4D5" }} />
+                <img src="/logo.png" alt="Pedigree Platform" className="w-8 h-8 rounded-lg object-cover flex-shrink-0" style={{ border: "2px solid #EDE4D5" }} />
               )}
               <span className="text-sm font-semibold truncate" style={{ color: getDogColor(d.registered_name), fontFamily: PG.font }}>
                 {d.registered_name}
@@ -956,7 +956,7 @@ export default function PublicPedigreePage() {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: PG.bg }}>
         <div className="text-center">
-          <img src="/logo.png" alt="" className="mx-auto mb-4 opacity-50" style={{ width: "80px", height: "80px" }} />
+          <img src="/logo.png" alt="Pedigree Platform" className="mx-auto mb-4 opacity-50" style={{ width: "80px", height: "80px" }} />
           <h2 className="text-xl font-bold mb-2" style={{ color: PG.text, fontFamily: PG.font }}>Dog Not Found</h2>
           <p className="text-sm mb-6" style={{ color: PG.textMuted }}>This pedigree doesn&apos;t exist or has been removed.</p>
           <Link href="/" className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-semibold transition-all hover:scale-105"

@@ -189,7 +189,7 @@ export default function ChatWidget() {
                   lineHeight: 1.6,
                 }}
               >
-                <img src="/logo.png" alt="" style={{ width: 48, height: 48, margin: "0 auto 8px", opacity: 0.6 }} />
+                <img src="/logo.png" alt="Pedigree Platform" style={{ width: 48, height: 48, margin: "0 auto 8px", opacity: 0.6 }} />
                 <div style={{ fontWeight: 600, fontFamily: "var(--font-table)" }}>Welcome!</div>
                 <div>Ask me how to use the site, search dogs, breeding tools, marketplace, and more.</div>
               </div>

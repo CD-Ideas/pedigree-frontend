@@ -191,7 +191,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
                 <img src={s.photo_url.startsWith("http") ? s.photo_url : `https://www.apbt.online-pedigrees.com/${s.photo_url}`}
                      alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
               ) : (
-                <img src="/logo.png" alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} />
+                <img src="/logo.png" alt="Pedigree Platform" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} />
               )}
               <div className="flex-1 min-w-0">
                 <span className="text-xs font-semibold truncate block" style={{ color: s.color, fontFamily: "var(--font-table)" }}>{s.name}</span>
@@ -294,7 +294,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
                   <img src={d.photo_url.startsWith("http") ? d.photo_url : `https://www.apbt.online-pedigrees.com/${d.photo_url}`}
                        alt="" className="w-8 h-8 rounded-full object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
                 ) : (
-                  <img src="/logo.png" alt="" className="w-8 h-8 rounded-full object-contain flex-shrink-0 opacity-30" style={{ background: "#FAFAFA", border: "2px solid #C9B29F", padding: "4px" }} />
+                  <img src="/logo.png" alt="Pedigree Platform" className="w-8 h-8 rounded-full object-contain flex-shrink-0 opacity-30" style={{ background: "#FAFAFA", border: "2px solid #C9B29F", padding: "4px" }} />
                 )}
                 <span className="text-sm font-semibold truncate" style={{ color, fontFamily: "var(--font-table)" }}>
                   {d.registered_name}
@@ -487,7 +487,7 @@ export default function SpotlightPage() {
                       <img src={f.photo_url.startsWith("http") ? f.photo_url : `https://www.apbt.online-pedigrees.com/${f.photo_url}`}
                            alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
                     ) : (
-                      <img src="/logo.png" alt="" className="w-6 h-6 rounded-full object-contain flex-shrink-0 opacity-30" style={{ background: "#FAFAFA", border: "2px solid #C9B29F", padding: "2px" }} />
+                      <img src="/logo.png" alt="Pedigree Platform" className="w-6 h-6 rounded-full object-contain flex-shrink-0 opacity-30" style={{ background: "#FAFAFA", border: "2px solid #C9B29F", padding: "2px" }} />
                     )}
                     <div className="min-w-0 flex-1">
                       <span className="block text-xs font-semibold truncate" style={{ color: getDogColor(f.name), fontFamily: "var(--font-table)" }}>
@@ -629,7 +629,7 @@ export default function SpotlightPage() {
                     {r.photo_url ? (
                       <img src={r.photo_url} alt={r.name} className="w-full h-full object-cover transition-transform group-hover:scale-110" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center opacity-20"><img src="/logo.png" alt="" style={{ width: "40px", height: "40px" }} /></div>
+                      <div className="w-full h-full flex items-center justify-center opacity-20"><img src="/logo.png" alt="Pedigree Platform" style={{ width: "40px", height: "40px" }} /></div>
                     )}
                   </div>
 
@@ -709,7 +709,7 @@ export default function SpotlightPage() {
                       <img src={f.photo_url.startsWith("http") ? f.photo_url : `https://www.apbt.online-pedigrees.com/${f.photo_url}`}
                            alt="" className="w-full h-full object-cover transition-transform group-hover:scale-110" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center opacity-20"><img src="/logo.png" alt="" style={{ width: "40px", height: "40px" }} /></div>
+                      <div className="w-full h-full flex items-center justify-center opacity-20"><img src="/logo.png" alt="Pedigree Platform" style={{ width: "40px", height: "40px" }} /></div>
                     )}
                   </div>
                   <div className="p-2">

@@ -501,7 +501,7 @@ export default function MyPedigreesPage() {
           </div>
         ) : filtered.length === 0 ? (
           <div className="text-center py-16">
-            <img src="/logo.png" alt="" className="mx-auto mb-4 opacity-30" style={{ width: "64px", height: "64px" }} />
+            <img src="/logo.png" alt="Pedigree Platform" className="mx-auto mb-4 opacity-30" style={{ width: "64px", height: "64px" }} />
             <p className="text-sm mb-2" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               {search.trim()
                 ? "No pedigrees match your search"

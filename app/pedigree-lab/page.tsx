@@ -804,7 +804,7 @@ function PedigreeLabInner() {
                             onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; e.currentTarget.parentElement!.classList.add("flex","items-center","justify-center"); const img = document.createElement("img"); img.src = "/logo.png"; img.style.width = "24px"; img.style.height = "24px"; img.style.opacity = "0.3"; e.currentTarget.parentElement!.appendChild(img); }} />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center">
-                            <img src="/logo.png" alt="" className="opacity-30" style={{ width: "24px", height: "24px" }} />
+                            <img src="/logo.png" alt="Pedigree Platform" className="opacity-30" style={{ width: "24px", height: "24px" }} />
                           </div>
                         )}
                       </div>
@@ -1386,7 +1386,7 @@ function PedigreeLabInner() {
                             className="w-full h-36 flex items-center justify-center"
                             style={{ background: "#FAFAFA" }}
                           >
-                            <img src="/logo.png" alt="" className="opacity-30" style={{ width: "64px", height: "64px" }} />
+                            <img src="/logo.png" alt="Pedigree Platform" className="opacity-30" style={{ width: "64px", height: "64px" }} />
                           </div>
                         )}
                       </div>
@@ -1419,7 +1419,7 @@ function PedigreeLabInner() {
                         className="w-full h-36 flex items-center justify-center"
                         style={{ background: "#FAFAFA" }}
                       >
-                        <img src="/logo.png" alt="" className="opacity-30" style={{ width: "64px", height: "64px" }} />
+                        <img src="/logo.png" alt="Pedigree Platform" className="opacity-30" style={{ width: "64px", height: "64px" }} />
                       </div>
                     </div>
                     <p className="text-sm font-bold leading-tight" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)", minHeight: "2.5em" }}>
@@ -2779,7 +2779,7 @@ function DropZone({
         >
           {!dog.photo_url && (
             <div className="w-full h-full flex items-center justify-center">
-              <img src="/logo.png" alt="" className="opacity-30" style={{ width: "20px", height: "20px" }} />
+              <img src="/logo.png" alt="Pedigree Platform" className="opacity-30" style={{ width: "20px", height: "20px" }} />
             </div>
           )}
         </div>

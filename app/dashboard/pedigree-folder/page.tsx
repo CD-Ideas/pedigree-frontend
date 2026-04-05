@@ -172,7 +172,7 @@ export default function PedigreeFolderPage() {
           </div>
         ) : views.length === 0 ? (
           <div className="text-center py-20">
-            <img src="/logo.png" alt="" className="mx-auto mb-6" style={{ width: "80px", height: "80px", opacity: 0.3 }} />
+            <img src="/logo.png" alt="Pedigree Platform" className="mx-auto mb-6" style={{ width: "80px", height: "80px", opacity: 0.3 }} />
             <p className="text-base font-bold mb-2" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               Your saved pedigrees live here
             </p>
