@@ -169,7 +169,7 @@ export default function NewTitleMapPage() {
 
         <div className="relative" style={{ width: "100%" }}>
           {/* Map */}
-          <div className="rounded-lg overflow-hidden" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px", maxHeight: "calc(100vh - 160px)" }}>
+          <div className="rounded-lg overflow-hidden" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px", height: "calc(100vh - 140px)" }}>
             {loading ? (
               <div className="flex items-center justify-center py-40">
                 <div className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} />
@@ -178,8 +178,8 @@ export default function NewTitleMapPage() {
               <ComposableMap
                 projectionConfig={{ scale: 160, center: [5, 20] }}
                 width={900}
-                height={450}
-                style={{ width: "100%", height: "auto", background: "#FAFAFA" }}
+                height={500}
+                style={{ width: "100%", height: "100%", background: "#FAFAFA" }}
               >
                 <ZoomableGroup
                   zoom={zoom}
