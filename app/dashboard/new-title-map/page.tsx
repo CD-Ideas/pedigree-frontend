@@ -122,9 +122,9 @@ export default function NewTitleMapPage() {
           </Link>
         </div>
 
-        <div className="flex gap-4">
+        <div className="relative">
           {/* Map */}
-          <div className="flex-1 rounded-lg overflow-hidden" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px" }}>
+          <div className="rounded-lg overflow-hidden" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px" }}>
             {loading ? (
               <div className="flex items-center justify-center py-40">
                 <div className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} />
@@ -162,7 +162,7 @@ export default function NewTitleMapPage() {
                         stroke="#fff"
                         strokeWidth={1.5}
                         style={{ cursor: "pointer" }}
-                        onClick={() => setSelected(group.alerts[0])}
+                        onClick={() => { markRead(group.alerts[0].id); setSelected(group.alerts[0]); }}
                       />
                       {group.alerts.length > 1 && (
                         <text textAnchor="middle" y={3} style={{ fontSize: 7, fill: "#fff", fontWeight: 700, pointerEvents: "none" }}>
@@ -176,53 +176,75 @@ export default function NewTitleMapPage() {
             )}
           </div>
 
-          {/* Sidebar */}
-          <div className="w-72 flex-shrink-0 rounded-lg overflow-hidden" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px", maxHeight: "600px" }}>
-            <div style={{ background: "#1C1C1C", padding: "12px 16px" }} className="flex items-center justify-between">
-              <p className="text-xs font-bold uppercase tracking-widest" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>
-                {selected ? "Dog Details" : `All Alerts (${alerts.length})`}
-              </p>
-              {!selected && alerts.some(a => !a.is_read) && (
-                <button onClick={markAllRead} className="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded transition-all hover:opacity-80" style={{ background: "#C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)", border: "none", cursor: "pointer" }}>
-                  Mark all read
-                </button>
-              )}
+          {/* Popup overlay when pin is clicked */}
+          {selected && (
+            <div
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                background: "#FAF7F2",
+                border: "2px solid #C9B29F",
+                borderRadius: "12px",
+                width: "320px",
+                maxWidth: "90vw",
+                boxShadow: "0 8px 30px rgba(0,0,0,0.3)",
+                zIndex: 50,
+                overflow: "hidden",
+              }}
+            >
+              {/* Header */}
+              <div style={{ background: "#1C1C1C", padding: "10px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <span style={{ color: "#FAF7F2", fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "12px", textTransform: "uppercase", letterSpacing: "0.05em" }}>Dog Details</span>
+                <button onClick={() => setSelected(null)} style={{ background: "rgba(255,255,255,0.2)", border: "none", color: "#FAF7F2", width: 24, height: 24, borderRadius: "50%", cursor: "pointer", fontSize: 12, display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
+              </div>
+              {/* Content */}
+              <div style={{ padding: "16px" }}>
+                {selected.photo_path && (
+                  <img src={selected.photo_path.startsWith("/") ? selected.photo_path : `/uploads/${selected.photo_path}`} alt={selected.name} className="w-full h-32 object-cover rounded-lg mb-3" style={{ border: "2px solid #C9B29F" }} onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                )}
+                <p style={{ fontSize: "16px", fontWeight: 900, color: "#1C1C1C", fontFamily: "var(--font-table)", marginBottom: "8px" }}>
+                  {selected.prefix ? selected.prefix + " " : ""}{selected.name}
+                </p>
+                <p style={{ fontSize: "12px", color: "#4A4A4A", fontFamily: "var(--font-table)", marginBottom: "4px" }}>
+                  {selected.sex === "Male" ? "♂" : "♀"} {selected.sex}
+                </p>
+                {selected.breeder && (
+                  <p style={{ fontSize: "12px", color: "#4A4A4A", fontFamily: "var(--font-table)", marginBottom: "4px" }}>
+                    Breeder: {selected.breeder}
+                  </p>
+                )}
+                <p style={{ fontSize: "12px", color: "#4A4A4A", fontFamily: "var(--font-table)", marginBottom: "4px" }}>
+                  📍 {selected.country || "Unknown"} ({selected.continent || "Unknown"})
+                </p>
+                <p style={{ fontSize: "12px", color: "#4A4A4A", fontFamily: "var(--font-mono)", marginBottom: "12px" }}>
+                  {new Date(selected.date_posted).toLocaleDateString()}
+                </p>
+                <Link
+                  href={`/pedigree/custom/${selected.id}`}
+                  style={{
+                    display: "block",
+                    width: "100%",
+                    padding: "10px",
+                    background: "#1C1C1C",
+                    color: "#FAF7F2",
+                    fontFamily: "var(--font-table)",
+                    fontWeight: 700,
+                    fontSize: "12px",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.08em",
+                    textAlign: "center",
+                    borderRadius: "8px",
+                    textDecoration: "none",
+                  }}
+                >
+                  View Full Pedigree
+                </Link>
+              </div>
             </div>
-            <div style={{ overflow: "auto", maxHeight: "550px" }}>
-              {selected ? (
-                <div className="p-4 space-y-3">
-                  <button onClick={() => setSelected(null)} className="text-xs font-bold" style={{ color: "#1d5bbf", fontFamily: "var(--font-table)", background: "none", border: "none", cursor: "pointer" }}>← Back to list</button>
-                  {selected.photo_path && (
-                    <img src={selected.photo_path.startsWith("/") ? selected.photo_path : `/uploads/${selected.photo_path}`} alt={selected.name} className="w-full h-32 object-cover rounded-lg" style={{ border: "2px solid #C9B29F" }} onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
-                  )}
-                  <p className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{selected.name}</p>
-                  <p className="text-xs" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>{selected.sex === "Male" ? "♂ Male" : "♀ Female"}</p>
-                  {selected.breeder && <p className="text-xs" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Breeder: {selected.breeder}</p>}
-                  {selected.country && <p className="text-xs" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>📍 {selected.country} ({selected.continent})</p>}
-                  <p className="text-xs" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>{new Date(selected.date_posted).toLocaleDateString()}</p>
-                  <Link href={`/pedigree/custom/${selected.id}`} className="block w-full py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-center transition-all hover:scale-105" style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)", textDecoration: "none" }}>
-                    View Full Pedigree
-                  </Link>
-                </div>
-              ) : alerts.length === 0 ? (
-                <div className="p-4 text-center">
-                  <img src="/logo.png" alt="Pedigree Platform" className="mx-auto mb-3 opacity-30" style={{ width: "48px", height: "48px" }} />
-                  <p className="text-xs" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>No title alerts yet</p>
-                </div>
-              ) : (
-                <div>
-                  {alerts.map(a => (
-                    <div key={a.id} onClick={() => { markRead(a.id); setSelected(a); }} className="p-3 transition-colors hover:bg-black/5 cursor-pointer" style={{ borderBottom: "1px solid #EDE4D5", opacity: a.is_read ? 0.6 : 1 }}>
-                      <p className="text-xs truncate" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", fontWeight: a.is_read ? 400 : 700 }}>{a.name}</p>
-                      <p className="text-xs mt-0.5" style={{ color: a.is_read ? "#999" : "#4A4A4A", fontFamily: "var(--font-table)" }}>
-                        {a.country ? `📍 ${a.country}` : a.continent || "Unknown"}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
+          )}
+
         </div>
       </div>
     </div>
