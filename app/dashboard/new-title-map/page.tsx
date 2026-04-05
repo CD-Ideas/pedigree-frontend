@@ -122,6 +122,25 @@ export default function NewTitleMapPage() {
     return n;
   };
 
+  // Build country color map for filling countries
+  const countryColors: Record<string, string> = {};
+  alerts.forEach(a => {
+    if (a.country) {
+      countryColors[a.country.toUpperCase()] = getDogColor(buildName(a));
+    }
+  });
+
+  const getCountryFill = (geoName: string): string => {
+    const upper = (geoName || "").toUpperCase();
+    // Check exact match and common variations
+    if (countryColors[upper]) return countryColors[upper];
+    // Check partial matches for country name variations
+    for (const [key, color] of Object.entries(countryColors)) {
+      if (upper.includes(key) || key.includes(upper)) return color;
+    }
+    return "#EDE4D5";
+  };
+
   const pinGroups: Record<string, { coords: [number, number]; alerts: TitleAlert[] }> = {};
   alerts.forEach(a => {
     const coords = getCoords(a);
@@ -133,8 +152,8 @@ export default function NewTitleMapPage() {
 
   return (
     <div className="min-h-screen" style={{ background: "#EDE4D5" }}>
-      <div className="max-w-5xl mx-auto px-4 py-6">
-        <div className="flex items-center justify-between mb-6">
+      <div className="max-w-4xl mx-auto px-4 py-4">
+        <div className="flex items-center justify-between mb-3">
           <div>
             <h1 className="text-2xl font-black uppercase tracking-widest" style={{ fontFamily: "var(--font-table)", color: "#1C1C1C" }}>
               New Title World Map
@@ -150,7 +169,7 @@ export default function NewTitleMapPage() {
 
         <div className="relative" style={{ width: "100%" }}>
           {/* Map */}
-          <div className="rounded-lg overflow-hidden" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px", width: "100%" }}>
+          <div className="rounded-lg overflow-hidden" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px", maxHeight: "calc(100vh - 160px)" }}>
             {loading ? (
               <div className="flex items-center justify-center py-40">
                 <div className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} />
@@ -173,7 +192,7 @@ export default function NewTitleMapPage() {
                         <Geography
                           key={geo.rpiKey || geo.properties?.name || Math.random()}
                           geography={geo}
-                          fill="#EDE4D5"
+                          fill={getCountryFill(geo.properties?.name || "")}
                           stroke="#C9B29F"
                           strokeWidth={0.5}
                           style={{
