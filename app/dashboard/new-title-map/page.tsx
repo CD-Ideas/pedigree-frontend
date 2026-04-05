@@ -22,6 +22,7 @@ interface TitleAlert {
   date_posted: string;
   photo_path: string;
   is_read: number;
+  last_modified: string;
 }
 
 const COUNTRY_COORDS: Record<string, [number, number]> = {

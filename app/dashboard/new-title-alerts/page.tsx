@@ -21,12 +21,18 @@ interface TitleAlert {
   photo_path: string;
   creator_username: string;
   is_read: number;
+  last_modified: string;
 }
 
 export default function NewTitleAlertsPage() {
   const [alerts, setAlerts] = useState<TitleAlert[]>([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+  const [sort, setSort] = useState("newest");
   const [filter, setFilter] = useState("all");
+  const [view, setView] = useState<"grid" | "table">("grid");
+  const [page, setPage] = useState(1);
+  const perPage = 20;
 
   useEffect(() => {
     let userId = 0;
@@ -49,31 +55,10 @@ export default function NewTitleAlertsPage() {
     setAlerts(prev => prev.map(a => a.id === alertId ? { ...a, is_read: 1 } : a));
   };
 
-  const markAllRead = async () => {
-    let userId = 0;
-    try { const u = JSON.parse(localStorage.getItem("user") || "{}"); userId = u?.id || 0; } catch {}
-    if (!userId) return;
-    await fetch("/api/title-alerts/read", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId, readAll: true }),
-    });
-    setAlerts(prev => prev.map(a => ({ ...a, is_read: 1 })));
-  };
-
-  const filtered = filter === "all" ? alerts
-    : filter === "week" ? alerts.filter(a => {
-        const diff = Date.now() - new Date(a.date_posted).getTime();
-        return diff < 7 * 24 * 60 * 60 * 1000;
-      })
-    : alerts.filter(a => a.continent === filter);
-
-  const continents = [...new Set(alerts.map(a => a.continent).filter(Boolean))];
-
   const buildDisplayName = (a: TitleAlert) => {
     let name = a.name;
     if (a.prefix && a.prefix !== "None") name = a.prefix + " " + name;
-    const parts = [];
+    const parts: string[] = [];
     if (a.suffix_wins && a.suffix_wins !== "0" && a.suffix_wins !== "") parts.push(a.suffix_wins);
     if (a.suffix_losses && a.suffix_losses !== "0" && a.suffix_losses !== "") parts.push(a.suffix_losses);
     if (a.suffix_draws && a.suffix_draws !== "0" && a.suffix_draws !== "") parts.push(a.suffix_draws);
@@ -82,68 +67,181 @@ export default function NewTitleAlertsPage() {
     return name;
   };
 
+  // Filter
+  let filtered = alerts;
+  if (search.trim()) {
+    const q = search.toUpperCase();
+    filtered = filtered.filter(a =>
+      buildDisplayName(a).toUpperCase().includes(q) ||
+      (a.breeder || "").toUpperCase().includes(q) ||
+      (a.country || "").toUpperCase().includes(q) ||
+      (a.creator_username || "").toUpperCase().includes(q)
+    );
+  }
+  if (filter === "week") {
+    filtered = filtered.filter(a => Date.now() - new Date(a.date_posted).getTime() < 7 * 24 * 60 * 60 * 1000);
+  } else if (filter !== "all") {
+    filtered = filtered.filter(a => a.continent === filter);
+  }
+
+  // Sort
+  if (sort === "oldest") {
+    filtered = [...filtered].sort((a, b) => new Date(a.date_posted).getTime() - new Date(b.date_posted).getTime());
+  } else {
+    filtered = [...filtered].sort((a, b) => new Date(b.date_posted).getTime() - new Date(a.date_posted).getTime());
+  }
+
+  // Pagination
+  const totalPages = Math.ceil(filtered.length / perPage);
+  const paginated = filtered.slice((page - 1) * perPage, page * perPage);
+  const continents = [...new Set(alerts.map(a => a.continent).filter(Boolean))];
+
   return (
     <div className="min-h-screen" style={{ background: "#EDE4D5" }}>
       <div className="max-w-6xl mx-auto px-4 py-6">
-        <div className="flex items-center justify-between mb-6">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-4">
           <div>
             <h1 className="text-2xl font-black uppercase tracking-widest" style={{ fontFamily: "var(--font-table)", color: "#1C1C1C" }}>
               New Title Alerts
             </h1>
             <p className="text-xs mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-              Recently announced dogs from breeders worldwide
+              Recently announced dogs from breeders worldwide &bull; {filtered.length} alerts
             </p>
           </div>
-          <div className="flex gap-2">
-            <Link href="/dashboard/new-title-map" className="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all hover:scale-105" style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)", border: "2px solid #C9B29F", textDecoration: "none" }}>
-              View World Map
-            </Link>
+          <Link href="/dashboard/new-title-map" className="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all hover:scale-105" style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)", border: "2px solid #C9B29F", textDecoration: "none" }}>
+            View World Map
+          </Link>
+        </div>
+
+        {/* Filters Row */}
+        <div className="flex flex-wrap items-center gap-3 mb-4">
+          {/* Continent Filters */}
+          <div className="flex gap-2 flex-wrap">
+            <button onClick={() => { setFilter("all"); setPage(1); }} className="px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all" style={{ background: filter === "all" ? "#1C1C1C" : "#FAF7F2", color: filter === "all" ? "#FAF7F2" : "#1C1C1C", border: "2px solid #C9B29F", fontFamily: "var(--font-table)" }}>All</button>
+            <button onClick={() => { setFilter("week"); setPage(1); }} className="px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all" style={{ background: filter === "week" ? "#1C1C1C" : "#FAF7F2", color: filter === "week" ? "#FAF7F2" : "#1C1C1C", border: "2px solid #C9B29F", fontFamily: "var(--font-table)" }}>This Week</button>
+            {continents.map(c => (
+              <button key={c} onClick={() => { setFilter(c); setPage(1); }} className="px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all" style={{ background: filter === c ? "#1C1C1C" : "#FAF7F2", color: filter === c ? "#FAF7F2" : "#1C1C1C", border: "2px solid #C9B29F", fontFamily: "var(--font-table)" }}>{c}</button>
+            ))}
           </div>
         </div>
 
-        {/* Filters */}
-        <div className="flex gap-2 mb-4 flex-wrap">
-          <button onClick={() => setFilter("all")} className="px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all" style={{ background: filter === "all" ? "#1C1C1C" : "#FAF7F2", color: filter === "all" ? "#FAF7F2" : "#1C1C1C", border: "2px solid #C9B29F", fontFamily: "var(--font-table)" }}>All</button>
-          <button onClick={() => setFilter("week")} className="px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all" style={{ background: filter === "week" ? "#1C1C1C" : "#FAF7F2", color: filter === "week" ? "#FAF7F2" : "#1C1C1C", border: "2px solid #C9B29F", fontFamily: "var(--font-table)" }}>This Week</button>
-          {continents.map(c => (
-            <button key={c} onClick={() => setFilter(c)} className="px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all" style={{ background: filter === c ? "#1C1C1C" : "#FAF7F2", color: filter === c ? "#FAF7F2" : "#1C1C1C", border: "2px solid #C9B29F", fontFamily: "var(--font-table)" }}>{c}</button>
-          ))}
+        {/* Search + Sort + View Toggle */}
+        <div className="flex flex-wrap items-center gap-3 mb-4">
+          <div className="flex-1 min-w-[200px]">
+            <input
+              type="text"
+              placeholder="Search by name, breeder, country..."
+              value={search}
+              onChange={e => { setSearch(e.target.value); setPage(1); }}
+              className="w-full rounded-lg px-4 py-2 text-xs outline-none"
+              style={{ background: "#FAF7F2", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }}
+            />
+          </div>
+          <select
+            value={sort}
+            onChange={e => setSort(e.target.value)}
+            className="rounded-lg px-3 py-2 text-xs outline-none"
+            style={{ background: "#FAF7F2", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }}
+          >
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+          </select>
+          <div className="flex rounded-lg overflow-hidden" style={{ border: "2px solid #C9B29F" }}>
+            <button onClick={() => setView("grid")} className="px-3 py-1.5 text-xs font-bold" style={{ background: view === "grid" ? "#1C1C1C" : "#FAF7F2", color: view === "grid" ? "#FAF7F2" : "#1C1C1C", fontFamily: "var(--font-table)" }}>Grid</button>
+            <button onClick={() => setView("table")} className="px-3 py-1.5 text-xs font-bold" style={{ background: view === "table" ? "#1C1C1C" : "#FAF7F2", color: view === "table" ? "#FAF7F2" : "#1C1C1C", fontFamily: "var(--font-table)" }}>Table</button>
+          </div>
         </div>
 
+        {/* Content */}
         {loading ? (
           <div className="flex items-center justify-center py-20">
             <div className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} />
-            <span className="ml-3 text-sm" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Loading...</span>
           </div>
         ) : filtered.length === 0 ? (
           <div className="text-center py-20">
             <img src="/logo.png" alt="Pedigree Platform" className="mx-auto mb-4 opacity-30" style={{ width: "64px", height: "64px" }} />
-            <p className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>No title alerts yet</p>
-            <p className="text-xs mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Dogs published with "Show in Dashboard Alerts" will appear here</p>
+            <p className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>No title alerts</p>
+            <p className="text-xs mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Dogs published with &quot;Show in Dashboard Alerts&quot; will appear here for 30 days</p>
+          </div>
+        ) : view === "table" ? (
+          /* Table View */
+          <div className="rounded-lg overflow-hidden" style={{ border: "2px solid #C9B29F" }}>
+            <table className="w-full text-sm">
+              <thead>
+                <tr style={{ background: "#1C1C1C", borderBottom: "2px solid #C9B29F" }}>
+                  <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-bold" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Dog Name</th>
+                  <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-bold" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Sex</th>
+                  <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-bold hidden md:table-cell" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Breeder</th>
+                  <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-bold hidden md:table-cell" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Country</th>
+                  <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-bold hidden lg:table-cell" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Creator</th>
+                  <th className="text-left px-3 py-2 text-[12px] uppercase tracking-wider font-bold" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {paginated.map(a => {
+                  const displayName = buildDisplayName(a);
+                  const isMale = a.sex?.toUpperCase() === "MALE";
+                  return (
+                    <tr key={a.id} className="transition-colors" style={{ borderBottom: "1px solid #C9B29F", opacity: a.is_read ? 0.7 : 1 }}>
+                      <td className="px-3 py-2">
+                        <Link href={`/pedigree/custom/${a.id}`} onClick={() => markRead(a.id)} className="font-bold hover:underline text-[12px]" style={{ color: getDogColor(displayName), fontFamily: "var(--font-table)" }}>
+                          {displayName}
+                        </Link>
+                      </td>
+                      <td className="px-3 py-2">
+                        <span className="text-xs" style={{ color: isMale ? "#1d5bbf" : "#9f1239" }}>{isMale ? "\u2642" : "\u2640"}</span>
+                      </td>
+                      <td className="px-3 py-2 hidden md:table-cell text-xs" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>{a.breeder || "\u2014"}</td>
+                      <td className="px-3 py-2 hidden md:table-cell text-xs" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>{a.country || a.continent || "\u2014"}</td>
+                      <td className="px-3 py-2 hidden lg:table-cell text-xs" style={{ color: "#1d5bbf", fontFamily: "var(--font-table)" }}>{a.creator_username || "\u2014"}</td>
+                      <td className="px-3 py-2 text-xs" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>{new Date(a.date_posted).toLocaleDateString()}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
         ) : (
+          /* Grid View */
           <div className="space-y-3">
-            {filtered.map(a => (
-              <Link key={a.id} href={`/pedigree/custom/${a.id}`} onClick={() => markRead(a.id)} className="flex items-center gap-4 p-4 rounded-lg transition-all hover:shadow-lg" style={{ background: "#FAF7F2", border: a.is_read ? "2px solid #D6CEBF" : "2px solid #C9B29F", borderRadius: "8px", textDecoration: "none", opacity: a.is_read ? 0.7 : 1 }}>
-                <div className="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0" style={{ border: "2px solid #C9B29F", background: "#FAFAFA" }}>
-                  {a.photo_path ? (
-                    <img src={a.photo_path.startsWith("/") ? a.photo_path : `/uploads/${a.photo_path}`} alt={a.name} className="w-full h-full object-cover" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.padding = "4px"; }} />
-                  ) : (
-                    <img src="/logo.png" alt="Pedigree Platform" className="w-full h-full object-contain opacity-30 p-1" />
-                  )}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm truncate" style={{ color: getDogColor(buildDisplayName(a)), fontFamily: "var(--font-table)", fontWeight: a.is_read ? 400 : 700 }}>{buildDisplayName(a)}</p>
-                  <p className="text-xs mt-0.5" style={{ fontFamily: "var(--font-table)" }}>
-                    <span style={{ color: a.sex === "Male" ? "#1d5bbf" : "#9f1239" }}>{a.sex === "Male" ? "\u2642" : "\u2640"}</span> {a.breeder ? `Breeder: ${a.breeder}` : ""} {a.country ? `\u2022 ${a.country}` : ""} {a.continent ? `(${a.continent})` : ""}
-                  </p>
-                </div>
-                <div className="text-right flex-shrink-0">
-                  <p className="text-xs" style={{ color: a.is_read ? "#999" : "#4A4A4A", fontFamily: "var(--font-mono)" }}>{new Date(a.date_posted).toLocaleDateString()}</p>
-                  {a.country && <p className="text-xs mt-0.5" style={{ color: "#C9B29F", fontFamily: "var(--font-table)" }}>{"\ud83d\udccd"} {a.country}</p>}
-                </div>
-              </Link>
+            {paginated.map(a => {
+              const displayName = buildDisplayName(a);
+              const isMale = a.sex?.toUpperCase() === "MALE";
+              return (
+                <Link key={a.id} href={`/pedigree/custom/${a.id}`} onClick={() => markRead(a.id)} className="flex items-center gap-4 p-4 rounded-lg transition-all hover:shadow-lg" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px", textDecoration: "none", opacity: a.is_read ? 0.7 : 1 }}>
+                  <div className="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0" style={{ border: "2px solid #C9B29F", background: "#FAFAFA" }}>
+                    {a.photo_path ? (
+                      <img src={a.photo_path.startsWith("/") ? a.photo_path : `/uploads/${a.photo_path}`} alt={a.name} className="w-full h-full object-cover" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.padding = "4px"; }} />
+                    ) : (
+                      <img src="/logo.png" alt="Pedigree Platform" className="w-full h-full object-contain opacity-30 p-1" />
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-bold truncate" style={{ color: getDogColor(displayName), fontFamily: "var(--font-table)" }}>{displayName}</p>
+                    <p className="text-xs mt-0.5" style={{ fontFamily: "var(--font-table)" }}>
+                      <span style={{ color: isMale ? "#1d5bbf" : "#9f1239" }}>{isMale ? "\u2642" : "\u2640"}</span>
+                      <span style={{ color: "#4A4A4A" }}> {a.breeder ? `\u2022 Breeder: ${a.breeder}` : ""} {a.country ? `\u2022 ${a.country}` : ""} {a.continent ? `(${a.continent})` : ""}</span>
+                    </p>
+                  </div>
+                  <div className="text-right flex-shrink-0">
+                    <p className="text-xs" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>{new Date(a.date_posted).toLocaleDateString()}</p>
+                    {a.country && <p className="text-xs mt-0.5" style={{ color: "#C9B29F", fontFamily: "var(--font-table)" }}>{"\ud83d\udccd"} {a.country}</p>}
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="flex items-center justify-center gap-2 mt-6">
+            <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1} className="px-3 py-1.5 rounded-lg text-xs font-bold" style={{ background: page === 1 ? "#EDE4D5" : "#1C1C1C", color: page === 1 ? "#4A4A4A" : "#FAF7F2", border: "2px solid #C9B29F", fontFamily: "var(--font-table)", cursor: page === 1 ? "default" : "pointer" }}>{"\u2190"} Prev</button>
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
+              <button key={p} onClick={() => setPage(p)} className="w-8 h-8 rounded-lg text-xs font-bold" style={{ background: page === p ? "#1C1C1C" : "#FAF7F2", color: page === p ? "#FAF7F2" : "#1C1C1C", border: "2px solid #C9B29F", fontFamily: "var(--font-table)" }}>{p}</button>
             ))}
+            <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages} className="px-3 py-1.5 rounded-lg text-xs font-bold" style={{ background: page === totalPages ? "#EDE4D5" : "#1C1C1C", color: page === totalPages ? "#4A4A4A" : "#FAF7F2", border: "2px solid #C9B29F", fontFamily: "var(--font-table)", cursor: page === totalPages ? "default" : "pointer" }}>Next {"\u2192"}</button>
           </div>
         )}
       </div>

@@ -22,7 +22,7 @@ cur.execute("""
   FROM published_pedigrees p
   LEFT JOIN users u ON p.user_id = u.id
   LEFT JOIN title_alert_reads r ON r.alert_id = p.id AND r.user_id = ${userId}
-  WHERE p.show_in_title_feed = 1
+  WHERE p.show_in_title_feed = 1 AND p.last_modified >= datetime('now', '-30 days')
   ORDER BY p.date_posted DESC
   LIMIT 100
 """)

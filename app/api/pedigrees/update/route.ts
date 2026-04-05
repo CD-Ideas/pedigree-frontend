@@ -100,6 +100,9 @@ cur.execute("""
   ${pedId}, ${userId}
 ))
 db.commit()
+if ${showInTitleFeed} == 1:
+    cur.execute("DELETE FROM title_alert_reads WHERE alert_id = ?", (${pedId},))
+    db.commit()
 print(json.dumps({"success": True, "id": ${pedId}}))
 db.close()
 `;
