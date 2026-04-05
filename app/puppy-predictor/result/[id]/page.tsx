@@ -122,7 +122,7 @@ export default function PredictionResultPage() {
         {/* Header */}
         <div className="text-center space-y-2">
           <h1 style={{
-            fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "2rem",
+            fontFamily: "var(--font-table)", fontWeight: 900, fontSize: "2rem",
             color: "#1C1C1C",
             
           }}>

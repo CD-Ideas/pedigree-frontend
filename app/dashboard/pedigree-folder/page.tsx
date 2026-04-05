@@ -254,7 +254,7 @@ export default function PedigreeFolderPage() {
                     </div>
                     {/* Image */}
                     <div style={{ overflow: "auto", flex: 1, background: "#FAFAFA", padding: "12px" }}>
-                      <img src={v.image_path} alt={v.dog_name} style={{ width: "100%", objectFit: "contain" }} />
+                      <img src={v.image_path} alt={v.dog_name} style={{ width: "100%", objectFit: "contain" }} onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "20px"; }} />
                     </div>
                     {/* Footer buttons */}
                     <div style={{ padding: "12px 16px", borderTop: "2px solid #C9B29F", display: "flex", gap: "8px", flexShrink: 0 }}>

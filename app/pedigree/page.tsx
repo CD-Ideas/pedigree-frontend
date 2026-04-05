@@ -128,7 +128,7 @@ export default function PedigreeHub() {
             <img src={LOGO} alt="Logo" className="w-28" style={{ height: "auto" }} />
           </div>
           <h1 style={{
-            fontFamily: "var(--font-table)", fontSize: "clamp(1.8rem, 5vw, 3rem)", fontWeight: 700,
+            fontFamily: "var(--font-table)", fontSize: "clamp(1.8rem, 5vw, 3rem)", fontWeight: 900,
             lineHeight: 1.1, color: "#1C1C1C",
           }}>
             Pedigree <span style={{ color: "#C9B29F" }}>Hub</span>

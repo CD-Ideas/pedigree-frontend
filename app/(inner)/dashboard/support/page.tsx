@@ -134,7 +134,7 @@ export default function SupportPage() {
         <div>
           <h1 style={{
             fontFamily: "var(--font-table)",
-            fontWeight: 700,
+            fontWeight: 900,
             fontSize: "1.6rem",
             color: "#1C1C1C",
             

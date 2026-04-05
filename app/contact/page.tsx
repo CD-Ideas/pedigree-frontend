@@ -72,7 +72,7 @@ export default function ContactPage() {
       {/* Header */}
       <div className="text-center mb-8">
         <h1
-          className="text-2xl font-bold mb-2"
+          className="text-2xl font-black mb-2"
           style={{
             fontFamily: "var(--font-table)",
             color: "#1C1C1C",

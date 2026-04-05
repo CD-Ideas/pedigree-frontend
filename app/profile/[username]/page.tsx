@@ -263,7 +263,7 @@ export default function ProfilePage() {
             {/* Username + Role + Message */}
             <div className="flex items-center gap-3 flex-wrap">
               <h1
-                className="text-xl font-bold"
+                className="text-xl font-black"
                 style={{
                   color: "#1C1C1C",
                   fontFamily: "var(--font-table)",
