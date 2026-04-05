@@ -51,6 +51,7 @@ export default function Dashboard() {
   const [user, setUser] = useState<UserData | null>(null);
   const [alerts, setAlerts] = useState<TitleAlert[]>([]);
   const [unreadMessages, setUnreadMessages] = useState(0);
+  const [titleAlertCount, setTitleAlertCount] = useState(0);
   const [searchQ, setSearchQ] = useState("");
   const [searchResults, setSearchResults] = useState<{ dog_id: number; registered_name: string }[]>([]);
   const [showSearch, setShowSearch] = useState(false);
@@ -87,6 +88,21 @@ export default function Dashboard() {
       })
       .catch(() => {});
 
+  }, []);
+
+  useEffect(() => {
+    let userId = 0;
+    try { const u = JSON.parse(localStorage.getItem("user") || "{}"); userId = u?.id || 0; } catch {}
+    if (!userId) return;
+    fetch(`/api/title-alerts?userId=${userId}`)
+      .then(r => r.ok ? r.json() : { unread_count: 0 })
+      .then(d => {
+        setTitleAlertCount(d.unread_count || 0);
+        if (d.unread_count > 0 && (window as any).__playTitleChime) {
+          (window as any).__playTitleChime();
+        }
+      })
+      .catch(() => {});
   }, []);
 
   const handleAvatarSelect = async (emoji: string) => {
@@ -295,6 +311,11 @@ export default function Dashboard() {
                     style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                     {tool.label}
                   </span>
+                  {tool.label === "New Title Alerts" && titleAlertCount > 0 && (
+                    <span style={{ background: "#ef4444", color: "#fff", fontSize: "10px", fontWeight: 700, borderRadius: "50%", width: 18, height: 18, display: "inline-flex", alignItems: "center", justifyContent: "center", marginLeft: 4 }}>
+                      {titleAlertCount}
+                    </span>
+                  )}
                   <span className="dash-arrow ml-auto text-xs transition-all" style={{ color: "#4A4A4A" }}>→</span>
                 </Link>
               ))}

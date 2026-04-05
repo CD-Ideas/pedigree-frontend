@@ -43,6 +43,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <script src="/save-pedigree.js" defer></script>
+        <script src="/notification-chime.js" defer></script>
       </head>
       <body className="antialiased">
         <NavBar />

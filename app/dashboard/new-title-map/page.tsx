@@ -17,6 +17,7 @@ interface TitleAlert {
   sex: string;
   date_posted: string;
   photo_path: string;
+  is_read: number;
 }
 
 const COUNTRY_COORDS: Record<string, [number, number]> = {
@@ -57,11 +58,37 @@ export default function NewTitleMapPage() {
   const [selected, setSelected] = useState<TitleAlert | null>(null);
 
   useEffect(() => {
-    fetch("/api/title-alerts")
+    let userId = 0;
+    try { const u = JSON.parse(localStorage.getItem("user") || "{}"); userId = u?.id || 0; } catch {}
+    fetch(`/api/title-alerts?userId=${userId}`)
       .then(r => r.ok ? r.json() : { alerts: [] })
       .then(d => { setAlerts(d.alerts || []); setLoading(false); })
       .catch(() => setLoading(false));
   }, []);
+
+  const markRead = async (alertId: number) => {
+    let userId = 0;
+    try { const u = JSON.parse(localStorage.getItem("user") || "{}"); userId = u?.id || 0; } catch {}
+    if (!userId) return;
+    await fetch("/api/title-alerts/read", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId, alertId }),
+    });
+    setAlerts(prev => prev.map(a => a.id === alertId ? { ...a, is_read: 1 } : a));
+  };
+
+  const markAllRead = async () => {
+    let userId = 0;
+    try { const u = JSON.parse(localStorage.getItem("user") || "{}"); userId = u?.id || 0; } catch {}
+    if (!userId) return;
+    await fetch("/api/title-alerts/read", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId, readAll: true }),
+    });
+    setAlerts(prev => prev.map(a => ({ ...a, is_read: 1 })));
+  };
 
   const getCoords = (a: TitleAlert): [number, number] | null => {
     if (a.country && COUNTRY_COORDS[a.country]) return COUNTRY_COORDS[a.country];
@@ -151,10 +178,15 @@ export default function NewTitleMapPage() {
 
           {/* Sidebar */}
           <div className="w-72 flex-shrink-0 rounded-lg overflow-hidden" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px", maxHeight: "600px" }}>
-            <div style={{ background: "#1C1C1C", padding: "12px 16px" }}>
+            <div style={{ background: "#1C1C1C", padding: "12px 16px" }} className="flex items-center justify-between">
               <p className="text-xs font-bold uppercase tracking-widest" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>
                 {selected ? "Dog Details" : `All Alerts (${alerts.length})`}
               </p>
+              {!selected && alerts.some(a => !a.is_read) && (
+                <button onClick={markAllRead} className="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded transition-all hover:opacity-80" style={{ background: "#C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)", border: "none", cursor: "pointer" }}>
+                  Mark all read
+                </button>
+              )}
             </div>
             <div style={{ overflow: "auto", maxHeight: "550px" }}>
               {selected ? (
@@ -180,9 +212,9 @@ export default function NewTitleMapPage() {
               ) : (
                 <div>
                   {alerts.map(a => (
-                    <div key={a.id} onClick={() => setSelected(a)} className="p-3 transition-colors hover:bg-black/5 cursor-pointer" style={{ borderBottom: "1px solid #EDE4D5" }}>
-                      <p className="text-xs font-bold truncate" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{a.name}</p>
-                      <p className="text-xs mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                    <div key={a.id} onClick={() => { markRead(a.id); setSelected(a); }} className="p-3 transition-colors hover:bg-black/5 cursor-pointer" style={{ borderBottom: "1px solid #EDE4D5", opacity: a.is_read ? 0.6 : 1 }}>
+                      <p className="text-xs truncate" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", fontWeight: a.is_read ? 400 : 700 }}>{a.name}</p>
+                      <p className="text-xs mt-0.5" style={{ color: a.is_read ? "#999" : "#4A4A4A", fontFamily: "var(--font-table)" }}>
                         {a.country ? `📍 ${a.country}` : a.continent || "Unknown"}
                       </p>
                     </div>
