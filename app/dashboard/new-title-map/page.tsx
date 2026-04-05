@@ -25,33 +25,92 @@ interface TitleAlert {
 }
 
 const COUNTRY_COORDS: Record<string, [number, number]> = {
+  // North America
   "United States": [-98, 39], "USA": [-98, 39], "Canada": [-106, 56], "Mexico": [-102, 23],
+  // Central America
+  "Guatemala": [-90.2, 15.8], "Belize": [-88.5, 17.2], "Honduras": [-86.2, 14.1],
+  "El Salvador": [-88.9, 13.8], "Nicaragua": [-85.2, 12.9], "Costa Rica": [-84, 10], "Panama": [-80, 9],
+  // Caribbean
+  "Cuba": [-79, 22], "Jamaica": [-77.3, 18.1], "Haiti": [-72.3, 19], "Dominican Republic": [-70, 19],
+  "Puerto Rico": [-66, 18], "Trinidad and Tobago": [-61.2, 10.5], "Barbados": [-59.5, 13.2],
+  "Bahamas": [-77.4, 25], "Grenada": [-61.7, 12.1], "Antigua and Barbuda": [-61.8, 17.1],
+  "Saint Lucia": [-61, 13.9], "Saint Vincent and the Grenadines": [-61.2, 13.2],
+  "Dominica": [-61.4, 15.4], "Saint Kitts and Nevis": [-62.7, 17.3],
+  "Curacao": [-69, 12.2], "Aruba": [-70, 12.5], "Cayman Islands": [-81.2, 19.3],
+  "Turks and Caicos": [-71.8, 21.8], "Bermuda": [-64.8, 32.3],
+  // South America
   "Brazil": [-51, -14], "Argentina": [-64, -34], "Colombia": [-74, 4], "Chile": [-71, -35],
   "Peru": [-76, -10], "Venezuela": [-66, 7], "Ecuador": [-78, -2], "Bolivia": [-65, -17],
-  "Paraguay": [-58, -23], "Uruguay": [-56, -33], "Cuba": [-79, 22], "Dominican Republic": [-70, 19],
-  "Puerto Rico": [-66, 18], "Costa Rica": [-84, 10], "Panama": [-80, 9],
-  "Grenada": [-61.7, 12.1], "Jamaica": [-77.3, 18.1], "Trinidad and Tobago": [-61.2, 10.5],
-  "Barbados": [-59.5, 13.2], "Bahamas": [-77.4, 25], "Haiti": [-72.3, 19],
-  "Honduras": [-86.2, 14.1], "Guatemala": [-90.2, 15.8], "El Salvador": [-88.9, 13.8],
-  "Nicaragua": [-85.2, 12.9], "Belize": [-88.5, 17.2],
-  "United Kingdom": [-3, 54], "UK": [-3, 54], "England": [-1, 52],
-  "Germany": [10, 51], "France": [2, 47], "Spain": [-4, 40], "Italy": [12, 43],
-  "Netherlands": [5, 52], "Belgium": [4, 51], "Portugal": [-8, 39],
-  "Poland": [20, 52], "Romania": [25, 46], "Hungary": [19, 47],
-  "Russia": [105, 62], "Turkey": [35, 39], "Greece": [22, 39],
-  "Ireland": [-8, 53], "Sweden": [18, 62], "Norway": [8, 62],
-  "Denmark": [10, 56], "Finland": [26, 64], "Switzerland": [8, 47],
-  "Austria": [14, 48], "Czech Republic": [15, 50], "Croatia": [16, 45],
-  "Serbia": [21, 44], "Bulgaria": [25, 43],
-  "Philippines": [122, 13], "Japan": [138, 36], "China": [105, 35],
-  "South Korea": [128, 36], "India": [79, 21], "Thailand": [101, 15],
-  "Indonesia": [120, -5], "Vietnam": [108, 16], "Malaysia": [102, 4],
-  "Australia": [134, -25], "New Zealand": [174, -41],
-  "South Africa": [25, -29], "Nigeria": [8, 10], "Kenya": [38, 0],
-  "Egypt": [30, 27], "Morocco": [-6, 32], "Tanzania": [35, -6],
-  "Ghana": [-2, 8], "Ethiopia": [40, 9],
-  "Saudi Arabia": [45, 24], "UAE": [54, 24], "Iran": [53, 33],
-  "Israel": [35, 31], "Iraq": [44, 33],
+  "Paraguay": [-58, -23], "Uruguay": [-56, -33], "Guyana": [-59, 5], "Suriname": [-56, 4],
+  "French Guiana": [-53, 4],
+  // Western Europe
+  "United Kingdom": [-3, 54], "UK": [-3, 54], "England": [-1, 52], "Scotland": [-4, 57],
+  "Wales": [-3.5, 52.5], "Ireland": [-8, 53], "France": [2, 47], "Spain": [-4, 40],
+  "Portugal": [-8, 39], "Italy": [12, 43], "Germany": [10, 51], "Netherlands": [5, 52],
+  "Belgium": [4, 51], "Switzerland": [8, 47], "Austria": [14, 48], "Luxembourg": [6.1, 49.8],
+  "Monaco": [7.4, 43.7], "Andorra": [1.5, 42.5], "Liechtenstein": [9.5, 47.2],
+  // Northern Europe
+  "Sweden": [18, 62], "Norway": [8, 62], "Denmark": [10, 56], "Finland": [26, 64],
+  "Iceland": [-19, 65],
+  // Eastern Europe
+  "Poland": [20, 52], "Czech Republic": [15, 50], "Czechia": [15, 50], "Slovakia": [19.5, 48.7],
+  "Hungary": [19, 47], "Romania": [25, 46], "Bulgaria": [25, 43], "Croatia": [16, 45],
+  "Serbia": [21, 44], "Bosnia and Herzegovina": [17.8, 44], "Slovenia": [15, 46],
+  "North Macedonia": [21.7, 41.5], "Macedonia": [21.7, 41.5], "Albania": [20, 41],
+  "Montenegro": [19.3, 42.7], "Kosovo": [21, 42.6], "Moldova": [28.8, 47],
+  "Ukraine": [32, 49], "Belarus": [28, 53], "Lithuania": [24, 55.2], "Latvia": [24.6, 57],
+  "Estonia": [25, 59], "Russia": [105, 62],
+  // Southern Europe
+  "Greece": [22, 39], "Turkey": [35, 39], "Cyprus": [33, 35], "Malta": [14.4, 35.9],
+  // Middle East
+  "Saudi Arabia": [45, 24], "UAE": [54, 24], "United Arab Emirates": [54, 24],
+  "Qatar": [51.2, 25.3], "Bahrain": [50.5, 26], "Kuwait": [47.5, 29.3], "Oman": [57, 21],
+  "Yemen": [48, 15.5], "Iran": [53, 33], "Iraq": [44, 33], "Israel": [35, 31],
+  "Palestine": [35.2, 31.9], "Jordan": [36, 31], "Lebanon": [35.8, 33.9], "Syria": [38, 35],
+  // Central Asia
+  "Kazakhstan": [67, 48], "Uzbekistan": [64, 41], "Turkmenistan": [59, 39],
+  "Kyrgyzstan": [75, 41], "Tajikistan": [69, 39], "Afghanistan": [67, 33],
+  // South Asia
+  "India": [79, 21], "Pakistan": [69, 30], "Bangladesh": [90, 24], "Sri Lanka": [81, 7],
+  "Nepal": [84, 28], "Bhutan": [90.4, 27.5], "Maldives": [73, 3.2],
+  // East Asia
+  "China": [105, 35], "Japan": [138, 36], "South Korea": [128, 36], "North Korea": [127, 40],
+  "Mongolia": [105, 47], "Taiwan": [121, 24],
+  // Southeast Asia
+  "Philippines": [122, 13], "Thailand": [101, 15], "Vietnam": [108, 16],
+  "Indonesia": [120, -5], "Malaysia": [102, 4], "Singapore": [104, 1.3],
+  "Myanmar": [96, 20], "Burma": [96, 20], "Cambodia": [105, 13], "Laos": [103, 18],
+  "Brunei": [115, 4.5], "Timor-Leste": [126, -8.5], "East Timor": [126, -8.5],
+  // Oceania
+  "Australia": [134, -25], "New Zealand": [174, -41], "Papua New Guinea": [147, -6],
+  "Fiji": [178, -18], "Samoa": [-172, -14], "Tonga": [-175, -21],
+  "Solomon Islands": [160, -9], "Vanuatu": [167, -16],
+  // North Africa
+  "Egypt": [30, 27], "Morocco": [-6, 32], "Algeria": [3, 28], "Tunisia": [9, 34],
+  "Libya": [17, 27],
+  // West Africa
+  "Nigeria": [8, 10], "Ghana": [-2, 8], "Senegal": [-14, 14], "Mali": [-4, 17],
+  "Ivory Coast": [-5.5, 7.5], "Cote d'Ivoire": [-5.5, 7.5], "Burkina Faso": [-2, 12],
+  "Niger": [8, 16], "Guinea": [-12, 11], "Sierra Leone": [-12, 8.5],
+  "Liberia": [-10, 6.4], "Togo": [1.2, 8.6], "Benin": [2.3, 9.3],
+  "Mauritania": [-10, 20], "Gambia": [-16.6, 13.4], "Guinea-Bissau": [-15, 12],
+  "Cape Verde": [-24, 16],
+  // East Africa
+  "Kenya": [38, 0], "Tanzania": [35, -6], "Ethiopia": [40, 9], "Uganda": [32, 1],
+  "Rwanda": [30, -2], "Burundi": [30, -3.5], "Somalia": [46, 6], "Eritrea": [39, 15.3],
+  "Djibouti": [43, 11.5], "South Sudan": [32, 7], "Sudan": [30, 15],
+  // Central Africa
+  "Congo": [15, -4], "Democratic Republic of Congo": [22, -4], "DRC": [22, -4],
+  "Cameroon": [12, 6], "Central African Republic": [21, 7], "Chad": [19, 15],
+  "Gabon": [11.5, -0.8], "Equatorial Guinea": [10, 2], "Republic of the Congo": [15, -4],
+  // Southern Africa
+  "South Africa": [25, -29], "Zimbabwe": [30, -20], "Mozambique": [35, -18],
+  "Zambia": [28, -15], "Malawi": [34, -14], "Botswana": [24, -22],
+  "Namibia": [17, -22], "Angola": [18, -12], "Madagascar": [47, -19],
+  "Mauritius": [57.5, -20.3], "Eswatini": [31.5, -26.5], "Swaziland": [31.5, -26.5],
+  "Lesotho": [28.2, -29.6],
+  // Georgia, Armenia, Azerbaijan
+  "Georgia": [44, 42], "Armenia": [45, 40], "Azerbaijan": [50, 40.5],
 };
 
 const CONTINENT_COORDS: Record<string, [number, number]> = {
@@ -130,33 +189,15 @@ export default function NewTitleMapPage() {
     return n;
   };
 
-  // Build country color map for filling countries
-  const countryColors: Record<string, string> = {};
-  alerts.forEach(a => {
-    if (a.country) {
-      countryColors[a.country.toUpperCase()] = getDogColor(buildName(a));
-    }
-  });
-
-  const getCountryFill = (geoName: string): string => {
-    const upper = (geoName || "").toUpperCase();
-    // Check exact match and common variations
-    if (countryColors[upper]) return countryColors[upper];
-    // Check partial matches for country name variations
-    for (const [key, color] of Object.entries(countryColors)) {
-      if (upper.includes(key) || key.includes(upper)) return color;
-    }
-    return "#EDE4D5";
-  };
-
-  const pinGroups: Record<string, { coords: [number, number]; alerts: TitleAlert[] }> = {};
-  alerts.forEach(a => {
+  // Each alert gets its own pin (no grouping)
+  const alertsWithCoords = alerts.map((a, i) => {
     const coords = getCoords(a);
-    if (!coords) return;
-    const key = coords.join(",");
-    if (!pinGroups[key]) pinGroups[key] = { coords, alerts: [] };
-    pinGroups[key].alerts.push(a);
-  });
+    if (!coords) return null;
+    // Add small offset if multiple dogs in same area to prevent overlap
+    const offset = i * 0.8;
+    const adjustedCoords: [number, number] = [coords[0] + (i % 3 - 1) * offset * 0.5, coords[1] + (Math.floor(i / 3) % 3 - 1) * offset * 0.3];
+    return { alert: a, coords: adjustedCoords };
+  }).filter(Boolean) as { alert: TitleAlert; coords: [number, number] }[];
 
   return (
     <div className="min-h-screen" style={{ background: "#EDE4D5" }}>
@@ -215,21 +256,16 @@ export default function NewTitleMapPage() {
                     }
                   </Geographies>
 
-                  {Object.values(pinGroups).map((group, i) => (
-                    <Marker key={i} coordinates={group.coords}>
+                  {alertsWithCoords.map((item, i) => (
+                    <Marker key={i} coordinates={item.coords}>
                       <circle
-                        r={group.alerts.length > 1 ? 8 : 6}
-                        fill={getDogColor(buildName(group.alerts[0]))}
+                        r={6}
+                        fill={getDogColor(buildName(item.alert))}
                         stroke="#fff"
                         strokeWidth={2}
                         style={{ cursor: "pointer" }}
-                        onClick={() => { markRead(group.alerts[0].id); setSelected(group.alerts[0]); }}
+                        onClick={() => { markRead(item.alert.id); setSelected(item.alert); }}
                       />
-                      {group.alerts.length > 1 && (
-                        <text textAnchor="middle" y={3} style={{ fontSize: 7, fill: "#fff", fontWeight: 700, pointerEvents: "none" }}>
-                          {group.alerts.length}
-                        </text>
-                      )}
                     </Marker>
                   ))}
                 </ZoomableGroup>
