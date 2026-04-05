@@ -155,10 +155,9 @@ export default function NewTitleMapPage() {
                 <ZoomableGroup
                   zoom={zoom}
                   center={center}
-                  onMoveEnd={({ zoom: z }) => { setZoom(z); }}
+                  onMoveEnd={({ coordinates, zoom: z }) => { setCenter(coordinates); setZoom(z); }}
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  filterZoomEvent={() => false}
-                  translateExtent={[[0, 0], [0, 0]]}
+                  filterZoomEvent={(evt: any) => evt?.type !== "wheel"}
                 >
                   <Geographies geography={GEO_URL}>
                     {({ geographies }) =>
