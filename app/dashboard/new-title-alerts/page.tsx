@@ -72,8 +72,8 @@ export default function NewTitleAlertsPage() {
     let name = a.name;
     if (a.prefix && a.prefix !== "None") name = a.prefix + " " + name;
     const parts = [];
-    if (a.suffix_wins && a.suffix_wins !== "0") parts.push(a.suffix_wins + "XW");
-    if (a.suffix_losses && a.suffix_losses !== "0") parts.push(a.suffix_losses + "XL");
+    if (a.suffix_wins && a.suffix_wins !== "0") parts.push(a.suffix_wins);
+    if (a.suffix_losses && a.suffix_losses !== "0") parts.push(a.suffix_losses);
     if (parts.length > 0) name += " " + parts.join(" ");
     return name;
   };

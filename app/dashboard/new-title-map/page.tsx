@@ -118,7 +118,7 @@ export default function NewTitleMapPage() {
   const buildName = (a: TitleAlert) => {
     let n = a.name;
     if (a.prefix && a.prefix !== "None") n = a.prefix + " " + n;
-    if (a.suffix_wins && a.suffix_wins !== "0" && a.suffix_wins !== "") n += " " + a.suffix_wins + "XW";
+    if (a.suffix_wins && a.suffix_wins !== "0" && a.suffix_wins !== "") n += " " + a.suffix_wins;
     return n;
   };
 
