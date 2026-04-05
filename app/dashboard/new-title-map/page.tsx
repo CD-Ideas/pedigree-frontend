@@ -62,7 +62,7 @@ export default function NewTitleMapPage() {
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<TitleAlert | null>(null);
   const [zoom, setZoom] = useState(1);
-  const [center, setCenter] = useState<[number, number]>([0, 0]);
+  const [center, setCenter] = useState<[number, number]>([15, 5]);
 
   useEffect(() => {
     let userId = 0;
@@ -176,7 +176,7 @@ export default function NewTitleMapPage() {
               </div>
             ) : (
               <ComposableMap
-                projectionConfig={{ scale: 140, center: [0, 0] }}
+                projectionConfig={{ scale: 140, center: [15, 5] }}
                 style={{ width: "100%", height: "auto", background: "#FAFAFA" }}
               >
                 <ZoomableGroup
@@ -237,7 +237,7 @@ export default function NewTitleMapPage() {
                 style={{ width: 32, height: 32, borderRadius: 8, border: "2px solid #C9B29F", background: "#1C1C1C", color: "#FAF7F2", fontSize: 16, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}
               >−</button>
               <button
-                onClick={() => { setZoom(1); setCenter([0, 0]); }}
+                onClick={() => { setZoom(1); setCenter([15, 5]); }}
                 style={{ width: 32, height: 32, borderRadius: 8, border: "2px solid #C9B29F", background: "#FAF7F2", color: "#1C1C1C", fontSize: 10, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-table)" }}
               >↺</button>
             </div>
