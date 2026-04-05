@@ -12,6 +12,9 @@ interface TitleAlert {
   name: string;
   prefix: string;
   suffix_wins: string;
+  suffix_losses: string;
+  suffix_draws: string;
+  suffix_honors: string;
   breeder: string;
   country: string;
   continent: string;
@@ -118,7 +121,12 @@ export default function NewTitleMapPage() {
   const buildName = (a: TitleAlert) => {
     let n = a.name;
     if (a.prefix && a.prefix !== "None") n = a.prefix + " " + n;
-    if (a.suffix_wins && a.suffix_wins !== "0" && a.suffix_wins !== "") n += " " + a.suffix_wins;
+    const parts: string[] = [];
+    if (a.suffix_wins && a.suffix_wins !== "0" && a.suffix_wins !== "") parts.push(a.suffix_wins);
+    if (a.suffix_losses && a.suffix_losses !== "0" && a.suffix_losses !== "") parts.push(a.suffix_losses);
+    if (a.suffix_draws && a.suffix_draws !== "0" && a.suffix_draws !== "") parts.push(a.suffix_draws);
+    if (a.suffix_honors && a.suffix_honors !== "0" && a.suffix_honors !== "") parts.push(a.suffix_honors);
+    if (parts.length > 0) n += " " + parts.join(" ");
     return n;
   };
 
