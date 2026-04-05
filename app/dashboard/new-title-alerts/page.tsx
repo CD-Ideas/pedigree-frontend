@@ -258,30 +258,38 @@ export default function NewTitleAlertsPage() {
             </table>
           </div>
         ) : (
-          /* Grid View */
-          <div className="space-y-3">
+          /* Grid View - Compact Cards */
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
             {paginated.map(a => {
               const displayName = buildDisplayName(a);
               const isMale = a.sex?.toUpperCase() === "MALE";
               return (
-                <Link key={a.id} href={`/pedigree/custom/${a.id}`} onClick={() => markRead(a.id)} className="flex items-center gap-4 p-4 rounded-lg transition-all hover:shadow-lg" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px", textDecoration: "none", opacity: a.is_read ? 0.7 : 1 }}>
-                  <div className="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0" style={{ border: "2px solid #C9B29F", background: "#FAFAFA" }}>
-                    {a.photo_path ? (
-                      <img src={a.photo_path.startsWith("/") ? a.photo_path : `/uploads/${a.photo_path}`} alt={a.name} className="w-full h-full object-cover" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.padding = "4px"; }} />
-                    ) : (
-                      <img src="/logo.png" alt="Pedigree Platform" className="w-full h-full object-contain opacity-30 p-1" />
+                <Link key={a.id} href={`/pedigree/custom/${a.id}`} onClick={() => markRead(a.id)} className="rounded-lg overflow-hidden transition-all hover:shadow-lg" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px", textDecoration: "none", opacity: a.is_read ? 0.7 : 1 }}>
+                  {/* Creator badge */}
+                  <div className="px-2 pt-2 pb-1 flex items-center justify-between">
+                    {a.creator_username && (
+                      <span className="text-[12px] font-bold" style={{ color: "#1d5bbf", fontFamily: "var(--font-table)" }}>{a.creator_username}</span>
+                    )}
+                    <span className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>{new Date(a.date_posted).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</span>
+                  </div>
+                  {/* Dog Name */}
+                  <div className="px-2 pb-1">
+                    <p className="text-sm font-bold truncate" style={{ color: getDogColor(displayName), fontFamily: "var(--font-table)" }}>{displayName}</p>
+                    <span className="text-[12px]" style={{ color: isMale ? "#1d5bbf" : "#9f1239" }}>{isMale ? "♂" : "♀"}</span>
+                    {a.country && <span className="text-[12px] ml-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>· {a.country}</span>}
+                  </div>
+                  {/* Breeder/Owner */}
+                  <div className="px-2 pb-2 flex flex-wrap gap-1">
+                    {a.breeder && (
+                      <span className="text-[12px] px-1.5 py-0.5 rounded-full" style={{ background: "rgba(201,178,159,0.2)", color: "#4A4A4A", fontFamily: "var(--font-table)" }}>B: {a.breeder}</span>
+                    )}
+                    {a.owner && (
+                      <span className="text-[12px] px-1.5 py-0.5 rounded-full" style={{ background: "rgba(201,178,159,0.2)", color: "#4A4A4A", fontFamily: "var(--font-table)" }}>O: {a.owner}</span>
                     )}
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-bold truncate" style={{ color: getDogColor(displayName), fontFamily: "var(--font-table)" }}>{displayName}</p>
-                    <p className="text-xs mt-0.5" style={{ fontFamily: "var(--font-table)" }}>
-                      <span style={{ color: isMale ? "#1d5bbf" : "#9f1239" }}>{isMale ? "\u2642" : "\u2640"}</span>
-                      <span style={{ color: "#4A4A4A" }}> {a.breeder ? `\u2022 Breeder: ${a.breeder}` : ""} {a.country ? `\u2022 ${a.country}` : ""} {a.continent ? `(${a.continent})` : ""}</span>
-                    </p>
-                  </div>
-                  <div className="text-right flex-shrink-0">
-                    <p className="text-xs" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>{new Date(a.date_posted).toLocaleDateString()}</p>
-                    {a.country && <p className="text-xs mt-0.5" style={{ color: "#C9B29F", fontFamily: "var(--font-table)" }}>{"\ud83d\udccd"} {a.country}</p>}
+                  {/* View Pedigree */}
+                  <div className="px-2 pb-2">
+                    <span className="text-[12px] font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", border: "1px solid #C9B29F", borderRadius: "6px", padding: "3px 8px" }}>View Pedigree</span>
                   </div>
                 </Link>
               );
