@@ -264,7 +264,7 @@ export default function NewTitleAlertsPage() {
               const displayName = buildDisplayName(a);
               const isMale = a.sex?.toUpperCase() === "MALE";
               return (
-                <Link key={a.id} href={`/pedigree/custom/${a.id}`} onClick={() => markRead(a.id)} className="rounded-lg overflow-hidden transition-all hover:shadow-lg" style={{ background: "#FAF7F2", border: a.is_read ? "2px solid #EDE4D5" : "2px solid #C9B29F", borderRadius: "8px", textDecoration: "none" }}>
+                <Link key={a.id} href={`/pedigree/custom/${a.id}`} onClick={() => markRead(a.id)} className="rounded-lg overflow-hidden transition-all hover:shadow-lg" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px", textDecoration: "none" }}>
                   {/* Creator badge */}
                   <div className="px-2 pt-2 pb-1 flex items-center justify-between">
                     {a.creator_username && (
