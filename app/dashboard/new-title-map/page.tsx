@@ -26,6 +26,10 @@ const COUNTRY_COORDS: Record<string, [number, number]> = {
   "Peru": [-76, -10], "Venezuela": [-66, 7], "Ecuador": [-78, -2], "Bolivia": [-65, -17],
   "Paraguay": [-58, -23], "Uruguay": [-56, -33], "Cuba": [-79, 22], "Dominican Republic": [-70, 19],
   "Puerto Rico": [-66, 18], "Costa Rica": [-84, 10], "Panama": [-80, 9],
+  "Grenada": [-61.7, 12.1], "Jamaica": [-77.3, 18.1], "Trinidad and Tobago": [-61.2, 10.5],
+  "Barbados": [-59.5, 13.2], "Bahamas": [-77.4, 25], "Haiti": [-72.3, 19],
+  "Honduras": [-86.2, 14.1], "Guatemala": [-90.2, 15.8], "El Salvador": [-88.9, 13.8],
+  "Nicaragua": [-85.2, 12.9], "Belize": [-88.5, 17.2],
   "United Kingdom": [-3, 54], "UK": [-3, 54], "England": [-1, 52],
   "Germany": [10, 51], "France": [2, 47], "Spain": [-4, 40], "Italy": [12, 43],
   "Netherlands": [5, 52], "Belgium": [4, 51], "Portugal": [-8, 39],
@@ -91,8 +95,20 @@ export default function NewTitleMapPage() {
   };
 
   const getCoords = (a: TitleAlert): [number, number] | null => {
-    if (a.country && COUNTRY_COORDS[a.country]) return COUNTRY_COORDS[a.country];
-    if (a.continent && CONTINENT_COORDS[a.continent]) return CONTINENT_COORDS[a.continent];
+    // Case-insensitive country lookup
+    if (a.country) {
+      const countryUpper = a.country.toUpperCase();
+      for (const [key, val] of Object.entries(COUNTRY_COORDS)) {
+        if (key.toUpperCase() === countryUpper) return val;
+      }
+    }
+    // Case-insensitive continent fallback
+    if (a.continent) {
+      const contUpper = a.continent.toUpperCase();
+      for (const [key, val] of Object.entries(CONTINENT_COORDS)) {
+        if (key.toUpperCase() === contUpper) return val;
+      }
+    }
     return null;
   };
 
@@ -122,9 +138,9 @@ export default function NewTitleMapPage() {
           </Link>
         </div>
 
-        <div className="relative">
+        <div className="relative" style={{ width: "100%" }}>
           {/* Map */}
-          <div className="rounded-lg overflow-hidden" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px" }}>
+          <div className="rounded-lg overflow-hidden" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px", width: "100%" }}>
             {loading ? (
               <div className="flex items-center justify-center py-40">
                 <div className="w-5 h-5 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} />
@@ -157,10 +173,10 @@ export default function NewTitleMapPage() {
                   {Object.values(pinGroups).map((group, i) => (
                     <Marker key={i} coordinates={group.coords}>
                       <circle
-                        r={group.alerts.length > 1 ? 6 : 4}
+                        r={group.alerts.length > 1 ? 8 : 6}
                         fill="#ef4444"
                         stroke="#fff"
-                        strokeWidth={1.5}
+                        strokeWidth={2}
                         style={{ cursor: "pointer" }}
                         onClick={() => { markRead(group.alerts[0].id); setSelected(group.alerts[0]); }}
                       />
