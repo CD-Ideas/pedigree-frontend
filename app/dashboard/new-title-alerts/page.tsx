@@ -238,7 +238,7 @@ export default function NewTitleAlertsPage() {
                   const displayName = buildDisplayName(a);
                   const isMale = a.sex?.toUpperCase() === "MALE";
                   return (
-                    <tr key={a.id} className="transition-colors" style={{ borderBottom: "1px solid #C9B29F", opacity: a.is_read ? 0.7 : 1 }}>
+                    <tr key={a.id} className="transition-colors" style={{ borderBottom: "1px solid #C9B29F" }}>
                       <td className="px-3 py-2">
                         <Link href={`/pedigree/custom/${a.id}`} onClick={() => markRead(a.id)} className="font-bold hover:underline text-[12px]" style={{ color: getDogColor(displayName), fontFamily: "var(--font-table)" }}>
                           {displayName}
@@ -264,19 +264,19 @@ export default function NewTitleAlertsPage() {
               const displayName = buildDisplayName(a);
               const isMale = a.sex?.toUpperCase() === "MALE";
               return (
-                <Link key={a.id} href={`/pedigree/custom/${a.id}`} onClick={() => markRead(a.id)} className="rounded-lg overflow-hidden transition-all hover:shadow-lg" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px", textDecoration: "none", opacity: a.is_read ? 0.7 : 1 }}>
+                <Link key={a.id} href={`/pedigree/custom/${a.id}`} onClick={() => markRead(a.id)} className="rounded-lg overflow-hidden transition-all hover:shadow-lg" style={{ background: "#FAF7F2", border: a.is_read ? "2px solid #EDE4D5" : "2px solid #C9B29F", borderRadius: "8px", textDecoration: "none" }}>
                   {/* Creator badge */}
                   <div className="px-2 pt-2 pb-1 flex items-center justify-between">
                     {a.creator_username && (
                       <span className="text-[12px] font-bold" style={{ color: "#1d5bbf", fontFamily: "var(--font-table)" }}>{a.creator_username}</span>
                     )}
-                    <span className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>{new Date(a.date_posted).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</span>
+                    <span className="text-[12px] font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{new Date(a.date_posted).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</span>
                   </div>
                   {/* Dog Name */}
                   <div className="px-2 pb-1">
                     <p className="text-sm font-bold truncate" style={{ color: getDogColor(displayName), fontFamily: "var(--font-table)" }}>{displayName}</p>
                     <span className="text-[12px]" style={{ color: isMale ? "#1d5bbf" : "#9f1239" }}>{isMale ? "♂" : "♀"}</span>
-                    {a.country && <span className="text-[12px] ml-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>· {a.country}</span>}
+                    {a.country && <span className="text-[12px] ml-1 font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>· {a.country}</span>}
                   </div>
                   {/* Breeder/Owner */}
                   <div className="px-2 pb-2 flex flex-wrap gap-1">
