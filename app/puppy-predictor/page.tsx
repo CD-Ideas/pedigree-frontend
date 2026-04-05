@@ -612,7 +612,7 @@ export default function PuppyPredictorPage() {
         {/* --- Header --- */}
         <div className="text-center space-y-2">
           <h1 style={{
-            fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "2.5rem",
+            fontFamily: "var(--font-table)", fontWeight: 900, fontSize: "2.5rem",
             color: "#1C1C1C", letterSpacing: "0.03em",
           }}>
             PUPPY COLOR PREDICTOR
