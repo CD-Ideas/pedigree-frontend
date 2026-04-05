@@ -60,6 +60,8 @@ export default function NewTitleMapPage() {
   const [alerts, setAlerts] = useState<TitleAlert[]>([]);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<TitleAlert | null>(null);
+  const [zoom, setZoom] = useState(1);
+  const [center, setCenter] = useState<[number, number]>([0, 20]);
 
   useEffect(() => {
     let userId = 0;
@@ -150,7 +152,13 @@ export default function NewTitleMapPage() {
                 projectionConfig={{ scale: 147, center: [0, 20] }}
                 style={{ width: "100%", height: "auto", background: "#FAFAFA" }}
               >
-                <ZoomableGroup>
+                <ZoomableGroup
+                  zoom={zoom}
+                  center={center}
+                  onMoveEnd={({ coordinates, zoom: z }) => { setCenter(coordinates); setZoom(z); }}
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  filterZoomEvent={(evt: any) => evt?.type !== "wheel"}
+                >
                   <Geographies geography={GEO_URL}>
                     {({ geographies }) =>
                       geographies.map((geo) => (
@@ -190,6 +198,22 @@ export default function NewTitleMapPage() {
                 </ZoomableGroup>
               </ComposableMap>
             )}
+
+            {/* Zoom Controls */}
+            <div style={{ position: "absolute", bottom: 16, right: 16, display: "flex", flexDirection: "column", gap: 4, zIndex: 10 }}>
+              <button
+                onClick={() => setZoom(z => Math.min(z * 1.5, 8))}
+                style={{ width: 32, height: 32, borderRadius: 8, border: "2px solid #C9B29F", background: "#1C1C1C", color: "#FAF7F2", fontSize: 16, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}
+              >+</button>
+              <button
+                onClick={() => setZoom(z => Math.max(z / 1.5, 1))}
+                style={{ width: 32, height: 32, borderRadius: 8, border: "2px solid #C9B29F", background: "#1C1C1C", color: "#FAF7F2", fontSize: 16, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}
+              >−</button>
+              <button
+                onClick={() => { setZoom(1); setCenter([0, 20]); }}
+                style={{ width: 32, height: 32, borderRadius: 8, border: "2px solid #C9B29F", background: "#FAF7F2", color: "#1C1C1C", fontSize: 10, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-table)" }}
+              >↺</button>
+            </div>
           </div>
 
           {/* Popup overlay when pin is clicked */}
