@@ -189,12 +189,21 @@ export default function NewTitleMapPage() {
     return n;
   };
 
-  // Each alert gets its own pin (no grouping)
-  const alertsWithCoords = alerts.map((a, i) => {
+  // Each alert gets its own pin — spread in circle if same location
+  const coordCounts: Record<string, number> = {};
+  const alertsWithCoords = alerts.map((a) => {
     const coords = getCoords(a);
     if (!coords) return null;
-    // Add offset so pins in same location don't overlap
-    const adjustedCoords: [number, number] = [coords[0] + i * 2, coords[1] + (i % 2 === 0 ? i * 1.5 : -i * 1.5)];
+    const key = coords.join(",");
+    const count = coordCounts[key] || 0;
+    coordCounts[key] = count + 1;
+    // Spread in circle: radius ~2 degrees, evenly spaced angles
+    const radius = count === 0 ? 0 : 2;
+    const angle = (count * 137.5 * Math.PI) / 180; // golden angle for even spread
+    const adjustedCoords: [number, number] = [
+      coords[0] + radius * Math.cos(angle),
+      coords[1] + radius * Math.sin(angle),
+    ];
     return { alert: a, coords: adjustedCoords };
   }).filter(Boolean) as { alert: TitleAlert; coords: [number, number] }[];
 
