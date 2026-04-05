@@ -16,10 +16,11 @@ db = sqlite3.connect("${DB}")
 db.row_factory = sqlite3.Row
 cur = db.cursor()
 cur.execute("""
-  SELECT id, name, prefix, suffix_wins, suffix_losses, breeder, owner, country, continent, sex, date_posted, photo_path, creator_username
-  FROM published_pedigrees
-  WHERE show_in_title_feed = 1
-  ORDER BY date_posted DESC
+  SELECT p.id, p.name, p.prefix, p.suffix_wins, p.suffix_losses, p.breeder, p.owner, p.country, p.continent, p.sex, p.date_posted, p.photo_path, u.username as creator_username
+  FROM published_pedigrees p
+  LEFT JOIN users u ON p.user_id = u.id
+  WHERE p.show_in_title_feed = 1
+  ORDER BY p.date_posted DESC
   LIMIT 100
 """)
 rows = [dict(r) for r in cur.fetchall()]
