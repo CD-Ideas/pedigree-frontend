@@ -507,6 +507,7 @@ export default function PublishedPedigreePage() {
   const [tree, setTree] = useState<TreeRow[]>([]);
   const [isOwner, setIsOwner] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [hoverPhoto, setHoverPhoto] = useState<string | null>(null);
   const [deleting, setDeleting] = useState(false);
   const router = useRouter();
 
@@ -687,6 +688,11 @@ export default function PublishedPedigreePage() {
                   <span className="text-2xl opacity-10" style={{ color: sexColor }}>{isMale ? "♂" : "♀"}</span>
                 </div>
               )}
+              {hoverPhoto && (
+                <div className="absolute inset-0 z-10 transition-opacity duration-200 rounded-lg overflow-hidden">
+                  <img src={hoverPhoto} alt="Parent" className="w-full h-full object-cover" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
+                </div>
+              )}
             </div>
 
             {/* Details */}
@@ -747,8 +753,10 @@ export default function PublishedPedigreePage() {
 
         {/* ─── Sire / Dam links ─── */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <div className="rounded-lg p-2.5"
-            style={{ border: "2px solid #C9B29F",  background: "#FAFAFA",  }}>
+          <div className="rounded-lg p-2.5 transition-all hover:shadow-md cursor-pointer"
+            style={{ border: "2px solid #C9B29F",  background: "#FAFAFA",  }}
+            onMouseEnter={() => { if (sire?.photo_url) { const u = sire.photo_url; setHoverPhoto(u.startsWith("http") ? u : `https://www.apbt.online-pedigrees.com/${u}`); } }}
+            onMouseLeave={() => setHoverPhoto(null)}>
             <div className="text-[12px] uppercase tracking-wider mb-0.5 font-semibold" style={{ color: "#1d5bbf", letterSpacing: "0.1em" }}>♂ Sire (Father)</div>
             {sire ? (
               <Link href={`/pedigree/${sire.dog_id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColor(sire.registered_name) }}>
@@ -756,8 +764,10 @@ export default function PublishedPedigreePage() {
               </Link>
             ) : <span className="text-sm" style={{ color: "#4A4A4A" }}>Unknown</span>}
           </div>
-          <div className="rounded-lg p-2.5"
-            style={{ border: "2px solid #C9B29F",  background: "#FAFAFA",  }}>
+          <div className="rounded-lg p-2.5 transition-all hover:shadow-md cursor-pointer"
+            style={{ border: "2px solid #C9B29F",  background: "#FAFAFA",  }}
+            onMouseEnter={() => { if (dam?.photo_url) { const u = dam.photo_url; setHoverPhoto(u.startsWith("http") ? u : `https://www.apbt.online-pedigrees.com/${u}`); } }}
+            onMouseLeave={() => setHoverPhoto(null)}>
             <div className="text-[12px] uppercase tracking-wider mb-0.5 font-semibold" style={{ color: "#9f1239", letterSpacing: "0.1em" }}>♀ Dam (Mother)</div>
             {dam ? (
               <Link href={`/pedigree/${dam.dog_id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColor(dam.registered_name) }}>
