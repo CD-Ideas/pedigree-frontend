@@ -283,7 +283,7 @@ export default function DogsPage() {
       {/* Header */}
       <div className="flex items-end justify-between mb-4">
         <div>
-          <h1 style={{ fontFamily: "var(--font-table)", fontSize: "1.6rem", fontWeight: 700, color: "#1C1C1C" }}>
+          <h1 style={{ fontFamily: "var(--font-table)", fontSize: "1.6rem", fontWeight: 900, color: "#1C1C1C" }}>
             Dogs
           </h1>
           <p className="text-xs mt-0.5" style={{ color: "#4A4A4A" }}>

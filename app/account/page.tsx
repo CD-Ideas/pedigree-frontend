@@ -240,7 +240,7 @@ export default function AccountPage() {
   return (
     <div className="max-w-2xl mx-auto px-6 py-12 space-y-6" style={{ background: "#EDE4D5" }}>
       <div>
-        <h1 style={{ fontFamily: "var(--font-table)", fontSize: "1.6rem", fontWeight: 700, color: "#1C1C1C" }}>
+        <h1 style={{ fontFamily: "var(--font-table)", fontSize: "1.6rem", fontWeight: 900, color: "#1C1C1C" }}>
           Account Settings
         </h1>
         <p className="mt-1 text-sm" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
