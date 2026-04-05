@@ -155,9 +155,10 @@ export default function NewTitleMapPage() {
                 <ZoomableGroup
                   zoom={zoom}
                   center={center}
-                  onMoveEnd={({ coordinates, zoom: z }) => { setCenter(coordinates); setZoom(z); }}
+                  onMoveEnd={({ zoom: z }) => { setZoom(z); }}
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  filterZoomEvent={(evt: any) => evt?.type !== "wheel"}
+                  filterZoomEvent={() => false}
+                  translateExtent={[[0, 0], [0, 0]]}
                 >
                   <Geographies geography={GEO_URL}>
                     {({ geographies }) =>
@@ -200,7 +201,7 @@ export default function NewTitleMapPage() {
             )}
 
             {/* Zoom Controls */}
-            <div style={{ position: "absolute", bottom: 16, right: 16, display: "flex", flexDirection: "column", gap: 4, zIndex: 10 }}>
+            <div style={{ position: "absolute", top: 16, right: 16, display: "flex", flexDirection: "column", gap: 4, zIndex: 10 }}>
               <button
                 onClick={() => setZoom(z => Math.min(z * 1.5, 8))}
                 style={{ width: 32, height: 32, borderRadius: 8, border: "2px solid #C9B29F", background: "#1C1C1C", color: "#FAF7F2", fontSize: 16, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}

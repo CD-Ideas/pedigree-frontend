@@ -90,11 +90,6 @@ export default function NewTitleAlertsPage() {
             </p>
           </div>
           <div className="flex gap-2">
-            {alerts.some(a => !a.is_read) && (
-              <button onClick={markAllRead} className="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all hover:scale-105" style={{ background: "#C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)", border: "2px solid #C9B29F", cursor: "pointer" }}>
-                Mark All Read
-              </button>
-            )}
             <Link href="/dashboard/new-title-map" className="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all hover:scale-105" style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)", border: "2px solid #C9B29F", textDecoration: "none" }}>
               View World Map
             </Link>
