@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ComposableMap, Geographies, Geography, Marker, ZoomableGroup } from "react-simple-maps";
+import { getDogColor } from "@/app/utils/colors";
 
 const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 
@@ -114,6 +115,13 @@ export default function NewTitleMapPage() {
     return null;
   };
 
+  const buildName = (a: TitleAlert) => {
+    let n = a.name;
+    if (a.prefix && a.prefix !== "None") n = a.prefix + " " + n;
+    if (a.suffix_wins && a.suffix_wins !== "0" && a.suffix_wins !== "") n += " " + a.suffix_wins + "XW";
+    return n;
+  };
+
   const pinGroups: Record<string, { coords: [number, number]; alerts: TitleAlert[] }> = {};
   alerts.forEach(a => {
     const coords = getCoords(a);
@@ -182,7 +190,7 @@ export default function NewTitleMapPage() {
                     <Marker key={i} coordinates={group.coords}>
                       <circle
                         r={group.alerts.length > 1 ? 8 : 6}
-                        fill="#ef4444"
+                        fill={getDogColor(buildName(group.alerts[0]))}
                         stroke="#fff"
                         strokeWidth={2}
                         style={{ cursor: "pointer" }}
@@ -244,10 +252,10 @@ export default function NewTitleMapPage() {
                 {selected.photo_path && (
                   <img src={selected.photo_path.startsWith("/") ? selected.photo_path : `/uploads/${selected.photo_path}`} alt={selected.name} className="w-full h-32 object-cover rounded-lg mb-3" style={{ border: "2px solid #C9B29F" }} onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
                 )}
-                <p style={{ fontSize: "16px", fontWeight: 900, color: "#1C1C1C", fontFamily: "var(--font-table)", marginBottom: "8px" }}>
-                  {selected.prefix ? selected.prefix + " " : ""}{selected.name}
+                <p style={{ fontSize: "16px", fontWeight: 900, color: getDogColor(buildName(selected)), fontFamily: "var(--font-table)", marginBottom: "8px" }}>
+                  {buildName(selected)}
                 </p>
-                <p style={{ fontSize: "12px", color: "#4A4A4A", fontFamily: "var(--font-table)", marginBottom: "4px" }}>
+                <p style={{ fontSize: "12px", color: selected.sex === "Male" ? "#1d5bbf" : "#9f1239", fontFamily: "var(--font-table)", marginBottom: "4px" }}>
                   {selected.sex === "Male" ? "♂" : "♀"} {selected.sex}
                 </p>
                 {selected.breeder && (

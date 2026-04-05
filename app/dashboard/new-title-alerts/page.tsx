@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { getDogColor } from "@/app/utils/colors";
 
 interface TitleAlert {
   id: number;
@@ -128,9 +129,9 @@ export default function NewTitleAlertsPage() {
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm truncate" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", fontWeight: a.is_read ? 400 : 700 }}>{buildDisplayName(a)}</p>
-                  <p className="text-xs mt-0.5" style={{ color: a.is_read ? "#999" : "#4A4A4A", fontFamily: "var(--font-table)" }}>
-                    {a.sex === "Male" ? "\u2642" : "\u2640"} {a.breeder ? `Breeder: ${a.breeder}` : ""} {a.country ? `\u2022 ${a.country}` : ""} {a.continent ? `(${a.continent})` : ""}
+                  <p className="text-sm truncate" style={{ color: getDogColor(buildDisplayName(a)), fontFamily: "var(--font-table)", fontWeight: a.is_read ? 400 : 700 }}>{buildDisplayName(a)}</p>
+                  <p className="text-xs mt-0.5" style={{ fontFamily: "var(--font-table)" }}>
+                    <span style={{ color: a.sex === "Male" ? "#1d5bbf" : "#9f1239" }}>{a.sex === "Male" ? "\u2642" : "\u2640"}</span> {a.breeder ? `Breeder: ${a.breeder}` : ""} {a.country ? `\u2022 ${a.country}` : ""} {a.continent ? `(${a.continent})` : ""}
                   </p>
                 </div>
                 <div className="text-right flex-shrink-0">
