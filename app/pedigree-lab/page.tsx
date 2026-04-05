@@ -1657,9 +1657,9 @@ function PedigreeLabInner() {
                     <span className="text-xs font-bold uppercase tracking-wider" style={{
                       fontFamily: "var(--font-table)",
                       color: "#1C1C1C",
-                    }}>Title Feed</span>
+                    }}>Show in Dashboard Alerts</span>
                     <p className="text-[12px] mt-0.5 font-medium" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-                      Announce this dog on the dashboard title alerts
+                      Announce this dog on the dashboard as a New Title alert and pin it on the New Title World Map
                     </p>
                   </div>
                   <span className="relative w-11 h-6 rounded-full flex-shrink-0 transition-all"

@@ -280,7 +280,7 @@ export default function Dashboard() {
             </h2>
             <div className="space-y-2">
               {[
-                { label: "New Titles", href: "/dashboard/titles", icon: "🏆", color: "#f59e0b" },
+                { label: "New Title Alerts", href: "/dashboard/new-title-alerts", icon: "🏆", color: "#f59e0b" },
                 { label: "Marketplace", href: "/marketplace", icon: "🛒", color: "#3b82f6" },
                 { label: "My Affiliates", href: "/dashboard/affiliates", icon: "🤝", color: "#10b981" },
               ].map((tool) => (
