@@ -436,7 +436,7 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
                           }}>★</span>
                         )}
                         {hasLink ? (
-                          <Link href={a.dog_id >= 10000000 ? `/pedigree/custom/${a.dog_id - 10000000}` : `/pedigree/${a.dog_id}`}
+                          <Link href={a.dog_id && a.dog_id >= 10000000 ? `/pedigree/custom/${a.dog_id - 10000000}` : `/pedigree/${a.dog_id}`}
                             className="font-medium truncate block w-full group-hover:underline"
                             style={{
                               color: cellTextColor, fontSize, fontFamily: "var(--font-table)",
