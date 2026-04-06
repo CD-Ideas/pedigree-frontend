@@ -184,6 +184,87 @@ db.close()
       console.error("Failed to insert into dogs table:", e);
     }
 
+    // Populate pedigree_tree for this published pedigree (enables Spotlight & Bloodline Calculator)
+    const treeScript = `
+import sqlite3, json
+
+DB = "${DB}"
+DOG_ID = ${dogId}
+MAX_GEN = 6
+
+conn = sqlite3.connect(DB)
+cur = conn.cursor()
+
+def get_position(gen, index):
+    if gen == 1:
+        return "G1_sire_0" if index == 0 else "G1_dam_1"
+    side = "S" if index % 2 == 0 else "D"
+    return f"G{gen}_{side}_{index}"
+
+# Delete existing entries
+cur.execute("DELETE FROM pedigree_tree WHERE dog_id = ?", (DOG_ID,))
+
+# BFS to build tree
+queue = []
+cur.execute("SELECT sire_id, dam_id FROM dogs WHERE dog_id = ?", (DOG_ID,))
+row = cur.fetchone()
+if row:
+    sire_id, dam_id = row
+    if sire_id: queue.append((int(sire_id), 1, 0))
+    if dam_id: queue.append((int(dam_id), 1, 1))
+
+inserted = 0
+while queue:
+    ancestor_id, gen, idx = queue.pop(0)
+    cur.execute("SELECT registered_name, css_class FROM dogs WHERE dog_id = ?", (ancestor_id,))
+    arow = cur.fetchone()
+    if not arow:
+        continue
+    name, css_class = arow
+    position = get_position(gen, idx)
+    try:
+        cur.execute("INSERT OR REPLACE INTO pedigree_tree (dog_id, ancestor_id, ancestor_name, position, generation, css_class) VALUES (?,?,?,?,?,?)",
+                    (DOG_ID, ancestor_id, name, position, gen, css_class))
+        inserted += 1
+    except:
+        pass
+
+    if gen < MAX_GEN:
+        # Check existing pedigree_tree for this ancestor
+        cur.execute("SELECT ancestor_id, ancestor_name, position, generation, css_class FROM pedigree_tree WHERE dog_id = ?", (ancestor_id,))
+        subtree = cur.fetchall()
+        if subtree:
+            for sub_anc_id, sub_name, sub_pos, sub_gen, sub_css in subtree:
+                new_gen = gen + sub_gen
+                if new_gen > MAX_GEN:
+                    continue
+                sub_idx = int(sub_pos.split("_")[-1])
+                new_idx = (2 ** sub_gen) * idx + sub_idx
+                new_pos = get_position(new_gen, new_idx)
+                try:
+                    cur.execute("INSERT OR REPLACE INTO pedigree_tree (dog_id, ancestor_id, ancestor_name, position, generation, css_class) VALUES (?,?,?,?,?,?)",
+                                (DOG_ID, sub_anc_id, sub_name, new_pos, new_gen, sub_css))
+                    inserted += 1
+                except:
+                    pass
+        else:
+            cur.execute("SELECT sire_id, dam_id FROM dogs WHERE dog_id = ?", (ancestor_id,))
+            prow = cur.fetchone()
+            if prow:
+                s, d = prow
+                if s: queue.append((int(s), gen + 1, 2 * idx))
+                if d: queue.append((int(d), gen + 1, 2 * idx + 1))
+
+conn.commit()
+conn.close()
+print(json.dumps({"inserted": inserted}))
+`;
+    try {
+      await execFileAsync("python3", ["-c", treeScript], { timeout: 30000 });
+    } catch (e) {
+      console.error("Failed to populate pedigree_tree:", e);
+    }
+
     return NextResponse.json({ success: true, id: ppId, dogId: dogId });
   } catch (err: unknown) {
     console.error("Publish error:", err);
