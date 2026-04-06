@@ -1,6 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
+
+/* ─── Types ─── */
+interface SearchResult { dog_id: number; registered_name: string; photo_url: string | null }
+interface SavedWhelping {
+  id: number; dam_name: string; dam_id: number | null;
+  breed_date_1: string; breed_date_2: string;
+  earliest_due: string; expected_due: string; latest_due: string;
+  note: string; date_saved: string;
+}
 
 /* ─── Gestation milestones (days from breeding) ─── */
 const MILESTONES = [
@@ -37,438 +46,562 @@ const CHECKLIST = [
 function formatDate(date: Date): string {
   return date.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", year: "numeric" });
 }
-
-function addDays(date: Date, days: number): Date {
-  const d = new Date(date);
-  d.setDate(d.getDate() + days);
-  return d;
+function formatDateISO(date: Date): string {
+  return date.toISOString().split("T")[0];
 }
-
+function addDays(date: Date, days: number): Date {
+  const d = new Date(date); d.setDate(d.getDate() + days); return d;
+}
 function daysBetween(a: Date, b: Date): number {
   return Math.round((b.getTime() - a.getTime()) / (1000 * 60 * 60 * 24));
 }
 
-const steelFrame = {
-  background: "#FAF7F2",
-  border: "2px solid #C9B29F",
-  borderRadius: "8px",
-};
+const steelFrame = { background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px" };
 
 export default function WhelpingCalculatorPage() {
-  const [breedDate, setBreedDate] = useState<string>("");
-  const [secondBreedDate, setSecondBreedDate] = useState<string>("");
+  const [breedDate, setBreedDate] = useState("");
+  const [secondBreedDate, setSecondBreedDate] = useState("");
   const [calculated, setCalculated] = useState(false);
   const [checkedItems, setCheckedItems] = useState<Set<number>>(new Set());
 
+  /* Dam search */
+  const [damQuery, setDamQuery] = useState("");
+  const [damResults, setDamResults] = useState<SearchResult[]>([]);
+  const [damOpen, setDamOpen] = useState(false);
+  const [selectedDam, setSelectedDam] = useState<{ id: number | null; name: string } | null>(null);
+  const damRef = useRef<HTMLDivElement>(null);
+  const damTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  /* Save / My Whelping */
+  const [note, setNote] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [saveMsg, setSaveMsg] = useState("");
+  const [showMyWhelping, setShowMyWhelping] = useState(false);
+  const [myWhelpings, setMyWhelpings] = useState<SavedWhelping[]>([]);
+  const [loadingWhelpings, setLoadingWhelpings] = useState(false);
+  const [userId, setUserId] = useState<number | null>(null);
+
+  /* Get user on mount */
+  useEffect(() => {
+    try {
+      const u = JSON.parse(localStorage.getItem("user") || "{}");
+      if (u.id) setUserId(u.id);
+    } catch (_) {}
+  }, []);
+
+  /* Close dam dropdown on outside click */
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (damRef.current && !damRef.current.contains(e.target as Node)) setDamOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  /* Dam search debounce */
+  const searchDam = useCallback((q: string) => {
+    if (damTimer.current) clearTimeout(damTimer.current);
+    if (q.length < 2) { setDamResults([]); setDamOpen(false); return; }
+    damTimer.current = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/dogs/search?q=${encodeURIComponent(q)}&limit=8`);
+        const data = await res.json();
+        setDamResults(data.results || []);
+        setDamOpen(true);
+      } catch (_) {}
+    }, 300);
+  }, []);
+
+  /* Load saved whelpings */
+  const loadWhelpings = useCallback(async () => {
+    if (!userId) return;
+    setLoadingWhelpings(true);
+    try {
+      const res = await fetch(`/api/whelpings?userId=${userId}`);
+      const data = await res.json();
+      setMyWhelpings(data.whelpings || []);
+    } catch (_) {}
+    setLoadingWhelpings(false);
+  }, [userId]);
+
+  /* Save whelping */
+  const handleSave = async () => {
+    if (!userId || !breedDate || !calculated) return;
+    const damName = selectedDam?.name || damQuery || "Unknown Dam";
+    const breedingDate = new Date(breedDate + "T12:00:00");
+    setSaving(true);
+    setSaveMsg("");
+    try {
+      const res = await fetch("/api/whelpings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId,
+          damName,
+          damId: selectedDam?.id || null,
+          breedDate1: breedDate,
+          breedDate2: secondBreedDate || "",
+          earliestDue: formatDateISO(addDays(breedingDate, 58)),
+          expectedDue: formatDateISO(addDays(breedingDate, 63)),
+          latestDue: formatDateISO(addDays(breedingDate, 68)),
+          note,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSaveMsg("Saved!");
+        setTimeout(() => setSaveMsg(""), 3000);
+      }
+    } catch (_) {
+      setSaveMsg("Error saving");
+    }
+    setSaving(false);
+  };
+
+  /* Delete whelping */
+  const handleDelete = async (id: number) => {
+    if (!userId) return;
+    try {
+      await fetch("/api/whelpings", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, userId }),
+      });
+      setMyWhelpings((prev) => prev.filter((w) => w.id !== id));
+    } catch (_) {}
+  };
+
+  /* Load a saved whelping into calculator */
+  const loadWhelping = (w: SavedWhelping) => {
+    setBreedDate(w.breed_date_1);
+    setSecondBreedDate(w.breed_date_2 || "");
+    setSelectedDam({ id: w.dam_id, name: w.dam_name });
+    setDamQuery(w.dam_name);
+    setNote(w.note || "");
+    setCalculated(true);
+    setShowMyWhelping(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   const breedingDate = breedDate ? new Date(breedDate + "T12:00:00") : null;
   const secondDate = secondBreedDate ? new Date(secondBreedDate + "T12:00:00") : null;
-  const today = new Date();
-  today.setHours(12, 0, 0, 0);
-
+  const today = new Date(); today.setHours(12, 0, 0, 0);
   const dueDate = breedingDate ? addDays(breedingDate, 63) : null;
   const earlyDate = breedingDate ? addDays(breedingDate, 58) : null;
   const lateDate = breedingDate ? addDays(breedingDate, 68) : null;
-
   const daysPregnant = breedingDate ? daysBetween(breedingDate, today) : 0;
   const daysRemaining = dueDate ? daysBetween(today, dueDate) : 0;
   const progressPct = breedingDate ? Math.min(Math.max((daysPregnant / 63) * 100, 0), 100) : 0;
-
   const currentWeek = Math.ceil(daysPregnant / 7);
   const currentTrimester = daysPregnant <= 21 ? 1 : daysPregnant <= 42 ? 2 : 3;
 
   const toggleCheck = (idx: number) => {
-    setCheckedItems((prev) => {
-      const next = new Set(prev);
-      if (next.has(idx)) next.delete(idx);
-      else next.add(idx);
-      return next;
-    });
+    setCheckedItems((prev) => { const next = new Set(prev); if (next.has(idx)) next.delete(idx); else next.add(idx); return next; });
   };
-
-  const handleCalculate = () => {
-    if (breedDate) setCalculated(true);
-  };
-
+  const handleCalculate = () => { if (breedDate) setCalculated(true); };
   const handleReset = () => {
-    setBreedDate("");
-    setSecondBreedDate("");
-    setCalculated(false);
-    setCheckedItems(new Set());
+    setBreedDate(""); setSecondBreedDate(""); setCalculated(false);
+    setCheckedItems(new Set()); setSelectedDam(null); setDamQuery(""); setNote(""); setSaveMsg("");
   };
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-6">
       {/* Header */}
-      <div className="mb-6">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg flex items-center justify-center text-xl"
-            style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}>
-            <img src="/logo.png" alt="" className="w-6 h-6 object-contain opacity-60" />
-          </div>
-          <div>
-            <h1 className="text-lg font-bold tracking-wide"
-              style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", letterSpacing: "0.05em" }}>
-              WHELPING <span style={{ color: "#C9B29F" }}>CALCULATOR</span>
-            </h1>
-            <p className="text-xs" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-              Calculate due dates & track pregnancy milestones
-            </p>
-          </div>
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex-1 text-center">
+          <h1 className="font-black" style={{ fontFamily: "var(--font-table)", fontSize: "1.6rem", fontWeight: 900, letterSpacing: "0.02em", color: "#1C1C1C" }}>
+            WHELPING{" "}<span style={{ color: "#C9B29F" }}>CALCULATOR</span>
+          </h1>
+          <p className="text-xs max-w-xl mx-auto" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+            Calculate due dates &amp; track pregnancy milestones. Enter your breeding date to estimate whelping day, monitor progress, and prepare supplies.
+          </p>
         </div>
-      </div>
-
-      {/* Date Input Section */}
-      <div className="rounded-lg p-4 md:p-5 mb-5" style={steelFrame}>
-        <h2 className="text-xs font-bold uppercase mb-4 tracking-wider"
-          style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-          Breeding Dates
-        </h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-          {/* First breeding */}
-          <div>
-            <label className="block text-xs font-semibold mb-1.5"
-              style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-              First Breeding Date *
-            </label>
-            <input
-              type="date"
-              value={breedDate}
-              onChange={(e) => { setBreedDate(e.target.value); setCalculated(false); }}
-              className="w-full px-3 py-2 rounded-lg text-sm outline-none"
-              style={{ ...steelFrame, color: "#1C1C1C", fontFamily: "var(--font-mono)" }}
-            />
-          </div>
-
-          {/* Second breeding (optional) */}
-          <div>
-            <label className="block text-xs font-semibold mb-1.5"
-              style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-              Second Breeding Date <span className="font-normal opacity-60">(optional)</span>
-            </label>
-            <input
-              type="date"
-              value={secondBreedDate}
-              onChange={(e) => { setSecondBreedDate(e.target.value); setCalculated(false); }}
-              className="w-full px-3 py-2 rounded-lg text-sm outline-none"
-              style={{ ...steelFrame, color: "#1C1C1C", fontFamily: "var(--font-mono)" }}
-            />
-          </div>
-        </div>
-
-        <div className="flex gap-3">
-          <button
-            onClick={handleCalculate}
-            disabled={!breedDate}
-            className="px-5 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all hover:scale-105"
-            style={{
-              background: breedDate ? "#1C1C1C" : "#C9B29F",
-              color: "#FAFAFA",
-              border: "2px solid #C9B29F",
-              fontFamily: "var(--font-table)",
-              cursor: breedDate ? "pointer" : "not-allowed",
-              opacity: breedDate ? 1 : 0.5,
-            }}>
-            Calculate Due Date
-          </button>
-          {calculated && (
-            <button
-              onClick={handleReset}
-              className="px-4 py-2 rounded-lg text-xs font-semibold tracking-wider transition-all hover:scale-105"
-              style={{ ...steelFrame, color: "#4A4A4A", fontFamily: "var(--font-table)", cursor: "pointer" }}>
-              Reset
-            </button>
+        {/* My Whelping button — top right */}
+        <button
+          onClick={() => { setShowMyWhelping(!showMyWhelping); if (!showMyWhelping) loadWhelpings(); }}
+          className="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all hover:scale-105 flex-shrink-0 ml-4"
+          style={{ background: showMyWhelping ? "#1C1C1C" : "#FAF7F2", color: showMyWhelping ? "#FAF7F2" : "#1C1C1C", border: "2px solid #C9B29F", fontFamily: "var(--font-table)", cursor: "pointer" }}>
+          {showMyWhelping ? "Calculator" : "My Whelping"}
+          {myWhelpings.length > 0 && !showMyWhelping && (
+            <span className="ml-2 px-1.5 py-0.5 rounded-full text-[12px]"
+              style={{ background: "#C9B29F", color: "#FAFAFA", fontFamily: "var(--font-mono)" }}>
+              {myWhelpings.length}
+            </span>
           )}
-        </div>
+        </button>
       </div>
 
-      {/* Results */}
-      {calculated && breedingDate && dueDate && earlyDate && lateDate && (
-        <>
-          {/* Due Date Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
-            {/* Early */}
-            <div className="rounded-lg p-4 text-center" style={steelFrame}>
-              <p className="text-[10px] font-bold uppercase tracking-wider mb-1"
-                style={{ color: "#f59e0b", fontFamily: "var(--font-table)" }}>
-                Earliest (Day 58)
-              </p>
-              <p className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
-                {formatDate(earlyDate)}
-              </p>
-            </div>
+      {/* ═══ MY WHELPING LIST ═══ */}
+      {showMyWhelping && (
+        <div className="rounded-lg p-4 md:p-5 mb-5" style={steelFrame}>
+          <h2 className="text-[12px] uppercase tracking-widest font-semibold mb-4"
+            style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+            My Whelping
+          </h2>
 
-            {/* Expected */}
-            <div className="rounded-lg p-4 text-center"
-              style={{ background: "#1C1C1C", border: "2px solid #C9B29F", borderRadius: "8px" }}>
-              <p className="text-[10px] font-bold uppercase tracking-wider mb-1"
-                style={{ color: "#C9B29F", fontFamily: "var(--font-table)" }}>
-                Expected Due Date (Day 63)
-              </p>
-              <p className="text-lg font-bold" style={{ color: "#FAFAFA", fontFamily: "var(--font-mono)" }}>
-                {formatDate(dueDate)}
-              </p>
-              {secondDate && (
-                <p className="text-[10px] mt-1" style={{ color: "#C9B29F", fontFamily: "var(--font-table)" }}>
-                  2nd breed due: {formatDate(addDays(secondDate, 63))}
-                </p>
-              )}
-            </div>
-
-            {/* Late */}
-            <div className="rounded-lg p-4 text-center" style={steelFrame}>
-              <p className="text-[10px] font-bold uppercase tracking-wider mb-1"
-                style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
-                Latest (Day 68)
-              </p>
-              <p className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
-                {formatDate(lateDate)}
-              </p>
-            </div>
-          </div>
-
-          {/* Progress Bar */}
-          <div className="rounded-lg p-4 mb-5" style={steelFrame}>
-            <div className="flex items-center justify-between mb-2">
-              <h2 className="text-xs font-bold uppercase tracking-wider"
-                style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-                Pregnancy Progress
-              </h2>
-              <div className="flex items-center gap-3">
-                <span className="text-xs font-semibold" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
-                  Week {currentWeek} &middot; Trimester {currentTrimester}
-                </span>
-                <span className="text-xs font-bold px-2 py-0.5 rounded"
-                  style={{
-                    background: daysRemaining > 0 ? "#1C1C1C" : "#22c55e",
-                    color: "#FAFAFA",
-                    fontFamily: "var(--font-mono)",
-                  }}>
-                  {daysRemaining > 0 ? `${daysRemaining} days left` : daysPregnant > 68 ? "Overdue" : "Due now"}
-                </span>
+          {loadingWhelpings && (
+            <div className="text-center py-8">
+              <div className="inline-flex items-center gap-2">
+                <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+                <span className="text-xs" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Loading...</span>
               </div>
             </div>
+          )}
 
-            {/* Bar */}
-            <div className="relative h-6 rounded-full overflow-hidden" style={{ background: "#EDE4D5", border: "2px solid #C9B29F" }}>
-              <div
-                className="h-full rounded-full transition-all duration-1000 ease-out"
-                style={{
-                  width: `${progressPct}%`,
-                  background: progressPct >= 100
-                    ? "linear-gradient(90deg, #22c55e, #16a34a)"
-                    : progressPct >= 85
-                      ? "linear-gradient(90deg, #f59e0b, #ef4444)"
-                      : "linear-gradient(90deg, #C9B29F, #8a6518)",
-                }}
-              />
-              <span className="absolute inset-0 flex items-center justify-center text-[10px] font-bold"
-                style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
-                Day {Math.max(0, daysPregnant)} of 63 &middot; {progressPct.toFixed(0)}%
-              </span>
+          {!loadingWhelpings && myWhelpings.length === 0 && (
+            <div className="text-center py-8">
+              <p className="text-xs" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                No saved whelpings yet. Use the calculator and click &quot;Save This Whelping&quot; to save.
+              </p>
             </div>
+          )}
 
-            {/* Trimester labels */}
-            <div className="flex mt-1">
-              <div className="flex-1 text-center text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-                1st Trimester (1-21)
-              </div>
-              <div className="flex-1 text-center text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-                2nd Trimester (22-42)
-              </div>
-              <div className="flex-1 text-center text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-                3rd Trimester (43-63)
-              </div>
-            </div>
-          </div>
-
-          {/* Milestones Timeline */}
-          <div className="rounded-lg p-4 md:p-5 mb-5" style={steelFrame}>
-            <h2 className="text-xs font-bold uppercase tracking-wider mb-4"
-              style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-              Pregnancy Milestones
-            </h2>
-
-            <div className="space-y-0">
-              {MILESTONES.map((m, i) => {
-                const milestoneDate = addDays(breedingDate, m.day);
-                const isPast = today >= milestoneDate;
-                const isCurrent = daysPregnant >= (MILESTONES[i - 1]?.day || 0) && daysPregnant < m.day;
-                const isDueDate = m.day === 63;
-
+          {!loadingWhelpings && myWhelpings.length > 0 && (
+            <div className="space-y-3">
+              {myWhelpings.map((w) => {
+                const expDate = new Date(w.expected_due + "T12:00:00");
+                const dLeft = daysBetween(today, expDate);
                 return (
-                  <div key={m.day} className="flex items-start gap-3 py-2.5 relative"
-                    style={{ borderBottom: i < MILESTONES.length - 1 ? "2px solid #EDE4D5" : "none" }}>
-                    {/* Timeline dot */}
-                    <div className="flex flex-col items-center flex-shrink-0 mt-0.5">
-                      <div className="w-3 h-3 rounded-full border-2 flex-shrink-0"
-                        style={{
-                          background: isPast ? (isDueDate ? "#22c55e" : "#1C1C1C") : isCurrent ? "#f59e0b" : "#EDE4D5",
-                          borderColor: isPast ? (isDueDate ? "#22c55e" : "#1C1C1C") : isCurrent ? "#f59e0b" : "#C9B29F",
-                        }}
-                      />
+                  <div key={w.id} className="rounded-lg p-3 flex items-center gap-4 transition-all hover:scale-[1.005]"
+                    style={{ background: "#FAFAFA", border: "2px solid #EDE4D5", borderRadius: "8px" }}>
+                    {/* Dam info */}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-bold truncate" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+                        {w.dam_name}
+                      </p>
+                      <p className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
+                        Bred: {w.breed_date_1}{w.breed_date_2 ? ` & ${w.breed_date_2}` : ""}
+                      </p>
+                      {w.note && (
+                        <p className="text-[12px] mt-0.5 truncate" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                          {w.note}
+                        </p>
+                      )}
                     </div>
 
-                    {/* Content */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-xs font-bold"
-                          style={{
-                            color: isPast ? "#1C1C1C" : isCurrent ? "#f59e0b" : "#4A4A4A",
-                            fontFamily: "var(--font-table)",
-                          }}>
-                          Day {m.day} &mdash; {m.label}
-                        </span>
-                        {isCurrent && (
-                          <span className="text-[10px] font-bold px-1.5 py-0.5 rounded animate-pulse"
-                            style={{ background: "#f59e0b", color: "#FAFAFA", fontFamily: "var(--font-table)" }}>
-                            CURRENT
-                          </span>
-                        )}
-                        {isPast && !isCurrent && (
-                          <span className="text-[10px] px-1.5 py-0.5 rounded"
-                            style={{ background: "#EDE4D5", color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-                            DONE
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-[11px] mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-                        {m.desc}
+                    {/* Expected due - highlighted */}
+                    <div className="text-center flex-shrink-0 px-3 py-1.5 rounded-lg"
+                      style={{ background: "#1C1C1C", border: "2px solid #C9B29F", borderRadius: "8px" }}>
+                      <p className="text-[12px] uppercase tracking-widest" style={{ color: "#C9B29F", fontFamily: "var(--font-table)" }}>Due</p>
+                      <p className="text-xs font-bold" style={{ color: "#FAFAFA", fontFamily: "var(--font-mono)" }}>
+                        {formatDate(expDate)}
+                      </p>
+                      <p className="text-[12px]" style={{ color: dLeft > 0 ? "#C9B29F" : "#22c55e", fontFamily: "var(--font-mono)" }}>
+                        {dLeft > 0 ? `${dLeft}d left` : dLeft === 0 ? "Today!" : "Passed"}
                       </p>
                     </div>
 
-                    {/* Date */}
-                    <span className="text-[11px] font-semibold flex-shrink-0 mt-0.5"
-                      style={{ color: isDueDate ? "#22c55e" : "#4A4A4A", fontFamily: "var(--font-mono)" }}>
-                      {formatDate(milestoneDate)}
-                    </span>
+                    {/* Actions */}
+                    <div className="flex flex-col gap-1.5 flex-shrink-0">
+                      <button onClick={() => loadWhelping(w)}
+                        className="px-3 py-1 rounded-lg text-[12px] font-bold uppercase tracking-widest transition-all hover:scale-105"
+                        style={{ background: "#1C1C1C", color: "#FAFAFA", border: "2px solid #C9B29F", fontFamily: "var(--font-table)", cursor: "pointer" }}>
+                        Open
+                      </button>
+                      <button onClick={() => handleDelete(w.id)}
+                        className="px-3 py-1 rounded-lg text-[12px] font-bold uppercase tracking-widest transition-all hover:scale-105"
+                        style={{ ...steelFrame, color: "#ef4444", fontFamily: "var(--font-table)", cursor: "pointer" }}>
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 );
               })}
             </div>
-          </div>
+          )}
+        </div>
+      )}
 
-          {/* Two-column: Checklist + Key Dates Summary */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-5">
-            {/* Whelping Supply Checklist */}
-            <div className="rounded-lg p-4" style={steelFrame}>
-              <div className="flex items-center justify-between mb-3">
-                <h2 className="text-xs font-bold uppercase tracking-wider"
-                  style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-                  Whelping Supply Checklist
-                </h2>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded"
-                  style={{
-                    background: checkedItems.size === CHECKLIST.length ? "#22c55e" : "#EDE4D5",
-                    color: checkedItems.size === CHECKLIST.length ? "#FAFAFA" : "#4A4A4A",
-                    fontFamily: "var(--font-mono)",
-                  }}>
-                  {checkedItems.size}/{CHECKLIST.length}
-                </span>
-              </div>
+      {/* ═══ CALCULATOR ═══ */}
+      {!showMyWhelping && (
+        <>
+          {/* Date Input Section */}
+          <div className="rounded-lg p-4 md:p-5 mb-5" style={steelFrame}>
+            <h2 className="text-[12px] uppercase tracking-widest font-semibold mb-4"
+              style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+              Breeding Details
+            </h2>
 
-              <div className="space-y-1.5">
-                {CHECKLIST.map((item, i) => (
-                  <label
-                    key={i}
-                    className="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg cursor-pointer transition-all hover:scale-[1.01]"
-                    style={{
-                      background: checkedItems.has(i) ? "rgba(34, 197, 94, 0.08)" : "transparent",
-                      border: checkedItems.has(i) ? "2px solid rgba(34, 197, 94, 0.3)" : "2px solid transparent",
-                    }}>
-                    <input
-                      type="checkbox"
-                      checked={checkedItems.has(i)}
-                      onChange={() => toggleCheck(i)}
-                      className="w-3.5 h-3.5 rounded accent-[#22c55e]"
-                    />
-                    <span className="text-xs"
-                      style={{
-                        color: checkedItems.has(i) ? "#22c55e" : "#4A4A4A",
-                        fontFamily: "var(--font-table)",
-                        textDecoration: checkedItems.has(i) ? "line-through" : "none",
-                      }}>
-                      {item}
-                    </span>
-                  </label>
-                ))}
+            {/* Dam search */}
+            <div className="mb-4" ref={damRef}>
+              <label className="block text-[12px] uppercase tracking-widest font-bold mb-1"
+                style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                Dam *
+              </label>
+              <div className="relative">
+                <input
+                  type="text"
+                  value={damQuery}
+                  onChange={(e) => { setDamQuery(e.target.value); setSelectedDam(null); searchDam(e.target.value); setCalculated(false); }}
+                  placeholder="Search dam by name..."
+                  className="w-full px-3 py-2 rounded-lg text-sm outline-none"
+                  style={{ ...steelFrame, color: "#1C1C1C", fontFamily: "var(--font-table)" }}
+                />
+                {selectedDam && (
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[12px] font-bold px-2 py-0.5 rounded"
+                    style={{ background: "#22c55e", color: "#FAFAFA", fontFamily: "var(--font-table)" }}>
+                    Selected
+                  </span>
+                )}
+                {damOpen && damResults.length > 0 && (
+                  <div className="absolute z-50 left-0 right-0 mt-1 max-h-48 overflow-y-auto rounded-lg"
+                    style={{ ...steelFrame, background: "#FAFAFA" }}>
+                    {damResults.map((d) => (
+                      <button key={d.dog_id}
+                        className="w-full text-left px-3 py-2 text-xs transition-all hover:bg-[#EDE4D5] flex items-center gap-2"
+                        style={{ fontFamily: "var(--font-table)", color: "#1C1C1C", borderBottom: "2px solid #EDE4D5" }}
+                        onClick={() => { setSelectedDam({ id: d.dog_id, name: d.registered_name }); setDamQuery(d.registered_name); setDamOpen(false); }}>
+                        <span className="font-bold truncate">{d.registered_name}</span>
+                        <span className="text-[12px] flex-shrink-0" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
+                          #{d.dog_id >= 10000000 ? `PP-${d.dog_id - 10000000}` : d.dog_id}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
 
-            {/* Key Dates Summary */}
-            <div className="rounded-lg p-4" style={steelFrame}>
-              <h2 className="text-xs font-bold uppercase tracking-wider mb-3"
-                style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-                Key Dates Summary
-              </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              {/* First breeding */}
+              <div>
+                <label className="block text-[12px] uppercase tracking-widest font-bold mb-1"
+                  style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                  First Breeding Date *
+                </label>
+                <input type="date" value={breedDate}
+                  onChange={(e) => { setBreedDate(e.target.value); setCalculated(false); }}
+                  className="w-full px-3 py-2 rounded-lg text-sm outline-none"
+                  style={{ ...steelFrame, color: "#1C1C1C", fontFamily: "var(--font-mono)" }} />
+              </div>
+              {/* Second breeding (optional) */}
+              <div>
+                <label className="block text-[12px] uppercase tracking-widest font-bold mb-1"
+                  style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                  Second Breeding Date <span className="font-normal opacity-60">(optional)</span>
+                </label>
+                <input type="date" value={secondBreedDate}
+                  onChange={(e) => { setSecondBreedDate(e.target.value); setCalculated(false); }}
+                  className="w-full px-3 py-2 rounded-lg text-sm outline-none"
+                  style={{ ...steelFrame, color: "#1C1C1C", fontFamily: "var(--font-mono)" }} />
+              </div>
+            </div>
 
-              <div className="space-y-2">
-                {[
-                  { label: "Breeding Date", date: breedingDate, color: "#1d5bbf" },
-                  ...(secondDate ? [{ label: "2nd Breeding", date: secondDate, color: "#6d30b0" }] : []),
-                  { label: "Ultrasound Window", date: addDays(breedingDate, 25), color: "#0d7468" },
-                  { label: "X-Ray Recommended", date: addDays(breedingDate, 45), color: "#8a6518" },
-                  { label: "Start Temp Monitoring", date: addDays(breedingDate, 58), color: "#f59e0b" },
-                  { label: "Earliest Due (Day 58)", date: earlyDate, color: "#b45a0a" },
-                  { label: "Expected Due (Day 63)", date: dueDate, color: "#22c55e" },
-                  { label: "Latest Due (Day 68)", date: lateDate, color: "#ef4444" },
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center justify-between py-1.5 px-2.5 rounded-lg"
-                    style={{ background: i % 2 === 0 ? "rgba(201, 178, 159, 0.1)" : "transparent" }}>
-                    <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: item.color }} />
-                      <span className="text-xs font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-                        {item.label}
-                      </span>
-                    </div>
-                    <span className="text-xs font-semibold" style={{ color: item.color, fontFamily: "var(--font-mono)" }}>
-                      {formatDate(item.date)}
+            {/* Note field */}
+            {calculated && (
+              <div className="mb-4">
+                <label className="block text-[12px] uppercase tracking-widest font-bold mb-1"
+                  style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                  Note <span className="font-normal opacity-60">(optional)</span>
+                </label>
+                <input type="text" value={note} onChange={(e) => setNote(e.target.value)}
+                  placeholder="e.g. Natural breeding, progesterone confirmed..."
+                  className="w-full px-3 py-2 rounded-lg text-sm outline-none"
+                  style={{ ...steelFrame, color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
+              </div>
+            )}
+
+            <div className="flex gap-3 flex-wrap">
+              <button onClick={handleCalculate}
+                disabled={!breedDate}
+                className="px-5 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all hover:scale-105"
+                style={{ background: breedDate ? "#1C1C1C" : "#C9B29F", color: "#FAFAFA", border: "2px solid #C9B29F", fontFamily: "var(--font-table)", cursor: breedDate ? "pointer" : "not-allowed", opacity: breedDate ? 1 : 0.5 }}>
+                Calculate Due Date
+              </button>
+              {calculated && (
+                <>
+                  <button onClick={handleSave} disabled={saving}
+                    className="px-5 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all hover:scale-105"
+                    style={{ background: "#22c55e", color: "#FAFAFA", border: "2px solid #22c55e", fontFamily: "var(--font-table)", cursor: "pointer", opacity: saving ? 0.5 : 1 }}>
+                    {saving ? "Saving..." : "Save This Whelping"}
+                  </button>
+                  <button onClick={handleReset}
+                    className="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all hover:scale-105"
+                    style={{ ...steelFrame, color: "#4A4A4A", fontFamily: "var(--font-table)", cursor: "pointer" }}>
+                    Reset
+                  </button>
+                  {saveMsg && (
+                    <span className="self-center text-xs font-bold" style={{ color: saveMsg === "Saved!" ? "#22c55e" : "#ef4444", fontFamily: "var(--font-table)" }}>
+                      {saveMsg}
                     </span>
+                  )}
+                </>
+              )}
+            </div>
+          </div>
+
+          {/* Results */}
+          {calculated && breedingDate && dueDate && earlyDate && lateDate && (
+            <>
+              {/* Due Date Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
+                <div className="rounded-lg p-4 text-center" style={steelFrame}>
+                  <p className="text-[12px] font-bold uppercase tracking-widest mb-1" style={{ color: "#f59e0b", fontFamily: "var(--font-table)" }}>Earliest (Day 58)</p>
+                  <p className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{formatDate(earlyDate)}</p>
+                </div>
+                <div className="rounded-lg p-4 text-center" style={{ background: "#1C1C1C", border: "2px solid #C9B29F", borderRadius: "8px" }}>
+                  <p className="text-[12px] font-bold uppercase tracking-widest mb-1" style={{ color: "#C9B29F", fontFamily: "var(--font-table)" }}>Expected Due Date (Day 63)</p>
+                  <p className="text-lg font-bold" style={{ color: "#FAFAFA", fontFamily: "var(--font-mono)" }}>{formatDate(dueDate)}</p>
+                  {secondDate && (
+                    <p className="text-[12px] mt-1" style={{ color: "#C9B29F", fontFamily: "var(--font-table)" }}>2nd breed due: {formatDate(addDays(secondDate, 63))}</p>
+                  )}
+                </div>
+                <div className="rounded-lg p-4 text-center" style={steelFrame}>
+                  <p className="text-[12px] font-bold uppercase tracking-widest mb-1" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>Latest (Day 68)</p>
+                  <p className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{formatDate(lateDate)}</p>
+                </div>
+              </div>
+
+              {/* Progress Bar */}
+              <div className="rounded-lg p-4 mb-5" style={steelFrame}>
+                <div className="flex items-center justify-between mb-2">
+                  <h2 className="text-[12px] uppercase tracking-widest font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Pregnancy Progress</h2>
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs font-semibold" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>Week {currentWeek} &middot; Trimester {currentTrimester}</span>
+                    <span className="text-xs font-bold px-2 py-0.5 rounded" style={{ background: daysRemaining > 0 ? "#1C1C1C" : "#22c55e", color: "#FAFAFA", fontFamily: "var(--font-mono)" }}>
+                      {daysRemaining > 0 ? `${daysRemaining} days left` : daysPregnant > 68 ? "Overdue" : "Due now"}
+                    </span>
+                  </div>
+                </div>
+                <div className="relative h-6 rounded-full overflow-hidden" style={{ background: "#EDE4D5", border: "2px solid #C9B29F" }}>
+                  <div className="h-full rounded-full transition-all duration-1000 ease-out"
+                    style={{ width: `${progressPct}%`, background: progressPct >= 100 ? "linear-gradient(90deg, #22c55e, #16a34a)" : progressPct >= 85 ? "linear-gradient(90deg, #f59e0b, #ef4444)" : "linear-gradient(90deg, #C9B29F, #8a6518)" }} />
+                  <span className="absolute inset-0 flex items-center justify-center text-[12px] font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
+                    Day {Math.max(0, daysPregnant)} of 63 &middot; {progressPct.toFixed(0)}%
+                  </span>
+                </div>
+                <div className="flex mt-1">
+                  <div className="flex-1 text-center text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>1st Trimester (1-21)</div>
+                  <div className="flex-1 text-center text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>2nd Trimester (22-42)</div>
+                  <div className="flex-1 text-center text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>3rd Trimester (43-63)</div>
+                </div>
+              </div>
+
+              {/* Milestones Timeline */}
+              <div className="rounded-lg p-4 md:p-5 mb-5" style={steelFrame}>
+                <h2 className="text-[12px] uppercase tracking-widest font-semibold mb-4" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Pregnancy Milestones</h2>
+                <div className="space-y-0">
+                  {MILESTONES.map((m, i) => {
+                    const milestoneDate = addDays(breedingDate, m.day);
+                    const isPast = today >= milestoneDate;
+                    const isCurrent = daysPregnant >= (MILESTONES[i - 1]?.day || 0) && daysPregnant < m.day;
+                    const isDueDate = m.day === 63;
+                    return (
+                      <div key={m.day} className="flex items-start gap-3 py-2.5 relative"
+                        style={{ borderBottom: i < MILESTONES.length - 1 ? "2px solid #EDE4D5" : "none" }}>
+                        <div className="flex flex-col items-center flex-shrink-0 mt-0.5">
+                          <div className="w-3 h-3 rounded-full border-2 flex-shrink-0"
+                            style={{ background: isPast ? (isDueDate ? "#22c55e" : "#1C1C1C") : isCurrent ? "#f59e0b" : "#EDE4D5", borderColor: isPast ? (isDueDate ? "#22c55e" : "#1C1C1C") : isCurrent ? "#f59e0b" : "#C9B29F" }} />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <span className="text-xs font-bold" style={{ color: isPast ? "#1C1C1C" : isCurrent ? "#f59e0b" : "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                              Day {m.day} &mdash; {m.label}
+                            </span>
+                            {isCurrent && (
+                              <span className="text-[12px] font-bold px-1.5 py-0.5 rounded animate-pulse" style={{ background: "#f59e0b", color: "#FAFAFA", fontFamily: "var(--font-table)" }}>CURRENT</span>
+                            )}
+                            {isPast && !isCurrent && (
+                              <span className="text-[12px] px-1.5 py-0.5 rounded" style={{ background: "#EDE4D5", color: "#4A4A4A", fontFamily: "var(--font-table)" }}>DONE</span>
+                            )}
+                          </div>
+                          <p className="text-[12px] mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>{m.desc}</p>
+                        </div>
+                        <span className="text-[12px] font-semibold flex-shrink-0 mt-0.5" style={{ color: isDueDate ? "#22c55e" : "#4A4A4A", fontFamily: "var(--font-mono)" }}>
+                          {formatDate(milestoneDate)}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Two-column: Checklist + Key Dates Summary */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-5">
+                <div className="rounded-lg p-4" style={steelFrame}>
+                  <div className="flex items-center justify-between mb-3">
+                    <h2 className="text-[12px] uppercase tracking-widest font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Whelping Supply Checklist</h2>
+                    <span className="text-[12px] font-bold px-2 py-0.5 rounded"
+                      style={{ background: checkedItems.size === CHECKLIST.length ? "#22c55e" : "#EDE4D5", color: checkedItems.size === CHECKLIST.length ? "#FAFAFA" : "#4A4A4A", fontFamily: "var(--font-mono)" }}>
+                      {checkedItems.size}/{CHECKLIST.length}
+                    </span>
+                  </div>
+                  <div className="space-y-1.5">
+                    {CHECKLIST.map((item, i) => (
+                      <label key={i} className="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg cursor-pointer transition-all hover:scale-[1.01]"
+                        style={{ background: checkedItems.has(i) ? "rgba(34, 197, 94, 0.08)" : "transparent", border: checkedItems.has(i) ? "2px solid rgba(34, 197, 94, 0.3)" : "2px solid transparent" }}>
+                        <input type="checkbox" checked={checkedItems.has(i)} onChange={() => toggleCheck(i)} className="w-3.5 h-3.5 rounded accent-[#22c55e]" />
+                        <span className="text-xs" style={{ color: checkedItems.has(i) ? "#22c55e" : "#4A4A4A", fontFamily: "var(--font-table)", textDecoration: checkedItems.has(i) ? "line-through" : "none" }}>{item}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="rounded-lg p-4" style={steelFrame}>
+                  <h2 className="text-[12px] uppercase tracking-widest font-semibold mb-3" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Key Dates Summary</h2>
+                  <div className="space-y-2">
+                    {[
+                      { label: "Breeding Date", date: breedingDate, color: "#1d5bbf" },
+                      ...(secondDate ? [{ label: "2nd Breeding", date: secondDate, color: "#6d30b0" }] : []),
+                      { label: "Ultrasound Window", date: addDays(breedingDate, 25), color: "#0d7468" },
+                      { label: "X-Ray Recommended", date: addDays(breedingDate, 45), color: "#8a6518" },
+                      { label: "Start Temp Monitoring", date: addDays(breedingDate, 58), color: "#f59e0b" },
+                      { label: "Earliest Due (Day 58)", date: earlyDate, color: "#b45a0a" },
+                      { label: "Expected Due (Day 63)", date: dueDate, color: "#22c55e" },
+                      { label: "Latest Due (Day 68)", date: lateDate, color: "#ef4444" },
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-center justify-between py-1.5 px-2.5 rounded-lg"
+                        style={{ background: i % 2 === 0 ? "rgba(201, 178, 159, 0.1)" : "transparent" }}>
+                        <div className="flex items-center gap-2">
+                          <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: item.color }} />
+                          <span className="text-xs font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{item.label}</span>
+                        </div>
+                        <span className="text-xs font-semibold" style={{ color: item.color, fontFamily: "var(--font-mono)" }}>{formatDate(item.date)}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-4 p-3 rounded-lg" style={{ background: "rgba(245, 158, 11, 0.08)", border: "2px solid rgba(245, 158, 11, 0.2)" }}>
+                    <p className="text-[12px] leading-relaxed" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                      <span className="font-bold" style={{ color: "#f59e0b" }}>Note:</span> Canine gestation averages 63 days but can range from 58-68 days.
+                      If your dam has not whelped by day 68, contact your veterinarian immediately.
+                      Always consult a vet for pregnancy confirmation and prenatal care.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* Pre-calculate info */}
+          {!calculated && (
+            <div className="rounded-lg p-6 text-center" style={steelFrame}>
+              <div className="w-16 h-16 rounded-full mx-auto mb-3 flex items-center justify-center"
+                style={{ background: "#EDE4D5", border: "2px solid #C9B29F" }}>
+                <img src="/logo.png" alt="" className="w-8 h-8 object-contain opacity-40" />
+              </div>
+              <h3 className="text-sm font-bold mb-1.5" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+                Enter your breeding date to get started
+              </h3>
+              <p className="text-xs max-w-md mx-auto mb-4" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                The calculator will estimate your dam&apos;s due date, track pregnancy progress day by day,
+                show key milestones, and provide a whelping supply checklist.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-lg mx-auto">
+                {[
+                  { title: "Due Date", desc: "Day 58-68 window", icon: "📅" },
+                  { title: "Milestones", desc: "12 key stages tracked", icon: "📋" },
+                  { title: "Checklist", desc: "Whelping supplies", icon: "✅" },
+                ].map((f, i) => (
+                  <div key={i} className="rounded-lg p-3" style={{ background: "#EDE4D5", border: "2px solid #C9B29F", borderRadius: "8px" }}>
+                    <div className="text-lg mb-1">{f.icon}</div>
+                    <p className="text-xs font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{f.title}</p>
+                    <p className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>{f.desc}</p>
                   </div>
                 ))}
               </div>
-
-              {/* Important note */}
-              <div className="mt-4 p-3 rounded-lg" style={{ background: "rgba(245, 158, 11, 0.08)", border: "2px solid rgba(245, 158, 11, 0.2)" }}>
-                <p className="text-[11px] leading-relaxed" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-                  <span className="font-bold" style={{ color: "#f59e0b" }}>Note:</span> Canine gestation averages 63 days but can range from 58-68 days.
-                  If your dam has not whelped by day 68, contact your veterinarian immediately.
-                  Always consult a vet for pregnancy confirmation and prenatal care.
-                </p>
-              </div>
             </div>
-          </div>
+          )}
         </>
-      )}
-
-      {/* Pre-calculate info */}
-      {!calculated && (
-        <div className="rounded-lg p-6 text-center" style={steelFrame}>
-          <div className="w-16 h-16 rounded-full mx-auto mb-3 flex items-center justify-center"
-            style={{ background: "#EDE4D5", border: "2px solid #C9B29F" }}>
-            <img src="/logo.png" alt="" className="w-8 h-8 object-contain opacity-40" />
-          </div>
-          <h3 className="text-sm font-bold mb-1.5" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-            Enter your breeding date to get started
-          </h3>
-          <p className="text-xs max-w-md mx-auto mb-4" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-            The calculator will estimate your dam&apos;s due date, track pregnancy progress day by day,
-            show key milestones, and provide a whelping supply checklist.
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-lg mx-auto">
-            {[
-              { title: "Due Date", desc: "Day 58-68 window", icon: "📅" },
-              { title: "Milestones", desc: "12 key stages tracked", icon: "📋" },
-              { title: "Checklist", desc: "Whelping supplies", icon: "✅" },
-            ].map((f, i) => (
-              <div key={i} className="rounded-lg p-3" style={{ background: "#EDE4D5", border: "2px solid #C9B29F", borderRadius: "8px" }}>
-                <div className="text-lg mb-1">{f.icon}</div>
-                <p className="text-xs font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{f.title}</p>
-                <p className="text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>{f.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
       )}
     </div>
   );
