@@ -137,12 +137,28 @@ db.close()
 import sqlite3, json, sys
 db = sqlite3.connect("${DB}")
 cur = db.cursor()
+# Build full display name with prefix + suffix
+full_name = ${JSON.stringify(name)}
+prefix_val = ${JSON.stringify(prefix)}
+if prefix_val and prefix_val != "NONE" and prefix_val.strip():
+    full_name = prefix_val.strip() + " " + full_name
+parts = []
+sw = ${JSON.stringify(suffixWins)}
+sl = ${JSON.stringify(suffixLosses)}
+sd = ${JSON.stringify(suffixDraws)}
+sh = ${JSON.stringify(suffixHonors)}
+if sw and sw != "0" and sw.strip(): parts.append(sw.strip())
+if sl and sl != "0" and sl.strip(): parts.append(sl.strip())
+if sd and sd != "0" and sd.strip(): parts.append(sd.strip())
+if sh and sh != "0" and sh.strip(): parts.append(sh.strip())
+if parts:
+    full_name += " " + " ".join(parts)
 cur.execute("""
   INSERT OR REPLACE INTO dogs (dog_id, registered_name, sex, color, breeder, owner, birthdate,
     conditioned_weight, description, posted_date, modified_date, view_count, source)
   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), datetime('now'), 0, 'user')
 """, (
-  ${dogId}, ${JSON.stringify(name)}, ${JSON.stringify(sex)}, ${JSON.stringify(color)},
+  ${dogId}, full_name, ${JSON.stringify(sex)}, ${JSON.stringify(color)},
   ${JSON.stringify(breeder)}, ${JSON.stringify(owner)}, ${JSON.stringify(dob)},
   ${JSON.stringify(conditionedWeight)}, ${JSON.stringify(pedigreeNotes)}
 ))

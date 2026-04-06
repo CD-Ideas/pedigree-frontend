@@ -103,6 +103,24 @@ db.commit()
 if ${showInTitleFeed} == 1:
     cur.execute("DELETE FROM title_alert_reads WHERE alert_id = ?", (${pedId},))
     db.commit()
+# Also update the dogs table entry with full display name
+full_name = ${JSON.stringify(name)}
+prefix_val = ${JSON.stringify(prefix)}
+if prefix_val and prefix_val != "NONE" and prefix_val.strip():
+    full_name = prefix_val.strip() + " " + full_name
+parts = []
+sw = ${JSON.stringify(suffixWins)}
+sl = ${JSON.stringify(suffixLosses)}
+sd = ${JSON.stringify(suffixDraws)}
+sh = ${JSON.stringify(suffixHonors)}
+if sw and sw != "0" and sw.strip(): parts.append(sw.strip())
+if sl and sl != "0" and sl.strip(): parts.append(sl.strip())
+if sd and sd != "0" and sd.strip(): parts.append(sd.strip())
+if sh and sh != "0" and sh.strip(): parts.append(sh.strip())
+if parts:
+    full_name += " " + " ".join(parts)
+cur.execute("UPDATE dogs SET registered_name = ?, sex = ?, color = ?, breeder = ?, owner = ?, birthdate = ?, conditioned_weight = ?, description = ?, modified_date = datetime('now') WHERE dog_id = ?", (full_name, ${JSON.stringify(sex)}, ${JSON.stringify(color)}, ${JSON.stringify(breeder)}, ${JSON.stringify(owner)}, ${JSON.stringify(dob)}, ${JSON.stringify(conditionedWeight)}, ${JSON.stringify(pedigreeNotes)}, 10000000 + ${pedId}))
+db.commit()
 print(json.dumps({"success": True, "id": ${pedId}}))
 db.close()
 `;
