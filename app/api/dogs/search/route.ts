@@ -29,10 +29,20 @@ export async function GET(req: NextRequest) {
 
     let dogs: { dog_id: number; registered_name: string; photo_url: string | null; sex: string }[] = [];
 
+    // 0. Published pedigrees first (dog_id >= 10000000) — always prioritized
+    try {
+      const published = conn.prepare(
+        "SELECT dog_id, registered_name, photo_url, sex FROM dogs WHERE dog_id >= 10000000 AND registered_name LIKE ? ORDER BY dog_id DESC LIMIT ?"
+      ).all('%' + q + '%', limit) as typeof dogs;
+      dogs.push(...published);
+    } catch (_pubErr) { /* ignore */ }
+
+    const existing = new Set(dogs.map(d => d.dog_id));
+
     // 1. Try FTS5 first (fast, 2ms)
     const ftsQuery = q.replace(/['"]/g, '').split(/\s+/).map(w => `"${w}"*`).join(' ');
     try {
-      dogs = conn.prepare(
+      const ftsResults = conn.prepare(
         `SELECT d.dog_id, d.registered_name, d.photo_url, d.sex
          FROM dogs_fts f
          JOIN dogs d ON f.rowid = d.dog_id
@@ -40,6 +50,12 @@ export async function GET(req: NextRequest) {
          ORDER BY d.view_count DESC
          LIMIT ?`
       ).all(ftsQuery, limit) as typeof dogs;
+      for (const d of ftsResults) {
+        if (!existing.has(d.dog_id) && dogs.length < limit) {
+          dogs.push(d);
+          existing.add(d.dog_id);
+        }
+      }
     } catch (_ftsErr) {
       // FTS failed, will fall through to LIKE
     }
@@ -47,7 +63,6 @@ export async function GET(req: NextRequest) {
     // 2. If FTS returned few results, supplement with LIKE search
     //    Handles apostrophes (BWK'S), special chars, and partial matches
     if (dogs.length < limit) {
-      const existing = new Set(dogs.map(d => d.dog_id));
       const likeResults = conn.prepare(
         "SELECT dog_id, registered_name, photo_url, sex FROM dogs WHERE registered_name LIKE ? ORDER BY view_count DESC LIMIT ?"
       ).all('%' + q + '%', limit) as typeof dogs;
