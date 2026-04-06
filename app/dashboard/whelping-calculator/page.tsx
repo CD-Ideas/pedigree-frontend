@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 
 /* ─── Gestation milestones (days from breeding) ─── */
 const MILESTONES = [
@@ -101,10 +100,6 @@ export default function WhelpingCalculatorPage() {
     <div className="max-w-5xl mx-auto px-4 py-6">
       {/* Header */}
       <div className="mb-6">
-        <Link href="/dashboard" className="text-xs hover:underline mb-3 inline-block"
-          style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-          &larr; Back to Dashboard
-        </Link>
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-lg flex items-center justify-center text-xl"
             style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}>
@@ -303,7 +298,7 @@ export default function WhelpingCalculatorPage() {
 
                 return (
                   <div key={m.day} className="flex items-start gap-3 py-2.5 relative"
-                    style={{ borderBottom: i < MILESTONES.length - 1 ? "1px solid #EDE4D5" : "none" }}>
+                    style={{ borderBottom: i < MILESTONES.length - 1 ? "2px solid #EDE4D5" : "none" }}>
                     {/* Timeline dot */}
                     <div className="flex flex-col items-center flex-shrink-0 mt-0.5">
                       <div className="w-3 h-3 rounded-full border-2 flex-shrink-0"
@@ -379,7 +374,7 @@ export default function WhelpingCalculatorPage() {
                     className="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg cursor-pointer transition-all hover:scale-[1.01]"
                     style={{
                       background: checkedItems.has(i) ? "rgba(34, 197, 94, 0.08)" : "transparent",
-                      border: checkedItems.has(i) ? "1px solid rgba(34, 197, 94, 0.3)" : "1px solid transparent",
+                      border: checkedItems.has(i) ? "2px solid rgba(34, 197, 94, 0.3)" : "2px solid transparent",
                     }}>
                     <input
                       type="checkbox"
@@ -434,7 +429,7 @@ export default function WhelpingCalculatorPage() {
               </div>
 
               {/* Important note */}
-              <div className="mt-4 p-3 rounded-lg" style={{ background: "rgba(245, 158, 11, 0.08)", border: "1px solid rgba(245, 158, 11, 0.2)" }}>
+              <div className="mt-4 p-3 rounded-lg" style={{ background: "rgba(245, 158, 11, 0.08)", border: "2px solid rgba(245, 158, 11, 0.2)" }}>
                 <p className="text-[11px] leading-relaxed" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                   <span className="font-bold" style={{ color: "#f59e0b" }}>Note:</span> Canine gestation averages 63 days but can range from 58-68 days.
                   If your dam has not whelped by day 68, contact your veterinarian immediately.
@@ -466,7 +461,7 @@ export default function WhelpingCalculatorPage() {
               { title: "Milestones", desc: "12 key stages tracked", icon: "📋" },
               { title: "Checklist", desc: "Whelping supplies", icon: "✅" },
             ].map((f, i) => (
-              <div key={i} className="rounded-lg p-3" style={{ background: "#EDE4D5", border: "1px solid #C9B29F", borderRadius: "8px" }}>
+              <div key={i} className="rounded-lg p-3" style={{ background: "#EDE4D5", border: "2px solid #C9B29F", borderRadius: "8px" }}>
                 <div className="text-lg mb-1">{f.icon}</div>
                 <p className="text-xs font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{f.title}</p>
                 <p className="text-[10px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>{f.desc}</p>
