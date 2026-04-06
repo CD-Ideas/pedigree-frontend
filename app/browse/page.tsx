@@ -139,14 +139,14 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
             <div className="flex items-center gap-1 text-[12px]" style={{ fontFamily: "var(--font-table)" }}>
               <span className="w-1 h-1 rounded-lg flex-shrink-0" style={{ background: "#1d5bbf" }} />
               <span style={{ color: "#1d5bbf" }}>Sire:</span>
-              <span className="truncate" style={{ color: "#1d5bbf" }}>{dog.sire_name}</span>
+              <span className="truncate" style={{ color: getDogColor(dog.sire_name) }}>{dog.sire_name}</span>
             </div>
           )}
           {dog.dam_name && (
             <div className="flex items-center gap-1 text-[12px]" style={{ fontFamily: "var(--font-table)" }}>
               <span className="w-1 h-1 rounded-lg flex-shrink-0" style={{ background: "#9f1239" }} />
               <span style={{ color: "#9f1239" }}>Dam:</span>
-              <span className="truncate" style={{ color: "#9f1239" }}>{dog.dam_name}</span>
+              <span className="truncate" style={{ color: getDogColor(dog.dam_name) }}>{dog.dam_name}</span>
             </div>
           )}
         </div>

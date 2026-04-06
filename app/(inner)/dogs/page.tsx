@@ -145,7 +145,7 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
               <span style={{ color: "#1d5bbf" }}>Sire:</span>
               <span
                 className="truncate"
-                style={{ color: "#1d5bbf" }}
+                style={{ color: getDogColor(dog.sire_name) }}
               >
                 {dog.sire_name}
               </span>
@@ -160,7 +160,7 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
               <span style={{ color: "#9f1239" }}>Dam:</span>
               <span
                 className="truncate"
-                style={{ color: "#9f1239" }}
+                style={{ color: getDogColor(dog.dam_name) }}
               >
                 {dog.dam_name}
               </span>
