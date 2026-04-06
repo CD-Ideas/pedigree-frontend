@@ -41,6 +41,7 @@ const NAV_ITEMS = [
   { icon: "👑", label: "Dog of the Month", href: "/dog-of-the-month", desc: "Monthly photo contest", color: "#f97316" },
   { icon: "🎨", label: "Puppy Color Predictor", href: "/puppy-predictor", desc: "Predict coat colors", color: "#fb923c" },
   { icon: "🏪", label: "Marketplace", href: "/marketplace", desc: "Buy, sell & advertise", color: "#ef4444" },
+  { icon: "🤰", label: "Whelping Calculator", href: "/dashboard/whelping-calculator", desc: "Predict puppy due dates", color: "#e879a0" },
 ];
 
 
