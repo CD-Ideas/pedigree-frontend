@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import { getDogColor } from "@/app/utils/colors";
 
 /* ─── Types ─── */
 interface SearchResult { dog_id: number; registered_name: string; photo_url: string | null }
@@ -106,7 +107,7 @@ export default function WhelpingCalculatorPage() {
       try {
         const res = await fetch(`/api/dogs/search?q=${encodeURIComponent(q)}&limit=8`);
         const data = await res.json();
-        setDamResults(data.results || []);
+        setDamResults(data.dogs || data.results || []);
         setDamOpen(true);
       } catch (_) {}
     }, 300);
@@ -266,7 +267,7 @@ export default function WhelpingCalculatorPage() {
                     style={{ background: "#FAFAFA", border: "2px solid #EDE4D5", borderRadius: "8px" }}>
                     {/* Dam info */}
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs font-bold truncate" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
+                      <p className="text-xs font-bold truncate" style={{ color: getDogColor(w.dam_name), fontFamily: "var(--font-table)" }}>
                         {w.dam_name}
                       </p>
                       <p className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
@@ -349,9 +350,9 @@ export default function WhelpingCalculatorPage() {
                     {damResults.map((d) => (
                       <button key={d.dog_id}
                         className="w-full text-left px-3 py-2 text-xs transition-all hover:bg-[#EDE4D5] flex items-center gap-2"
-                        style={{ fontFamily: "var(--font-table)", color: "#1C1C1C", borderBottom: "2px solid #EDE4D5" }}
+                        style={{ fontFamily: "var(--font-table)", borderBottom: "2px solid #EDE4D5" }}
                         onClick={() => { setSelectedDam({ id: d.dog_id, name: d.registered_name }); setDamQuery(d.registered_name); setDamOpen(false); }}>
-                        <span className="font-bold truncate">{d.registered_name}</span>
+                        <span className="font-bold truncate" style={{ color: getDogColor(d.registered_name) }}>{d.registered_name}</span>
                         <span className="text-[12px] flex-shrink-0" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
                           #{d.dog_id >= 10000000 ? `PP-${d.dog_id - 10000000}` : d.dog_id}
                         </span>
