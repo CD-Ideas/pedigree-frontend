@@ -151,12 +151,20 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
           <style>{`@keyframes pieSpinIn { from { transform: rotate(-180deg) scale(0.5); opacity: 0; } to { transform: rotate(0deg) scale(1); opacity: 1; } } .lineage-pie { animation: pieSpinIn 0.8s ease-out; }`}</style>
           <svg width="260" height="260" viewBox="0 0 260 260" className="lineage-pie">
             {slices.map((s) => {
+              const isH = hovered === s.idx;
+              // Full circle (360°) needs a circle element, not an arc (SVG arcs can't draw 360°)
+              if (s.angle >= 359.99) {
+                return (
+                  <circle key={s.idx} cx={cx} cy={cy} r={radius} fill={s.color} stroke="#FAFAFA" strokeWidth="2"
+                         style={{ transform: isH ? "scale(1.06)" : "none", transformOrigin: `${cx}px ${cy}px`, transition: "all 0.2s", cursor: "pointer" }}
+                         onMouseEnter={() => { setHovered(s.idx); const el = lineageListRef.current?.children[s.idx] as HTMLElement; if (el) el.scrollIntoView({ behavior: "smooth", block: "nearest" }); }} onMouseLeave={() => setHovered(null)} />
+                );
+              }
               const sr = (s.startAngle * Math.PI) / 180;
               const er = (s.endAngle * Math.PI) / 180;
               const x1 = cx + radius * Math.cos(sr), y1 = cy + radius * Math.sin(sr);
               const x2 = cx + radius * Math.cos(er), y2 = cy + radius * Math.sin(er);
               const la = s.angle > 180 ? 1 : 0;
-              const isH = hovered === s.idx;
               return (
                 <path key={s.idx} d={`M ${cx} ${cy} L ${x1} ${y1} A ${radius} ${radius} 0 ${la} 1 ${x2} ${y2} Z`}
                       fill={s.color} stroke="#FAFAFA" strokeWidth="2"

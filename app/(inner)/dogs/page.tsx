@@ -140,12 +140,12 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
             <div className="flex items-center gap-1.5 text-[12px]">
               <span
                 className="w-1 h-1 rounded-full flex-shrink-0"
-                style={{ background: MALE_COLOR }}
+                style={{ background: "#1d5bbf" }}
               />
-              <span style={{ color: "#4A4A4A" }}>Sire:</span>
+              <span style={{ color: "#1d5bbf" }}>Sire:</span>
               <span
                 className="truncate"
-                style={{ color: MALE_COLOR }}
+                style={{ color: "#1d5bbf" }}
               >
                 {dog.sire_name}
               </span>
@@ -155,12 +155,12 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
             <div className="flex items-center gap-1.5 text-[12px]">
               <span
                 className="w-1 h-1 rounded-full flex-shrink-0"
-                style={{ background: FEMALE_COLOR }}
+                style={{ background: "#9f1239" }}
               />
-              <span style={{ color: "#4A4A4A" }}>Dam:</span>
+              <span style={{ color: "#9f1239" }}>Dam:</span>
               <span
                 className="truncate"
-                style={{ color: FEMALE_COLOR }}
+                style={{ color: "#9f1239" }}
               >
                 {dog.dam_name}
               </span>
