@@ -86,7 +86,7 @@ function NavSearch() {
             return (
               <a
                 key={r.dog_id}
-                href={`/pedigree/${r.dog_id}`}
+                href={r.dog_id >= 10000000 ? `/pedigree/custom/${r.dog_id - 10000000}` : `/pedigree/${r.dog_id}`}
                 className="flex items-center gap-2 px-3 py-2 transition-all hover:bg-[#C9B29F]/10 text-xs"
                 style={{ borderBottom: "1px solid #C9B29F" }}
               >
@@ -114,7 +114,7 @@ function NavSearch() {
                 return (
                   <a
                     key={r.dog_id}
-                    href={`/pedigree/${r.dog_id}`}
+                    href={r.dog_id >= 10000000 ? `/pedigree/custom/${r.dog_id - 10000000}` : `/pedigree/${r.dog_id}`}
                     className="flex items-center gap-2 px-3 py-2 transition-all hover:bg-[#C9B29F]/10 text-xs"
                     style={{ borderBottom: "1px solid #C9B29F" }}
                   >

@@ -342,7 +342,7 @@ export default function MarketplaceAdPage() {
             {/* Pedigree Link */}
             {ad.dog_id && (
               <Link
-                href={`/pedigree/${ad.dog_id}`}
+                href={ad.dog_id >= 10000000 ? `/pedigree/custom/${ad.dog_id - 10000000}` : `/pedigree/${ad.dog_id}`}
                 className="flex items-center gap-3 rounded-lg p-4 transition-all duration-300 hover:scale-[1.02]"
                 style={{
                   background: "rgba(184,134,11,0.25)",

@@ -811,7 +811,7 @@ function PedigreeLabInner() {
                       {/* Info */}
                       <div className="flex-1 min-w-0">
                         <a
-                          href={`/pedigree/${dog.dog_id}`}
+                          href={dog.dog_id >= 10000000 ? `/pedigree/custom/${dog.dog_id - 10000000}` : `/pedigree/${dog.dog_id}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={(e) => e.stopPropagation()}
@@ -1136,7 +1136,7 @@ function PedigreeLabInner() {
                                 </span>
                               )}
                               {dog?.dog_id ? (
-                                <a href={`/pedigree/${dog.dog_id}`} className="hover:underline" style={{ color: cellTextColor, textDecoration: "none" }}>
+                                <a href={dog.dog_id >= 10000000 ? `/pedigree/custom/${dog.dog_id - 10000000}` : `/pedigree/${dog.dog_id}`} className="hover:underline" style={{ color: cellTextColor, textDecoration: "none" }}>
                                   {name}
                                 </a>
                               ) : name}

@@ -119,7 +119,7 @@ function DogLink({ dogId, name, isMale }: { dogId: number | null; name: string; 
   const color = isGrCh ? "#1d5bbf" : isCh ? "#c02828" : xwColor ? xwColor : isRom ? "#0d7468" : isPor ? "#6d30b0" : !hasTitle ? "#3a3a3a" : isMale === true ? "#1d5bbf" : isMale === false ? "#b03878" : "#8a6518";
   if (!dogId) return <span style={{ color: PG.textMuted }}>{name}</span>;
   return (
-    <Link href={`/pedigree/${dogId}`} className="hover:underline transition-colors" style={{ color }}>
+    <Link href={dogId >= 10000000 ? `/pedigree/custom/${dogId - 10000000}` : `/pedigree/${dogId}`} className="hover:underline transition-colors" style={{ color }}>
       {name}
     </Link>
   );
@@ -238,7 +238,7 @@ function PedigreeSearch() {
         <div className="absolute left-0 right-0 top-full mt-1 rounded-lg overflow-hidden z-50 max-h-80 overflow-y-auto"
              style={{ background: PG.cardBg, border: PG.cardBorder, borderRadius: PG.cardRadius }}>
           {results.map((d) => (
-            <a key={d.dog_id} href={`/pedigree/${d.dog_id}`}
+            <a key={d.dog_id} href={d.dog_id >= 10000000 ? `/pedigree/custom/${d.dog_id - 10000000}` : `/pedigree/${d.dog_id}`}
                className="flex items-center gap-3 px-4 py-2.5 transition-all"
                style={{ borderBottom: "1px solid #EDE4D5" }}>
               {d.photo_url ? (
@@ -511,7 +511,7 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
                                 }}>★</span>
                         )}
                         {hasLink ? (
-                          <Link href={`/pedigree/${a.ancestor_id}`}
+                          <Link href={a.ancestor_id >= 10000000 ? `/pedigree/custom/${a.ancestor_id - 10000000}` : `/pedigree/${a.ancestor_id}`}
                                 className="font-medium truncate block w-full group-hover:underline"
                                 style={{
                                   color: cellTextColor,
@@ -794,7 +794,7 @@ function PhotosTab({ offspring }: { offspring: Offspring[] }) {
         const src = o.photo_url!.startsWith("http") ? o.photo_url! : `https://www.apbt.online-pedigrees.com/${o.photo_url}`;
         const cc = getDogColor(o.offspring_name);
         return (
-          <Link key={i} href={`/pedigree/${o.offspring_id}`} className="group relative rounded-lg overflow-hidden transition-all"
+          <Link key={i} href={o.offspring_id >= 10000000 ? `/pedigree/custom/${o.offspring_id - 10000000}` : `/pedigree/${o.offspring_id}`} className="group relative rounded-lg overflow-hidden transition-all"
                 style={{ background: PG.cardBg, border: PG.cardBorder, borderRadius: PG.cardRadius }}>
             <div className="w-full h-[130px] sm:h-[150px] overflow-hidden">
               <img src={src} alt={o.offspring_name} className="w-full h-full object-cover transition-transform group-hover:scale-105" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
@@ -1106,7 +1106,7 @@ export default function PublicPedigreePage() {
             <div className="text-[12px] uppercase tracking-wider mb-0.5 font-semibold"
                  style={{ color: "#1d5bbf", letterSpacing: "0.1em" }}>♂ Sire (Father)</div>
             {dog.sire ? (
-              <Link href={`/pedigree/${dog.sire.id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColor(dog.sire.name) }}>
+              <Link href={dog.sire.id >= 10000000 ? `/pedigree/custom/${dog.sire.id - 10000000}` : `/pedigree/${dog.sire.id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColor(dog.sire.name) }}>
                 {dog.sire.name}
               </Link>
             ) : <span className="text-sm" style={{ color: PG.textMuted }}>Unknown</span>}
@@ -1118,7 +1118,7 @@ export default function PublicPedigreePage() {
             <div className="text-[12px] uppercase tracking-wider mb-0.5 font-semibold"
                  style={{ color: "#9f1239", letterSpacing: "0.1em" }}>♀ Dam (Mother)</div>
             {dog.dam ? (
-              <Link href={`/pedigree/${dog.dam.id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColor(dog.dam.name) }}>
+              <Link href={dog.dam.id >= 10000000 ? `/pedigree/custom/${dog.dam.id - 10000000}` : `/pedigree/${dog.dam.id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColor(dog.dam.name) }}>
                 {dog.dam.name}
               </Link>
             ) : <span className="text-sm" style={{ color: PG.textMuted }}>Unknown</span>}

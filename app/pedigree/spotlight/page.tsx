@@ -243,7 +243,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
             <div className="flex items-center gap-2 mb-2 pt-2" style={{ borderTop: "2px solid #C9B29F" }}>
               <span className="text-xs">🧬</span>
               <span className="text-xs font-semibold flex-1" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-                Lineage of <a href={`/pedigree/${lineage.dog.id}`} className="underline" style={{ color: getDogColor(lineage.dog.name) }}>{lineage.dog.name}</a>
+                Lineage of <a href={lineage.dog.id >= 10000000 ? `/pedigree/custom/${lineage.dog.id - 10000000}` : `/pedigree/${lineage.dog.id}`} className="underline" style={{ color: getDogColor(lineage.dog.name) }}>{lineage.dog.name}</a>
               </span>
               <div className="flex items-center gap-1">
                 {[6, 8, 10, 12].map((g) => (
@@ -594,7 +594,7 @@ export default function SpotlightPage() {
             {/* Card Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2.5">
               {results.map((r, idx) => (
-                <Link key={r.id} href={`/pedigree/${r.id}`}
+                <Link key={r.id} href={r.id >= 10000000 ? `/pedigree/custom/${r.id - 10000000}` : `/pedigree/${r.id}`}
                       className="group rounded-lg overflow-hidden transition-all hover:scale-[1.02] relative"
                       style={{
                         background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px",

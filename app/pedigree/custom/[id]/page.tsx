@@ -196,7 +196,7 @@ function PedigreeSearch() {
         <div className="absolute left-0 right-0 top-full mt-1 rounded-lg overflow-hidden z-50 max-h-80 overflow-y-auto"
              style={{ background: "#FAF7F2", border: "2px solid #C9B29F",  }}>
           {results.map((d) => (
-            <a key={d.dog_id} href={`/pedigree/${d.dog_id}`}
+            <a key={d.dog_id} href={d.dog_id >= 10000000 ? `/pedigree/custom/${d.dog_id - 10000000}` : `/pedigree/${d.dog_id}`}
                className="flex items-center gap-3 px-4 py-2.5 transition-all hover:bg-white/5"
                style={{ borderBottom: "1px solid #C9B29F" }}>
               {d.photo_url ? (
@@ -436,7 +436,7 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
                           }}>★</span>
                         )}
                         {hasLink ? (
-                          <Link href={`/pedigree/${a.dog_id}`}
+                          <Link href={a.dog_id >= 10000000 ? `/pedigree/custom/${a.dog_id - 10000000}` : `/pedigree/${a.dog_id}`}
                             className="font-medium truncate block w-full group-hover:underline"
                             style={{
                               color: cellTextColor, fontSize, fontFamily: "var(--font-table)",
@@ -759,7 +759,7 @@ export default function PublishedPedigreePage() {
             onMouseLeave={() => setHoverPhoto(null)}>
             <div className="text-[12px] uppercase tracking-wider mb-0.5 font-semibold" style={{ color: "#1d5bbf", letterSpacing: "0.1em" }}>♂ Sire (Father)</div>
             {sire ? (
-              <Link href={`/pedigree/${sire.dog_id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColor(sire.registered_name) }}>
+              <Link href={sire.dog_id >= 10000000 ? `/pedigree/custom/${sire.dog_id - 10000000}` : `/pedigree/${sire.dog_id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColor(sire.registered_name) }}>
                 {sire.registered_name}
               </Link>
             ) : <span className="text-sm" style={{ color: "#4A4A4A" }}>Unknown</span>}
@@ -770,7 +770,7 @@ export default function PublishedPedigreePage() {
             onMouseLeave={() => setHoverPhoto(null)}>
             <div className="text-[12px] uppercase tracking-wider mb-0.5 font-semibold" style={{ color: "#9f1239", letterSpacing: "0.1em" }}>♀ Dam (Mother)</div>
             {dam ? (
-              <Link href={`/pedigree/${dam.dog_id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColor(dam.registered_name) }}>
+              <Link href={dam.dog_id >= 10000000 ? `/pedigree/custom/${dam.dog_id - 10000000}` : `/pedigree/${dam.dog_id}`} className="text-sm font-bold hover:underline" style={{ color: getDogColor(dam.registered_name) }}>
                 {dam.registered_name}
               </Link>
             ) : <span className="text-sm" style={{ color: "#4A4A4A" }}>Unknown</span>}

@@ -63,7 +63,7 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
     : null;
 
   return (
-    <Link href={`/pedigree/${dog.id}`}
+    <Link href={dog.id >= 10000000 ? `/pedigree/custom/${dog.id - 10000000}` : `/pedigree/${dog.id}`}
       className="group block overflow-hidden transition-all duration-300 hover:scale-[1.02]"
       style={{
         background: "#FAF7F2",
