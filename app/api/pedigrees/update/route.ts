@@ -119,7 +119,18 @@ if sd and sd != "0" and sd.strip(): parts.append(sd.strip())
 if sh and sh != "0" and sh.strip(): parts.append(sh.strip())
 if parts:
     full_name += " " + " ".join(parts)
-cur.execute("UPDATE dogs SET registered_name = ?, sex = ?, color = ?, breeder = ?, owner = ?, birthdate = ?, conditioned_weight = ?, description = ?, modified_date = datetime('now') WHERE dog_id = ?", (full_name, ${JSON.stringify(sex)}, ${JSON.stringify(color)}, ${JSON.stringify(breeder)}, ${JSON.stringify(owner)}, ${JSON.stringify(dob)}, ${JSON.stringify(conditionedWeight)}, ${JSON.stringify(pedigreeNotes)}, 10000000 + ${pedId}))
+# Parse sire_id and dam_id from slots
+sire_id_val = None
+dam_id_val = None
+try:
+    slots_data = json.loads(${JSON.stringify(slotsJson)})
+    if isinstance(slots_data.get("sire"), dict) and slots_data["sire"].get("dog_id"):
+        sire_id_val = slots_data["sire"]["dog_id"]
+    if isinstance(slots_data.get("dam"), dict) and slots_data["dam"].get("dog_id"):
+        dam_id_val = slots_data["dam"]["dog_id"]
+except:
+    pass
+cur.execute("UPDATE dogs SET registered_name = ?, sex = ?, color = ?, breeder = ?, owner = ?, birthdate = ?, conditioned_weight = ?, description = ?, sire_id = ?, dam_id = ?, modified_date = datetime('now') WHERE dog_id = ?", (full_name, ${JSON.stringify(sex)}, ${JSON.stringify(color)}, ${JSON.stringify(breeder)}, ${JSON.stringify(owner)}, ${JSON.stringify(dob)}, ${JSON.stringify(conditionedWeight)}, ${JSON.stringify(pedigreeNotes)}, sire_id_val, dam_id_val, 10000000 + ${pedId}))
 db.commit()
 print(json.dumps({"success": True, "id": ${pedId}}))
 db.close()

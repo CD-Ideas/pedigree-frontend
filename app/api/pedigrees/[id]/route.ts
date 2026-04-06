@@ -85,6 +85,11 @@ if row["user_id"] != ${parseInt(String(userId))}:
     db.close()
     raise SystemExit(0)
 cur.execute("DELETE FROM published_pedigrees WHERE id = ?", (${pedId},))
+cur.execute("DELETE FROM dogs WHERE dog_id = ?", (10000000 + ${pedId},))
+try:
+    cur.execute("DELETE FROM dogs_fts WHERE rowid = ?", (10000000 + ${pedId},))
+except:
+    pass
 db.commit()
 print(json.dumps({"success": True}))
 db.close()
