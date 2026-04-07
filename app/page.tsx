@@ -593,7 +593,7 @@ export default function Home() {
                 </div>
 
                 <button
-                  onClick={() => openAuth("/breeding-calculator")}
+                  onClick={() => openAuth("/bloodline-calculator")}
                   className="w-full py-2 rounded-lg text-center"
                   style={{
                     fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "12px", textTransform: "uppercase", letterSpacing: "0.08em",

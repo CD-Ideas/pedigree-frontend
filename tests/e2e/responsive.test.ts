@@ -65,7 +65,7 @@ describe("Responsive behavior", () => {
       { path: "/pedigree", name: "pedigree" },
       { path: "/privacy", name: "privacy" },
       { path: "/terms", name: "terms" },
-      { path: "/breeding-calculator", name: "breeding-calculator" },
+      { path: "/bloodline-calculator", name: "breeding-calculator" },
       { path: "/puppy-predictor", name: "puppy-predictor" },
       { path: "/community", name: "community" },
       { path: "/forgot-password", name: "forgot-password" },

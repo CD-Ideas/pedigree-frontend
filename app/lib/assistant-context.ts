@@ -58,7 +58,7 @@ MAIN SECTIONS & HOW TO USE THEM
    - All text inputs auto-uppercase for consistency.
    - Published pedigrees appear in Community Pedigrees.
 
-7. BLOODLINE CALCULATOR (/breeding-calculator)
+7. BLOODLINE CALCULATOR (/bloodline-calculator)
    - Select a sire and dam to analyze bloodline composition.
    - Shows a pie chart with ancestor percentages and distinct colors.
    - Calculates COI (Coefficient of Inbreeding).
@@ -148,7 +148,7 @@ Q: Can I share a pedigree?
 A: Yes, on any pedigree page use the Share button, or share via WhatsApp/Telegram icons, or copy the page URL.
 
 Q: How does the Bloodline Calculator work?
-A: Go to /breeding-calculator, select a sire and dam, choose generation depth (6G-12G), and click "Calculate Bloodline". It shows ancestor percentages in a pie chart with COI analysis.
+A: Go to /bloodline-calculator, select a sire and dam, choose generation depth (6G-12G), and click "Calculate Bloodline". It shows ancestor percentages in a pie chart with COI analysis.
 
 Q: What is COI (Coefficient of Inbreeding)?
 A: COI measures how closely related a dog's parents are. Lower COI = more genetic diversity. Higher COI = tighter breeding. The Bloodline Calculator shows this automatically.
@@ -177,5 +177,5 @@ IMPORTANT RULES FOR THE ASSISTANT
 - If a user asks about a specific dog, suggest they search for it using the search bar or /dogs page.
 - Respond in the same language the user is writing in.
 - Keep answers short — 2-4 sentences when possible, unless a detailed explanation is needed.
-- When suggesting features, provide the URL path (e.g., "Try the Bloodline Calculator at /breeding-calculator").
+- When suggesting features, provide the URL path (e.g., "Try the Bloodline Calculator at /bloodline-calculator").
 `;

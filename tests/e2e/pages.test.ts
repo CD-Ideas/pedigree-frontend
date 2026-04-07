@@ -8,7 +8,7 @@ const PUBLIC_PAGES = [
   { path: "/pedigree", name: "pedigree-hub", expectedText: "Pedigree" },
   { path: "/browse", name: "browse", expectedText: "" },
   { path: "/marketplace", name: "marketplace", expectedText: "Marketplace" },
-  { path: "/breeding-calculator", name: "breeding-calculator", expectedText: "" },
+  { path: "/bloodline-calculator", name: "breeding-calculator", expectedText: "" },
   { path: "/puppy-predictor", name: "puppy-predictor", expectedText: "" },
   { path: "/privacy", name: "privacy", expectedText: "Privacy" },
   { path: "/terms", name: "terms", expectedText: "Terms" },

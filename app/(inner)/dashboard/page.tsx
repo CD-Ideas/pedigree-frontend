@@ -34,7 +34,7 @@ interface UserData {
 const NAV_ITEMS = [
   { icon: "📋", label: "My Pedigrees", href: "/dashboard/pedigrees", desc: "Your published pedigrees", color: "#60a5fa" },
   { icon: "🧪", label: "Pedigree Lab", href: "/pedigree-lab", desc: "Create & publish pedigrees", color: "#22c55e" },
-  { icon: "🧬", label: "Bloodline Calculator", href: "/breeding-calculator", desc: "COI & linebreeding analysis", color: "#a78bfa" },
+  { icon: "🧬", label: "Bloodline Calculator", href: "/bloodline-calculator", desc: "COI & linebreeding analysis", color: "#a78bfa" },
   { icon: "🔦", label: "Lineage Spotlight", href: "/pedigree/spotlight", desc: "Explore lineage trees", color: "#f59e0b" },
   { icon: "🌍", label: "Community Pedigrees", href: "/community", desc: "Browse all pedigrees", color: "#34d399" },
   { icon: "🐾", label: "Dogs", href: "/dogs", desc: "Browse dog database", color: "#f472b6" },
@@ -268,7 +268,7 @@ export default function Dashboard() {
               {[
                 { label: "Search Dogs", href: "/dogs", icon: "🔍", color: "#60a5fa" },
                 { label: "Create New Pedigree", href: "/pedigree-lab", icon: "🧪", color: "#22c55e" },
-                { label: "Bloodline Calculator", href: "/breeding-calculator", icon: "🧬", color: "#a78bfa" },
+                { label: "Bloodline Calculator", href: "/bloodline-calculator", icon: "🧬", color: "#a78bfa" },
                 { label: "Post Ad on Marketplace", href: "/marketplace/create", icon: "📢", color: "#C9B29F" },
               ].map((action) => (
                 <Link key={action.href} href={action.href}

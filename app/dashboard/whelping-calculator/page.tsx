@@ -276,22 +276,13 @@ export default function WhelpingCalculatorPage() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-6">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex-1 text-center">
-          <h1 className="font-black" style={{ fontFamily: "var(--font-table)", fontSize: "1.6rem", fontWeight: 900, letterSpacing: "0.02em", color: "#1C1C1C" }}>
-            WHELPING{" "}<span style={{ color: "#C9B29F" }}>CALCULATOR</span>
-          </h1>
-          <p className="text-xs max-w-xl mx-auto" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-            Calculate due dates &amp; track pregnancy milestones. Enter your breeding date to estimate whelping day, monitor progress, and prepare supplies.
-          </p>
-        </div>
-        {/* My Whelping button — top right */}
+      {/* My Whelping button — own row, top right */}
+      <div className="flex justify-end mb-3">
         <button
           onClick={() => { setShowMyWhelping(!showMyWhelping); setViewingWhelping(null); setEditingId(null); if (!showMyWhelping) loadWhelpings(); }}
-          className="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all hover:scale-105 flex-shrink-0 ml-4"
+          className="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all hover:scale-105"
           style={{ background: showMyWhelping ? "#1C1C1C" : "#FAF7F2", color: showMyWhelping ? "#FAF7F2" : "#1C1C1C", border: "2px solid #C9B29F", fontFamily: "var(--font-table)", cursor: "pointer" }}>
-          {showMyWhelping ? "Calculator" : viewingWhelping ? "My Whelping" : "My Whelping"}
+          {showMyWhelping ? "Calculator" : "My Whelping"}
           {myWhelpings.length > 0 && !showMyWhelping && !viewingWhelping && (
             <span className="ml-2 px-1.5 py-0.5 rounded-full text-[12px]"
               style={{ background: "#C9B29F", color: "#FAFAFA", fontFamily: "var(--font-mono)" }}>
@@ -299,6 +290,16 @@ export default function WhelpingCalculatorPage() {
             </span>
           )}
         </button>
+      </div>
+
+      {/* Header — fully centered */}
+      <div className="text-center mb-6">
+        <h1 className="font-black" style={{ fontFamily: "var(--font-table)", fontSize: "1.6rem", fontWeight: 900, letterSpacing: "0.02em", color: "#1C1C1C" }}>
+          WHELPING{" "}<span style={{ color: "#C9B29F" }}>CALCULATOR</span>
+        </h1>
+        <p className="text-xs max-w-xl mx-auto" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+          Calculate due dates &amp; track pregnancy milestones. Enter your breeding date to estimate whelping day, monitor progress, and prepare supplies.
+        </p>
       </div>
 
       {/* ═══ MY WHELPING LIST ═══ */}

@@ -473,7 +473,7 @@ describe("User Flows E2E", () => {
   // ────────────────────────────────────────────────
   describe("Flow 8: Breeding Calculator", () => {
     it("should show the breeding calculator with search fields", async () => {
-      await page.goto(`${BASE_URL}/breeding-calculator`, {
+      await page.goto(`${BASE_URL}/bloodline-calculator`, {
         waitUntil: "networkidle2",
         timeout: 30000,
       });
