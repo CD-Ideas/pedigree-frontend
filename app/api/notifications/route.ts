@@ -7,7 +7,7 @@ import { promisify } from "util";
 const execFileAsync = promisify(execFile);
 const DB_PATH = process.env.SQLITE_DB_PATH || "/home/ubuntu/apbt-scraper/apbt_v2.db";
 
-// GET - fetch notifications for a user
+// GET - fetch notifications for a user (also checks whelping reminders)
 export async function GET(req: NextRequest) {
   const userId = req.nextUrl.searchParams.get("userId");
   if (!userId) return NextResponse.json({ error: "userId required" }, { status: 400 });
@@ -15,14 +15,60 @@ export async function GET(req: NextRequest) {
   try {
     const script = `
 import sqlite3, json, sys
+from datetime import datetime, date
 user_id = int(sys.argv[1])
 conn = sqlite3.connect("${DB_PATH}")
 conn.row_factory = sqlite3.Row
-rows = conn.execute(
+cur = conn.cursor()
+
+# === Whelping reminder check ===
+# For each saved whelping of this user, check which reminder tier applies today
+# and insert a notification if one for that tier doesn't already exist.
+today = date.today()
+try:
+    cur.execute("SELECT id, dam_name, expected_due FROM saved_whelpings WHERE user_id = ?", (user_id,))
+    whelpings = cur.fetchall()
+    for w in whelpings:
+        wid, dam, exp_str = w["id"], w["dam_name"], w["expected_due"]
+        if not exp_str:
+            continue
+        try:
+            exp_date = datetime.strptime(exp_str, "%Y-%m-%d").date()
+        except:
+            continue
+        days_to_due = (exp_date - today).days
+        # Determine tier
+        tier = None
+        title_text = None
+        if days_to_due == 7:
+            tier = "7d"
+            title_text = f"{dam} — Due in 7 days"
+        elif days_to_due == 1:
+            tier = "1d"
+            title_text = f"{dam} — Due tomorrow"
+        elif days_to_due == 0:
+            tier = "due"
+            title_text = f"{dam} — Due today!"
+        elif days_to_due <= -5:
+            tier = "overdue"
+            title_text = f"{dam} — Overdue, contact vet"
+        if tier:
+            link = f"/dashboard/whelping-calculator?view={wid}&tier={tier}"
+            # Check if this exact notification already exists
+            exists = cur.execute("SELECT 1 FROM notifications WHERE user_id = ? AND type = 'whelping' AND link = ? LIMIT 1", (user_id, link)).fetchone()
+            if not exists:
+                cur.execute("INSERT INTO notifications (user_id, type, title, body, link) VALUES (?, 'whelping', ?, ?, ?)",
+                            (user_id, title_text, "Click to view whelping details.", link))
+    conn.commit()
+except Exception as e:
+    pass
+
+# Fetch notifications
+rows = cur.execute(
     "SELECT * FROM notifications WHERE user_id = ? ORDER BY created_at DESC LIMIT 50",
     (user_id,)
 ).fetchall()
-unread = conn.execute(
+unread = cur.execute(
     "SELECT COUNT(*) as c FROM notifications WHERE user_id = ? AND is_read = 0",
     (user_id,)
 ).fetchone()["c"]

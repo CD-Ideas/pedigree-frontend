@@ -93,6 +93,28 @@ export default function WhelpingCalculatorPage() {
     } catch (_) {}
   }, []);
 
+  /* Handle ?view={id} query param — auto-open that whelping in view mode */
+  useEffect(() => {
+    if (!userId) return;
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const viewId = params.get("view");
+    if (!viewId) return;
+    (async () => {
+      try {
+        const res = await fetch(`/api/whelpings?userId=${userId}`);
+        const data = await res.json();
+        const list: SavedWhelping[] = data.whelpings || [];
+        setMyWhelpings(list);
+        const found = list.find((w) => w.id === parseInt(viewId, 10));
+        if (found) {
+          viewWhelping(found);
+        }
+      } catch (_) {}
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]);
+
   /* Close dam dropdown on outside click */
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -404,7 +426,7 @@ export default function WhelpingCalculatorPage() {
             <div className="rounded-lg p-4 md:p-5 mb-5" style={steelFrame}>
               <div className="flex items-start justify-between gap-4 flex-wrap">
                 <div className="flex-1 min-w-0">
-                  <p className="text-[12px] uppercase tracking-widest font-bold mb-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Dam</p>
+                  <p className="text-[12px] uppercase tracking-widest font-bold mb-1" style={{ color: "#9f1239", fontFamily: "var(--font-table)" }}>Dam</p>
                   {damHref ? (
                     <a href={damHref} target="_blank" rel="noopener noreferrer"
                       className="text-lg font-black hover:underline"
@@ -529,13 +551,16 @@ export default function WhelpingCalculatorPage() {
                 </div>
                 <div className="space-y-1.5">
                   {CHECKLIST.map((item, i) => (
-                    <label key={i} className="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg cursor-pointer transition-all hover:scale-[1.01]"
+                    <div key={i} className="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg"
                       style={{ background: viewChecked.has(i) ? "rgba(34, 197, 94, 0.08)" : "transparent", border: viewChecked.has(i) ? "2px solid rgba(34, 197, 94, 0.3)" : "2px solid transparent" }}>
-                      <input type="checkbox" checked={viewChecked.has(i)} onChange={() => toggleViewCheck(i)} className="w-3.5 h-3.5 rounded accent-[#22c55e]" />
+                      <input type="checkbox" checked={viewChecked.has(i)} readOnly disabled className="w-3.5 h-3.5 rounded accent-[#22c55e] cursor-not-allowed" />
                       <span className="text-xs" style={{ color: viewChecked.has(i) ? "#22c55e" : "#4A4A4A", fontFamily: "var(--font-table)", textDecoration: viewChecked.has(i) ? "line-through" : "none" }}>{item}</span>
-                    </label>
+                    </div>
                   ))}
                 </div>
+                <p className="text-[12px] mt-2 text-center" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                  Click <span className="font-bold" style={{ color: "#1C1C1C" }}>Edit</span> above to modify the checklist.
+                </p>
               </div>
 
               {/* Key Dates Summary */}

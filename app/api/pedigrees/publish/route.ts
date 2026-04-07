@@ -265,6 +265,39 @@ print(json.dumps({"inserted": inserted}))
       console.error("Failed to populate pedigree_tree:", e);
     }
 
+    // Create title alert notifications for all users (except creator) if show_in_title_feed is ON
+    if (showInTitleFeed === 1 && userId) {
+      // Build display name
+      let displayName = name;
+      if (prefix && prefix !== "NONE" && prefix.trim()) displayName = prefix.trim() + " " + displayName;
+      const suffixParts: string[] = [];
+      if (suffixWins && suffixWins !== "0" && suffixWins.trim()) suffixParts.push(suffixWins.trim());
+      if (suffixLosses && suffixLosses !== "0" && suffixLosses.trim()) suffixParts.push(suffixLosses.trim());
+      if (suffixDraws && suffixDraws !== "0" && suffixDraws.trim()) suffixParts.push(suffixDraws.trim());
+      if (suffixHonors && suffixHonors !== "0" && suffixHonors.trim()) suffixParts.push(suffixHonors.trim());
+      if (suffixParts.length > 0) displayName += " " + suffixParts.join(" ");
+
+      const notifScript = `
+import sqlite3
+conn = sqlite3.connect("${DB}")
+cur = conn.cursor()
+cur.execute("SELECT id FROM users WHERE id != ?", (${userId},))
+users = [r[0] for r in cur.fetchall()]
+title = ${JSON.stringify(`New title: ${displayName}`)}
+body = ${JSON.stringify(`A new titled pedigree was just published.`)}
+link = "/dashboard/new-title-alerts"
+for uid in users:
+    cur.execute("INSERT INTO notifications (user_id, type, title, body, link) VALUES (?, 'title', ?, ?, ?)", (uid, title, body, link))
+conn.commit()
+conn.close()
+`;
+      try {
+        await execFileAsync("python3", ["-c", notifScript], { timeout: 10000 });
+      } catch (e) {
+        console.error("Failed to create title notifications:", e);
+      }
+    }
+
     return NextResponse.json({ success: true, id: ppId, dogId: dogId });
   } catch (err: unknown) {
     console.error("Publish error:", err);

@@ -501,6 +501,10 @@ export default function NavBar() {
                             if (!groupMap.has(groupKey)) {
                               groupMap.set(groupKey, { key: groupKey, icon: "🏆", title: "Title tracking updates", body: "", link: notif.link, ids: [], count: 0, hasUnread: false, latestTime: notif.created_at });
                             }
+                          } else if (notif.type === "whelping") {
+                            // Each whelping reminder is its own entry so user sees dam name + tier
+                            groupKey = `whelping_${notif.id}`;
+                            groupMap.set(groupKey, { key: groupKey, icon: "🤰", title: notif.title, body: notif.body, link: notif.link, ids: [], count: 0, hasUnread: false, latestTime: notif.created_at });
                           } else {
                             groupKey = `other_${notif.id}`;
                             groupMap.set(groupKey, { key: groupKey, icon: "🔔", title: notif.title, body: notif.body, link: notif.link, ids: [], count: 0, hasUnread: false, latestTime: notif.created_at });
