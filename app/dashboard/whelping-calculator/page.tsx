@@ -81,6 +81,7 @@ export default function WhelpingCalculatorPage() {
   const [myWhelpings, setMyWhelpings] = useState<SavedWhelping[]>([]);
   const [loadingWhelpings, setLoadingWhelpings] = useState(false);
   const [userId, setUserId] = useState<number | null>(null);
+  const [viewingWhelping, setViewingWhelping] = useState<SavedWhelping | null>(null);
 
   /* Get user on mount */
   useEffect(() => {
@@ -172,14 +173,22 @@ export default function WhelpingCalculatorPage() {
     } catch (_) {}
   };
 
-  /* Load a saved whelping into calculator */
-  const loadWhelping = (w: SavedWhelping) => {
+  /* View a saved whelping (read-only live tracker) */
+  const viewWhelping = (w: SavedWhelping) => {
+    setViewingWhelping(w);
+    setShowMyWhelping(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  /* Edit a saved whelping (load into calculator) */
+  const editWhelping = (w: SavedWhelping) => {
     setBreedDate(w.breed_date_1);
     setSecondBreedDate(w.breed_date_2 || "");
     setSelectedDam({ id: w.dam_id, name: w.dam_name });
     setDamQuery(w.dam_name);
     setNote(w.note || "");
     setCalculated(true);
+    setViewingWhelping(null);
     setShowMyWhelping(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -219,11 +228,11 @@ export default function WhelpingCalculatorPage() {
         </div>
         {/* My Whelping button — top right */}
         <button
-          onClick={() => { setShowMyWhelping(!showMyWhelping); if (!showMyWhelping) loadWhelpings(); }}
+          onClick={() => { setShowMyWhelping(!showMyWhelping); setViewingWhelping(null); if (!showMyWhelping) loadWhelpings(); }}
           className="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all hover:scale-105 flex-shrink-0 ml-4"
           style={{ background: showMyWhelping ? "#1C1C1C" : "#FAF7F2", color: showMyWhelping ? "#FAF7F2" : "#1C1C1C", border: "2px solid #C9B29F", fontFamily: "var(--font-table)", cursor: "pointer" }}>
-          {showMyWhelping ? "Calculator" : "My Whelping"}
-          {myWhelpings.length > 0 && !showMyWhelping && (
+          {showMyWhelping ? "Calculator" : viewingWhelping ? "Back" : "My Whelping"}
+          {myWhelpings.length > 0 && !showMyWhelping && !viewingWhelping && (
             <span className="ml-2 px-1.5 py-0.5 rounded-full text-[12px]"
               style={{ background: "#C9B29F", color: "#FAFAFA", fontFamily: "var(--font-mono)" }}>
               {myWhelpings.length}
@@ -294,7 +303,7 @@ export default function WhelpingCalculatorPage() {
 
                     {/* Actions */}
                     <div className="flex flex-col gap-1.5 flex-shrink-0">
-                      <button onClick={() => loadWhelping(w)}
+                      <button onClick={() => viewWhelping(w)}
                         className="px-3 py-1 rounded-lg text-[12px] font-bold uppercase tracking-widest transition-all hover:scale-105"
                         style={{ background: "#1C1C1C", color: "#FAFAFA", border: "2px solid #C9B29F", fontFamily: "var(--font-table)", cursor: "pointer" }}>
                         Open
@@ -313,8 +322,144 @@ export default function WhelpingCalculatorPage() {
         </div>
       )}
 
+      {/* ═══ VIEW MODE (read-only live tracker) ═══ */}
+      {viewingWhelping && !showMyWhelping && (() => {
+        const w = viewingWhelping;
+        const bd = new Date(w.breed_date_1 + "T12:00:00");
+        const sd = w.breed_date_2 ? new Date(w.breed_date_2 + "T12:00:00") : null;
+        const exp = new Date(w.expected_due + "T12:00:00");
+        const early = new Date(w.earliest_due + "T12:00:00");
+        const late = new Date(w.latest_due + "T12:00:00");
+        const dp = daysBetween(bd, today);
+        const dLeft = daysBetween(today, exp);
+        const pct = Math.min(Math.max((dp / 63) * 100, 0), 100);
+        const wk = Math.ceil(dp / 7);
+        const tri = dp <= 21 ? 1 : dp <= 42 ? 2 : 3;
+        const damHref = w.dam_id ? (w.dam_id >= 10000000 ? `/pedigree/custom/${w.dam_id - 10000000}` : `/pedigree/${w.dam_id}`) : null;
+
+        return (
+          <>
+            {/* Header row with dam + edit button */}
+            <div className="rounded-lg p-4 md:p-5 mb-5" style={steelFrame}>
+              <div className="flex items-start justify-between gap-4 flex-wrap">
+                <div className="flex-1 min-w-0">
+                  <p className="text-[12px] uppercase tracking-widest font-bold mb-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Dam</p>
+                  {damHref ? (
+                    <a href={damHref} target="_blank" rel="noopener noreferrer"
+                      className="text-lg font-black hover:underline"
+                      style={{ color: getDogColor(w.dam_name), fontFamily: "var(--font-table)" }}>
+                      {w.dam_name}
+                    </a>
+                  ) : (
+                    <span className="text-lg font-black" style={{ color: getDogColor(w.dam_name), fontFamily: "var(--font-table)" }}>
+                      {w.dam_name}
+                    </span>
+                  )}
+                  <p className="text-[12px] mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
+                    Bred: {w.breed_date_1}{w.breed_date_2 ? ` & ${w.breed_date_2}` : ""}
+                  </p>
+                  {w.note && (
+                    <p className="text-[12px] mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                      <span className="font-bold">Note:</span> {w.note}
+                    </p>
+                  )}
+                </div>
+                <button onClick={() => editWhelping(w)}
+                  className="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all hover:scale-105 flex-shrink-0"
+                  style={{ background: "#1C1C1C", color: "#FAFAFA", border: "2px solid #C9B29F", fontFamily: "var(--font-table)", cursor: "pointer" }}>
+                  Edit
+                </button>
+              </div>
+            </div>
+
+            {/* Due Date Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
+              <div className="rounded-lg p-4 text-center" style={steelFrame}>
+                <p className="text-[12px] font-bold uppercase tracking-widest mb-1" style={{ color: "#f59e0b", fontFamily: "var(--font-table)" }}>Earliest (Day 58)</p>
+                <p className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{formatDate(early)}</p>
+              </div>
+              <div className="rounded-lg p-4 text-center" style={{ background: "#1C1C1C", border: "2px solid #C9B29F", borderRadius: "8px" }}>
+                <p className="text-[12px] font-bold uppercase tracking-widest mb-1" style={{ color: "#C9B29F", fontFamily: "var(--font-table)" }}>Expected Due Date (Day 63)</p>
+                <p className="text-lg font-bold" style={{ color: "#FAFAFA", fontFamily: "var(--font-mono)" }}>{formatDate(exp)}</p>
+                {sd && (
+                  <p className="text-[12px] mt-1" style={{ color: "#C9B29F", fontFamily: "var(--font-table)" }}>2nd breed due: {formatDate(addDays(sd, 63))}</p>
+                )}
+              </div>
+              <div className="rounded-lg p-4 text-center" style={steelFrame}>
+                <p className="text-[12px] font-bold uppercase tracking-widest mb-1" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>Latest (Day 68)</p>
+                <p className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{formatDate(late)}</p>
+              </div>
+            </div>
+
+            {/* Live Pregnancy Progress */}
+            <div className="rounded-lg p-4 mb-5" style={steelFrame}>
+              <div className="flex items-center justify-between mb-2">
+                <h2 className="text-[12px] uppercase tracking-widest font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Live Pregnancy Progress</h2>
+                <div className="flex items-center gap-3">
+                  <span className="text-xs font-semibold" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>Week {wk} &middot; Trimester {tri}</span>
+                  <span className="text-xs font-bold px-2 py-0.5 rounded" style={{ background: dLeft > 0 ? "#1C1C1C" : "#22c55e", color: "#FAFAFA", fontFamily: "var(--font-mono)" }}>
+                    {dLeft > 0 ? `${dLeft} days left` : dp > 68 ? "Overdue" : "Due now"}
+                  </span>
+                </div>
+              </div>
+              <div className="relative h-6 rounded-full overflow-hidden" style={{ background: "#EDE4D5", border: "2px solid #C9B29F" }}>
+                <div className="h-full rounded-full transition-all duration-1000 ease-out"
+                  style={{ width: `${pct}%`, background: pct >= 100 ? "linear-gradient(90deg, #22c55e, #16a34a)" : pct >= 85 ? "linear-gradient(90deg, #f59e0b, #ef4444)" : "linear-gradient(90deg, #C9B29F, #8a6518)" }} />
+                <span className="absolute inset-0 flex items-center justify-center text-[12px] font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
+                  Day {Math.max(0, dp)} of 63 &middot; {pct.toFixed(0)}%
+                </span>
+              </div>
+              <div className="flex mt-1">
+                <div className="flex-1 text-center text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>1st Trimester (1-21)</div>
+                <div className="flex-1 text-center text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>2nd Trimester (22-42)</div>
+                <div className="flex-1 text-center text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>3rd Trimester (43-63)</div>
+              </div>
+            </div>
+
+            {/* Milestones Timeline (live) */}
+            <div className="rounded-lg p-4 md:p-5 mb-5" style={steelFrame}>
+              <h2 className="text-[12px] uppercase tracking-widest font-semibold mb-4" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Pregnancy Milestones</h2>
+              <div className="space-y-0">
+                {MILESTONES.map((m, i) => {
+                  const md = addDays(bd, m.day);
+                  const isPast = today >= md;
+                  const isCurrent = dp >= (MILESTONES[i - 1]?.day || 0) && dp < m.day;
+                  const isDueDate = m.day === 63;
+                  return (
+                    <div key={m.day} className="flex items-start gap-3 py-2.5 relative"
+                      style={{ borderBottom: i < MILESTONES.length - 1 ? "2px solid #EDE4D5" : "none" }}>
+                      <div className="flex flex-col items-center flex-shrink-0 mt-0.5">
+                        <div className="w-3 h-3 rounded-full border-2 flex-shrink-0"
+                          style={{ background: isPast ? (isDueDate ? "#22c55e" : "#1C1C1C") : isCurrent ? "#f59e0b" : "#EDE4D5", borderColor: isPast ? (isDueDate ? "#22c55e" : "#1C1C1C") : isCurrent ? "#f59e0b" : "#C9B29F" }} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="text-xs font-bold" style={{ color: isPast ? "#1C1C1C" : isCurrent ? "#f59e0b" : "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                            Day {m.day} &mdash; {m.label}
+                          </span>
+                          {isCurrent && (
+                            <span className="text-[12px] font-bold px-1.5 py-0.5 rounded animate-pulse" style={{ background: "#f59e0b", color: "#FAFAFA", fontFamily: "var(--font-table)" }}>CURRENT</span>
+                          )}
+                          {isPast && !isCurrent && (
+                            <span className="text-[12px] px-1.5 py-0.5 rounded" style={{ background: "#EDE4D5", color: "#4A4A4A", fontFamily: "var(--font-table)" }}>DONE</span>
+                          )}
+                        </div>
+                        <p className="text-[12px] mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>{m.desc}</p>
+                      </div>
+                      <span className="text-[12px] font-semibold flex-shrink-0 mt-0.5" style={{ color: isDueDate ? "#22c55e" : "#4A4A4A", fontFamily: "var(--font-mono)" }}>
+                        {formatDate(md)}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </>
+        );
+      })()}
+
       {/* ═══ CALCULATOR ═══ */}
-      {!showMyWhelping && (
+      {!showMyWhelping && !viewingWhelping && (
         <>
           {/* Date Input Section */}
           <div className="rounded-lg p-4 md:p-5 mb-5" style={steelFrame}>
