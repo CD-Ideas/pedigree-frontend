@@ -33,14 +33,14 @@ interface UserData {
 
 const NAV_ITEMS = [
   { icon: "📋", label: "My Pedigrees", href: "/dashboard/pedigrees", desc: "Your published pedigrees", color: "#60a5fa" },
-  { icon: "🧪", label: "Pedigree Lab", href: "/pedigree-lab", desc: "Create & publish pedigrees", color: "#22c55e" },
+  { icon: "🧪", label: "Pedigree Lab", href: "/pedigree-lab", desc: "Create & publish pedigrees", color: "#15803d" },
   { icon: "🧬", label: "Bloodline Calculator", href: "/bloodline-calculator", desc: "COI & linebreeding analysis", color: "#a78bfa" },
-  { icon: "🔦", label: "Lineage Spotlight", href: "/pedigree/spotlight", desc: "Explore lineage trees", color: "#f59e0b" },
+  { icon: "🔦", label: "Lineage Spotlight", href: "/pedigree/spotlight", desc: "Explore lineage trees", color: "#b45309" },
   { icon: "🌍", label: "Community Pedigrees", href: "/community", desc: "Browse all pedigrees", color: "#34d399" },
   { icon: "🐾", label: "Dogs", href: "/dogs", desc: "Browse dog database", color: "#f472b6" },
   { icon: "👑", label: "Dog of the Month", href: "/dog-of-the-month", desc: "Monthly photo contest", color: "#f97316" },
   { icon: "🎨", label: "Puppy Color Predictor", href: "/puppy-predictor", desc: "Predict coat colors", color: "#fb923c" },
-  { icon: "🏪", label: "Marketplace", href: "/marketplace", desc: "Buy, sell & advertise", color: "#ef4444" },
+  { icon: "🏪", label: "Marketplace", href: "/marketplace", desc: "Buy, sell & advertise", color: "#dc2626" },
   { icon: "🤰", label: "Whelping Calculator", href: "/dashboard/whelping-calculator", desc: "Predict puppy due dates", color: "#e879a0" },
 ];
 
@@ -59,6 +59,15 @@ export default function Dashboard() {
   const [showAvatarPicker, setShowAvatarPicker] = useState(false);
   const [avatarUploading, setAvatarUploading] = useState(false);
   const avatarInputRef = useRef<HTMLInputElement>(null);
+
+  // Escape closes avatar picker (accessibility - keyboard navigation)
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && showAvatarPicker) setShowAvatarPicker(false);
+    };
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [showAvatarPicker]);
 
   const AVATAR_OPTIONS = [
     { id: "dog1", emoji: "🐕" }, { id: "dog2", emoji: "🐶" }, { id: "dog3", emoji: "🐾" },
@@ -267,7 +276,7 @@ export default function Dashboard() {
             <div className="space-y-2">
               {[
                 { label: "Search Dogs", href: "/dogs", icon: "🔍", color: "#60a5fa" },
-                { label: "Create New Pedigree", href: "/pedigree-lab", icon: "🧪", color: "#22c55e" },
+                { label: "Create New Pedigree", href: "/pedigree-lab", icon: "🧪", color: "#15803d" },
                 { label: "Bloodline Calculator", href: "/bloodline-calculator", icon: "🧬", color: "#a78bfa" },
                 { label: "Post Ad on Marketplace", href: "/marketplace/create", icon: "📢", color: "#C9B29F" },
               ].map((action) => (
@@ -297,7 +306,7 @@ export default function Dashboard() {
             </h2>
             <div className="space-y-2">
               {[
-                { label: "New Title Alerts", href: "/dashboard/new-title-alerts", icon: "🏆", color: "#f59e0b" },
+                { label: "New Title Alerts", href: "/dashboard/new-title-alerts", icon: "🏆", color: "#b45309" },
                 { label: "Marketplace", href: "/marketplace", icon: "🛒", color: "#3b82f6" },
                 { label: "My Affiliates", href: "/dashboard/affiliates", icon: "🤝", color: "#10b981" },
               ].map((tool) => (
@@ -313,7 +322,7 @@ export default function Dashboard() {
                     {tool.label}
                   </span>
                   {tool.label === "New Title Alerts" && titleAlertCount > 0 && (
-                    <span style={{ background: "#ef4444", color: "#fff", fontSize: "12px", fontWeight: 700, borderRadius: "50%", width: 20, height: 20, display: "inline-flex", alignItems: "center", justifyContent: "center", marginLeft: 4 }}>
+                    <span style={{ background: "#dc2626", color: "#fff", fontSize: "12px", fontWeight: 700, borderRadius: "50%", width: 20, height: 20, display: "inline-flex", alignItems: "center", justifyContent: "center", marginLeft: 4 }}>
                       {titleAlertCount}
                     </span>
                   )}
@@ -345,7 +354,7 @@ export default function Dashboard() {
             {showAvatarPicker && (
               <>
                 <div className="fixed inset-0 z-[60]" onClick={() => setShowAvatarPicker(false)} />
-                <div className="absolute top-20 left-1/2 -translate-x-1/2 w-48 sm:w-56 overflow-hidden z-[70]"
+                <div role="dialog" aria-modal="true" aria-label="Choose avatar" className="absolute top-20 left-1/2 -translate-x-1/2 w-48 sm:w-56 overflow-hidden z-[70]"
                   onClick={(e) => e.stopPropagation()}
                   style={{ background: "#FAFAFA", border: "2px solid #C9B29F", borderRadius: "8px" }}>
                   <div className="px-3 py-2" style={{ borderBottom: "2px solid #C9B29F" }}>
@@ -372,7 +381,7 @@ export default function Dashboard() {
                   {user?.profile_picture && (
                     <button onClick={() => handleAvatarSelect("")}
                       className="w-full flex items-center justify-center gap-1 px-3 py-1.5 transition-colors hover:bg-red-500/5 text-[12px]"
-                      style={{ borderTop: "2px solid #C9B29F", color: "#ef4444", fontFamily: "var(--font-table)" }}>
+                      style={{ borderTop: "2px solid #C9B29F", color: "#dc2626", fontFamily: "var(--font-table)" }}>
                       Remove
                     </button>
                   )}
@@ -406,8 +415,8 @@ export default function Dashboard() {
                 Basic access to all features
               </p>
               <div className="mt-2 flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#22c55e" }} />
-                <span className="text-[12px] font-bold" style={{ color: "#22c55e", fontFamily: "var(--font-table)" }}>Active</span>
+                <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#15803d" }} />
+                <span className="text-[12px] font-bold" style={{ color: "#15803d", fontFamily: "var(--font-table)" }}>Active</span>
               </div>
             </div>
           </div>
@@ -420,7 +429,7 @@ export default function Dashboard() {
                 <span className="text-base">🔔</span>
                 {unreadMessages > 0 && (
                   <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center text-[12px] font-bold"
-                    style={{ background: "#ef4444", color: "#fff" }}>
+                    style={{ background: "#dc2626", color: "#fff" }}>
                     {unreadMessages}
                   </span>
                 )}
@@ -466,7 +475,7 @@ export default function Dashboard() {
               className="dash-nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg group"
               style={{ fontFamily: "var(--font-table)", "--item-color": "239,68,68" } as React.CSSProperties}>
               <span className="text-base transition-transform group-hover:scale-110">🚪</span>
-              <span className="dash-nav-label text-xs font-medium transition-colors" style={{ color: "#ef4444" }}>Logout</span>
+              <span className="dash-nav-label text-xs font-medium transition-colors" style={{ color: "#dc2626" }}>Logout</span>
             </button>
           </div>
         </div>

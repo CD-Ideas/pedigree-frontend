@@ -156,6 +156,17 @@ export default function NavBar() {
   const prevUnreadCountRef = useRef<number | null>(null);
   const prevMessageNotifCountRef = useRef<number | null>(null);
 
+  // Escape closes navbar dropdowns (accessibility - keyboard navigation)
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      if (showNotifications) setShowNotifications(false);
+      else if (showAvatarPicker) setShowAvatarPicker(false);
+    };
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [showNotifications, showAvatarPicker]);
+
   const AVATAR_OPTIONS = [
     { id: "dog1", emoji: "🐕", label: "Dog" },
     { id: "dog2", emoji: "🐶", label: "Puppy" },
@@ -341,6 +352,7 @@ export default function NavBar() {
   return (
     <>
     <nav
+      aria-label="Main navigation"
       style={{
         background: "#1C1C1C",
         borderBottom: "2px solid #C9B29F",
@@ -422,6 +434,9 @@ export default function NavBar() {
                   border: "2px solid #C9B29F",
                 }}
                 title="Notifications"
+                aria-label={`Notifications${unreadCount > 0 ? `, ${unreadCount} unread` : ""}`}
+                aria-expanded={showNotifications}
+                aria-haspopup="dialog"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C1C1C" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
@@ -430,7 +445,7 @@ export default function NavBar() {
                 {unreadCount > 0 && (
                   <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-1 rounded-lg flex items-center justify-center text-[12px] font-bold"
                     style={{
-                      background: "#ef4444",
+                      background: "#dc2626",
                       color: "#fff",
                       fontFamily: "var(--font-mono)",
                     }}>
@@ -443,6 +458,9 @@ export default function NavBar() {
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setShowNotifications(false)} />
                   <div className="absolute right-0 top-full mt-2 w-80 sm:w-96 max-w-[calc(100vw-16px)] rounded-lg overflow-hidden z-50"
+                    role="dialog"
+                    aria-label="Notifications"
+                    aria-live="polite"
                     style={{
                       background: "#FAFAFA",
                       border: "2px solid #C9B29F",
@@ -450,12 +468,12 @@ export default function NavBar() {
                     {/* Header */}
                     <div className="px-4 py-3 flex items-center justify-between" style={{ borderBottom: "2px solid #C9B29F" }}>
                       <p className="text-xs font-bold uppercase tracking-wider" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-                        Notifications {unreadCount > 0 && <span className="ml-1 text-[12px]" style={{ color: "#ef4444" }}>({unreadCount} new)</span>}
+                        Notifications {unreadCount > 0 && <span className="ml-1 text-[12px]" style={{ color: "#dc2626" }}>({unreadCount} new)</span>}
                       </p>
                       {notifications.length > 0 && (
                         <button onClick={clearAllNotifications}
                           className="text-[12px] px-2 py-0.5 rounded transition-colors hover:bg-red-500/10"
-                          style={{ color: "#ef4444", fontFamily: "var(--font-table)", border: "2px solid #ef4444" }}>
+                          style={{ color: "#dc2626", fontFamily: "var(--font-table)", border: "2px solid #dc2626" }}>
                           Clear All
                         </button>
                       )}
@@ -632,7 +650,7 @@ export default function NavBar() {
                 {showAvatarPicker && (
                   <>
                     <div className="fixed inset-0 z-[60]" onClick={(e) => { e.stopPropagation(); setShowAvatarPicker(false); }} />
-                    <div className="fixed right-2 sm:absolute sm:right-0 top-14 sm:top-full mt-0 sm:mt-2 w-[calc(100vw-16px)] sm:w-64 max-w-64 rounded-lg overflow-hidden z-[70]"
+                    <div role="dialog" aria-modal="true" aria-label="Choose avatar" className="fixed right-2 sm:absolute sm:right-0 top-14 sm:top-full mt-0 sm:mt-2 w-[calc(100vw-16px)] sm:w-64 max-w-64 rounded-lg overflow-hidden z-[70]"
                       onClick={(e) => e.stopPropagation()}
                       style={{
                         background: "#FAFAFA",
@@ -673,7 +691,7 @@ export default function NavBar() {
                         <button
                           onClick={() => handleAvatarSelect("")}
                           className="w-full flex items-center justify-center gap-2 px-4 py-2 transition-colors hover:bg-red-500/5 text-xs"
-                          style={{ borderTop: "2px solid #C9B29F", color: "#ef4444", fontFamily: "var(--font-table)" }}>
+                          style={{ borderTop: "2px solid #C9B29F", color: "#dc2626", fontFamily: "var(--font-table)" }}>
                           Remove Avatar
                         </button>
                       )}
@@ -731,7 +749,7 @@ export default function NavBar() {
                       <button
                         onClick={() => { setDropdownOpen(false); handleLogout(); }}
                         className="w-full flex items-center gap-3 px-4 py-2.5 transition-colors hover:bg-red-500/5 text-left"
-                        style={{ color: "#ef4444", fontFamily: "var(--font-table)", fontSize: "0.8rem" }}>
+                        style={{ color: "#dc2626", fontFamily: "var(--font-table)", fontSize: "0.8rem" }}>
                         <span className="text-sm">🚪</span>
                         Logout
                       </button>

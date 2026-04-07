@@ -670,9 +670,9 @@ function PedStatsTab({ genetics }: { genetics: Genetic[] }) {
 
   const totalPct = genetics.reduce((sum, g) => sum + g.percentage, 0);
   const pieColors = [
-    "#f59e0b", "#3b82f6", "#ef4444", "#10b981", "#8b5cf6", "#f97316", "#06b6d4", "#ec4899",
+    "#b45309", "#3b82f6", "#dc2626", "#10b981", "#8b5cf6", "#f97316", "#06b6d4", "#ec4899",
     "#84cc16", "#6366f1", "#14b8a6", "#f43f5e", "#a855f7", "#eab308", "#0ea5e9", "#d946ef",
-    "#22c55e", "#e11d48", "#7c3aed", "#fb923c", "#2dd4bf", "#c084fc", "#facc15", "#38bdf8",
+    "#15803d", "#e11d48", "#7c3aed", "#fb923c", "#2dd4bf", "#c084fc", "#facc15", "#38bdf8",
     "#4ade80", "#f472b6", "#818cf8", "#fbbf24", "#34d399", "#a78bfa", "#fca5a5", "#67e8f9",
   ];
   const slices = genetics.map((g, i) => ({

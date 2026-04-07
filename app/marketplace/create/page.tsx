@@ -31,10 +31,10 @@ const INPUT_STYLE: React.CSSProperties = {
 };
 
 const CATEGORIES = [
-  { key: "dogs_for_sale", label: "Dogs for Sale", icon: "🐾", color: "#ef4444" },
+  { key: "dogs_for_sale", label: "Dogs for Sale", icon: "🐾", color: "#dc2626" },
   { key: "stud_service", label: "Stud Service", icon: "\uD83D\uDC8E", color: "#8b5cf6" },
   { key: "litters_for_sale", label: "Litters for Sale", icon: "\uD83C\uDF7C", color: "#f472b6" },
-  { key: "supplies_gear", label: "Supplies & Gear", icon: "\uD83C\uDF92", color: "#22c55e" },
+  { key: "supplies_gear", label: "Supplies & Gear", icon: "\uD83C\uDF92", color: "#15803d" },
   { key: "courier_services", label: "Courier Services", icon: "\uD83D\uDE9A", color: "#60a5fa" },
   { key: "puppies_wanted", label: "Puppies Wanted", icon: "\uD83D\uDCE2", color: "#1C1C1C" },
 ];
@@ -453,7 +453,7 @@ function CreateAdContent() {
               }}
             >
               <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-                📂 Category <span style={{ color: "#ef4444" }}>*</span>
+                📂 Category <span style={{ color: "#dc2626" }}>*</span>
               </label>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                 {CATEGORIES.map((cat) => (
@@ -486,7 +486,7 @@ function CreateAdContent() {
                 ))}
               </div>
               {errors.category && (
-                <p className="text-[12px] mt-2 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+                <p className="text-[12px] mt-2 font-medium" style={{ color: "#dc2626", fontFamily: "var(--font-table)" }}>
                   {errors.category}
                 </p>
               )}
@@ -505,14 +505,14 @@ function CreateAdContent() {
           >
             <label className="text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               🐾 Link to Dog {["dogs_for_sale", "stud_service", "litters_for_sale"].includes(category)
-                ? <span className="text-[12px] normal-case tracking-normal font-normal" style={{ color: "#ef4444" }}>(required)</span>
+                ? <span className="text-[12px] normal-case tracking-normal font-normal" style={{ color: "#dc2626" }}>(required)</span>
                 : <span className="text-[12px] normal-case tracking-normal font-normal">(optional)</span>}
             </label>
             <p className="text-[12px] mb-3" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Link this ad to a registered pedigree on the platform — the heading will be auto-filled
             </p>
             {errors.dog && (
-              <p className="text-[12px] mb-2" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px] mb-2" style={{ color: "#dc2626", fontFamily: "var(--font-table)" }}>
                 {errors.dog}
               </p>
             )}
@@ -541,7 +541,7 @@ function CreateAdContent() {
                     setPhotos([]);
                   }}
                   className="px-2.5 py-2 rounded-lg text-xs transition-all hover:scale-105"
-                  style={{ background: "rgba(239,68,68,0.1)", color: "#ef4444", border: "2px solid rgba(239,68,68,0.2)" }}
+                  style={{ background: "rgba(239,68,68,0.1)", color: "#dc2626", border: "2px solid rgba(239,68,68,0.2)" }}
                 >
                   {"\u2715"}
                 </button>
@@ -626,12 +626,12 @@ function CreateAdContent() {
           >
             <div className="flex items-center justify-between mb-2">
               <label className="text-xs font-bold uppercase tracking-widest" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-                ✏️ Heading <span style={{ color: "#ef4444" }}>*</span>
+                ✏️ Heading <span style={{ color: "#dc2626" }}>*</span>
               </label>
               <span
                 className="text-[12px]"
                 style={{
-                  color: title.length > 80 ? "#ef4444" : title.length > 60 ? "#eab308" : "#4A4A4A",
+                  color: title.length > 80 ? "#dc2626" : title.length > 60 ? "#eab308" : "#4A4A4A",
                   fontFamily: "var(--font-mono)",
                 }}
               >
@@ -666,7 +666,7 @@ function CreateAdContent() {
               </p>
             )}
             {errors.title && (
-              <p className="text-[12px] mt-1.5 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px] mt-1.5 font-medium" style={{ color: "#dc2626", fontFamily: "var(--font-table)" }}>
                 {errors.title}
               </p>
             )}
@@ -682,12 +682,12 @@ function CreateAdContent() {
           >
             <div className="flex items-center justify-between mb-2">
               <label className="text-xs font-bold uppercase tracking-widest" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-                📝 Description <span style={{ color: "#ef4444" }}>*</span>
+                📝 Description <span style={{ color: "#dc2626" }}>*</span>
               </label>
               <span
                 className="text-[12px]"
                 style={{
-                  color: description.length > 500 ? "#ef4444" : description.length > 400 ? "#eab308" : "#4A4A4A",
+                  color: description.length > 500 ? "#dc2626" : description.length > 400 ? "#eab308" : "#4A4A4A",
                   fontFamily: "var(--font-mono)",
                 }}
               >
@@ -711,7 +711,7 @@ function CreateAdContent() {
               }}
             />
             {errors.description && (
-              <p className="text-[12px] mt-1.5 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px] mt-1.5 font-medium" style={{ color: "#dc2626", fontFamily: "var(--font-table)" }}>
                 {errors.description}
               </p>
             )}
@@ -728,7 +728,7 @@ function CreateAdContent() {
             <div className="relative">
               <span
                 className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold"
-                style={{ color: "#22c55e", fontFamily: "var(--font-mono)" }}
+                style={{ color: "#15803d", fontFamily: "var(--font-mono)" }}
               >
                 $
               </span>
@@ -744,7 +744,7 @@ function CreateAdContent() {
                 style={{
                   background: "#FAFAFA",
                   border: "2px solid #C9B29F",
-                  color: "#22c55e",
+                  color: "#15803d",
                   fontFamily: "var(--font-mono)",
                   transition: "all 0.2s ease",
                 }}
@@ -765,7 +765,7 @@ function CreateAdContent() {
           >
             <div className="flex items-center justify-between mb-3">
               <label className="text-xs font-bold uppercase tracking-widest" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-                📸 Photos <span style={{ color: "#ef4444" }}>*</span>
+                📸 Photos <span style={{ color: "#dc2626" }}>*</span>
               </label>
               <span className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
                 {photos.length}/5
@@ -872,7 +872,7 @@ function CreateAdContent() {
             )}
 
             {errors.photos && (
-              <p className="text-[12px] mt-1.5 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px] mt-1.5 font-medium" style={{ color: "#dc2626", fontFamily: "var(--font-table)" }}>
                 {errors.photos}
               </p>
             )}
@@ -887,7 +887,7 @@ function CreateAdContent() {
             }}
           >
             <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-              📍 Location <span style={{ color: "#ef4444" }}>*</span>
+              📍 Location <span style={{ color: "#dc2626" }}>*</span>
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {/* Continent */}
@@ -936,7 +936,7 @@ function CreateAdContent() {
               </div>
             </div>
             {errors.location && (
-              <p className="text-[12px] mt-2 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px] mt-2 font-medium" style={{ color: "#dc2626", fontFamily: "var(--font-table)" }}>
                 {errors.location}
               </p>
             )}
@@ -951,7 +951,7 @@ function CreateAdContent() {
             }}
           >
             <label className="text-xs font-bold uppercase tracking-widest mb-3 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-              📞 Contact Information <span style={{ color: "#ef4444" }}>*</span>
+              📞 Contact Information <span style={{ color: "#dc2626" }}>*</span>
             </label>
             <p className="text-[12px] mb-3" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Provide at least one contact method
@@ -1051,7 +1051,7 @@ function CreateAdContent() {
               </div>
             </div>
             {errors.contact && (
-              <p className="text-[12px] mt-2 font-medium" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px] mt-2 font-medium" style={{ color: "#dc2626", fontFamily: "var(--font-table)" }}>
                 {errors.contact}
               </p>
             )}
@@ -1063,7 +1063,7 @@ function CreateAdContent() {
               className="rounded-lg p-4 text-center"
               style={{ background: "rgba(239,68,68,0.08)", border: "2px solid rgba(239,68,68,0.3)" }}
             >
-              <p className="text-xs font-bold" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+              <p className="text-xs font-bold" style={{ color: "#dc2626", fontFamily: "var(--font-table)" }}>
                 {submitError}
               </p>
             </div>

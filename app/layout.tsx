@@ -46,9 +46,11 @@ export default function RootLayout({
         <script src="/notification-chime.js" defer></script>
       </head>
       <body className="antialiased">
+        {/* Skip to content link for keyboard/screen reader users */}
+        <a href="#main-content" className="skip-to-content">Skip to main content</a>
         <NavBar />
         <HeartbeatTracker />
-        <main className="relative z-10">
+        <main id="main-content" className="relative z-10" tabIndex={-1}>
           {children}
         </main>
         <ChatWidget />

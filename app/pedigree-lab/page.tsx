@@ -131,10 +131,10 @@ function sexIcon(sex?: string): string {
 }
 
 function riskColor(coi: number): string {
-  if (coi < 5) return "#22c55e";
+  if (coi < 5) return "#15803d";
   if (coi < 10) return "#eab308";
   if (coi < 15) return "#f97316";
-  if (coi < 20) return "#ef4444";
+  if (coi < 20) return "#dc2626";
   return "#dc2626";
 }
 
@@ -340,6 +340,15 @@ function PedigreeLabInner() {
 
   const [showPublishModal, setShowPublishModal] = useState(false);
   const [publishForm, setPublishForm] = useState<PublishForm>(defaultPublishForm());
+
+  // Escape closes publish modal (accessibility - keyboard navigation)
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && showPublishModal) setShowPublishModal(false);
+    };
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [showPublishModal]);
 
   /* ---------- Preview pedigree tree state ---------- */
   interface TreeRow { gen: number; pos: number; dog_id: number | null; name: string; photo_url: string | null; sex: string | null; }
@@ -1511,7 +1520,7 @@ function PedigreeLabInner() {
               </Link>
 
               {/* My Saved Pedigrees */}
-              <span dangerouslySetInnerHTML={{ __html: `<a onclick="var b=document.getElementById('saved-pedigrees-badge');if(b)b.style.display='none';" href="/dashboard/pedigree-folder" style="display:flex;align-items:center;justify-content:center;gap:8px;position:relative;width:100%;padding:10px 0;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-table);background:#C9B29F;color:#1C1C1C;border:2px solid #1C1C1C;border-radius:8px;cursor:pointer;text-decoration:none;transition:all 0.2s">📁 My Saved Pedigrees<span id="saved-pedigrees-badge" style="display:${savedViews.length > 0 ? "flex" : "none"};position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:#ef4444;color:#fff;font-size:10px;font-weight:700;align-items:center;justify-content:center">${savedViews.length}</span></a>` }} />
+              <span dangerouslySetInnerHTML={{ __html: `<a onclick="var b=document.getElementById('saved-pedigrees-badge');if(b)b.style.display='none';" href="/dashboard/pedigree-folder" style="display:flex;align-items:center;justify-content:center;gap:8px;position:relative;width:100%;padding:10px 0;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-table);background:#C9B29F;color:#1C1C1C;border:2px solid #1C1C1C;border-radius:8px;cursor:pointer;text-decoration:none;transition:all 0.2s">📁 My Saved Pedigrees<span id="saved-pedigrees-badge" style="display:${savedViews.length > 0 ? "flex" : "none"};position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:#dc2626;color:#fff;font-size:10px;font-weight:700;align-items:center;justify-content:center">${savedViews.length}</span></a>` }} />
 
             </div>
           </Card>
@@ -1581,6 +1590,9 @@ function PedigreeLabInner() {
             }}
           >
             <div
+              role="dialog"
+              aria-modal="true"
+              aria-label="Publish pedigree"
               className="p-5 space-y-5"
               onClick={(e) => e.stopPropagation()}
             >
@@ -1668,9 +1680,9 @@ function PedigreeLabInner() {
                   <span className="relative w-11 h-6 rounded-full flex-shrink-0 transition-all"
                     style={{
                       background: publishForm.showInTitleFeed
-                        ? "#22c55e"
+                        ? "#15803d"
                         : "#C9B29F",
-                      border: publishForm.showInTitleFeed ? "2px solid #22c55e" : "2px solid #C9B29F",
+                      border: publishForm.showInTitleFeed ? "2px solid #15803d" : "2px solid #C9B29F",
                     }}>
                     <span className="absolute top-0.5 left-0.5 w-5 h-5 rounded-full transition-all"
                       style={{
@@ -2047,7 +2059,7 @@ function PedigreeLabInner() {
                     style={{
                       background: "#FAFAFA",
                       border: "2px solid #C9B29F",
-                      color: publishForm.journal.rabiesNextDue ? "#22c55e" : "#4A4A4A",
+                      color: publishForm.journal.rabiesNextDue ? "#15803d" : "#4A4A4A",
                       fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)",
                     }}
                   >
@@ -2258,7 +2270,7 @@ function PedigreeLabInner() {
                       ))}
                     </div>
                     {publishForm.journal.wormingDraft.nextDue && (
-                      <p className="text-[12px] mt-1" style={{ color: "#22c55e", fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}>
+                      <p className="text-[12px] mt-1" style={{ color: "#15803d", fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}>
                         Due: {formatDateShort(publishForm.journal.wormingDraft.nextDue)}
                       </p>
                     )}
@@ -2339,7 +2351,7 @@ function PedigreeLabInner() {
                           {entry.nextDue && (
                             <>
                               <span className="text-[12px]" style={{ color: "#4A4A4A" }}>→</span>
-                              <span className="text-[12px]" style={{ color: "#22c55e", fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}>
+                              <span className="text-[12px]" style={{ color: "#15803d", fontFamily: "var(--font-mono, 'JetBrains Mono', monospace)" }}>
                                 Due: {formatDateShort(entry.nextDue)}
                               </span>
                             </>
@@ -2392,7 +2404,7 @@ function PedigreeLabInner() {
                 return (
                   <div className="rounded-lg p-4" style={{
                     background: "#FAF7F2",
-                    border: isUpcoming ? "2px solid #fb923c" : isOverdue ? "2px solid #ef4444" : "2px solid #C9B29F",
+                    border: isUpcoming ? "2px solid #fb923c" : isOverdue ? "2px solid #dc2626" : "2px solid #C9B29F",
                     borderRadius: 8,
                   }}>
                     <div className="flex items-center gap-2 mb-3">
@@ -2485,13 +2497,13 @@ function PedigreeLabInner() {
                     {hc.lastHeatDate && nextHeatDate && (
                       <div className="mt-3 rounded-lg px-3 py-2.5 flex items-center justify-between" style={{
                         background: "#FAF7F2",
-                        border: isOverdue ? "2px solid #ef4444" : isUpcoming ? "2px solid #fb923c" : "2px solid #C9B29F",
+                        border: isOverdue ? "2px solid #dc2626" : isUpcoming ? "2px solid #fb923c" : "2px solid #C9B29F",
                       }}>
                         <div className="flex items-center gap-2">
                           <span className="text-sm">{isOverdue ? "🔴" : isUpcoming ? "🟠" : "🌷"}</span>
                           <div>
                             <p className="text-[12px] uppercase tracking-wider font-semibold" style={{
-                              color: isOverdue ? "#ef4444" : isUpcoming ? "#fb923c" : "#9f1239",
+                              color: isOverdue ? "#dc2626" : isUpcoming ? "#fb923c" : "#9f1239",
                               fontFamily: "var(--font-table)",
                             }}>
                               {isOverdue ? "May be overdue" : isUpcoming ? "Coming up soon" : "Next expected heat"}
@@ -2503,7 +2515,7 @@ function PedigreeLabInner() {
                         </div>
                         <div className="text-right">
                           <p className="text-lg font-bold" style={{
-                            color: isOverdue ? "#ef4444" : isUpcoming ? "#fb923c" : "#9f1239",
+                            color: isOverdue ? "#dc2626" : isUpcoming ? "#fb923c" : "#9f1239",
                             fontFamily: "var(--font-table)",
                           }}>
                             {isOverdue ? `${Math.abs(daysUntilNext!)}d ago` : `${daysUntilNext}d`}
@@ -2541,7 +2553,7 @@ function PedigreeLabInner() {
                         onClick={() => updateHeatCycle({ reminderEnabled: !hc.reminderEnabled })}
                         className="relative w-9 h-5 rounded-full transition-all flex-shrink-0"
                         style={{
-                          background: hc.reminderEnabled ? "#22c55e" : "#C9B29F",
+                          background: hc.reminderEnabled ? "#15803d" : "#C9B29F",
                           border: "2px solid #C9B29F",
                         }}
                       >

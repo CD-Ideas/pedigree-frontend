@@ -200,7 +200,7 @@ export default function RegisterPage() {
             <p
               className="text-center text-sm mt-2"
               style={{
-                color: messageType === "success" ? "#22c55e" : "#ef4444",
+                color: messageType === "success" ? "#15803d" : "#dc2626",
               }}
             >
               {message}

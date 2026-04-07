@@ -91,7 +91,7 @@ export default function Home() {
                     <ul className="space-y-2.5 mb-5">
                       {["Unlimited dog registrations", "3-generation pedigree trees", "Basic search & browse", "Share pedigree links"].map((item, i) => (
                         <li key={i} className="flex items-center gap-2.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-body)", fontSize: "13px", fontWeight: 400 }}>
-                          <span style={{ color: "#22c55e", fontSize: "12px" }}>&#10003;</span>{item}
+                          <span style={{ color: "#15803d", fontSize: "12px" }}>&#10003;</span>{item}
                         </li>
                       ))}
                     </ul>
@@ -183,11 +183,11 @@ export default function Home() {
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
               {[
-                { icon: "🌳", title: "Pedigree Trees", desc: "Multi-generation interactive lineage visualization", color: "#22c55e", glow: "0,200,80", redirect: "/pedigree/3" },
+                { icon: "🌳", title: "Pedigree Trees", desc: "Multi-generation interactive lineage visualization", color: "#15803d", glow: "0,200,80", redirect: "/pedigree/3" },
                 { icon: "📋", title: "Dog Registry", desc: "Detailed profiles with titles, weights & records", color: "#3b82f6", glow: "59,130,246", redirect: "/dogs" },
                 { icon: "🔗", title: "Easy Sharing", desc: "Share via WhatsApp, Telegram with rich previews", color: "#a855f7", glow: "168,85,247" },
                 { icon: "🏆", title: "Title Tracking", desc: "CH, GR CH, ROM tracking across generations", color: "#C9B29F", glow: "201,178,159" },
-                { icon: "🧬", title: "Puppy Predictor", desc: "Input sire + dam genotypes, predict litter coat colors & probabilities", color: "#ef4444", glow: "239,68,68", redirect: "/puppy-predictor" },
+                { icon: "🧬", title: "Puppy Predictor", desc: "Input sire + dam genotypes, predict litter coat colors & probabilities", color: "#dc2626", glow: "239,68,68", redirect: "/puppy-predictor" },
                 { icon: "👑", title: "Dog of the Month", desc: "Monthly photo contest with community voting & prizes", color: "#f97316", glow: "249,115,22", redirect: "/dog-of-the-month" },
                 { icon: "🔦", title: "Lineage Spotlight", desc: "Search any legendary dog, trace descendants and find the tightest bloodlines ranked by blood %", color: "#1d8cf8", glow: "29,140,248", redirect: "/pedigree/spotlight" },
                 { icon: "🧪", title: "Pedigree Lab", desc: "Build custom pedigrees with drag-and-drop, then publish and share", color: "#a78bfa", glow: "167,139,250", redirect: "/pedigree-lab" },
@@ -330,10 +330,10 @@ export default function Home() {
                     <div className="w-6 h-6 rounded-lg flex items-center justify-center" style={{ background: "rgba(239,68,68,0.15)", border: "2px solid rgba(239,68,68,0.3)" }}>
                       <span style={{ fontSize: "12px" }}>⚠️</span>
                     </div>
-                    <span style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "12px", color: "#ef4444", textTransform: "uppercase", letterSpacing: "0.06em" }}>Inbreeding Alert — 6.2% COI</span>
+                    <span style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "12px", color: "#dc2626", textTransform: "uppercase", letterSpacing: "0.06em" }}>Inbreeding Alert — 6.2% COI</span>
                   </div>
                   <p style={{ fontFamily: "var(--font-body)", fontSize: "12px", color: "#4A4A4A", lineHeight: 1.5 }}>
-                    Carver&apos;s Black Widow appears <span style={{ color: "#ef4444", fontWeight: 600 }}>3 times across both sides</span>. Tight linebreeding. Monitor structural soundness.
+                    Carver&apos;s Black Widow appears <span style={{ color: "#dc2626", fontWeight: 600 }}>3 times across both sides</span>. Tight linebreeding. Monitor structural soundness.
                   </p>
                 </div>
 
@@ -415,10 +415,10 @@ export default function Home() {
             </p>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
               {[
-                { icon: "🐾", title: "Dogs For Sale", desc: "Browse verified listings from registered breeders", color: "#ef4444", glow: "239,68,68", tag: "HOT", category: "dogs_for_sale" },
+                { icon: "🐾", title: "Dogs For Sale", desc: "Browse verified listings from registered breeders", color: "#dc2626", glow: "239,68,68", tag: "HOT", category: "dogs_for_sale" },
                 { icon: "💎", title: "Stud Service", desc: "Find proven studs with full pedigree verification", color: "#8b5cf6", glow: "139,92,246", tag: null, category: "stud_service" },
                 { icon: "🍼", title: "Litters for Sale", desc: "Reserve puppies from planned breedings", color: "#f472b6", glow: "244,114,182", tag: "NEW", category: "litters_for_sale" },
-                { icon: "🎒", title: "Supplies & Gear", desc: "Premium products from trusted vendors", color: "#22c55e", glow: "34,197,94", tag: null, category: "supplies_gear" },
+                { icon: "🎒", title: "Supplies & Gear", desc: "Premium products from trusted vendors", color: "#15803d", glow: "34,197,94", tag: null, category: "supplies_gear" },
                 { icon: "🚚", title: "Courier Services", desc: "Licensed pet transport & delivery", color: "#60a5fa", glow: "96,165,250", tag: null, category: "courier_services" },
                 { icon: "📢", title: "Puppies Wanted", desc: "Post what you're looking for", color: "#C9B29F", glow: "201,178,159", tag: null, category: "puppies_wanted" },
               ].map((m, i) => (
@@ -454,7 +454,7 @@ export default function Home() {
                         {m.tag && (
                           <span style={{
                             fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "12px", letterSpacing: "0.08em",
-                            color: m.tag === "HOT" ? "#ef4444" : "#22c55e",
+                            color: m.tag === "HOT" ? "#dc2626" : "#15803d",
                             background: m.tag === "HOT" ? "rgba(239,68,68,0.12)" : "rgba(34,197,94,0.12)",
                             border: `2px solid ${m.tag === "HOT" ? "rgba(239,68,68,0.25)" : "rgba(34,197,94,0.25)"}`,
                             padding: "1px 6px", borderRadius: "9999px",

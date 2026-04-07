@@ -633,7 +633,7 @@ function MessagesContent() {
                   <Avatar src={t.other_profile_picture} username={t.other_username} />
                   {isOnline && (
                     <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2"
-                      style={{ background: "#22c55e", borderColor: "#FAFAFA" }} />
+                      style={{ background: "#15803d", borderColor: "#FAFAFA" }} />
                   )}
                 </div>
                 {/* Info */}
@@ -779,7 +779,7 @@ function MessagesContent() {
                   rows={4}
                   className="w-full rounded-lg px-4 py-3 text-sm outline-none resize-none"
                   style={{ background: "#FAF7F2", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
-                {composeMsg && <p className="text-xs text-center" style={{ color: composeMsg === "Sent!" ? "#22c55e" : "#ef4444" }}>{composeMsg}</p>}
+                {composeMsg && <p className="text-xs text-center" style={{ color: composeMsg === "Sent!" ? "#15803d" : "#dc2626" }}>{composeMsg}</p>}
                 <button onClick={sendNewMessage} disabled={sending || !toUsername.trim() || !replyText.trim()}
                   className="w-full py-3 rounded-lg text-sm font-bold uppercase tracking-wider transition-all disabled:opacity-40"
                   style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)" }}>
@@ -801,7 +801,7 @@ function MessagesContent() {
                     <Avatar src={selectedThreadData.other_profile_picture} username={selectedThreadData.other_username} size="w-9 h-9" textSize="text-xs" />
                     {onlineUserIds.has(selectedThreadData.other_user_id) && (
                       <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2"
-                        style={{ background: "#22c55e", borderColor: "#1C1C1C" }} />
+                        style={{ background: "#15803d", borderColor: "#1C1C1C" }} />
                     )}
                   </div>
                   <div>
@@ -1055,8 +1055,8 @@ function MessagesContent() {
                 <button onClick={isRecording ? stopRecording : startRecording} disabled={uploading}
                   className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center transition-all hover:scale-110"
                   style={{
-                    background: isRecording ? "#ef4444" : "#FAF7F2",
-                    border: isRecording ? "2px solid #ef4444" : "2px solid #C9B29F",
+                    background: isRecording ? "#dc2626" : "#FAF7F2",
+                    border: isRecording ? "2px solid #dc2626" : "2px solid #C9B29F",
                     color: isRecording ? "#FAFAFA" : "#1C1C1C",
                   }}>
                   {isRecording ? <span className="text-xs font-bold" style={{ fontFamily: "var(--font-table)" }}>{formatRecordingTime(recordingTime)}</span> : <span className="text-base">🎤</span>}

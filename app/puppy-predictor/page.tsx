@@ -707,13 +707,13 @@ export default function PuppyPredictorPage() {
                 {history.length > 0 && !confirmClear && (
                   <button onClick={() => setConfirmClear(true)}
                     className="text-[12px] px-2 py-0.5 rounded-lg transition-all"
-                    style={{ background: "#FAFAFA", color: "#ef4444", border: "2px solid #ef4444", fontFamily: "var(--font-table)" }}>
+                    style={{ background: "#FAFAFA", color: "#dc2626", border: "2px solid #dc2626", fontFamily: "var(--font-table)" }}>
                     Clear All
                   </button>
                 )}
                 {confirmClear && (
                   <div className="flex items-center gap-1.5">
-                    <span className="text-[12px]" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>Are you sure?</span>
+                    <span className="text-[12px]" style={{ color: "#dc2626", fontFamily: "var(--font-table)" }}>Are you sure?</span>
                     <button onClick={async () => {
                       try {
                         const u = JSON.parse(localStorage.getItem("user") || "null");
@@ -724,7 +724,7 @@ export default function PuppyPredictorPage() {
                       } catch (_e) {}
                     }}
                       className="text-[12px] px-2 py-0.5 rounded-lg transition-all"
-                      style={{ background: "#FAFAFA", color: "#ef4444", border: "2px solid #ef4444", fontFamily: "var(--font-table)", fontWeight: 700 }}>
+                      style={{ background: "#FAFAFA", color: "#dc2626", border: "2px solid #dc2626", fontFamily: "var(--font-table)", fontWeight: 700 }}>
                       Yes, Clear
                     </button>
                     <button onClick={() => setConfirmClear(false)}

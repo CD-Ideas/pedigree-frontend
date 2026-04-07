@@ -366,8 +366,8 @@ export default function AccountPage() {
               </div>
               <span className="text-[12px]" style={{ color: "#4A4A4A" }}>|</span>
               <div className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full" style={{ background: "#22c55e" }} />
-                <span className="text-xs font-bold" style={{ color: "#22c55e", fontFamily: "var(--font-table)" }}>Active</span>
+                <span className="w-2 h-2 rounded-full" style={{ background: "#15803d" }} />
+                <span className="text-xs font-bold" style={{ color: "#15803d", fontFamily: "var(--font-table)" }}>Active</span>
               </div>
             </div>
             <button
@@ -457,7 +457,7 @@ export default function AccountPage() {
               style={inputStyle}
             />
             {confirmPassword && newPassword !== confirmPassword && (
-              <p className="text-[12px] mt-1" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+              <p className="text-[12px] mt-1" style={{ color: "#dc2626", fontFamily: "var(--font-table)" }}>
                 Passwords do not match
               </p>
             )}
@@ -585,7 +585,7 @@ export default function AccountPage() {
                 btn.dataset.on = isOn ? "false" : "true";
                 btn.style.background = isOn ? "#EDE4D5" : "rgba(34,197,94,0.3)";
                 btn.querySelector("span")!.style.transform = isOn ? "translateX(0)" : "translateX(20px)";
-                btn.querySelector("span")!.style.background = isOn ? "#4A4A4A" : "#22c55e";
+                btn.querySelector("span")!.style.background = isOn ? "#4A4A4A" : "#15803d";
                 localStorage.setItem("pref_email_notifs", isOn ? "off" : "on");
                 showMsg(`Email notifications ${isOn ? "disabled" : "enabled"}`, "success");
               }}
@@ -625,7 +625,7 @@ export default function AccountPage() {
               <span
                 className="absolute top-0.5 left-0.5 w-5 h-5 rounded-full transition-all"
                 style={{
-                  background: soundMuted ? "#4A4A4A" : "#22c55e",
+                  background: soundMuted ? "#4A4A4A" : "#15803d",
                   transform: soundMuted ? "translateX(0)" : "translateX(20px)",
                 }}
               />
@@ -665,7 +665,7 @@ export default function AccountPage() {
               <span
                 className="absolute top-0.5 left-0.5 w-5 h-5 rounded-full transition-all"
                 style={{
-                  background: activeStatus ? "#22c55e" : "#4A4A4A",
+                  background: activeStatus ? "#15803d" : "#4A4A4A",
                   transform: activeStatus ? "translateX(20px)" : "translateX(0)",
                 }}
               />
@@ -676,8 +676,8 @@ export default function AccountPage() {
 
 
       {/* --- Danger Zone --- */}
-      <div className="p-6" style={{ ...cardStyle, border: "2px solid #ef4444" }}>
-        <h2 className="text-sm font-bold uppercase tracking-wider mb-4" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+      <div className="p-6" style={{ ...cardStyle, border: "2px solid #dc2626" }}>
+        <h2 className="text-sm font-bold uppercase tracking-wider mb-4" style={{ color: "#dc2626", fontFamily: "var(--font-table)" }}>
           Danger Zone
         </h2>
 
@@ -714,8 +714,8 @@ export default function AccountPage() {
               <button onClick={() => setShowDelete(!showDelete)}
                 className="px-4 py-2 text-xs font-bold uppercase tracking-wider transition-colors flex-shrink-0"
                 style={{
-                  color: "#ef4444", background: "#FEF2F2",
-                  border: "2px solid #ef4444", borderRadius: "8px", fontFamily: "var(--font-table)",
+                  color: "#dc2626", background: "#FEF2F2",
+                  border: "2px solid #dc2626", borderRadius: "8px", fontFamily: "var(--font-table)",
                 }}>
                 Delete
               </button>
@@ -723,7 +723,7 @@ export default function AccountPage() {
 
             {showDelete && (
               <div className="mt-4 p-4" style={{ background: "#FEF2F2", border: "2px solid #FCA5A5", borderRadius: "8px" }}>
-                <p className="text-xs mb-3" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+                <p className="text-xs mb-3" style={{ color: "#dc2626", fontFamily: "var(--font-table)" }}>
                   Type <strong>DELETE</strong> to confirm permanent deletion:
                 </p>
                 <div className="flex gap-3">
@@ -745,9 +745,9 @@ export default function AccountPage() {
                     disabled={deleteConfirm !== "DELETE"}
                     className="px-6 py-2 text-xs font-bold uppercase transition-colors"
                     style={{
-                      background: deleteConfirm === "DELETE" ? "#ef4444" : "#FEF2F2",
+                      background: deleteConfirm === "DELETE" ? "#dc2626" : "#FEF2F2",
                       color: deleteConfirm === "DELETE" ? "#fff" : "#FCA5A5",
-                      border: "2px solid #ef4444",
+                      border: "2px solid #dc2626",
                       borderRadius: "8px",
                       fontFamily: "var(--font-table)",
                       cursor: deleteConfirm === "DELETE" ? "pointer" : "not-allowed",

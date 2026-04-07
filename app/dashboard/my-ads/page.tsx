@@ -24,19 +24,19 @@ interface MarketplaceAd {
 const LOGO = "/logo.png";
 
 const CATEGORIES: Record<string, { label: string; icon: string; color: string }> = {
-  dogs_for_sale: { label: "Dogs for Sale", icon: "🐾", color: "#ef4444" },
+  dogs_for_sale: { label: "Dogs for Sale", icon: "🐾", color: "#dc2626" },
   stud_service: { label: "Stud Service", icon: "\uD83D\uDC8E", color: "#8b5cf6" },
   litters_for_sale: { label: "Litters for Sale", icon: "\uD83C\uDF7C", color: "#f472b6" },
-  supplies_gear: { label: "Supplies & Gear", icon: "\uD83C\uDF92", color: "#22c55e" },
+  supplies_gear: { label: "Supplies & Gear", icon: "\uD83C\uDF92", color: "#15803d" },
   courier_services: { label: "Courier Services", icon: "\uD83D\uDE9A", color: "#60a5fa" },
   puppies_wanted: { label: "Puppies Wanted", icon: "\uD83D\uDCE2", color: "#1C1C1C" },
 };
 
 const STATUS_STYLES: Record<string, { bg: string; color: string; border: string; label: string }> = {
-  active: { bg: "rgba(34,197,94,0.12)", color: "#22c55e", border: "rgba(34,197,94,0.3)", label: "Active" },
+  active: { bg: "rgba(34,197,94,0.12)", color: "#15803d", border: "rgba(34,197,94,0.3)", label: "Active" },
   pending: { bg: "rgba(234,179,8,0.12)", color: "#eab308", border: "rgba(234,179,8,0.3)", label: "Pending" },
   expired: { bg: "rgba(148,163,184,0.12)", color: "#4A4A4A", border: "rgba(148,163,184,0.3)", label: "Expired" },
-  removed: { bg: "rgba(239,68,68,0.12)", color: "#ef4444", border: "rgba(239,68,68,0.3)", label: "Removed" },
+  removed: { bg: "rgba(239,68,68,0.12)", color: "#dc2626", border: "rgba(239,68,68,0.3)", label: "Removed" },
 };
 
 /* ─── Helpers ─── */
@@ -334,7 +334,7 @@ export default function MyAdsPage() {
                         {ad.price !== null && ad.price !== undefined && (
                           <div
                             className="text-sm font-black mt-1"
-                            style={{ color: "#22c55e", fontFamily: "var(--font-mono)" }}
+                            style={{ color: "#15803d", fontFamily: "var(--font-mono)" }}
                           >
                             ${ad.price.toLocaleString()}
                           </div>
@@ -378,7 +378,7 @@ export default function MyAdsPage() {
                             className="px-3 py-1.5 rounded-lg text-[12px] font-bold transition-all hover:scale-105 disabled:opacity-50"
                             style={{
                               background: "rgba(239,68,68,0.1)",
-                              color: "#ef4444",
+                              color: "#dc2626",
                               border: "2px solid rgba(239,68,68,0.25)",
                               fontFamily: "var(--font-table)",
                             }}

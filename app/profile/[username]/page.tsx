@@ -82,6 +82,16 @@ export default function ProfilePage() {
   const [pedigrees, setPedigrees] = useState<Pedigree[]>([]);
   const [ads, setAds] = useState<Ad[]>([]);
   const [showPhotoModal, setShowPhotoModal] = useState(false);
+
+  // Escape key closes photo modal (accessibility - keyboard navigation)
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && showPhotoModal) setShowPhotoModal(false);
+    };
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [showPhotoModal]);
+
   const [currentUsername, setCurrentUsername] = useState<string | null>(null);
   const [currentUserId, setCurrentUserId] = useState<number | null>(null);
   const [isBlocked, setIsBlocked] = useState(false);
@@ -304,9 +314,9 @@ export default function ProfilePage() {
                     className="flex items-center gap-1.5 px-3 py-1 rounded-lg text-[12px] font-semibold transition-all hover:scale-105"
                     style={{
                       background: isBlocked ? "#FEF2F2" : "#FAF7F2",
-                      border: `2px solid ${isBlocked ? "#ef4444" : "#C9B29F"}`,
+                      border: `2px solid ${isBlocked ? "#dc2626" : "#C9B29F"}`,
                       borderRadius: "8px",
-                      color: isBlocked ? "#ef4444" : "#4A4A4A",
+                      color: isBlocked ? "#dc2626" : "#4A4A4A",
                       fontFamily: "var(--font-table)",
                       opacity: blockLoading ? 0.5 : 1,
                     }}
@@ -323,13 +333,13 @@ export default function ProfilePage() {
               <span
                 className="w-2 h-2 rounded-full"
                 style={{
-                  background: online ? "#22c55e" : "#4A4A4A",
+                  background: online ? "#15803d" : "#4A4A4A",
                 }}
               />
               <span
                 className="text-xs"
                 style={{
-                  color: online ? "#22c55e" : "#4A4A4A",
+                  color: online ? "#15803d" : "#4A4A4A",
                   fontFamily: "var(--font-table)",
                 }}
               >
@@ -474,7 +484,7 @@ export default function ProfilePage() {
                     {ad.price != null && (
                       <span
                         className="text-[12px] font-bold"
-                        style={{ color: "#22c55e" }}
+                        style={{ color: "#15803d" }}
                       >
                         ${Number(ad.price).toLocaleString()}
                       </span>
@@ -500,7 +510,7 @@ export default function ProfilePage() {
           style={{ background: "rgba(0,0,0,0.6)" }}
           onClick={() => setShowPhotoModal(false)}
         >
-          <div className="relative max-w-[90vw] max-h-[90vh]" onClick={(e) => e.stopPropagation()}>
+          <div role="dialog" aria-modal="true" aria-label={`${user.username} profile photo`} className="relative max-w-[90vw] max-h-[90vh]" onClick={(e) => e.stopPropagation()}>
             <img
               src={user.profile_picture}
               alt={user.username}
@@ -515,6 +525,7 @@ export default function ProfilePage() {
             />
             <button
               onClick={() => setShowPhotoModal(false)}
+              aria-label="Close photo preview"
               className="absolute -top-3 -right-3 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all hover:scale-110"
               style={{
                 background: "#FAF7F2",

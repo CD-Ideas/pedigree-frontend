@@ -488,7 +488,7 @@ function NavAuthButton() {
         <button
           onClick={() => { localStorage.removeItem("token"); localStorage.removeItem("refreshToken"); localStorage.removeItem("user"); window.location.reload(); }}
           className="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all hover:scale-105"
-          style={{ background: "rgba(220,38,38,0.15)", color: "#ef4444", border: "2px solid rgba(220,38,38,0.3)", fontFamily: "var(--font-table)" }}>
+          style={{ background: "rgba(220,38,38,0.15)", color: "#dc2626", border: "2px solid rgba(220,38,38,0.3)", fontFamily: "var(--font-table)" }}>
           Logout
         </button>
       </div>
@@ -662,7 +662,7 @@ export default function PublishedPedigreePage() {
                   <Link href={`/pedigree-lab?edit=${ped.id}`}
                     className="text-[12px] px-2 py-0.5 rounded-lg font-semibold transition-all hover:scale-105"
                     style={{
-                      background: "rgba(34,197,94,0.12)", color: "#22c55e",
+                      background: "rgba(34,197,94,0.12)", color: "#15803d",
                       fontFamily: "var(--font-table)", border: "2px solid rgba(34,197,94,0.3)",
                     }}>
                     ✎ Edit
@@ -671,7 +671,7 @@ export default function PublishedPedigreePage() {
                     onClick={() => setShowDeleteConfirm(true)}
                     className="text-[12px] px-2 py-0.5 rounded-lg font-semibold transition-all hover:scale-105"
                     style={{
-                      background: "rgba(239,68,68,0.12)", color: "#ef4444",
+                      background: "rgba(239,68,68,0.12)", color: "#dc2626",
                       fontFamily: "var(--font-table)", border: "2px solid rgba(239,68,68,0.3)",
                     }}>
                     ✕ Delete
@@ -848,7 +848,7 @@ export default function PublishedPedigreePage() {
                   </span>
                 </div>
                 <span className="text-[12px] px-2 py-0.5 rounded-lg" style={{
-                  background: "rgba(220,38,38,0.12)", color: "#ef4444",
+                  background: "rgba(220,38,38,0.12)", color: "#dc2626",
                   fontFamily: "var(--font-table)", border: "2px solid rgba(220,38,38,0.3)",
                 }}>
                   Private — Only You
@@ -865,7 +865,7 @@ export default function PublishedPedigreePage() {
                     </div>
                     <div>
                       <span className="text-[12px] uppercase tracking-widest font-semibold block mb-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Rabies: Next Due</span>
-                      <span className="text-sm" style={{ color: "#22c55e", fontFamily: "var(--font-mono)" }}>{fmtDate(journal.rabiesNextDue || "")}</span>
+                      <span className="text-sm" style={{ color: "#15803d", fontFamily: "var(--font-mono)" }}>{fmtDate(journal.rabiesNextDue || "")}</span>
                     </div>
                   </div>
                 )}
@@ -886,7 +886,7 @@ export default function PublishedPedigreePage() {
                       {journal.vaccines.filter(v => v.checked).map(v => (
                         <div key={v.name} className="flex items-center justify-between rounded-lg px-3 py-2"
                           style={{ background: "#FAF7F2", border: "2px solid #EDE4D5" }}>
-                          <span className="text-xs font-semibold" style={{ color: "#22c55e", fontFamily: "var(--font-table)" }}>✓ {v.name}</span>
+                          <span className="text-xs font-semibold" style={{ color: "#15803d", fontFamily: "var(--font-table)" }}>✓ {v.name}</span>
                           {v.date && <span className="text-[12px]" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{fmtDate(v.date)}</span>}
                         </div>
                       ))}
@@ -913,7 +913,7 @@ export default function PublishedPedigreePage() {
                             {w.nextDue && (
                               <>
                                 <span className="text-[12px]" style={{ color: "#4A4A4A" }}>→</span>
-                                <span className="text-[12px]" style={{ color: "#22c55e", fontFamily: "var(--font-mono)" }}>Due: {fmtDate(w.nextDue)}</span>
+                                <span className="text-[12px]" style={{ color: "#15803d", fontFamily: "var(--font-mono)" }}>Due: {fmtDate(w.nextDue)}</span>
                               </>
                             )}
                           </div>
@@ -966,7 +966,7 @@ export default function PublishedPedigreePage() {
             <div className="text-center mb-4">
               <span className="text-3xl">⚠️</span>
             </div>
-            <h3 className="text-sm font-bold text-center mb-2" style={{ color: "#ef4444", fontFamily: "var(--font-table)", letterSpacing: "0.03em" }}>
+            <h3 className="text-sm font-bold text-center mb-2" style={{ color: "#dc2626", fontFamily: "var(--font-table)", letterSpacing: "0.03em" }}>
               Delete Pedigree
             </h3>
             <p className="text-xs text-center mb-1" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
@@ -975,7 +975,7 @@ export default function PublishedPedigreePage() {
             <p className="text-xs text-center font-bold mb-4" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               {ped?.name || "this pedigree"}?
             </p>
-            <p className="text-[12px] text-center mb-5" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+            <p className="text-[12px] text-center mb-5" style={{ color: "#dc2626", fontFamily: "var(--font-table)" }}>
               This action cannot be undone.
             </p>
             <div className="flex gap-3">
@@ -996,7 +996,7 @@ export default function PublishedPedigreePage() {
                 disabled={deleting}
                 className="flex-1 px-4 py-2.5 rounded-lg text-xs font-semibold transition-all hover:scale-105"
                 style={{
-                  background: "#ef4444",
+                  background: "#dc2626",
                   color: "#fff",
                   fontFamily: "var(--font-table)",
                   letterSpacing: "0.05em",

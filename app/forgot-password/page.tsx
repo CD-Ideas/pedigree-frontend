@@ -73,7 +73,7 @@ export default function ForgotPasswordPage() {
           <div className="text-center py-4">
             <div className="w-16 h-16 rounded-lg mx-auto mb-4 flex items-center justify-center"
               style={{ background: "rgba(34,197,94,0.1)", border: "2px solid rgba(34,197,94,0.3)" }}>
-              <span className="text-3xl" style={{ color: "#22c55e" }}>&#10003;</span>
+              <span className="text-3xl" style={{ color: "#15803d" }}>&#10003;</span>
             </div>
             <p style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", fontSize: "1rem", fontWeight: 600 }}>
               Check your email

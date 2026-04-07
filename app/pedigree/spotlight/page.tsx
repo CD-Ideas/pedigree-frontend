@@ -625,11 +625,11 @@ export default function SpotlightPage() {
                   {/* Blood % + COI Badges */}
                   <div className="absolute top-2 right-2 z-10 flex flex-col gap-0.5 items-end">
                     <div className="px-2 py-0.5 rounded-full text-[12px] font-bold"
-                         style={{ background: "#FAF7F2", color: "#ef4444", fontFamily: "var(--font-mono)", border: "2px solid #C9B29F" }}>
+                         style={{ background: "#FAF7F2", color: "#dc2626", fontFamily: "var(--font-mono)", border: "2px solid #C9B29F" }}>
                       🩸 {r.blood_pct}% {target?.name?.split("'S ")[1]?.split(" ")[0] || "Blood"}
                     </div>
                     <div className="px-2 py-0.5 rounded-full text-[12px] font-bold"
-                         style={{ background: "#FAF7F2", color: r.coi >= 10 ? "#ef4444" : r.coi >= 5 ? "#f59e0b" : "#22c55e", fontFamily: "var(--font-mono)", border: "2px solid #C9B29F" }}>
+                         style={{ background: "#FAF7F2", color: r.coi >= 10 ? "#dc2626" : r.coi >= 5 ? "#b45309" : "#15803d", fontFamily: "var(--font-mono)", border: "2px solid #C9B29F" }}>
                       COI {r.coi}%
                     </div>
                   </div>

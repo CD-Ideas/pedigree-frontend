@@ -9,10 +9,10 @@ import { getDogColor } from "@/app/utils/colors";
 /* Helpers                                                            */
 /* ------------------------------------------------------------------ */
 function riskColor(coi: number): string {
-  if (coi < 5) return "#22c55e";
+  if (coi < 5) return "#15803d";
   if (coi < 10) return "#eab308";
   if (coi < 15) return "#f97316";
-  if (coi < 20) return "#ef4444";
+  if (coi < 20) return "#dc2626";
   return "#dc2626";
 }
 

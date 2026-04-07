@@ -35,10 +35,10 @@ interface MarketplaceAd {
 const LOGO = "/logo.png";
 
 const CATEGORIES: Record<string, { label: string; icon: string; color: string }> = {
-  dogs_for_sale: { label: "Dogs for Sale", icon: "🐾", color: "#ef4444" },
+  dogs_for_sale: { label: "Dogs for Sale", icon: "🐾", color: "#dc2626" },
   stud_service: { label: "Stud Service", icon: "\uD83D\uDC8E", color: "#8b5cf6" },
   litters_for_sale: { label: "Litters for Sale", icon: "\uD83C\uDF7C", color: "#f472b6" },
-  supplies_gear: { label: "Supplies & Gear", icon: "\uD83C\uDF92", color: "#22c55e" },
+  supplies_gear: { label: "Supplies & Gear", icon: "\uD83C\uDF92", color: "#15803d" },
   courier_services: { label: "Courier Services", icon: "\uD83D\uDE9A", color: "#60a5fa" },
   puppies_wanted: { label: "Puppies Wanted", icon: "\uD83D\uDCE2", color: "#1C1C1C" },
 };
@@ -393,13 +393,13 @@ export default function MarketplaceAdPage() {
                 >
                   {reportSent ? (
                     <div className="text-center py-2">
-                      <span className="text-xs font-bold" style={{ color: "#22c55e", fontFamily: "var(--font-table)" }}>
+                      <span className="text-xs font-bold" style={{ color: "#15803d", fontFamily: "var(--font-table)" }}>
                         Report submitted. Thank you.
                       </span>
                     </div>
                   ) : (
                     <>
-                      <h4 className="text-xs font-bold mb-2" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>
+                      <h4 className="text-xs font-bold mb-2" style={{ color: "#dc2626", fontFamily: "var(--font-table)" }}>
                         Report this listing
                       </h4>
                       <textarea
@@ -422,7 +422,7 @@ export default function MarketplaceAdPage() {
                           className="px-4 py-1.5 rounded-lg text-[12px] font-bold transition-all hover:scale-105"
                           style={{
                             background: "rgba(239,68,68,0.15)",
-                            color: "#ef4444",
+                            color: "#dc2626",
                             border: "2px solid rgba(239,68,68,0.3)",
                             fontFamily: "var(--font-table)",
                           }}
@@ -664,10 +664,10 @@ export default function MarketplaceAdPage() {
                     className="text-[12px] font-bold"
                     style={{
                       color: daysUntilExpiry <= 0
-                        ? "#ef4444"
+                        ? "#dc2626"
                         : daysUntilExpiry <= 7
-                          ? "#f59e0b"
-                          : "#22c55e",
+                          ? "#b45309"
+                          : "#15803d",
                       fontFamily: "var(--font-table)",
                     }}
                   >
@@ -714,7 +714,7 @@ export default function MarketplaceAdPage() {
                       className="flex-1 rounded-lg px-4 py-2.5 text-xs font-bold uppercase tracking-wider transition-all hover:scale-[1.02]"
                       style={{
                         background: "rgba(239,68,68,0.15)",
-                        color: "#ef4444",
+                        color: "#dc2626",
                         border: "2px solid rgba(239,68,68,0.3)",
                         fontFamily: "var(--font-table)",
                       }}
@@ -725,7 +725,7 @@ export default function MarketplaceAdPage() {
                     <div className="flex-1 flex flex-col gap-2">
                       <span
                         className="text-[12px] font-bold text-center"
-                        style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}
+                        style={{ color: "#dc2626", fontFamily: "var(--font-table)" }}
                       >
                         Are you sure?
                       </span>
@@ -735,7 +735,7 @@ export default function MarketplaceAdPage() {
                           disabled={deleting}
                           className="flex-1 rounded-lg px-2 py-1.5 text-[12px] font-bold uppercase tracking-wider transition-all hover:scale-105 disabled:opacity-50"
                           style={{
-                            background: "#ef4444",
+                            background: "#dc2626",
                             color: "#fff",
                             fontFamily: "var(--font-table)",
                           }}
@@ -829,7 +829,7 @@ export default function MarketplaceAdPage() {
                       {verifyRequesting ? "Requesting..." : "🛡 Request Free Verification"}
                     </button>
                     {verifyMsg && (
-                      <p className="text-[12px] text-center mt-2" style={{ color: verifyMsg.includes("!") ? "#22c55e" : "#ef4444" }}>
+                      <p className="text-[12px] text-center mt-2" style={{ color: verifyMsg.includes("!") ? "#15803d" : "#dc2626" }}>
                         {verifyMsg}
                       </p>
                     )}

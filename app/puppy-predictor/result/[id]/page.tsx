@@ -110,7 +110,7 @@ export default function PredictionResultPage() {
 
   if (error || !data) return (
     <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: "#EDE4D5" }}>
-      <p className="text-sm" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>{error || "Not found"}</p>
+      <p className="text-sm" style={{ color: "#dc2626", fontFamily: "var(--font-table)" }}>{error || "Not found"}</p>
     </div>
   );
 
@@ -192,7 +192,7 @@ export default function PredictionResultPage() {
               {r.carriers.length > 0 && (
                 <div className="mt-2 space-y-0.5">
                   {r.carriers.map((c, ci) => (
-                    <div key={ci} className="flex items-center gap-1.5 text-[12px]" style={{ color: "#f59e0b" }}>
+                    <div key={ci} className="flex items-center gap-1.5 text-[12px]" style={{ color: "#b45309" }}>
                       <span>⚠</span><span>{c}</span>
                     </div>
                   ))}

@@ -41,10 +41,10 @@ interface SharedAncestor {
 /* ------------------------------------------------------------------ */
 
 function riskColor(coi: number): string {
-  if (coi < 5) return "#22c55e";
+  if (coi < 5) return "#15803d";
   if (coi < 10) return "#eab308";
   if (coi < 15) return "#f97316";
-  if (coi < 20) return "#ef4444";
+  if (coi < 20) return "#dc2626";
   return "#dc2626";
 }
 
@@ -66,7 +66,7 @@ function riskVerdict(coi: number, topAncestor?: SharedAncestor): string {
 }
 
 const PIE_COLORS = [
-  "#ef4444", "#f97316", "#eab308", "#22c55e", "#3b82f6",
+  "#dc2626", "#f97316", "#eab308", "#15803d", "#3b82f6",
   "#8b5cf6", "#ec4899", "#14b8a6", "#f43f5e", "#a855f7",
   "#06b6d4", "#84cc16", "#e11d48", "#6366f1",
 ];
@@ -121,10 +121,10 @@ function TachoGauge({ coi }: { coi: number }) {
       <svg width="280" height="180" viewBox="0 0 280 180">
         <defs>
           <linearGradient id="gaugeGrad" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="#22c55e" />
+            <stop offset="0%" stopColor="#15803d" />
             <stop offset="30%" stopColor="#eab308" />
             <stop offset="55%" stopColor="#f97316" />
-            <stop offset="75%" stopColor="#ef4444" />
+            <stop offset="75%" stopColor="#dc2626" />
             <stop offset="100%" stopColor="#dc2626" />
           </linearGradient>
         </defs>
@@ -253,7 +253,7 @@ function DogSlot({
           <span className="text-sm" style={{ color }}>{icon}</span>
           <span className="text-[12px] font-semibold uppercase tracking-widest" style={{ color, fontFamily: "var(--font-table)" }}>{label}</span>
           {selected && (
-            <button onClick={clear} className="ml-auto text-[12px] px-2 py-0.5 rounded-lg transition-all hover:bg-red-500/10" style={{ color: "#ef4444", background: "#FAFAFA", border: "2px solid #C9B29F" }}>
+            <button onClick={clear} className="ml-auto text-[12px] px-2 py-0.5 rounded-lg transition-all hover:bg-red-500/10" style={{ color: "#dc2626", background: "#FAFAFA", border: "2px solid #C9B29F" }}>
               Clear
             </button>
           )}
@@ -624,7 +624,7 @@ export default function BloodlineCalculatorPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {/* Gauge Card */}
               <Card className="p-5 flex flex-col items-center justify-center">
-                <SectionHeader color="#22c55e">COI Gauge</SectionHeader>
+                <SectionHeader color="#15803d">COI Gauge</SectionHeader>
                 <TachoGauge coi={coi} />
               </Card>
 
@@ -663,15 +663,15 @@ export default function BloodlineCalculatorPage() {
               {/* AVK */}
               {avk !== null && (
                 <Card className="p-5">
-                  <SectionHeader color={avk > 80 ? "#22c55e" : avk > 60 ? "#eab308" : "#ef4444"}>Ancestor Loss Coefficient (AVK)</SectionHeader>
+                  <SectionHeader color={avk > 80 ? "#15803d" : avk > 60 ? "#eab308" : "#dc2626"}>Ancestor Loss Coefficient (AVK)</SectionHeader>
                   <div className="flex items-end gap-3">
-                    <span className="text-3xl font-bold" style={{ color: avk > 80 ? "#22c55e" : avk > 60 ? "#eab308" : "#ef4444", fontFamily: "var(--font-mono)" }}>{avk.toFixed(1)}%</span>
+                    <span className="text-3xl font-bold" style={{ color: avk > 80 ? "#15803d" : avk > 60 ? "#eab308" : "#dc2626", fontFamily: "var(--font-mono)" }}>{avk.toFixed(1)}%</span>
                     <span className="text-[12px] mb-1.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                       {avk > 80 ? "High diversity -- wide gene pool" : avk > 60 ? "Moderate -- some repeat ancestors" : "Low diversity -- heavy linebreeding"}
                     </span>
                   </div>
                   <div className="mt-3 h-2 rounded-full overflow-hidden" style={{ background: "#EDE4D5" }}>
-                    <div className="h-full rounded-full transition-all duration-1000" style={{ width: `${Math.min(avk, 100)}%`, background: avk > 80 ? "#22c55e" : avk > 60 ? "#eab308" : "#ef4444" }} />
+                    <div className="h-full rounded-full transition-all duration-1000" style={{ width: `${Math.min(avk, 100)}%`, background: avk > 80 ? "#15803d" : avk > 60 ? "#eab308" : "#dc2626" }} />
                   </div>
                 </Card>
               )}

@@ -236,7 +236,7 @@ export default function PedigreeFolderPage() {
                     <a href={v.image_path} download={`${v.dog_name}.png`} className="flex-1 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider text-center transition-all hover:scale-105" style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)", textDecoration: "none", fontSize: "12px" }}>
                       Download
                     </a>
-                    <button onClick={() => deleteView(v.id)} className="px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all hover:scale-105" style={{ background: "#ef4444", color: "#fff", border: "none", fontFamily: "var(--font-table)", cursor: "pointer", fontSize: "12px" }}>
+                    <button onClick={() => deleteView(v.id)} className="px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all hover:scale-105" style={{ background: "#dc2626", color: "#fff", border: "none", fontFamily: "var(--font-table)", cursor: "pointer", fontSize: "12px" }}>
                       Delete
                     </button>
                   </div>
@@ -280,7 +280,7 @@ export default function PedigreeFolderPage() {
                       <a href={v.image_path} download={`${v.dog_name}.png`} className="flex-1 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-center transition-all hover:scale-105" style={{ background: "#1C1C1C", color: "#FAF7F2", fontFamily: "var(--font-table)", textDecoration: "none", fontSize: "12px" }}>
                         ↓ Download
                       </a>
-                      <button onClick={() => { deleteView(v.id); setExpandedId(null); }} className="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all hover:scale-105" style={{ background: "#ef4444", color: "#fff", border: "none", fontFamily: "var(--font-table)", cursor: "pointer", fontSize: "12px" }}>
+                      <button onClick={() => { deleteView(v.id); setExpandedId(null); }} className="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all hover:scale-105" style={{ background: "#dc2626", color: "#fff", border: "none", fontFamily: "var(--font-table)", cursor: "pointer", fontSize: "12px" }}>
                         ✕ Delete
                       </button>
                     </div>
@@ -320,7 +320,7 @@ export default function PedigreeFolderPage() {
                 </button>
                 <button
                   onClick={confirmDelete}
-                  style={{ padding: "8px 20px", borderRadius: "8px", border: "none", background: "#ef4444", color: "#fff", fontWeight: 700, fontSize: "12px", cursor: "pointer", fontFamily: "var(--font-table)" }}
+                  style={{ padding: "8px 20px", borderRadius: "8px", border: "none", background: "#dc2626", color: "#fff", fontWeight: 700, fontSize: "12px", cursor: "pointer", fontFamily: "var(--font-table)" }}
                 >
                   Delete
                 </button>

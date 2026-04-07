@@ -138,7 +138,7 @@ export default function DogOfTheMonthPage() {
             type="submit"
             className="px-6 py-3 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all hover:scale-[1.02]"
             style={{
-              background: submitted ? "#22c55e" : "#1C1C1C",
+              background: submitted ? "#15803d" : "#1C1C1C",
               color: "#FAF7F2",
               fontFamily: "var(--font-table)",
               borderRadius: "8px",

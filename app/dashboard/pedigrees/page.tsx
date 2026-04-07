@@ -480,7 +480,7 @@ export default function MyPedigreesPage() {
                     <span className="text-[12px] px-1.5 py-0.5 rounded-full font-bold"
                       style={{
                         background: r.daysLeft <= 0 ? "rgba(220,38,38,0.2)" : r.daysLeft <= 3 ? "rgba(234,179,8,0.2)" : "rgba(34,197,94,0.15)",
-                        color: r.daysLeft <= 0 ? "#fc8181" : r.daysLeft <= 3 ? "#eab308" : "#22c55e",
+                        color: r.daysLeft <= 0 ? "#fc8181" : r.daysLeft <= 3 ? "#eab308" : "#15803d",
                         fontFamily: "var(--font-mono)",
                         border: `2px solid ${r.daysLeft <= 0 ? "rgba(220,38,38,0.3)" : r.daysLeft <= 3 ? "rgba(234,179,8,0.3)" : "rgba(34,197,94,0.3)"}`,
                       }}>
@@ -626,7 +626,7 @@ export default function MyPedigreesPage() {
                       <div className="flex items-center gap-1 flex-wrap mt-1">
                         {journal.vaccines?.filter(v => v.checked).map(v => (
                           <span key={v.name} className="text-[12px] px-1 py-0.5 rounded-full"
-                            style={{ background: "rgba(34,197,94,0.1)", color: "#22c55e", border: "2px solid rgba(34,197,94,0.2)", fontFamily: "var(--font-table)" }}>
+                            style={{ background: "rgba(34,197,94,0.1)", color: "#15803d", border: "2px solid rgba(34,197,94,0.2)", fontFamily: "var(--font-table)" }}>
                             ✓ {v.name}
                           </span>
                         ))}
@@ -655,7 +655,7 @@ export default function MyPedigreesPage() {
                         className="text-[12px] px-2 py-0.5 rounded-lg font-semibold inline-block"
                         style={{
                           background: "rgba(34,197,94,0.1)",
-                          color: "#22c55e",
+                          color: "#15803d",
                           border: "2px solid rgba(34,197,94,0.2)",
                           fontFamily: "var(--font-table)",
                         }}

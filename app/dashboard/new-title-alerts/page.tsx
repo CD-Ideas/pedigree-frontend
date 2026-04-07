@@ -206,7 +206,7 @@ export default function NewTitleAlertsPage() {
             <button
               onClick={() => { setFilterContinent(""); setFilterCountry(""); setFilterTime(""); setPage(1); }}
               className="px-3 py-2 rounded-lg text-xs font-bold transition-all hover:scale-105"
-              style={{ background: "rgba(239,68,68,0.1)", color: "#ef4444", border: "2px solid rgba(239,68,68,0.3)", fontFamily: "var(--font-table)" }}
+              style={{ background: "rgba(239,68,68,0.1)", color: "#dc2626", border: "2px solid rgba(239,68,68,0.3)", fontFamily: "var(--font-table)" }}
             >
               Clear all
             </button>

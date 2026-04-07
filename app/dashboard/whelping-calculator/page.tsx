@@ -359,7 +359,7 @@ export default function WhelpingCalculatorPage() {
                       <div className="absolute top-1.5 right-1.5 flex items-center px-1.5 py-0.5 rounded-full"
                         style={{ background: "rgba(250,247,242,0.95)", border: "2px solid #C9B29F" }}>
                         <span className="text-[12px] font-bold"
-                          style={{ color: dLeft > 0 ? "#1C1C1C" : dLeft === 0 ? "#22c55e" : "#ef4444", fontFamily: "var(--font-mono)" }}>
+                          style={{ color: dLeft > 0 ? "#1C1C1C" : dLeft === 0 ? "#15803d" : "#dc2626", fontFamily: "var(--font-mono)" }}>
                           {dLeft > 0 ? `${dLeft}d` : dLeft === 0 ? "Today" : "Past"}
                         </span>
                       </div>
@@ -367,7 +367,7 @@ export default function WhelpingCalculatorPage() {
                       <button
                         onClick={(e) => { e.stopPropagation(); handleDelete(w.id); }}
                         className="absolute top-1.5 left-1.5 w-5 h-5 rounded-full flex items-center justify-center transition-all hover:scale-110"
-                        style={{ background: "#FAFAFA", border: "2px solid #ef4444", color: "#ef4444", fontFamily: "var(--font-table)", fontSize: "12px", fontWeight: 900, lineHeight: 1 }}
+                        style={{ background: "#FAFAFA", border: "2px solid #dc2626", color: "#dc2626", fontFamily: "var(--font-table)", fontSize: "12px", fontWeight: 900, lineHeight: 1 }}
                         title="Delete">
                         ×
                       </button>
@@ -391,7 +391,7 @@ export default function WhelpingCalculatorPage() {
                         <div className="h-full rounded-full"
                           style={{
                             width: `${pct}%`,
-                            background: pct >= 100 ? "#22c55e" : pct >= 85 ? "#f59e0b" : "#C9B29F",
+                            background: pct >= 100 ? "#15803d" : pct >= 85 ? "#b45309" : "#C9B29F",
                           }} />
                       </div>
                       <p className="text-[12px] mt-0.5 text-center" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
@@ -456,7 +456,7 @@ export default function WhelpingCalculatorPage() {
                   </button>
                   <button onClick={() => { handleDelete(w.id); setViewingWhelping(null); setShowMyWhelping(true); loadWhelpings(); }}
                     className="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all hover:scale-105"
-                    style={{ background: "#FAFAFA", color: "#ef4444", border: "2px solid #ef4444", fontFamily: "var(--font-table)", cursor: "pointer" }}>
+                    style={{ background: "#FAFAFA", color: "#dc2626", border: "2px solid #dc2626", fontFamily: "var(--font-table)", cursor: "pointer" }}>
                     Delete
                   </button>
                 </div>
@@ -466,7 +466,7 @@ export default function WhelpingCalculatorPage() {
             {/* Due Date Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
               <div className="rounded-lg p-4 text-center" style={steelFrame}>
-                <p className="text-[12px] font-bold uppercase tracking-widest mb-1" style={{ color: "#f59e0b", fontFamily: "var(--font-table)" }}>Earliest (Day 58)</p>
+                <p className="text-[12px] font-bold uppercase tracking-widest mb-1" style={{ color: "#b45309", fontFamily: "var(--font-table)" }}>Earliest (Day 58)</p>
                 <p className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{formatDate(early)}</p>
               </div>
               <div className="rounded-lg p-4 text-center" style={{ background: "#1C1C1C", border: "2px solid #C9B29F", borderRadius: "8px" }}>
@@ -477,7 +477,7 @@ export default function WhelpingCalculatorPage() {
                 )}
               </div>
               <div className="rounded-lg p-4 text-center" style={steelFrame}>
-                <p className="text-[12px] font-bold uppercase tracking-widest mb-1" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>Latest (Day 68)</p>
+                <p className="text-[12px] font-bold uppercase tracking-widest mb-1" style={{ color: "#dc2626", fontFamily: "var(--font-table)" }}>Latest (Day 68)</p>
                 <p className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{formatDate(late)}</p>
               </div>
             </div>
@@ -488,14 +488,14 @@ export default function WhelpingCalculatorPage() {
                 <h2 className="text-[12px] uppercase tracking-widest font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Live Pregnancy Progress</h2>
                 <div className="flex items-center gap-3">
                   <span className="text-xs font-semibold" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>Week {wk} &middot; Trimester {tri}</span>
-                  <span className="text-xs font-bold px-2 py-0.5 rounded" style={{ background: dLeft > 0 ? "#1C1C1C" : "#22c55e", color: "#FAFAFA", fontFamily: "var(--font-mono)" }}>
+                  <span className="text-xs font-bold px-2 py-0.5 rounded" style={{ background: dLeft > 0 ? "#1C1C1C" : "#15803d", color: "#FAFAFA", fontFamily: "var(--font-mono)" }}>
                     {dLeft > 0 ? `${dLeft} days left` : dp > 68 ? "Overdue" : "Due now"}
                   </span>
                 </div>
               </div>
               <div className="relative h-6 rounded-full overflow-hidden" style={{ background: "#EDE4D5", border: "2px solid #C9B29F" }}>
                 <div className="h-full rounded-full transition-all duration-1000 ease-out"
-                  style={{ width: `${pct}%`, background: pct >= 100 ? "linear-gradient(90deg, #22c55e, #16a34a)" : pct >= 85 ? "linear-gradient(90deg, #f59e0b, #ef4444)" : "linear-gradient(90deg, #C9B29F, #8a6518)" }} />
+                  style={{ width: `${pct}%`, background: pct >= 100 ? "linear-gradient(90deg, #15803d, #16a34a)" : pct >= 85 ? "linear-gradient(90deg, #b45309, #dc2626)" : "linear-gradient(90deg, #C9B29F, #8a6518)" }} />
                 <span className="absolute inset-0 flex items-center justify-center text-[12px] font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
                   Day {Math.max(0, dp)} of 63 &middot; {pct.toFixed(0)}%
                 </span>
@@ -521,15 +521,15 @@ export default function WhelpingCalculatorPage() {
                       style={{ borderBottom: i < MILESTONES.length - 1 ? "2px solid #EDE4D5" : "none" }}>
                       <div className="flex flex-col items-center flex-shrink-0 mt-0.5">
                         <div className="w-3 h-3 rounded-full border-2 flex-shrink-0"
-                          style={{ background: isPast ? (isDueDate ? "#22c55e" : "#1C1C1C") : isCurrent ? "#f59e0b" : "#EDE4D5", borderColor: isPast ? (isDueDate ? "#22c55e" : "#1C1C1C") : isCurrent ? "#f59e0b" : "#C9B29F" }} />
+                          style={{ background: isPast ? (isDueDate ? "#15803d" : "#1C1C1C") : isCurrent ? "#b45309" : "#EDE4D5", borderColor: isPast ? (isDueDate ? "#15803d" : "#1C1C1C") : isCurrent ? "#b45309" : "#C9B29F" }} />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <span className="text-xs font-bold" style={{ color: isPast ? "#1C1C1C" : isCurrent ? "#f59e0b" : "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                          <span className="text-xs font-bold" style={{ color: isPast ? "#1C1C1C" : isCurrent ? "#b45309" : "#4A4A4A", fontFamily: "var(--font-table)" }}>
                             Day {m.day} &mdash; {m.label}
                           </span>
                           {isCurrent && (
-                            <span className="text-[12px] font-bold px-1.5 py-0.5 rounded animate-pulse" style={{ background: "#f59e0b", color: "#FAFAFA", fontFamily: "var(--font-table)" }}>CURRENT</span>
+                            <span className="text-[12px] font-bold px-1.5 py-0.5 rounded animate-pulse" style={{ background: "#b45309", color: "#FAFAFA", fontFamily: "var(--font-table)" }}>CURRENT</span>
                           )}
                           {isPast && !isCurrent && (
                             <span className="text-[12px] px-1.5 py-0.5 rounded" style={{ background: "#EDE4D5", color: "#4A4A4A", fontFamily: "var(--font-table)" }}>DONE</span>
@@ -537,7 +537,7 @@ export default function WhelpingCalculatorPage() {
                         </div>
                         <p className="text-[12px] mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>{m.desc}</p>
                       </div>
-                      <span className="text-[12px] font-semibold flex-shrink-0 mt-0.5" style={{ color: isDueDate ? "#22c55e" : "#4A4A4A", fontFamily: "var(--font-mono)" }}>
+                      <span className="text-[12px] font-semibold flex-shrink-0 mt-0.5" style={{ color: isDueDate ? "#15803d" : "#4A4A4A", fontFamily: "var(--font-mono)" }}>
                         {formatDate(md)}
                       </span>
                     </div>
@@ -553,7 +553,7 @@ export default function WhelpingCalculatorPage() {
                 <div className="flex items-center justify-between mb-3">
                   <h2 className="text-[12px] uppercase tracking-widest font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Whelping Supply Checklist</h2>
                   <span className="text-[12px] font-bold px-2 py-0.5 rounded"
-                    style={{ background: viewChecked.size === CHECKLIST.length ? "#22c55e" : "#EDE4D5", color: viewChecked.size === CHECKLIST.length ? "#FAFAFA" : "#4A4A4A", fontFamily: "var(--font-mono)" }}>
+                    style={{ background: viewChecked.size === CHECKLIST.length ? "#15803d" : "#EDE4D5", color: viewChecked.size === CHECKLIST.length ? "#FAFAFA" : "#4A4A4A", fontFamily: "var(--font-mono)" }}>
                     {viewChecked.size}/{CHECKLIST.length}
                   </span>
                 </div>
@@ -561,8 +561,8 @@ export default function WhelpingCalculatorPage() {
                   {CHECKLIST.map((item, i) => (
                     <div key={i} className="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg"
                       style={{ background: viewChecked.has(i) ? "rgba(34, 197, 94, 0.08)" : "transparent", border: viewChecked.has(i) ? "2px solid rgba(34, 197, 94, 0.3)" : "2px solid transparent" }}>
-                      <input type="checkbox" checked={viewChecked.has(i)} readOnly disabled className="w-3.5 h-3.5 rounded accent-[#22c55e] cursor-not-allowed" />
-                      <span className="text-xs" style={{ color: viewChecked.has(i) ? "#22c55e" : "#4A4A4A", fontFamily: "var(--font-table)", textDecoration: viewChecked.has(i) ? "line-through" : "none" }}>{item}</span>
+                      <input type="checkbox" checked={viewChecked.has(i)} readOnly disabled className="w-3.5 h-3.5 rounded accent-[#15803d] cursor-not-allowed" />
+                      <span className="text-xs" style={{ color: viewChecked.has(i) ? "#15803d" : "#4A4A4A", fontFamily: "var(--font-table)", textDecoration: viewChecked.has(i) ? "line-through" : "none" }}>{item}</span>
                     </div>
                   ))}
                 </div>
@@ -580,10 +580,10 @@ export default function WhelpingCalculatorPage() {
                     ...(sd ? [{ label: "2nd Breeding", date: sd, color: "#6d30b0" }] : []),
                     { label: "Ultrasound Window", date: addDays(bd, 25), color: "#0d7468" },
                     { label: "X-Ray Recommended", date: addDays(bd, 45), color: "#8a6518" },
-                    { label: "Start Temp Monitoring", date: addDays(bd, 58), color: "#f59e0b" },
+                    { label: "Start Temp Monitoring", date: addDays(bd, 58), color: "#b45309" },
                     { label: "Earliest Due (Day 58)", date: early, color: "#b45a0a" },
-                    { label: "Expected Due (Day 63)", date: exp, color: "#22c55e" },
-                    { label: "Latest Due (Day 68)", date: late, color: "#ef4444" },
+                    { label: "Expected Due (Day 63)", date: exp, color: "#15803d" },
+                    { label: "Latest Due (Day 68)", date: late, color: "#dc2626" },
                   ].map((item, i) => (
                     <div key={i} className="flex items-center justify-between py-1.5 px-2.5 rounded-lg"
                       style={{ background: i % 2 === 0 ? "rgba(201, 178, 159, 0.1)" : "transparent" }}>
@@ -597,7 +597,7 @@ export default function WhelpingCalculatorPage() {
                 </div>
                 <div className="mt-4 p-3 rounded-lg" style={{ background: "rgba(245, 158, 11, 0.08)", border: "2px solid rgba(245, 158, 11, 0.2)" }}>
                   <p className="text-[12px] leading-relaxed" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-                    <span className="font-bold" style={{ color: "#f59e0b" }}>Note:</span> Canine gestation averages 63 days but can range from 58-68 days.
+                    <span className="font-bold" style={{ color: "#b45309" }}>Note:</span> Canine gestation averages 63 days but can range from 58-68 days.
                     If your dam has not whelped by day 68, contact your veterinarian immediately.
                     Always consult a vet for pregnancy confirmation and prenatal care.
                   </p>
@@ -622,7 +622,7 @@ export default function WhelpingCalculatorPage() {
             <div className="mb-4" ref={damRef}>
               <label className="block text-[12px] uppercase tracking-widest font-bold mb-1"
                 style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-                Dam <span style={{ color: "#ef4444" }}>*</span>
+                Dam <span style={{ color: "#dc2626" }}>*</span>
               </label>
               <div className="relative">
                 <input
@@ -635,7 +635,7 @@ export default function WhelpingCalculatorPage() {
                 />
                 {selectedDam && (
                   <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[12px] font-bold px-2 py-0.5 rounded"
-                    style={{ background: "#22c55e", color: "#FAFAFA", fontFamily: "var(--font-table)" }}>
+                    style={{ background: "#15803d", color: "#FAFAFA", fontFamily: "var(--font-table)" }}>
                     Selected
                   </span>
                 )}
@@ -660,7 +660,7 @@ export default function WhelpingCalculatorPage() {
               <div>
                 <label className="block text-[12px] uppercase tracking-widest font-bold mb-1"
                   style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-                  First Breeding Date <span style={{ color: "#ef4444" }}>*</span>
+                  First Breeding Date <span style={{ color: "#dc2626" }}>*</span>
                 </label>
                 <input type="date" value={breedDate}
                   onChange={(e) => { setBreedDate(e.target.value); setCalculated(false); }}
@@ -685,7 +685,7 @@ export default function WhelpingCalculatorPage() {
               <div className="mb-4">
                 <label className="block text-[12px] uppercase tracking-widest font-bold mb-1"
                   style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-                  Note <span style={{ color: "#ef4444" }}>*</span>
+                  Note <span style={{ color: "#dc2626" }}>*</span>
                 </label>
                 <input type="text" value={note} onChange={(e) => setNote(e.target.value)}
                   placeholder="e.g. Natural breeding, progesterone confirmed..."
@@ -705,7 +705,7 @@ export default function WhelpingCalculatorPage() {
                 <>
                   <button onClick={handleSave} disabled={saving || !note.trim()}
                     className="px-5 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all hover:scale-105"
-                    style={{ background: note.trim() ? "#22c55e" : "#C9B29F", color: "#FAFAFA", border: `2px solid ${note.trim() ? "#22c55e" : "#C9B29F"}`, fontFamily: "var(--font-table)", cursor: note.trim() && !saving ? "pointer" : "not-allowed", opacity: saving || !note.trim() ? 0.5 : 1 }}>
+                    style={{ background: note.trim() ? "#15803d" : "#C9B29F", color: "#FAFAFA", border: `2px solid ${note.trim() ? "#15803d" : "#C9B29F"}`, fontFamily: "var(--font-table)", cursor: note.trim() && !saving ? "pointer" : "not-allowed", opacity: saving || !note.trim() ? 0.5 : 1 }}>
                     {saving ? "Saving..." : editingId ? "Update Whelping" : "Save This Whelping"}
                   </button>
                   <button onClick={handleReset}
@@ -714,7 +714,7 @@ export default function WhelpingCalculatorPage() {
                     Reset
                   </button>
                   {saveMsg && (
-                    <span className="self-center text-xs font-bold" style={{ color: saveMsg === "Saved!" ? "#22c55e" : "#ef4444", fontFamily: "var(--font-table)" }}>
+                    <span className="self-center text-xs font-bold" style={{ color: saveMsg === "Saved!" ? "#15803d" : "#dc2626", fontFamily: "var(--font-table)" }}>
                       {saveMsg}
                     </span>
                   )}
@@ -729,7 +729,7 @@ export default function WhelpingCalculatorPage() {
               {/* Due Date Cards */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
                 <div className="rounded-lg p-4 text-center" style={steelFrame}>
-                  <p className="text-[12px] font-bold uppercase tracking-widest mb-1" style={{ color: "#f59e0b", fontFamily: "var(--font-table)" }}>Earliest (Day 58)</p>
+                  <p className="text-[12px] font-bold uppercase tracking-widest mb-1" style={{ color: "#b45309", fontFamily: "var(--font-table)" }}>Earliest (Day 58)</p>
                   <p className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{formatDate(earlyDate)}</p>
                 </div>
                 <div className="rounded-lg p-4 text-center" style={{ background: "#1C1C1C", border: "2px solid #C9B29F", borderRadius: "8px" }}>
@@ -740,7 +740,7 @@ export default function WhelpingCalculatorPage() {
                   )}
                 </div>
                 <div className="rounded-lg p-4 text-center" style={steelFrame}>
-                  <p className="text-[12px] font-bold uppercase tracking-widest mb-1" style={{ color: "#ef4444", fontFamily: "var(--font-table)" }}>Latest (Day 68)</p>
+                  <p className="text-[12px] font-bold uppercase tracking-widest mb-1" style={{ color: "#dc2626", fontFamily: "var(--font-table)" }}>Latest (Day 68)</p>
                   <p className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>{formatDate(lateDate)}</p>
                 </div>
               </div>
@@ -751,14 +751,14 @@ export default function WhelpingCalculatorPage() {
                   <h2 className="text-[12px] uppercase tracking-widest font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Pregnancy Progress</h2>
                   <div className="flex items-center gap-3">
                     <span className="text-xs font-semibold" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>Week {currentWeek} &middot; Trimester {currentTrimester}</span>
-                    <span className="text-xs font-bold px-2 py-0.5 rounded" style={{ background: daysRemaining > 0 ? "#1C1C1C" : "#22c55e", color: "#FAFAFA", fontFamily: "var(--font-mono)" }}>
+                    <span className="text-xs font-bold px-2 py-0.5 rounded" style={{ background: daysRemaining > 0 ? "#1C1C1C" : "#15803d", color: "#FAFAFA", fontFamily: "var(--font-mono)" }}>
                       {daysRemaining > 0 ? `${daysRemaining} days left` : daysPregnant > 68 ? "Overdue" : "Due now"}
                     </span>
                   </div>
                 </div>
                 <div className="relative h-6 rounded-full overflow-hidden" style={{ background: "#EDE4D5", border: "2px solid #C9B29F" }}>
                   <div className="h-full rounded-full transition-all duration-1000 ease-out"
-                    style={{ width: `${progressPct}%`, background: progressPct >= 100 ? "linear-gradient(90deg, #22c55e, #16a34a)" : progressPct >= 85 ? "linear-gradient(90deg, #f59e0b, #ef4444)" : "linear-gradient(90deg, #C9B29F, #8a6518)" }} />
+                    style={{ width: `${progressPct}%`, background: progressPct >= 100 ? "linear-gradient(90deg, #15803d, #16a34a)" : progressPct >= 85 ? "linear-gradient(90deg, #b45309, #dc2626)" : "linear-gradient(90deg, #C9B29F, #8a6518)" }} />
                   <span className="absolute inset-0 flex items-center justify-center text-[12px] font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
                     Day {Math.max(0, daysPregnant)} of 63 &middot; {progressPct.toFixed(0)}%
                   </span>
@@ -784,15 +784,15 @@ export default function WhelpingCalculatorPage() {
                         style={{ borderBottom: i < MILESTONES.length - 1 ? "2px solid #EDE4D5" : "none" }}>
                         <div className="flex flex-col items-center flex-shrink-0 mt-0.5">
                           <div className="w-3 h-3 rounded-full border-2 flex-shrink-0"
-                            style={{ background: isPast ? (isDueDate ? "#22c55e" : "#1C1C1C") : isCurrent ? "#f59e0b" : "#EDE4D5", borderColor: isPast ? (isDueDate ? "#22c55e" : "#1C1C1C") : isCurrent ? "#f59e0b" : "#C9B29F" }} />
+                            style={{ background: isPast ? (isDueDate ? "#15803d" : "#1C1C1C") : isCurrent ? "#b45309" : "#EDE4D5", borderColor: isPast ? (isDueDate ? "#15803d" : "#1C1C1C") : isCurrent ? "#b45309" : "#C9B29F" }} />
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 flex-wrap">
-                            <span className="text-xs font-bold" style={{ color: isPast ? "#1C1C1C" : isCurrent ? "#f59e0b" : "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                            <span className="text-xs font-bold" style={{ color: isPast ? "#1C1C1C" : isCurrent ? "#b45309" : "#4A4A4A", fontFamily: "var(--font-table)" }}>
                               Day {m.day} &mdash; {m.label}
                             </span>
                             {isCurrent && (
-                              <span className="text-[12px] font-bold px-1.5 py-0.5 rounded animate-pulse" style={{ background: "#f59e0b", color: "#FAFAFA", fontFamily: "var(--font-table)" }}>CURRENT</span>
+                              <span className="text-[12px] font-bold px-1.5 py-0.5 rounded animate-pulse" style={{ background: "#b45309", color: "#FAFAFA", fontFamily: "var(--font-table)" }}>CURRENT</span>
                             )}
                             {isPast && !isCurrent && (
                               <span className="text-[12px] px-1.5 py-0.5 rounded" style={{ background: "#EDE4D5", color: "#4A4A4A", fontFamily: "var(--font-table)" }}>DONE</span>
@@ -800,7 +800,7 @@ export default function WhelpingCalculatorPage() {
                           </div>
                           <p className="text-[12px] mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>{m.desc}</p>
                         </div>
-                        <span className="text-[12px] font-semibold flex-shrink-0 mt-0.5" style={{ color: isDueDate ? "#22c55e" : "#4A4A4A", fontFamily: "var(--font-mono)" }}>
+                        <span className="text-[12px] font-semibold flex-shrink-0 mt-0.5" style={{ color: isDueDate ? "#15803d" : "#4A4A4A", fontFamily: "var(--font-mono)" }}>
                           {formatDate(milestoneDate)}
                         </span>
                       </div>
@@ -815,7 +815,7 @@ export default function WhelpingCalculatorPage() {
                   <div className="flex items-center justify-between mb-3">
                     <h2 className="text-[12px] uppercase tracking-widest font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Whelping Supply Checklist</h2>
                     <span className="text-[12px] font-bold px-2 py-0.5 rounded"
-                      style={{ background: checkedItems.size === CHECKLIST.length ? "#22c55e" : "#EDE4D5", color: checkedItems.size === CHECKLIST.length ? "#FAFAFA" : "#4A4A4A", fontFamily: "var(--font-mono)" }}>
+                      style={{ background: checkedItems.size === CHECKLIST.length ? "#15803d" : "#EDE4D5", color: checkedItems.size === CHECKLIST.length ? "#FAFAFA" : "#4A4A4A", fontFamily: "var(--font-mono)" }}>
                       {checkedItems.size}/{CHECKLIST.length}
                     </span>
                   </div>
@@ -823,8 +823,8 @@ export default function WhelpingCalculatorPage() {
                     {CHECKLIST.map((item, i) => (
                       <label key={i} className="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg cursor-pointer transition-all hover:scale-[1.01]"
                         style={{ background: checkedItems.has(i) ? "rgba(34, 197, 94, 0.08)" : "transparent", border: checkedItems.has(i) ? "2px solid rgba(34, 197, 94, 0.3)" : "2px solid transparent" }}>
-                        <input type="checkbox" checked={checkedItems.has(i)} onChange={() => toggleCheck(i)} className="w-3.5 h-3.5 rounded accent-[#22c55e]" />
-                        <span className="text-xs" style={{ color: checkedItems.has(i) ? "#22c55e" : "#4A4A4A", fontFamily: "var(--font-table)", textDecoration: checkedItems.has(i) ? "line-through" : "none" }}>{item}</span>
+                        <input type="checkbox" checked={checkedItems.has(i)} onChange={() => toggleCheck(i)} className="w-3.5 h-3.5 rounded accent-[#15803d]" />
+                        <span className="text-xs" style={{ color: checkedItems.has(i) ? "#15803d" : "#4A4A4A", fontFamily: "var(--font-table)", textDecoration: checkedItems.has(i) ? "line-through" : "none" }}>{item}</span>
                       </label>
                     ))}
                   </div>
@@ -838,10 +838,10 @@ export default function WhelpingCalculatorPage() {
                       ...(secondDate ? [{ label: "2nd Breeding", date: secondDate, color: "#6d30b0" }] : []),
                       { label: "Ultrasound Window", date: addDays(breedingDate, 25), color: "#0d7468" },
                       { label: "X-Ray Recommended", date: addDays(breedingDate, 45), color: "#8a6518" },
-                      { label: "Start Temp Monitoring", date: addDays(breedingDate, 58), color: "#f59e0b" },
+                      { label: "Start Temp Monitoring", date: addDays(breedingDate, 58), color: "#b45309" },
                       { label: "Earliest Due (Day 58)", date: earlyDate, color: "#b45a0a" },
-                      { label: "Expected Due (Day 63)", date: dueDate, color: "#22c55e" },
-                      { label: "Latest Due (Day 68)", date: lateDate, color: "#ef4444" },
+                      { label: "Expected Due (Day 63)", date: dueDate, color: "#15803d" },
+                      { label: "Latest Due (Day 68)", date: lateDate, color: "#dc2626" },
                     ].map((item, i) => (
                       <div key={i} className="flex items-center justify-between py-1.5 px-2.5 rounded-lg"
                         style={{ background: i % 2 === 0 ? "rgba(201, 178, 159, 0.1)" : "transparent" }}>
@@ -855,7 +855,7 @@ export default function WhelpingCalculatorPage() {
                   </div>
                   <div className="mt-4 p-3 rounded-lg" style={{ background: "rgba(245, 158, 11, 0.08)", border: "2px solid rgba(245, 158, 11, 0.2)" }}>
                     <p className="text-[12px] leading-relaxed" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-                      <span className="font-bold" style={{ color: "#f59e0b" }}>Note:</span> Canine gestation averages 63 days but can range from 58-68 days.
+                      <span className="font-bold" style={{ color: "#b45309" }}>Note:</span> Canine gestation averages 63 days but can range from 58-68 days.
                       If your dam has not whelped by day 68, contact your veterinarian immediately.
                       Always consult a vet for pregnancy confirmation and prenatal care.
                     </p>

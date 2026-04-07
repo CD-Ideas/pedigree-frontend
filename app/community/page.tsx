@@ -655,7 +655,7 @@ export default function CommunityPedigreesPage() {
                           {p.owner && (
                             <span className="text-[12px] px-1 py-0.5 rounded-full" style={{
                               background: "rgba(34,197,94,0.1)",
-                              color: "#22c55e",
+                              color: "#15803d",
                               border: "2px solid rgba(34,197,94,0.2)",
                               fontFamily: "var(--font-table)",
                             }}>

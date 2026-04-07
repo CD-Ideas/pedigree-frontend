@@ -190,7 +190,7 @@ export default function SupportPage() {
                     </div>
                     <span className="text-[12px] px-1.5 py-0.5 rounded-full ml-2 flex-shrink-0" style={{
                       background: m.status === "new" ? "rgba(234,179,8,0.15)" : m.status === "replied" ? "rgba(34,197,94,0.15)" : "rgba(107,114,128,0.15)",
-                      color: m.status === "new" ? "#eab308" : m.status === "replied" ? "#22c55e" : "#4A4A4A",
+                      color: m.status === "new" ? "#eab308" : m.status === "replied" ? "#15803d" : "#4A4A4A",
                       fontFamily: "var(--font-table)",
                     }}>
                       {m.status}
@@ -227,7 +227,7 @@ export default function SupportPage() {
                     style={{
                       background: "rgba(239,68,68,0.1)",
                       border: "2px solid rgba(239,68,68,0.3)",
-                      color: "#ef4444",
+                      color: "#dc2626",
                       fontFamily: "var(--font-table)",
                     }}
                   >

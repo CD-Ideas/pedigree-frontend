@@ -35,10 +35,10 @@ interface MarketplaceResponse {
 const LOGO = "/logo.png";
 
 const CATEGORIES = [
-  { key: "dogs_for_sale", label: "Dogs for Sale", icon: "🐾", color: "#ef4444", tag: "HOT" },
+  { key: "dogs_for_sale", label: "Dogs for Sale", icon: "🐾", color: "#dc2626", tag: "HOT" },
   { key: "stud_service", label: "Stud Service", icon: "\uD83D\uDC8E", color: "#8b5cf6", tag: null },
   { key: "litters_for_sale", label: "Litters for Sale", icon: "\uD83C\uDF7C", color: "#f472b6", tag: "NEW" },
-  { key: "supplies_gear", label: "Supplies & Gear", icon: "\uD83C\uDF92", color: "#22c55e", tag: null },
+  { key: "supplies_gear", label: "Supplies & Gear", icon: "\uD83C\uDF92", color: "#15803d", tag: null },
   { key: "courier_services", label: "Courier Services", icon: "\uD83D\uDE9A", color: "#60a5fa", tag: null },
   { key: "puppies_wanted", label: "Puppies Wanted", icon: "\uD83D\uDCE2", color: "#C9B29F", tag: null },
 ];
@@ -392,7 +392,7 @@ export default function MarketplacePage() {
                       {cat.tag && (
                         <span style={{
                           fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "12px", letterSpacing: "0.08em",
-                          color: cat.tag === "HOT" ? "#ef4444" : "#22c55e",
+                          color: cat.tag === "HOT" ? "#dc2626" : "#15803d",
                           background: "#FAF7F2",
                           border: "2px solid #C9B29F",
                           padding: "1px 6px", borderRadius: "9999px",
@@ -552,7 +552,7 @@ export default function MarketplacePage() {
               }}
               className="text-[12px] font-medium px-3 py-1 transition-all hover:scale-105"
               style={{
-                color: "#ef4444",
+                color: "#dc2626",
                 background: "#FAF7F2",
                 fontFamily: "var(--font-table)",
                 border: "2px solid #C9B29F",
