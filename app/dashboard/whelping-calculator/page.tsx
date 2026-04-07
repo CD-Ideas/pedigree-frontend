@@ -362,11 +362,11 @@ export default function WhelpingCalculatorPage() {
                           {dLeft > 0 ? `${dLeft}d` : dLeft === 0 ? "Today" : "Past"}
                         </span>
                       </div>
-                      {/* Delete button */}
+                      {/* Delete button — always visible */}
                       <button
                         onClick={(e) => { e.stopPropagation(); handleDelete(w.id); }}
-                        className="absolute top-1.5 left-1.5 w-5 h-5 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                        style={{ background: "rgba(250,247,242,0.95)", border: "2px solid #ef4444", color: "#ef4444", fontFamily: "var(--font-table)", fontSize: "12px", fontWeight: 900, lineHeight: 1 }}
+                        className="absolute top-1.5 left-1.5 w-5 h-5 rounded-full flex items-center justify-center transition-all hover:scale-110"
+                        style={{ background: "#FAFAFA", border: "2px solid #ef4444", color: "#ef4444", fontFamily: "var(--font-table)", fontSize: "12px", fontWeight: 900, lineHeight: 1 }}
                         title="Delete">
                         ×
                       </button>
@@ -447,11 +447,18 @@ export default function WhelpingCalculatorPage() {
                     </p>
                   )}
                 </div>
-                <button onClick={() => editWhelping(w)}
-                  className="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all hover:scale-105 flex-shrink-0"
-                  style={{ background: "#1C1C1C", color: "#FAFAFA", border: "2px solid #C9B29F", fontFamily: "var(--font-table)", cursor: "pointer" }}>
-                  Edit
-                </button>
+                <div className="flex gap-2 flex-shrink-0">
+                  <button onClick={() => editWhelping(w)}
+                    className="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all hover:scale-105"
+                    style={{ background: "#1C1C1C", color: "#FAFAFA", border: "2px solid #C9B29F", fontFamily: "var(--font-table)", cursor: "pointer" }}>
+                    Edit
+                  </button>
+                  <button onClick={() => { handleDelete(w.id); setViewingWhelping(null); setShowMyWhelping(true); loadWhelpings(); }}
+                    className="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all hover:scale-105"
+                    style={{ background: "#FAFAFA", color: "#ef4444", border: "2px solid #ef4444", fontFamily: "var(--font-table)", cursor: "pointer" }}>
+                    Delete
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -614,7 +621,7 @@ export default function WhelpingCalculatorPage() {
             <div className="mb-4" ref={damRef}>
               <label className="block text-[12px] uppercase tracking-widest font-bold mb-1"
                 style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-                Dam *
+                Dam <span style={{ color: "#ef4444" }}>*</span>
               </label>
               <div className="relative">
                 <input
@@ -623,7 +630,7 @@ export default function WhelpingCalculatorPage() {
                   onChange={(e) => { setDamQuery(e.target.value); setSelectedDam(null); searchDam(e.target.value); setCalculated(false); }}
                   placeholder="Search dam by name..."
                   className="w-full px-3 py-2 rounded-lg text-sm outline-none"
-                  style={{ ...steelFrame, color: "#1C1C1C", fontFamily: "var(--font-table)" }}
+                  style={{ ...steelFrame, background: "#FAFAFA", color: "#1C1C1C", fontFamily: "var(--font-table)" }}
                 />
                 {selectedDam && (
                   <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[12px] font-bold px-2 py-0.5 rounded"
@@ -652,12 +659,12 @@ export default function WhelpingCalculatorPage() {
               <div>
                 <label className="block text-[12px] uppercase tracking-widest font-bold mb-1"
                   style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-                  First Breeding Date *
+                  First Breeding Date <span style={{ color: "#ef4444" }}>*</span>
                 </label>
                 <input type="date" value={breedDate}
                   onChange={(e) => { setBreedDate(e.target.value); setCalculated(false); }}
                   className="w-full px-3 py-2 rounded-lg text-sm outline-none"
-                  style={{ ...steelFrame, color: "#1C1C1C", fontFamily: "var(--font-mono)" }} />
+                  style={{ ...steelFrame, background: "#FAFAFA", color: "#1C1C1C", fontFamily: "var(--font-mono)" }} />
               </div>
               {/* Second breeding (optional) */}
               <div>
@@ -668,7 +675,7 @@ export default function WhelpingCalculatorPage() {
                 <input type="date" value={secondBreedDate}
                   onChange={(e) => { setSecondBreedDate(e.target.value); setCalculated(false); }}
                   className="w-full px-3 py-2 rounded-lg text-sm outline-none"
-                  style={{ ...steelFrame, color: "#1C1C1C", fontFamily: "var(--font-mono)" }} />
+                  style={{ ...steelFrame, background: "#FAFAFA", color: "#1C1C1C", fontFamily: "var(--font-mono)" }} />
               </div>
             </div>
 
@@ -677,12 +684,12 @@ export default function WhelpingCalculatorPage() {
               <div className="mb-4">
                 <label className="block text-[12px] uppercase tracking-widest font-bold mb-1"
                   style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-                  Note *
+                  Note <span style={{ color: "#ef4444" }}>*</span>
                 </label>
                 <input type="text" value={note} onChange={(e) => setNote(e.target.value)}
                   placeholder="e.g. Natural breeding, progesterone confirmed..."
                   className="w-full px-3 py-2 rounded-lg text-sm outline-none"
-                  style={{ ...steelFrame, color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
+                  style={{ ...steelFrame, background: "#FAFAFA", color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
               </div>
             )}
 
