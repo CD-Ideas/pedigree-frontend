@@ -783,7 +783,7 @@ export default function PuppyPredictorPage() {
                 <label className="text-xs font-semibold" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                   Select visible coat color:
                 </label>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   {Object.entries(COAT_PRESETS).map(([key, val]) => (
                     <button key={key} onClick={() => handleSelectSirePreset(key)}
                       className="flex items-center gap-2 px-2 py-1.5 rounded-lg text-[12px] transition-all"
@@ -839,7 +839,7 @@ export default function PuppyPredictorPage() {
                 <label className="text-xs font-semibold" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                   Select visible coat color:
                 </label>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   {Object.entries(COAT_PRESETS).map(([key, val]) => (
                     <button key={key} onClick={() => handleSelectDamPreset(key)}
                       className="flex items-center gap-2 px-2 py-1.5 rounded-lg text-[12px] transition-all"

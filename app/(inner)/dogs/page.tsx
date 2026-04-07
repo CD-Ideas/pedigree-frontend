@@ -632,7 +632,7 @@ export default function DogsPage() {
                 <button
                   key={p}
                   onClick={() => setPage(p)}
-                  className="page-btn w-8 h-8 rounded-lg text-xs font-bold transition-all"
+                  className="page-btn w-11 h-11 rounded-lg text-xs font-bold transition-all"
                   style={{
                     background: page === p ? "#C9B29F" : "#FAF7F2",
                     color: page === p ? "#1C1C1C" : "#4A4A4A",

@@ -307,7 +307,7 @@ export default function NewTitleAlertsPage() {
           <div className="flex items-center justify-center gap-2 mt-6">
             <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1} className="px-3 py-1.5 rounded-lg text-xs font-bold" style={{ background: page === 1 ? "#EDE4D5" : "#1C1C1C", color: page === 1 ? "#4A4A4A" : "#FAF7F2", border: "2px solid #C9B29F", fontFamily: "var(--font-table)", cursor: page === 1 ? "default" : "pointer" }}>{"\u2190"} Prev</button>
             {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
-              <button key={p} onClick={() => setPage(p)} className="w-8 h-8 rounded-lg text-xs font-bold" style={{ background: page === p ? "#1C1C1C" : "#FAF7F2", color: page === p ? "#FAF7F2" : "#1C1C1C", border: "2px solid #C9B29F", fontFamily: "var(--font-table)" }}>{p}</button>
+              <button key={p} onClick={() => setPage(p)} className="w-11 h-11 rounded-lg text-xs font-bold" style={{ background: page === p ? "#1C1C1C" : "#FAF7F2", color: page === p ? "#FAF7F2" : "#1C1C1C", border: "2px solid #C9B29F", fontFamily: "var(--font-table)" }}>{p}</button>
             ))}
             <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages} className="px-3 py-1.5 rounded-lg text-xs font-bold" style={{ background: page === totalPages ? "#EDE4D5" : "#1C1C1C", color: page === totalPages ? "#4A4A4A" : "#FAF7F2", border: "2px solid #C9B29F", fontFamily: "var(--font-table)", cursor: page === totalPages ? "default" : "pointer" }}>Next {"\u2192"}</button>
           </div>

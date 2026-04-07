@@ -252,6 +252,16 @@ body {
   border-radius: 0 0 999px 999px;
 }
 
+/* ── MOBILE: Prevent iOS Safari auto-zoom on inputs ────────────────── */
+/* iOS auto-zooms when input font-size < 16px. Force 16px on small screens. */
+@media screen and (max-width: 768px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
 /* ── ACCESSIBILITY: Skip to content link ───────────────────────────── */
 /* Visually hidden by default, shows on keyboard focus.
    Allows keyboard/screen reader users to skip past the navbar. */
