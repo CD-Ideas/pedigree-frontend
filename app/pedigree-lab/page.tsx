@@ -1094,6 +1094,8 @@ function PedigreeLabInner() {
                               background: cellBg,
                               border: "2px solid #EDE4D5",
                               borderLeftColor: cellBorder,
+                              // 3px/4px left border is a justified exception — emphasis border
+                              // for title color indicator on pedigree cells (visual hierarchy).
                               borderLeftWidth: isCompact ? "3px" : "4px",
                               borderRadius: 8,
                               padding: isCompact ? "3px 6px" : "6px 10px",

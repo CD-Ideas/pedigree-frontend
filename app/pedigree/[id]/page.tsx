@@ -497,6 +497,8 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
                            className="flex-1 rounded-lg px-2.5 py-1.5 flex items-center group relative transition-all duration-200"
                            style={{
                              background: `linear-gradient(135deg, ${cellTint}, ${PG.cardBg})`,
+                             // 3px/4px left borders are a justified exception — emphasis borders
+                             // for title color indicators on pedigree cells (visual hierarchy).
                              borderLeft: `${maxGen >= 5 ? "3px" : "4px"} solid ${cellBorderColor}`,
                              border: PG.cardBorder,
                              borderLeftColor: cellBorderColor,

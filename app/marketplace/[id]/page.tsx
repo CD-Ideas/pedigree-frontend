@@ -285,6 +285,8 @@ export default function MarketplaceAdPage() {
                           style={{
                             width: size,
                             height: size,
+                            // 3px selected border is a justified exception — emphasis border
+                            // for the currently-selected thumbnail in the photo gallery.
                             border: isSelected ? "3px solid #B8860B" : "2px solid rgba(255,255,255,0.6)",
                             opacity: isSelected ? 1 : 0.8,
                           }}

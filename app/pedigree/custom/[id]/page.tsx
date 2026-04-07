@@ -425,6 +425,8 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
                           background: `linear-gradient(135deg, ${cellTint}, #FAF7F2)`,
                           border: "2px solid #EDE4D5",
                           borderLeftColor: cellBorderColor,
+                          // 3px/4px left border is a justified exception — emphasis border
+                          // for title color indicator on pedigree cells (visual hierarchy).
                           borderLeftWidth: maxGen >= 5 ? "3px" : "4px",
                           borderRadius: "8px",
                           minHeight: cellMinH,
