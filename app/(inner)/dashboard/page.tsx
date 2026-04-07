@@ -275,7 +275,7 @@ export default function Dashboard() {
                   className="dash-nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg group"
                   style={{ "--item-color": action.color.replace("#", "").match(/.{2}/g)!.map(h => parseInt(h, 16)).join(",") } as React.CSSProperties}>
                   <span className="w-8 h-8 rounded-lg flex items-center justify-center text-sm transition-transform group-hover:scale-110"
-                    style={{ background: `${action.color}15`, border: `1px solid ${action.color}30` }}>
+                    style={{ background: `${action.color}15`, border: `2px solid ${action.color}30` }}>
                     {action.icon}
                   </span>
                   <span className="dash-nav-label text-sm font-medium transition-colors"
@@ -305,7 +305,7 @@ export default function Dashboard() {
                   className="dash-nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg group"
                   style={{ "--item-color": tool.color.replace("#", "").match(/.{2}/g)!.map(h => parseInt(h, 16)).join(",") } as React.CSSProperties}>
                   <span className="w-8 h-8 rounded-lg flex items-center justify-center text-sm transition-transform group-hover:scale-110"
-                    style={{ background: `${tool.color}15`, border: `1px solid ${tool.color}30` }}>
+                    style={{ background: `${tool.color}15`, border: `2px solid ${tool.color}30` }}>
                     {tool.icon}
                   </span>
                   <span className="dash-nav-label text-sm font-medium transition-colors"
@@ -363,7 +363,7 @@ export default function Dashboard() {
                         className="w-7 h-7 rounded-full flex items-center justify-center text-sm transition-all hover:scale-110"
                         style={{
                           background: user?.profile_picture === `emoji:${av.emoji}` ? "#FAF7F2" : "#FAFAFA",
-                          border: user?.profile_picture === `emoji:${av.emoji}` ? "2px solid #C9B29F" : "1px solid #C9B29F",
+                          border: user?.profile_picture === `emoji:${av.emoji}` ? "2px solid #C9B29F" : "2px solid #C9B29F",
                         }}>
                         {av.emoji}
                       </button>

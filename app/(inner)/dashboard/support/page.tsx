@@ -176,7 +176,7 @@ export default function SupportPage() {
                 <button key={m.id} onClick={() => setSelected(m.id)}
                   className="w-full text-left px-4 py-3 transition-all"
                   style={{
-                    borderBottom: "1px solid #C9B29F",
+                    borderBottom: "2px solid #C9B29F",
                     background: selected === m.id ? "rgba(201,178,159,0.15)" : "transparent",
                   }}>
                   <div className="flex items-center justify-between">
@@ -226,7 +226,7 @@ export default function SupportPage() {
                     className="px-3 py-1 rounded-lg text-[12px] font-semibold uppercase tracking-wider transition-all hover:scale-105"
                     style={{
                       background: "rgba(239,68,68,0.1)",
-                      border: "1px solid rgba(239,68,68,0.3)",
+                      border: "2px solid rgba(239,68,68,0.3)",
                       color: "#ef4444",
                       fontFamily: "var(--font-table)",
                     }}

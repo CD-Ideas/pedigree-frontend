@@ -290,7 +290,7 @@ export default function MyAdsPage() {
                                 style={{
                                   background: `${cat.color}18`,
                                   color: cat.color,
-                                  border: `1px solid ${cat.color}33`,
+                                  border: `2px solid ${cat.color}33`,
                                   fontFamily: "var(--font-table)",
                                 }}
                               >
@@ -304,7 +304,7 @@ export default function MyAdsPage() {
                               style={{
                                 background: statusStyle.bg,
                                 color: statusStyle.color,
-                                border: `1px solid ${statusStyle.border}`,
+                                border: `2px solid ${statusStyle.border}`,
                                 fontFamily: "var(--font-table)",
                               }}
                             >
@@ -342,7 +342,7 @@ export default function MyAdsPage() {
                       </div>
 
                       {/* Footer */}
-                      <div className="flex items-center justify-between mt-3 pt-3" style={{ borderTop: "1px solid #C9B29F" }}>
+                      <div className="flex items-center justify-between mt-3 pt-3" style={{ borderTop: "2px solid #C9B29F" }}>
                         <span className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
                           Created {formatDate(ad.created_at)}
                         </span>
@@ -366,7 +366,7 @@ export default function MyAdsPage() {
                             style={{
                               background: "rgba(96,165,250,0.1)",
                               color: "#60a5fa",
-                              border: "1px solid rgba(96,165,250,0.25)",
+                              border: "2px solid rgba(96,165,250,0.25)",
                               fontFamily: "var(--font-table)",
                             }}
                           >
@@ -379,7 +379,7 @@ export default function MyAdsPage() {
                             style={{
                               background: "rgba(239,68,68,0.1)",
                               color: "#ef4444",
-                              border: "1px solid rgba(239,68,68,0.25)",
+                              border: "2px solid rgba(239,68,68,0.25)",
                               fontFamily: "var(--font-table)",
                             }}
                           >

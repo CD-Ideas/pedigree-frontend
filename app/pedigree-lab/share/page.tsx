@@ -160,7 +160,7 @@ function SharePreviewInner() {
               background: "#F5EDE0",
               width: isCompact ? 12 : 15,
               height: isCompact ? 12 : 15,
-              border: "1px solid #C9B29F",
+              border: "2px solid #C9B29F",
             }}
           >
             ★
@@ -268,7 +268,7 @@ function SharePreviewInner() {
             className="px-4 py-2 rounded-lg text-sm font-semibold"
             style={{
               color: "#C9B29F",
-              border: "1px solid #C9B29F",
+              border: "2px solid #C9B29F",
               textDecoration: "none",
             }}
           >

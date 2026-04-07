@@ -125,7 +125,7 @@ export default function ChatWidget() {
             display: "flex",
             flexDirection: "column",
             background: "#FAF7F2",
-            border: "1px solid #C9B29F",
+            border: "2px solid #C9B29F",
             boxShadow: "0 8px 40px rgba(0,0,0,0.2)",
           }}
         >
@@ -209,7 +209,7 @@ export default function ChatWidget() {
                   color: m.role === "user" ? "#fff" : "#1C1C1C",
                   fontSize: 14,
                   lineHeight: 1.5,
-                  border: m.role === "assistant" ? "1px solid #C9B29F" : "none",
+                  border: m.role === "assistant" ? "2px solid #C9B29F" : "none",
                   wordBreak: "break-word",
                   whiteSpace: "pre-wrap",
                 }}
@@ -224,7 +224,7 @@ export default function ChatWidget() {
                   padding: "10px 14px",
                   borderRadius: "16px 16px 16px 4px",
                   background: "#FAFAFA",
-                  border: "1px solid #C9B29F",
+                  border: "2px solid #C9B29F",
                   fontSize: 14,
                   color: "#4A4A4A",
                 }}
@@ -239,7 +239,7 @@ export default function ChatWidget() {
           <div
             style={{
               padding: "10px 12px",
-              borderTop: "1px solid #C9B29F",
+              borderTop: "2px solid #C9B29F",
               display: "flex",
               gap: 8,
               background: "#FAFAFA",
@@ -256,7 +256,7 @@ export default function ChatWidget() {
                 flex: 1,
                 padding: "10px 14px",
                 borderRadius: 10,
-                border: "1px solid #C9B29F",
+                border: "2px solid #C9B29F",
                 background: "#FAF7F2",
                 color: "#1C1C1C",
                 fontSize: 14,

@@ -423,7 +423,7 @@ export default function MarketplaceAdPage() {
                           style={{
                             background: "rgba(239,68,68,0.15)",
                             color: "#ef4444",
-                            border: "1px solid rgba(239,68,68,0.3)",
+                            border: "2px solid rgba(239,68,68,0.3)",
                             fontFamily: "var(--font-table)",
                           }}
                         >
@@ -438,7 +438,7 @@ export default function MarketplaceAdPage() {
                           style={{
                             background: "rgba(148,163,184,0.15)",
                             color: "#4A4A4A",
-                            border: "1px solid rgba(148,163,184,0.3)",
+                            border: "2px solid rgba(148,163,184,0.3)",
                             fontFamily: "var(--font-table)",
                           }}
                         >
@@ -469,7 +469,7 @@ export default function MarketplaceAdPage() {
                 {cat && (
                   <div
                     className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg"
-                    style={{ background: `${cat.color}18`, border: `1px solid ${cat.color}33` }}
+                    style={{ background: `${cat.color}18`, border: `2px solid ${cat.color}33` }}
                   >
                     <span className="text-xs">{cat.icon}</span>
                     <span
@@ -545,7 +545,7 @@ export default function MarketplaceAdPage() {
               {!!ad.is_verified && (
                 <div
                   className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg mb-3"
-                  style={{ background: "rgba(34,197,94,0.1)", border: "1px solid rgba(34,197,94,0.3)" }}
+                  style={{ background: "rgba(34,197,94,0.1)", border: "2px solid rgba(34,197,94,0.3)" }}
                 >
                   <span className="text-xs" style={{ color: "#16a34a" }}>{"\u2713"}</span>
                   <span
@@ -653,8 +653,8 @@ export default function MarketplaceAdPage() {
                       ? "rgba(239,68,68,0.08)"
                       : "rgba(34,197,94,0.08)",
                     border: daysUntilExpiry <= 7
-                      ? "1px solid rgba(239,68,68,0.25)"
-                      : "1px solid rgba(34,197,94,0.25)",
+                      ? "2px solid rgba(239,68,68,0.25)"
+                      : "2px solid rgba(34,197,94,0.25)",
                   }}
                 >
                   <span className="text-xs">

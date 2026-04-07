@@ -257,7 +257,7 @@ export default function CommunityPedigreesPage() {
               style={{
                 background: "rgba(96,165,250,0.1)",
                 color: "#1d5bbf",
-                border: "1px solid rgba(96,165,250,0.2)",
+                border: "2px solid rgba(96,165,250,0.2)",
                 fontFamily: "var(--font-mono)",
               }}
             >
@@ -489,7 +489,7 @@ export default function CommunityPedigreesPage() {
                         <tr
                           key={p.id}
                           className="transition-colors"
-                          style={{ borderBottom: "1px solid #C9B29F" }}
+                          style={{ borderBottom: "2px solid #C9B29F" }}
                         >
                           <td className="px-3 py-2">
                             <Link href={`/pedigree/custom/${p.id}`} className="font-bold hover:underline text-[12px]" style={{ color: titleColor, fontFamily: "var(--font-table)" }}>
@@ -566,7 +566,7 @@ export default function CommunityPedigreesPage() {
                         className="absolute top-1.5 right-1.5 flex items-center gap-0.5 px-1.5 py-0.5 rounded-full"
                         style={{
                           background: "rgba(250,247,242,0.9)",
-                          border: "1px solid #C9B29F",
+                          border: "2px solid #C9B29F",
                         }}
                       >
                         <span
@@ -585,7 +585,7 @@ export default function CommunityPedigreesPage() {
                           className="absolute top-1.5 left-1.5 flex items-center px-1.5 py-0.5 rounded-full"
                           style={{
                             background: "rgba(250,247,242,0.9)",
-                            border: "1px solid #C9B29F",
+                            border: "2px solid #C9B29F",
                           }}
                         >
                           <Link
@@ -641,7 +641,7 @@ export default function CommunityPedigreesPage() {
                             <span className="text-[12px] px-1 py-0.5 rounded-full" style={{
                               background: "rgba(201,178,159,0.1)",
                               color: "#1C1C1C",
-                              border: "1px solid #C9B29F",
+                              border: "2px solid #C9B29F",
                               fontFamily: "var(--font-table)",
                             }}>
                               B: {p.breeder}
@@ -651,7 +651,7 @@ export default function CommunityPedigreesPage() {
                             <span className="text-[12px] px-1 py-0.5 rounded-full" style={{
                               background: "rgba(34,197,94,0.1)",
                               color: "#22c55e",
-                              border: "1px solid rgba(34,197,94,0.2)",
+                              border: "2px solid rgba(34,197,94,0.2)",
                               fontFamily: "var(--font-table)",
                             }}>
                               O: {p.owner}

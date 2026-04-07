@@ -246,7 +246,7 @@ export default function PedigreeHub() {
                             <div className="absolute top-2 right-2 flex gap-1">
                               {titles.slice(0, 2).map((t) => (
                                 <span key={t} className="text-[12px] font-bold px-1.5 py-0.5 rounded"
-                                  style={{ background: "#FAF7F2", color: TC[t] || "#1C1C1C", fontFamily: "var(--font-table)", border: "1px solid #C9B29F" }}>
+                                  style={{ background: "#FAF7F2", color: TC[t] || "#1C1C1C", fontFamily: "var(--font-table)", border: "2px solid #C9B29F" }}>
                                   {t}
                                 </span>
                               ))}
@@ -262,7 +262,7 @@ export default function PedigreeHub() {
                           <div className="flex items-center gap-2 mt-1.5">
                             {dog.color && (
                               <span className="text-[12px] px-2 py-0.5 rounded-lg"
-                                style={{ background: "#FAFAFA", color: "#4A4A4A", fontFamily: "var(--font-table)", border: "1px solid #C9B29F" }}>
+                                style={{ background: "#FAFAFA", color: "#4A4A4A", fontFamily: "var(--font-table)", border: "2px solid #C9B29F" }}>
                                 {dog.color}
                               </span>
                             )}
@@ -271,7 +271,7 @@ export default function PedigreeHub() {
                             </span>
                           </div>
                           {(dog.sire_name || dog.dam_name) && (
-                            <div className="mt-2 pt-2 flex flex-col gap-0.5" style={{ borderTop: "1px solid #C9B29F" }}>
+                            <div className="mt-2 pt-2 flex flex-col gap-0.5" style={{ borderTop: "2px solid #C9B29F" }}>
                               {dog.sire_name && (
                                 <div className="text-[12px] truncate" style={{ fontFamily: "var(--font-table)" }}>
                                   <span style={{ color: "#1d5bbf" }}>Sire:</span>{" "}

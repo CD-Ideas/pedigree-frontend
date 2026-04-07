@@ -201,7 +201,7 @@ export default function NewTitleAlertsPage() {
             <button
               onClick={() => { setFilterContinent(""); setFilterCountry(""); setFilterTime(""); setPage(1); }}
               className="px-3 py-2 rounded-lg text-xs font-bold transition-all hover:scale-105"
-              style={{ background: "rgba(239,68,68,0.1)", color: "#ef4444", border: "1px solid rgba(239,68,68,0.3)", fontFamily: "var(--font-table)" }}
+              style={{ background: "rgba(239,68,68,0.1)", color: "#ef4444", border: "2px solid rgba(239,68,68,0.3)", fontFamily: "var(--font-table)" }}
             >
               Clear all
             </button>
@@ -238,7 +238,7 @@ export default function NewTitleAlertsPage() {
                   const displayName = buildDisplayName(a);
                   const isMale = a.sex?.toUpperCase() === "MALE";
                   return (
-                    <tr key={a.id} className="transition-colors" style={{ borderBottom: "1px solid #C9B29F" }}>
+                    <tr key={a.id} className="transition-colors" style={{ borderBottom: "2px solid #C9B29F" }}>
                       <td className="px-3 py-2">
                         <Link href={`/pedigree/custom/${a.id}`} onClick={() => markRead(a.id)} className="font-bold hover:underline text-[12px]" style={{ color: getDogColor(displayName), fontFamily: "var(--font-table)" }}>
                           {displayName}
@@ -264,7 +264,7 @@ export default function NewTitleAlertsPage() {
               const displayName = buildDisplayName(a);
               const isMale = a.sex?.toUpperCase() === "MALE";
               return (
-                <Link key={a.id} href={`/pedigree/custom/${a.id}`} onClick={() => markRead(a.id)} className="rounded-lg overflow-hidden transition-all hover:shadow-lg" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px", textDecoration: "none" }}>
+                <Link key={a.id} href={`/pedigree/custom/${a.id}`} onClick={() => markRead(a.id)} className="rounded-lg overflow-hidden transition-all hover:scale-[1.02]" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px", textDecoration: "none" }}>
                   {/* Creator badge */}
                   <div className="px-2 pt-2 pb-1 flex items-center justify-between">
                     {a.creator_username && (
@@ -289,7 +289,7 @@ export default function NewTitleAlertsPage() {
                   </div>
                   {/* View Pedigree */}
                   <div className="px-2 pb-2">
-                    <span className="text-[12px] font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", border: "1px solid #C9B29F", borderRadius: "6px", padding: "3px 8px" }}>View Pedigree</span>
+                    <span className="text-[12px] font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", border: "2px solid #C9B29F", borderRadius: "8px", padding: "3px 8px" }}>View Pedigree</span>
                   </div>
                 </Link>
               );

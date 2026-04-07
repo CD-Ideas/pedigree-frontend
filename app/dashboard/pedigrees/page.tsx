@@ -303,7 +303,7 @@ export default function MyPedigreesPage() {
               style={{
                 background: "rgba(96,165,250,0.1)",
                 color: "#1d5bbf",
-                border: "1px solid rgba(96,165,250,0.2)",
+                border: "2px solid rgba(96,165,250,0.2)",
                 fontFamily: "var(--font-mono)",
               }}
             >
@@ -462,7 +462,7 @@ export default function MyPedigreesPage() {
             <div className="space-y-2">
               {allReminders.map((r, i) => (
                 <div key={i} className="flex items-center justify-between rounded-lg px-3 py-2"
-                  style={{ background: "rgba(201,178,159,0.15)", border: "1px solid rgba(234,179,8,0.15)" }}>
+                  style={{ background: "rgba(201,178,159,0.15)", border: "2px solid rgba(234,179,8,0.15)" }}>
                   <div className="flex items-center gap-2">
                     <Link href={`/pedigree/custom/${r.pedId}`} className="text-xs font-bold hover:underline"
                       style={{ color: getDogColor(r.dogName), fontFamily: "var(--font-table)" }}>
@@ -480,7 +480,7 @@ export default function MyPedigreesPage() {
                         background: r.daysLeft <= 0 ? "rgba(220,38,38,0.2)" : r.daysLeft <= 3 ? "rgba(234,179,8,0.2)" : "rgba(34,197,94,0.15)",
                         color: r.daysLeft <= 0 ? "#fc8181" : r.daysLeft <= 3 ? "#eab308" : "#22c55e",
                         fontFamily: "var(--font-mono)",
-                        border: `1px solid ${r.daysLeft <= 0 ? "rgba(220,38,38,0.3)" : r.daysLeft <= 3 ? "rgba(234,179,8,0.3)" : "rgba(34,197,94,0.3)"}`,
+                        border: `2px solid ${r.daysLeft <= 0 ? "rgba(220,38,38,0.3)" : r.daysLeft <= 3 ? "rgba(234,179,8,0.3)" : "rgba(34,197,94,0.3)"}`,
                       }}>
                       {r.daysLeft <= 0 ? "OVERDUE" : r.daysLeft === 1 ? "Tomorrow" : `${r.daysLeft}d`}
                     </span>
@@ -552,7 +552,7 @@ export default function MyPedigreesPage() {
                       className="absolute top-1.5 right-1.5 flex items-center gap-0.5 px-1.5 py-0.5 rounded-full"
                       style={{
                         background: "rgba(250,247,242,0.9)",
-                        border: "1px solid #C9B29F",
+                        border: "2px solid #C9B29F",
                       }}
                     >
                       <span
@@ -571,7 +571,7 @@ export default function MyPedigreesPage() {
                         className="absolute top-1.5 left-1.5 flex items-center px-1.5 py-0.5 rounded-full"
                         style={{
                           background: "rgba(234,179,8,0.2)",
-                          border: "1px solid rgba(234,179,8,0.4)",
+                          border: "2px solid rgba(234,179,8,0.4)",
                         }}
                       >
                         <span
@@ -624,13 +624,13 @@ export default function MyPedigreesPage() {
                       <div className="flex items-center gap-1 flex-wrap mt-1">
                         {journal.vaccines?.filter(v => v.checked).map(v => (
                           <span key={v.name} className="text-[12px] px-1 py-0.5 rounded-full"
-                            style={{ background: "rgba(34,197,94,0.1)", color: "#22c55e", border: "1px solid rgba(34,197,94,0.2)", fontFamily: "var(--font-table)" }}>
+                            style={{ background: "rgba(34,197,94,0.1)", color: "#22c55e", border: "2px solid rgba(34,197,94,0.2)", fontFamily: "var(--font-table)" }}>
                             ✓ {v.name}
                           </span>
                         ))}
                         {journal.worming?.length > 0 && (
                           <span className="text-[12px] px-1 py-0.5 rounded-full"
-                            style={{ background: "rgba(96,165,250,0.1)", color: "#1d5bbf", border: "1px solid rgba(96,165,250,0.2)", fontFamily: "var(--font-table)" }}>
+                            style={{ background: "rgba(96,165,250,0.1)", color: "#1d5bbf", border: "2px solid rgba(96,165,250,0.2)", fontFamily: "var(--font-table)" }}>
                             💊 {journal.worming.length} worming
                           </span>
                         )}
@@ -654,7 +654,7 @@ export default function MyPedigreesPage() {
                         style={{
                           background: "rgba(34,197,94,0.1)",
                           color: "#22c55e",
-                          border: "1px solid rgba(34,197,94,0.2)",
+                          border: "2px solid rgba(34,197,94,0.2)",
                           fontFamily: "var(--font-table)",
                         }}
                       >
@@ -689,7 +689,7 @@ export default function MyPedigreesPage() {
                   const displayName = buildDisplayName(p);
                   const isMale = p.sex === "Male" || p.sex === "MALE" || p.sex === "M";
                   return (
-                    <tr key={p.id} className="transition-colors" style={{ borderBottom: "1px solid #C9B29F" }}>
+                    <tr key={p.id} className="transition-colors" style={{ borderBottom: "2px solid #C9B29F" }}>
                       <td className="px-3 py-2">
                         <Link href={`/pedigree/custom/${p.id}`} className="font-bold hover:underline text-[12px]" style={{ color: getDogColor(displayName), fontFamily: "var(--font-table)" }}>
                           {displayName}

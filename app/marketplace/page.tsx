@@ -148,7 +148,7 @@ function AdCard({ ad, index }: { ad: MarketplaceAd; index: number }) {
           {ad.is_verified && (
             <span
               className="flex-shrink-0 text-[12px] font-bold px-1.5 py-0.5 rounded"
-              style={{ background: "rgba(34,197,94,0.15)", color: "#16a34a", border: "1px solid rgba(34,197,94,0.3)", fontFamily: "var(--font-table)" }}
+              style={{ background: "rgba(34,197,94,0.15)", color: "#16a34a", border: "2px solid rgba(34,197,94,0.3)", fontFamily: "var(--font-table)" }}
             >
               ✓
             </span>
@@ -182,7 +182,7 @@ function AdCard({ ad, index }: { ad: MarketplaceAd; index: number }) {
         )}
 
         {/* Location & time & share */}
-        <div className="flex items-center justify-between" style={{ borderTop: "1px solid #EDE4D5", paddingTop: 6 }}>
+        <div className="flex items-center justify-between" style={{ borderTop: "2px solid #EDE4D5", paddingTop: 6 }}>
           <div className="flex items-center gap-1 text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
             <span>{"\uD83D\uDCCD"}</span>
             <span className="truncate max-w-[70px]">{ad.location || "Unknown"}</span>

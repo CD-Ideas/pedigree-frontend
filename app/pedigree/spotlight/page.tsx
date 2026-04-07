@@ -295,7 +295,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
             return (
               <button key={d.dog_id} onClick={() => { fetchLineage(d.dog_id, d.registered_name, d.photo_url); setQuery(d.registered_name); setResults([]); setOpen(false); }}
                  className="w-full flex items-center gap-3 px-4 py-2.5 transition-all text-left"
-                 style={{ borderBottom: "1px solid #C9B29F" }}
+                 style={{ borderBottom: "2px solid #C9B29F" }}
                  onMouseEnter={(e) => (e.currentTarget.style.background = "#FAFAFA")}
                  onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}>
                 {d.photo_url ? (
@@ -488,7 +488,7 @@ export default function SpotlightPage() {
                 {filteredFamous.map((f) => (
                   <button key={f.id} onClick={() => { setSelectedDog(f.id); setDropdownOpen(false); setSearchText(""); }}
                           className="w-full text-left px-3 py-2 flex items-center gap-2 transition-all"
-                          style={{ borderBottom: "1px solid #C9B29F" }}
+                          style={{ borderBottom: "2px solid #C9B29F" }}
                           onMouseEnter={(e) => (e.currentTarget.style.background = "#FAFAFA")}
                           onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}>
                     {f.photo_url ? (
@@ -669,7 +669,7 @@ export default function SpotlightPage() {
 
                     {/* Lineage Path Preview */}
                     {r.lineage_paths.length > 0 && (
-                      <div className="text-[12px] px-2 py-1.5 rounded-lg mb-2" style={{ background: "#FAFAFA", fontFamily: "var(--font-mono)", color: "#4A4A4A", border: "1px solid #C9B29F" }}>
+                      <div className="text-[12px] px-2 py-1.5 rounded-lg mb-2" style={{ background: "#FAFAFA", fontFamily: "var(--font-mono)", color: "#4A4A4A", border: "2px solid #C9B29F" }}>
                         Gen {r.lineage_paths[0].gen}: {r.lineage_paths[0].path}
                         {r.lineage_paths.length > 1 && <span style={{ color: "#1C1C1C" }}> +{r.lineage_paths.length - 1} more</span>}
                       </div>

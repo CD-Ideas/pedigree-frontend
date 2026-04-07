@@ -131,7 +131,7 @@ function _BreedingCalcPreview_UNUSED() {
               border: `2px solid ${coiColor}`,
             }}>
               <div className="flex items-center gap-2 mb-1.5">
-                <div className="w-6 h-6 rounded-lg flex items-center justify-center" style={{ background: `${coiColor}20`, border: `1px solid ${coiColor}40` }}>
+                <div className="w-6 h-6 rounded-lg flex items-center justify-center" style={{ background: `${coiColor}20`, border: `2px solid ${coiColor}40` }}>
                   <span style={{ fontSize: "12px" }}>⚠️</span>
                 </div>
                 <span style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "12px", color: coiColor, textTransform: "uppercase", letterSpacing: "0.06em" }}>
@@ -425,7 +425,7 @@ export default function Home() {
                   <div className="relative mx-auto mb-1.5 w-7 h-7 flex items-center justify-center rounded-lg transition-all duration-300"
                     style={{
                       background: `rgba(${f.glow},0.1)`,
-                      border: `1px solid rgba(${f.glow},0.2)`,
+                      border: `2px solid rgba(${f.glow},0.2)`,
                     }}
                     ref={el => {
                       if (el) {
@@ -531,7 +531,7 @@ export default function Home() {
                     borderRadius: "8px",
                   }}>
                   <div className="flex items-center gap-2 mb-1.5">
-                    <div className="w-6 h-6 rounded-lg flex items-center justify-center" style={{ background: "rgba(239,68,68,0.15)", border: "1px solid rgba(239,68,68,0.3)" }}>
+                    <div className="w-6 h-6 rounded-lg flex items-center justify-center" style={{ background: "rgba(239,68,68,0.15)", border: "2px solid rgba(239,68,68,0.3)" }}>
                       <span style={{ fontSize: "12px" }}>⚠️</span>
                     </div>
                     <span style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "12px", color: "#ef4444", textTransform: "uppercase", letterSpacing: "0.06em" }}>Inbreeding Alert — 6.2% COI</span>
@@ -648,7 +648,7 @@ export default function Home() {
                   <div className="flex items-start gap-2">
                     {/* Icon */}
                     <div className="flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-lg"
-                      style={{ background: `rgba(${m.glow},0.1)`, border: `1px solid rgba(${m.glow},0.2)` }}>
+                      style={{ background: `rgba(${m.glow},0.1)`, border: `2px solid rgba(${m.glow},0.2)` }}>
                       <span className="text-sm">{m.icon}</span>
                     </div>
                     {/* Text */}
@@ -660,7 +660,7 @@ export default function Home() {
                             fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "12px", letterSpacing: "0.08em",
                             color: m.tag === "HOT" ? "#ef4444" : "#22c55e",
                             background: m.tag === "HOT" ? "rgba(239,68,68,0.12)" : "rgba(34,197,94,0.12)",
-                            border: `1px solid ${m.tag === "HOT" ? "rgba(239,68,68,0.25)" : "rgba(34,197,94,0.25)"}`,
+                            border: `2px solid ${m.tag === "HOT" ? "rgba(239,68,68,0.25)" : "rgba(34,197,94,0.25)"}`,
                             padding: "1px 6px", borderRadius: "9999px",
                           }}>{m.tag}</span>
                         )}

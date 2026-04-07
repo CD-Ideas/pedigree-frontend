@@ -198,7 +198,7 @@ function PedigreeSearch() {
           {results.map((d) => (
             <a key={d.dog_id} href={d.dog_id >= 10000000 ? `/pedigree/custom/${d.dog_id - 10000000}` : `/pedigree/${d.dog_id}`}
                className="flex items-center gap-3 px-4 py-2.5 transition-all hover:bg-white/5"
-               style={{ borderBottom: "1px solid #C9B29F" }}>
+               style={{ borderBottom: "2px solid #C9B29F" }}>
               {d.photo_url ? (
                 <img src={d.photo_url.startsWith("http") ? d.photo_url : `https://www.apbt.online-pedigrees.com/${d.photo_url}`}
                      alt="" className="w-8 h-8 rounded-lg object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
@@ -291,7 +291,7 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
               style={{
                 background: displayGens === g ? "#C9B29F" : "transparent",
                 color: displayGens === g ? "#1C1C1C" : "#FAF7F2",
-                border: "1px solid transparent",
+                border: "2px solid transparent",
                 fontFamily: "var(--font-table)",
                 letterSpacing: "0.03em",
                 borderRadius: "8px",
@@ -432,7 +432,7 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
                             fontSize: maxGen >= 5 ? "7px" : "9px", color: "#8a6518",
                             background: "#F5EDE0",
                             width: maxGen >= 5 ? "12px" : "15px", height: maxGen >= 5 ? "12px" : "15px",
-                            border: "1px solid #C9B29F",
+                            border: "2px solid #C9B29F",
                           }}>★</span>
                         )}
                         {hasLink ? (
@@ -481,7 +481,7 @@ function NavAuthButton() {
         <button
           onClick={() => { localStorage.removeItem("token"); localStorage.removeItem("refreshToken"); localStorage.removeItem("user"); window.location.reload(); }}
           className="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all hover:scale-105"
-          style={{ background: "rgba(220,38,38,0.15)", color: "#ef4444", border: "1px solid rgba(220,38,38,0.3)", fontFamily: "var(--font-table)" }}>
+          style={{ background: "rgba(220,38,38,0.15)", color: "#ef4444", border: "2px solid rgba(220,38,38,0.3)", fontFamily: "var(--font-table)" }}>
           Logout
         </button>
       </div>
@@ -645,7 +645,7 @@ export default function PublishedPedigreePage() {
               {ped.creator_username && (
                 <Link href={`/profile/${encodeURIComponent(ped.creator_username)}`} className="text-[12px] px-2 py-0.5 rounded-lg hover:underline" style={{
                   background: "rgba(201,178,159,0.12)", color: "#1d5bbf",
-                  fontFamily: "var(--font-table)", border: "1px solid rgba(96,165,250,0.3)",
+                  fontFamily: "var(--font-table)", border: "2px solid rgba(96,165,250,0.3)",
                 }}>
                   {capName(ped.creator_username)}
                 </Link>
@@ -656,7 +656,7 @@ export default function PublishedPedigreePage() {
                     className="text-[12px] px-2 py-0.5 rounded-lg font-semibold transition-all hover:scale-105"
                     style={{
                       background: "rgba(34,197,94,0.12)", color: "#22c55e",
-                      fontFamily: "var(--font-table)", border: "1px solid rgba(34,197,94,0.3)",
+                      fontFamily: "var(--font-table)", border: "2px solid rgba(34,197,94,0.3)",
                     }}>
                     ✎ Edit
                   </Link>
@@ -665,7 +665,7 @@ export default function PublishedPedigreePage() {
                     className="text-[12px] px-2 py-0.5 rounded-lg font-semibold transition-all hover:scale-105"
                     style={{
                       background: "rgba(239,68,68,0.12)", color: "#ef4444",
-                      fontFamily: "var(--font-table)", border: "1px solid rgba(239,68,68,0.3)",
+                      fontFamily: "var(--font-table)", border: "2px solid rgba(239,68,68,0.3)",
                     }}>
                     ✕ Delete
                   </button>
@@ -842,7 +842,7 @@ export default function PublishedPedigreePage() {
                 </div>
                 <span className="text-[12px] px-2 py-0.5 rounded-lg" style={{
                   background: "rgba(220,38,38,0.12)", color: "#ef4444",
-                  fontFamily: "var(--font-table)", border: "1px solid rgba(220,38,38,0.3)",
+                  fontFamily: "var(--font-table)", border: "2px solid rgba(220,38,38,0.3)",
                 }}>
                   Private — Only You
                 </span>
@@ -929,7 +929,7 @@ export default function PublishedPedigreePage() {
         })()}
 
         {/* ─── Footer ─── */}
-        <footer className="text-center py-8 mt-8" style={{ borderTop: "1px solid #D6CEBF" }}>
+        <footer className="text-center py-8 mt-8" style={{ borderTop: "2px solid #D6CEBF" }}>
           <div className="flex items-center justify-center gap-2 mb-3">
             <img src={LOGO} alt="Logo" className="w-12" style={{ height: "auto" }} />
             <span style={{
@@ -953,7 +953,7 @@ export default function PublishedPedigreePage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4" style={{ background: "rgba(0,0,0,0.4)",  }}>
           <div className="rounded-lg p-6 max-w-sm w-full" style={{
             background: "#FAF7F2",
-            border: "1px solid rgba(239,68,68,0.3)",
+            border: "2px solid rgba(239,68,68,0.3)",
             
           }}>
             <div className="text-center mb-4">

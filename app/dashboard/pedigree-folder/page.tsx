@@ -203,7 +203,7 @@ export default function PedigreeFolderPage() {
             {views.map((v) => (
               <div
                 key={v.id}
-                className="rounded-lg overflow-hidden transition-all hover:shadow-lg cursor-pointer"
+                className="rounded-lg overflow-hidden transition-all hover:scale-[1.02] cursor-pointer"
                 style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px" }}
                 onClick={() => setExpandedId(v.id)}
               >
@@ -239,7 +239,7 @@ export default function PedigreeFolderPage() {
                   onClick={() => setExpandedId(null)}
                 >
                   <div
-                    style={{ background: "#FAF7F2", borderRadius: "12px", maxWidth: "900px", width: "100%", maxHeight: "90vh", overflow: "hidden", border: "2px solid #C9B29F", boxShadow: "0 8px 40px rgba(0,0,0,0.3)", display: "flex", flexDirection: "column" }}
+                    style={{ background: "#FAF7F2", borderRadius: "8px", maxWidth: "900px", width: "100%", maxHeight: "90vh", overflow: "hidden", border: "2px solid #C9B29F", display: "flex", flexDirection: "column" }}
                     onClick={(e) => e.stopPropagation()}
                   >
                     {/* Header */}
@@ -279,7 +279,7 @@ export default function PedigreeFolderPage() {
           onClick={() => setDeleteId(null)}
         >
           <div
-            style={{ background: "#FAF7F2", borderRadius: "12px", width: "380px", maxWidth: "90vw", overflow: "hidden", border: "2px solid #C9B29F", boxShadow: "0 8px 30px rgba(0,0,0,0.3)" }}
+            style={{ background: "#FAF7F2", borderRadius: "8px", width: "380px", maxWidth: "90vw", overflow: "hidden", border: "2px solid #C9B29F" }}
             onClick={(e) => e.stopPropagation()}
           >
             <div style={{ background: "#1C1C1C", padding: "12px 16px", color: "#FAF7F2", fontWeight: 700, fontSize: "14px", fontFamily: "var(--font-table)" }}>

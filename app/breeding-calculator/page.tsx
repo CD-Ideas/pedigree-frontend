@@ -302,7 +302,7 @@ function DogSlot({
                   {results.map((dog) => {
                     const src = dog.photo_url ? (dog.photo_url.startsWith("http") ? dog.photo_url : `https://www.apbt.online-pedigrees.com/${dog.photo_url}`) : null;
                     return (
-                      <button key={dog.dog_id} onClick={() => pick(dog)} className="w-full flex items-center gap-2.5 px-3 py-2 text-left transition-all hover:bg-[#F0EBE3]" style={{ borderBottom: "1px solid #C9B29F" }}>
+                      <button key={dog.dog_id} onClick={() => pick(dog)} className="w-full flex items-center gap-2.5 px-3 py-2 text-left transition-all hover:bg-[#F0EBE3]" style={{ borderBottom: "2px solid #C9B29F" }}>
                         <div className="w-6 h-6 rounded-full overflow-hidden flex-shrink-0" style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}>
                           {src ? <img src={src} alt="" className="w-full h-full object-cover" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "2px"; }} /> : <div className="w-full h-full flex items-center justify-center opacity-20"><img src="/logo.png" alt="Pedigree Platform" style={{ width: "16px", height: "16px" }} /></div>}
                         </div>

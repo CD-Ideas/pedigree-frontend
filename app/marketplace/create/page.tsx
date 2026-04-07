@@ -438,7 +438,7 @@ function CreateAdContent() {
                   router.replace("/marketplace/create");
                 }}
                 className="ml-auto text-[12px] px-2.5 py-1 rounded-lg transition-all duration-200 hover:scale-105 hover:brightness-125"
-                style={{ background: "#FAFAFA", border: "1px solid #C9B29F", color: "#4A4A4A", fontFamily: "var(--font-table)" }}
+                style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#4A4A4A", fontFamily: "var(--font-table)" }}
               >
                 Change
               </button>
@@ -541,7 +541,7 @@ function CreateAdContent() {
                     setPhotos([]);
                   }}
                   className="px-2.5 py-2 rounded-lg text-xs transition-all hover:scale-105"
-                  style={{ background: "rgba(239,68,68,0.1)", color: "#ef4444", border: "1px solid rgba(239,68,68,0.2)" }}
+                  style={{ background: "rgba(239,68,68,0.1)", color: "#ef4444", border: "2px solid rgba(239,68,68,0.2)" }}
                 >
                   {"\u2715"}
                 </button>
@@ -593,7 +593,7 @@ function CreateAdContent() {
                           }
                         }}
                         className="w-full text-left px-3 py-2 text-xs flex items-center gap-2 transition-colors hover:bg-[rgba(201,178,159,0.1)]"
-                        style={{ borderBottom: "1px solid #C9B29F" }}
+                        style={{ borderBottom: "2px solid #C9B29F" }}
                       >
                         {dog.photo_url ? (
                           <img src={dog.photo_url.startsWith("http") ? dog.photo_url : `https://www.apbt.online-pedigrees.com/${dog.photo_url}`}
@@ -650,7 +650,7 @@ function CreateAdContent() {
               className="w-full rounded-lg px-4 py-2.5 text-sm outline-none font-bold"
               style={{
                 background: selectedDogName ? "rgba(201,178,159,0.1)" : "#FAFAFA",
-                border: selectedDogName ? "1px solid rgba(201,178,159,0.3)" : "1px solid 1px solid #C9B29F",
+                border: selectedDogName ? "2px solid rgba(201,178,159,0.3)" : "2px solid 2px solid #C9B29F",
                 color: selectedDogName ? getDogColor(selectedDogName) : "var(--text-primary, #e2e8f0)",
                 fontFamily: "var(--font-table)",
                 cursor: selectedDogName ? "not-allowed" : "text",

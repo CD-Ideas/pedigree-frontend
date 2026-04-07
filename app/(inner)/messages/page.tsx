@@ -625,7 +625,7 @@ function MessagesContent() {
                 className="w-full text-left px-3 py-3 flex items-center gap-3 transition-all"
                 style={{
                   background: isSelected ? "#FAF7F2" : "transparent",
-                  borderBottom: "1px solid #C9B29F",
+                  borderBottom: "2px solid #C9B29F",
                 }}>
                 {/* Avatar with online dot */}
                 <div className="relative flex-shrink-0">
@@ -840,7 +840,7 @@ function MessagesContent() {
                     {showDate && (
                       <div className="flex justify-center my-3">
                         <span className="px-3 py-1 rounded-lg text-[12px] font-medium"
-                          style={{ background: "#FAF7F2", color: "#4A4A4A", border: "1px solid #EDE4D5", fontFamily: "var(--font-table)" }}>
+                          style={{ background: "#FAF7F2", color: "#4A4A4A", border: "2px solid #EDE4D5", fontFamily: "var(--font-table)" }}>
                           {formatDateSeparator(msg.created_at)}
                         </span>
                       </div>
@@ -977,7 +977,7 @@ function MessagesContent() {
                                     className="flex items-center gap-1 px-2 py-1 transition-all hover:scale-105"
                                     style={{
                                       background: iReacted ? "#EDE4D5" : "#FAF7F2",
-                                      border: iReacted ? "2px solid #C9B29F" : "1px solid #C9B29F",
+                                      border: iReacted ? "2px solid #C9B29F" : "2px solid #C9B29F",
                                       borderRadius: "8px",
                                       fontSize: "14px",
                                       fontFamily: "var(--font-table)",
@@ -1028,7 +1028,7 @@ function MessagesContent() {
                 <div className="flex flex-wrap gap-2 mb-2">
                   {pendingAttachments.map((att, i) => (
                     <div key={i} className="flex items-center gap-1.5 px-2 py-1 rounded-lg text-[12px]"
-                      style={{ background: "#FAF7F2", border: "1px solid #C9B29F" }}>
+                      style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}>
                       {att.isImage ? <img src={att.url} alt="" className="w-8 h-8 rounded object-cover" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} /> : (att as { isVoice?: boolean }).isVoice ? <span>🎤</span> : <span>📎</span>}
                       <span className="truncate max-w-[80px]" style={{ color: "#1C1C1C" }}>{att.name}</span>
                       <button onClick={() => setPendingAttachments(prev => prev.filter((_, j) => j !== i))} className="text-red-400">✕</button>

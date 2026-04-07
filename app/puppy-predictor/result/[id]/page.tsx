@@ -146,7 +146,7 @@ export default function PredictionResultPage() {
           ].map(g => (
             <div key={g.label} className="rounded-lg p-3 space-y-1" style={{
               background: "#FAF7F2",
-              border: `1px solid ${g.color}30`,
+              border: `2px solid ${g.color}30`,
             }}>
               <h3 className="text-xs font-bold" style={{ color: g.color, fontFamily: "var(--font-table)" }}>
                 {g.icon} {g.label}

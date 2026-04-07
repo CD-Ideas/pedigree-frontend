@@ -594,7 +594,7 @@ export default function EditAdPage() {
                     setPhotos([]);
                   }}
                   className="px-2.5 py-2 rounded-lg text-xs transition-all hover:scale-105"
-                  style={{ background: "rgba(239,68,68,0.1)", color: "#ef4444", border: "1px solid rgba(239,68,68,0.2)" }}
+                  style={{ background: "rgba(239,68,68,0.1)", color: "#ef4444", border: "2px solid rgba(239,68,68,0.2)" }}
                 >
                   {"\u2715"}
                 </button>
@@ -649,7 +649,7 @@ export default function EditAdPage() {
                           }
                         }}
                         className="w-full text-left px-3 py-2 text-xs flex items-center gap-2 transition-colors hover:bg-[rgba(201,178,159,0.1)]"
-                        style={{ borderBottom: "1px solid #C9B29F" }}
+                        style={{ borderBottom: "2px solid #C9B29F" }}
                       >
                         <span style={{ color: getDogColor(dog.name), fontFamily: "var(--font-table)", fontWeight: 600 }}>
                           {dog.name}
@@ -701,7 +701,7 @@ export default function EditAdPage() {
               className="w-full rounded-lg px-4 py-2.5 text-sm outline-none font-bold"
               style={{
                 background: selectedDogName ? "rgba(201,178,159,0.1)" : "#FAFAFA",
-                border: selectedDogName ? "1px solid rgba(201,178,159,0.3)" : "1px solid #C9B29F",
+                border: selectedDogName ? "2px solid rgba(201,178,159,0.3)" : "2px solid #C9B29F",
                 color: selectedDogName ? getDogColor(selectedDogName) : "var(--text-primary, #C9B29F)",
                 fontFamily: "var(--font-table)",
                 cursor: selectedDogName ? "not-allowed" : "text",

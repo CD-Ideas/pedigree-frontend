@@ -439,7 +439,7 @@ function DogSearch({ label, onSelect }: { label: string; onSelect: (dog: SearchD
           {results.map(d => (
             <button key={d.dog_id} onClick={() => { onSelect(d); setQ(d.registered_name); setShow(false); }}
               className="w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-[#F0EBE3] text-xs transition-colors"
-              style={{ borderBottom: "1px solid #C9B29F" }}>
+              style={{ borderBottom: "2px solid #C9B29F" }}>
               {d.photo_url ? (
                 <img src={d.photo_url.startsWith("http") ? d.photo_url : `https://www.apbt.online-pedigrees.com/${d.photo_url}`}
                   alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />

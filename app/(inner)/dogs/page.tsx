@@ -103,7 +103,7 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
                 className="text-[12px] font-bold px-1.5 py-0.5 rounded"
                 style={{
                   background: "#FAF7F2",
-                  border: "1px solid #C9B29F",
+                  border: "2px solid #C9B29F",
                   color: TITLE_COLORS[t] || "#1C1C1C",
                 }}
               >
@@ -541,7 +541,7 @@ export default function DogsPage() {
                 <tr
                   key={dog.id}
                   className="transition-colors"
-                  style={{ borderBottom: "1px solid #C9B29F" }}
+                  style={{ borderBottom: "2px solid #C9B29F" }}
                 >
                   <td className="px-3 py-2">
                     <Link href={`/dogs/${dog.id}`} className="font-bold hover:underline text-[12px]" style={{ color: getDogColor(dog.name), fontFamily: "var(--font-table)" }}>

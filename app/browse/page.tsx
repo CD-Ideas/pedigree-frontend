@@ -388,7 +388,7 @@ export default function PublicDogsPage() {
                     color: sexFilter === f.value
                       ? f.value === "MALE" ? "#1d5bbf" : f.value === "FEMALE" ? "#9f1239" : "#1d5bbf"
                       : "#4A4A4A",
-                    border: "1px solid transparent",
+                    border: "2px solid transparent",
                   }}>
                   {f.icon && <span className="mr-1">{f.icon}</span>}{f.label}
                 </button>
@@ -480,7 +480,7 @@ export default function PublicDogsPage() {
                   style={{
                     background: sort === s.key ? "rgba(29,91,191,0.08)" : "transparent",
                     color: sort === s.key ? "#1d5bbf" : "#4A4A4A",
-                    border: sort === s.key ? "2px solid #C9B29F" : "1px solid transparent",
+                    border: sort === s.key ? "2px solid #C9B29F" : "2px solid transparent",
                     fontFamily: "var(--font-table)",
                   }}>
                   <span className="opacity-70">{s.icon}</span> {s.label}

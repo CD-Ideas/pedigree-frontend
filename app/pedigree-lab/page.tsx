@@ -876,7 +876,7 @@ function PedigreeLabInner() {
                         style={{
                           background: previewDisplayGens === g ? "#C9B29F" : "transparent",
                           color: previewDisplayGens === g ? "#1C1C1C" : "#FAF7F2",
-                          border: "1px solid transparent",
+                          border: "2px solid transparent",
                           fontFamily: "var(--font-table)",
                           letterSpacing: "0.03em",
                           borderRadius: "8px",
@@ -1129,7 +1129,7 @@ function PedigreeLabInner() {
                                     alignItems: "center",
                                     justifyContent: "center",
                                     borderRadius: 4,
-                                    border: "1px solid #C9B29F",
+                                    border: "2px solid #C9B29F",
                                   }}
                                 >
                                   ★

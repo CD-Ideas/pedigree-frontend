@@ -308,10 +308,9 @@ export default function NewTitleMapPage() {
                 transform: "translate(-50%, -50%)",
                 background: "#FAF7F2",
                 border: "2px solid #C9B29F",
-                borderRadius: "12px",
+                borderRadius: "8px",
                 width: "320px",
                 maxWidth: "90vw",
-                boxShadow: "0 8px 30px rgba(0,0,0,0.3)",
                 zIndex: 50,
                 overflow: "hidden",
               }}
