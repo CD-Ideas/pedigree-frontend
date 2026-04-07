@@ -63,6 +63,39 @@ conn.close()
   }
 }
 
+/* PUT /api/whelpings — update an existing whelping */
+export async function PUT(req: NextRequest) {
+  try {
+    const body = await req.json();
+    const { id, userId, damName, damId, breedDate1, breedDate2, earliestDue, expectedDue, latestDue, note } = body;
+
+    if (!id || !userId || !damName || !breedDate1) {
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+    }
+
+    const script = `
+import sqlite3, json, base64
+conn = sqlite3.connect("${DB}")
+cur = conn.cursor()
+dam_name = base64.b64decode("${Buffer.from(damName).toString("base64")}").decode("utf-8")
+note_val = base64.b64decode("${Buffer.from(note || "").toString("base64")}").decode("utf-8")
+cur.execute("""
+  UPDATE saved_whelpings SET dam_name = ?, dam_id = ?, breed_date_1 = ?, breed_date_2 = ?,
+    earliest_due = ?, expected_due = ?, latest_due = ?, note = ?
+  WHERE id = ? AND user_id = ?
+""", (dam_name, ${damId || "None"}, "${breedDate1}", "${breedDate2 || ""}", "${earliestDue}", "${expectedDue}", "${latestDue}", note_val, ${id}, ${userId}))
+conn.commit()
+print(json.dumps({"updated": cur.rowcount, "success": True}))
+conn.close()
+`;
+    const { stdout } = await execFileAsync("python3", ["-c", script], { timeout: 10000 });
+    return NextResponse.json(JSON.parse(stdout));
+  } catch (e: any) {
+    console.error("PUT whelpings error:", e);
+    return NextResponse.json({ error: "Failed to update" }, { status: 500 });
+  }
+}
+
 /* DELETE /api/whelpings — delete a whelping */
 export async function DELETE(req: NextRequest) {
   try {

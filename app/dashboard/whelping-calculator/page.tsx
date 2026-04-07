@@ -82,6 +82,7 @@ export default function WhelpingCalculatorPage() {
   const [loadingWhelpings, setLoadingWhelpings] = useState(false);
   const [userId, setUserId] = useState<number | null>(null);
   const [viewingWhelping, setViewingWhelping] = useState<SavedWhelping | null>(null);
+  const [editingId, setEditingId] = useState<number | null>(null);
 
   /* Get user on mount */
   useEffect(() => {
@@ -126,32 +127,33 @@ export default function WhelpingCalculatorPage() {
     setLoadingWhelpings(false);
   }, [userId]);
 
-  /* Save whelping */
+  /* Save whelping (create new or update existing) */
   const handleSave = async () => {
     if (!userId || !breedDate || !calculated) return;
     const damName = selectedDam?.name || damQuery || "Unknown Dam";
     const breedingDate = new Date(breedDate + "T12:00:00");
     setSaving(true);
     setSaveMsg("");
+    const payload = {
+      userId,
+      damName,
+      damId: selectedDam?.id || null,
+      breedDate1: breedDate,
+      breedDate2: secondBreedDate || "",
+      earliestDue: formatDateISO(addDays(breedingDate, 58)),
+      expectedDue: formatDateISO(addDays(breedingDate, 63)),
+      latestDue: formatDateISO(addDays(breedingDate, 68)),
+      note,
+    };
     try {
       const res = await fetch("/api/whelpings", {
-        method: "POST",
+        method: editingId ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userId,
-          damName,
-          damId: selectedDam?.id || null,
-          breedDate1: breedDate,
-          breedDate2: secondBreedDate || "",
-          earliestDue: formatDateISO(addDays(breedingDate, 58)),
-          expectedDue: formatDateISO(addDays(breedingDate, 63)),
-          latestDue: formatDateISO(addDays(breedingDate, 68)),
-          note,
-        }),
+        body: JSON.stringify(editingId ? { ...payload, id: editingId } : payload),
       });
       const data = await res.json();
       if (data.success) {
-        setSaveMsg("Saved!");
+        setSaveMsg(editingId ? "Updated!" : "Saved!");
         setTimeout(() => setSaveMsg(""), 3000);
       }
     } catch (_) {
@@ -190,6 +192,7 @@ export default function WhelpingCalculatorPage() {
     setCalculated(true);
     setViewingWhelping(null);
     setShowMyWhelping(false);
+    setEditingId(w.id);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -212,6 +215,7 @@ export default function WhelpingCalculatorPage() {
   const handleReset = () => {
     setBreedDate(""); setSecondBreedDate(""); setCalculated(false);
     setCheckedItems(new Set()); setSelectedDam(null); setDamQuery(""); setNote(""); setSaveMsg("");
+    setEditingId(null);
   };
 
   return (
@@ -228,10 +232,10 @@ export default function WhelpingCalculatorPage() {
         </div>
         {/* My Whelping button — top right */}
         <button
-          onClick={() => { setShowMyWhelping(!showMyWhelping); setViewingWhelping(null); if (!showMyWhelping) loadWhelpings(); }}
+          onClick={() => { setShowMyWhelping(!showMyWhelping); setViewingWhelping(null); setEditingId(null); if (!showMyWhelping) loadWhelpings(); }}
           className="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all hover:scale-105 flex-shrink-0 ml-4"
           style={{ background: showMyWhelping ? "#1C1C1C" : "#FAF7F2", color: showMyWhelping ? "#FAF7F2" : "#1C1C1C", border: "2px solid #C9B29F", fontFamily: "var(--font-table)", cursor: "pointer" }}>
-          {showMyWhelping ? "Calculator" : viewingWhelping ? "Back" : "My Whelping"}
+          {showMyWhelping ? "Calculator" : viewingWhelping ? "My Whelping" : "My Whelping"}
           {myWhelpings.length > 0 && !showMyWhelping && !viewingWhelping && (
             <span className="ml-2 px-1.5 py-0.5 rounded-full text-[12px]"
               style={{ background: "#C9B29F", color: "#FAFAFA", fontFamily: "var(--font-mono)" }}>
@@ -267,52 +271,70 @@ export default function WhelpingCalculatorPage() {
           )}
 
           {!loadingWhelpings && myWhelpings.length > 0 && (
-            <div className="space-y-3">
-              {myWhelpings.map((w) => {
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
+              {myWhelpings.map((w, index) => {
                 const expDate = new Date(w.expected_due + "T12:00:00");
+                const bd = new Date(w.breed_date_1 + "T12:00:00");
                 const dLeft = daysBetween(today, expDate);
+                const dp = daysBetween(bd, today);
+                const pct = Math.min(Math.max((dp / 63) * 100, 0), 100);
+                const titleColor = getDogColor(w.dam_name);
                 return (
-                  <div key={w.id} className="rounded-lg p-3 flex items-center gap-4 transition-all hover:scale-[1.005]"
-                    style={{ background: "#FAFAFA", border: "2px solid #EDE4D5", borderRadius: "8px" }}>
-                    {/* Dam info */}
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs font-bold truncate" style={{ color: getDogColor(w.dam_name), fontFamily: "var(--font-table)" }}>
+                  <div key={w.id} onClick={() => viewWhelping(w)}
+                    className="rounded-lg overflow-hidden transition-all hover:scale-[1.02] group cursor-pointer"
+                    style={{
+                      background: "#FAF7F2",
+                      border: "2px solid #C9B29F",
+                      borderRadius: "8px",
+                      animation: "cardReveal 0.4s ease both",
+                      animationDelay: `${index * 30}ms`,
+                    }}>
+                    {/* Top banner — due date */}
+                    <div className="h-16 relative flex items-center justify-center"
+                      style={{ background: `linear-gradient(135deg, ${titleColor}15, #FAF7F2)` }}>
+                      <div className="text-center">
+                        <p className="text-[12px] font-bold uppercase tracking-widest" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Due</p>
+                        <p className="text-xs font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-mono)" }}>
+                          {expDate.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                        </p>
+                      </div>
+                      {/* Days left badge */}
+                      <div className="absolute top-1.5 right-1.5 flex items-center px-1.5 py-0.5 rounded-full"
+                        style={{ background: "rgba(250,247,242,0.95)", border: "2px solid #C9B29F" }}>
+                        <span className="text-[12px] font-bold"
+                          style={{ color: dLeft > 0 ? "#1C1C1C" : dLeft === 0 ? "#22c55e" : "#ef4444", fontFamily: "var(--font-mono)" }}>
+                          {dLeft > 0 ? `${dLeft}d` : dLeft === 0 ? "Today" : "Past"}
+                        </span>
+                      </div>
+                      {/* Delete button */}
+                      <button
+                        onClick={(e) => { e.stopPropagation(); handleDelete(w.id); }}
+                        className="absolute top-1.5 left-1.5 w-5 h-5 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                        style={{ background: "rgba(250,247,242,0.95)", border: "2px solid #ef4444", color: "#ef4444", fontFamily: "var(--font-table)", fontSize: "12px", fontWeight: 900, lineHeight: 1 }}
+                        title="Delete">
+                        ×
+                      </button>
+                    </div>
+
+                    {/* Details */}
+                    <div className="px-2 py-1.5">
+                      <p className="text-[12px] font-bold truncate" style={{ color: titleColor, fontFamily: "var(--font-table)" }}>
                         {w.dam_name}
                       </p>
-                      <p className="text-[12px]" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
-                        Bred: {w.breed_date_1}{w.breed_date_2 ? ` & ${w.breed_date_2}` : ""}
+                      <p className="text-[12px] mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
+                        Bred: {w.breed_date_1}
                       </p>
-                      {w.note && (
-                        <p className="text-[12px] mt-0.5 truncate" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-                          {w.note}
-                        </p>
-                      )}
-                    </div>
-
-                    {/* Expected due - highlighted */}
-                    <div className="text-center flex-shrink-0 px-3 py-1.5 rounded-lg"
-                      style={{ background: "#1C1C1C", border: "2px solid #C9B29F", borderRadius: "8px" }}>
-                      <p className="text-[12px] uppercase tracking-widest" style={{ color: "#C9B29F", fontFamily: "var(--font-table)" }}>Due</p>
-                      <p className="text-xs font-bold" style={{ color: "#FAFAFA", fontFamily: "var(--font-mono)" }}>
-                        {formatDate(expDate)}
+                      {/* Mini progress bar */}
+                      <div className="relative h-1.5 rounded-full overflow-hidden mt-1" style={{ background: "#EDE4D5" }}>
+                        <div className="h-full rounded-full"
+                          style={{
+                            width: `${pct}%`,
+                            background: pct >= 100 ? "#22c55e" : pct >= 85 ? "#f59e0b" : "#C9B29F",
+                          }} />
+                      </div>
+                      <p className="text-[12px] mt-0.5 text-center" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
+                        Day {Math.max(0, dp)}/63
                       </p>
-                      <p className="text-[12px]" style={{ color: dLeft > 0 ? "#C9B29F" : "#22c55e", fontFamily: "var(--font-mono)" }}>
-                        {dLeft > 0 ? `${dLeft}d left` : dLeft === 0 ? "Today!" : "Passed"}
-                      </p>
-                    </div>
-
-                    {/* Actions */}
-                    <div className="flex flex-col gap-1.5 flex-shrink-0">
-                      <button onClick={() => viewWhelping(w)}
-                        className="px-3 py-1 rounded-lg text-[12px] font-bold uppercase tracking-widest transition-all hover:scale-105"
-                        style={{ background: "#1C1C1C", color: "#FAFAFA", border: "2px solid #C9B29F", fontFamily: "var(--font-table)", cursor: "pointer" }}>
-                        Open
-                      </button>
-                      <button onClick={() => handleDelete(w.id)}
-                        className="px-3 py-1 rounded-lg text-[12px] font-bold uppercase tracking-widest transition-all hover:scale-105"
-                        style={{ ...steelFrame, color: "#ef4444", fontFamily: "var(--font-table)", cursor: "pointer" }}>
-                        Delete
-                      </button>
                     </div>
                   </div>
                 );
@@ -559,7 +581,7 @@ export default function WhelpingCalculatorPage() {
                   <button onClick={handleSave} disabled={saving}
                     className="px-5 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all hover:scale-105"
                     style={{ background: "#22c55e", color: "#FAFAFA", border: "2px solid #22c55e", fontFamily: "var(--font-table)", cursor: "pointer", opacity: saving ? 0.5 : 1 }}>
-                    {saving ? "Saving..." : "Save This Whelping"}
+                    {saving ? "Saving..." : editingId ? "Update Whelping" : "Save This Whelping"}
                   </button>
                   <button onClick={handleReset}
                     className="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all hover:scale-105"
