@@ -92,9 +92,9 @@ function NavSearch() {
                 style={{ borderBottom: "2px solid #C9B29F" }}
               >
                 {photoSrc ? (
-                  <img src={photoSrc} alt={r.registered_name} className="w-6 h-6 rounded-lg object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
+                  <img loading="lazy" src={photoSrc} alt={r.registered_name} className="w-6 h-6 rounded-lg object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
                 ) : (
-                  <img src="/logo.png" alt="Pedigree Platform" className="w-6 h-6 rounded-lg object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} />
+                  <img loading="lazy" src="/logo.png" alt="Pedigree Platform" className="w-6 h-6 rounded-lg object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} />
                 )}
                 <span className="font-semibold truncate" style={{ color: getDogColor(r.registered_name), fontFamily: "var(--font-table)" }}>
                   {r.registered_name}
@@ -120,9 +120,9 @@ function NavSearch() {
                     style={{ borderBottom: "2px solid #C9B29F" }}
                   >
                     {photoSrc ? (
-                      <img src={photoSrc} alt={r.registered_name} className="w-6 h-6 rounded-lg object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
+                      <img loading="lazy" src={photoSrc} alt={r.registered_name} className="w-6 h-6 rounded-lg object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
                     ) : (
-                      <img src="/logo.png" alt="Pedigree Platform" className="w-6 h-6 rounded-lg object-contain flex-shrink-0 opacity-30" style={{ background: "#FAFAFA", border: "2px solid #C9B29F", padding: "2px" }} />
+                      <img loading="lazy" src="/logo.png" alt="Pedigree Platform" className="w-6 h-6 rounded-lg object-contain flex-shrink-0 opacity-30" style={{ background: "#FAFAFA", border: "2px solid #C9B29F", padding: "2px" }} />
                     )}
                     <span className="font-semibold truncate" style={{ color: getDogColor(r.registered_name), fontFamily: "var(--font-table)" }}>
                       {r.registered_name}
@@ -361,7 +361,7 @@ export default function NavBar() {
     >
       <div className="max-w-[1600px] mx-auto px-6 flex items-center justify-between h-14 overflow-visible">
         <Link href="/" className="flex items-center gap-2">
-          <img src={LOGO} alt="Logo" className="w-12" style={{ height: "auto" }} />
+          <img loading="lazy" src={LOGO} alt="Logo" className="w-12" style={{ height: "auto" }} />
           <span
             style={{
               fontFamily: "var(--font-table)",
@@ -635,7 +635,7 @@ export default function NavBar() {
                   {userPicture?.startsWith("emoji:") ? (
                     <span className="text-sm">{userPicture.replace("emoji:", "")}</span>
                   ) : userPicture ? (
-                    <img src={userPicture} alt={`${userName || "User"} profile`} className="w-full h-full object-cover rounded-lg" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                    <img loading="lazy" src={userPicture} alt={`${userName || "User"} profile`} className="w-full h-full object-cover rounded-lg" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
                   ) : (
                     (userName || "U")[0].toUpperCase()
                   )}

@@ -220,7 +220,7 @@ export default function NewTitleAlertsPage() {
           </div>
         ) : filtered.length === 0 ? (
           <div className="text-center py-20">
-            <img src="/logo.png" alt="Pedigree Platform" className="mx-auto mb-4 opacity-30" style={{ width: "64px", height: "64px" }} />
+            <img loading="lazy" src="/logo.png" alt="Pedigree Platform" className="mx-auto mb-4 opacity-30" style={{ width: "64px", height: "64px" }} />
             <p className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>No title alerts</p>
             <p className="text-xs mt-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Dogs published with &quot;Show in Dashboard Alerts&quot; will appear here for 30 days</p>
           </div>

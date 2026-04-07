@@ -75,9 +75,8 @@ function DogCard({ dog, index }: { dog: Dog; index: number }) {
       {/* Photo */}
       <div className="relative h-36 overflow-hidden" style={{ borderBottom: "2px solid #C9B29F" }}>
         {photoUrl ? (
-          <img src={photoUrl} alt={dog.name}
+          <img loading="lazy" src={photoUrl} alt={dog.name}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-            loading="lazy"
             onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
         ) : (
           <div className="w-full h-full flex items-center justify-center"
@@ -266,7 +265,7 @@ export default function PublicDogsPage() {
       <nav className="sticky top-0 z-50 px-4 md:px-6 py-2.5 flex items-center justify-between"
         style={{ background: "#FAF7F2", borderBottom: "2px solid #C9B29F" }}>
         <Link href="/" className="flex items-center gap-2.5">
-          <img src={LOGO} alt="Logo" className="w-14" style={{ height: "auto" }} />
+          <img loading="lazy" src={LOGO} alt="Logo" className="w-14" style={{ height: "auto" }} />
           <span style={{
             fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "1rem",
             color: "#1C1C1C",
@@ -539,7 +538,7 @@ export default function PublicDogsPage() {
         ) : dogs.length === 0 ? (
           /* Empty state */
           <div className="text-center py-20">
-            <img src="/logo.png" alt="Pedigree Platform" className="mx-auto mb-4 opacity-30" style={{ width: "80px", height: "80px" }} />
+            <img loading="lazy" src="/logo.png" alt="Pedigree Platform" className="mx-auto mb-4 opacity-30" style={{ width: "80px", height: "80px" }} />
             <h3 className="text-lg font-bold mb-2" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               No dogs found
             </h3>
@@ -651,7 +650,7 @@ export default function PublicDogsPage() {
       {/* ─── Footer ─── */}
       <footer className="text-center py-6" style={{ borderTop: "2px solid #C9B29F" }}>
         <div className="flex items-center justify-center gap-2 mb-2">
-          <img src={LOGO} alt="Logo" className="w-12" style={{ height: "auto" }} />
+          <img loading="lazy" src={LOGO} alt="Logo" className="w-12" style={{ height: "auto" }} />
           <span style={{
             fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "12px",
             color: "#1C1C1C",

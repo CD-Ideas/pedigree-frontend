@@ -264,9 +264,9 @@ function DogSlot({
             <div className="flex items-center gap-3">
               <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0" style={{ border: "2px solid #C9B29F", background: "#FAFAFA" }}>
                 {photoSrc ? (
-                  <img src={photoSrc} alt={selected.registered_name} className="w-full h-full object-cover" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
+                  <img loading="lazy" src={photoSrc} alt={selected.registered_name} className="w-full h-full object-cover" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center opacity-20"><img src="/logo.png" alt="Pedigree Platform" style={{ width: "32px", height: "32px" }} /></div>
+                  <div className="w-full h-full flex items-center justify-center opacity-20"><img loading="lazy" src="/logo.png" alt="Pedigree Platform" style={{ width: "32px", height: "32px" }} /></div>
                 )}
               </div>
               <div className="flex-1 min-w-0">
@@ -305,7 +305,7 @@ function DogSlot({
                     return (
                       <button key={dog.dog_id} onClick={() => pick(dog)} className="w-full flex items-center gap-2.5 px-3 py-2 text-left transition-all hover:bg-[#F0EBE3]" style={{ borderBottom: "2px solid #C9B29F" }}>
                         <div className="w-6 h-6 rounded-full overflow-hidden flex-shrink-0" style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}>
-                          {src ? <img src={src} alt={dog.registered_name} className="w-full h-full object-cover" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "2px"; }} /> : <div className="w-full h-full flex items-center justify-center opacity-20"><img src="/logo.png" alt="Pedigree Platform" style={{ width: "16px", height: "16px" }} /></div>}
+                          {src ? <img loading="lazy" src={src} alt={dog.registered_name} className="w-full h-full object-cover" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "2px"; }} /> : <div className="w-full h-full flex items-center justify-center opacity-20"><img src="/logo.png" alt="Pedigree Platform" style={{ width: "16px", height: "16px" }} /></div>}
                         </div>
                         <span className="text-xs font-semibold truncate" style={{ color: getDogColor(dog.registered_name), fontFamily: "var(--font-table)" }}>{dog.registered_name}</span>
                       </button>
@@ -738,7 +738,7 @@ export default function BloodlineCalculatorPage() {
                         }}>
                         <div className="w-2.5 h-7 rounded-full flex-shrink-0" style={{ background: getDogColor(a.name) }} />
                         <div className="w-7 h-7 rounded-full overflow-hidden flex-shrink-0" style={{ background: "#FAFAFA", border: "2px solid #C9B29F" }}>
-                          {photoSrc ? <img src={photoSrc} alt={a.name} className="w-full h-full object-cover" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "2px"; }} /> : (
+                          {photoSrc ? <img loading="lazy" src={photoSrc} alt={a.name} className="w-full h-full object-cover" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "2px"; }} /> : (
                             <div className="w-full h-full flex items-center justify-center text-[12px] font-bold" style={{ color: getDogColor(a.name) }}>{i + 1}</div>
                           )}
                         </div>

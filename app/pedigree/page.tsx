@@ -99,7 +99,7 @@ export default function PedigreeHub() {
       <nav className="sticky top-0 z-50 px-4 md:px-6 py-3 flex items-center justify-between"
            style={{ background: "#FAF7F2", borderBottom: "2px solid #C9B29F" }}>
         <Link href="/" className="flex items-center gap-3">
-          <img src={LOGO} alt="Logo" className="w-12" style={{ height: "auto" }} />
+          <img loading="lazy" src={LOGO} alt="Logo" className="w-12" style={{ height: "auto" }} />
           <span style={{
             fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "1.1rem",
             color: "#1C1C1C",
@@ -125,7 +125,7 @@ export default function PedigreeHub() {
       <section className="relative px-4 md:px-6 pt-12 pb-8">
         <div className="relative max-w-3xl mx-auto text-center">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <img src={LOGO} alt="Logo" className="w-28" style={{ height: "auto" }} />
+            <img loading="lazy" src={LOGO} alt="Logo" className="w-28" style={{ height: "auto" }} />
           </div>
           <h1 style={{
             fontFamily: "var(--font-table)", fontSize: "clamp(1.8rem, 5vw, 3rem)", fontWeight: 900,
@@ -224,7 +224,7 @@ export default function PedigreeHub() {
                         {/* Photo or placeholder */}
                         <div className="h-36 relative overflow-hidden">
                           {photo ? (
-                            <img src={photo} alt={dog.name} className="w-full h-full object-cover transition-transform group-hover:scale-110" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
+                            <img loading="lazy" src={photo} alt={dog.name} className="w-full h-full object-cover transition-transform group-hover:scale-110" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center"
                                  style={{ background: isMale ? "rgba(29,91,191,0.08)" : "rgba(159,18,57,0.08)" }}>
@@ -432,7 +432,7 @@ export default function PedigreeHub() {
       {/* Footer */}
       <footer className="text-center py-8 mt-4" style={{ borderTop: "2px solid #C9B29F" }}>
         <div className="flex items-center justify-center gap-2 mb-3">
-          <img src={LOGO} alt="Logo" className="w-12" style={{ height: "auto" }} />
+          <img loading="lazy" src={LOGO} alt="Logo" className="w-12" style={{ height: "auto" }} />
           <span style={{
             fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "14px",
             color: "#1C1C1C",

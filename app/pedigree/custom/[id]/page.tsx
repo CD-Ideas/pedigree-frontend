@@ -204,7 +204,7 @@ function PedigreeSearch() {
                 <img src={d.photo_url.startsWith("http") ? d.photo_url : `https://www.apbt.online-pedigrees.com/${d.photo_url}`}
                      alt={d.registered_name} className="w-8 h-8 rounded-lg object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
               ) : (
-                <img src="/logo.png" alt="Pedigree Platform" className="w-8 h-8 rounded-lg object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} />
+                <img loading="lazy" src="/logo.png" alt="Pedigree Platform" className="w-8 h-8 rounded-lg object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} />
               )}
               <span className="text-sm font-semibold truncate" style={{ color: getDogColor(d.registered_name), fontFamily: "var(--font-table)" }}>
                 {d.registered_name}
@@ -570,7 +570,7 @@ export default function PublishedPedigreePage() {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: "#EDE4D5" }}>
         <div className="flex flex-col items-center gap-4">
-          <img src={LOGO} alt="Logo" className="w-24 animate-pulse" style={{ height: "auto" }} />
+          <img loading="lazy" src={LOGO} alt="Logo" className="w-24 animate-pulse" style={{ height: "auto" }} />
           <div className="flex items-center gap-3" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
             <div className="w-5 h-5 rounded-lg border-2 border-t-transparent animate-spin" style={{ borderColor: "#C9B29F", borderTopColor: "transparent" }} />
             Loading pedigree...
@@ -583,7 +583,7 @@ export default function PublishedPedigreePage() {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: "#EDE4D5" }}>
         <div className="text-center">
-          <img src="/logo.png" alt="Pedigree Platform" className="mx-auto mb-4 opacity-50" style={{ width: "80px", height: "80px" }} />
+          <img loading="lazy" src="/logo.png" alt="Pedigree Platform" className="mx-auto mb-4 opacity-50" style={{ width: "80px", height: "80px" }} />
           <h2 className="text-xl font-bold mb-2" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Pedigree Not Found</h2>
           <p className="text-sm mb-6" style={{ color: "#4A4A4A" }}>This pedigree doesn&apos;t exist or has been removed.</p>
           <Link href="/" className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-semibold transition-all hover:scale-105"
@@ -688,7 +688,7 @@ export default function PublishedPedigreePage() {
             {/* Photo */}
             <div className="flex-shrink-0 relative m-2 w-full sm:w-[200px] h-[200px]">
               {photoUrl ? (
-                <img src={photoUrl} alt={displayName} className="rounded-lg w-full sm:w-[200px] h-[200px]" style={{ objectFit: "fill" }} onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
+                <img loading="lazy" src={photoUrl} alt={displayName} className="rounded-lg w-full sm:w-[200px] h-[200px]" style={{ objectFit: "fill" }} onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
               ) : (
                 <div className="rounded-lg flex items-center justify-center w-full sm:w-[200px] h-[200px]"
                   style={{ background: isMale ? "rgba(29,91,191,0.08)" : "rgba(159,18,57,0.08)" }}>
@@ -697,7 +697,7 @@ export default function PublishedPedigreePage() {
               )}
               {hoverPhoto && (
                 <div className="absolute inset-0 z-10 transition-opacity duration-200 rounded-lg overflow-hidden">
-                  <img src={hoverPhoto} alt="Parent" className="w-full h-full object-cover" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
+                  <img loading="lazy" src={hoverPhoto} alt="Parent" className="w-full h-full object-cover" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
                 </div>
               )}
             </div>
@@ -938,7 +938,7 @@ export default function PublishedPedigreePage() {
         {/* ─── Footer ─── */}
         <footer className="text-center py-8 mt-8" style={{ borderTop: "2px solid #D6CEBF" }}>
           <div className="flex items-center justify-center gap-2 mb-3">
-            <img src={LOGO} alt="Logo" className="w-12" style={{ height: "auto" }} />
+            <img loading="lazy" src={LOGO} alt="Logo" className="w-12" style={{ height: "auto" }} />
             <span style={{
               fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "14px",
               color: "#1C1C1C",

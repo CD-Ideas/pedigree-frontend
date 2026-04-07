@@ -335,7 +335,7 @@ export default function NewTitleMapPage() {
               {/* Content */}
               <div style={{ padding: "16px" }}>
                 {selected.photo_path && (
-                  <img src={selected.photo_path.startsWith("/") ? selected.photo_path : `/uploads/${selected.photo_path}`} alt={selected.name} className="w-full h-32 object-cover rounded-lg mb-3" style={{ border: "2px solid #C9B29F" }} onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                  <img loading="lazy" src={selected.photo_path.startsWith("/") ? selected.photo_path : `/uploads/${selected.photo_path}`} alt={selected.name} className="w-full h-32 object-cover rounded-lg mb-3" style={{ border: "2px solid #C9B29F" }} onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
                 )}
                 <p style={{ fontSize: "16px", fontWeight: 900, color: getDogColor(buildName(selected)), fontFamily: "var(--font-table)", marginBottom: "8px" }}>
                   {buildName(selected)}

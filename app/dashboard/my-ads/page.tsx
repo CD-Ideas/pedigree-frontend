@@ -120,7 +120,7 @@ export default function MyAdsPage() {
         }}
       >
         <Link href="/" className="flex items-center gap-2.5">
-          <img src={LOGO} alt="Logo" className="w-14" style={{ height: "auto" }} />
+          <img loading="lazy" src={LOGO} alt="Logo" className="w-14" style={{ height: "auto" }} />
           <span
             style={{
               fontFamily: "var(--font-table)",
@@ -267,7 +267,7 @@ export default function MyAdsPage() {
                     {/* Thumbnail */}
                     <div className="sm:w-36 md:w-40 h-32 sm:h-auto flex-shrink-0 relative overflow-hidden">
                       {photo ? (
-                        <img src={photo} alt={ad.title} className="w-full h-full object-cover" loading="lazy" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
+                        <img loading="lazy" src={photo} alt={ad.title} className="w-full h-full object-cover" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
                       ) : (
                         <div
                           className="w-full h-full flex items-center justify-center min-h-[100px]"
@@ -399,7 +399,7 @@ export default function MyAdsPage() {
       {/* ─── Footer ─── */}
       <footer className="text-center py-6 mt-4" style={{ borderTop: "2px solid #C9B29F" }}>
         <div className="flex items-center justify-center gap-2 mb-2">
-          <img src={LOGO} alt="Logo" className="w-12" style={{ height: "auto" }} />
+          <img loading="lazy" src={LOGO} alt="Logo" className="w-12" style={{ height: "auto" }} />
           <span
             style={{
               fontFamily: "var(--font-table)",

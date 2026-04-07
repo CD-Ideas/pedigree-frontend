@@ -1,8 +1,15 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import NavBar from "./NavBar";
 import HeartbeatTracker from "./HeartbeatTracker";
 import ChatWidget from "./ChatWidget";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#1C1C1C",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://pedigreeplatform.com'),
@@ -30,6 +37,40 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  alternates: {
+    canonical: "/",
+  },
+};
+
+// JSON-LD structured data for SEO (Organization + WebSite with SearchAction)
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://pedigreeplatform.com/#organization",
+      "name": "Pedigree Platform",
+      "url": "https://pedigreeplatform.com",
+      "logo": "https://pedigreeplatform.com/logo.png",
+      "description": "The largest American Pit Bull Terrier (APBT) pedigree registry with 947,000+ dogs.",
+      "sameAs": [],
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://pedigreeplatform.com/#website",
+      "url": "https://pedigreeplatform.com",
+      "name": "Pedigree Platform",
+      "publisher": { "@id": "https://pedigreeplatform.com/#organization" },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://pedigreeplatform.com/browse?search={search_term_string}",
+        },
+        "query-input": "required name=search_term_string",
+      },
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -44,6 +85,11 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <script src="/save-pedigree.js" defer></script>
         <script src="/notification-chime.js" defer></script>
+        {/* JSON-LD structured data for SEO */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </head>
       <body className="antialiased">
         {/* Skip to content link for keyboard/screen reader users */}

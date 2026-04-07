@@ -24,7 +24,6 @@ export default function DogOfTheMonthPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (email.trim()) {
-      console.log("Notify email:", email);
       setSubmitted(true);
       setTimeout(() => setSubmitted(false), 4000);
       setEmail("");

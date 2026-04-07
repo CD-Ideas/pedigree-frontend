@@ -196,7 +196,7 @@ export default function Dashboard() {
       return (
         <div className={`${size} rounded-full flex items-center justify-center overflow-hidden`}
           style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}>
-          <img src={pp} alt={`${user?.username || "User"} profile`} className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; const parent = e.currentTarget.parentElement; if (parent) parent.innerHTML = `<span class="${textSize}" style="color:#C9B29F">📷</span>`; }} />
+          <img loading="lazy" src={pp} alt={`${user?.username || "User"} profile`} className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; const parent = e.currentTarget.parentElement; if (parent) parent.innerHTML = `<span class="${textSize}" style="color:#C9B29F">📷</span>`; }} />
         </div>
       );
     }

@@ -107,7 +107,7 @@ function Avatar({ src, username, size = "w-10 h-10", textSize = "text-sm" }: { s
   }
   if (src) {
     return (
-      <img src={src} alt={`${username} avatar`} className={`${size} rounded-full object-cover flex-shrink-0`}
+      <img loading="lazy" src={src} alt={`${username} avatar`} className={`${size} rounded-full object-cover flex-shrink-0`}
         style={{ border: "2px solid #C9B29F" }}
         onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
     );
@@ -209,7 +209,6 @@ function MessagesContent() {
     socketRef.current = socket;
 
     socket.on("connect", () => {
-      console.log("[Socket] Connected:", socket.id);
       socket.emit("auth", { userId: user.id, username: user.username });
     });
 
@@ -278,9 +277,7 @@ function MessagesContent() {
       setOnlineUserIds(new Set(ids));
     });
 
-    socket.on("disconnect", () => {
-      console.log("[Socket] Disconnected");
-    });
+    socket.on("disconnect", () => {});
 
     return () => {
       socket.disconnect();
@@ -878,7 +875,7 @@ function MessagesContent() {
                                     if (att.isImage) {
                                       return (
                                         <a key={i} href={att.url} target="_blank" rel="noopener noreferrer" className="block">
-                                          <img src={att.url} alt={att.name} className="max-w-full rounded-lg max-h-52 object-cover" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
+                                          <img loading="lazy" src={att.url} alt={att.name} className="max-w-full rounded-lg max-h-52 object-cover" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
                                         </a>
                                       );
                                     }
@@ -1036,7 +1033,7 @@ function MessagesContent() {
                   {pendingAttachments.map((att, i) => (
                     <div key={i} className="flex items-center gap-1.5 px-2 py-1 rounded-lg text-[12px]"
                       style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}>
-                      {att.isImage ? <img src={att.url} alt={att.name} className="w-8 h-8 rounded object-cover" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} /> : (att as { isVoice?: boolean }).isVoice ? <span>🎤</span> : <span>📎</span>}
+                      {att.isImage ? <img loading="lazy" src={att.url} alt={att.name} className="w-8 h-8 rounded object-cover" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} /> : (att as { isVoice?: boolean }).isVoice ? <span>🎤</span> : <span>📎</span>}
                       <span className="truncate max-w-[80px]" style={{ color: "#1C1C1C" }}>{att.name}</span>
                       <button onClick={() => setPendingAttachments(prev => prev.filter((_, j) => j !== i))} aria-label="Remove attachment" className="text-red-400">✕</button>
                     </div>

@@ -141,7 +141,7 @@ export default function Home() {
         {/* ── Hero ── */}
         <section className="relative flex items-center justify-center px-4" style={{ minHeight: "26vh", paddingTop: "45px" }}>
           <div className="relative max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-3 md:gap-5 animate-reveal">
-            <img src={LOGO} alt="Pedigree Platform" className="flex-shrink-0 w-[160px] md:w-[240px]" style={{ height: "auto" }} />
+            <img loading="lazy" src={LOGO} alt="Pedigree Platform" className="flex-shrink-0 w-[160px] md:w-[240px]" style={{ height: "auto" }} />
             <div className="text-center md:text-left">
               <h1 style={{ fontFamily: "var(--font-body)", fontSize: "clamp(1.2rem, 3.5vw, 2.2rem)", fontWeight: 700, lineHeight: 1.1, color: "#1C1C1C" }} className="mb-1.5">
                 The Ultimate <span style={{ color: "#C9B29F" }}>Pedigree Hub</span>
@@ -491,7 +491,7 @@ export default function Home() {
               {/* Brand */}
               <div className="flex flex-col items-center md:items-start gap-1.5">
                 <div className="flex items-center gap-2">
-                  <img src={LOGO} alt="Pedigree Platform logo" width={40} height={40} style={{ height: "auto" }} />
+                  <img loading="lazy" src={LOGO} alt="Pedigree Platform logo" width={40} height={40} style={{ height: "auto" }} />
                   <span style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "12px", color: "#1C1C1C", textTransform: "uppercase", letterSpacing: "0.1em" }}>Pedigree Platform</span>
                 </div>
                 <p style={{ fontFamily: "var(--font-body)", fontSize: "12px", color: "#4A4A4A", maxWidth: "240px", lineHeight: 1.5 }} className="text-center md:text-left">
@@ -577,7 +577,7 @@ export default function Home() {
             </button>
             {/* Logo */}
             <div className="text-center mb-5">
-              <img src={LOGO} alt="Pedigree Platform" width={80} height={80} className="mx-auto mb-3" style={{ height: "auto" }} />
+              <img loading="lazy" src={LOGO} alt="Pedigree Platform" width={80} height={80} className="mx-auto mb-3" style={{ height: "auto" }} />
               <h3 style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "18px", color: "#1C1C1C", letterSpacing: "0.02em" }}>
                 Sign in to continue
               </h3>

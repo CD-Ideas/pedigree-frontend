@@ -183,7 +183,7 @@ export default function PedigreeFolderPage() {
           </div>
         ) : views.length === 0 ? (
           <div className="text-center py-20">
-            <img src="/logo.png" alt="Pedigree Platform" className="mx-auto mb-6" style={{ width: "80px", height: "80px", opacity: 0.3 }} />
+            <img loading="lazy" src="/logo.png" alt="Pedigree Platform" className="mx-auto mb-6" style={{ width: "80px", height: "80px", opacity: 0.3 }} />
             <p className="text-base font-bold mb-2" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               Your saved pedigrees live here
             </p>
@@ -223,7 +223,7 @@ export default function PedigreeFolderPage() {
                 onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setExpandedId(v.id); } }}
               >
                 <div className="aspect-[16/9] overflow-hidden" style={{ background: "#FAFAFA" }}>
-                  <img src={v.image_path} alt={v.dog_name} className="w-full h-full object-contain" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.padding = "20px"; }} />
+                  <img loading="lazy" src={v.image_path} alt={v.dog_name} className="w-full h-full object-contain" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.padding = "20px"; }} />
                 </div>
                 <div className="p-3">
                   <div onClick={(e) => e.stopPropagation()}>
@@ -273,7 +273,7 @@ export default function PedigreeFolderPage() {
                     </div>
                     {/* Image */}
                     <div style={{ overflow: "auto", flex: 1, background: "#FAFAFA", padding: "12px" }}>
-                      <img src={v.image_path} alt={v.dog_name} style={{ width: "100%", objectFit: "contain" }} onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "20px"; }} />
+                      <img loading="lazy" src={v.image_path} alt={v.dog_name} style={{ width: "100%", objectFit: "contain" }} onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "20px"; }} />
                     </div>
                     {/* Footer buttons */}
                     <div style={{ padding: "12px 16px", borderTop: "2px solid #C9B29F", display: "flex", gap: "8px", flexShrink: 0 }}>

@@ -523,7 +523,7 @@ function CreateAdContent() {
                   className="flex-1 flex items-center gap-2 rounded-lg px-3 py-2"
                   style={{ background: "rgba(201,178,159,0.1)", border: "2px solid #C9B29F" }}
                 >
-                  <img src="/logo.png" alt="Pedigree Platform" style={{ width: "16px", height: "16px" }} />
+                  <img loading="lazy" src="/logo.png" alt="Pedigree Platform" style={{ width: "16px", height: "16px" }} />
                   <span className="text-xs font-bold" style={{ color: getDogColor(selectedDogName), fontFamily: "var(--font-table)" }}>
                     {selectedDogName}
                   </span>
@@ -600,7 +600,7 @@ function CreateAdContent() {
                           <img src={dog.photo_url.startsWith("http") ? dog.photo_url : `https://www.apbt.online-pedigrees.com/${dog.photo_url}`}
                             alt="" className="w-6 h-6 rounded-lg object-cover" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "2px"; }} />
                         ) : (
-                          <img src="/logo.png" alt="Pedigree Platform" className="w-6 h-6 rounded-lg opacity-30" style={{ objectFit: "contain", padding: "2px" }} />
+                          <img loading="lazy" src="/logo.png" alt="Pedigree Platform" className="w-6 h-6 rounded-lg opacity-30" style={{ objectFit: "contain", padding: "2px" }} />
                         )}
                         <span style={{ color: getDogColor(dog.registered_name), fontFamily: "var(--font-table)", fontWeight: 600 }}>
                           {dog.registered_name}
@@ -1099,7 +1099,7 @@ function CreateAdContent() {
       {/* ─── Footer ─── */}
       <footer className="text-center py-6 mt-4" style={{ borderTop: "2px solid #C9B29F" }}>
         <div className="flex items-center justify-center gap-2 mb-2">
-          <img src={LOGO} alt="Logo" className="w-12" style={{ height: "auto" }} />
+          <img loading="lazy" src={LOGO} alt="Logo" className="w-12" style={{ height: "auto" }} />
           <span
             style={{
               fontFamily: "var(--font-table)",

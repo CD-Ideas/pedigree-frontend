@@ -242,7 +242,7 @@ export default function MarketplaceAdPage() {
                 className="absolute top-2.5 left-2.5 flex items-center gap-1.5 px-2 py-1 rounded-lg z-10"
                 style={{ background: "rgba(250,247,242,0.85)", border: "2px solid #C9B29F" }}
               >
-                <img src={LOGO} alt="" role="presentation" className="w-6" style={{ height: "auto" }} />
+                <img loading="lazy" src={LOGO} alt="" role="presentation" className="w-6" style={{ height: "auto" }} />
                 <span
                   className="text-[12px] font-bold"
                   style={{
@@ -291,7 +291,7 @@ export default function MarketplaceAdPage() {
                             opacity: isSelected ? 1 : 0.8,
                           }}
                         >
-                          <img src={photo} alt={`Photo ${i + 1}`} className="w-full h-full object-cover" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
+                          <img loading="lazy" src={photo} alt={`Photo ${i + 1}`} className="w-full h-full object-cover" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
                         </button>
                       );
                     })}
@@ -945,7 +945,7 @@ export default function MarketplaceAdPage() {
       {/* ─── Footer ─── */}
       <footer className="text-center py-6 mt-8" style={{ borderTop: "2px solid #C9B29F" }}>
         <div className="flex items-center justify-center gap-2 mb-2">
-          <img src={LOGO} alt="Logo" className="w-12" style={{ height: "auto" }} />
+          <img loading="lazy" src={LOGO} alt="Logo" className="w-12" style={{ height: "auto" }} />
           <span
             style={{
               fontFamily: "var(--font-table)",
