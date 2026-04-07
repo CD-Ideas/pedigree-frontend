@@ -35,7 +35,7 @@ print(json.dumps({"whelpings": rows}))
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { userId, damName, damId, breedDate1, breedDate2, earliestDue, expectedDue, latestDue, note } = body;
+    const { userId, damName, damId, breedDate1, breedDate2, earliestDue, expectedDue, latestDue, note, checklistState } = body;
 
     if (!userId || !damName || !breedDate1) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -47,10 +47,11 @@ conn = sqlite3.connect("${DB}")
 cur = conn.cursor()
 dam_name = base64.b64decode("${Buffer.from(damName).toString("base64")}").decode("utf-8")
 note_val = base64.b64decode("${Buffer.from(note || "").toString("base64")}").decode("utf-8")
+checklist_val = base64.b64decode("${Buffer.from(checklistState || "").toString("base64")}").decode("utf-8")
 cur.execute("""
-  INSERT INTO saved_whelpings (user_id, dam_name, dam_id, breed_date_1, breed_date_2, earliest_due, expected_due, latest_due, note)
-  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-""", (${userId}, dam_name, ${damId || "None"}, "${breedDate1}", "${breedDate2 || ""}", "${earliestDue}", "${expectedDue}", "${latestDue}", note_val))
+  INSERT INTO saved_whelpings (user_id, dam_name, dam_id, breed_date_1, breed_date_2, earliest_due, expected_due, latest_due, note, checklist_state)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+""", (${userId}, dam_name, ${damId || "None"}, "${breedDate1}", "${breedDate2 || ""}", "${earliestDue}", "${expectedDue}", "${latestDue}", note_val, checklist_val))
 conn.commit()
 print(json.dumps({"id": cur.lastrowid, "success": True}))
 conn.close()
@@ -67,7 +68,7 @@ conn.close()
 export async function PUT(req: NextRequest) {
   try {
     const body = await req.json();
-    const { id, userId, damName, damId, breedDate1, breedDate2, earliestDue, expectedDue, latestDue, note } = body;
+    const { id, userId, damName, damId, breedDate1, breedDate2, earliestDue, expectedDue, latestDue, note, checklistState } = body;
 
     if (!id || !userId || !damName || !breedDate1) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -79,11 +80,12 @@ conn = sqlite3.connect("${DB}")
 cur = conn.cursor()
 dam_name = base64.b64decode("${Buffer.from(damName).toString("base64")}").decode("utf-8")
 note_val = base64.b64decode("${Buffer.from(note || "").toString("base64")}").decode("utf-8")
+checklist_val = base64.b64decode("${Buffer.from(checklistState || "").toString("base64")}").decode("utf-8")
 cur.execute("""
   UPDATE saved_whelpings SET dam_name = ?, dam_id = ?, breed_date_1 = ?, breed_date_2 = ?,
-    earliest_due = ?, expected_due = ?, latest_due = ?, note = ?
+    earliest_due = ?, expected_due = ?, latest_due = ?, note = ?, checklist_state = ?
   WHERE id = ? AND user_id = ?
-""", (dam_name, ${damId || "None"}, "${breedDate1}", "${breedDate2 || ""}", "${earliestDue}", "${expectedDue}", "${latestDue}", note_val, ${id}, ${userId}))
+""", (dam_name, ${damId || "None"}, "${breedDate1}", "${breedDate2 || ""}", "${earliestDue}", "${expectedDue}", "${latestDue}", note_val, checklist_val, ${id}, ${userId}))
 conn.commit()
 print(json.dumps({"updated": cur.rowcount, "success": True}))
 conn.close()
@@ -93,6 +95,31 @@ conn.close()
   } catch (e: any) {
     console.error("PUT whelpings error:", e);
     return NextResponse.json({ error: "Failed to update" }, { status: 500 });
+  }
+}
+
+/* PATCH /api/whelpings — quick update (for checklist state only) */
+export async function PATCH(req: NextRequest) {
+  try {
+    const body = await req.json();
+    const { id, userId, checklistState } = body;
+    if (!id || !userId) return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+
+    const script = `
+import sqlite3, json, base64
+conn = sqlite3.connect("${DB}")
+cur = conn.cursor()
+checklist_val = base64.b64decode("${Buffer.from(checklistState || "").toString("base64")}").decode("utf-8")
+cur.execute("UPDATE saved_whelpings SET checklist_state = ? WHERE id = ? AND user_id = ?", (checklist_val, ${id}, ${userId}))
+conn.commit()
+print(json.dumps({"updated": cur.rowcount, "success": True}))
+conn.close()
+`;
+    const { stdout } = await execFileAsync("python3", ["-c", script], { timeout: 10000 });
+    return NextResponse.json(JSON.parse(stdout));
+  } catch (e: any) {
+    console.error("PATCH whelpings error:", e);
+    return NextResponse.json({ error: "Failed to patch" }, { status: 500 });
   }
 }
 

@@ -9,7 +9,7 @@ interface SavedWhelping {
   id: number; dam_name: string; dam_id: number | null;
   breed_date_1: string; breed_date_2: string;
   earliest_due: string; expected_due: string; latest_due: string;
-  note: string; date_saved: string;
+  note: string; date_saved: string; checklist_state?: string;
 }
 
 /* ─── Gestation milestones (days from breeding) ─── */
@@ -83,6 +83,7 @@ export default function WhelpingCalculatorPage() {
   const [userId, setUserId] = useState<number | null>(null);
   const [viewingWhelping, setViewingWhelping] = useState<SavedWhelping | null>(null);
   const [editingId, setEditingId] = useState<number | null>(null);
+  const [viewChecked, setViewChecked] = useState<Set<number>>(new Set());
 
   /* Get user on mount */
   useEffect(() => {
@@ -144,6 +145,7 @@ export default function WhelpingCalculatorPage() {
       expectedDue: formatDateISO(addDays(breedingDate, 63)),
       latestDue: formatDateISO(addDays(breedingDate, 68)),
       note,
+      checklistState: JSON.stringify(Array.from(checkedItems)),
     };
     try {
       const res = await fetch("/api/whelpings", {
@@ -155,6 +157,8 @@ export default function WhelpingCalculatorPage() {
       if (data.success) {
         setSaveMsg(editingId ? "Updated!" : "Saved!");
         setTimeout(() => setSaveMsg(""), 3000);
+        // Reload list so it shows up immediately in My Whelping
+        loadWhelpings();
       }
     } catch (_) {
       setSaveMsg("Error saving");
@@ -179,7 +183,32 @@ export default function WhelpingCalculatorPage() {
   const viewWhelping = (w: SavedWhelping) => {
     setViewingWhelping(w);
     setShowMyWhelping(false);
+    try {
+      const parsed = w.checklist_state ? JSON.parse(w.checklist_state) : [];
+      setViewChecked(new Set(parsed));
+    } catch (_) { setViewChecked(new Set()); }
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  /* Toggle checklist item in view mode + auto-save */
+  const toggleViewCheck = async (idx: number) => {
+    if (!viewingWhelping || !userId) return;
+    const next = new Set(viewChecked);
+    if (next.has(idx)) next.delete(idx);
+    else next.add(idx);
+    setViewChecked(next);
+    // Auto-save
+    try {
+      await fetch("/api/whelpings", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: viewingWhelping.id,
+          userId,
+          checklistState: JSON.stringify(Array.from(next)),
+        }),
+      });
+    } catch (_) {}
   };
 
   /* Edit a saved whelping (load into calculator) */
@@ -193,6 +222,11 @@ export default function WhelpingCalculatorPage() {
     setViewingWhelping(null);
     setShowMyWhelping(false);
     setEditingId(w.id);
+    // Load checklist state
+    try {
+      const parsed = w.checklist_state ? JSON.parse(w.checklist_state) : [];
+      setCheckedItems(new Set(parsed));
+    } catch (_) { setCheckedItems(new Set()); }
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -324,6 +358,11 @@ export default function WhelpingCalculatorPage() {
                       <p className="text-[12px] mt-0.5" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
                         Bred: {w.breed_date_1}
                       </p>
+                      {w.note && (
+                        <p className="text-[12px] mt-0.5 truncate" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                          {w.note}
+                        </p>
+                      )}
                       {/* Mini progress bar */}
                       <div className="relative h-1.5 rounded-full overflow-hidden mt-1" style={{ background: "#EDE4D5" }}>
                         <div className="h-full rounded-full"
@@ -476,6 +515,62 @@ export default function WhelpingCalculatorPage() {
                 })}
               </div>
             </div>
+
+            {/* Two-column: Checklist + Key Dates Summary */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-5">
+              {/* Whelping Supply Checklist (auto-saves) */}
+              <div className="rounded-lg p-4" style={steelFrame}>
+                <div className="flex items-center justify-between mb-3">
+                  <h2 className="text-[12px] uppercase tracking-widest font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Whelping Supply Checklist</h2>
+                  <span className="text-[12px] font-bold px-2 py-0.5 rounded"
+                    style={{ background: viewChecked.size === CHECKLIST.length ? "#22c55e" : "#EDE4D5", color: viewChecked.size === CHECKLIST.length ? "#FAFAFA" : "#4A4A4A", fontFamily: "var(--font-mono)" }}>
+                    {viewChecked.size}/{CHECKLIST.length}
+                  </span>
+                </div>
+                <div className="space-y-1.5">
+                  {CHECKLIST.map((item, i) => (
+                    <label key={i} className="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg cursor-pointer transition-all hover:scale-[1.01]"
+                      style={{ background: viewChecked.has(i) ? "rgba(34, 197, 94, 0.08)" : "transparent", border: viewChecked.has(i) ? "2px solid rgba(34, 197, 94, 0.3)" : "2px solid transparent" }}>
+                      <input type="checkbox" checked={viewChecked.has(i)} onChange={() => toggleViewCheck(i)} className="w-3.5 h-3.5 rounded accent-[#22c55e]" />
+                      <span className="text-xs" style={{ color: viewChecked.has(i) ? "#22c55e" : "#4A4A4A", fontFamily: "var(--font-table)", textDecoration: viewChecked.has(i) ? "line-through" : "none" }}>{item}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Key Dates Summary */}
+              <div className="rounded-lg p-4" style={steelFrame}>
+                <h2 className="text-[12px] uppercase tracking-widest font-semibold mb-3" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>Key Dates Summary</h2>
+                <div className="space-y-2">
+                  {[
+                    { label: "Breeding Date", date: bd, color: "#1d5bbf" },
+                    ...(sd ? [{ label: "2nd Breeding", date: sd, color: "#6d30b0" }] : []),
+                    { label: "Ultrasound Window", date: addDays(bd, 25), color: "#0d7468" },
+                    { label: "X-Ray Recommended", date: addDays(bd, 45), color: "#8a6518" },
+                    { label: "Start Temp Monitoring", date: addDays(bd, 58), color: "#f59e0b" },
+                    { label: "Earliest Due (Day 58)", date: early, color: "#b45a0a" },
+                    { label: "Expected Due (Day 63)", date: exp, color: "#22c55e" },
+                    { label: "Latest Due (Day 68)", date: late, color: "#ef4444" },
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center justify-between py-1.5 px-2.5 rounded-lg"
+                      style={{ background: i % 2 === 0 ? "rgba(201, 178, 159, 0.1)" : "transparent" }}>
+                      <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: item.color }} />
+                        <span className="text-xs font-semibold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>{item.label}</span>
+                      </div>
+                      <span className="text-xs font-semibold" style={{ color: item.color, fontFamily: "var(--font-mono)" }}>{formatDate(item.date)}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-4 p-3 rounded-lg" style={{ background: "rgba(245, 158, 11, 0.08)", border: "2px solid rgba(245, 158, 11, 0.2)" }}>
+                  <p className="text-[12px] leading-relaxed" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                    <span className="font-bold" style={{ color: "#f59e0b" }}>Note:</span> Canine gestation averages 63 days but can range from 58-68 days.
+                    If your dam has not whelped by day 68, contact your veterinarian immediately.
+                    Always consult a vet for pregnancy confirmation and prenatal care.
+                  </p>
+                </div>
+              </div>
+            </div>
           </>
         );
       })()}
@@ -516,13 +611,10 @@ export default function WhelpingCalculatorPage() {
                     style={{ ...steelFrame, background: "#FAFAFA" }}>
                     {damResults.map((d) => (
                       <button key={d.dog_id}
-                        className="w-full text-left px-3 py-2 text-xs transition-all hover:bg-[#EDE4D5] flex items-center gap-2"
+                        className="w-full text-left px-3 py-2 text-xs transition-all hover:bg-[#EDE4D5]"
                         style={{ fontFamily: "var(--font-table)", borderBottom: "2px solid #EDE4D5" }}
                         onClick={() => { setSelectedDam({ id: d.dog_id, name: d.registered_name }); setDamQuery(d.registered_name); setDamOpen(false); }}>
                         <span className="font-bold truncate" style={{ color: getDogColor(d.registered_name) }}>{d.registered_name}</span>
-                        <span className="text-[12px] flex-shrink-0" style={{ color: "#4A4A4A", fontFamily: "var(--font-mono)" }}>
-                          #{d.dog_id >= 10000000 ? `PP-${d.dog_id - 10000000}` : d.dog_id}
-                        </span>
                       </button>
                     ))}
                   </div>
@@ -560,7 +652,7 @@ export default function WhelpingCalculatorPage() {
               <div className="mb-4">
                 <label className="block text-[12px] uppercase tracking-widest font-bold mb-1"
                   style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
-                  Note <span className="font-normal opacity-60">(optional)</span>
+                  Note *
                 </label>
                 <input type="text" value={note} onChange={(e) => setNote(e.target.value)}
                   placeholder="e.g. Natural breeding, progesterone confirmed..."
@@ -578,9 +670,9 @@ export default function WhelpingCalculatorPage() {
               </button>
               {calculated && (
                 <>
-                  <button onClick={handleSave} disabled={saving}
+                  <button onClick={handleSave} disabled={saving || !note.trim()}
                     className="px-5 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all hover:scale-105"
-                    style={{ background: "#22c55e", color: "#FAFAFA", border: "2px solid #22c55e", fontFamily: "var(--font-table)", cursor: "pointer", opacity: saving ? 0.5 : 1 }}>
+                    style={{ background: note.trim() ? "#22c55e" : "#C9B29F", color: "#FAFAFA", border: `2px solid ${note.trim() ? "#22c55e" : "#C9B29F"}`, fontFamily: "var(--font-table)", cursor: note.trim() && !saving ? "pointer" : "not-allowed", opacity: saving || !note.trim() ? 0.5 : 1 }}>
                     {saving ? "Saving..." : editingId ? "Update Whelping" : "Save This Whelping"}
                   </button>
                   <button onClick={handleReset}
