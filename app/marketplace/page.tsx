@@ -449,6 +449,7 @@ export default function MarketplacePage() {
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 placeholder="Search ads by title or description... press / to focus"
+                aria-label="Search marketplace ads"
                 className="flex-1 bg-transparent outline-none py-2.5 pr-3"
                 style={{ fontFamily: "var(--font-table)", fontSize: "13px", color: "#1C1C1C" }}
               />
@@ -486,6 +487,7 @@ export default function MarketplacePage() {
           {/* Sort dropdown */}
           <div className="relative" style={{ minWidth: "160px" }}>
             <select
+              aria-label="Sort marketplace by"
               value={sort}
               onChange={(e) => {
                 setSort(e.target.value);

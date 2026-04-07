@@ -130,6 +130,7 @@ export default function DogOfTheMonthPage() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email..."
             required
+            aria-label="Email address"
             className="flex-1 rounded-lg px-4 py-3 text-sm outline-none transition-all"
             style={INPUT_STYLE}
           />

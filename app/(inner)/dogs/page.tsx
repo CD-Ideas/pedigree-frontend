@@ -330,6 +330,7 @@ export default function DogsPage() {
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
             placeholder="Search by name or reg number..."
+            aria-label="Search dogs"
             className="dogs-search flex-1 rounded-lg px-3 py-2 text-xs transition-all outline-none"
             style={{
               background: "#FAFAFA",

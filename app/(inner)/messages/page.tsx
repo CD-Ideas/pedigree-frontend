@@ -682,11 +682,13 @@ function MessagesContent() {
               <div className="w-full max-w-sm space-y-3">
                 <input value={groupName} onChange={e => setGroupName(e.target.value)}
                   placeholder="Group name..."
+                  aria-label="Group name"
                   className="w-full rounded-lg px-4 py-3 text-sm outline-none"
                   style={{ background: "#FAF7F2", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
                 <div>
                   <div className="flex gap-2">
                     <input value={groupMemberInput} onChange={e => setGroupMemberInput(e.target.value)}
+                      aria-label="Add group member"
                       onKeyDown={e => {
                         if (e.key === "Enter" && groupMemberInput.trim()) {
                           e.preventDefault();
@@ -763,14 +765,17 @@ function MessagesContent() {
               <div className="w-full max-w-sm space-y-3">
                 <input value={toUsername} onChange={e => setToUsername(e.target.value)}
                   placeholder="Username..."
+                  aria-label="Recipient username"
                   className="w-full rounded-lg px-4 py-3 text-sm outline-none"
                   style={{ background: "#FAF7F2", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
                 <input value={subject} onChange={e => setSubject(e.target.value)}
                   placeholder="Subject (optional)"
+                  aria-label="Message subject"
                   className="w-full rounded-lg px-4 py-3 text-sm outline-none"
                   style={{ background: "#FAF7F2", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
                 <textarea value={replyText} onChange={e => setReplyText(e.target.value)}
                   placeholder="Write your message..."
+                  aria-label="Message text"
                   rows={4}
                   className="w-full rounded-lg px-4 py-3 text-sm outline-none resize-none"
                   style={{ background: "#FAF7F2", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
@@ -1057,6 +1062,7 @@ function MessagesContent() {
                   {isRecording ? <span className="text-xs font-bold" style={{ fontFamily: "var(--font-table)" }}>{formatRecordingTime(recordingTime)}</span> : <span className="text-base">🎤</span>}
                 </button>
                 <textarea
+                  aria-label="Reply message"
                   value={replyText}
                   onChange={e => {
                     setReplyText(e.target.value);

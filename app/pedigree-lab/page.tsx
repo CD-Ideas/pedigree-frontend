@@ -1733,6 +1733,7 @@ function PedigreeLabInner() {
                     ))}
                   </select>
                   <select
+                    aria-label="Number of draws"
                     value={publishForm.suffixDraws}
                     onChange={(e) => setPublishForm((p) => ({ ...p, suffixDraws: e.target.value }))}
                     className="rounded-lg px-2 py-2 text-xs outline-none transition-all"
@@ -1750,6 +1751,7 @@ function PedigreeLabInner() {
                     ))}
                   </select>
                   <select
+                    aria-label="Honor titles"
                     value={publishForm.suffixHonors}
                     onChange={(e) => setPublishForm((p) => ({ ...p, suffixHonors: e.target.value }))}
                     className="rounded-lg px-2 py-2 text-xs outline-none transition-all"
@@ -1795,6 +1797,7 @@ function PedigreeLabInner() {
                     🔹 Sex
                   </label>
                   <select
+                    aria-label="Sex"
                     value={publishForm.sex}
                     onChange={(e) => setPublishForm((p) => ({ ...p, sex: e.target.value }))}
                     className="w-full rounded-lg px-3 py-2 text-sm outline-none uppercase transition-all"
@@ -1835,6 +1838,7 @@ function PedigreeLabInner() {
                     🌍 Continent
                   </label>
                   <select
+                    aria-label="Continent"
                     value={publishForm.continent}
                     onChange={(e) => setPublishForm((p) => ({ ...p, continent: e.target.value, country: "" }))}
                     className="w-full rounded-lg px-3 py-2 text-sm outline-none uppercase transition-all"
@@ -1863,6 +1867,7 @@ function PedigreeLabInner() {
                     🏳️ Country
                   </label>
                   <select
+                    aria-label="Country"
                     value={publishForm.country}
                     onChange={(e) => {
                       const country = e.target.value;
@@ -1947,6 +1952,7 @@ function PedigreeLabInner() {
                   📝 Pedigree Notes
                 </label>
                 <textarea
+                  aria-label="Pedigree notes"
                   rows={3}
                   className="w-full rounded-lg px-3 py-2 text-sm outline-none transition-all focus:ring-1"
                   style={{
@@ -2132,6 +2138,7 @@ function PedigreeLabInner() {
                 >
                   {/* Type */}
                   <select
+                    aria-label="Worming product type"
                     value={publishForm.journal.wormingDraft.type}
                     onChange={(e) =>
                       setPublishForm((p) => ({
@@ -2431,6 +2438,7 @@ function PedigreeLabInner() {
                           Cycle Frequency
                         </label>
                         <select
+                          aria-label="Heat cycle frequency"
                           value={hc.interval}
                           onChange={(e) => updateHeatCycle({ interval: e.target.value })}
                           className="w-full rounded-lg px-3 py-2 text-xs outline-none transition-all"
@@ -2557,6 +2565,7 @@ function PedigreeLabInner() {
                   Journal Notes
                 </label>
                 <textarea
+                  aria-label="Journal notes"
                   value={publishForm.journal.notes}
                   onChange={(e) =>
                     setPublishForm((p) => ({

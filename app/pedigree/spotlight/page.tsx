@@ -434,7 +434,7 @@ export default function SpotlightPage() {
                      style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                 📅 From Year
               </label>
-              <select value={fromYear} onChange={(e) => setFromYear(Number(e.target.value))}
+              <select aria-label="From year" value={fromYear} onChange={(e) => setFromYear(Number(e.target.value))}
                       className="w-full px-2.5 py-2 rounded-lg text-xs outline-none appearance-none cursor-pointer"
                       style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)", borderRadius: "8px" }}>
                 {yearOptions.map((y) => <option key={y} value={y}>{y}</option>)}
@@ -446,7 +446,7 @@ export default function SpotlightPage() {
                      style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                 📅 To Year
               </label>
-              <select value={toYear} onChange={(e) => setToYear(Number(e.target.value))}
+              <select aria-label="To year" value={toYear} onChange={(e) => setToYear(Number(e.target.value))}
                       className="w-full px-2.5 py-2 rounded-lg text-xs outline-none appearance-none cursor-pointer"
                       style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)", borderRadius: "8px" }}>
                 {yearOptions.map((y) => <option key={y} value={y}>{y}</option>)}

@@ -271,6 +271,7 @@ export default function CommunityPedigreesPage() {
         <div className="flex flex-wrap items-center gap-2">
           {/* Sort */}
           <select
+            aria-label="Sort by"
             value={sort}
             onChange={(e) => setSort(e.target.value as SortOption)}
             className="rounded-lg px-3 py-1.5 text-[12px] outline-none cursor-pointer"
@@ -322,10 +323,11 @@ export default function CommunityPedigreesPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2.5">
               {/* Continent */}
               <div>
-                <label className="text-[12px] uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                <label htmlFor="comm-continent" className="text-[12px] uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                   Continent
                 </label>
                 <select
+                  id="comm-continent"
                   value={filterContinent}
                   onChange={(e) => {
                     setFilterContinent(e.target.value);
@@ -347,10 +349,11 @@ export default function CommunityPedigreesPage() {
 
               {/* Country */}
               <div>
-                <label className="text-[12px] uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                <label htmlFor="comm-country" className="text-[12px] uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                   Country
                 </label>
                 <select
+                  id="comm-country"
                   value={filterCountry}
                   onChange={(e) => {
                     const country = e.target.value;
@@ -380,10 +383,11 @@ export default function CommunityPedigreesPage() {
 
               {/* Sex */}
               <div>
-                <label className="text-[12px] uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                <label htmlFor="comm-sex" className="text-[12px] uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                   Sex
                 </label>
                 <select
+                  id="comm-sex"
                   value={sexFilter}
                   onChange={(e) => { setSexFilter(e.target.value); setPage(1); }}
                   className="w-full rounded-lg px-3 py-1.5 text-xs outline-none cursor-pointer"

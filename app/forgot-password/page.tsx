@@ -39,12 +39,14 @@ export default function ForgotPasswordPage() {
           <form onSubmit={handleSubmit} className="space-y-3.5">
             <div>
               <label
+                htmlFor="forgot-email"
                 style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "0.85rem", letterSpacing: "0.06em", color: "#1C1C1C" }}
                 className="block mb-1 uppercase"
               >
                 Email
               </label>
               <input
+                id="forgot-email"
                 type="email"
                 placeholder="Enter your email"
                 value={email}

@@ -127,6 +127,15 @@ export default function NewTitleMapPage() {
   const [zoom, setZoom] = useState(1);
   const [center, setCenter] = useState<[number, number]>([10, 10]);
 
+  // Escape closes the dog details modal (accessibility)
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && selected) setSelected(null);
+    };
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [selected]);
+
   useEffect(() => {
     let userId = 0;
     try { const u = JSON.parse(localStorage.getItem("user") || "{}"); userId = u?.id || 0; } catch {}
@@ -301,6 +310,9 @@ export default function NewTitleMapPage() {
           {/* Popup overlay when pin is clicked */}
           {selected && (
             <div
+              role="dialog"
+              aria-modal="true"
+              aria-label="Dog details"
               style={{
                 position: "absolute",
                 top: "50%",

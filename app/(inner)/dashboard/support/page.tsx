@@ -279,6 +279,7 @@ export default function SupportPage() {
                       onChange={e => setReplyText(e.target.value)}
                       onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendReply(); } }}
                       placeholder="Type your reply..."
+                      aria-label="Reply text"
                       rows={1}
                       className="flex-1 rounded-lg px-3 py-2.5 text-sm outline-none resize-none"
                       style={{ background: "#FAFAFA", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)", minHeight: "42px", maxHeight: "100px", overflowY: "auto" }}

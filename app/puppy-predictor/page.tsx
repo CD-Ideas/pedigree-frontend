@@ -810,7 +810,7 @@ export default function PuppyPredictorPage() {
                         style={{ background: "#FAFAFA", color: "#1C1C1C", border: "2px solid #C9B29F" }}
                         title={LOCUS_INFO[l.key]}>?</span>
                     </div>
-                    <select value={sire[l.key]} onChange={e => setSire({ ...sire, [l.key]: e.target.value })}
+                    <select aria-label={`Sire ${l.key} locus`} value={sire[l.key]} onChange={e => setSire({ ...sire, [l.key]: e.target.value })}
                       className="w-full px-3 py-2 outline-none cursor-pointer" style={inputStyle}>
                       {l.options.map(o => <option key={o} value={o}>{o}</option>)}
                     </select>
@@ -865,7 +865,7 @@ export default function PuppyPredictorPage() {
                         style={{ background: "#FAFAFA", color: "#1C1C1C", border: "2px solid #C9B29F" }}
                         title={LOCUS_INFO[l.key]}>?</span>
                     </div>
-                    <select value={dam[l.key]} onChange={e => setDam({ ...dam, [l.key]: e.target.value })}
+                    <select aria-label={`Dam ${l.key} locus`} value={dam[l.key]} onChange={e => setDam({ ...dam, [l.key]: e.target.value })}
                       className="w-full px-3 py-2 outline-none cursor-pointer" style={inputStyle}>
                       {l.options.map(o => <option key={o} value={o}>{o}</option>)}
                     </select>
@@ -1044,7 +1044,7 @@ export default function PuppyPredictorPage() {
                   </div>
                   <div className="flex items-center gap-2">
                     <label className="text-xs" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Litter size:</label>
-                    <select value={litterSize} onChange={e => setLitterSize(Number(e.target.value))}
+                    <select aria-label="Litter size" value={litterSize} onChange={e => setLitterSize(Number(e.target.value))}
                       className="px-2 py-1 text-xs outline-none cursor-pointer" style={inputStyle}>
                       {[3, 4, 5, 6, 7, 8, 9, 10].map(n => <option key={n} value={n}>{n}</option>)}
                     </select>

@@ -252,6 +252,22 @@ body {
   border-radius: 0 0 999px 999px;
 }
 
+/* ── ACCESSIBILITY: Global focus indicator ─────────────────────────── */
+/* Visible focus ring for keyboard navigation (Tab key).
+   Uses :focus-visible so it only shows for keyboard, not mouse clicks. */
+*:focus-visible {
+  outline: 2px solid #1d5bbf !important;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+/* Inputs and textareas get a sandy brown ring instead */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #C9B29F !important;
+  outline-offset: 1px;
+}
+
 /* ── SCROLLBAR ──────────────────────────────────────────────────────── */
 /* Note: 4px scrollbar radius is intentional — scrollbars use thin radii by convention. */
 ::-webkit-scrollbar { width: 5px; height: 5px; }

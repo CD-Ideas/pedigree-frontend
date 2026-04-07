@@ -403,6 +403,7 @@ export default function MarketplaceAdPage() {
                         Report this listing
                       </h4>
                       <textarea
+                        aria-label="Report reason"
                         value={reportReason}
                         onChange={(e) => setReportReason(e.target.value)}
                         placeholder="Describe the issue..."

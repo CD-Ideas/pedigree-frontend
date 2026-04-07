@@ -330,11 +330,12 @@ export default function AccountPage() {
         </h2>
         <div className="space-y-4">
           <div>
-            <label className="block text-[12px] uppercase tracking-widest font-semibold mb-1.5"
+            <label htmlFor="account-username" className="block text-[12px] uppercase tracking-widest font-semibold mb-1.5"
               style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Username
             </label>
             <input
+              id="account-username"
               type="text"
               value={editUsername}
               onChange={(e) => setEditUsername(e.target.value)}
@@ -343,11 +344,12 @@ export default function AccountPage() {
             />
           </div>
           <div>
-            <label className="block text-[12px] uppercase tracking-widest font-semibold mb-1.5"
+            <label htmlFor="account-email" className="block text-[12px] uppercase tracking-widest font-semibold mb-1.5"
               style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Email
             </label>
             <input
+              id="account-email"
               type="email"
               value={editEmail}
               onChange={(e) => setEditEmail(e.target.value)}
@@ -393,12 +395,13 @@ export default function AccountPage() {
         </h2>
         <div className="space-y-4">
           <div>
-            <label className="block text-[12px] uppercase tracking-widest font-semibold mb-1.5"
+            <label htmlFor="account-current-pw" className="block text-[12px] uppercase tracking-widest font-semibold mb-1.5"
               style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Current Password
             </label>
             <div className="relative">
               <input
+                id="account-current-pw"
                 type={showCurrentPw ? "text" : "password"}
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
@@ -416,12 +419,13 @@ export default function AccountPage() {
             </div>
           </div>
           <div>
-            <label className="block text-[12px] uppercase tracking-widest font-semibold mb-1.5"
+            <label htmlFor="account-new-pw" className="block text-[12px] uppercase tracking-widest font-semibold mb-1.5"
               style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               New Password
             </label>
             <div className="relative">
               <input
+                id="account-new-pw"
                 type={showNewPw ? "text" : "password"}
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
@@ -440,11 +444,12 @@ export default function AccountPage() {
             </div>
           </div>
           <div>
-            <label className="block text-[12px] uppercase tracking-widest font-semibold mb-1.5"
+            <label htmlFor="account-confirm-pw" className="block text-[12px] uppercase tracking-widest font-semibold mb-1.5"
               style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               Confirm New Password
             </label>
             <input
+              id="account-confirm-pw"
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
@@ -549,6 +554,7 @@ export default function AccountPage() {
               </p>
             </div>
             <select
+              aria-label="Default pedigree generations"
               defaultValue="4"
               onChange={(e) => {
                 localStorage.setItem("pref_default_gens", e.target.value);
@@ -726,6 +732,7 @@ export default function AccountPage() {
                     value={deleteConfirm}
                     onChange={(e) => setDeleteConfirm(e.target.value)}
                     placeholder="Type DELETE"
+                    aria-label="Type DELETE to confirm account deletion"
                     className="flex-1 px-3 py-2 text-sm outline-none"
                     style={{
                       background: "#FAFAFA", border: "2px solid #FCA5A5",

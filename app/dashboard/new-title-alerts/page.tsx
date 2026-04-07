@@ -164,8 +164,9 @@ export default function NewTitleAlertsPage() {
         {showFilters && (
           <div className="rounded-lg p-4 mb-4 flex flex-wrap items-end gap-4" style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px" }}>
             <div>
-              <label className="block text-[12px] uppercase tracking-widest font-bold mb-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Continent</label>
+              <label htmlFor="ta-continent" className="block text-[12px] uppercase tracking-widest font-bold mb-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Continent</label>
               <select
+                id="ta-continent"
                 value={filterContinent}
                 onChange={e => { setFilterContinent(e.target.value); setFilterCountry(""); setPage(1); }}
                 className="rounded-lg px-3 py-2 text-xs outline-none min-w-[180px]"
@@ -176,8 +177,9 @@ export default function NewTitleAlertsPage() {
               </select>
             </div>
             <div>
-              <label className="block text-[12px] uppercase tracking-widest font-bold mb-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Country</label>
+              <label htmlFor="ta-country" className="block text-[12px] uppercase tracking-widest font-bold mb-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Country</label>
               <select
+                id="ta-country"
                 value={filterCountry}
                 onChange={e => { setFilterCountry(e.target.value); setPage(1); }}
                 className="rounded-lg px-3 py-2 text-xs outline-none min-w-[180px]"
@@ -188,8 +190,9 @@ export default function NewTitleAlertsPage() {
               </select>
             </div>
             <div>
-              <label className="block text-[12px] uppercase tracking-widest font-bold mb-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Time</label>
+              <label htmlFor="ta-time" className="block text-[12px] uppercase tracking-widest font-bold mb-1" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>Time</label>
               <select
+                id="ta-time"
                 value={filterTime}
                 onChange={e => { setFilterTime(e.target.value); setPage(1); }}
                 className="rounded-lg px-3 py-2 text-xs outline-none min-w-[140px]"

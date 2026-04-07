@@ -397,7 +397,7 @@ export default function PublicDogsPage() {
             </div>
 
             {/* Color filter */}
-            <select value={colorFilter}
+            <select aria-label="Filter by color" value={colorFilter}
               onChange={(e) => { setColorFilter(e.target.value); setPage(1); }}
               className="px-3 py-1.5 text-[12px] font-medium appearance-none cursor-pointer"
               style={{

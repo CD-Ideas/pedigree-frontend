@@ -41,6 +41,7 @@ function EditableTitle({ view, onRename }: { view: SavedView; onRename: (id: num
         onChange={(e) => setValue(e.target.value)}
         onBlur={save}
         onKeyDown={(e) => { if (e.key === "Enter") save(); if (e.key === "Escape") { setValue(view.dog_name); setEditing(false); } }}
+        aria-label="Edit pedigree dog name"
         className="w-full text-sm font-bold outline-none"
         style={{
           color: "#1C1C1C",
@@ -87,6 +88,18 @@ export default function PedigreeFolderPage() {
   const [views, setViews] = useState<SavedView[]>([]);
   const [loading, setLoading] = useState(true);
   const [expandedId, setExpandedId] = useState<number | null>(null);
+  const [deleteId, setDeleteId] = useState<number | null>(null);
+
+  // Global Escape key handler for modals (accessibility - keyboard navigation)
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      if (expandedId !== null) setExpandedId(null);
+      else if (deleteId !== null) setDeleteId(null);
+    };
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [expandedId, deleteId]);
 
   const fetchViews = async () => {
     let userId = 0;
@@ -106,8 +119,6 @@ export default function PedigreeFolderPage() {
   };
 
   useEffect(() => { fetchViews(); }, []);
-
-  const [deleteId, setDeleteId] = useState<number | null>(null);
 
   const confirmDelete = async () => {
     if (!deleteId) return;
@@ -203,9 +214,13 @@ export default function PedigreeFolderPage() {
             {views.map((v) => (
               <div
                 key={v.id}
+                role="button"
+                tabIndex={0}
+                aria-label={`Open ${v.dog_name} pedigree`}
                 className="rounded-lg overflow-hidden transition-all hover:scale-[1.02] cursor-pointer"
                 style={{ background: "#FAF7F2", border: "2px solid #C9B29F", borderRadius: "8px" }}
                 onClick={() => setExpandedId(v.id)}
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setExpandedId(v.id); } }}
               >
                 <div className="aspect-[16/9] overflow-hidden" style={{ background: "#FAFAFA" }}>
                   <img src={v.image_path} alt={v.dog_name} className="w-full h-full object-contain" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.padding = "20px"; }} />
@@ -239,6 +254,9 @@ export default function PedigreeFolderPage() {
                   onClick={() => setExpandedId(null)}
                 >
                   <div
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label={`${v.dog_name} pedigree preview`}
                     style={{ background: "#FAF7F2", borderRadius: "8px", maxWidth: "900px", width: "100%", maxHeight: "90vh", overflow: "hidden", border: "2px solid #C9B29F", display: "flex", flexDirection: "column" }}
                     onClick={(e) => e.stopPropagation()}
                   >
@@ -247,6 +265,7 @@ export default function PedigreeFolderPage() {
                       <span style={{ color: "#FAF7F2", fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "14px" }}>{v.dog_name} — {v.generation}G Pedigree</span>
                       <button
                         onClick={() => setExpandedId(null)}
+                        aria-label="Close preview"
                         style={{ background: "rgba(255,255,255,0.2)", border: "none", color: "#FAF7F2", width: 30, height: 30, borderRadius: "50%", cursor: "pointer", fontSize: 16, display: "flex", alignItems: "center", justifyContent: "center" }}
                       >
                         ✕
@@ -279,10 +298,13 @@ export default function PedigreeFolderPage() {
           onClick={() => setDeleteId(null)}
         >
           <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="delete-confirm-title"
             style={{ background: "#FAF7F2", borderRadius: "8px", width: "380px", maxWidth: "90vw", overflow: "hidden", border: "2px solid #C9B29F" }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div style={{ background: "#1C1C1C", padding: "12px 16px", color: "#FAF7F2", fontWeight: 700, fontSize: "14px", fontFamily: "var(--font-table)" }}>
+            <div id="delete-confirm-title" style={{ background: "#1C1C1C", padding: "12px 16px", color: "#FAF7F2", fontWeight: 700, fontSize: "14px", fontFamily: "var(--font-table)" }}>
               Delete Pedigree
             </div>
             <div style={{ padding: "20px" }}>
