@@ -870,7 +870,7 @@ export default function WhelpingCalculatorPage() {
             <div className="rounded-lg p-6 text-center" style={steelFrame}>
               <div className="w-16 h-16 rounded-full mx-auto mb-3 flex items-center justify-center"
                 style={{ background: "#EDE4D5", border: "2px solid #C9B29F" }}>
-                <img src="/logo.png" alt="" className="w-8 h-8 object-contain opacity-40" />
+                <img src="/logo.png" alt="" role="presentation" className="w-8 h-8 object-contain opacity-40" />
               </div>
               <h3 className="text-sm font-bold mb-1.5" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                 Enter your breeding date to get started

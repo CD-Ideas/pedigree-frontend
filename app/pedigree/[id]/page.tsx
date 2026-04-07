@@ -227,11 +227,12 @@ function PedigreeSearch() {
         <div className="px-4 py-2.5 flex items-center gap-3">
           <span className="text-base">🔍</span>
           <input type="text" placeholder="Search by dog name or paste a pedigree URL..."
+            aria-label="Search dogs or paste pedigree URL"
             value={query} onChange={(e) => search(e.target.value)}
             onFocus={() => { if (results.length > 0) setOpen(true); }}
             className="flex-1 bg-transparent text-sm outline-none"
             style={{ color: PG.text, fontFamily: PG.font }} />
-          {query && <button onClick={() => { setQuery(""); setResults([]); setOpen(false); }} className="text-xs opacity-70 hover:opacity-100" style={{ color: PG.text }}>✕</button>}
+          {query && <button onClick={() => { setQuery(""); setResults([]); setOpen(false); }} aria-label="Clear search" className="text-xs opacity-70 hover:opacity-100" style={{ color: PG.text }}>✕</button>}
         </div>
       </div>
       {open && results.length > 0 && (
@@ -243,7 +244,7 @@ function PedigreeSearch() {
                style={{ borderBottom: "2px solid #EDE4D5" }}>
               {d.photo_url ? (
                 <img src={d.photo_url.startsWith("http") ? d.photo_url : `https://www.apbt.online-pedigrees.com/${d.photo_url}`}
-                     alt="" className="w-8 h-8 rounded-lg object-cover flex-shrink-0" style={{ border: "2px solid #EDE4D5" }} onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
+                     alt={d.registered_name} className="w-8 h-8 rounded-lg object-cover flex-shrink-0" style={{ border: "2px solid #EDE4D5" }} onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
               ) : (
                 <img src="/logo.png" alt="Pedigree Platform" className="w-8 h-8 rounded-lg object-cover flex-shrink-0" style={{ border: "2px solid #EDE4D5" }} />
               )}

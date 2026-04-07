@@ -318,6 +318,7 @@ export default function MyPedigreesPage() {
             <input
               type="text"
               placeholder="Search by name, country, breeder..."
+              aria-label="Search pedigrees"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-full rounded-lg px-3 py-2 text-xs outline-none transition-all"
@@ -331,6 +332,7 @@ export default function MyPedigreesPage() {
             <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs" style={{ color: "#4A4A4A" }}>🔍</span>
           </div>
           <select
+            aria-label="Sort by"
             value={sort}
             onChange={(e) => setSort(e.target.value as SortOption)}
             className="rounded-lg px-3 text-[12px] outline-none cursor-pointer"

@@ -559,6 +559,7 @@ function CreateAdContent() {
                     }}
                     onFocus={() => setShowDogSearch(true)}
                     placeholder="Search for a dog by name..."
+                    aria-label="Search dogs"
                     className="w-full rounded-lg pl-9 pr-4 py-2.5 text-sm outline-none"
                     style={{
                       ...INPUT_STYLE,
@@ -645,6 +646,7 @@ function CreateAdContent() {
                 if (errors.title) setErrors((prev) => ({ ...prev, title: "" }));
               }}
               placeholder={selectedDogName ? selectedDogName : "e.g., Champion Bloodline Male - 2 Years Old"}
+              aria-label="Listing title"
               maxLength={80}
               readOnly={!!selectedDogName}
               className="w-full rounded-lg px-4 py-2.5 text-sm outline-none font-bold"
@@ -699,6 +701,7 @@ function CreateAdContent() {
                 if (errors.description) setErrors((prev) => ({ ...prev, description: "" }));
               }}
               placeholder="Describe your listing in detail..."
+              aria-label="Listing description"
               rows={5}
               maxLength={500}
               className="w-full rounded-lg px-4 py-2.5 text-sm outline-none resize-none"
@@ -734,6 +737,7 @@ function CreateAdContent() {
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 placeholder="0.00"
+                aria-label="Price in USD"
                 min="0"
                 step="0.01"
                 className="w-full rounded-lg pl-8 pr-4 py-2.5 text-sm outline-none"
@@ -888,10 +892,11 @@ function CreateAdContent() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {/* Continent */}
               <div>
-                <label className="text-[12px] font-medium uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                <label htmlFor="mp-continent" className="text-[12px] font-medium uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                   Continent
                 </label>
                 <select
+                  id="mp-continent"
                   value={continent}
                   onChange={(e) => {
                     setContinent(e.target.value);
@@ -909,10 +914,11 @@ function CreateAdContent() {
               </div>
               {/* Country */}
               <div>
-                <label className="text-[12px] font-medium uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
+                <label htmlFor="mp-country" className="text-[12px] font-medium uppercase tracking-wider mb-1.5 block" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
                   Country
                 </label>
                 <select
+                  id="mp-country"
                   value={country}
                   onChange={(e) => {
                     setCountry(e.target.value);
@@ -963,6 +969,7 @@ function CreateAdContent() {
                     if (errors.contact) setErrors((prev) => ({ ...prev, contact: "" }));
                   }}
                   placeholder="Phone number"
+                  aria-label="Phone number"
                   className="flex-1 rounded-lg px-3 py-2 text-xs outline-none"
                   style={{
                     background: "#FAFAFA",
@@ -985,6 +992,7 @@ function CreateAdContent() {
                     if (errors.contact) setErrors((prev) => ({ ...prev, contact: "" }));
                   }}
                   placeholder="Email address"
+                  aria-label="Email address"
                   className="flex-1 rounded-lg px-3 py-2 text-xs outline-none"
                   style={{
                     background: "#FAFAFA",
@@ -1007,6 +1015,7 @@ function CreateAdContent() {
                     if (errors.contact) setErrors((prev) => ({ ...prev, contact: "" }));
                   }}
                   placeholder="Venmo username"
+                  aria-label="Venmo username"
                   className="flex-1 rounded-lg px-3 py-2 text-xs outline-none"
                   style={{
                     background: "#FAFAFA",
@@ -1029,6 +1038,7 @@ function CreateAdContent() {
                     if (errors.contact) setErrors((prev) => ({ ...prev, contact: "" }));
                   }}
                   placeholder="PayPal email or username"
+                  aria-label="PayPal email or username"
                   className="flex-1 rounded-lg px-3 py-2 text-xs outline-none"
                   style={{
                     background: "#FAFAFA",

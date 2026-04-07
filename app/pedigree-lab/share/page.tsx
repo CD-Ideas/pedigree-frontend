@@ -253,7 +253,7 @@ function SharePreviewInner() {
         }}
       >
         {/* Logo + Branding */}
-        <a href="/" className="flex items-center gap-3" style={{ textDecoration: "none" }}>
+        <Link href="/" className="flex items-center gap-3" style={{ textDecoration: "none" }}>
           <img src="/logo.png" alt="Pedigree Platform" style={{ height: 36 }} />
           <span
             className="text-lg font-bold tracking-wide"
@@ -261,7 +261,7 @@ function SharePreviewInner() {
           >
             Pedigree Platform
           </span>
-        </a>
+        </Link>
 
         {/* Sign In / Sign Up */}
         <div className="flex items-center gap-3">
@@ -315,7 +315,7 @@ function SharePreviewInner() {
               >
                 Pedigree Preview
               </span>
-              <a href="/" className="flex items-center gap-2" style={{ textDecoration: "none" }} title="Visit PedigreePlatform.com">
+              <Link href="/" className="flex items-center gap-2" style={{ textDecoration: "none" }} title="Visit PedigreePlatform.com">
                 <img src="/logo.png" alt="Pedigree Platform" style={{ height: 20 }} />
                 <span
                   className="text-[12px] tracking-wide italic hover:underline"
@@ -323,7 +323,7 @@ function SharePreviewInner() {
                 >
                   Generated in PedigreePlatform.com
                 </span>
-              </a>
+              </Link>
             </div>
             <div className="flex items-center gap-2">
               <span

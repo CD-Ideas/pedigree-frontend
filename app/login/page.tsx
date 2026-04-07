@@ -90,12 +90,14 @@ function LoginForm() {
       <form onSubmit={handleLogin} className="space-y-3.5">
         <div>
           <label
+            htmlFor="login-username"
             style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "0.85rem", letterSpacing: "0.06em", color: "#1C1C1C" }}
             className="block mb-1 uppercase"
           >
             Username
           </label>
           <input
+            id="login-username"
             type="text"
             placeholder="Enter username"
             value={username}
@@ -114,6 +116,7 @@ function LoginForm() {
 
         <div>
           <label
+            htmlFor="login-password"
             style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "0.85rem", letterSpacing: "0.06em", color: "#1C1C1C" }}
             className="block mb-1 uppercase"
           >
@@ -121,6 +124,7 @@ function LoginForm() {
           </label>
           <div className="relative">
             <input
+              id="login-password"
               type={showPassword ? "text" : "password"}
               placeholder="Enter password"
               value={password}

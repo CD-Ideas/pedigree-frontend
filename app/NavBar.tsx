@@ -64,10 +64,11 @@ function NavSearch() {
           onChange={(e) => doSearch(e.target.value)}
           onFocus={() => (results.length > 0 || suggestions.length > 0) && setShow(true)}
           placeholder="Search dog or paste URL..."
+          aria-label="Search dogs"
           className="flex-1 bg-transparent text-xs outline-none"
           style={{ color: q && getDogColor(q) !== "#3a3a3a" ? getDogColor(q) : "#1C1C1C", fontFamily: "var(--font-table, system-ui, sans-serif)", minWidth: 0 }}
         />
-        {q && <button onClick={() => { setQ(""); setResults([]); setSuggestions([]); setShow(false); }} className="text-[12px] opacity-70 hover:opacity-100">✕</button>}
+        {q && <button onClick={() => { setQ(""); setResults([]); setSuggestions([]); setShow(false); }} aria-label="Clear search" className="text-[12px] opacity-70 hover:opacity-100">✕</button>}
       </div>
       {show && (results.length > 0 || suggestions.length > 0) && (
         <div
@@ -91,7 +92,7 @@ function NavSearch() {
                 style={{ borderBottom: "2px solid #C9B29F" }}
               >
                 {photoSrc ? (
-                  <img src={photoSrc} alt="" className="w-6 h-6 rounded-lg object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
+                  <img src={photoSrc} alt={r.registered_name} className="w-6 h-6 rounded-lg object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
                 ) : (
                   <img src="/logo.png" alt="Pedigree Platform" className="w-6 h-6 rounded-lg object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} />
                 )}
@@ -119,7 +120,7 @@ function NavSearch() {
                     style={{ borderBottom: "2px solid #C9B29F" }}
                   >
                     {photoSrc ? (
-                      <img src={photoSrc} alt="" className="w-6 h-6 rounded-lg object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
+                      <img src={photoSrc} alt={r.registered_name} className="w-6 h-6 rounded-lg object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
                     ) : (
                       <img src="/logo.png" alt="Pedigree Platform" className="w-6 h-6 rounded-lg object-contain flex-shrink-0 opacity-30" style={{ background: "#FAFAFA", border: "2px solid #C9B29F", padding: "2px" }} />
                     )}
@@ -616,7 +617,7 @@ export default function NavBar() {
                   {userPicture?.startsWith("emoji:") ? (
                     <span className="text-sm">{userPicture.replace("emoji:", "")}</span>
                   ) : userPicture ? (
-                    <img src={userPicture} alt="" className="w-full h-full object-cover rounded-lg" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                    <img src={userPicture} alt={`${userName || "User"} profile`} className="w-full h-full object-cover rounded-lg" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
                   ) : (
                     (userName || "U")[0].toUpperCase()
                   )}

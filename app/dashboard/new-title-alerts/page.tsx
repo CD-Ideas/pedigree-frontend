@@ -130,6 +130,7 @@ export default function NewTitleAlertsPage() {
             <input
               type="text"
               placeholder="Search by name, breeder, country..."
+              aria-label="Search title alerts"
               value={search}
               onChange={e => { setSearch(e.target.value); setPage(1); }}
               className="w-full rounded-lg px-4 py-2 text-xs outline-none"
@@ -137,6 +138,7 @@ export default function NewTitleAlertsPage() {
             />
           </div>
           <select
+            aria-label="Sort by"
             value={sort}
             onChange={e => setSort(e.target.value)}
             className="rounded-lg px-3 py-2 text-xs outline-none"

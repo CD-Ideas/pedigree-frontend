@@ -491,7 +491,7 @@ export default function Home() {
               {/* Brand */}
               <div className="flex flex-col items-center md:items-start gap-1.5">
                 <div className="flex items-center gap-2">
-                  <img src={LOGO} alt="" width={40} height={40} style={{ height: "auto" }} />
+                  <img src={LOGO} alt="Pedigree Platform logo" width={40} height={40} style={{ height: "auto" }} />
                   <span style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "12px", color: "#1C1C1C", textTransform: "uppercase", letterSpacing: "0.1em" }}>Pedigree Platform</span>
                 </div>
                 <p style={{ fontFamily: "var(--font-body)", fontSize: "12px", color: "#4A4A4A", maxWidth: "240px", lineHeight: 1.5 }} className="text-center md:text-left">

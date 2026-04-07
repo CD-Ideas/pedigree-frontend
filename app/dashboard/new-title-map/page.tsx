@@ -318,7 +318,7 @@ export default function NewTitleMapPage() {
               {/* Header */}
               <div style={{ background: "#1C1C1C", padding: "10px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span style={{ color: "#FAF7F2", fontFamily: "var(--font-table)", fontWeight: 700, fontSize: "12px", textTransform: "uppercase", letterSpacing: "0.05em" }}>Dog Details</span>
-                <button onClick={() => setSelected(null)} style={{ background: "rgba(255,255,255,0.2)", border: "none", color: "#FAF7F2", width: 24, height: 24, borderRadius: "50%", cursor: "pointer", fontSize: 12, display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
+                <button onClick={() => setSelected(null)} aria-label="Close details" style={{ background: "rgba(255,255,255,0.2)", border: "none", color: "#FAF7F2", width: 24, height: 24, borderRadius: "50%", cursor: "pointer", fontSize: 12, display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
               </div>
               {/* Content */}
               <div style={{ padding: "16px" }}>

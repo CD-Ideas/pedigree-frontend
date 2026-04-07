@@ -800,7 +800,7 @@ function PedigreeLabInner() {
                         }}
                       >
                         {dog.photo_url ? (
-                          <img src={`${PHOTO_BASE}${dog.photo_url}`} alt="" className="w-full h-full object-cover"
+                          <img src={`${PHOTO_BASE}${dog.photo_url}`} alt={dog.registered_name || "Dog photo"} className="w-full h-full object-cover"
                             onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; e.currentTarget.parentElement!.classList.add("flex","items-center","justify-center"); const img = document.createElement("img"); img.src = "/logo.png"; img.style.width = "24px"; img.style.height = "24px"; img.style.opacity = "0.3"; e.currentTarget.parentElement!.appendChild(img); }} />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center">
@@ -1624,6 +1624,7 @@ function PedigreeLabInner() {
                     🏷️ Prefix
                   </label>
                   <select
+                    aria-label="Title prefix"
                     value={publishForm.prefix}
                     onChange={(e) => setPublishForm((p) => ({ ...p, prefix: e.target.value }))}
                     className="rounded-lg px-2 py-2 text-xs outline-none transition-all"
@@ -1696,6 +1697,7 @@ function PedigreeLabInner() {
                 </label>
                 <div className="flex items-center gap-2 flex-wrap">
                   <select
+                    aria-label="Number of wins"
                     value={publishForm.suffixWins}
                     onChange={(e) => setPublishForm((p) => ({ ...p, suffixWins: e.target.value }))}
                     className="rounded-lg px-2 py-2 text-xs outline-none transition-all"
@@ -1713,6 +1715,7 @@ function PedigreeLabInner() {
                     ))}
                   </select>
                   <select
+                    aria-label="Number of losses"
                     value={publishForm.suffixLosses}
                     onChange={(e) => setPublishForm((p) => ({ ...p, suffixLosses: e.target.value }))}
                     className="rounded-lg px-2 py-2 text-xs outline-none transition-all"

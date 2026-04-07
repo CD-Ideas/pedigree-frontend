@@ -249,6 +249,7 @@ export default function ChatWidget() {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && send()}
               placeholder="Type your question..."
+              aria-label="Chat message"
               disabled={loading}
               style={{
                 flex: 1,

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function PrivacyPage() {
   return (
     <div className="min-h-screen px-4 py-20" style={{ background: "#EDE4D5" }}>
@@ -19,7 +21,7 @@ export default function PrivacyPage() {
           <p>We use essential cookies for authentication and session management. No third-party tracking cookies are used.</p>
 
           <h2 style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "1.1rem", color: "#1C1C1C" }}>5. Your Rights</h2>
-          <p>You may request access to, correction of, or deletion of your personal data at any time by <a href="/contact" style={{ color: "#1C1C1C", textDecoration: "underline" }}>contacting us here</a>.</p>
+          <p>You may request access to, correction of, or deletion of your personal data at any time by <Link href="/contact" style={{ color: "#1C1C1C", textDecoration: "underline" }}>contacting us here</Link>.</p>
 
           <h2 style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "1.1rem", color: "#1C1C1C" }}>6. Changes to This Policy</h2>
           <p>We may update this policy from time to time. Changes will be posted on this page with an updated revision date.</p>

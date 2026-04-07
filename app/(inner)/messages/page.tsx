@@ -107,7 +107,7 @@ function Avatar({ src, username, size = "w-10 h-10", textSize = "text-sm" }: { s
   }
   if (src) {
     return (
-      <img src={src} alt="" className={`${size} rounded-full object-cover flex-shrink-0`}
+      <img src={src} alt={`${username} avatar`} className={`${size} rounded-full object-cover flex-shrink-0`}
         style={{ border: "2px solid #C9B29F" }}
         onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
     );
@@ -600,6 +600,7 @@ function MessagesContent() {
             <span style={{ color: "#4A4A4A", fontSize: "14px" }}>🔍</span>
             <input value={convSearch} onChange={e => setConvSearch(e.target.value)}
               placeholder="Search or start new chat"
+              aria-label="Search conversations"
               className="flex-1 bg-transparent text-xs outline-none"
               style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
           </div>
@@ -673,7 +674,7 @@ function MessagesContent() {
             <div className="px-4 py-3 flex items-center gap-3 flex-shrink-0"
               style={{ background: "#1C1C1C" }}>
               <button onClick={() => { setShowGroupCreate(false); setMobileShowChat(false); }}
-                className="text-lg" style={{ color: "#FAF7F2" }}>←</button>
+                aria-label="Go back" className="text-lg" style={{ color: "#FAF7F2" }}>←</button>
               <span className="text-sm font-bold" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>Create Group Chat</span>
             </div>
             <div className="flex-1 flex flex-col items-center justify-center px-6 gap-4">
@@ -716,7 +717,7 @@ function MessagesContent() {
                           style={{ background: "#FAF7F2", border: "2px solid #C9B29F", color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
                           {m}
                           <button onClick={() => setGroupMembers(prev => prev.filter((_, j) => j !== i))}
-                            className="ml-1 text-red-400 hover:text-red-600">✕</button>
+                            aria-label="Remove member" className="ml-1 text-red-400 hover:text-red-600">✕</button>
                         </span>
                       ))}
                     </div>
@@ -754,7 +755,7 @@ function MessagesContent() {
             <div className="px-4 py-3 flex items-center gap-3 flex-shrink-0"
               style={{ background: "#1C1C1C" }}>
               <button onClick={() => { setShowCompose(false); setMobileShowChat(false); }}
-                className="text-lg" style={{ color: "#FAF7F2" }}>←</button>
+                aria-label="Go back" className="text-lg" style={{ color: "#FAF7F2" }}>←</button>
               <span className="text-sm font-bold" style={{ color: "#FAF7F2", fontFamily: "var(--font-table)" }}>New Message</span>
             </div>
             <div className="flex-1 flex flex-col items-center justify-center px-6 gap-4">
@@ -789,7 +790,7 @@ function MessagesContent() {
               style={{ background: "#1C1C1C" }}>
               <div className="flex items-center gap-3">
                 <button onClick={() => { setMobileShowChat(false); setSelectedThread(null); }}
-                  className="md:hidden text-lg" style={{ color: "#FAF7F2" }}>←</button>
+                  aria-label="Go back" className="md:hidden text-lg" style={{ color: "#FAF7F2" }}>←</button>
                 <a href={`/profile/${selectedThreadData.other_username}`} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
                   <div className="relative">
                     <Avatar src={selectedThreadData.other_profile_picture} username={selectedThreadData.other_username} size="w-9 h-9" textSize="text-xs" />
@@ -1030,9 +1031,9 @@ function MessagesContent() {
                   {pendingAttachments.map((att, i) => (
                     <div key={i} className="flex items-center gap-1.5 px-2 py-1 rounded-lg text-[12px]"
                       style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}>
-                      {att.isImage ? <img src={att.url} alt="" className="w-8 h-8 rounded object-cover" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} /> : (att as { isVoice?: boolean }).isVoice ? <span>🎤</span> : <span>📎</span>}
+                      {att.isImage ? <img src={att.url} alt={att.name} className="w-8 h-8 rounded object-cover" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} /> : (att as { isVoice?: boolean }).isVoice ? <span>🎤</span> : <span>📎</span>}
                       <span className="truncate max-w-[80px]" style={{ color: "#1C1C1C" }}>{att.name}</span>
-                      <button onClick={() => setPendingAttachments(prev => prev.filter((_, j) => j !== i))} className="text-red-400">✕</button>
+                      <button onClick={() => setPendingAttachments(prev => prev.filter((_, j) => j !== i))} aria-label="Remove attachment" className="text-red-400">✕</button>
                     </div>
                   ))}
                 </div>

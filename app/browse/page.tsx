@@ -349,12 +349,13 @@ export default function PublicDogsPage() {
                 <input ref={searchRef}
                   type="text" value={searchInput} onChange={(e) => setSearchInput(e.target.value)}
                   placeholder="Search by name... press / to focus"
+                  aria-label="Search dogs by name"
                   className="flex-1 bg-transparent outline-none py-2.5 pr-3"
                   style={{ fontFamily: "var(--font-table)", fontSize: "13px", color: "#1C1C1C" }}
                 />
                 {searchInput && (
                   <button type="button" onClick={() => { setSearchInput(""); setSearch(""); setPage(1); }}
-                    className="pr-3 text-xs" style={{ color: "#4A4A4A" }}>✕</button>
+                    aria-label="Clear search" className="pr-3 text-xs" style={{ color: "#4A4A4A" }}>✕</button>
                 )}
               </div>
               <button type="submit"

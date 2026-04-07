@@ -85,12 +85,14 @@ export default function RegisterPage() {
         <form onSubmit={handleRegister} className="space-y-3.5">
           <div>
             <label
+              htmlFor="register-username"
               style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "0.85rem", letterSpacing: "0.06em", color: "#1C1C1C" }}
               className="block mb-1 uppercase"
             >
               Username
             </label>
             <input
+              id="register-username"
               type="text"
               placeholder="Choose a username"
               value={username}
@@ -109,12 +111,14 @@ export default function RegisterPage() {
 
           <div>
             <label
+              htmlFor="register-email"
               style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "0.85rem", letterSpacing: "0.06em", color: "#1C1C1C" }}
               className="block mb-1 uppercase"
             >
               Email
             </label>
             <input
+              id="register-email"
               type="email"
               placeholder="Enter email"
               value={email}
@@ -133,12 +137,14 @@ export default function RegisterPage() {
 
           <div>
             <label
+              htmlFor="register-password"
               style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "0.85rem", letterSpacing: "0.06em", color: "#1C1C1C" }}
               className="block mb-1 uppercase"
             >
               Password
             </label>
             <input
+              id="register-password"
               type="password"
               placeholder="Create a password"
               value={password}
@@ -157,12 +163,14 @@ export default function RegisterPage() {
 
           <div>
             <label
+              htmlFor="register-confirm-password"
               style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "0.85rem", letterSpacing: "0.06em", color: "#1C1C1C" }}
               className="block mb-1 uppercase"
             >
               Confirm Password
             </label>
             <input
+              id="register-confirm-password"
               type="password"
               placeholder="Confirm your password"
               value={confirmPassword}

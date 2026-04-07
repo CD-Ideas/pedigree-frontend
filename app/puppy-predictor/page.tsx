@@ -429,9 +429,10 @@ function DogSearch({ label, onSelect }: { label: string; onSelect: (dog: SearchD
           onFocus={() => results.length > 0 && setShow(true)}
           onBlur={() => setTimeout(() => setShow(false), 200)}
           placeholder={`Search ${label} from database...`}
+          aria-label={`Search ${label}`}
           className="flex-1 bg-transparent text-xs outline-none"
           style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }} />
-        {q && <button onClick={() => { setQ(""); setResults([]); setShow(false); }} className="text-[12px] text-[#4A4A4A] hover:text-[#1C1C1C]">✕</button>}
+        {q && <button onClick={() => { setQ(""); setResults([]); setShow(false); }} aria-label="Clear search" className="text-[12px] text-[#4A4A4A] hover:text-[#1C1C1C]">✕</button>}
       </div>
       {show && results.length > 0 && (
         <div className="absolute left-0 right-0 top-full mt-1 rounded-lg overflow-hidden z-50 max-h-48 overflow-y-auto"
@@ -442,7 +443,7 @@ function DogSearch({ label, onSelect }: { label: string; onSelect: (dog: SearchD
               style={{ borderBottom: "2px solid #C9B29F" }}>
               {d.photo_url ? (
                 <img src={d.photo_url.startsWith("http") ? d.photo_url : `https://www.apbt.online-pedigrees.com/${d.photo_url}`}
-                  alt="" className="w-6 h-6 rounded-full object-cover flex-shrink-0" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
+                  alt={d.registered_name} className="w-6 h-6 rounded-full object-cover flex-shrink-0" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
               ) : (
                 <img src="/logo.png" alt="Pedigree Platform" className="w-6 h-6 rounded-full object-cover flex-shrink-0" style={{ border: "2px solid #C9B29F" }} />
               )}
@@ -668,7 +669,7 @@ export default function PuppyPredictorPage() {
               <h3 className="text-sm font-bold" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", letterSpacing: "0.05em" }}>
                 DNA COLOR TEST GUIDE
               </h3>
-              <button onClick={() => setShowGuide(false)} className="text-xs text-[#4A4A4A] hover:text-[#1C1C1C]">✕</button>
+              <button onClick={() => setShowGuide(false)} aria-label="Close guide" className="text-xs text-[#4A4A4A] hover:text-[#1C1C1C]">✕</button>
             </div>
             <p className="text-xs leading-relaxed" style={{ color: "#4A4A4A", fontFamily: "var(--font-table)" }}>
               To get accurate predictions, you need your dog&apos;s coat color genotype from a DNA test. Here are the most popular services:
@@ -733,7 +734,7 @@ export default function PuppyPredictorPage() {
                     </button>
                   </div>
                 )}
-                <button onClick={() => { setShowHistory(false); setConfirmClear(false); }} className="text-xs text-[#4A4A4A] hover:text-[#1C1C1C]">✕</button>
+                <button onClick={() => { setShowHistory(false); setConfirmClear(false); }} aria-label="Close history" className="text-xs text-[#4A4A4A] hover:text-[#1C1C1C]">✕</button>
               </div>
             </div>
             {history.length === 0 ? (

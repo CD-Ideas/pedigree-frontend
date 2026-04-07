@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function TermsPage() {
   return (
     <div className="min-h-screen px-4 py-20" style={{ background: "#EDE4D5" }}>
@@ -28,7 +30,7 @@ export default function TermsPage() {
           <p>Pedigree Platform is provided &ldquo;as is&rdquo; without warranty. We are not liable for any decisions made based on pedigree data, bloodline analysis, or breeding recommendations provided by the platform.</p>
 
           <h2 style={{ fontFamily: "var(--font-table)", fontWeight: 600, fontSize: "1.1rem", color: "#1C1C1C" }}>8. Contact</h2>
-          <p>For questions about these terms, <a href="/contact" style={{ color: "#1C1C1C", textDecoration: "underline" }}>contact us here</a>.</p>
+          <p>For questions about these terms, <Link href="/contact" style={{ color: "#1C1C1C", textDecoration: "underline" }}>contact us here</Link>.</p>
         </div>
       </div>
     </div>

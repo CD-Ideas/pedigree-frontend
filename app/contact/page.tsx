@@ -90,11 +90,12 @@ export default function ContactPage() {
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Name */}
           <div>
-            <label className="block text-[12px] uppercase tracking-widest font-bold mb-1.5"
+            <label htmlFor="contact-name" className="block text-[12px] uppercase tracking-widest font-bold mb-1.5"
               style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               Your Name
             </label>
             <input
+              id="contact-name"
               type="text"
               value={name}
               onChange={(e) => !nameAutoFilled && setName(e.target.value)}
@@ -108,11 +109,12 @@ export default function ContactPage() {
 
           {/* Subject */}
           <div>
-            <label className="block text-[12px] uppercase tracking-widest font-bold mb-1.5"
+            <label htmlFor="contact-subject" className="block text-[12px] uppercase tracking-widest font-bold mb-1.5"
               style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               Subject
             </label>
             <input
+              id="contact-subject"
               type="text"
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
@@ -125,11 +127,12 @@ export default function ContactPage() {
 
           {/* Message */}
           <div>
-            <label className="block text-[12px] uppercase tracking-widest font-bold mb-1.5"
+            <label htmlFor="contact-message" className="block text-[12px] uppercase tracking-widest font-bold mb-1.5"
               style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
               Message
             </label>
             <textarea
+              id="contact-message"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Write your message here..."

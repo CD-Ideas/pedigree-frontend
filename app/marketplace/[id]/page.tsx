@@ -242,7 +242,7 @@ export default function MarketplaceAdPage() {
                 className="absolute top-2.5 left-2.5 flex items-center gap-1.5 px-2 py-1 rounded-lg z-10"
                 style={{ background: "rgba(250,247,242,0.85)", border: "2px solid #C9B29F" }}
               >
-                <img src={LOGO} alt="" className="w-6" style={{ height: "auto" }} />
+                <img src={LOGO} alt="" role="presentation" className="w-6" style={{ height: "auto" }} />
                 <span
                   className="text-[12px] font-bold"
                   style={{

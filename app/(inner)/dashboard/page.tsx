@@ -187,7 +187,7 @@ export default function Dashboard() {
       return (
         <div className={`${size} rounded-full flex items-center justify-center overflow-hidden`}
           style={{ background: "#FAF7F2", border: "2px solid #C9B29F" }}>
-          <img src={pp} alt="" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; const parent = e.currentTarget.parentElement; if (parent) parent.innerHTML = `<span class="${textSize}" style="color:#C9B29F">📷</span>`; }} />
+          <img src={pp} alt={`${user?.username || "User"} profile`} className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; const parent = e.currentTarget.parentElement; if (parent) parent.innerHTML = `<span class="${textSize}" style="color:#C9B29F">📷</span>`; }} />
         </div>
       );
     }
@@ -414,7 +414,7 @@ export default function Dashboard() {
 
           {/* Messaging */}
           <div className="pb-4" style={{ borderBottom: "2px solid #C9B29F" }}>
-            <a href="/messages" className="dash-nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg"
+            <Link href="/messages" className="dash-nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg"
               style={{ fontFamily: "var(--font-table)", "--item-color": "96,165,250" } as React.CSSProperties}>
               <span className="relative">
                 <span className="text-base">🔔</span>
@@ -431,12 +431,12 @@ export default function Dashboard() {
                   {unreadMessages > 0 ? `${unreadMessages} unread` : "No new messages"}
                 </p>
               </div>
-            </a>
+            </Link>
           </div>
 
           {/* Support Messages */}
           <div className="pb-4" style={{ borderBottom: "2px solid #C9B29F" }}>
-            <a href="/dashboard/support" className="dash-nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg"
+            <Link href="/dashboard/support" className="dash-nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg"
               style={{ fontFamily: "var(--font-table)", "--item-color": "212,168,85" } as React.CSSProperties}>
               <span className="text-base">📩</span>
               <div className="text-left">
@@ -445,7 +445,7 @@ export default function Dashboard() {
                   View replies from support
                 </p>
               </div>
-            </a>
+            </Link>
           </div>
 
           {/* Account & Logout */}

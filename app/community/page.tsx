@@ -218,6 +218,7 @@ export default function CommunityPedigreesPage() {
               <input
                 type="text"
                 placeholder="Search by name, creator, country..."
+                aria-label="Search community pedigrees"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full rounded-lg px-4 py-2 text-xs outline-none"
