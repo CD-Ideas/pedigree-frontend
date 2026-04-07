@@ -198,13 +198,14 @@ body {
 }
 
 .section-title::after {
+  /* Decorative 3px tall accent line — pill-shaped */
   content: '';
   display: block;
   width: 0;
   height: 3px;
   margin-top: 6px;
   background: linear-gradient(90deg, var(--sandy-brown), transparent);
-  border-radius: 2px;
+  border-radius: 999px;
   animation: underlineGrow 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   animation-delay: 0.15s;
 }
@@ -242,15 +243,17 @@ body {
 /* ── CHAMPION RIBBON ──────────────────────────────────────────────── */
 .champion-ribbon { position: relative; overflow: visible; }
 .champion-ribbon::before {
+  /* Decorative 3px champion ribbon at top of card — pill-shaped bottom edges */
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 3px;
   background: linear-gradient(90deg, transparent, var(--sandy-brown) 15%, var(--accent-gold) 50%, var(--sandy-brown) 85%, transparent);
-  border-radius: 0 0 2px 2px;
+  border-radius: 0 0 999px 999px;
 }
 
 /* ── SCROLLBAR ──────────────────────────────────────────────────────── */
+/* Note: 4px scrollbar radius is intentional — scrollbars use thin radii by convention. */
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
@@ -316,11 +319,12 @@ body {
   content: '';
   position: absolute;
   left: 0;
+  /* Decorative 3px wide left accent bar on dash nav items — pill on right edge */
   top: 50%;
   transform: translateY(-50%) scaleY(0);
   width: 3px;
   height: 60%;
-  border-radius: 0 3px 3px 0;
+  border-radius: 0 999px 999px 0;
   background: rgb(var(--item-color));
   transition: transform 0.25s ease;
 }
@@ -435,7 +439,9 @@ main { animation: pageIn 0.35s ease forwards; }
   body.printing-pedigree > #print-pedigree-wrapper * {
     visibility: visible !important;
   }
-  /* Compact print for pedigree trees */
+  /* Compact print for pedigree trees.
+     Note: 10px font is a justified exception in @media print only —
+     required for PDF pedigree to fit on paper. */
   body.printing-pedigree #print-pedigree-wrapper div[style*="grid"] > div {
     padding-top: 2px !important;
     padding-bottom: 2px !important;

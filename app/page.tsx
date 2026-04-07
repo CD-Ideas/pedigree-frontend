@@ -5,210 +5,6 @@ import { useEffect, useState } from "react";
 
 const LOGO = "/logo.png";
 
-/* removed unused dynamic component */
-function _REMOVED() { return null; }
-function _BreedingCalcPreview_UNUSED() {
-  const [data, setData] = useState<{
-    sire: { name: string; photo: string | null };
-    dam: { name: string; photo: string | null };
-    coi: number;
-    bloodlines: { name: string; pct: number }[];
-    sharedCount: number;
-    topAncestor: string | null;
-    genDepth: number;
-  } | null>(null);
-
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem("breedingCalcResult");
-      if (stored) setData(JSON.parse(stored));
-    } catch (_e) {}
-  }, []);
-
-  const PIE_COLORS = ["#c02828", "#3a3a3a", "#b45a0a", "#8a6518", "#0d7468", "#b03878", "#6d30b0", "#0d7468"];
-
-  /* Use stored data or fallback to static example */
-  const isLive = !!data;
-  const bl = data?.bloodlines?.length ? data.bloodlines : [
-    { name: "Jeep/Redboy", pct: 31 }, { name: "Eli/Boudreaux", pct: 22 },
-    { name: "Carver", pct: 15 }, { name: "Tab", pct: 12 },
-  ];
-  const coiVal = data?.coi ?? 4.5;
-  const topLine = bl[0];
-  const totalPct = bl.reduce((s, b) => s + b.pct, 0);
-  const otherPct = Math.max(0, 100 - totalPct);
-  const coiColor = coiVal < 5 ? "#22c55e" : coiVal < 10 ? "#eab308" : coiVal < 15 ? "#f97316" : "#ef4444";
-  const coiLabel = coiVal < 5 ? "Clean Outcross" : coiVal < 10 ? "Mild Linebreed" : coiVal < 15 ? "Tight Linebreed" : "Danger Zone";
-
-  const insights = isLive ? [
-    `${topLine.pct}% ${topLine.name} lineage — dominant bloodline`,
-    data.sharedCount > 0 ? `${data.sharedCount} shared ancestors between sire & dam` : "No shared ancestors — clean cross",
-    data.topAncestor ? `Most repeated: ${data.topAncestor}` : "Wide genetic diversity",
-    coiVal > 10 ? "Test for joint health due to inbreeding overlap" : "Healthy genetic distance",
-  ] : [
-    "31% Jeep lineage — expect explosive prey drive",
-    "Double Jeep on both sides — high impact genetics",
-    "22% Red Boy adds gameness & stamina",
-    "Test for joint health due to inbreeding overlap",
-  ];
-
-  /* Build pie offsets */
-  let cumPct = 0;
-  const slices = bl.slice(0, 4).map((b, i) => {
-    const offset = cumPct;
-    cumPct += b.pct;
-    return { ...b, offset, color: PIE_COLORS[i % PIE_COLORS.length] };
-  });
-
-  return (
-    <section id="bloodline-calculator" className="py-5 px-4">
-      <div className="max-w-5xl mx-auto">
-        <h2 className="text-center mb-0.5" style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "clamp(0.95rem, 2vw, 1.25rem)", color: "#1C1C1C" }}>
-          Bloodline Calculator
-        </h2>
-        <p className="text-center mb-3" style={{ color: "#4A4A4A", fontFamily: "var(--font-body)", fontSize: "12px", fontWeight: 400 }}>
-          Know Your Cross Before You Make It
-        </p>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-          {/* Pie Chart */}
-          <div className="relative rounded-lg p-4" style={{
-            background: "#FAF7F2",
-            border: "2px solid #C9B29F",
-          }}>
-            <div className="text-center mb-2">
-              {isLive ? (
-                <>
-                  <span style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "12px", color: "#1d5bbf" }}>{data.sire.name}</span>
-                  <span style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "12px", color: "#4A4A4A" }}> × </span>
-                  <span style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "12px", color: "#9f1239" }}>{data.dam.name}</span>
-                </>
-              ) : (
-                <>
-                  <span style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "12px", color: "#c02828" }}>CH Garner&apos;s Chinaman (4XW) ROM</span>
-                </>
-              )}
-            </div>
-            <div className="flex justify-center">
-              <svg width="180" height="180" viewBox="0 0 220 220">
-                {slices.map((s, i) => (
-                  <circle key={i} cx="110" cy="110" r="85" fill="none" stroke={s.color} strokeWidth="45"
-                    strokeDasharray={`${s.pct * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-s.offset * 5.34}`}
-                    transform="rotate(-90 110 110)" />
-                ))}
-                {otherPct > 0 && (
-                  <circle cx="110" cy="110" r="85" fill="none" stroke="rgba(120,120,140,0.5)" strokeWidth="45"
-                    strokeDasharray={`${otherPct * 5.34} ${100 * 5.34}`} strokeDashoffset={`${-cumPct * 5.34}`}
-                    transform="rotate(-90 110 110)" />
-                )}
-                <circle cx="110" cy="110" r="62" fill="#FAFAFA" />
-                <text x="110" y="100" textAnchor="middle" fill="#1C1C1C" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "22px" }}>{topLine.pct}%</text>
-                <text x="110" y="118" textAnchor="middle" fill={slices[0]?.color || "#ef4444"} style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "12px", letterSpacing: "0.05em" }}>
-                  {topLine.name.toUpperCase()}
-                </text>
-                <text x="110" y="134" textAnchor="middle" fill="#4A4A4A" style={{ fontFamily: "var(--font-body)", fontWeight: 400, fontSize: "12px" }}>
-                  {isLive ? `${data.genDepth}-gen analysis` : "4-gen analysis"}
-                </text>
-              </svg>
-            </div>
-            {/* Legend */}
-            <div className="grid grid-cols-2 gap-x-3 gap-y-1 mt-2">
-              {slices.map((b, i) => (
-                <div key={i} className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ background: b.color }} />
-                  <span style={{ fontFamily: "var(--font-body)", fontSize: "12px", color: "#1C1C1C", fontWeight: 500 }}>{b.name}</span>
-                  <span style={{ fontFamily: "var(--font-body)", fontSize: "12px", color: b.color, fontWeight: 700, marginLeft: "auto" }}>{b.pct}%</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Info & Warnings */}
-          <div className="flex flex-col gap-2">
-            {/* COI Alert */}
-            <div className="rounded-lg p-3" style={{
-              background: "#FAF7F2",
-              border: `2px solid ${coiColor}`,
-            }}>
-              <div className="flex items-center gap-2 mb-1.5">
-                <div className="w-6 h-6 rounded-lg flex items-center justify-center" style={{ background: `${coiColor}20`, border: `2px solid ${coiColor}40` }}>
-                  <span style={{ fontSize: "12px" }}>⚠️</span>
-                </div>
-                <span style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "12px", color: coiColor, textTransform: "uppercase", letterSpacing: "0.06em" }}>
-                  {coiLabel} — {coiVal.toFixed(1)}% COI
-                </span>
-              </div>
-              <p style={{ fontFamily: "var(--font-body)", fontSize: "12px", color: "#4A4A4A", lineHeight: 1.5 }}>
-                {isLive && data.topAncestor
-                  ? <>{data.topAncestor} appears on <span style={{ color: coiColor, fontWeight: 600 }}>both sire and dam side</span>. {coiVal < 10 ? "Low risk." : "Monitor joint health and temperament stability."}</>
-                  : <>Jeep appears on <span style={{ color: "#ef4444", fontWeight: 600 }}>both sire and dam side</span>. Moderate risk. Monitor joint health and temperament stability.</>
-                }
-              </p>
-            </div>
-
-            {/* Breeder Insights */}
-            <div className="rounded-lg p-3" style={{
-              background: "#FAF7F2",
-              border: "2px solid #C9B29F",
-            }}>
-              <h4 style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "12px", color: "#C9B29F", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "6px" }}>
-                Breeder Insights {isLive && <span style={{ color: "#4A4A4A", fontWeight: 400 }}>— Live Result</span>}
-              </h4>
-              <ul className="space-y-1.5">
-                {insights.map((tip, i) => (
-                  <li key={i} className="flex items-start gap-1.5" style={{ fontFamily: "var(--font-body)", fontSize: "12px", color: "#4A4A4A", lineHeight: 1.45 }}>
-                    <span style={{ color: "#C9B29F", fontSize: "12px", marginTop: "3px" }}>◆</span>
-                    {tip}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* How it works */}
-            <div className="rounded-lg p-3" style={{
-              background: "#FAF7F2",
-              border: "2px solid #C9B29F",
-            }}>
-              <h4 style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "12px", color: "#1C1C1C", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "6px" }}>
-                How It Works
-              </h4>
-              <div className="flex items-center gap-2">
-                {[
-                  { step: "1", text: "Enter parents" },
-                  { step: "2", text: `We crunch ${isLive ? data.genDepth * 2 : 16} ancestors` },
-                  { step: "3", text: "Results light up" },
-                ].map((s, i) => (
-                  <div key={i} className="flex-1 flex items-center gap-1.5">
-                    <div className="w-5 h-5 rounded-lg flex items-center justify-center flex-shrink-0"
-                      style={{ background: "#1C1C1C", fontSize: "12px", fontWeight: 700, fontFamily: "var(--font-body)", color: "#FAF7F2" }}>
-                      {s.step}
-                    </div>
-                    <span style={{ fontFamily: "var(--font-body)", fontSize: "12px", color: "#4A4A4A", fontWeight: 500 }}>{s.text}</span>
-                    {i < 2 && <span style={{ color: "#C9B29F", fontSize: "12px" }}>→</span>}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* CTA */}
-            <button
-              onClick={() => window.location.href = "#bloodline-calculator"}
-              className="w-full py-2 rounded-lg text-center"
-              style={{
-                fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "12px", textTransform: "uppercase", letterSpacing: "0.08em",
-                background: "#1C1C1C", color: "#FAF7F2",
-                border: "2px solid #1C1C1C",
-                cursor: "pointer", transition: "all 0.2s",
-              }}>
-              {isLive ? "Open Bloodline Calculator" : "Try Bloodline Calculator"}
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [pricingOpen, setPricingOpen] = useState(false);
@@ -369,7 +165,7 @@ export default function Home() {
             ].map((s, i) => (
               <div key={i} className="text-center">
                 <div style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "clamp(0.9rem, 2vw, 1.2rem)", color: "#C9B29F", lineHeight: 1 }}>
-                  {s.value}{s.suffix && <span style={{ fontSize: "0.65em", color: "#4A4A4A" }}>{s.suffix}</span>}
+                  {s.value}{s.suffix && <span style={{ fontSize: "12px", color: "#4A4A4A" }}>{s.suffix}</span>}
                 </div>
                 <div style={{ fontFamily: "var(--font-body)", fontWeight: 400, fontSize: "12px", color: "#4A4A4A", textTransform: "uppercase", letterSpacing: "0.1em", marginTop: "2px" }}>
                   {s.label}
@@ -514,7 +310,7 @@ export default function Home() {
                     { name: "CH Crenshaw", pct: "12%", color: "#c02828" },
                   ].map((b, i) => (
                     <div key={i} className="flex items-center gap-2">
-                      <div className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ background: b.color }} />
+                      <div className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: b.color }} />
                       <span style={{ fontFamily: "var(--font-body)", fontSize: "12px", color: b.color, fontWeight: 600 }}>{b.name}</span>
                       <span style={{ fontFamily: "var(--font-body)", fontSize: "12px", color: b.color, fontWeight: 700, marginLeft: "auto" }}>{b.pct}</span>
                     </div>

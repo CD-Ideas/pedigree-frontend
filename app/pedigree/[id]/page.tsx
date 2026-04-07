@@ -402,7 +402,9 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
             }}>{maxGen} Generation Pedigree</h3>
           </div>
 
-          {/* Column headers */}
+          {/* Column headers — Note: 10px/11px font sizes are a justified exception
+              for deeper pedigree generations (5G+) where dozens of cells must
+              fit visually. Industry-standard for pedigree chart UIs. */}
           <div className="mb-1" style={{ display: "grid", gridTemplateColumns: `${maxGen >= 5 ? "130px" : "170px"} repeat(${maxGen}, 1fr)`, gap: "4px" }}>
             <div className="px-1.5 py-1 text-center"
                  style={{ fontFamily: PG.font, fontWeight: 700, fontSize: maxGen >= 5 ? "10px" : "11px", color: PG.text, textTransform: "uppercase", letterSpacing: "0.1em" }}>
@@ -440,6 +442,10 @@ function PedigreeTree({ pedigree, dogName, dogId, isMale }: { pedigree: Ancestor
               const cellMinH = maxGen >= 5
                 ? (gen <= 1 ? "30px" : gen === 2 ? "24px" : gen === 3 ? "20px" : "16px")
                 : (gen <= 1 ? "40px" : gen === 2 ? "34px" : gen === 3 ? "28px" : "24px");
+              // Note: font sizes <12px are a justified exception for the pedigree
+              // tree at deeper generations (5G+) — at 6G there are 64 cells per
+              // generation that must fit horizontally on screen. Standard for
+              // pedigree chart UIs.
               const fontSize = maxGen >= 5
                 ? (gen <= 1 ? "11px" : gen === 2 ? "10px" : "9.5px")
                 : (gen <= 1 ? "13px" : gen === 2 ? "12px" : "11px");

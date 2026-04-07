@@ -143,7 +143,8 @@ function TachoGauge({ coi }: { coi: number }) {
           const ty = 155 + 128 * Math.sin(a);
           return (
             <g key={val}>
-              <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="#C9B29F" strokeWidth="1.5" />
+              <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="#C9B29F" strokeWidth="2" />
+              {/* fontSize 9 — justified exception: SVG gauge tick label, must fit graphical element */}
               <text x={tx} y={ty} textAnchor="middle" dominantBaseline="middle" fill="#1C1C1C" fontSize="9" fontFamily="var(--font-mono)">{val}%</text>
             </g>
           );
@@ -367,6 +368,7 @@ function DonutChart({ ancestors, hoveredIdx, onHover }: { ancestors: SharedAnces
         <text x={cx} y={cy - 6} textAnchor="middle" fill="#1C1C1C" fontSize="22" fontWeight="bold" fontFamily="var(--font-table)">
           {ancestors.length}
         </text>
+        {/* fontSize 8 — justified exception: SVG label inside donut chart center, must fit graphical element */}
         <text x={cx} y={cy + 10} textAnchor="middle" fill="#4A4A4A" fontSize="8" fontFamily="var(--font-mono)">
           SHARED
         </text>
@@ -384,7 +386,7 @@ function DonutChart({ ancestors, hoveredIdx, onHover }: { ancestors: SharedAnces
 /* ------------------------------------------------------------------ */
 /* Main Page                                                           */
 /* ------------------------------------------------------------------ */
-export default function BreedingCalculatorPage() {
+export default function BloodlineCalculatorPage() {
   const [sire, setSire] = useState<DogSearchResult | null>(null);
   const [dam, setDam] = useState<DogSearchResult | null>(null);
   const [genDepth, setGenDepth] = useState<number>(6);
@@ -486,7 +488,7 @@ export default function BreedingCalculatorPage() {
 
       /* Save to localStorage for homepage display */
       try {
-        localStorage.setItem("breedingCalcResult", JSON.stringify({
+        localStorage.setItem("bloodlineCalcResult", JSON.stringify({
           sire: { name: sire.registered_name, photo: sire.photo_url },
           dam: { name: dam.registered_name, photo: dam.photo_url },
           coi: coiVal * 100,

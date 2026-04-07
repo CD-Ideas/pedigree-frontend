@@ -240,7 +240,7 @@ export default function MarketplaceAdPage() {
               {/* Watermark */}
               <div
                 className="absolute top-2.5 left-2.5 flex items-center gap-1.5 px-2 py-1 rounded-lg z-10"
-                style={{ background: "rgba(250,247,242,0.85)", border: "1.5px solid #C9B29F" }}
+                style={{ background: "rgba(250,247,242,0.85)", border: "2px solid #C9B29F" }}
               >
                 <img src={LOGO} alt="" className="w-6" style={{ height: "auto" }} />
                 <span
@@ -267,7 +267,6 @@ export default function MarketplaceAdPage() {
                       color: "#1C1C1C",
                       fontSize: "14px",
                       fontWeight: 700,
-                      boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
                     }}
                   >
                     ‹
@@ -288,7 +287,6 @@ export default function MarketplaceAdPage() {
                             height: size,
                             border: isSelected ? "3px solid #B8860B" : "2px solid rgba(255,255,255,0.6)",
                             opacity: isSelected ? 1 : 0.8,
-                            boxShadow: isSelected ? "0 4px 12px rgba(0,0,0,0.25)" : "0 2px 6px rgba(0,0,0,0.15)",
                           }}
                         >
                           <img src={photo} alt={`Photo ${i + 1}`} className="w-full h-full object-cover" onError={(e) => { const t = e.target as HTMLImageElement; t.onerror = null; t.src = "/logo.png"; t.style.opacity = "0.3"; t.style.objectFit = "contain"; t.style.padding = "8px"; }} />
@@ -307,7 +305,6 @@ export default function MarketplaceAdPage() {
                       color: "#1C1C1C",
                       fontSize: "14px",
                       fontWeight: 700,
-                      boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
                     }}
                   >
                     ›
@@ -490,7 +487,7 @@ export default function MarketplaceAdPage() {
                     className="flex items-center gap-1 px-2 py-1 rounded-lg text-[12px] font-bold transition-all hover:scale-105"
                     style={{
                       background: "#FAF7F2",
-                      border: "1.5px solid #C9B29F",
+                      border: "2px solid #C9B29F",
                       color: "#1C1C1C",
                       fontFamily: "var(--font-table)",
                     }}
@@ -504,7 +501,7 @@ export default function MarketplaceAdPage() {
                     className="flex items-center gap-1 px-2 py-1 rounded-lg text-[12px] font-bold transition-all hover:scale-105"
                     style={{
                       background: "#FAF7F2",
-                      border: "1.5px solid #C9B29F",
+                      border: "2px solid #C9B29F",
                       color: "#1C1C1C",
                       fontFamily: "var(--font-table)",
                     }}
@@ -518,7 +515,7 @@ export default function MarketplaceAdPage() {
                     className="flex items-center gap-1 px-2 py-1 rounded-lg text-[12px] font-bold transition-all hover:scale-105"
                     style={{
                       background: "#FAF7F2",
-                      border: "1.5px solid #C9B29F",
+                      border: "2px solid #C9B29F",
                       color: "#1C1C1C",
                       fontFamily: "var(--font-table)",
                     }}
@@ -715,7 +712,7 @@ export default function MarketplaceAdPage() {
                       style={{
                         background: "rgba(239,68,68,0.15)",
                         color: "#ef4444",
-                        border: "1.5px solid rgba(239,68,68,0.3)",
+                        border: "2px solid rgba(239,68,68,0.3)",
                         fontFamily: "var(--font-table)",
                       }}
                     >
@@ -767,8 +764,8 @@ export default function MarketplaceAdPage() {
                 style={{
                   background: "#FAF7F2",
                   border: ad.verification_requested
-                    ? "1.5px solid rgba(234,179,8,0.3)"
-                    : "1.5px solid #C9B29F",
+                    ? "2px solid rgba(234,179,8,0.3)"
+                    : "2px solid #C9B29F",
                   
                 }}
               >

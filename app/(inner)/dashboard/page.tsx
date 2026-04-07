@@ -261,7 +261,7 @@ export default function Dashboard() {
           <div className="dash-box-hover rounded-lg p-5" style={steelFrame}>
             <h2 className="text-[12px] uppercase tracking-widest font-bold mb-4 flex items-center gap-2"
               style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-              <span style={{ width: 16, height: 2, background: "#C9B29F", borderRadius: 1 }} />
+              <span style={{ width: 16, height: 2, background: "#C9B29F", borderRadius: "999px" }} />
               ⚡ Quick Actions
             </h2>
             <div className="space-y-2">
@@ -292,7 +292,7 @@ export default function Dashboard() {
           <div className="dash-box-hover rounded-lg p-5" style={steelFrame}>
             <h2 className="text-[12px] uppercase tracking-widest font-bold mb-4 flex items-center gap-2"
               style={{ color: "#1C1C1C", fontFamily: "var(--font-table)" }}>
-              <span style={{ width: 16, height: 2, background: "#C9B29F", borderRadius: 1 }} />
+              <span style={{ width: 16, height: 2, background: "#C9B29F", borderRadius: "999px" }} />
               🛠️ Tools
             </h2>
             <div className="space-y-2">

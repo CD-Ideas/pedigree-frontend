@@ -358,6 +358,10 @@ function PedigreeTreeView({ tree, dogName, isMale }: { tree: TreeRow[]; dogName:
               const cellMinH = maxGen >= 5
                 ? (gen <= 1 ? "30px" : gen === 2 ? "24px" : gen === 3 ? "20px" : "16px")
                 : (gen <= 1 ? "40px" : gen === 2 ? "34px" : gen === 3 ? "28px" : "24px");
+              // Note: font sizes <12px are a justified exception for the pedigree
+              // tree at deeper generations (5G+) — at 6G there are 64 cells per
+              // generation that must fit horizontally on screen. Standard for
+              // pedigree chart UIs.
               const fontSize = maxGen >= 5
                 ? (gen <= 1 ? "11px" : gen === 2 ? "10px" : "9.5px")
                 : (gen <= 1 ? "13px" : gen === 2 ? "12px" : "11px");
@@ -753,7 +757,7 @@ export default function PublishedPedigreePage() {
 
         {/* ─── Sire / Dam links ─── */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <div className="rounded-lg p-2.5 transition-all hover:shadow-md cursor-pointer"
+          <div className="rounded-lg p-2.5 transition-all hover:scale-[1.01] cursor-pointer"
             style={{ border: "2px solid #C9B29F",  background: "#FAFAFA",  }}
             onMouseEnter={() => { if (sire?.photo_url) { const u = sire.photo_url; setHoverPhoto(u.startsWith("http") ? u : `https://www.apbt.online-pedigrees.com/${u}`); } }}
             onMouseLeave={() => setHoverPhoto(null)}>
@@ -764,7 +768,7 @@ export default function PublishedPedigreePage() {
               </Link>
             ) : <span className="text-sm" style={{ color: "#4A4A4A" }}>Unknown</span>}
           </div>
-          <div className="rounded-lg p-2.5 transition-all hover:shadow-md cursor-pointer"
+          <div className="rounded-lg p-2.5 transition-all hover:scale-[1.01] cursor-pointer"
             style={{ border: "2px solid #C9B29F",  background: "#FAFAFA",  }}
             onMouseEnter={() => { if (dam?.photo_url) { const u = dam.photo_url; setHoverPhoto(u.startsWith("http") ? u : `https://www.apbt.online-pedigrees.com/${u}`); } }}
             onMouseLeave={() => setHoverPhoto(null)}>

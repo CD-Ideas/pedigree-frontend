@@ -179,7 +179,7 @@ export default function PredictionResultPage() {
                       }} />
                     )}
                     <div className="absolute top-1 right-2 px-2 py-0.5 rounded-full text-xs font-bold"
-                      style={{ background: "rgba(0,0,0,0.6)", color: "#1C1C1C", fontFamily: "var(--font-mono)", fontSize: "0.7rem" }}>
+                      style={{ background: "rgba(0,0,0,0.6)", color: "#1C1C1C", fontFamily: "var(--font-mono)", fontSize: "12px" }}>
                       {r.percentage}%
                     </div>
                   </div>

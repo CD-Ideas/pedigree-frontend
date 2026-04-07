@@ -174,6 +174,7 @@ function QuickSearch({ onSelectDog, famousDogs }: { onSelectDog?: (dogId: number
             })}
             <circle cx={cx} cy={cy} r="55" fill="#FAFAFA" stroke="#C9B29F" strokeWidth="2" />
             <text x={cx} y={cy - 8} textAnchor="middle" fill="#1C1C1C" fontSize="14" fontWeight="bold" fontFamily="var(--font-table)">{matches.length}</text>
+            {/* fontSize 8 — justified exception: SVG label inside small pie chart center, must fit graphical element */}
             <text x={cx} y={cy + 10} textAnchor="middle" fill="#4A4A4A" fontSize="8" fontFamily="var(--font-table)">Legendary</text>
           </svg>
           {hovered !== null && slices[hovered] && (

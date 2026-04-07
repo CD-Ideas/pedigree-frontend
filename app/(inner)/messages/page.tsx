@@ -852,10 +852,11 @@ function MessagesContent() {
                         onTouchEnd={() => { if (longPressTimer.current) clearTimeout(longPressTimer.current); }}
                         onTouchMove={() => { if (longPressTimer.current) clearTimeout(longPressTimer.current); }}
                         style={{ position: "relative" }}>
-                        <div className="rounded-2xl px-3.5 py-2"
+                        <div className="rounded-lg px-3.5 py-2"
                           style={{
                             background: isMine ? "#C9B29F" : "#FAFAFA",
-                            borderRadius: isMine ? "18px 18px 4px 18px" : "18px 18px 18px 4px",
+                            borderRadius: "8px",
+                            border: "2px solid #C9B29F",
                           }}>
                           <p className="text-[13px] leading-relaxed" style={{ color: "#1C1C1C", fontFamily: "var(--font-table)", wordBreak: "break-word" }}>
                             {msg.body}
@@ -1009,7 +1010,7 @@ function MessagesContent() {
               {/* Typing indicator */}
               {typingUserId && selectedThreadData && typingUserId === selectedThreadData.other_user_id && (
                 <div className="flex justify-start mb-1">
-                  <div className="rounded-2xl px-4 py-2" style={{ background: "#FAFAFA", borderRadius: "18px 18px 18px 4px" }}>
+                  <div className="rounded-lg px-4 py-2" style={{ background: "#FAFAFA", borderRadius: "8px", border: "2px solid #C9B29F" }}>
                     <div className="flex items-center gap-1">
                       <span className="w-2 h-2 rounded-full animate-bounce" style={{ background: "#C9B29F", animationDelay: "0ms" }} />
                       <span className="w-2 h-2 rounded-full animate-bounce" style={{ background: "#C9B29F", animationDelay: "150ms" }} />

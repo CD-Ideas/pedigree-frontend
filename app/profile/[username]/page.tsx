@@ -371,7 +371,7 @@ export default function ProfilePage() {
               width: 16,
               height: 2,
               background: "#C9B29F",
-              borderRadius: 1,
+              borderRadius: "999px",
             }}
           />
           Published Pedigrees
@@ -434,7 +434,7 @@ export default function ProfilePage() {
               width: 16,
               height: 2,
               background: "#C9B29F",
-              borderRadius: 1,
+              borderRadius: "999px",
             }}
           />
           Marketplace Listings

@@ -1128,7 +1128,7 @@ function PedigreeLabInner() {
                                     display: "flex",
                                     alignItems: "center",
                                     justifyContent: "center",
-                                    borderRadius: 4,
+                                    borderRadius: 8,
                                     border: "2px solid #C9B29F",
                                   }}
                                 >
@@ -2080,7 +2080,7 @@ function PedigreeLabInner() {
                         type="checkbox"
                         checked={vax.checked}
                         onChange={() => handleVaccineToggle(idx)}
-                        className="rounded"
+                        className="rounded-lg"
                         style={{ accentColor: "#C9B29F" }}
                       />
                       <span
