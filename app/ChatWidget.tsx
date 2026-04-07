@@ -92,9 +92,8 @@ export default function ChatWidget() {
             borderRadius: "50%",
             background: "#1C1C1C",
             color: "#fff",
-            border: hasNewReply ? "2px solid #C9B29F" : "none",
+            border: "2px solid #C9B29F",
             cursor: "pointer",
-            boxShadow: hasNewReply ? "0 0 0 0 rgba(201,178,159,0.7)" : "0 4px 20px rgba(0,0,0,0.25)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -120,13 +119,12 @@ export default function ChatWidget() {
             maxWidth: "calc(100vw - 32px)",
             height: 520,
             maxHeight: "calc(100vh - 48px)",
-            borderRadius: 16,
+            borderRadius: 8,
             overflow: "hidden",
             display: "flex",
             flexDirection: "column",
             background: "#FAF7F2",
             border: "2px solid #C9B29F",
-            boxShadow: "0 8px 40px rgba(0,0,0,0.2)",
           }}
         >
           {/* Header */}
@@ -145,7 +143,7 @@ export default function ChatWidget() {
               <span style={{ fontSize: 22 }}>🐾</span>
               <div>
                 <div style={{ fontWeight: 600, fontSize: 15 }}>Rex</div>
-                <div style={{ fontSize: 11, opacity: 0.85 }}>Your Pedigree Platform Assistant</div>
+                <div style={{ fontSize: 12, opacity: 0.85 }}>Your Pedigree Platform Assistant</div>
               </div>
             </div>
             <button
@@ -201,7 +199,7 @@ export default function ChatWidget() {
                   alignSelf: m.role === "user" ? "flex-end" : "flex-start",
                   maxWidth: "82%",
                   padding: "10px 14px",
-                  borderRadius: m.role === "user" ? "16px 16px 4px 16px" : "16px 16px 16px 4px",
+                  borderRadius: "8px",
                   background:
                     m.role === "user"
                       ? "#1C1C1C"
@@ -222,7 +220,7 @@ export default function ChatWidget() {
                 style={{
                   alignSelf: "flex-start",
                   padding: "10px 14px",
-                  borderRadius: "16px 16px 16px 4px",
+                  borderRadius: "8px",
                   background: "#FAFAFA",
                   border: "2px solid #C9B29F",
                   fontSize: 14,
@@ -255,7 +253,7 @@ export default function ChatWidget() {
               style={{
                 flex: 1,
                 padding: "10px 14px",
-                borderRadius: 10,
+                borderRadius: 8,
                 border: "2px solid #C9B29F",
                 background: "#FAF7F2",
                 color: "#1C1C1C",
@@ -269,7 +267,7 @@ export default function ChatWidget() {
               disabled={loading || !input.trim()}
               style={{
                 padding: "10px 16px",
-                borderRadius: 10,
+                borderRadius: 8,
                 border: "none",
                 background: loading || !input.trim()
                   ? "#4A4A4A"
@@ -300,12 +298,11 @@ export default function ChatWidget() {
           75% { content: '...'; }
         }
         .chat-pulse {
-          animation: chatPulse 2s ease-in-out infinite;
+          animation: chatPulse 1.5s ease-in-out infinite;
         }
         @keyframes chatPulse {
-          0%   { box-shadow: 0 0 0 0 rgba(201,178,159,0.6); }
-          50%  { box-shadow: 0 0 0 12px rgba(201,178,159,0); }
-          100% { box-shadow: 0 0 0 0 rgba(201,178,159,0); }
+          0%, 100% { transform: scale(1); }
+          50%      { transform: scale(1.08); }
         }
       `}</style>
     </>

@@ -61,7 +61,7 @@ function _BreedingCalcPreview_UNUSED() {
   });
 
   return (
-    <section id="breeding-calculator" className="py-5 px-4">
+    <section id="bloodline-calculator" className="py-5 px-4">
       <div className="max-w-5xl mx-auto">
         <h2 className="text-center mb-0.5" style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "clamp(0.95rem, 2vw, 1.25rem)", color: "#1C1C1C" }}>
           Bloodline Calculator
@@ -192,7 +192,7 @@ function _BreedingCalcPreview_UNUSED() {
 
             {/* CTA */}
             <button
-              onClick={() => window.location.href = "#breeding-calculator"}
+              onClick={() => window.location.href = "#bloodline-calculator"}
               className="w-full py-2 rounded-lg text-center"
               style={{
                 fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "12px", textTransform: "uppercase", letterSpacing: "0.08em",
@@ -267,7 +267,7 @@ export default function Home() {
         </button>
         <div className="hidden md:flex items-center gap-6">
           <a href="#features" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "12px", textTransform: "uppercase", letterSpacing: "0.08em", color: scrolled ? "#C9B29F" : "#1C1C1C", transition: "color 0.2s" }}>Features</a>
-          <a href="#breeding-calculator" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "12px", textTransform: "uppercase", letterSpacing: "0.08em", color: scrolled ? "#C9B29F" : "#1C1C1C", transition: "color 0.2s" }}>Bloodline Calculator</a>
+          <a href="#bloodline-calculator" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "12px", textTransform: "uppercase", letterSpacing: "0.08em", color: scrolled ? "#C9B29F" : "#1C1C1C", transition: "color 0.2s" }}>Bloodline Calculator</a>
           <a href="#marketplace" style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "12px", textTransform: "uppercase", letterSpacing: "0.08em", color: scrolled ? "#C9B29F" : "#1C1C1C", transition: "color 0.2s" }}>Marketplace</a>
           <div className="relative">
             <button
@@ -324,7 +324,7 @@ export default function Home() {
           <div className="flex flex-col items-center justify-center h-full gap-6">
             {[
               { label: "Features", href: "#features" },
-              { label: "Bloodline Calculator", href: "#breeding-calculator" },
+              { label: "Bloodline Calculator", href: "#bloodline-calculator" },
               { label: "Marketplace", href: "#marketplace" },
             ].map((item) => (
               <a key={item.label} href={item.href} onClick={() => setMobileMenu(false)}
@@ -452,7 +452,7 @@ export default function Home() {
         </section>
 
         {/* ── Bloodline Calculator ── */}
-        <section id="breeding-calculator" className="py-5 px-4">
+        <section id="bloodline-calculator" className="py-5 px-4">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-center mb-0.5" style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "clamp(0.95rem, 2vw, 1.25rem)", color: "#1C1C1C" }}>
               Bloodline Calculator
@@ -708,7 +708,7 @@ export default function Home() {
                 <div>
                   <h4 style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "12px", color: "#1C1C1C", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "6px" }}>Platform</h4>
                   <div className="flex flex-col gap-1.5">
-                    {[{ label: "Features", href: "#features" }, { label: "Bloodline Calculator", href: "#breeding-calculator" }, { label: "Marketplace", href: "#marketplace" }].map((l) => (
+                    {[{ label: "Features", href: "#features" }, { label: "Bloodline Calculator", href: "#bloodline-calculator" }, { label: "Marketplace", href: "#marketplace" }].map((l) => (
                       <a key={l.label} href={l.href} style={{ fontFamily: "var(--font-body)", fontSize: "12px", color: "#4A4A4A", transition: "color 0.2s" }}
                         onMouseEnter={e => e.currentTarget.style.color = "#1C1C1C"}
                         onMouseLeave={e => e.currentTarget.style.color = "#4A4A4A"}>{l.label}</a>

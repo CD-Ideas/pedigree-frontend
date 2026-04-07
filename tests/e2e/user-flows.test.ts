@@ -469,16 +469,16 @@ describe("User Flows E2E", () => {
   });
 
   // ────────────────────────────────────────────────
-  // Flow 8: Breeding Calculator
+  // Flow 8: Bloodline Calculator
   // ────────────────────────────────────────────────
-  describe("Flow 8: Breeding Calculator", () => {
-    it("should show the breeding calculator with search fields", async () => {
+  describe("Flow 8: Bloodline Calculator", () => {
+    it("should show the bloodline calculator with search fields", async () => {
       await page.goto(`${BASE_URL}/bloodline-calculator`, {
         waitUntil: "networkidle2",
         timeout: 30000,
       });
 
-      await waitAndScreenshot(page, "breeding-calc-empty.png");
+      await waitAndScreenshot(page, "bloodline-calc-empty.png");
 
       // Verify sire and dam search fields exist
       const bodyText = await page.evaluate(() =>
@@ -687,7 +687,7 @@ describe("User Flows E2E", () => {
 
       // Scroll to Bloodline Calculator section
       await page.evaluate(() => {
-        const section = document.getElementById("breeding-calculator");
+        const section = document.getElementById("bloodline-calculator");
         if (section) section.scrollIntoView({ behavior: "instant" });
       });
       await new Promise((r) => setTimeout(r, 500));

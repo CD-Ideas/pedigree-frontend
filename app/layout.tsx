@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     template: "%s | Pedigree Platform",
   },
   description: "Track, manage, and share dog pedigrees with 947,000+ dogs. Browse pedigrees, use the bloodline calculator, marketplace, and community tools. Built for APBT breeders and enthusiasts.",
-  keywords: ["pedigree", "APBT", "American Pit Bull Terrier", "dog pedigree", "bloodline", "breeding calculator", "dog registry", "pedigree tree"],
+  keywords: ["pedigree", "APBT", "American Pit Bull Terrier", "dog pedigree", "bloodline", "bloodline calculator", "dog registry", "pedigree tree"],
   openGraph: {
     title: "Pedigree Platform — The Largest APBT Pedigree Registry",
     description: "Track, manage, and share dog pedigrees with 947,000+ dogs.",

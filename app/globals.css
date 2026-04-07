@@ -44,7 +44,7 @@
   --sandy-wrapper-bg: #FAFAFA;
   --sandy-brown: #C9B29F;
   --sandy-charcoal: #1C1C1C;
-  --sandy-card-radius: 10px;
+  --sandy-card-radius: 8px;
 }
 
 @theme inline {
@@ -171,19 +171,19 @@ body {
 .badge-gold {
   background: var(--accent-gold-glow);
   color: var(--accent-gold);
-  border: 1px solid rgba(184, 134, 11, 0.15);
+  border: 2px solid rgba(184, 134, 11, 0.15);
 }
 
 .badge-gold-strong {
   background: var(--accent-gold-glow-strong);
   color: var(--accent-gold-dim);
-  border: 1px solid rgba(184, 134, 11, 0.25);
+  border: 2px solid rgba(184, 134, 11, 0.25);
 }
 
 .badge-red {
   background: var(--accent-red-glow);
   color: var(--accent-red);
-  border: 1px solid rgba(139, 94, 60, 0.2);
+  border: 2px solid rgba(139, 94, 60, 0.2);
 }
 
 /* ── SECTION TITLE ────────────────────────────────────────────────── */
@@ -419,7 +419,7 @@ main { animation: pageIn 0.35s ease forwards; }
 
 /* ── GOLD LINE ──────────────────────────────────────────────────────── */
 .gold-line {
-  height: 1px;
+  height: 2px;
   background: linear-gradient(90deg, transparent, var(--sandy-brown), transparent);
   opacity: 0.5;
 }

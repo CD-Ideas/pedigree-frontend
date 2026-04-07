@@ -313,7 +313,7 @@ export default function Dashboard() {
                     {tool.label}
                   </span>
                   {tool.label === "New Title Alerts" && titleAlertCount > 0 && (
-                    <span style={{ background: "#ef4444", color: "#fff", fontSize: "10px", fontWeight: 700, borderRadius: "50%", width: 18, height: 18, display: "inline-flex", alignItems: "center", justifyContent: "center", marginLeft: 4 }}>
+                    <span style={{ background: "#ef4444", color: "#fff", fontSize: "12px", fontWeight: 700, borderRadius: "50%", width: 20, height: 20, display: "inline-flex", alignItems: "center", justifyContent: "center", marginLeft: 4 }}>
                       {titleAlertCount}
                     </span>
                   )}
